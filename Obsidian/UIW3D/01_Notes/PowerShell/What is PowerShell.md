@@ -1,7 +1,19 @@
-# What is PowerShell?
+---
 
+---
+---
+**Status** #Better
+
+**Related**
+
+**Tags**
+[[../../03_Utilities/Tags/PowerShell|PowerShell]] [[../../03_Utilities/Tags/Documentation|Documentation]] [[../../03_Utilities/Tags/Learning|Learning]] [[../../03_Utilities/Tags/Command Line|Command Line]]
+
+---
+### Description
 PowerShell is a command-line shell and scripting language combined into one powerful tool. Think of it as an advanced command prompt that enables verbosity, automation, and system management at scale.
 
+---
 ## Key Characteristics
 
 **Object-Based Processing**
@@ -15,7 +27,6 @@ PowerShell is a command-line shell and scripting language combined into one powe
 - File Extension: `.ps1`
 
 ---
-
 ## Installation
 
 ### Search for Latest Version
@@ -42,7 +53,6 @@ winget upgrade --id Microsoft.PowerShell
 ```
 
 ---
-
 ## Basic Navigation Commands
 
 **Change Directory**
@@ -67,7 +77,6 @@ Set-Location -Path C:\Repos
 *Note: Script must be in current directory*
 
 ---
-
 ## Cmdlets (Command-lets)
 
 PowerShell commands are called **cmdlets** and follow a consistent `Verb-Noun` naming convention. This structure makes commands intuitive and discoverable.
@@ -98,7 +107,6 @@ Get-Command -Verb Get
 *Shows all cmdlets that retrieve information*
 
 ---
-
 ## Getting Help
 
 **Display Help for Any Cmdlet**
@@ -127,7 +135,6 @@ Update-Help
 *Downloads the latest help files from Microsoft*
 
 ---
-
 ## Parameters
 
 Parameters modify how cmdlets behave and allow you to specify options. They're preceded by a hyphen (`-`).
@@ -145,7 +152,6 @@ Set-Location -Path C:\Users
 ```
 
 ---
-
 ## Aliases
 
 Aliases are shorthand versions of cmdlets. While convenient for interactive use, they sacrifice the verbosity that makes PowerShell scripts readable and maintainable.
@@ -162,20 +168,3 @@ Get-Alias
 - `cat` → `Get-Content`
 
 **Best Practice:** Use full cmdlet names in scripts for clarity and maintainability. Save aliases for interactive terminal use only.
-
----
-
-## Why PowerShell?
-
-- **Automation** - Script repetitive tasks
-- **Consistency** - Verb-Noun naming convention
-- **Discoverability** - Easy to find and learn commands
-- **Object Pipeline** - Pass rich data between commands
-- **Cross-Platform** - Runs on Windows, macOS, and Linux
-- **Integration** - Deep system access and .NET framework support
-
----
-
-**Related:** [[Git Setup for Obsidian]]
-
-**Tags:** #PowerShell #Documentation #Basics #CommandLine

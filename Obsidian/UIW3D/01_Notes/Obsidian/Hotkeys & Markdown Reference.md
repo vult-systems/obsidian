@@ -1,3 +1,19 @@
+---
+
+---
+---
+**Status**: #Best
+
+**Related**
+
+**Tags**
+[[../../03_Utilities/Tags/Hotkeys|Hotkeys]] [[../../03_Utilities/Tags/Documentation|Documentation]] 
+
+---
+### **Description**
+Hotkeys and markdown editing reference for utilizing Obsidian efficiently. 
+
+---
 ## Text Formatting
 
 **Bold**
@@ -18,7 +34,6 @@
 - Syntax: `` `code` `` → `code`
 
 ---
-
 ## Headings
 
 **Heading 1**
@@ -31,7 +46,6 @@
 - Syntax: `###`
 
 ---
-
 ## Lists
 
 **Bulleted List**
@@ -51,7 +65,6 @@
 - [x] Checked item
 
 ---
-
 ## Quotes & Dividers
 
 **Quote Block**
@@ -62,7 +75,6 @@
 - Syntax: `---`
 
 ---
-
 ## Code
 
 **Inline Code**
@@ -78,16 +90,15 @@ def hello_world():
 ```
 
 ---
-
 ## Links & Embeds
 
 **Link to Internal Note**
 - Syntax: `[[Note Name]]`
-- Example: [[What is PowerShell]]
+- Example: [[../../03_Utilities/Proxies/Proxy Note|Proxy Note]]
 
 **Link with Custom Text**
 - Syntax: `[[Note Name|Display Text]]`
-- Example: [[What is PowerShell|PowerShell Guide]]
+- Example: [[../../03_Utilities/Proxies/Proxy Note| This is a custom name title]]
 
 **Embed Entire Note**
 - Syntax: `![[Note Name]]`
@@ -101,7 +112,6 @@ def hello_world():
 - Example: `![Logo](https://example.com/logo.svg)`
 
 ---
-
 ## Navigation & UI
 
 **Go Back / Forward**
@@ -121,9 +131,3 @@ def hello_world():
 
 **Quick Switcher**
 - `Ctrl + O`
-
----
-
-**Related:** 
-
-**Tags:** #Hotkeys #Documentation #Productivity

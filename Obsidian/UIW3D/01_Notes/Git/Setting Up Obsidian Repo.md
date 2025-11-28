@@ -1,7 +1,21 @@
+---
+
+---
+---
+**Status:** #Better
+
+**Related**
+[[../PowerShell/What is PowerShell|What is PowerShell]]
+
+**Tags**
+[[../../03_Utilities/Tags/Git|Git]] [[../../03_Utilities/Tags/Obsidian|Obsidian]] [[../../03_Utilities/Tags/Documentation|Documentation]] [[../../03_Utilities/Tags/Learning|Learning]]
+
+---
+### Description
 Documentation for setting up a Git repository for an Obsidian vault with proper line ending handling across Windows and macOS platforms.
 
 ---
-### Step 1: Navigate to Repository Root
+## Step 1: Navigate to Repository Root
 
 ```powershell
 cd C:\Repos
@@ -10,7 +24,7 @@ cd C:\Repos
 **What this does:** Changes your current directory to the repository root where the `.git` folder lives.
 
 ---
-### Step 2: Verify Git Repository Location
+## Step 2: Verify Git Repository Location
 
 ```powershell
 Test-Path .git
@@ -21,7 +35,7 @@ Test-Path .git
 **What this does:** `Test-Path` is a PowerShell cmdlet that checks if a file or folder exists. Returns `True` if found, `False` if not. This confirms you're in the correct Git repository root.
 
 ---
-### Step 3: List Directory Contents
+## Step 3: List Directory Contents
 
 ```powershell
 ls
@@ -39,7 +53,7 @@ d----          11/26/2025  6:37 PM                Obsidian
 **What this does:** `ls` (alias for `Get-ChildItem`) lists the contents of the current directory. Shows you have an `Obsidian` folder.
 
 ---
-### Step 4: Create .gitattributes File
+## Step 4: Create .gitattributes File
 
 ```powershell
 @"
@@ -78,7 +92,7 @@ d----          11/26/2025  6:37 PM                Obsidian
 **Result:** Creates a `.gitattributes` file in `C:\Repos\.gitattributes`
 
 ---
-### Step 5: Verify File Creation
+## Step 5: Verify File Creation
 
 ```powershell
 Get-Content .gitattributes
@@ -89,7 +103,7 @@ Get-Content .gitattributes
 **Note:** You initially typed `.gitattributres` (typo) which caused an error. PowerShell is case-sensitive for paths and exact spelling matters.
 
 ---
-### Step 6: Stage the File for Commit
+## Step 6: Stage the File for Commit
 
 ```powershell
 git add .gitattributes
@@ -108,7 +122,7 @@ warning: in the working copy of '.gitattributes', LF will be replaced by CRLF th
 - Your prompt changes from `+16` to `+17` (17 files now staged)
 
 ---
-### Step 7: Check Repository Status
+## Step 7: Check Repository Status
 
 ```powershell
 git status
@@ -134,7 +148,7 @@ Changes to be committed:
 - What files are untracked (red, "Untracked files")
 
 ---
-### Step 8: Commit the Changes
+## Step 8: Commit the Changes
 
 ```powershell
 git commit -m "Init for my Obsidian notes with .gitatts for consistent line endings"
@@ -200,10 +214,4 @@ git commit -m "Init for my Obsidian notes with .gitatts for consistent line endi
 5. **PowerShell aliases** like `ls` make it feel familiar if you know Unix commands, but they're calling PowerShell cmdlets underneath
 
 This workflow is now repeatable for any future Git operations in your Obsidian vault!
-
----
-Related: [[../PowerShell/What is PowerShell|What is PowerShell]]
-
----
-Tags: #Obsidian #Git #PowerShell #Documenation
 
