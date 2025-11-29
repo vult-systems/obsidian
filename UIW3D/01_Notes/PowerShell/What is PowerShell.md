@@ -14,7 +14,7 @@
 PowerShell is a command-line shell and scripting language combined into one powerful tool. Think of it as an advanced command prompt that enables verbosity, automation, and system management at scale.
 
 ---
-## Key Characteristics
+# Key Characteristics
 
 **Object-Based Processing**
 - PowerShell accepts and returns .NET objects rather than plain text
@@ -27,9 +27,9 @@ PowerShell is a command-line shell and scripting language combined into one powe
 - File Extension: `.ps1`
 
 ---
-## Installation
+# Installation
 
-### Search for Latest Version
+## Search for Latest Version
 ```powershell
 winget search --id Microsoft.PowerShell
 ```
@@ -42,18 +42,18 @@ PowerShell             Microsoft.PowerShell             7.5.4.0    winget
 PowerShell Preview     Microsoft.PowerShell.Preview     7.6.0.5    winget
 ```
 
-### Install PowerShell
+## Install PowerShell
 ```powershell
 winget install --id Microsoft.PowerShell --source winget
 ```
 
-### Upgrade PowerShell
+## Upgrade PowerShell
 ```powershell
 winget upgrade --id Microsoft.PowerShell
 ```
 
 ---
-## Basic Navigation Commands
+# Basic Navigation Commands
 
 **Change Directory**
 ```powershell
@@ -77,11 +77,11 @@ Set-Location -Path C:\Repos
 *Note: Script must be in current directory*
 
 ---
-## Cmdlets (Command-lets)
+# Cmdlets (Command-lets)
 
 PowerShell commands are called **cmdlets** and follow a consistent `Verb-Noun` naming convention. This structure makes commands intuitive and discoverable.
 
-### Finding Commands
+## Finding Commands
 
 **List All Available Cmdlets**
 ```powershell
@@ -107,7 +107,7 @@ Get-Command -Verb Get
 *Shows all cmdlets that retrieve information*
 
 ---
-## Getting Help
+# Getting Help
 
 **Display Help for Any Cmdlet**
 ```powershell
@@ -135,7 +135,7 @@ Update-Help
 *Downloads the latest help files from Microsoft*
 
 ---
-## Parameters
+# Parameters
 
 Parameters modify how cmdlets behave and allow you to specify options. They're preceded by a hyphen (`-`).
 
@@ -152,7 +152,7 @@ Set-Location -Path C:\Users
 ```
 
 ---
-## Aliases
+# Aliases
 
 Aliases are shorthand versions of cmdlets. While convenient for interactive use, they sacrifice the verbosity that makes PowerShell scripts readable and maintainable.
 

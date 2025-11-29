@@ -15,14 +15,6 @@
 A PowerShell automation script that streamlines the Git workflow by combining `git add`, `git commit`, and `git push` operations into a single command `obsync`
 
 ---
-### Assumptions
-
-- PowerShell 7+ (`pwsh`)
-- Git installed and configured
-- Obsidian vault initialized as a Git repository
-- GitHub repository set up as remote
-
----
 ## Step 1: Create the Script Directory
 
 ```powershell
