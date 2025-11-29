@@ -7,7 +7,7 @@
 **Related**
 
 **Tags**
-[[../../03_Utilities/Tags/PowerShell|PowerShell]] [[../../03_Utilities/Tags/Documentation|Documentation]] [[../../03_Utilities/Tags/Learning|Learning]] [[../../03_Utilities/Tags/Command Line|Command Line]]
+[[../../03_Utility/Tags/PowerShell|PowerShell]] [[../../03_Utility/Tags/Documentation|Documentation]] [[../../03_Utility/Tags/Learning|Learning]] [[../../03_Utility/Tags/Command Line|Command Line]]
 
 ---
 ### Description
