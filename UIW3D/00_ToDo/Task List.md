@@ -14,6 +14,7 @@ kanban-plugin: board
 ## In Progress
 
 - [ ] **Obsidian**: Restructure Obsidian and document the process and push to Git.
+- [ ] **Git:** Polish the README.md by adding links, images, code blocks, etc.
 
 
 ## Review
