@@ -8,7 +8,7 @@
 [[What is PowerShell|What is PowerShell]] 
 
 **Tags**
-[[../../03_Utility/Tags/PowerShell|PowerShell]] [[../../03_Utility/Tags/Documentation|Documentation]] [[../../03_Utility/Tags/Obsidian|Obsidian]]
+[[../../05_Utility/Tags/PowerShell|PowerShell]] [[../../05_Utility/Tags/Documentation|Documentation]] [[../../05_Utility/Tags/Obsidian|Obsidian]]
 
 ---
 ### Description

@@ -1,0 +1,1 @@
+Proxy note for render farm folder.

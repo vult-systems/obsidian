@@ -8,7 +8,7 @@
 [[../PowerShell/What is PowerShell|What is PowerShell]]
 
 **Tags**
-[[../../03_Utility/Tags/Git|Git]] [[../../03_Utility/Tags/Obsidian|Obsidian]] [[../../03_Utility/Tags/Documentation|Documentation]] [[../../03_Utility/Tags/Learning|Learning]]
+[[../../05_Utility/Tags/Git|Git]] [[../../05_Utility/Tags/Obsidian|Obsidian]] [[../../05_Utility/Tags/Documentation|Documentation]] [[../../05_Utility/Tags/Learning|Learning]]
 
 ---
 ### Description

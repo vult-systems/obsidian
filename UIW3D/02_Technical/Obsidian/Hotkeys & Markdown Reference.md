@@ -7,7 +7,7 @@
 **Related**
 
 **Tags**
-[[../../03_Utility/Tags/Hotkeys|Hotkeys]] [[../../03_Utility/Tags/Documentation|Documentation]] 
+[[../../05_Utility/Tags/Hotkeys|Hotkeys]] [[../../05_Utility/Tags/Documentation|Documentation]] 
 
 ---
 ### **Description**
@@ -94,11 +94,11 @@ def hello_world():
 
 **Link to Internal Note**
 - Syntax: `[[Note Name]]`
-- Example: [[../../03_Utility/Proxies/Proxy Note|Proxy Note]]
+- Example: [[../../05_Utility/Proxies/Proxy Note|Proxy Note]]
 
 **Link with Custom Text**
 - Syntax: `[[Note Name|Display Text]]`
-- Example: [[../../03_Utility/Proxies/Proxy Note| This is a custom name title]]
+- Example: [[../../05_Utility/Proxies/Proxy Note| This is a custom name title]]
 
 **Embed Entire Note**
 - Syntax: `![[Note Name]]`
