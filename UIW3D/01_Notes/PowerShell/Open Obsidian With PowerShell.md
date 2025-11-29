@@ -1,7 +1,20 @@
-**Status** #Good 
-
 ---
 
+---
+---
+**Status** #Best
+
+**Related**
+[[What is PowerShell|What is PowerShell]] 
+
+**Tags**
+[[../../03_Utility/Tags/PowerShell|PowerShell]] [[../../03_Utility/Tags/Documentation|Documentation]] [[../../03_Utility/Tags/Obsidian|Obsidian]]
+
+---
+### Description
+The command and explanation for opening my Obsidian notes (UIW3D vault) via PowerShell. 
+
+---
 ## Open Obsidian via PowerShell
 
 ``` PowerShell
