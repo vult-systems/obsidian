@@ -1,74 +1,91 @@
 # Obsidian Repository
-In my freetime, I role-play as a pipeline developer, technical director, programmer, network specialist, home labber, and so much more. My hope is to utilize this repo to collect my thoughts, perfect my technical writing, gather references, develop scripts, and more.
 
-End game and best case scenerio would be to create practicle, production ready tools and identify best practices that can be applied to larger knowledge bases and production processes for my personal and professional work.
+In my free time, I role-play as a pipeline developer, technical director, programmer, network specialist, homelabber, and so much more. This repo is where I collect my thoughts, perfect my technical writing, gather references, and develop scripts.
+
+**End goal:** Create practical, production-ready tools and identify best practices that scale across larger knowledge bases and production processes - both personal and professional.
 
 ## Stack
-- Obsidian
-    - Knowledge base
-- Git (GitHub)
-    - Version control
-    - Source control
-- PowerShell
-    - Command line & scripting language 
-    - Oh My Posh & PSReadline
-    - Automation scripts
-- NeoVim
-    - Editor
+
+**Knowledge & Version Control**
+- **Obsidian** - Knowledge base
+- **Git (GitHub)** - Version and source control
+
+**Development Tools**
+- **PowerShell** - Command line & scripting
+  - Oh My Posh & PSReadLine
+  - Automation scripts
+- **NeoVim** - Primary editor
 
 ## Production Goals
-The current objective driving my learning path is that I would like to not only standup an "academic friendly" offline and real-time production pipeline, but I'd like to make it reproducible, scalable, and accessible. 
 
-This process has been in the works for the last couple years allowing me to have some control variables, some infrastructure, and some trial & error. However, I'm at a point in which automation, documentation, and learning are a neccessity. 
+My current objective is to stand up an "academic-friendly" offline and real-time production pipeline that's reproducible, scalable, and accessible.
 
-Bringing the industry to academia has always been a driving factor. I've pushed for my students to not only excel in their chosen discipline, but to do so with industry in mind. That said, framing their minds and works to accomplish that would be a ton easier if the University had a pipeline live and deployed. We're in the heat of battle now - Perforce up and running, Linux server and Nas ready and waiting, Deadline is finally deployed as a service, YouTrack is our knowledge base and project management hub, and the students are gaining real-world experience throughout their time with us. 
+This process has been in the works for a couple years now - giving me control variables, infrastructure, and plenty of trial and error. But I'm at the point where automation, documentation, and systematic learning are no longer optional.
 
-It's not perfect, but I can see the light. I'm an artist first, but this rabbit hole has been a ton of fun and I'm enjoying all the new. I'll continue to document as I go here as I rp the programmer life. 
+**The mission:** Bring industry-standard pipelines to academia.
 
-## Current Pipeline Tools and Development
-    - Home software
-        - Autodesk Maya
-        - Arnold renderer
-    - DCC's
-        - A ton...
-    - Render farm solution
-        - AWS Thinkbox Deadline
-    - Comp & cut
-        - Davinci Ressolve
-        - Adobe Premiere
-    - Game engines
-        - UE5
-        - Unity
-    - Project management & knowledge base
-        - YouTrack
-    - Communication
-        - Teams
-    - Infrastructure
-        - Linux Server
-            - Perforce 
-                - Version & source control
-            - Deadline
-            - Render repository
-        - Nas
-        - Local Network Drives (UNC Paths)
-        - Subst drives (S:\ProjectTAG) 
-            - Universal absolute path
-        - Labs
-            - ~85+ machines
-            - Various specs
+I've pushed my students to excel in their discipline *with industry in mind*. Framing their work around real-world production workflows is infinitely easier when the university has an actual pipeline deployed. 
 
-## Looking Ahead 
-Once we iron out and document our current pipeline, the plan is to deploy a pipeline solution using Ayon or Prism. I can see this occuring in the next year or so (being hopeful), but first the objective is gain an understanding of how we make games and films. There's no right or wrong here and as long as the students gain some experience being plugged into a production pipeline, I believe this will all be worth it. 
+### Current State
 
-- Python
-    - Developer tools
-    - Maya, Substance, Arnold, UE5, etc.
-- C++
-    - I'd personally like to dive into it to scratch my rp programming UE5 developer itch
-- AYON Pipeline
-- Prism Pipeline
-- Houdini
-    - Mainly for Solaris
-- USD
-    - This is the ultimate goal and honestly is what kick started all of this.
-    - Mission complete once USD is in play for offline and real-time productions. 
+**We're in the heat of battle:**
+- Perforce deployed and running
+- Linux server and NAS deployed
+- Deadline running as a service
+- YouTrack managing projects and documentation
+- Students gaining real-world production experience
+
+It's not perfect, but I can see the light. I'm an artist first, but this rabbit hole has been a ton of fun, and I'm enjoying the journey. I'll continue documenting as I RP the programmer life.
+
+## Current Pipeline Tools
+
+### 3D Software
+- **Autodesk Maya** - Home software
+- **Arnold** - Offline renderer
+- Plus a ton of other DCCs for both game and film assets...
+
+### Render Management
+- **AWS Thinkbox Deadline** - Render farm orchestration
+
+### Post-Production
+- **DaVinci Resolve** - Compositing & color
+- **Adobe Premiere** - Editing
+
+### Real-Time Engines
+- **Unreal Engine 5** - Primary game engine
+- **Unity** - Secondary engine
+
+### Project Management & Communication
+- **YouTrack** - Project tracking & knowledge base
+- **Microsoft Teams** - Team communication
+
+### Infrastructure
+- **Linux Server**
+  - Perforce (version & source control)
+  - Deadline repository
+  - Render farm backend
+- **NAS** - Centralized storage
+- **Network Drives** - UNC paths for file access
+- **Subst Drives** - Universal absolute paths (`S:\ProjectTAG`)
+- **Lab Network** - ~85 machines with varying specs
+
+## Looking Ahead
+
+Once we document our current pipeline and iron out the workflows, the plan is to deploy **AYON** or **Prism Pipeline**. I can see this happening in the next year or so (being hopeful). 
+
+First, though, we need to understand *how* we make games and films with what we have. There's no right or wrong here - as long as students gain experience working in a production pipeline, it's worth it.
+
+### On the Roadmap
+
+- **Python** - Pipeline tools for Maya, Substance, Arnold, UE5, etc.
+- **C++** - Scratching my RP UE5 developer itch
+- **AYON Pipeline** - Future deployment target
+- **Prism Pipeline** - Alternative solution
+- **Houdini** - Mainly for Solaris workflows
+- **USD (Universal Scene Description)** - *The ultimate goal*
+  - This is what kick-started everything
+  - Mission complete once USD is integrated for offline and real-time productions
+
+---
+
+**Bottom line:** I'm an artist first, pipeline TD second - learning and documenting the journey as I go!
