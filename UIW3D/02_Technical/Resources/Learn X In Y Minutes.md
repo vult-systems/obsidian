@@ -16,6 +16,13 @@ favicon: https://github.githubassets.com/favicons/favicon.svg
 image: https://opengraph.githubassets.com/87aead472f47ee5cec1c94aae7047084107754fcea1a38794bedf228060d9894/adambard/learnxinyminutes-docs
 ```
 
+### Adam Bards Website
+```cardlink
+url: https://adambard.com/
+title: "Home Page | Adam Bard, Handsome Web Developer"
+host: adambard.com
+```
+
 ---
 Status
 #Better 

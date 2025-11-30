@@ -1,6 +1,5 @@
-# Description
-Index Notes (MOCs - Maps of Content)
-Core pipeline documentation.
+## Description
+Map of content for my Pipeline notes.
 
 ---
 ## Notes
@@ -23,3 +22,4 @@ Core pipeline documentation.
 - [[../Tags/Perforce|Perforce]] 
 - [[../Tags/Maya|Maya]] 
 - [[../Tags/Arnold|Arnold]] 
+- [[../Tags/Resources|Resources]]

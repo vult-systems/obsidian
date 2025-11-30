@@ -143,7 +143,6 @@ Status
 #Better Need to include .gitignore write up.
 
 Related
-[[../PowerShell/What is PowerShell|What is PowerShell]]
 
 Tags
 [[../../05_Utility/Tags/Git|Git]] [[../../05_Utility/Tags/Obsidian|Obsidian]] [[../../05_Utility/Tags/Documentation|Documentation]] [[../../05_Utility/Tags/Learning|Learning]]

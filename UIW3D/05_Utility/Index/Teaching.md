@@ -1,6 +1,5 @@
-# Description
-Index Notes (MOCs - Maps of Content)
-Core teaching notes.
+## Description
+Map of content for my teaching notes.
 
 ---
 ## Notes
@@ -15,4 +14,5 @@ Core teaching notes.
 - [[../Tags/Deadline|Deadline]] 
 - [[../Tags/Perforce|Perforce]] 
 - [[../Tags/Maya|Maya]] 
-- [[../Tags/Arnold|Arnold]] 
+- [[../Tags/Arnold|Arnold]]
+- [[../Tags/Resources|Resources]]
