@@ -2,14 +2,6 @@
 
 ---
 ---
-**Status**: #Best
-
-**Related**
-
-**Tags**
-[[../../05_Utility/Tags/Hotkeys|Hotkeys]] [[../../05_Utility/Tags/Documentation|Documentation]] 
-
----
 ### **Description**
 Hotkeys and markdown editing reference for utilizing Obsidian efficiently. 
 
@@ -131,3 +123,12 @@ def hello_world():
 
 **Quick Switcher**
 - `Ctrl + O`
+
+---
+Status
+#Best
+
+Related
+
+Tags
+[[../../05_Utility/Tags/Hotkeys|Hotkeys]] [[../../05_Utility/Tags/Documentation|Documentation]] 

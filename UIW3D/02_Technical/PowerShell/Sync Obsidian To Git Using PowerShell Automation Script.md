@@ -2,15 +2,6 @@
 
 ---
 ---
-**Status** #Best
-
-**Related**
-[[What is PowerShell|What is PowerShell]]
-
-**Tags**
-[[../../05_Utility/Tags/Git|Git]] [[../../05_Utility/Tags/Obsidian|Obsidian]] [[../../05_Utility/Tags/Documentation|Documentation]] [[../../05_Utility/Tags/PowerShell|PowerShell]] [[../../05_Utility/Tags/Automation|Automation]]
-
----
 ### Description
 A PowerShell automation script that streamlines the Git workflow by combining `git add`, `git commit`, and `git push` operations into a single command `obsync`
 
@@ -262,3 +253,13 @@ chmod +x ~/Scripts/sync-obsidian.sh
 echo 'alias obsync="~/Scripts/sync-obsidian.sh"' >> ~/.zshrc
 source ~/.zshrc
 ```
+
+---
+Status 
+#Best
+
+Related
+[[What is PowerShell|What is PowerShell]]
+
+Tags
+[[../../05_Utility/Tags/Git|Git]] [[../../05_Utility/Tags/Obsidian|Obsidian]] [[../../05_Utility/Tags/Documentation|Documentation]] [[../../05_Utility/Tags/PowerShell|PowerShell]] [[../../05_Utility/Tags/Automation|Automation]]

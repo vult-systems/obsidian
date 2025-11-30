@@ -12,7 +12,7 @@ Core technical knowledge for pipeline development and production workflows.
 
 **PowerShell**
 [[../../02_Technical/PowerShell/Open Obsidian With PowerShell|Open Obsidian With PowerShell]]
-[[../../02_Technical/PowerShell/PowerShell Documentation|PowerShell Documentation]]
+[[../../02_Technical/Resources/PowerShell Documentation|PowerShell Documentation]]
 [[../../02_Technical/PowerShell/Sync Obsidian To Git Using PowerShell Automation Script|Sync Obsidian To Git Using PowerShell Automation Script]]
 [[../../02_Technical/PowerShell/What is PowerShell|What is PowerShell]]
 

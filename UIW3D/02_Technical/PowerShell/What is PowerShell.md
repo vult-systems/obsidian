@@ -2,14 +2,6 @@
 
 ---
 ---
-**Status** #Better
-
-**Related**
-
-**Tags**
-[[../../05_Utility/Tags/PowerShell|PowerShell]] [[../../05_Utility/Tags/Documentation|Documentation]] [[../../05_Utility/Tags/Learning|Learning]] [[../../05_Utility/Tags/Command Line|Command Line]]
-
----
 ### Description
 PowerShell is a command-line shell and scripting language combined into one powerful tool. Think of it as an advanced command prompt that enables verbosity, automation, and system management at scale.
 
@@ -168,3 +160,13 @@ Get-Alias
 - `cat` → `Get-Content`
 
 **Best Practice:** Use full cmdlet names in scripts for clarity and maintainability. Save aliases for interactive terminal use only.
+
+---
+Status 
+#Better
+
+Related
+[[../Resources/PowerShell Documentation|PowerShell Documentation]]
+
+Tags
+[[../../05_Utility/Tags/PowerShell|PowerShell]] [[../../05_Utility/Tags/Documentation|Documentation]] [[../../05_Utility/Tags/Learning|Learning]] [[../../05_Utility/Tags/Command Line|Command Line]]

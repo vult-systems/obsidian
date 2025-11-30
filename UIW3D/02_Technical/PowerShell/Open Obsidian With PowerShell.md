@@ -2,15 +2,6 @@
 
 ---
 ---
-**Status** #Best
-
-**Related**
-[[What is PowerShell|What is PowerShell]] 
-
-**Tags**
-[[../../05_Utility/Tags/PowerShell|PowerShell]] [[../../05_Utility/Tags/Documentation|Documentation]] [[../../05_Utility/Tags/Obsidian|Obsidian]]
-
----
 ### Description
 The command and explanation for opening my Obsidian notes (UIW3D vault) via PowerShell. 
 
@@ -51,3 +42,13 @@ Obsidian registers the `obsidian://` protocol with Windows when installed, so Po
 		- Additional examples include: 
 			- `open?vault=UIW3D&file=Notes/PowerShell.md`
 			- `search?vault=UIW3D&query=pipeline`
+
+---
+Status 
+#Best
+
+Related
+[[What is PowerShell|What is PowerShell]] 
+
+Tags
+[[../../05_Utility/Tags/PowerShell|PowerShell]] [[../../05_Utility/Tags/Documentation|Documentation]] [[../../05_Utility/Tags/Obsidian|Obsidian]]

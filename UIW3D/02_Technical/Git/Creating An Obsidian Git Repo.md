@@ -2,15 +2,6 @@
 
 ---
 ---
-**Status:** #Better Need to include .gitignore write up.
-
-**Related**
-[[../PowerShell/What is PowerShell|What is PowerShell]]
-
-**Tags**
-[[../../05_Utility/Tags/Git|Git]] [[../../05_Utility/Tags/Obsidian|Obsidian]] [[../../05_Utility/Tags/Documentation|Documentation]] [[../../05_Utility/Tags/Learning|Learning]]
-
----
 ### Description
 A guide for setting up a Git repository for an Obsidian vault to be used cross platform. 
 
@@ -146,3 +137,13 @@ git push
 
 - **`-FilePath`** - Specify file location
 - **`-Encoding`** - Specify text encoding
+
+---
+Status
+#Better Need to include .gitignore write up.
+
+Related
+[[../PowerShell/What is PowerShell|What is PowerShell]]
+
+Tags
+[[../../05_Utility/Tags/Git|Git]] [[../../05_Utility/Tags/Obsidian|Obsidian]] [[../../05_Utility/Tags/Documentation|Documentation]] [[../../05_Utility/Tags/Learning|Learning]]
