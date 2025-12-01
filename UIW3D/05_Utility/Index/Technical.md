@@ -7,11 +7,12 @@ Map of content for my Technical notes.
 [[../../02_Technical/Git/Creating An Obsidian Git Repo|Creating An Obsidian Git Repo]]
 
 **NeoVim**
+[[../../02_Technical/NeoVim/NeoVim Development Environment Setup on Windows|NeoVim Development Environment Setup on Windows]]
+[[../../02_Technical/NeoVim/NeoVim Text-Editing Hotkeys|NeoVim Text-Editing Hotkeys]]
 [[../../02_Technical/NeoVim/What Is NeoVim|What Is NeoVim]]
-[[../../02_Technical/NeoVim/Text-Editing Hotkeys In NeoVim|Text-Editing Hotkeys In NeoVim]]
 
 **Obsidian**
-[[../../02_Technical/Obsidian/Hotkeys & Markdown Reference|Hotkeys & Markdown Reference]]
+[[../../02_Technical/Obsidian/Obsidian Hotkeys & Markdown Reference|Obsidian Hotkeys & Markdown Reference]]
 
 **PowerShell**
 [[../../02_Technical/PowerShell/Open Obsidian With PowerShell|Open Obsidian With PowerShell]]
@@ -24,17 +25,17 @@ Map of content for my Technical notes.
 
 ---
 ## Tags
+- [[../Tags/Arnold|Arnold]] 
 - [[../Tags/Automation|Automation]]
 - [[../Tags/Command Line|Command Line]]
+- [[../Tags/Deadline|Deadline]] 
+- [[../Tags/Documentation|Documentation]]
+- [[../Tags/Git|Git]] 
 - [[../Tags/Hotkeys|Hotkeys]]
 - [[../Tags/Learning|Learning]]
-- [[../Tags/Documentation|Documentation]]
-- [[../Tags/Obsidian|Obsidian]]
-- [[../Tags/PowerShell|PowerShell]] 
-- [[../Tags/Git|Git]] 
-- [[../Tags/Deadline|Deadline]] 
-- [[../Tags/Perforce|Perforce]] 
 - [[../Tags/Maya|Maya]] 
-- [[../Tags/Arnold|Arnold]] 
 - [[../Tags/NeoVim|NeoVim]]
+- [[../Tags/Obsidian|Obsidian]]
+- [[../Tags/Perforce|Perforce]] 
+- [[../Tags/PowerShell|PowerShell]] 
 - [[../Tags/Resources|Resources]]

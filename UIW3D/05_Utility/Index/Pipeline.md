@@ -8,18 +8,22 @@ Map of content for my Pipeline notes.
 
 **Render Farm**
 [[../../03_Pipeline/Render Farm/__UPDATE__Deploying Deadline as a Service|__UPDATE__Deploying Deadline as a Service]]
+[[../../03_Pipeline/Render Farm/Automated Installation|Automated Installation]]
 [[../../03_Pipeline/Render Farm/What Is Deadline|What Is Deadline]]
+
+**Resources**
+[[../../03_Pipeline/Resources/Install-DeadlineClient.ps1|Install-DeadlineClient.ps1]]
 
 ---
 ## Tags
+- [[../Tags/Arnold|Arnold]] 
 - [[../Tags/Automation|Automation]]
 - [[../Tags/Command Line|Command Line]]
-- [[../Tags/Learning|Learning]]
-- [[../Tags/Documentation|Documentation]]
-- [[../Tags/PowerShell|PowerShell]] 
-- [[../Tags/Git|Git]] 
 - [[../Tags/Deadline|Deadline]] 
-- [[../Tags/Perforce|Perforce]] 
+- [[../Tags/Documentation|Documentation]]
+- [[../Tags/Git|Git]] 
+- [[../Tags/Learning|Learning]]
 - [[../Tags/Maya|Maya]] 
-- [[../Tags/Arnold|Arnold]] 
+- [[../Tags/Perforce|Perforce]] 
+- [[../Tags/PowerShell|PowerShell]] 
 - [[../Tags/Resources|Resources]]

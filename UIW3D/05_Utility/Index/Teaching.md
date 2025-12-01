@@ -8,11 +8,11 @@ Map of content for my teaching notes.
 
 ---
 ## Tags
-- [[../Tags/Learning|Learning]]
+- [[../Tags/Arnold|Arnold]]
+- [[../Tags/Deadline|Deadline]] 
 - [[../Tags/Documentation|Documentation]]
 - [[../Tags/Git|Git]] 
-- [[../Tags/Deadline|Deadline]] 
-- [[../Tags/Perforce|Perforce]] 
+- [[../Tags/Learning|Learning]]
 - [[../Tags/Maya|Maya]] 
-- [[../Tags/Arnold|Arnold]]
+- [[../Tags/Perforce|Perforce]] 
 - [[../Tags/Resources|Resources]]
