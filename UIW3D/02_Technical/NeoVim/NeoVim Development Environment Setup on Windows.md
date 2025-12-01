@@ -1,8 +1,85 @@
-## Description
-This is my current NeoVim setup and configuration below. I'm using the `init.lua` template from the `:Tutor` lesson. I slightly tweaked it, but I need to deep dive the configuration setting in order to fully customize it. I will continue to update this write-up and documentation as I go.  
+---
 
 ---
-# Step-By-Step Guide
+---
+## Description
+My mac development setup is getting dialed in and this is an attempt to replicate it on my Windows machine.
+- **Neovim**
+	- `init.lua` config forked and edited from the example provided in the `:Tutor` nvim tutorial
+	- Kanagawa Dragon theme. 
+- **PowerShell 7**
+	- `$PROFILE` includes PSReadLine and a custom search history function
+- **Nerd Font** 
+	- `GNU Unifont 1998`
+
+---
+# Part 1: Font Installation
+---
+Download and install your preferred **Nerd Font: 
+
+```cardlink
+url: https://www.nerdfonts.com/font-downloads
+title: "Nerd Fonts - Iconic font aggregator, glyphs/icons collection, & fonts patcher"
+description: "Iconic font aggregator, collection, & patcher: 9,000+ glyph/icons, 60+ patched fonts: Hack, Source Code Pro, more. Popular glyph collections: Font Awesome, Octicons, Material Design Icons, and more"
+host: www.nerdfonts.com
+image: https://www.nerdfonts.com/assets/img/sankey-glyphs-combined-diagram.png
+```
+
+In Windows Terminal or Powershell, go to **Settings → Profiles → Defaults → Appearance** and set the font face to your chosen.
+
+---
+## Preferred Nerd Fonts
+- [Fixedsys1984 — Travis Owens](https://www.programmingfonts.org/#fixedsys)
+- [Fixedsys with Ligatures2016 — Darien Valentine](https://www.programmingfonts.org/#fixedsys-ligatures)
+- [GNU Unifont1998 — Roman Czyborra](https://www.programmingfonts.org/#unifont)
+- [Gohufont 142010 — Hugo Chargois](https://www.programmingfonts.org/#gohufont-14)
+- [IBM VGA 9x161987 — IBM](https://www.programmingfonts.org/#ibm-vga)
+- [Proggy Clean2004 — Tristan Grimmer](https://www.programmingfonts.org/#proggy-clean)
+- [Scientifica2019 — Akshay Oppiliappan](https://www.programmingfonts.org/#scientifica)
+- [UnifontEX2023 — stgiga](https://www.programmingfonts.org/#unifontex)
+- [VT3232014 — Peter Hull](https://www.programmingfonts.org/#vt323)
+
+---
+# Part 2: PowerShell Profile
+---
+## Step 1: Open your profile
+
+```powershell
+notepad $PROFILE
+```
+
+If it doesn't exist, create it:
+
+```powershell
+New-Item -ItemType File -Force -Path $PROFILE
+```
+
+---
+### Step 2: Add your config
+
+Paste the following:
+
+```powershell
+# Home bin path (Windows equivalent)
+$env:PATH += ";$HOME\.local\bin"
+
+# PowerShell PSReadLine History Search
+function hist {
+  $find = $args
+  Write-Host "Finding in full history using `$_ -like `"*$find*`""
+  Get-Content (Get-PSReadlineOption).HistorySavePath | Where-Object {$_ -like "*$find*"} | Get-Unique | more
+}
+```
+
+---
+### Step 3: Reload profile
+
+```powershell
+. $PROFILE
+```
+
+---
+# Part 3: Neovim Setup
 ---
 ## Step 1: Install Neovim
 
@@ -146,10 +223,10 @@ git pull
 
 ---
 Status
-#Good 
+#Better
 
 Related
 [[What Is NeoVim|What Is NeoVim]] [[NeoVim Text-Editing Hotkeys|NeoVim Text-Editing Hotkeys]]
 
 Tags
-[[../../05_Utility/Tags/NeoVim|NeoVim]] 
+[[../../05_Utility/Tags/NeoVim|NeoVim]] [[../../05_Utility/Tags/PowerShell|PowerShell]] [[../../05_Utility/Tags/Documentation|Documentation]] [[../../05_Utility/Tags/Command Line|Command Line]] [[../../05_Utility/Tags/Resources|Resources]] 

@@ -7,7 +7,7 @@ Map of content for my Technical notes.
 [[../../02_Technical/Git/Creating An Obsidian Git Repo|Creating An Obsidian Git Repo]]
 
 **NeoVim**
-[[../../02_Technical/NeoVim/NeoVim Development Environment Setup on Windows|NeoVim Development Environment Setup on Windows]]
+[[../../02_Technical/NeoVim/Neovim Development Environment Setup on Windows|Neovim Development Environment Setup on Windows]]
 [[../../02_Technical/NeoVim/NeoVim Text-Editing Hotkeys|NeoVim Text-Editing Hotkeys]]
 [[../../02_Technical/NeoVim/What Is NeoVim|What Is NeoVim]]
 
