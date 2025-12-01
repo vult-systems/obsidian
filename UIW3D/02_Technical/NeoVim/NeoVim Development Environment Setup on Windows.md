@@ -4,13 +4,6 @@
 ---
 ## Description
 My mac development setup is getting dialed in and this is an attempt to replicate it on my Windows machine.
-- **Neovim**
-	- `init.lua` config forked and edited from the example provided in the `:Tutor` nvim tutorial
-	- Kanagawa Dragon theme. 
-- **PowerShell 7**
-	- `$PROFILE` includes PSReadLine and a custom search history function
-- **Nerd Font** 
-	- `GNU Unifont 1998`
 
 ---
 # Part 1: Font Installation
@@ -25,10 +18,13 @@ host: www.nerdfonts.com
 image: https://www.nerdfonts.com/assets/img/sankey-glyphs-combined-diagram.png
 ```
 
-In Windows Terminal or Powershell, go to **Settings → Profiles → Defaults → Appearance** and set the font face to your chosen.
+ **Configure Windows Terminal:**
+    - Open Windows Terminal/PowerShell
+    - Go to: `Settings → Profiles → Defaults → Appearance`
+    - Set **Font face** to your installed Nerd Font
 
 ---
-## Preferred Nerd Fonts
+## Recommended Fonts
 - [Fixedsys1984 — Travis Owens](https://www.programmingfonts.org/#fixedsys)
 - [Fixedsys with Ligatures2016 — Darien Valentine](https://www.programmingfonts.org/#fixedsys-ligatures)
 - [GNU Unifont1998 — Roman Czyborra](https://www.programmingfonts.org/#unifont)
@@ -40,136 +36,155 @@ In Windows Terminal or Powershell, go to **Settings → Profiles → Defaults �
 - [VT3232014 — Peter Hull](https://www.programmingfonts.org/#vt323)
 
 ---
-# Part 2: PowerShell Profile
+# Part 2: Configure PowerShell
 ---
-## Step 1: Open your profile
+## Step 1: Create Your Profile
+
+Check if you have a profile:
 
 ```powershell
-notepad $PROFILE
+Test-Path $PROFILE
 ```
 
-If it doesn't exist, create it:
+IIf it returns `False`, create it:
 
 ```powershell
 New-Item -ItemType File -Force -Path $PROFILE
 ```
 
----
-### Step 2: Add your config
+### Step 2: Add Custom Functions
 
-Paste the following:
+Open your profile:
 
 ```powershell
-# Home bin path (Windows equivalent)
-$env:PATH += ";$HOME\.local\bin"
-
-# PowerShell PSReadLine History Search
-function hist {
-  $find = $args
-  Write-Host "Finding in full history using `$_ -like `"*$find*`""
-  Get-Content (Get-PSReadlineOption).HistorySavePath | Where-Object {$_ -like "*$find*"} | Get-Unique | more
-}
+notepad $PROFILE
 ```
 
+Paste this configuration:
+
+```powershell
+# Add local bin to PATH
+$env:PATH += ";$HOME\.local\bin"
+
+# PSReadLine options for better IntelliSense
+Set-PSReadLineOption -PredictionSource History
+Set-PSReadLineOption -PredictionViewStyle ListView
+Set-PSReadLineOption -EditMode Windows
+
+# Menu completion for Tab (shows folder list for cd, etc.)
+Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+
+# Show tooltips during completion
+Set-PSReadLineOption -ShowToolTips
+
+# Bell/visual feedback when commands complete
+Set-PSReadLineOption -BellStyle Visual
+
+# Show last command status more clearly
+$PSStyle.Formatting.Error = "`e[91m"  # Bright red for errors
+```
+
+**What this does:**
+
+- Adds `~/.local/bin` to your PATH (like Linux/macOS)
+- Creates `hist` command to search your command history
+
 ---
-### Step 3: Reload profile
+### Step 3: Load Your New Profile
 
 ```powershell
 . $PROFILE
 ```
 
+**Test it**: Try typing hist git to search your history!
+
 ---
-# Part 3: Neovim Setup
----
-## Step 1: Install Neovim
+# Part 3: Install and Configure Neovim
+
+### Step 1: Install Neovim
 
 ```powershell
 winget install Neovim.Neovim
 ```
 
-Restart your terminal after installation and edit your Environment Variables.
+Wait for installation to complete, then **refresh your PATH**:
 
 ```powershell
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 ```
 
-Test by running `nvim --version`
-Find where it's installed `nvim --version`
+**Verify installation:**
+
+```powershell
+nvim --version
+```
+
+You should see: `NVIM v0.11.5` (or similar)
 
 ---
-## Step 2: Create Config Directory
+
+### Step 2: Set Up Directory Structure
+
+Create the config directory:
 
 ```powershell
 New-Item -ItemType Directory -Force -Path "$env:LOCALAPPDATA\nvim"
 ```
 
 ---
-## Step 3: Install Kanagawa Theme
+
+### Step 3: Install Kanagawa Theme
 
 ```powershell
 git clone https://github.com/rebelot/kanagawa.nvim.git "$env:LOCALAPPDATA\nvim-data\site\pack\plugins\start\kanagawa.nvim"
 ```
 
 ---
-## Step 4: Create init.lua
-Find or edit the `init.lua` nvim configuration file or create it.
-The file can be found, edited, or created 
+### Step 4: Create Your Configuration File
 
-- `%LOCALAPPDATA%\nvim\init.lua`
-- `~/.config/nvim/initl.lua` 
-
-You can navigate to your config directory and create the init.lua file. 
+Navigate to your config directory:
 
 ```powershell
 cd "$env:LOCALAPPDATA\nvim"
 ```
 
-Create the init.lua and copy and paste the follow code below, then save the file.
-@"
-"@
+Create `init.lua` using:
+
+```
+nvim init.lua
+```
+
+Copy and paste this into the file:
 
 ```lua
--- Set <space> as the leader key
+-- Leader key: space
 vim.g.mapleader = ' '
 
--- Print the line number in front of each line
+-- Line numbers
 vim.o.number = true
-vim.cmd("colorscheme kanagawa-dragon")
-
--- Use relative line numbers, so that it is easier to jump with j, k. This will affect the 'number'
--- option above, see `:h number_relativenumber`
 vim.o.relativenumber = true
 
--- Sync clipboard between OS and Neovim.
+-- Clipboard sync with Windows
 vim.api.nvim_create_autocmd('UIEnter', {
-callback = function()
-vim.o.clipboard = 'unnamedplus'
-end,
+  callback = function()
+    vim.o.clipboard = 'unnamedplus'
+  end,
 })
 
--- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
+-- Smart case-insensitive search
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
--- Highlight the line where the cursor is on
--- vim.o.cursorline = true
+-- Visual helpers
 vim.o.cursorcolumn = true
-  
--- Minimal number of screen lines to keep above and below the cursor.
 vim.o.scrolloff = 10
-
--- Show <tab> and trailing spaces
 vim.o.list = true
-
--- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
--- instead raise a dialog asking if you wish to save the current file(s) See `:help 'confirm'`
 vim.o.confirm = true
 
--- [[ Set up keymaps ]] See `:h vim.keymap.set()`, `:h mapping`, `:h keycodes`
--- Use <Esc> to exit terminal mode
+-- Exit terminal mode with Esc
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 
--- Map <A-j>, <A-k>, <A-h>, <A-l> to navigate between windows in any modes
+-- Window navigation with Alt + hjkl
 vim.keymap.set({ 't', 'i' }, '<A-h>', '<C-\\><C-n><C-w>h')
 vim.keymap.set({ 't', 'i' }, '<A-j>', '<C-\\><C-n><C-w>j')
 vim.keymap.set({ 't', 'i' }, '<A-k>', '<C-\\><C-n><C-w>k')
@@ -179,61 +194,107 @@ vim.keymap.set({ 'n' }, '<A-j>', '<C-w>j')
 vim.keymap.set({ 'n' }, '<A-k>', '<C-w>k')
 vim.keymap.set({ 'n' }, '<A-l>', '<C-w>l')
 
--- [[ Basic Autocommands ]].
--- See `:h lua-guide-autocommands`, `:h autocmd`, `:h nvim_create_autocmd()`
-
--- Highlight when yanking (copying) text.
--- Try it with `yap` in normal mode. See `:h vim.hl.on_yank()`
+-- Highlight yanked text
 vim.api.nvim_create_autocmd('TextYankPost', {
-desc = 'Highlight when yanking (copying) text',
-callback = function()
-vim.hl.on_yank()
-end,
+  desc = 'Highlight when yanking text',
+  callback = function()
+    vim.hl.on_yank()
+  end,
 })
-  
--- [[ Create user commands ]]
--- See `:h nvim_create_user_command()` and `:h user-commands`
-  
--- Create a command `:GitBlameLine` that print the git blame for the current line
-vim.api.nvim_create_user_command('GitBlameLine', function()
-local line_number = vim.fn.line('.') -- Get the current line number. See `:h line()`
-local filename = vim.api.nvim_buf_get_name(0)
-print(vim.fn.system({ 'git', 'blame', '-L', line_number .. ',+1', filename }))
-end, { desc = 'Print the git blame for the current line' })
 
--- [[ Add optional packages ]]
--- Nvim comes bundled with a set of packages that are not enabled by
--- default. You can enable any of them by using the `:packadd` command.
-  
--- For example, to add the "nohlsearch" package to automatically turn off search highlighting after
--- 'updatetime' and when going to insert mode
+-- Git blame command
+vim.api.nvim_create_user_command('GitBlameLine', function()
+  local line_number = vim.fn.line('.')
+  local filename = vim.api.nvim_buf_get_name(0)
+  print(vim.fn.system({ 'git', 'blame', '-L', line_number .. ',+1', filename }))
+end, { desc = 'Show git blame for current line' })
+
+-- Optional packages
 vim.cmd('packadd! nohlsearch')
-  
--- Kanagawa Theme Plugin located here: ~/.local/share/nvim/site/pack/plugins/start/kanagawa.nvim
--- To update run the following:
--- cd ~/.local/share/nvim/site/pack/plugins/start/kanagawa.nvim
--- git pull
+
+-- Kanagawa Dragon Theme
 vim.opt.termguicolors = true
-vim.cmd("colorscheme kanagawa-dragon")
+vim.cmd('colorscheme kanagawa-dragon')
+
+-- PowerShell integration (Windows)
+if vim.fn.has('win32') == 1 then
+  vim.opt.shell = 'pwsh'
+  vim.opt.shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
+  vim.opt.shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit `$LastExitCode'
+  vim.opt.shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit `$LastExitCode'
+  vim.opt.shellquote = ''
+  vim.opt.shellxquote = ''
+end
 ```
 
+**What this config provides:**
+
+-  Kanagawa Dragon theme (dark, professional colors)
+-  Line numbers and relative line numbers
+-  Windows clipboard integration
+-  Alt+hjkl for window navigation
+-  PowerShell support (run `ls`, `pwd`, etc. in Neovim)
+-  Git blame command (`:GitBlameLine`)
+
 ---
-## Step 5: Verify
+### Step 5: Test Your Setup
+
 Launch Neovim:
 
 ```powershell
 nvim
 ```
 
-The Kanagawa Dragon theme should now be active.
+**You should see:**
+
+- Dark Kanagawa Dragon theme
+- Line numbers on the left
+- No errors
+
+**Test PowerShell commands:** Inside Neovim, try:
+
+```vim
+:!ls
+:!pwd
+:!git status
+```
+
+These should all work!
+
+**Exit Neovim:** Press `Esc` then type `:q` and press `Enter`
 
 ---
-# Updating the Theme
-As needed you can update the theme by pulling from the source branch hosted on git. 
+##  Updating the Theme
+
+When theme updates are available:
 
 ```powershell
 cd "$env:LOCALAPPDATA\nvim-data\site\pack\plugins\start\kanagawa.nvim"
 git pull
+```
+
+Restart Neovim to see changes.
+
+---
+##  File Locations
+
+| Item               | Location                                                         |
+| ------------------ | ---------------------------------------------------------------- |
+| Neovim config      | `%LOCALAPPDATA%\nvim\init.lua`                                   |
+| Theme plugin       | `%LOCALAPPDATA%\nvim-data\site\pack\plugins\start\kanagawa.nvim` |
+| PowerShell profile | `$PROFILE` (varies by user)                                      |
+
+**Quick navigation:**
+
+```powershell
+# Open config
+nvim "$env:LOCALAPPDATA\nvim\init.lua"
+
+# Open PowerShell profile
+nvim $PROFILE
+
+# Go to theme directory
+cd "$env:LOCALAPPDATA\nvim-data\site\pack\plugins\start\kanagawa.nvim"
 ```
 
 ---
