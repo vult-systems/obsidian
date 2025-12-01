@@ -87,7 +87,14 @@ function hist {
 winget install Neovim.Neovim
 ```
 
-Restart your terminal after installation.
+Restart your terminal after installation and edit your Environment Variables.
+
+```powershell
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+```
+
+Test by running `nvim --version`
+Find where it's installed `nvim --version`
 
 ---
 ## Step 2: Create Config Directory
@@ -111,7 +118,15 @@ The file can be found, edited, or created
 - `%LOCALAPPDATA%\nvim\init.lua`
 - `~/.config/nvim/initl.lua` 
 
-Copy and paste the follow code below, then save the file.
+You can navigate to your config directory and create the init.lua file. 
+
+```powershell
+cd "$env:LOCALAPPDATA\nvim"
+```
+
+Create the init.lua and copy and paste the follow code below, then save the file.
+@"
+"@
 
 ```lua
 -- Set <space> as the leader key
