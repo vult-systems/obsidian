@@ -75,17 +75,36 @@ Open Deadline Monitor - should connect to `10.40.14.25:4433`.
 # System Configuration
 
 ## Network Drives (SYSTEM Level)
-Render services require drives mounted as SYSTEM user.
+Render services require access to network drives. **Do NOT use PsExec method** - it fails on modern Windows due to SMB security policies.
 
-### Mount Procedure
-Using PsExec:
+### Recommended: Scheduled Task Method
+
+Create persistent mounts using a scheduled task (one-time setup per machine):
+
 ```powershell
-# Launch SYSTEM shell
-psexec -i -s cmd.exe
+# Save this as C:\Scripts\MountDrives.ps1
+cmdkey /add:10.40.14.25 /user:perforce /pass:uiw3d
+net use T: \\10.40.14.25\RenderSourceRepository /persistent:yes
+net use R: \\10.40.14.25\RenderOutputRepo /persistent:yes
+Add-Content -Path "C:\Scripts\mount-log.txt" -Value "$(Get-Date): Drives mounted"
+```
 
-# Mount drives
-net use T: \\10.40.14.25\RenderSourceRepository /user:perforce uiw3d /persistent:yes
-net use R: \\10.40.14.25\RenderOutputRepo /user:perforce uiw3d /persistent:yes
+**Create the scheduled task:**
+
+```powershell
+# Run as Administrator
+$Action = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "-ExecutionPolicy Bypass -File C:\Scripts\MountDrives.ps1"
+$Trigger = New-ScheduledTaskTrigger -AtStartup
+$Principal = New-ScheduledTaskPrincipal -UserId "SYSTEM" -LogonType ServiceAccount -RunLevel Highest
+$Settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
+
+Register-ScheduledTask -TaskName "MountRenderDrives" -Action $Action -Trigger $Trigger -Principal $Principal -Settings $Settings -Force
+```
+
+**Test immediately:**
+
+```powershell
+Start-ScheduledTask -TaskName "MountRenderDrives"
 ```
 
 ### Verify
@@ -95,6 +114,17 @@ net use
 ```
 
 Expected: T: and R: mapped to `\\10.40.14.25\...`
+
+### Alternative: Use UNC Paths (No Mapping Required)
+
+For maximum reliability, configure Deadline and Maya to use UNC paths directly:
+- `\\10.40.14.25\RenderSourceRepository` instead of `T:`
+- `\\10.40.14.25\RenderOutputRepo` instead of `R:`
+
+Store credentials once per machine:
+```powershell
+cmdkey /add:10.40.14.25 /user:perforce /pass:uiw3d
+```
 
 ## Autodesk License
 Set environment variable (System level):

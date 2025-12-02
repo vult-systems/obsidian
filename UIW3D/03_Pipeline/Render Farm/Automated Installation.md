@@ -41,10 +41,29 @@ After automated install, you still need to:
 
 ### Mount Drives as SYSTEM (one-time per machine)
 
+**Use Scheduled Task method** (PsExec method is unreliable):
+
 ```powershell
-psexec -i -s cmd.exe
-net use T: \\10.40.14.25\RenderSourceRepository /user:perforce uiw3d /persistent:yes
-net use R: \\10.40.14.25\RenderOutputRepo /user:perforce uiw3d /persistent:yes
+# Create mount script
+New-Item -Path "C:\Scripts" -ItemType Directory -Force
+Set-Content -Path "C:\Scripts\MountDrives.ps1" -Value @'
+cmdkey /add:10.40.14.25 /user:perforce /pass:uiw3d
+net use T: \\10.40.14.25\RenderSourceRepository /persistent:yes
+net use R: \\10.40.14.25\RenderOutputRepo /persistent:yes
+Add-Content -Path "C:\Scripts\mount-log.txt" -Value "$(Get-Date): Drives mounted"
+'@
+
+# Create scheduled task (runs at startup as SYSTEM)
+$Action = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "-ExecutionPolicy Bypass -File C:\Scripts\MountDrives.ps1"
+$Trigger = New-ScheduledTaskTrigger -AtStartup
+$Principal = New-ScheduledTaskPrincipal -UserId "SYSTEM" -LogonType ServiceAccount -RunLevel Highest
+$Settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
+Register-ScheduledTask -TaskName "MountRenderDrives" -Action $Action -Trigger $Trigger -Principal $Principal -Settings $Settings -Force
+
+# Test immediately
+Start-ScheduledTask -TaskName "MountRenderDrives"
+Start-Sleep -Seconds 2
+net use
 ```
 
 ## Bulk Deployment
@@ -66,7 +85,6 @@ foreach ($machine in $machines) {
 - Administrator access
 - Network access to `10.40.14.25`
 - Service account password set (contact TD if needed)
-- PsExec downloaded for SYSTEM drive mounting
 
 ## Troubleshooting
 
