@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pulse Configuration &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Job Scheduling" href="job-scheduling.html" />
+    <link rel="prev" title="Worker Configuration" href="worker-config.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="job-scheduling.html" title="Job Scheduling"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="worker-config.html" title="Worker Configuration"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" accesskey="U">Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Pulse Configuration</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pulse-configuration">
+<span id="pulse-config-ref-label"></span><h1>Pulse Configuration<a class="headerlink" href="#pulse-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Pulse has two sets of options that can be configured. There are the global Pulse settings in the <a class="reference internal" href="repository-config.html#pulse-settings-ref-label"><span class="std std-ref">Repository Options</span></a>, which are applied to every running instance of Pulse, and there are the per-Pulse settings that can be configured from the right-click menu in the Pulse panel. Note that the availability of these options can vary depending on the context in which they are used, as well as the filters that are defined for the current user.</p>
+<p>If the Pulse panel is not visible, see the <a class="reference internal" href="monitor.html#monitor-panel-features-ref-label"><span class="std std-ref">Panel Features</span></a> documentation for instructions on how to create new panels in the Monitor.</p>
+</div>
+<div class="section" id="pulse-states">
+<h2>Pulse States<a class="headerlink" href="#pulse-states" title="Permalink to this headline">¶</a></h2>
+<p>These are the states that a Pulse can be in. They are color coded to make it clear which state the Pulse is in.</p>
+<ul class="simple">
+<li><p><strong>Offline (gray)</strong>: The Pulse application is closed.</p></li>
+<li><p><strong>Running (white)</strong>: The Pulse application is running.</p></li>
+<li><p><strong>Stalled (red)</strong>: Pulse becomes stalled if it hasn’t updated its state for a certain amount of time. This could be because the machine crashed, or that Pulse simply didn’t shutdown cleanly.</p></li>
+</ul>
+<p>If you see a red Pulse, it means the Pulse has been marked as stalled. This happens if the Pulse hasn’t updated its state for a certain amount of time. You can configure the Stalled Pulse Threshold in the General Pulse settings in the <a class="reference internal" href="repository-config.html#pulse-settings-ref-label"><span class="std std-ref">Repository Options</span></a>. When a Pulse is marked as stalled, it usually means that the machine crashed, or that Pulse simply didn’t shutdown cleanly. In the latter case, you can simply mark Pulse as offline from the right-click menu.</p>
+<p>The Pulse panel’s right-click menu also gives the option to delete Pulses.</p>
+</div>
+<div class="section" id="pulse-settings">
+<span id="pulse-config-settings-ref-label"></span><h2>Pulse Settings<a class="headerlink" href="#pulse-settings" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned above, there are the global Pulse settings in the <a class="reference internal" href="repository-config.html#pulse-settings-ref-label"><span class="std std-ref">Repository Options</span></a>, which are applied to every running instance of Pulse. However, there are also settings that can be specified for individual Pulse instances, which can be modified by right-clicking on a Pulse in the Pulse panel and selecting ‘Modify Pulse Properties’.</p>
+<a class="reference internal image-reference" href="../_images/pulse_panel_menu.png"><img alt="../_images/pulse_panel_menu.png" src="../_images/pulse_panel_menu.png" style="height: 350px;" /></a>
+<p>You can also auto-configure a Pulse instance by right-clicking on it in the Monitor and selecting ‘Auto Configure Pulse’. This will automatically make this Pulse the Primary Pulse, and set its connection settings.</p>
+<div class="section" id="general">
+<h3>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h3>
+<p>These are some general Pulse settings:</p>
+<ul class="simple">
+<li><p><strong>This Pulse Is The Primary</strong>: If enabled, this is the Primary Pulse that the Workers will connect to. If there is no Primary, the Workers will not be able to connect to Pulse.</p></li>
+<li><p><strong>Override Listening Port</strong>: If enabled, this port will be used by Pulse instead of a random port.</p></li>
+<li><p><strong>Override Remote Command Port</strong>: If enabled, this port will be used by Pulse for remote commands instead of a random port.</p></li>
+<li><p><strong>Host Name/IP Address Override</strong>: Overrides the Host name/IP address used by the Workers to connect to Pulse, and for remote commands.</p></li>
+<li><p><strong>MAC Address Override</strong>: This is used to override the MAC Address associated with this Pulse. This is useful in the event that Pulse defaults to a different MAC Address than the one needed for Wake On Lan.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/pulse_settings.png"><img alt="../_images/pulse_settings.png" src="../_images/pulse_settings.png" style="height: 400px;" /></a>
+</div>
+</div>
+<div class="section" id="pulse-history">
+<h2>Pulse History<a class="headerlink" href="#pulse-history" title="Permalink to this headline">¶</a></h2>
+<p>You can view a Pulse’s history by right-clicking on it in the Pulse panel and selecting the View Pulse History option.</p>
+<a class="reference internal image-reference" href="../_images/pulse_history.png"><img alt="../_images/pulse_history.png" src="../_images/pulse_history.png" style="height: 400px;" /></a>
+</div>
+<div class="section" id="remote-control">
+<h2>Remote Control<a class="headerlink" href="#remote-control" title="Permalink to this headline">¶</a></h2>
+<p>You can view the live log for Pulse or control it remotely from the right-click menu. See the <a class="reference internal" href="remote-control.html#remote-control-ref-label"><span class="std std-ref">Remote Control</span></a> documentation for more information.</p>
+</div>
+<div class="section" id="pulse-redundancy">
+<span id="pulse-config-redundancy-ref-label"></span><h2>Pulse Redundancy<a class="headerlink" href="#pulse-redundancy" title="Permalink to this headline">¶</a></h2>
+<p>It is recommended to run multiple instances of Pulse on separate machines as backups in case your Primary Pulse instance goes down. If the current Primary Pulse hasn’t responded within the <a class="reference internal" href="repository-config.html#pulse-settings-ref-label"><span class="std std-ref">Stalled Pulse Threshold</span></a> (in minutes), then non-primary Pulses are allowed to run secondary operations (House Cleaning, Repository Repair, and Pending Job Scan). This allows a secondary Pulse to assume some responsibilities until the primary Pulse comes back online.</p>
+<p>If this is a common situation, users can choose to automatically elect a new primary Pulse when the primary is detected as stalled, by enabling <a class="reference internal" href="repository-config.html#repository-repair-settings-label"><span class="std std-ref">Automatic Primary Pulse Election</span></a> option under “Repository Repair” settings in “House Cleaning” section in <a class="reference internal" href="repository-config.html#repository-repair-settings-label"><span class="std std-ref">Repository Options</span></a>.</p>
+<p>Note that when multiple Pulse instances are running, only the Primary Pulse is used to perform Housecleaning, Power Management, and Statistics Gathering.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In Deadline 10.0.21 and later, client applications (Pulse, Worker, etc.) that are connected to the <a class="reference internal" href="remote-connection-server.html#remote-connection-server-ref-label"><span class="std std-ref">Remote Connection Server</span></a> will not be able to perform house cleaning operations. Instead, the Remote Connection Server has adopted this responsibility and will perform <a class="reference internal" href="repository-config.html#house-cleaning-settings-label"><span class="std std-ref">House Cleaning</span></a>, <a class="reference internal" href="repository-config.html#repository-repair-settings-label"><span class="std std-ref">Repository Repair</span></a>, and <a class="reference internal" href="repository-config.html#pending-job-scan-settings-label"><span class="std std-ref">Pending Job Scan</span></a> periodically.</p>
+<p>Client applications that use a direct Repository connection can still perform house cleaning operations as normal.</p>
+<p>When running several applications in Direct connection mode it might be necessary to prevent some of them from running house cleaning tasks. This could be done by setting the following environment variables to <cite>true</cite>:</p>
+<p>DCONFIG_DISABLEHOUSECLEANING</p>
+<p>DCONFIG_DISABLEREPOSITORYJOBSSCAN</p>
+<p>DCONFIG_DISABLEREPOSITORYREPAIR</p>
+<p>The same effect could be achieved with configuration file settings: <a class="reference internal" href="client-config.html#client-config-housecleaning-overrides-ref-label"><span class="std std-ref">House Cleaning Override Settings</span></a>.</p>
+</div>
+</div>
+<div class="section" id="advanced-features">
+<h2>Advanced Features<a class="headerlink" href="#advanced-features" title="Permalink to this headline">¶</a></h2>
+<p>Many advanced features are built into Pulse. These features are described below.</p>
+<p><strong>Auto Configuration</strong></p>
+<p>This allows you to set the repository path in a single location. When a Worker starts up, it will automatically pull the repository path from Pulse and from that apply some settings before fully initializing. See the <a class="reference internal" href="auto-config.html#auto-config-ref-label"><span class="std std-ref">Auto Configuration</span></a> documentation for more information.</p>
+<p><strong>Power Management</strong></p>
+<p>Power management is a system for controlling how machines startup and shutdown automatically based on sets of conditions on the render farm, including job load and temperature. Power management is built into Pulse, so Pulse must be running to use this feature. The only exception to this rule is Temperature checking. See the <a class="reference internal" href="power-management.html#power-management-ref-label"><span class="std std-ref">Power Management</span></a> documentation for more information.</p>
+<p><strong>Statistics Gathering</strong></p>
+<p>While Pulse isn’t required to gather job statistics, it is required to gather the Worker and Repository statistics. See the <a class="reference internal" href="statistics.html#statistics-ref-label"><span class="std std-ref">Farm Statistics</span></a> documentation for more information.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Pulse Configuration</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#pulse-states">Pulse States</a></li>
+<li><a class="reference internal" href="#pulse-settings">Pulse Settings</a><ul>
+<li><a class="reference internal" href="#general">General</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pulse-history">Pulse History</a></li>
+<li><a class="reference internal" href="#remote-control">Remote Control</a></li>
+<li><a class="reference internal" href="#pulse-redundancy">Pulse Redundancy</a></li>
+<li><a class="reference internal" href="#advanced-features">Advanced Features</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="worker-config.html"
+                        title="previous chapter">Worker Configuration</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="job-scheduling.html"
+                        title="next chapter">Job Scheduling</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="job-scheduling.html" title="Job Scheduling"
+             >next</a></li>
+        <li class="right" >
+          <a href="worker-config.html" title="Worker Configuration"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" >Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Pulse Configuration</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

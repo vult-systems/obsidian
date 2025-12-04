@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>V-Ray Swarm &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="V-Ray VDenoise" href="app-vray-vdenoise.html" />
+    <link rel="prev" title="V-Ray Ply2Vrmesh" href="app-vray-ply2vrmesh.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-vray-vdenoise.html" title="V-Ray VDenoise"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-vray-ply2vrmesh.html" title="V-Ray Ply2Vrmesh"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">V-Ray Swarm</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="v-ray-swarm">
+<span id="app-vray-swarm-ref-label"></span><h1>V-Ray Swarm<a class="headerlink" href="#v-ray-swarm" title="Permalink to this headline">¶</a></h1>
+<p>For information on the older V-Ray Distributed Rendering system, navigate to our <a class="reference internal" href="app-vray-dbr.html#app-vray-dbr-ref-label"><span class="std std-ref">V-Ray DBR documentation</span></a>.</p>
+<div class="section" id="interactive-distributed-rendering">
+<h2>Interactive Distributed Rendering<a class="headerlink" href="#interactive-distributed-rendering" title="Permalink to this headline">¶</a></h2>
+<p>Though we do attempt to support it, we recommend that you do <strong>NOT</strong> have V-Swarm running as a background service on render nodes. Deadline can be be more flexible and will spawn the V-Ray Swarm executable as a child process of the Deadline Worker. This makes your pipeline more resilient to crashes as when the job is completed we’ll tidy up the child processes. This will also prevent artists from unwillingly using compute resources they should not have access to since we shut down V-Ray Swarm when the job completes.</p>
+<a class="reference internal image-reference" href="../_images/vray_swarm.png"><img alt="../_images/vray_swarm.png" src="../_images/vray_swarm.png" style="height: 400px;" /></a>
+<p>Like the <a class="reference internal" href="app-vray-dbr.html#app-vray-dbr-ref-label"><span class="std std-ref">V-Ray Distributed Rendering</span></a> process, this is an interactive submitter that will submit a V-Ray Swarm job to reserve render nodes.</p>
+<div class="section" id="setup">
+<h3>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h3>
+<p>For your farm to support V-Ray Swarm, you have to ensure that the V-Ray Swarm processes can all detect each other. Ensure you read the official <a class="reference external" href="https://docs.chaosgroup.com/display/VRAYSWARM/V-Ray+Swarm">V-Ray Swarm Setup documentation</a> for setup details.</p>
+</div>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. The V-Ray Swarm job options are:</p>
+<ul class="simple">
+<li><p><strong>Maximum Servers</strong>: The maximum number of Workers to reserve for V-Ray Swarm rendering.</p></li>
+</ul>
+</div>
+<div class="section" id="rendering">
+<h3>Rendering<a class="headerlink" href="#rendering" title="Permalink to this headline">¶</a></h3>
+<p>Workers that pick up the job will attempt to start V-Ray Swarm and create a Swarm tag equal to the Deadline job name (recognizable) followed by the Deadline job ID (unique).</p>
+<a class="reference internal image-reference" href="../_images/vray_swarm_choose_tag.png"><img alt="../_images/vray_swarm_choose_tag.png" src="../_images/vray_swarm_choose_tag.png" style="height: 400px;" /></a>
+<p>The Workers will then wait until a user selects their tag in the application and starts the render.</p>
+<p>Note that the V-Ray Swarm process can sometimes take a little while to initialize. This means that a Worker could have started V-Ray Swarm, but it’s not fully initialized yet. With V-Ray Swarm running on your local machine, you can navigate to <a class="reference external" href="http://localhost:24267/network">localhost</a> to view the machines that have initialized V-Ray Swarm and have the job tag waiting to render.</p>
+<p>After the render is finished, if you’ve set-up automatic timeouts it’ll auto-complete the job for you. Otherwise you’ll wanna mark the job as complete in the Monitor so that the render nodes can move on to another job.</p>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<span id="app-vray-swarm-plugin-config-ref-label"></span><h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the V-Ray Swarm plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the VraySwarm plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_vray_swarm.png"><img alt="../_images/cp_vray_swarm.png" src="../_images/cp_vray_swarm.png" style="height: 400px;" /></a>
+<p><strong>V-Ray Swarm Executables</strong></p>
+<p>Here you can specify the location of the ‘swrm’ executable used for launching V-Ray Swarm.</p>
+<p><strong>Job Handling</strong></p>
+<ul class="simple">
+<li><p><strong>On Job Complete</strong>: If desired, you can automatically archive or delete the Swarm job when it completes.</p></li>
+</ul>
+<p><strong>Swarm Session Handling</strong></p>
+<p>If enabled, these settings control what happens when a Worker that is running V-Ray Swarm has entered an IDLE state where it is not currently partaking in a V-Ray Swarm render. We define a <strong>session</strong> as the time between a V-Ray Swarm render completing and the next Swarm based render starting. There are additional settings to control the behaviour once at least one render has taken place on a Worker.</p>
+<ul class="simple">
+<li><p><strong>Swarm Session Auto Timeout Enable</strong>: If enabled, when a Swarm session has successfully completed on a Worker, the task on the Worker will be marked as complete after the Swarm session auto timeout period in seconds has been reached (Default: False).</p></li>
+<li><p><strong>Swarm Session Auto Timeout: Wait for first render</strong>: If enabled, it will force at least one render to complete before Auto Timeout becomes active (Default: True).</p></li>
+<li><p><strong>Swarm Session Auto Timeout (Minutes)</strong>: This is the timeout period (Default: 15 minutes) when a Swarm session will timeout and be marked as complete by a Worker. This timeout is only active prior to the first render on the Worker.</p></li>
+<li><p><strong>Swarm Session Auto Timeout: After first render (Minutes)</strong>: This is the timeout period (Default: 15 minutes) when a Swarm session will timeout and be marked as complete by a Worker. This timeout becomes active once the first render on the Worker is complete.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-vray-swarm-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Is V-Ray Swarm supported?</strong></p>
+<blockquote>
+<div><p>Yes. A special ‘reserve’ job is submitted that will run the V-Ray Swarm process on the render nodes. Once the V-Ray Swarm process is running, these nodes will be able to participate in distributed rendering.</p>
+</div></blockquote>
+<p><strong>What V-Ray Swarm applications are supported?</strong></p>
+<blockquote>
+<div><p>V-Ray Swarm in Deadline supports all applications that Chaos Group supports with V-Ray Swarm! The Monitor submitter does not care which application you are working in, since V-Ray Swarm handles the launching and uses the V-Ray Standalone process.</p>
+</div></blockquote>
+<p><strong>Why can’t I select a V-Ray Swarm version in the Monitor submitter?</strong></p>
+<blockquote>
+<div><p>Assuming we can find the V-Ray Swarm Executable in the <a class="reference internal" href="#app-vray-swarm-plugin-config-ref-label"><span class="std std-ref">Plugin Configuration</span></a>, we automatically detect/connect to V-Ray Swarm without the user needing to know which version is installed.</p>
+</div></blockquote>
+<p><strong>Can two Workers on the same machine pick up a V-Ray Swarm job?</strong></p>
+<blockquote>
+<div><p>No. You can only have one V-Ray Swarm process running on a machine at a time, thus attempting to start a second V-Ray Swarm process will cause it to error out.</p>
+</div></blockquote>
+<p><strong>Can I mark ALL V-Ray Swarm jobs as completed after a render?</strong></p>
+<blockquote>
+<div><p>Yes. A number of options are available in the <a class="reference internal" href="#app-vray-swarm-plugin-config-ref-label"><span class="std std-ref">Plugin Configuration</span></a> to automatically mark ALL V-Ray Swarm jobs as completed after the job has finished rendering.</p>
+</div></blockquote>
+<p><strong>Can I use V-Ray Spawner and V-Ray Swarm at the same time on the same machine?</strong></p>
+<blockquote>
+<div><p>No. This is NOT recommended.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">V-Ray Swarm</a><ul>
+<li><a class="reference internal" href="#interactive-distributed-rendering">Interactive Distributed Rendering</a><ul>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#rendering">Rendering</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-vray-ply2vrmesh.html"
+                        title="previous chapter">V-Ray Ply2Vrmesh</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-vray-vdenoise.html"
+                        title="next chapter">V-Ray VDenoise</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-vray-vdenoise.html" title="V-Ray VDenoise"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-vray-ply2vrmesh.html" title="V-Ray Ply2Vrmesh"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">V-Ray Swarm</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

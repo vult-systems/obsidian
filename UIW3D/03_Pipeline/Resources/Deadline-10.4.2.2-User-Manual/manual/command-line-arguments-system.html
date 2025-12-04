@@ -1,0 +1,1653 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>System Functions and Dialogs - Command Arguments &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Scans, History, and Reports - Command Arguments" href="command-line-arguments-housekeeping.html" />
+    <link rel="prev" title="Scripting - Command Arguments" href="command-line-arguments-scripting.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command-line-arguments-housekeeping.html" title="Scans, History, and Reports - Command Arguments"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="command-line-arguments-scripting.html" title="Scripting - Command Arguments"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" accesskey="U">Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">System Functions and Dialogs - Command Arguments</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="system-functions-and-dialogs-command-arguments">
+<span id="command-arguments-system"></span><h1>System Functions and Dialogs - Command Arguments<a class="headerlink" href="#system-functions-and-dialogs-command-arguments" title="Permalink to this headline">¶</a></h1>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td colspan="2"><p><a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">Command Overview</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-repo.html#command-arguments-repo"><span class="std std-ref">Database and Repository</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-clients.html#command-arguments-clients"><span class="std std-ref">Clients and Logs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-workers.html#command-arguments-workers"><span class="std std-ref">Workers</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="command-line-arguments-jobs.html#command-arguments-jobs"><span class="std std-ref">Jobs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-tasks.html#command-arguments-tasks"><span class="std std-ref">Tasks</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-pools-groups.html#command-arguments-pools"><span class="std std-ref">Pools, Groups, and Limits</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-users.html#command-arguments-users"><span class="std std-ref">Users and User Groups</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-pathmapping.html#command-arguments-pathmapping"><span class="std std-ref">Path and Drive Mapping</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="command-line-arguments-cloud.html#command-arguments-cloud"><span class="std std-ref">AWS Portal and Cloud</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-scripting.html#command-arguments-scripting"><span class="std std-ref">Scripting</span></a></p></td>
+<td><p><a class="reference internal" href="#command-arguments-system"><span class="std std-ref">System Functions and Dialogs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-housekeeping.html#command-arguments-housekeeping"><span class="std std-ref">Scans, History, and Reports</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-version.html#command-arguments-version"><span class="std std-ref">Version and Help</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#file-and-directory-functions" id="id1">File and Directory Functions</a></p>
+<ul>
+<li><p><a class="reference internal" href="#checkfilepermissions" id="id2">CheckFilePermissions</a></p></li>
+<li><p><a class="reference internal" href="#getcommonapppath" id="id3">GetCommonAppPath</a></p></li>
+<li><p><a class="reference internal" href="#isinpath" id="id4">IsInPath</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#get-directory" id="id5">Get Directory</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getbindirectory" id="id6">GetBinDirectory</a></p></li>
+<li><p><a class="reference internal" href="#getcurrentuserhomedirectory" id="id7">GetCurrentUserHomeDirectory</a></p></li>
+<li><p><a class="reference internal" href="#gethomedirectory" id="id8">GetHomeDirectory</a></p></li>
+<li><p><a class="reference internal" href="#getnetworkdrives" id="id9">GetNetworkDrives</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#registry-keys" id="id10">Registry Keys</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getregistrykeyvalue" id="id11">GetRegistryKeyValue</a></p></li>
+<li><p><a class="reference internal" href="#setregistrykeyvalue" id="id12">SetRegistryKeyValue</a></p></li>
+<li><p><a class="reference internal" href="#removeregistrykeyvalue" id="id13">RemoveRegistryKeyValue</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#processes" id="id14">Processes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getprocess" id="id15">GetProcess</a></p></li>
+<li><p><a class="reference internal" href="#getprocesses" id="id16">GetProcesses</a></p></li>
+<li><p><a class="reference internal" href="#getprocessnames" id="id17">GetProcessNames</a></p></li>
+<li><p><a class="reference internal" href="#startprocess" id="id18">StartProcess</a></p></li>
+<li><p><a class="reference internal" href="#testprotectedconfig" id="id19">TestProtectedConfig</a></p></li>
+<li><p><a class="reference internal" href="#killprocess" id="id20">KillProcess</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#ini-files" id="id21">INI Files</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getinifilesetting" id="id22">GetIniFileSetting</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#plugin-settings" id="id23">Plugin Settings</a></p>
+<ul>
+<li><p><a class="reference internal" href="#upgradepluginsettings" id="id24">UpgradePluginSettings</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#file-dialogs" id="id25">File Dialogs</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getdirectory" id="id26">GetDirectory</a></p></li>
+<li><p><a class="reference internal" href="#selectfilenameload" id="id27">SelectFilenameLoad</a></p></li>
+<li><p><a class="reference internal" href="#selectfilenamesave" id="id28">SelectFilenameSave</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#deadline-dialogs" id="id29">Deadline Dialogs</a></p>
+<ul>
+<li><p><a class="reference internal" href="#selectrepository" id="id30">SelectRepository</a></p></li>
+<li><p><a class="reference internal" href="#selectlimitgroups" id="id31">SelectLimitGroups</a></p></li>
+<li><p><a class="reference internal" href="#selectmachinelist" id="id32">SelectMachineList</a></p></li>
+<li><p><a class="reference internal" href="#showmessagebox" id="id33">ShowMessageBox</a></p></li>
+<li><p><a class="reference internal" href="#popupmessage" id="id34">PopupMessage</a></p></li>
+<li><p><a class="reference internal" href="#launchpreviewstylewindow" id="id35">LaunchPreviewStyleWindow</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#security-keys" id="id36">Security Keys</a></p>
+<ul>
+<li><p><a class="reference internal" href="#generatersakeys" id="id37">GenerateRSAKeys</a></p></li>
+<li><p><a class="reference internal" href="#getpublicencryptionkey" id="id38">GetPublicEncryptionKey</a></p></li>
+<li><p><a class="reference internal" href="#getpublicsigningkey" id="id39">GetPublicSigningKey</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#certificates" id="id40">Certificates</a></p>
+<ul>
+<li><p><a class="reference internal" href="#savecertificatepassword" id="id41">SaveCertificatePassword</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="file-and-directory-functions">
+<h2><a class="toc-backref" href="#contents">File and Directory Functions</a><a class="headerlink" href="#file-and-directory-functions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="checkfilepermissions">
+<span id="checkfilepermissions-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">CheckFilePermissions</a><a class="headerlink" href="#checkfilepermissions" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Checks the read/write permissions on the file</p>
+<p><strong>Aliases:</strong> <code class="docutils literal notranslate"><span class="pre">CheckFilePermissions</span></code>, <code class="docutils literal notranslate"><span class="pre">FileCheck</span></code></p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -CheckFilePermissions</strong>  [&lt;ReadOnly/WriteOnly&gt;] [&lt;Quiet&gt;] &lt;Filename&gt;</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>deadlinecommand -FileCheck</strong>  [&lt;ReadOnly/WriteOnly&gt;] [&lt;Quiet&gt;] &lt;Filename&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;ReadOnly/WriteOnly&gt;</p></td>
+<td><p>Checks both if omitted (optional)</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Quiet&gt;</p></td>
+<td><p>Print only SUCCESS or errors (optional)</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Filename&gt;</p></td>
+<td><p>The file to check</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -FileCheck
+    Error: no process name specified
+
+C:\&gt;deadlinecommand -FileCheck &quot;C:\Temp\deadline.txt&quot;
+    Checking permissions on file &#39;C:\Temp\deadline.txt&#39; from user account &#39;DOMAIN\SomeUser&#39;
+    Verifying read permissions...SUCCESS
+    Verifying write permissions...SUCCESS
+
+C:\&gt;deadlinecommand -FileCheck Quiet &quot;C:\Temp\deadline.txt&quot;
+    SUCCESS
+    SUCCESS
+
+C:\&gt;deadlinecommand -CheckFilePermissions ReadOnly &quot;C:\Temp\deadline.txt&quot;
+    Checking permissions on file &#39;C:\Temp\deadline.txt&#39; from user account &#39;DOMAIN\SomeUser&#39;
+    Verifying read permissions...SUCCESS
+
+C:\&gt;deadlinecommand -CheckFilePermissions WriteOnly &quot;C:\Temp\deadline.txt&quot;
+    Checking permissions on file &#39;C:\Temp\deadline.txt&#39; from user account &#39;DOMAIN\SomeUser&#39;
+    Verifying write permissions...SUCCESS
+</pre></div>
+</div>
+</div>
+<div class="section" id="getcommonapppath">
+<span id="getcommonapppath-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetCommonAppPath</a><a class="headerlink" href="#getcommonapppath" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Prints out the path to the common application data folder.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetCommonAppPath</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetCommonAppPath
+    C:\ProgramData
+</pre></div>
+</div>
+</div>
+<div class="section" id="isinpath">
+<span id="isinpath-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">IsInPath</a><a class="headerlink" href="#isinpath" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays the full path of an executable as resolved by the OS based on the PATH environment settings.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Works like <code class="docutils literal notranslate"><span class="pre">which</span></code> on Unix.</p>
+</div>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -IsInPath</strong> &lt;File Name&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;File Name&gt;</p></td>
+<td><p>The name of the file to check.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="get-directory">
+<h2><a class="toc-backref" href="#contents">Get Directory</a><a class="headerlink" href="#get-directory" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getbindirectory">
+<span id="getbindirectory-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetBinDirectory</a><a class="headerlink" href="#getbindirectory" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays the bin directory of the Deadline Client software.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetBinDirectory</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetBinDirectory
+    C:\Program Files\Thinkbox\Deadline10\bin
+</pre></div>
+</div>
+</div>
+<div class="section" id="getcurrentuserhomedirectory">
+<span id="getcurrentuserhomedirectory-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetCurrentUserHomeDirectory</a><a class="headerlink" href="#getcurrentuserhomedirectory" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays the current user home directory of the Deadline Client software.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetCurrentUserHomeDirectory</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetCurrentUserHomeDirectory
+    C:\Users\SomeUser\AppData\Local\Thinkbox\Deadline10
+</pre></div>
+</div>
+</div>
+<div class="section" id="gethomedirectory">
+<span id="gethomedirectory-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetHomeDirectory</a><a class="headerlink" href="#gethomedirectory" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays the home directory of the Deadline Client software.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetHomeDirectory</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetHomeDirectory
+    C:\ProgramData\Thinkbox\Deadline10
+</pre></div>
+</div>
+</div>
+<div class="section" id="getnetworkdrives">
+<span id="getnetworkdrives-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetNetworkDrives</a><a class="headerlink" href="#getnetworkdrives" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display all network drives.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetNetworkDrives</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetNetworkDrives
+    M:\
+    P:\
+    V:\
+    Z:\
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="registry-keys">
+<h2><a class="toc-backref" href="#contents">Registry Keys</a><a class="headerlink" href="#registry-keys" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getregistrykeyvalue">
+<span id="getregistrykeyvalue-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetRegistryKeyValue</a><a class="headerlink" href="#getregistrykeyvalue" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Returns the specified value for the specified registry key.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetRegistryKeyValue</strong>  &lt;Key Name&gt; &lt;Value Name&gt; [&lt;Default Value&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Key Name&gt;</p></td>
+<td><p>The name of the registry key</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Value Name&gt;</p></td>
+<td><p>The name of the value to get</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Default Value&gt;</p></td>
+<td><p>(optional) The default value to return</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetRegistryKeyValue &quot;HKEY_CURRENT_USER\Software\FLEXlm License Manager&quot; &quot;SOME_LICENSE_FILE&quot;
+    C:\Users\SomeUser\Documents\Some_license.lic
+</pre></div>
+</div>
+</div>
+<div class="section" id="setregistrykeyvalue">
+<span id="setregistrykeyvalue-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetRegistryKeyValue</a><a class="headerlink" href="#setregistrykeyvalue" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Adds and/or sets the specified value for the specified registry key.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetRegistryKeyValue</strong>  &lt;Key Name&gt; &lt;Value Name&gt; &lt;Value Data&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Key Name&gt;</p></td>
+<td><p>The name of the registry key</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Value Name&gt;</p></td>
+<td><p>The name of the value to set/add</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Value Data&gt;</p></td>
+<td><p>The string data to set the value to</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SetRegistryKeyValue &quot;HKEY_CURRENT_USER\Software\FLEXlm License Manager&quot; &quot;SOME_LICENSE_FILE&quot; &quot;C:\Users\SomeUser\Documents\Some_license.lic&quot;
+    Opening &quot;HKEY_CURRENT_USER\Software\FLEXlm License Manager&quot;...
+    Setting &quot;SOME_LICENSE_FILE&quot; to value &quot;C:\Users\SomeUser\Documents\Some_license.lic&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="removeregistrykeyvalue">
+<span id="removeregistrykeyvalue-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">RemoveRegistryKeyValue</a><a class="headerlink" href="#removeregistrykeyvalue" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Removes the specified value for the specified registry key. Enable Recursive to delete sub-keys.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -RemoveRegistryKeyValue</strong>  &lt;Key Name&gt; &lt;Value Name&gt; [&lt;Recursive&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Key Name&gt;</p></td>
+<td><p>The name of the registry key</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Value Name&gt;</p></td>
+<td><p>The name of the value to remove</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Recursive&gt;</p></td>
+<td><p>True/False - whether to delete sub-keys (optional, default is False)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -RemoveRegistryKeyValue &quot;HKEY_CURRENT_USER\Software\FLEXlm License Manager&quot; &quot;SOME_LICENSE_FILE&quot;
+    Opening &quot;HKEY_CURRENT_USER\Software\FLEXlm License Manager&quot;...
+    Removing &quot;SOME_LICENSE_FILE&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="processes">
+<h2><a class="toc-backref" href="#contents">Processes</a><a class="headerlink" href="#processes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getprocess">
+<span id="getprocess-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetProcess</a><a class="headerlink" href="#getprocess" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays information for all running processes with the given name.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetProcess</strong>  &lt;Process Name&gt; [&lt;Use Ini Display&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Process Name&gt;</p></td>
+<td><p>Process name to search for</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Use Ini Display&gt;</p></td>
+<td><p>true/false (optional, default is false)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetProcess 3dsmax
+    ProcessName=3dsmax
+    ProcessId=5376
+    MemoryUsage=191.73 MB
+    VirtualMemory=1.57 GB
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetProcess DeadlineMonitor True
+    [deadlinemonitor]
+    ProcessName=deadlinemonitor
+    ProcessId=18936
+    MemoryUsage=211.25 MB
+    VirtualMemory=366.73 MB
+</pre></div>
+</div>
+</div>
+<div class="section" id="getprocesses">
+<span id="getprocesses-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetProcesses</a><a class="headerlink" href="#getprocesses" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>The output is similar to <a class="reference internal" href="#getprocess-dlc-ref-label"><span class="std std-ref">GetProcess</span></a>, except that it lists all processes, with or without Ini Header based on the optional argument:</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetProcesses</strong>  [&lt;Use Ini Display&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Use Ini Display&gt;</p></td>
+<td><p>true/false (optional, default is false)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="getprocessnames">
+<span id="getprocessnames-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetProcessNames</a><a class="headerlink" href="#getprocessnames" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays all running process names.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetProcessNames</strong>  &lt;Process Name&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Process Name&gt;</p></td>
+<td><p>Process name to search for (optional)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="startprocess">
+<span id="startprocess-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">StartProcess</a><a class="headerlink" href="#startprocess" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Starts the program or the program associated with the file.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -StartProcess</strong>  &lt;Filename&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Filename&gt;</p></td>
+<td><p>The path to a given application or file</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -StartProcess notepad.exe
+</pre></div>
+</div>
+<p>The Notepad application opens on Windows…</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -StartProcess nosuchapp.exe
+    Error: The system cannot find the file specified (System.ComponentModel.Win32Exception)
+</pre></div>
+</div>
+</div>
+<div class="section" id="testprotectedconfig">
+<span id="testprotectedconfig-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">TestProtectedConfig</a><a class="headerlink" href="#testprotectedconfig" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Runs a test to make sure that a Repository’s protected configuration file will work properly on this machine.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -TestProtectedConfig</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -TestProtectedConfig
+    Deadline protected configuration test was successful.
+</pre></div>
+</div>
+</div>
+<div class="section" id="killprocess">
+<span id="killprocess-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">KillProcess</a><a class="headerlink" href="#killprocess" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Kills all processes with specified name or Process ID.</p>
+<ul class="simple">
+<li><p>When using a name, all processes with the same name will be killed.</p></li>
+<li><p>When using the Process ID, only the process with the specified Process ID will be killed.</p></li>
+</ul>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -KillProcess</strong>  &lt;Process Name Or ID&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Process Name Or ID&gt;</p></td>
+<td><p>Name of the process or process ID</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Output:</strong></p>
+<blockquote>
+<div><p>Prints a report “Killed &lt;name of process&gt;:&lt;PID&gt;”, or nothing if the process does not exist.</p>
+</div></blockquote>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -KillProcess deadlineworker
+    Killed deadlineworker:22608
+
+C:\&gt;deadlinecommand -Prompt
+GetProcess deadlineworker
+    ProcessName=deadlineworker
+    ProcessId=12180
+    MemoryUsage=153.16 MB
+    VirtualMemory=108.18 MB
+
+    ProcessName=deadlineworker
+    ProcessId=2980
+    MemoryUsage=150.36 MB
+    VirtualMemory=103.39 MB
+
+KillProcess 12180
+    Killed deadlineworker:12180
+Exit
+
+C:\&gt;deadlinecommand -KillProcess Eve
+
+C:\&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the process name or ID does not exist, no info is returned.</p>
+</div>
+</div>
+</div>
+<div class="section" id="ini-files">
+<h2><a class="toc-backref" href="#contents">INI Files</a><a class="headerlink" href="#ini-files" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getinifilesetting">
+<span id="getinifilesetting-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetIniFileSetting</a><a class="headerlink" href="#getinifilesetting" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Returns the value for the given key from the deadline.ini configuration file.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetIniFileSetting</strong>  &lt;Key&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Key&gt;</p></td>
+<td><p>The key to get</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetIniFileSetting
+    Error: No key was specified.
+
+C:\&gt;deadlinecommand -GetIniFileSetting LauncherListeningPort
+    17000
+
+C:\&gt;deadlinecommand -GetIniFileSetting LifeTheUniverseAndEverything
+    Error: Key not found.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="plugin-settings">
+<h2><a class="toc-backref" href="#contents">Plugin Settings</a><a class="headerlink" href="#plugin-settings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="upgradepluginsettings">
+<span id="upgradepluginsettings-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">UpgradePluginSettings</a><a class="headerlink" href="#upgradepluginsettings" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Used by installer to upgrade the plugins without overriding user configured settings.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -UpgradePluginSettings</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>For Internal Use Only.</p>
+</div>
+</div>
+</div>
+<div class="section" id="file-dialogs">
+<h2><a class="toc-backref" href="#contents">File Dialogs</a><a class="headerlink" href="#file-dialogs" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getdirectory">
+<span id="getdirectory-dlc-ref-label"></span><span id="selectdirectory-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetDirectory</a><a class="headerlink" href="#getdirectory" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Opens a folder browser starting at the current path, or at the initial path if supplied.</p>
+<p><strong>Aliases:</strong> <code class="docutils literal notranslate"><span class="pre">GetDirectory</span></code>, <code class="docutils literal notranslate"><span class="pre">SelectDirectory</span></code></p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetDirectory</strong> [&lt;Initial Path&gt;]</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>deadlinecommand -SelectDirectory</strong> [&lt;Initial Path&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Initial Path&gt;</p></td>
+<td><p>The path to the initial directory (optional)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Output:</strong></p>
+<ul class="simple">
+<li><p>Prints out the resulting directory path.</p></li>
+<li><p>No result is printed if the <strong>Cancel</strong> button is pressed in the dialog.</p></li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetDirectory
+</pre></div>
+</div>
+<p>A “Select Folder” dialog opens:</p>
+<img alt="../_images/command-getdirectory-folder.png" src="../_images/command-getdirectory-folder.png" />
+<p>Navigate to a folder and press the <strong>Select Folder</strong> button:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\Program Files\Thinkbox\Deadline10\bin
+</pre></div>
+</div>
+</div>
+<div class="section" id="selectfilenameload">
+<span id="selectfilenameload-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SelectFilenameLoad</a><a class="headerlink" href="#selectfilenameload" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Opens a file load dialog.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SelectFilenameLoad</strong>  [&lt;Initial Path&gt;] [&lt;Filter&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Initial Path&gt;</p></td>
+<td><p>The path to the initial filename (optional)</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Filter&gt;</p></td>
+<td><p>The filter string (optional) - an example filter would look like “Text Files (<em>.txt);;All Files (</em>.*)”</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Output:</strong></p>
+<blockquote>
+<div><p>Prints out the selected existing filename path.</p>
+</div></blockquote>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SelectFilenameLoad
+</pre></div>
+</div>
+<p>A “Select File” dialog showing all files opens:</p>
+<img alt="../_images/command-selectfilenameload-dialog.png" src="../_images/command-selectfilenameload-dialog.png" />
+<p>Select a file and press <strong>Open</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\Program Files\Thinkbox\Deadline10\bin\deadlinemonitor.exe
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>deadlinecommand -SelectFilenameLoad &quot;&quot; &quot;Program Files (*.exe);;All Files (*.*)&quot;
+</pre></div>
+</div>
+<p>A “Select File” dialog showing by default only executable files pops up:</p>
+<img alt="../_images/command-selectfilenameload-program-dialog.png" src="../_images/command-selectfilenameload-program-dialog.png" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>No result is printed if the <strong>Cancel</strong> button is pressed in the dialog.</p>
+</div>
+</div>
+<div class="section" id="selectfilenamesave">
+<span id="selectfilenamesave-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SelectFilenameSave</a><a class="headerlink" href="#selectfilenamesave" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<blockquote>
+<div><p>Opens a file save dialog</p>
+</div></blockquote>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SelectFilenameSave</strong>  [&lt;Initial Path&gt;] [&lt;Filter&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Initial Path&gt;</p></td>
+<td><p>The path to the initial filename (optional)</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Filter&gt;</p></td>
+<td><p>The filter string (optional) - an example filter would look like “Text Files (<em>.txt);;All Files (</em>.*)”</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Output:</strong></p>
+<blockquote>
+<div><p>Prints out the filename to save.</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="deadline-dialogs">
+<h2><a class="toc-backref" href="#contents">Deadline Dialogs</a><a class="headerlink" href="#deadline-dialogs" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="selectrepository">
+<span id="selectrepository-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SelectRepository</a><a class="headerlink" href="#selectrepository" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Select the repository root from a dialog.</p>
+<p><strong>Aliases:</strong> <code class="docutils literal notranslate"><span class="pre">SelectRepository</span></code>, <code class="docutils literal notranslate"><span class="pre">SelectNetwork</span></code></p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SelectRepository</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Output:</strong></p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>If <strong>Remote Connection</strong> was selected, prints</dt><dd><ul>
+<li><p>The Remote Connection Server’s IP address and Port, followed by the path to the <code class="docutils literal notranslate"><span class="pre">Deadline10RemoteClient.pfx</span></code> certificate.</p></li>
+<li><p>The keyword <code class="docutils literal notranslate"><span class="pre">Remote</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>If <strong>Direct Connection</strong> was selected, prints</dt><dd><ul>
+<li><p>The Deadline Repository path</p></li>
+<li><p>The keyword <code class="docutils literal notranslate"><span class="pre">Repository</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>If <strong>Cancel</strong> was pressed, prints the message <code class="docutils literal notranslate"><span class="pre">Action</span> <span class="pre">was</span> <span class="pre">cancelled</span> <span class="pre">by</span> <span class="pre">user</span></code>.</p></li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SelectNetwork
+</pre></div>
+</div>
+<p>The Deadline “Select Repository” dialog opens:</p>
+<img alt="../_images/command-selectnetwork-dialog.png" src="../_images/command-selectnetwork-dialog.png" />
+<p>Press the <strong>OK</strong> button:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\DeadlineRepository10
+Repository
+</pre></div>
+</div>
+<p>If <strong>Remote Connection</strong> was selected, the output looks like this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>10.0.0.42:4433;C:/DeadlineCerts/RCS/Deadline10RemoteClient.pfx
+Repository
+</pre></div>
+</div>
+</div>
+<div class="section" id="selectlimitgroups">
+<span id="selectlimitgroups-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SelectLimitGroups</a><a class="headerlink" href="#selectlimitgroups" title="Permalink to this headline">¶</a></h3>
+<p>Opens the standard Deadline Limits dialog. Lets you select a list of Limits.</p>
+<p><strong>Output:</strong></p>
+<blockquote>
+<div><p>Prints a comma-separated list of the Limits moved to the right-hand-side <strong>Selected</strong> list.</p>
+</div></blockquote>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Initial Limits&gt;</p></td>
+<td><p>A comma-separated list of the initially selected limits (optional)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SelectLimitGroups
+</pre></div>
+</div>
+<p>The “Select Limits” dialog opens:</p>
+<img alt="../_images/command-selectlimits-dialog.png" src="../_images/command-selectlimits-dialog.png" />
+<p>After pressing <strong>OK</strong>, the Limits listed in the <strong>Selected</strong> list will be printed:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>max,maya,arnold
+</pre></div>
+</div>
+<p>If <strong>Cancel</strong> is pressed, the call prints:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Action was cancelled by user
+</pre></div>
+</div>
+</div>
+<div class="section" id="selectmachinelist">
+<span id="selectmachinelist-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SelectMachineList</a><a class="headerlink" href="#selectmachinelist" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Allows you to select a list of machines</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SelectMachineList</strong>  &lt;Initial Machines&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Initial Machines&gt;</p></td>
+<td><p>A comma-separated list of the initially selected machines (optional)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Output:</strong></p>
+<blockquote>
+<div><p>Prints a comma-separated list of the Machines moved to the right-hand-side <strong>Selected</strong> list.</p>
+</div></blockquote>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SelectMachineList
+</pre></div>
+</div>
+<p>The “Select Machine List” dialog opens:</p>
+<img alt="../_images/command-selectmachinelist-dialog.png" src="../_images/command-selectmachinelist-dialog.png" />
+<p>Move a machines to the Selected list and press <strong>OK</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ywg-9902945169
+</pre></div>
+</div>
+</div>
+<div class="section" id="showmessagebox">
+<span id="showmessagebox-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">ShowMessageBox</a><a class="headerlink" href="#showmessagebox" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays a simple dialog box with optional title text, message text, and one or more buttons.</p>
+<p><strong>Aliases:</strong> <code class="docutils literal notranslate"><span class="pre">ShowMessageBox</span></code>, <code class="docutils literal notranslate"><span class="pre">ShowUserDialog</span></code></p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -ShowMessageBox</strong>  [<strong>title</strong> &lt;Title&gt;] [<strong>message</strong> &lt;Message&gt;] [<strong>buttons</strong> &lt;Buttons&gt;]</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>deadlinecommand -ShowUserDialog</strong>  [<strong>title</strong> &lt;Title&gt;] [<strong>message</strong> &lt;Message&gt;] [<strong>buttons</strong> &lt;Buttons&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>title &lt;Title&gt;</p></td>
+<td><p>The dialog title. Defaults to “Deadline Message Box” if not specified.</p></td>
+</tr>
+<tr class="row-odd"><td><p>message &lt;Message&gt;</p></td>
+<td><p>The message text. Defaults to empty string “” if not specified.</p></td>
+</tr>
+<tr class="row-even"><td><p>buttons &lt;Buttons&gt;</p></td>
+<td><p>A comma-separated list of buttons. Defaults to a single <strong>OK</strong> button if not specified.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Output:</strong></p>
+<blockquote>
+<div><p>Prints out the pressed button.</p>
+</div></blockquote>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -ShowMessageBox title &quot;Hello World!&quot; message &quot;How are you feeling today?&quot; buttons &quot;OK&quot;,&quot;Not OK&quot;,&quot;Meh!&quot;
+</pre></div>
+</div>
+<p>The message dialog opens:</p>
+<img alt="../_images/command-showuserdialog-dialog.png" src="../_images/command-showuserdialog-dialog.png" />
+<p>Press the <strong>Not Ok</strong> button:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Not OK
+</pre></div>
+</div>
+</div>
+<div class="section" id="popupmessage">
+<span id="popupmessage-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">PopupMessage</a><a class="headerlink" href="#popupmessage" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays a popup message.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -PopupMessage</strong>  &lt;Message&gt; [&lt;Delete Message File&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Message&gt;</p></td>
+<td><p>The message to display. This can be a string, or a path to a file that contains a message.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Delete Message File&gt;</p></td>
+<td><p>(optional) If the message is stored in a file, specify ‘true’ to delete the file after the window is closed.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -PopupMessage &quot;So long and thanks for all the fish!&quot;
+</pre></div>
+</div>
+<img alt="../_images/command-popupmessage-dialog.png" src="../_images/command-popupmessage-dialog.png" />
+</div>
+<div class="section" id="launchpreviewstylewindow">
+<span id="launchpreviewstylewindow-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">LaunchPreviewStyleWindow</a><a class="headerlink" href="#launchpreviewstylewindow" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Previews a style.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -LaunchPreviewStyleWindow</strong>  &lt;Style&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Style&gt;</p></td>
+<td><p>The style info to preview (JSON format)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="security-keys">
+<h2><a class="toc-backref" href="#contents">Security Keys</a><a class="headerlink" href="#security-keys" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="generatersakeys">
+<span id="generatersakeys-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GenerateRSAKeys</a><a class="headerlink" href="#generatersakeys" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Creates and saves RSA key-pairs for internal use by Deadline. Administrator/root privileges might be required to create machine-wide keys.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GenerateRSAKeys</strong>  [&lt;UserSpecific&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;UserSpecific&gt;</p></td>
+<td><p>If True, keys specific to the current OS user will be generated. (Default: False)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="getpublicencryptionkey">
+<span id="getpublicencryptionkey-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetPublicEncryptionKey</a><a class="headerlink" href="#getpublicencryptionkey" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Prints out the Public Key used for encryption of messages sent to this Deadline client, in XML format. This creates a key if one is not already present, and therefore might require administrator/root privileges when retrieving the machine-wide key.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetPublicEncryptionKey</strong>  [&lt;UserSpecific&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;UserSpecific&gt;</p></td>
+<td><p>If True, key specific to the current OS user will be returned. (Default: False)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="getpublicsigningkey">
+<span id="getpublicsigningkey-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetPublicSigningKey</a><a class="headerlink" href="#getpublicsigningkey" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Prints out the Public Key used for verification of signatures by this Deadline client, in XML format. This creates a key if one is not already present, and therefore might require administrator/root privileges privileges when retrieving the machine-wide key.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetPublicSigningKey</strong>  [&lt;UserSpecific&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;UserSpecific&gt;</p></td>
+<td><p>If True, key specific to the current OS user will be returned. (Default: False)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="certificates">
+<h2><a class="toc-backref" href="#contents">Certificates</a><a class="headerlink" href="#certificates" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="savecertificatepassword">
+<span id="savecertificatepassword-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SaveCertificatePassword</a><a class="headerlink" href="#savecertificatepassword" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Allows you to change the password that is used to decrypt the given client certificate on this Machine, when connecting to the specified repository.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SaveCertificatePassword</strong> &lt;Connection String&gt; &lt;Client Certificate&gt; [&lt;Certificate Password&gt;] [&lt;All Users&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is not currently implemented when using a Proxy connection.</p>
+</div>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Connection String&gt;</p></td>
+<td><p>Required. When using a Proxy connection, this is a string of format &lt;HOST&gt;:&lt;PORT&gt;. When using Direct connection, this is the path to the root of the Repository.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Client Certificate&gt;</p></td>
+<td><p>Required. The path to the x509 client certificate that is used to connect to the Repository with TLS/SSL.</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Certificate Password&gt;</p></td>
+<td><p>Optional. The password to encrypt and save on this machine. If blank, will clear any existing saved password for the specified certificate.
+Default is empty (ie, will clear existing password).</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;All Users&gt;</p></td>
+<td><p>Optional. If true, the specified password will be saved for all users on this machine.
+Otherwise, it will only be saved for the current user. Defaults to False.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">System Functions and Dialogs - Command Arguments</a><ul>
+<li><a class="reference internal" href="#file-and-directory-functions">File and Directory Functions</a><ul>
+<li><a class="reference internal" href="#checkfilepermissions">CheckFilePermissions</a></li>
+<li><a class="reference internal" href="#getcommonapppath">GetCommonAppPath</a></li>
+<li><a class="reference internal" href="#isinpath">IsInPath</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#get-directory">Get Directory</a><ul>
+<li><a class="reference internal" href="#getbindirectory">GetBinDirectory</a></li>
+<li><a class="reference internal" href="#getcurrentuserhomedirectory">GetCurrentUserHomeDirectory</a></li>
+<li><a class="reference internal" href="#gethomedirectory">GetHomeDirectory</a></li>
+<li><a class="reference internal" href="#getnetworkdrives">GetNetworkDrives</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#registry-keys">Registry Keys</a><ul>
+<li><a class="reference internal" href="#getregistrykeyvalue">GetRegistryKeyValue</a></li>
+<li><a class="reference internal" href="#setregistrykeyvalue">SetRegistryKeyValue</a></li>
+<li><a class="reference internal" href="#removeregistrykeyvalue">RemoveRegistryKeyValue</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#processes">Processes</a><ul>
+<li><a class="reference internal" href="#getprocess">GetProcess</a></li>
+<li><a class="reference internal" href="#getprocesses">GetProcesses</a></li>
+<li><a class="reference internal" href="#getprocessnames">GetProcessNames</a></li>
+<li><a class="reference internal" href="#startprocess">StartProcess</a></li>
+<li><a class="reference internal" href="#testprotectedconfig">TestProtectedConfig</a></li>
+<li><a class="reference internal" href="#killprocess">KillProcess</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ini-files">INI Files</a><ul>
+<li><a class="reference internal" href="#getinifilesetting">GetIniFileSetting</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-settings">Plugin Settings</a><ul>
+<li><a class="reference internal" href="#upgradepluginsettings">UpgradePluginSettings</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#file-dialogs">File Dialogs</a><ul>
+<li><a class="reference internal" href="#getdirectory">GetDirectory</a></li>
+<li><a class="reference internal" href="#selectfilenameload">SelectFilenameLoad</a></li>
+<li><a class="reference internal" href="#selectfilenamesave">SelectFilenameSave</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#deadline-dialogs">Deadline Dialogs</a><ul>
+<li><a class="reference internal" href="#selectrepository">SelectRepository</a></li>
+<li><a class="reference internal" href="#selectlimitgroups">SelectLimitGroups</a></li>
+<li><a class="reference internal" href="#selectmachinelist">SelectMachineList</a></li>
+<li><a class="reference internal" href="#showmessagebox">ShowMessageBox</a></li>
+<li><a class="reference internal" href="#popupmessage">PopupMessage</a></li>
+<li><a class="reference internal" href="#launchpreviewstylewindow">LaunchPreviewStyleWindow</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#security-keys">Security Keys</a><ul>
+<li><a class="reference internal" href="#generatersakeys">GenerateRSAKeys</a></li>
+<li><a class="reference internal" href="#getpublicencryptionkey">GetPublicEncryptionKey</a></li>
+<li><a class="reference internal" href="#getpublicsigningkey">GetPublicSigningKey</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#certificates">Certificates</a><ul>
+<li><a class="reference internal" href="#savecertificatepassword">SaveCertificatePassword</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="command-line-arguments-scripting.html"
+                        title="previous chapter">Scripting - Command Arguments</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="command-line-arguments-housekeeping.html"
+                        title="next chapter">Scans, History, and Reports - Command Arguments</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command-line-arguments-housekeeping.html" title="Scans, History, and Reports - Command Arguments"
+             >next</a></li>
+        <li class="right" >
+          <a href="command-line-arguments-scripting.html" title="Scripting - Command Arguments"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" >Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">System Functions and Dialogs - Command Arguments</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,680 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tasks &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Task Reports" href="rest-task-reports.html" />
+    <link rel="prev" title="Workers" href="rest-workers.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="rest-task-reports.html" title="Task Reports"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="rest-workers.html" title="Workers"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-rest-api.html" accesskey="U">RESTful HTTP API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Tasks</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tasks">
+<span id="rest-tasks-ref-label"></span><h1>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 11%" />
+<col style="width: 9%" />
+<col style="width: 8%" />
+<col style="width: 9%" />
+<col style="width: 10%" />
+<col style="width: 8%" />
+<col style="width: 9%" />
+<col style="width: 8%" />
+<col style="width: 11%" />
+<col style="width: 8%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td colspan="11"><p><a class="reference internal" href="rest-overview.html#rest-overview-ref-label"><span class="std std-ref">REST Overview</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="rest-jobs.html#rest-jobs-ref-label"><span class="std std-ref">Jobs</span></a></p></td>
+<td><p><a class="reference internal" href="rest-job-reports.html#rest-job-reports-ref-label"><span class="std std-ref">Job Reports</span></a></p></td>
+<td><p><a class="reference internal" href="rest-groups.html#rest-groups-ref-label"><span class="std std-ref">Groups</span></a></p></td>
+<td><p><a class="reference internal" href="rest-pools.html#rest-pools-ref-label"><span class="std std-ref">Pools</span></a></p></td>
+<td><p><a class="reference internal" href="rest-limits.html#rest-limits-ref-label"><span class="std std-ref">Limits</span></a></p></td>
+<td><p><a class="reference internal" href="rest-repository.html#rest-repository-ref-label"><span class="std std-ref">Repository</span></a></p></td>
+<td><p><a class="reference internal" href="rest-pulse.html#rest-pulse-ref-label"><span class="std std-ref">Pulse</span></a></p></td>
+<td><p><a class="reference internal" href="rest-workers.html#rest-workers-ref-label"><span class="std std-ref">Workers</span></a></p></td>
+<td><p><a class="reference internal" href="#rest-tasks-ref-label"><span class="std std-ref">Tasks</span></a></p></td>
+<td><p><a class="reference internal" href="rest-task-reports.html#rest-task-reports-ref-label"><span class="std std-ref">Task Reports</span></a></p></td>
+<td><p><a class="reference internal" href="rest-users.html#rest-users-ref-label"><span class="std std-ref">Users</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
+<li><p><a class="reference internal" href="#requests-and-responses" id="id2">Requests and Responses</a></p>
+<ul>
+<li><p><a class="reference internal" href="#get-task-ids" id="id3">Get Task IDs</a></p></li>
+<li><p><a class="reference internal" href="#get-task" id="id4">Get Task</a></p></li>
+<li><p><a class="reference internal" href="#get-all-tasks" id="id5">Get All Tasks</a></p></li>
+<li><p><a class="reference internal" href="#requeue-tasks" id="id6">Requeue Tasks</a></p></li>
+<li><p><a class="reference internal" href="#complete-tasks" id="id7">Complete Tasks</a></p></li>
+<li><p><a class="reference internal" href="#suspend-tasks" id="id8">Suspend Tasks</a></p></li>
+<li><p><a class="reference internal" href="#fail-tasks" id="id9">Fail Tasks</a></p></li>
+<li><p><a class="reference internal" href="#resume-failed-tasks" id="id10">Resume Failed Tasks</a></p></li>
+<li><p><a class="reference internal" href="#pend-tasks" id="id11">Pend Tasks</a></p></li>
+<li><p><a class="reference internal" href="#release-pending-tasks" id="id12">Release Pending Tasks</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#task-property-values" id="id13">Task Property Values</a></p></li>
+</ul>
+</div>
+<div class="section" id="overview">
+<h2><a class="toc-backref" href="#contents">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Task requests can be used to set and retrieve Task information using <code class="docutils literal notranslate"><span class="pre">GET</span></code> and <code class="docutils literal notranslate"><span class="pre">PUT</span></code> request types.</p>
+<p><code class="docutils literal notranslate"><span class="pre">POST</span></code> and <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> are <strong>not supported</strong> and sending a message of either of these types will result in a <strong>501 Not Implemented Error</strong> message.</p>
+<p>For more about these request types and their uses see the <a class="reference internal" href="rest-overview.html#types-of-http-ref-label"><span class="std std-ref">Request Formats and Responses</span></a> documentation.</p>
+</div>
+<div class="section" id="requests-and-responses">
+<h2><a class="toc-backref" href="#contents">Requests and Responses</a><a class="headerlink" href="#requests-and-responses" title="Permalink to this headline">¶</a></h2>
+<p>List of possible requests for Tasks.</p>
+<p>For all <code class="docutils literal notranslate"><span class="pre">PUT</span></code> requests it is possible to return a <strong>400 Bad Request</strong> error message if the message body is empty or if no command key is provided.</p>
+<p>All requests may return a <strong>400 Bad request</strong> error message if no Job ID is provided or a <strong>500 Internal Server Error</strong> if the Job ID provided does not correspond to any Job in the Repository.</p>
+<div class="section" id="get-task-ids">
+<h3><a class="toc-backref" href="#contents">Get Task IDs</a><a class="headerlink" href="#get-task-ids" title="Permalink to this headline">¶</a></h3>
+<p>Gets all the Task IDs for the Job that corresponds to the Job ID provided.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/tasks?IdOnly=true&amp;JobID=validJobID</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>GET</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>JSON object containing all the Task IDs for the Job.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="get-task">
+<h3><a class="toc-backref" href="#contents">Get Task</a><a class="headerlink" href="#get-task" title="Permalink to this headline">¶</a></h3>
+<p>Gets the Task that correspond to the Task ID provided for the Job that corresponds to the Job ID provided.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/tasks?TaskID=oneValidTaskID&amp;JobID=validJobID</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>GET</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>JSON object containing the Task information for the requested Task.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><ul class="simple">
+<li><dl class="simple">
+<dt>400 Bad Request:</dt><dd><ul>
+<li><p>No Task ID provided, or</p></li>
+<li><p>Task ID must be an integer value.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="get-all-tasks">
+<h3><a class="toc-backref" href="#contents">Get All Tasks</a><a class="headerlink" href="#get-all-tasks" title="Permalink to this headline">¶</a></h3>
+<p>Gets the Tasks for the Job that corresponds to the Job ID provided.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/tasks?JobID=validJobID</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>GET</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>JSON object containing the Task information for all the Job Tasks.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="requeue-tasks">
+<h3><a class="toc-backref" href="#contents">Requeue Tasks</a><a class="headerlink" href="#requeue-tasks" title="Permalink to this headline">¶</a></h3>
+<p>Requeues the Tasks that correspond to the Task IDs provided for the Job that corresponds to the Job ID provided. If no Task IDs are provided, all Job Tasks will be requeued.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/tasks</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>PUT</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><dl class="simple">
+<dt>JSON object where the following keys are mandatory:</dt><dd><ul class="simple">
+<li><p>Command = requeue</p></li>
+<li><p>JobID = the id of the Job</p></li>
+</ul>
+</dd>
+<dt>The following keys are optional:</dt><dd><ul class="simple">
+<li><p>TaskList = integer Task ID(s) (may be an Array)</p></li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>“Success”</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><ul class="simple">
+<li><p>400 Bad Request: TaskList contains entries, but none of them are valid integers.</p></li>
+<li><p>404 Not Found: Requested Task ID does not correspond to a Task for the Job.</p></li>
+<li><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="complete-tasks">
+<h3><a class="toc-backref" href="#contents">Complete Tasks</a><a class="headerlink" href="#complete-tasks" title="Permalink to this headline">¶</a></h3>
+<p>Completes the Tasks that correspond to the Task IDs provided for the Job that corresponds to the Job ID provided. If no Task IDs are provided, all Job Tasks will be completed.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/tasks</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>PUT</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><dl class="simple">
+<dt>JSON object where the following keys are mandatory:</dt><dd><ul class="simple">
+<li><p>Command = complete</p></li>
+<li><p>JobID = the id of the Job</p></li>
+</ul>
+</dd>
+<dt>The following keys are optional:</dt><dd><ul class="simple">
+<li><p>TaskList = integer Task ID(s) (may be an Array)</p></li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>“Success”</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><ul class="simple">
+<li><p>400 Bad Request: TaskList contains entries, but none of them are valid integers.</p></li>
+<li><p>404 Not Found: Requested Task ID does not correspond to a Task for the Job.</p></li>
+<li><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="suspend-tasks">
+<h3><a class="toc-backref" href="#contents">Suspend Tasks</a><a class="headerlink" href="#suspend-tasks" title="Permalink to this headline">¶</a></h3>
+<p>Suspend the Tasks that correspond to the Task IDs provided for the Job that corresponds to the Job ID provided. If no Task IDs are provided, all Job Tasks will be suspended.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/tasks</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>PUT</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><dl class="simple">
+<dt>JSON object where the following keys are mandatory:</dt><dd><ul class="simple">
+<li><p>Command = suspend</p></li>
+<li><p>JobID = the id of the Job</p></li>
+</ul>
+</dd>
+<dt>The following keys are optional:</dt><dd><ul class="simple">
+<li><p>TaskList = integer Task ID(s) (may be an Array)</p></li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>“Success”</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><ul class="simple">
+<li><p>400 Bad Request: TaskList contains entries, but none of them are valid integers.</p></li>
+<li><p>404 Not Found: Requested Task ID does not correspond to a Task for the Job.</p></li>
+<li><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="fail-tasks">
+<h3><a class="toc-backref" href="#contents">Fail Tasks</a><a class="headerlink" href="#fail-tasks" title="Permalink to this headline">¶</a></h3>
+<p>Fails the Tasks that correspond to the Task IDs provided for the Job that corresponds to the Job ID provided. If no Task IDs are provided, all Job Tasks will be failed.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/tasks</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>PUT</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><dl class="simple">
+<dt>JSON object where the following keys are mandatory:</dt><dd><ul class="simple">
+<li><p>Command = fail</p></li>
+<li><p>JobID = the id of the Job</p></li>
+</ul>
+</dd>
+<dt>The following keys are optional:</dt><dd><ul class="simple">
+<li><p>TaskList = integer Task ID(s) (may be an Array)</p></li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>“Success”</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><ul class="simple">
+<li><p>400 Bad Request: TaskList contains entries, but none of them are valid integers.</p></li>
+<li><p>404 Not Found: Requested Task ID does not correspond to a Task for the Job.</p></li>
+<li><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="resume-failed-tasks">
+<h3><a class="toc-backref" href="#contents">Resume Failed Tasks</a><a class="headerlink" href="#resume-failed-tasks" title="Permalink to this headline">¶</a></h3>
+<p>Resumes the Failed Tasks that correspond to the Task IDs provided for the Job that corresponds to the Job ID provided. If no Task IDs are provided, all Job failed Tasks will be resumed.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/tasks</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>PUT</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><dl class="simple">
+<dt>JSON object where the following keys are mandatory:</dt><dd><ul class="simple">
+<li><p>Command = resumefailed</p></li>
+<li><p>JobID = the id of the Job</p></li>
+</ul>
+</dd>
+<dt>The following keys are optional:</dt><dd><ul class="simple">
+<li><p>TaskList = integer Task ID(s) (may be an Array)</p></li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>“Success”</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><ul class="simple">
+<li><p>400 Bad Request: TaskList contains entries, but none of them are valid integers.</p></li>
+<li><p>404 Not Found: Requested Task ID does not correspond to a Task for the Job.</p></li>
+<li><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="pend-tasks">
+<h3><a class="toc-backref" href="#contents">Pend Tasks</a><a class="headerlink" href="#pend-tasks" title="Permalink to this headline">¶</a></h3>
+<p>Pends the Tasks that correspond to the Task IDs provided for the Job that corresponds to the Job ID provided. If no Task IDs are provided, all Job Tasks will be pended.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/tasks</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>PUT</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><dl class="simple">
+<dt>JSON object where the following keys are mandatory:</dt><dd><ul class="simple">
+<li><p>Command = pend</p></li>
+<li><p>JobID = the id of the Job</p></li>
+</ul>
+</dd>
+<dt>The following keys are optional:</dt><dd><ul class="simple">
+<li><p>TaskList = integer Task ID(s) (may be an Array)</p></li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>“Success”</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><ul class="simple">
+<li><p>400 Bad Request: TaskList contains entries, but none of them are valid integers.</p></li>
+<li><p>404 Not Found: Requested Task ID does not correspond to a Task for the Job.</p></li>
+<li><dl class="simple">
+<dt>500 Internal Server Error:</dt><dd><ul>
+<li><p>An exception occurred within the Deadline code, or</p></li>
+<li><p>Trying to pend a Task for a Suspended Job.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="release-pending-tasks">
+<h3><a class="toc-backref" href="#contents">Release Pending Tasks</a><a class="headerlink" href="#release-pending-tasks" title="Permalink to this headline">¶</a></h3>
+<p>Releases the pending Tasks that correspond to the Task IDs provided for the Job that corresponds to the Job ID provided. If no Task IDs are provided, all Job Pending Tasks will be released.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/tasks</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>PUT</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><dl class="simple">
+<dt>JSON object where the following keys are mandatory:</dt><dd><ul class="simple">
+<li><p>Command = releasepending</p></li>
+<li><p>JobID = the id of the Job</p></li>
+</ul>
+</dd>
+<dt>The following keys are optional:</dt><dd><ul class="simple">
+<li><p>TaskList = integer Task ID(s) (may be an Array)</p></li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>“Success”</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><ul class="simple">
+<li><p>400 Bad Request: TaskList contains entries, but none of them are valid integers.</p></li>
+<li><p>404 Not Found: Requested Task ID does not correspond to a Task for the Job.</p></li>
+<li><dl class="simple">
+<dt>500 Internal Server Error:</dt><dd><ul>
+<li><p>An exception occurred within the Deadline code, or</p></li>
+<li><p>Trying to release a Task from pending for a Suspended Job.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="task-property-values">
+<h2><a class="toc-backref" href="#contents">Task Property Values</a><a class="headerlink" href="#task-property-values" title="Permalink to this headline">¶</a></h2>
+<p>Values for some Task properties are represented by numbers. Those properties and their possible values are listed below.</p>
+<dl class="simple">
+<dt>Stat (Status)</dt><dd><ul class="simple">
+<li><p>1 = Unknown</p></li>
+<li><p>2 = Queued</p></li>
+<li><p>3 = Suspended</p></li>
+<li><p>4 = Rendering</p></li>
+<li><p>5 = Completed</p></li>
+<li><p>6 = Failed</p></li>
+<li><p>8 = Pending</p></li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Tasks</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#requests-and-responses">Requests and Responses</a><ul>
+<li><a class="reference internal" href="#get-task-ids">Get Task IDs</a></li>
+<li><a class="reference internal" href="#get-task">Get Task</a></li>
+<li><a class="reference internal" href="#get-all-tasks">Get All Tasks</a></li>
+<li><a class="reference internal" href="#requeue-tasks">Requeue Tasks</a></li>
+<li><a class="reference internal" href="#complete-tasks">Complete Tasks</a></li>
+<li><a class="reference internal" href="#suspend-tasks">Suspend Tasks</a></li>
+<li><a class="reference internal" href="#fail-tasks">Fail Tasks</a></li>
+<li><a class="reference internal" href="#resume-failed-tasks">Resume Failed Tasks</a></li>
+<li><a class="reference internal" href="#pend-tasks">Pend Tasks</a></li>
+<li><a class="reference internal" href="#release-pending-tasks">Release Pending Tasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#task-property-values">Task Property Values</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="rest-workers.html"
+                        title="previous chapter">Workers</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="rest-task-reports.html"
+                        title="next chapter">Task Reports</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="rest-task-reports.html" title="Task Reports"
+             >next</a></li>
+        <li class="right" >
+          <a href="rest-workers.html" title="Workers"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-rest-api.html" >RESTful HTTP API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Tasks</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

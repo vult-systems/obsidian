@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Karma Standalone &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Katana" href="app-katana.html" />
+    <link rel="prev" title="HServer" href="app-hserver.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-katana.html" title="Katana"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-hserver.html" title="HServer"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Karma Standalone</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="karma-standalone">
+<span id="app-karma-ref-label"></span><h1>Karma Standalone<a class="headerlink" href="#karma-standalone" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit Karma Standalone jobs from the Monitor.</p>
+<a class="reference internal image-reference" href="../_images/sub_karma.png"><img alt="../_images/sub_karma.png" src="../_images/sub_karma.png" style="height: 500px;" /></a>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.
+The Karma specific options are:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>USD File</strong>: Specify the Karma USD file(s) to render.</dt><dd><ul>
+<li><p>To submit multiple USD frames, ensure that all USD frames are numbered and reside in the same file folder. In the USD File box, select the first USD frame in the sequence. Indicate the frames to render using the Frame List. The frames to render should correspond to the numbering in the USD file names.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>Output File</strong>: The output file path.</p></li>
+<li><p><strong>Version</strong>: The Karma version to render with.</p></li>
+<li><p><strong>Threads</strong>: The number of threads to use for rendering.</p></li>
+<li><p><strong>Additional Arguments</strong>: Additional command line arguments to pass to the renderer.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Karma plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Karma plugin from the list on the left.</p>
+<p>Note, if the executable supports a MAJOR.MINOR.REVISION (9.0.123) numbering system in its path, then you will need to configure the explicit exe path to the particular revision that you have installed on your machines. Deadline does not track every possible revision available or indeed where it might be custom installed to, so a studio should verify their exe paths are correct for each application version they choose to use with Deadline. Multiple exe paths can still be declared and the first one that is found on a particular Worker on a particular platform will be used from the exe list.</p>
+<a class="reference internal image-reference" href="../_images/cp_karma.png"><img alt="../_images/cp_karma.png" src="../_images/cp_karma.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Karma Executable</strong>: The path to the Karma executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-karma-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Karma are supported by Deadline?</strong></p>
+<blockquote>
+<div><p>Karma for Houdini 20.0 and later is supported by Deadline.</p>
+</div></blockquote>
+<p><strong>Does Path Mapping work in Karma?</strong></p>
+<blockquote>
+<div><p>No. Path mapping for USD files must be handled using Output Resolvers in the Houdini scene nodes. Please refer to Houdini USD documentation for more information.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Karma error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please email <a class="reference external" href="https://www.awsthinkbox.com/support/">Deadline Support</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Karma Standalone</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-hserver.html"
+                        title="previous chapter">HServer</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-katana.html"
+                        title="next chapter">Katana</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-katana.html" title="Katana"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-hserver.html" title="HServer"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Karma Standalone</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

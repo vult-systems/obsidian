@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RVIO &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Salt" href="app-salt.html" />
+    <link rel="prev" title="Rhino" href="app-rhino.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-salt.html" title="Salt"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-rhino.html" title="Rhino"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">RVIO</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="rvio">
+<span id="app-rvio-ref-label"></span><h1>RVIO<a class="headerlink" href="#rvio" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit RVIO jobs from the Monitor, or you can right-click on a job and select ‘Scripts’ -&gt; ‘Submit RVIO Job To Deadline’ to automatically populate some fields in the RVIO submitter based on the job’s output.</p>
+<a class="reference internal image-reference" href="../_images/sub_rvio.png"><img alt="../_images/sub_rvio.png" src="../_images/sub_rvio.png" style="height: 500px;" /></a>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.</p>
+<p>The RVIO submitter allows you to create and save Layers, each of which can contain one or two source images, an arbitrary number of audio files, and a list of overrides.</p>
+<ul class="simple">
+<li><p>Click the New button to add a new Layer.</p></li>
+<li><p>Click the Rename button to rename the selected Layer.</p></li>
+<li><p>Click the Remove button to remove the selected Layer.</p></li>
+<li><p>Click the Clear All button to remove all Layers.</p></li>
+<li><p>Click the Load Layers button to load saved Layers from disk.</p></li>
+<li><p>Click the Save Layers button to save the list of current Layers to disk.</p></li>
+</ul>
+<p>For Layers, the only required setting is the Source 1 file(s). If specifying a sequence, you can set the range to the right of the file name (the same for the Source 2 file if specified). Note that the .rv file format is also
+supported as a Source file. For Audio Files, a comma separated list is used to allow the submission of multiple files. Other than submitting at least one Layer, the only other required option is the Output File under the Output
+tab. See the <a class="reference external" href="https://www.tweaksoftware.com/static/documentation/rv/current/html/rv_manual.html">RVIO Documentation</a> for more information about the available options and overrides.</p>
+</div>
+<div class="section" id="codec-lists">
+<h3>Codec Lists<a class="headerlink" href="#codec-lists" title="Permalink to this headline">¶</a></h3>
+<p>The RVIO submitter pulls its codec settings from the GetRawCodecText() function in \\your\repository\scripts\submission\RVIOSubmission.py. The raw text was retrieved from running “rvio.exe -formats” in a command prompt. This means that if your installation of RVIO supports additional codecs that aren’t available in the submitter, you can run the following and then copy the text in the resulting Codecs.txt file and paste it between the triple quotes in GetRawCodecText():</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rvio</span><span class="o">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">formats</span> <span class="o">&gt;</span> <span class="n">Codecs</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the RVIO plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the RVIO plugin from the list on the left.</p>
+<p>Note, if the executable supports a MAJOR.MINOR.REVISION (9.0.123) numbering system in its path, then you will need to configure the explicit exe path to the particular revision that you have installed on your machines. Deadline does not track every possible revision available or indeed where it might be custom installed to, so a studio should verify their exe paths are correct for each application version they choose to use with Deadline. Multiple exe paths can still be declared and the first one that is found on a particular Worker on a particular platform will be used from the exe list.</p>
+<a class="reference internal image-reference" href="../_images/cp_rvio.png"><img alt="../_images/cp_rvio.png" src="../_images/cp_rvio.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>RVIO Executable</strong>: The path to the rvio executable file used for rendering. Enter alternative paths on separate lines.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-rvio-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><em>Currently, there are no FAQs for this plugin.</em></p>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known RVIO error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here, please contact
+<a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">RVIO</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#codec-lists">Codec Lists</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-rhino.html"
+                        title="previous chapter">Rhino</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-salt.html"
+                        title="next chapter">Salt</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-salt.html" title="Salt"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-rhino.html" title="Rhino"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">RVIO</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

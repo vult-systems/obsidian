@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shotgun &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Spot Event Plugin" href="event-spot.html" />
+    <link rel="prev" title="Salt" href="event-salt.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-spot.html" title="Spot Event Plugin"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="event-salt.html" title="Salt"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" accesskey="U">Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Shotgun</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="shotgun">
+<span id="event-shotgun-ref-label"></span><h1>Shotgun<a class="headerlink" href="#shotgun" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Shotgun is a customizable web-based Production Tracking system for digital studios, and is developed by <a class="reference external" href="https://www.shotgridsoftware.com/">Shotgun Software</a>.</p>
+<p>Using Deadline’s Shotgun event plugin, artists can automatically create new Versions for Shots or Tasks in Shotgun when they submit a render job to the farm. When the job finishes, Deadline can automatically update the Version by uploading a thumbnail and marking it as complete or pending for review.</p>
+<img alt="../_images/shotgun_version.png" src="../_images/shotgun_version.png" />
+</div>
+<div class="section" id="creating-versions">
+<h2>Creating Versions<a class="headerlink" href="#creating-versions" title="Permalink to this headline">¶</a></h2>
+<p>Versions can either be created automatically on submission (using the Shotgun Event Plugin), or done manually afterwards.</p>
+<div class="section" id="automatic-version-creation">
+<h3>Automatic Version Creation<a class="headerlink" href="#automatic-version-creation" title="Permalink to this headline">¶</a></h3>
+<p>When you submit a new job to Deadline, you can have Deadline automatically create a new Version in Shotgun. This is done by connecting to Shotgun prior to submitting the job and choosing the Task that the job is for. The majority of the submission scripts that ship with Deadline include the Shotgun connection option. For this example, we will use Maya, but the process is basically the same for each submission script.</p>
+<p>First, open the <a class="reference internal" href="event-pipeline-tools.html#event-pipeline-tools-ref-label"><span class="std std-ref">Pipeline Tools</span></a> window via the Pipeline Tools button and navigate to the Project Management tab.</p>
+<p><a class="reference internal" href="../_images/pipeline_tools_button.png"><img alt="first" src="../_images/pipeline_tools_button.png" style="height: 450px;" /></a> <a class="reference internal" href="../_images/shotgun_login.png"><img alt="second" src="../_images/shotgun_login.png" style="height: 450px;" /></a> <a class="reference internal" href="../_images/pipeline_tools_shotgun.png"><img alt="third" src="../_images/pipeline_tools_shotgun.png" style="height: 450px;" /></a></p>
+<p>Choose Shotgun from the Project Management drop down, and then check the “Create new version” checkbox to begin. Enter your Shotgun Login username and password, and press Login. If the connection is successful, Deadline will collect the list of Tasks you are assigned to. If there are problems connecting, Deadline will try to display the appropriate error message to help you diagnose the problem. Once you login successfully, we will store the session token for you so you do not have to login again as long as the session token is still valid. All you have to do is to enter Login username and press Connect. You will be asked to login again once the session token is expired.</p>
+<a class="reference internal image-reference" href="../_images/shotgun_connect.png"><img alt="../_images/shotgun_connect.png" src="../_images/shotgun_connect.png" style="height: 450px;" /></a>
+<p>After you have selected a Task, you must specify a Version name and a description. If you have configured Version name templates in the Shotgun event plugin configuration, you can select one from the drop down. You can also manually type in the version name instead.</p>
+<a class="reference internal image-reference" href="../_images/shotgun_configure.png"><img alt="../_images/shotgun_configure.png" src="../_images/shotgun_configure.png" style="height: 450px;" /></a>
+<p>After you have configured the Version information, press OK to return to the Maya submitter. The Shotgun settings will now contain the Version information you just specified. To include this information with the job, leave the Create New Version option enabled. If you want to change the Version name or description before submitting, you must first reconnect to Shotgun in the Pipeline Tools window.</p>
+<p>Press the Submit Job button in the Maya submitter to finish the submission. If the Shotgun event plugin is configured to create the new version during Submission, the log report from the Shotgun event plugin will show the Version’s ID. Otherwise, the Version won’t be created in Shotgun until the job completes.</p>
+<p>You can view the log report for the job by right-clicking on the job in the Monitor and selecting View Job Reports.</p>
+<a class="reference internal image-reference" href="../_images/shotgun_log_report.png"><img alt="../_images/shotgun_log_report.png" src="../_images/shotgun_log_report.png" style="height: 400px;" /></a>
+</div>
+<div class="section" id="manual-version-creation">
+<h3>Manual Version Creation<a class="headerlink" href="#manual-version-creation" title="Permalink to this headline">¶</a></h3>
+<p>To manually create a Version from a completed job, right-click on the job in the Deadline Monitor and select Scripts -&gt; Integration -&gt; Create Shotgun Version. This will bring up the Shotgun browser so that you can connect, pick the appropriate Task, and specify a Version name and description. After specifying the appropriate information, press OK to create the new version.</p>
+<a class="reference internal image-reference" href="../_images/shotgun_browser_03.png"><img alt="../_images/shotgun_browser_03.png" src="../_images/shotgun_browser_03.png" style="height: 300px;" /></a>
+</div>
+<div class="section" id="selecting-an-existing-version">
+<h3>Selecting An Existing Version<a class="headerlink" href="#selecting-an-existing-version" title="Permalink to this headline">¶</a></h3>
+<p>When using the Draft Monitor submitter it’s possible to edit an existing Shotgun version rather than creating a new one.</p>
+<a class="reference internal image-reference" href="../_images/shotgun_draft.png"><img alt="../_images/shotgun_draft.png" src="../_images/shotgun_draft.png" style="height: 450px;" /></a>
+<p>Choose Shotgun from the Project Management drop down, enter your Shotgun Login username and password, and press Login. If the connection is successful, Deadline will collect the list of Tasks you are assigned to. If there are problems connecting, Deadline will try to display the appropriate error message to help you diagnose the problem. Once you login successfully, we will store the session token for you so you do not have to login again as long as the session token is still valid. All you have to do is to enter Login username and press Connect. You will be asked to login again once the session token is expired. After you have selected a Task, you can select a Version for that Task.</p>
+<a class="reference internal image-reference" href="../_images/shotgun_draft_connect.png"><img alt="../_images/shotgun_draft_connect.png" src="../_images/shotgun_draft_connect.png" style="height: 450px;" /></a>
+<p>You can now submit the job as normal. When the job finishes, the rendered movie will automatically be uploaded to the selected Version.</p>
+</div>
+</div>
+<div class="section" id="advanced-workflow-mode">
+<h2>Advanced Workflow Mode<a class="headerlink" href="#advanced-workflow-mode" title="Permalink to this headline">¶</a></h2>
+<p>When setting up the Shotgun event plugin, you can enable an Advanced Workflow Mode. This mode allows you to create Versions by selecting a Task, or by selecting a Project and Entity. Studios that don’t use the Task-centric approach will probably find the Advanced Workflow Mode more suitable to their needs.</p>
+<a class="reference internal image-reference" href="../_images/shotgun_browser_04.png"><img alt="../_images/shotgun_browser_04.png" src="../_images/shotgun_browser_04.png" style="height: 300px;" /></a>
+</div>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>Follow these steps to setup Deadline’s connection to Shotgun.</p>
+<div class="section" id="create-the-api-script-in-shotgun">
+<h3>Create the API Script in Shotgun<a class="headerlink" href="#create-the-api-script-in-shotgun" title="Permalink to this headline">¶</a></h3>
+<p>In Shotgun, you must first create a new API script so that Deadline can communicate with Shotgun. This can by done from the Admin menu.</p>
+<a class="reference internal image-reference" href="../_images/shotgun_script_01.png"><img alt="../_images/shotgun_script_01.png" src="../_images/shotgun_script_01.png" style="width: 700px;" /></a>
+<p>After the Scripts page is displayed, press the [+] button to create a new script, and enter the following information in the window that appears. If you can’t see one or more of the following fields, use the More Fields drop down to show them.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Script Name</strong>: deadline_integration</p></li>
+<li><p><strong>Description</strong>: Script for Deadline integration</p></li>
+<li><p><strong>Version</strong>: 1.0</p></li>
+<li><p><strong>Permission Group</strong>: API Admin</p></li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/shotgun_script_02.png"><img alt="../_images/shotgun_script_02.png" src="../_images/shotgun_script_02.png" style="height: 200px;" /></a>
+<p>After you have created the new script, click on the deadline_integration link in the Scripts list and note the value in Application Key field (it’s a long key consisting of alphanumeric characters). You’ll need this key when configuring Deadline’s Shotgun connection in the next step.</p>
+<a class="reference internal image-reference" href="../_images/shotgun_script_03.png"><img alt="../_images/shotgun_script_03.png" src="../_images/shotgun_script_03.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="configure-the-shotgun-connection">
+<h3>Configure the Shotgun Connection<a class="headerlink" href="#configure-the-shotgun-connection" title="Permalink to this headline">¶</a></h3>
+<p>After you have created the Deadline API Script in Shotgun, you can now configure the Shotgun event plugin from the Deadline Monitor. Enter Power User Mode from the Tools menu, and then select Tools -&gt; Configure Events.</p>
+<a class="reference internal image-reference" href="../_images/cep_shotgun.png"><img alt="../_images/cep_shotgun.png" src="../_images/cep_shotgun.png" style="height: 400px;" /></a>
+<p>The event plugin settings are split up into a few sections. The most important sections are the Options and Connection Settings, as these control how Deadline connects to Shotgun. In most cases, the Field and Value Mapping sections can be left alone because they map to fields that exist in the default Shotgun installation. Only studios that have deeply customized their Shotgun installations might have to worry about changing the Field and Value Mapping settings.</p>
+<p><strong>Options</strong></p>
+<p>This section contains general high-level options that control the behaviour of the Deadline’s Shotgun integration.</p>
+<ul>
+<li><p><strong>State</strong>: There are two different states that an Event Plugin can be in: <strong>Global Enabled</strong> or <strong>Disabled</strong>. In order for Deadline to connect to Shotgun, the State must be set to <strong>Global Enabled</strong>.</p></li>
+<li><p><strong>Create Version On Submission</strong>: If enabled, Deadline will create the Shotgun Version at time of submission and update its status as the job progresses. Otherwise, the Version will only be created once the job completes.</p></li>
+<li><p><strong>Enable Advanced Workflow</strong>: If enabled, the user can select a Project and Entity instead of just a Task.</p></li>
+<li><p><strong>Thumbnail Frame</strong>: The frame to upload to Shotgun as a thumbnail.</p></li>
+<li><p><strong>Convert Thumbnails with Draft</strong>: Whether or not to attempt to use Draft to convert the Thumbnail frame prior to upload.</p></li>
+<li><p><strong>Thumbnail Conversion Format</strong>: The format to convert the Thumbnail to prior to upload (see above).</p></li>
+<li><p><strong>Status List</strong>: The Deadline Shotgun UI will only show tasks that have a status in this list.</p></li>
+<li><p><strong>Version Templates</strong>: Presets for Version names that users can select from (one per line). Available tokens include ${project}, ${shot}, ${task}, ${user}, and ${jobid}. For example:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>${project} - ${shot} - ${task}</p></li>
+<li><p>${project}_${shot}_${task} (${jobid})</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Frame Padding Character</strong>: Specifies the character that should be used for frame padding. Note that RV should use ‘&#64;’ and Python style frame padding also accepts: ‘%’, ‘0’, ‘#’, or ‘d’ as frame padding characters.</p></li>
+<li><p><strong>Enable Verbose Errors</strong>: Whether or not detailed (technical) error information should be displayed when errors occur while connecting to Shotgun.</p></li>
+<li><p><strong>Auto Connect to Shotgun</strong>: Whether or not a connection to Shotgun should be automatically made when the pipeline tools dialog is opened.</p></li>
+</ul>
+<p><strong>Connection Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Shotgun URL</strong>: Your Shotgun URL.</p></li>
+<li><p><strong>Shotgun Proxy</strong>: Your proxy (if you use one).</p></li>
+<li><p><strong>No SSL Validation</strong>: Disables SSL Validation if set to ‘True’.</p></li>
+<li><p><strong>API Script Name</strong>: The name of the API script you created in Shotgun earlier (<code class="docutils literal notranslate"><span class="pre">deadline_integration</span></code>).</p></li>
+<li><p><strong>API Application Key</strong>: The key from the script you created in Shotgun earlier (it’s a long key consisting of alphanumeric characters). If using the <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-ref-label"><span class="std std-ref">Deadline Secrets Management</span></a> feature, this parameter will be saved and retrieved based on the <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-secret-namespace-ref-label"><span class="std std-ref">Event Plugin Secrets Access Level</span></a>.</p></li>
+</ul>
+<p><strong>Shotgun Field Mappings</strong></p>
+<p>These are the Version fields that Deadline is expecting to exist in Shotgun. The default values match those from a default Shotgun installation, so you will only have to edit these settings if you have customized the Version Field names in your Shotgun installation.</p>
+<p>Note that some of the Fields you can specify aren’t created by default in Shotgun. You will have to manually create those fields in Shotgun and specify their names here, if you wish to use them. An example of such fields would be Deadline Job ID, and Average/Total Render Time.</p>
+<p><strong>Status Value Mappings</strong></p>
+<p>These are the Version status values that Deadline is expecting to exist in Shotgun. The default values match those from a default Shotgun installation, so you will only have to edit these settings if you have customized the Version Status values in your Shotgun installation.</p>
+<p><strong>Draft Field Mappings</strong></p>
+<ul class="simple">
+<li><p>Draft Template Field: The field code for a Task field that contains a Draft Template relevant to the Task. If this is specified, Deadline can automatically pull in the specified template at submission time.</p></li>
+</ul>
+</div>
+<div class="section" id="test-the-shotgun-connection">
+<h3>Test the Shotgun Connection<a class="headerlink" href="#test-the-shotgun-connection" title="Permalink to this headline">¶</a></h3>
+<p>You can test the Shotgun connection with your username/password from the Deadline Monitor by selecting Scripts -&gt; Integration -&gt; Test Integration Connection. This will bring up the Test Integration Connection dialog.</p>
+<a class="reference internal image-reference" href="../_images/shotgun_browser_00.png"><img alt="../_images/shotgun_browser_00.png" src="../_images/shotgun_browser_00.png" style="height: 300px;" /></a>
+<p>Choose Shotgun from the Project Management drop down, and then press Login. If the connection is successful, Deadline will collect the list of Tasks you are assigned to. If there are problems connecting, Deadline will try to display the appropriate error message to help you diagnose the problem.</p>
+<p><a class="reference internal" href="../_images/shotgun_browser_01.png"><img alt="shotgun1" src="../_images/shotgun_browser_01.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/shotgun_browser_02.png"><img alt="shotgun2" src="../_images/shotgun_browser_02.png" style="height: 300px;" /></a></p>
+<p>If you already connected to Shotgun before, you do not have to type password again. You can simply press Connect to connect to Shotgun.</p>
+<a class="reference internal image-reference" href="../_images/shotgun_browser_05.png"><img alt="../_images/shotgun_browser_05.png" src="../_images/shotgun_browser_05.png" style="height: 300px;" /></a>
+</div>
+<div class="section" id="set-up-shotgun-columns-in-the-deadline-monitor">
+<h3>Set up Shotgun Columns in the Deadline Monitor<a class="headerlink" href="#set-up-shotgun-columns-in-the-deadline-monitor" title="Permalink to this headline">¶</a></h3>
+<p>Deadline uses the job Extra Info properties 0 to 5 for Shotgun specific settings, and you can configure the columns in the Job List in the Monitor to properly represent these settings. In the Monitor, enter Power User mode from the Tools menu, and then select Tools -&gt; Configure Repository Options. Find the Job Settings section and click on the Extra Properties tab. It will show the following:</p>
+<a class="reference internal image-reference" href="../_images/cro_js_extra.png"><img alt="../_images/cro_js_extra.png" src="../_images/cro_js_extra.png" style="height: 400px;" /></a>
+<p>Rename the Extra Info properties as shown in the following image. After committing these changes, you will now be able to see these Shotgun specific columns in the Job List in the Monitor.</p>
+<a class="reference internal image-reference" href="../_images/shotgun_extra.png"><img alt="../_images/shotgun_extra.png" src="../_images/shotgun_extra.png" style="height: 400px;" /></a>
+</div>
+</div>
+<div class="section" id="faq">
+<h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which editions of Shotgun does Deadline support?</strong></p>
+<blockquote>
+<div><p>Deadline supports the Studio and Partner editions of Shotgun, because those editions include the necessary API access.</p>
+</div></blockquote>
+<p><strong>Which versions of Shotgun does Deadline support?</strong></p>
+<blockquote>
+<div><p>Deadline supports Shotgun 2.3 and later.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Shotgun error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here, please contact
+<a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this event plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Shotgun</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#creating-versions">Creating Versions</a><ul>
+<li><a class="reference internal" href="#automatic-version-creation">Automatic Version Creation</a></li>
+<li><a class="reference internal" href="#manual-version-creation">Manual Version Creation</a></li>
+<li><a class="reference internal" href="#selecting-an-existing-version">Selecting An Existing Version</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#advanced-workflow-mode">Advanced Workflow Mode</a></li>
+<li><a class="reference internal" href="#setup">Setup</a><ul>
+<li><a class="reference internal" href="#create-the-api-script-in-shotgun">Create the API Script in Shotgun</a></li>
+<li><a class="reference internal" href="#configure-the-shotgun-connection">Configure the Shotgun Connection</a></li>
+<li><a class="reference internal" href="#test-the-shotgun-connection">Test the Shotgun Connection</a></li>
+<li><a class="reference internal" href="#set-up-shotgun-columns-in-the-deadline-monitor">Set up Shotgun Columns in the Deadline Monitor</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="event-salt.html"
+                        title="previous chapter">Salt</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="event-spot.html"
+                        title="next chapter">Spot Event Plugin</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-spot.html" title="Spot Event Plugin"
+             >next</a></li>
+        <li class="right" >
+          <a href="event-salt.html" title="Salt"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" >Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Shotgun</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

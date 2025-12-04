@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clarisse iFX &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Clarisse BUiLDER" href="app-clarisse-BUiLDER.html" />
+    <link rel="prev" title="Cinema 4D" href="app-cinema-4d.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-clarisse-BUiLDER.html" title="Clarisse BUiLDER"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-cinema-4d.html" title="Cinema 4D"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Clarisse iFX</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="clarisse-ifx">
+<span id="app-clarisse-ref-label"></span><h1>Clarisse iFX<a class="headerlink" href="#clarisse-ifx" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs from within Clarisse iFX by installing the <a class="reference internal" href="#app-clarisse-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a>, or you can submit them from the Monitor. The instructions for installing the <a class="reference internal" href="#app-clarisse-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<p>To submit from within Clarisse iFX, click on the custom toolbar item you created during the integrated submission script setup. You will then be asked if you wish to export the render archive to render with crender.</p>
+<a class="reference internal image-reference" href="../_images/clarisse_render_archive.png"><img alt="../_images/clarisse_render_archive.png" src="../_images/clarisse_render_archive.png" style="height: 120px;" /></a>
+<p>After you specify the render archive file, the submitter will come up with the Render Archive and Frame List fields already populated.</p>
+<a class="reference internal image-reference" href="../_images/sub_clarisse.png"><img alt="../_images/sub_clarisse.png" src="../_images/sub_clarisse.png" style="height: 500px;" /></a>
+<p>Note that if you are submitting from the Monitor, you will have to manually export your render archive from inside Clarisse iFX, and then browse to the Render Archive file in the Monitor submitter.</p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. The Clarisse iFX specific options are:</p>
+<ul class="simple">
+<li><p><strong>Threads</strong>: The number of threads to use for rendering. If set to 0, the value in the Clarisse iFX configuration file will be used.</p></li>
+<li><p><strong>Verbose Logging</strong>: Enables verbose logging during rendering.</p></li>
+<li><p><strong>Version</strong>: The version of Clarisse iFX to render with.</p></li>
+<li><p><strong>Render Using</strong>: Whether the Clarisse iFX job should be rendered using crender or cnode.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Clarisse iFX plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Clarisse plugin from the list on the left.</p>
+<p>Note, if the executable supports a MAJOR.MINOR.REVISION (9.0.123) numbering system in its path, then you will need to configure the explicit exe path to the particular revision that you have installed on your machines. Deadline does not track every possible revision available or indeed where it might be custom installed to, so a studio should verify their exe paths are correct for each application version they choose to use with Deadline. Multiple exe paths can still be declared and the first one that is found on a particular Worker on a particular platform will be used from the exe list.</p>
+<a class="reference internal image-reference" href="../_images/cp_clarisse.png"><img alt="../_images/cp_clarisse.png" src="../_images/cp_clarisse.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>CRender Executable</strong>: The path to the Clarisse iFX’s crender executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.  (Clarisse iFX version 3.6 and lower only)</p></li>
+<li><p><strong>CNode Executable</strong>: The path to the Clarisse iFX’s cnode executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+<p><strong>Configuration Options</strong></p>
+<ul class="simple">
+<li><p><strong>Global Config File</strong>: A global configuration file to be used for rendering. If left blank, the Clarisse.cfg file in the user home directory will be used instead.</p></li>
+<li><p><strong>Module Paths</strong>: Additional paths to search for modules (one path per line).</p></li>
+<li><p><strong>Search Paths</strong>: Additional paths to search for includes (one path per line).</p></li>
+</ul>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-clarisse-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to install the integrated Clarisse iFX submission script. This script allows for submitting Clarisse iFX render jobs to Deadline directly from within the Clarisse iFX editing GUI.</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/Clarisse/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Copy the script DeadlineClarisseClient.py from <code class="docutils literal notranslate"><span class="pre">[Repository]\submission\Clarisse\Client</span></code> to your local machine.  The submitter installer copies the script to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%localappdata%\Thinkbox\Deadline[VERSION]\submitters\ClarisseSubmitter
+
+(where [VERSION] is the major version of Deadline)
+Optional: Copy the ``SubmitToDeadline.png`` icon from ``[Repository]\submission\Clarisse\Client`` to the same location
+</pre></div>
+</div>
+</li>
+<li><p>In Clarisse iFX, right-click on the toolbar at the top and select Add Item.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/clarisse_integrated_step_1.png"><img alt="../_images/clarisse_integrated_step_1.png" src="../_images/clarisse_integrated_step_1.png" style="height: 300px;" /></a>
+</div></blockquote>
+</li>
+<li><p>In the Add New Item dialog, set the following properties:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Title: Submit To Deadline</p></li>
+<li><p>Category: Custom</p></li>
+<li><p>Category Custom: Deadline</p></li>
+<li><p>Script Path: Choose the <code class="docutils literal notranslate"><span class="pre">DeadlineClarisseClient.py</span></code> script that you copied to your local machine.</p></li>
+<li><p>Icon Path (Optional): Choose the <code class="docutils literal notranslate"><span class="pre">SubmitToDeadline.png</span></code> image that you copied to your local machine.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/clarisse_integrated_step_2.png"><img alt="../_images/clarisse_integrated_step_2.png" src="../_images/clarisse_integrated_step_2.png" style="height: 300px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Click Add, and you should now see a Deadline tab in the toolbar with a button that you can click on to submit the job.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/clarisse_integrated_step_3.png"><img alt="../_images/clarisse_integrated_step_3.png" src="../_images/clarisse_integrated_step_3.png" style="height: 300px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-clarisse-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Clarisse iFX are supported?</strong></p>
+<blockquote>
+<div><p>Either the “crender” or “cnode” application can be used for rendering, so any version of Clarisse iFX that includes this application is supported.</p>
+<p>Note: Clarisse no longer supports CRender after Clarisse iFX 3.6</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Clarisse iFX error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Clarisse iFX</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-cinema-4d.html"
+                        title="previous chapter">Cinema 4D</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-clarisse-BUiLDER.html"
+                        title="next chapter">Clarisse BUiLDER</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-clarisse-BUiLDER.html" title="Clarisse BUiLDER"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-cinema-4d.html" title="Cinema 4D"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Clarisse iFX</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

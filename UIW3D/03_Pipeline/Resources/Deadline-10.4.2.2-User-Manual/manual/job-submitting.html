@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submitting Jobs &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Monitoring Jobs" href="job-monitoring.html" />
+    <link rel="prev" title="Application Configuration" href="app-configuration.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="job-monitoring.html" title="Monitoring Jobs"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-configuration.html" title="Application Configuration"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-getting-started.html" accesskey="U">Getting Started With Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Submitting Jobs</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="submitting-jobs">
+<span id="job-submitting-ref-label"></span><h1>Submitting Jobs<a class="headerlink" href="#submitting-jobs" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The easiest and most common way to submit render jobs to Deadline is via our many submission scripts, which are written for each rendering application it supports. After you have submitted your job, you can monitor progress using the Monitor. See the <a class="reference internal" href="job-monitoring.html#job-monitoring-ref-label"><span class="std std-ref">Monitoring Jobs</span></a> documentation for more information.</p>
+<p>If you would like more control over the submission process, or would like to submit arbitrary command line jobs to Deadline, see the <a class="reference internal" href="manual-submission.html#manual-submission-ref-label"><span class="std std-ref">Manual Job Submission</span></a> documentation for more information.</p>
+</div>
+<div class="section" id="integrated-submission-scripts">
+<span id="integrated-submission-scripts-ref-label"></span><h2>Integrated Submission Scripts<a class="headerlink" href="#integrated-submission-scripts" title="Permalink to this headline">¶</a></h2>
+<p>Where possible, we have created integrated submission scripts that allow you to submit jobs directly from the application you’re working with. These scripts are convenient because you don’t have to launch a separate application to submit the job. In addition, these scripts often provide more submission options because they have direct access to the scene or project file you are submitting.</p>
+<p>See the <a class="reference internal" href="../index-linear.html#plugin-ref-lable"><span class="std std-ref">Plugins</span></a> documentation for more information on how to set up the integrated submission scripts (where applicable) and submit jobs for specific applications.</p>
+<p><a class="reference internal" href="../_images/integrated_3dsmax.png"><img alt="integrated_3dsmax" src="../_images/integrated_3dsmax.png" style="height: 500px;" /></a> <a class="reference internal" href="../_images/integrated_maya.png"><img alt="integrated_maya" src="../_images/integrated_maya.png" style="height: 500px;" /></a></p>
+</div>
+<div class="section" id="monitor-submission-scripts">
+<h2>Monitor Submission Scripts<a class="headerlink" href="#monitor-submission-scripts" title="Permalink to this headline">¶</a></h2>
+<p>In cases where an application does not have an integrated submission script, you can submit the jobs from the Submit menu in the Monitor. Note that applications that have integrated submission scripts also have Monitor scripts here, but in most cases there are less options to choose from. This is because the integrated submission scripts use the application’s native scripting language to pull additional information from the file being submitted. See the Plugins documentation for more information on how submit jobs for specific applications.</p>
+<p>You can also create your own submission scripts for the Monitor. Check out the <a class="reference internal" href="monitor-scripts.html#monitor-scripts-ref-label"><span class="std std-ref">Monitor Scripting documentation</span></a> for more details.</p>
+<p><a class="reference internal" href="../_images/sub_maya.png"><img alt="monitor_maya" src="../_images/sub_maya.png" style="height: 500px;" /></a> <a class="reference internal" href="../_images/sub_nuke.png"><img alt="monitor_nuke" src="../_images/sub_nuke.png" style="height: 500px;" /></a></p>
+</div>
+<div class="section" id="common-job-submission-options">
+<span id="common-job-ref-label"></span><h2>Common Job Submission Options<a class="headerlink" href="#common-job-submission-options" title="Permalink to this headline">¶</a></h2>
+<p>There are many job options that can be specified on submission. A lot of these options are general job properties that aren’t specific to the application you’re rendering with. Some of these options are described below, many other options that are specific to the application that you’re rendering with. These are covered in each application’s plugin guide, which can be found in the <a class="reference internal" href="../index-linear.html#plugin-ref-lable"><span class="std std-ref">Plugins</span></a> documentation.</p>
+<p><strong>Job Name</strong></p>
+<blockquote>
+<div><p>The name of your job. This is optional, and if left blank, it will default to “Untitled”.</p>
+</div></blockquote>
+<p><strong>Comment</strong></p>
+<blockquote>
+<div><p>A simple description of your job. This is optional and can be left blank.</p>
+</div></blockquote>
+<p><strong>Department</strong></p>
+<blockquote>
+<div><p>The department you belong to. This is optional and can be left blank.</p>
+</div></blockquote>
+<p><strong>Pool and Group</strong></p>
+<blockquote>
+<div><p>The pool and group that the job belongs to. See the <a class="reference internal" href="job-scheduling.html#job-scheduling-ref-label"><span class="std std-ref">Job Scheduling</span></a> documentation for more information on how these options affect job scheduling.</p>
+</div></blockquote>
+<p><strong>Priority</strong></p>
+<blockquote>
+<div><p>A job can have a numeric priority ranging from 0 to 100, where 0 is the lowest priority and 100 is the highest priority. See the <a class="reference internal" href="job-scheduling.html#job-scheduling-ref-label"><span class="std std-ref">Job Scheduling</span></a> documentation for more information
+on how this option affects job scheduling.</p>
+</div></blockquote>
+<p><strong>Task Timeout and Auto Task Timeout</strong></p>
+<blockquote>
+<div><p>The number of minutes a Worker has to render a task for this job before an error is reported, and the task is requeued. Specify 0 for no limit.</p>
+<p>If the Auto Task Timeout is properly configured in the Repository Options, then enabling the Auto Task Timeout option will allow a task timeout to be automatically calculated, which is based on the render times of previous frames for the job.</p>
+</div></blockquote>
+<p><strong>Concurrent Tasks and Limiting Tasks To A Worker’s Task Limit</strong></p>
+<blockquote>
+<div><p>The number of tasks that can render concurrently on a single Worker. This is useful if the rendering application only uses one thread to render and your Workers have multiple CPUs. Caution should be used when using this feature if your renders require a large amount of RAM.</p>
+<p>If you limit the tasks to a Worker’s task limit, then by default, the Worker won’t dequeue more tasks then it has CPUs. This task limit can be overridden for individual Workers by an administrator.
+See the <a class="reference internal" href="worker-config.html#worker-config-settings-ref-label"><span class="std std-ref">Worker Settings</span></a> documentation for more information.</p>
+</div></blockquote>
+<p><strong>Machine Limit and Machine Allow List/Deny List</strong></p>
+<blockquote>
+<div><p>Use the Machine Limit to specify the maximum number of Workers that can render your job at one time. Specify 0 for no limit. You can also force the job to render on specific Workers by using an allow list, or you
+can avoid specific Workers by using a deny list. See the <a class="reference internal" href="limits.html#limits-ref-label"><span class="std std-ref">Limit Documentation</span></a> for more information.</p>
+</div></blockquote>
+<p><strong>Limits</strong></p>
+<blockquote>
+<div><p>The limits that your job must adhere to. See the <a class="reference internal" href="limits.html#limits-ref-label"><span class="std std-ref">Limit Documentation</span></a> for more information.</p>
+</div></blockquote>
+<p><strong>Dependencies</strong></p>
+<blockquote>
+<div><p>This job will not start until the specified existing job finishes rendering.</p>
+</div></blockquote>
+<p><strong>On Job Complete</strong></p>
+<blockquote>
+<div><p>If desired, you can automatically archive or delete the job when it completes.</p>
+</div></blockquote>
+<p><strong>Submit Job As Suspended</strong></p>
+<blockquote>
+<div><p>If enabled, the job will submit in the suspended state. This is useful if you don’t want the job to start rendering right away. Just resume it from the Monitor when you want it to render.</p>
+</div></blockquote>
+<p><strong>Scene/Project/Data File (if applicable)</strong></p>
+<blockquote>
+<div><p>The file path to the Scene/Project/Data File to be processed/rendered as the job. The file needs to be in a shared location so that the Worker machines can find it when they go to render it directly. See <a class="reference internal" href="#submit-ref-label"><span class="std std-ref">Submit Scene/Project File with Job</span></a> below for a further option.</p>
+<p>Note all external asset/file paths referenced by the Scene/Project/Data File should be resolvable by your Worker machines on your network.</p>
+</div></blockquote>
+<p><strong>Frame List</strong></p>
+<blockquote>
+<div><p>The list of frames to render. See the <a class="reference internal" href="#frame-list-ref-label"><span class="std std-ref">Frame List Formatting Options</span></a> below for valid frame lists.</p>
+</div></blockquote>
+<p><strong>Frames Per Task</strong></p>
+<blockquote>
+<div><p>Also known as Chunk Size. This is the number of frames that will be rendered at a time, for each job task. Increasing the Frames Per Task can help alleviate some of the inherited overhead that comes with network rendering, but if your frames take longer than a couple of minutes to render, it is recommended that you leave the Frames Per Task at 1.</p>
+</div></blockquote>
+<p id="submit-ref-label"><strong>Submit Scene/Project File With Job</strong></p>
+<blockquote>
+<div><p>If this option is enabled, the scene or project file you want to render will be submitted with the job, and then copied locally to the Worker machine during rendering. The benefit to this is that you have a copy of the file in the state that it was in when it was submitted. However, if your scene or project file uses relative asset paths, enabling this option can cause the render to fail when the asset paths can’t be resolved.</p>
+<p>Note, only the Scene/Project File is submitted with the job and ALL external/asset files referenced by the Scene/Project File are still required by the Worker machines.</p>
+<p>If this option is disabled, the file needs to be in a shared location so that the Worker machines can find it when they go to render it directly. Leaving this option disabled is required if the file has references (footage, textures, caches, etc) that exist in a relative location.</p>
+<p>Note if you modify the original file, it will affect the render job.</p>
+</div></blockquote>
+</div>
+<div class="section" id="draft-and-integration-submission-options">
+<span id="draft-shotgun-ref-label"></span><h2>Draft and Integration Submission Options<a class="headerlink" href="#draft-and-integration-submission-options" title="Permalink to this headline">¶</a></h2>
+<p>The majority of the submission scripts that ship with Deadline have Integration options to connect to Shotgun, FTrack, NIM, and/or use Draft to perform post-rendering compositing operations. The Integration and Draft job options are essentially the same in every submission script, and more information can be found in their respective documentation:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="event-draft.html#event-draft-ref-label"><span class="std std-ref">Draft Documentation</span></a></p></li>
+<li><p><a class="reference internal" href="event-shotgun.html#event-shotgun-ref-label"><span class="std std-ref">Shotgun Documentation</span></a></p></li>
+<li><p><a class="reference internal" href="event-ftrack.html#event-ftrack-ref-label"><span class="std std-ref">FTrack Documentation</span></a></p></li>
+<li><p><a class="reference internal" href="event-nim.html#event-nim-ref-label"><span class="std std-ref">NIM Documentation</span></a></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="jigsaw">
+<span id="common-jigsaw-ref-label"></span><h2>Jigsaw<a class="headerlink" href="#jigsaw" title="Permalink to this headline">¶</a></h2>
+<p>Jigsaw is a flexible multi-region rendering system for Deadline. This is available for 3ds Max, Maya, Houdini, modo, and Rhino. It can be used to render regions of various sizes for a single frame, and in 3ds Max and Maya, it can be used to track and render specific objects over an animation.</p>
+<p>Draft can then be used to automatically assemble the regions into the final frame or frames. It can also be used to automatically composite re-rendered regions onto the original frame.</p>
+<p>Jigsaw is built into the 3ds Max, Maya, Houdini, modo, and Rhino submitters. With the exception of 3ds Max, Jigsaw viewport will be displayed in a separate window.</p>
+<a class="reference internal image-reference" href="../_images/jigsaw_window.png"><img alt="../_images/jigsaw_window.png" src="../_images/jigsaw_window.png" style="height: 500px;" /></a>
+<p>The viewport can be used to create and manipulate regions. Regions are then submitted to Deadline to render. The available options are listed below:</p>
+<p><strong>General Options</strong></p>
+<p>These options are always available:</p>
+<ul class="simple">
+<li><p><strong>Add Region</strong>: Adds a new region.</p></li>
+<li><p><strong>Delete All</strong>: Deletes all the current regions.</p></li>
+<li><p><strong>Create From Grid</strong>: Creates a grid of regions to cover the full viewport. The X value controls the number of columns and the Y value controls the number of rows.</p></li>
+<li><p><strong>Fill Regions</strong>: Automatically creates new regions to fill the parts of the viewport that are not currently covered by a region.</p></li>
+<li><p><strong>Clean Regions</strong>: Deletes any regions that are fully contained within another region.</p></li>
+<li><p><strong>Undo</strong>: Undo the last change made to the regions.</p></li>
+<li><p><strong>Redo</strong>: Redo the last change that was previously undone.</p></li>
+</ul>
+<p><strong>Selected Regions Options</strong></p>
+<p>These options are only available when a single region is selected:</p>
+<ul class="simple">
+<li><p><strong>Clone</strong>: Creates a duplicate region parallel to the selected region in the specified direction.</p></li>
+<li><p><strong>Lock Postion</strong>: If enabled, the region will be locked to its current position.</p></li>
+<li><p><strong>Enable Region</strong>: If disabled, the region will be ignored when submitting the job.</p></li>
+<li><p><strong>X Position</strong>: The horizontal position of the selected region, taken from the left.</p></li>
+<li><p><strong>Y Position</strong>: The vertical position of the selected region, taken from the top.</p></li>
+<li><p><strong>Width</strong>: The width of the selected region.</p></li>
+<li><p><strong>Height</strong>: The height of the selected region.</p></li>
+</ul>
+<p>These options are only available when one or more regions are selected.</p>
+<ul class="simple">
+<li><p><strong>Delete</strong>: Deletes the selected regions.</p></li>
+<li><p><strong>Split</strong>: Splits the selected regions into sub-regions based on the Tiles In X and Tyles In Y settings.</p></li>
+</ul>
+<p>These options are only available when multiple regions are selected.</p>
+<ul class="simple">
+<li><p><strong>Merge</strong>: Combines the selected regions into a single region that covers the full area of the selected regions.</p></li>
+</ul>
+<p><strong>Zoom Options</strong></p>
+<p>These zoom options are always available:</p>
+<ul class="simple">
+<li><p><strong>Zoom Slider</strong>: Use the slider to zoom the viewport in and out. You can also use the mouse wheel to zoom in and out. If the image does not fit in the viewpoint, click the mouse wheel down to pan the image.</p></li>
+<li><p><strong>Reset Zoom</strong>: Resets the zoom within the viewport.</p></li>
+<li><p><strong>Fit Viewport</strong>: Zoom to see everything in the viewport.</p></li>
+<li><p><strong>Keep Fit</strong>: Zoom to see everything in the viewport, and force the viewport to not change. This allows the viewport to scale when resizing the Jigsaw window.</p></li>
+</ul>
+<p><strong>Maya Options</strong></p>
+<p>These options are currently only available for Maya:</p>
+<ul class="simple">
+<li><p><strong>Reset Background</strong>: Gets the current viewport image from Maya.</p></li>
+<li><p><strong>Fit Selection</strong>: Create regions surrounding the selected items in the Maya scene.</p></li>
+<li><p><strong>Mode</strong>: The type of regions to be used when fitting the selected items. The options are Tight (fitting the minimum 2D bounding box of the points) and Loose (fitting the minimum 2D bounding box of the bounding box of the object).</p></li>
+<li><p><strong>Padding</strong>: The amount of padding to add when fitting the selection (this is a percentage value that is added in each direction).</p></li>
+<li><p><strong>Save Regions</strong>: Saves the information in the regions directly into the Maya scene.</p></li>
+<li><p><strong>Load Regions</strong>: Loads the saved regions information from the Maya scene.</p></li>
+</ul>
+</div>
+<div class="section" id="frame-list-formatting-options">
+<span id="frame-list-ref-label"></span><h2>Frame List Formatting Options<a class="headerlink" href="#frame-list-formatting-options" title="Permalink to this headline">¶</a></h2>
+<p>During job submission, you usually have the option to specify the frame list you want to render, which often involves manually typing the frame list into a text box. In this case, you can make use of the following
+frame list formatting options.</p>
+<p><strong>Specifying Individual Frames or a Sequence</strong></p>
+<p>You can specify a single frame just by typing in the frame number:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">5</span>
+</pre></div>
+</div>
+<p>You can specify individual frames by separating each frame with a comma or a space:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">20</span>
+<span class="mi">5</span> <span class="mi">10</span> <span class="mi">15</span> <span class="mi">20</span>
+</pre></div>
+</div>
+<p>You can specify a frame range by separating the start and end frame with a dash or a colon:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span><span class="mi">100</span>
+<span class="mi">1</span><span class="p">:</span><span class="mi">100</span>
+</pre></div>
+</div>
+<p><strong>Specifying a Sequence with a Step Frame</strong></p>
+<p>You can specify a step frame for a sequence using x, :, step, by, or every:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span><span class="mi">100</span><span class="n">x5</span>
+<span class="mi">1</span><span class="p">:</span><span class="mi">100</span><span class="p">:</span><span class="mi">5</span>
+<span class="mi">1</span><span class="o">-</span><span class="mi">100</span><span class="n">step5</span>
+<span class="mi">1</span><span class="o">-</span><span class="mi">100</span><span class="n">by5</span>
+<span class="mi">1</span><span class="o">-</span><span class="mi">100</span><span class="n">every5</span>
+<span class="mi">1</span><span class="p">:</span><span class="mi">100</span><span class="p">:</span><span class="mi">5</span>
+</pre></div>
+</div>
+<p>Each of these examples will render every 5th frame between 1 and 100 (1, 6, 11, 16, etc).</p>
+<p><strong>Specifying a Reverse Frame Sequence</strong></p>
+<p>You can specify a reverse frame range by separating the end frame and start frame with a dash:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">100</span><span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>Using a step frame also works for reverse frame sequences:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">100</span><span class="o">-</span><span class="mi">1</span><span class="n">x5</span>
+<span class="mi">100</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span>
+</pre></div>
+</div>
+<p><strong>Advanced Frame Lists</strong></p>
+<p>Individual frames for the same job are never repeated when creating tasks for a job, which allows you to get creative with your frame lists without worrying about rendering the same frame more than once.</p>
+<p>To render frames 5, 18, and then from 28 to 100, you can specify one of the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">5</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">28</span><span class="o">-</span><span class="mi">100</span>
+<span class="mi">5</span> <span class="mi">18</span> <span class="mi">28</span><span class="o">-</span><span class="mi">100</span>
+<span class="mi">5</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">28</span><span class="p">:</span><span class="mi">100</span>
+</pre></div>
+</div>
+<p>To render every 5th frame between 1 to 100, then fill in the rest, you can specify one of the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span><span class="mi">100</span><span class="n">x5</span><span class="p">,</span><span class="mi">1</span><span class="o">-</span><span class="mi">100</span>
+<span class="mi">1</span><span class="o">-</span><span class="mi">100</span><span class="n">x5</span> <span class="mi">1</span><span class="o">-</span><span class="mi">100</span>
+<span class="mi">1</span><span class="p">:</span><span class="mi">100</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="mi">100</span>
+<span class="mi">1</span><span class="p">:</span><span class="mi">100</span><span class="p">:</span><span class="mi">5</span> <span class="mi">1</span><span class="p">:</span><span class="mi">100</span>
+</pre></div>
+</div>
+<p>To render every 10th frame between 1 to 100, then every 5th frame, then every 2nd frame, then fill in the rest, you can specify one of the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">-</span><span class="mi">100</span><span class="n">x10</span><span class="p">,</span><span class="mi">1</span><span class="o">-</span><span class="mi">100</span><span class="n">x5</span><span class="p">,</span><span class="mi">1</span><span class="o">-</span><span class="mi">100</span><span class="n">x2</span><span class="p">,</span><span class="mi">1</span><span class="o">-</span><span class="mi">100</span>
+<span class="mi">1</span><span class="o">-</span><span class="mi">100</span><span class="n">x10</span> <span class="mi">1</span><span class="o">-</span><span class="mi">100</span><span class="n">x5</span> <span class="mi">1</span><span class="o">-</span><span class="mi">100</span><span class="n">x2</span> <span class="mi">1</span><span class="o">-</span><span class="mi">100</span>
+<span class="mi">1</span><span class="p">:</span><span class="mi">100</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="mi">100</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="mi">100</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="mi">100</span>
+<span class="mi">1</span><span class="p">:</span><span class="mi">100</span><span class="p">:</span><span class="mi">10</span> <span class="mi">1</span><span class="p">:</span><span class="mi">100</span><span class="p">:</span><span class="mi">5</span> <span class="mi">1</span><span class="p">:</span><span class="mi">100</span><span class="p">:</span><span class="mi">2</span> <span class="mi">1</span><span class="p">:</span><span class="mi">100</span>
+</pre></div>
+</div>
+<p>To render in a mix of forward and reverse by different Nth frames, then fill in the rest in reverse, you can specify one of the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">100</span><span class="o">-</span><span class="mi">1</span><span class="n">x10</span><span class="p">,</span><span class="mi">0</span><span class="o">-</span><span class="mi">100</span><span class="n">x5</span><span class="p">,</span><span class="mi">100</span><span class="o">-</span><span class="mi">1</span>
+<span class="mi">100</span><span class="o">-</span><span class="mi">1</span><span class="n">x10</span> <span class="mi">0</span><span class="o">-</span><span class="mi">100</span><span class="n">x5</span> <span class="mi">100</span><span class="o">-</span><span class="mi">1</span>
+<span class="mi">100</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">100</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="mi">100</span><span class="p">:</span><span class="mi">1</span>
+<span class="mi">100</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">10</span> <span class="mi">0</span><span class="p">:</span><span class="mi">100</span><span class="p">:</span><span class="mi">5</span> <span class="mi">100</span><span class="p">:</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>NOTE, a job’s frame range can be modified after a job has been submitted to Deadline by right-clicking on a job and selecting “Modify Frame Range…”.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Submitting Jobs</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#integrated-submission-scripts">Integrated Submission Scripts</a></li>
+<li><a class="reference internal" href="#monitor-submission-scripts">Monitor Submission Scripts</a></li>
+<li><a class="reference internal" href="#common-job-submission-options">Common Job Submission Options</a></li>
+<li><a class="reference internal" href="#draft-and-integration-submission-options">Draft and Integration Submission Options</a></li>
+<li><a class="reference internal" href="#jigsaw">Jigsaw</a></li>
+<li><a class="reference internal" href="#frame-list-formatting-options">Frame List Formatting Options</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-configuration.html"
+                        title="previous chapter">Application Configuration</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="job-monitoring.html"
+                        title="next chapter">Monitoring Jobs</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="job-monitoring.html" title="Monitoring Jobs"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-configuration.html" title="Application Configuration"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-getting-started.html" >Getting Started With Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Submitting Jobs</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

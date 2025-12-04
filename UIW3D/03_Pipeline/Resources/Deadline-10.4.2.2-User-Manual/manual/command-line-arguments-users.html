@@ -1,0 +1,940 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Users and User Groups - Command Arguments &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="AWS Portal and Cloud - Command Arguments" href="command-line-arguments-cloud.html" />
+    <link rel="prev" title="Pools, Groups, and Limits - Command Arguments" href="command-line-arguments-pools-groups.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command-line-arguments-cloud.html" title="AWS Portal and Cloud - Command Arguments"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="command-line-arguments-pools-groups.html" title="Pools, Groups, and Limits - Command Arguments"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" accesskey="U">Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Users and User Groups - Command Arguments</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="users-and-user-groups-command-arguments">
+<span id="command-arguments-users"></span><h1>Users and User Groups - Command Arguments<a class="headerlink" href="#users-and-user-groups-command-arguments" title="Permalink to this headline">¶</a></h1>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td colspan="2"><p><a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">Command Overview</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-repo.html#command-arguments-repo"><span class="std std-ref">Database and Repository</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-clients.html#command-arguments-clients"><span class="std std-ref">Clients and Logs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-workers.html#command-arguments-workers"><span class="std std-ref">Workers</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="command-line-arguments-jobs.html#command-arguments-jobs"><span class="std std-ref">Jobs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-tasks.html#command-arguments-tasks"><span class="std std-ref">Tasks</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-pools-groups.html#command-arguments-pools"><span class="std std-ref">Pools, Groups, and Limits</span></a></p></td>
+<td><p><a class="reference internal" href="#command-arguments-users"><span class="std std-ref">Users and User Groups</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-pathmapping.html#command-arguments-pathmapping"><span class="std std-ref">Path and Drive Mapping</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="command-line-arguments-cloud.html#command-arguments-cloud"><span class="std std-ref">AWS Portal and Cloud</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-scripting.html#command-arguments-scripting"><span class="std std-ref">Scripting</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-system.html#command-arguments-system"><span class="std std-ref">System Functions and Dialogs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-housekeeping.html#command-arguments-housekeeping"><span class="std std-ref">Scans, History, and Reports</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-version.html#command-arguments-version"><span class="std std-ref">Version and Help</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#users" id="id1">Users</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getusernames" id="id2">GetUserNames</a></p></li>
+<li><p><a class="reference internal" href="#getusers" id="id3">GetUsers</a></p></li>
+<li><p><a class="reference internal" href="#getuser" id="id4">GetUser</a></p></li>
+<li><p><a class="reference internal" href="#setuser" id="id5">SetUser</a></p></li>
+<li><p><a class="reference internal" href="#changeuser" id="id6">ChangeUser</a></p></li>
+<li><p><a class="reference internal" href="#checkadminprivileges" id="id7">CheckAdminPrivileges</a></p></li>
+<li><p><a class="reference internal" href="#getcurrentusername" id="id8">GetCurrentUserName</a></p></li>
+<li><p><a class="reference internal" href="#deleteuser" id="id9">DeleteUser</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#user-groups" id="id10">User Groups</a></p>
+<ul>
+<li><p><a class="reference internal" href="#newusergroups" id="id11">NewUserGroups</a></p></li>
+<li><p><a class="reference internal" href="#getusergroup" id="id12">GetUserGroup</a></p></li>
+<li><p><a class="reference internal" href="#getusergroupnames" id="id13">GetUserGroupNames</a></p></li>
+<li><p><a class="reference internal" href="#addusertousergroup" id="id14">AddUserToUserGroup</a></p></li>
+<li><p><a class="reference internal" href="#getusergroupsforuser" id="id15">GetUserGroupsForUser</a></p></li>
+<li><p><a class="reference internal" href="#setuserforusergroup" id="id16">SetUserForUserGroup</a></p></li>
+<li><p><a class="reference internal" href="#removeuserfromusergroup" id="id17">RemoveUserFromUserGroup</a></p></li>
+<li><p><a class="reference internal" href="#deleteusergroup" id="id18">DeleteUserGroup</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="users">
+<h2><a class="toc-backref" href="#contents">Users</a><a class="headerlink" href="#users" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getusernames">
+<span id="getusernames-dlc-ref-label"></span><span id="users-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetUserNames</a><a class="headerlink" href="#getusernames" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display all the user names.</p>
+<p><strong>Aliases:</strong> <code class="docutils literal notranslate"><span class="pre">GetUserNames</span></code>, <code class="docutils literal notranslate"><span class="pre">Users</span></code></p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetUserNames</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>deadlinecommand -Users</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetUserNames
+    janesmith
+    johnsmith
+    reneebarton
+    sandyallison
+    tylerjordan
+</pre></div>
+</div>
+</div>
+<div class="section" id="getusers">
+<span id="getusers-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetUsers</a><a class="headerlink" href="#getusers" title="Permalink to this headline">¶</a></h3>
+<p>Displays information for all users.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Use Ini Display&gt;</p></td>
+<td><p>true/false (optional, default is false)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>See <a class="reference internal" href="#getuser-dlc-ref-label"><span class="std std-ref">GetUser</span></a> below for example output.</p>
+</div>
+</div>
+<div class="section" id="getuser">
+<span id="getuser-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetUser</a><a class="headerlink" href="#getuser" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays information for the user.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetUser</strong> &lt;User Name(s)&gt; [&lt;Use Ini Display&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;User Name(s)&gt;</p></td>
+<td><p>The user name, or a list of names separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Use Ini Display&gt;</p></td>
+<td><p>true/false (optional, default is false)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetUser janesmith,johnsmith True
+    [janesmith]
+    EmailAddress=janesmith@someemail.com
+    EmailNotifications=True
+    MachineName=WS-1337
+    PopupNotifications=False
+    UserName=janesmith
+
+    [johnsmith]
+    EmailAddress=johnsmith@someemail.com
+    EmailNotifications=False
+    MachineName=WS-10537
+    PopupNotifications=True
+    UserName=johnsmith
+</pre></div>
+</div>
+</div>
+<div class="section" id="setuser">
+<span id="setuser-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetUser</a><a class="headerlink" href="#setuser" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Modifies or creates the user.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetUser</strong> &lt;User Name&gt; &lt;Email&gt; &lt;Machine Name&gt; &lt;Notify By Email&gt; &lt;Notify By Popup&gt; [&lt;User Group&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;User Name&gt;</p></td>
+<td><p>The user name</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Email&gt;</p></td>
+<td><p>Their email address</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Machine Name&gt;</p></td>
+<td><p>Their machine name</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Notify By Email&gt;</p></td>
+<td><p>If they want email notifications (true/false)</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Notify By Popup&gt;</p></td>
+<td><p>If they want popup notifications (true/false)</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;User Group&gt;</p></td>
+<td><p>Optional. The user group (or list of groups separated by commas) to add the user to. By default, the user is already part of the Everyone group.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Assuming user johnsmith does not exist, this will create a new user:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SetUser johnsmith johnsmith@someemail.com WS-10537 True False Artists
+    Created user &#39;johnsmith&#39;
+</pre></div>
+</div>
+<p>If the user exists, the existing user’s settings will be modified:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SetUser johnsmith johnsmith@gmail.com WS-10537 False True Producers
+    Modified user &#39;johnsmith&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="changeuser">
+<span id="changeuser-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">ChangeUser</a><a class="headerlink" href="#changeuser" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Changes the current Deadline User on the machine.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -ChangeUser</strong> &lt;User Name&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;User Name&gt;</p></td>
+<td><p>(optional) If not specified, a Switch Deadline User dialog will be displayed</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Change the user to an existing name - no result is printed out on success:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -ChangeUser janesmith
+
+C:\&gt;
+</pre></div>
+</div>
+<p>Opening the Switch Deadline User dialog from the Monitor toolbar will show the new current user:</p>
+<img alt="../_images/command-changeuser-janesmith.png" src="../_images/command-changeuser-janesmith.png" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Opening the Switch Deadline User dialog via <code class="docutils literal notranslate"><span class="pre">deadlinecommand</span> <span class="pre">-ChangeUser</span></code> with no optional name argument will <strong>not</strong> display the current user, but will default to the top user on the list!</p>
+</div>
+<p>If the User name <strong>does not exist</strong>, an <strong>new user</strong> will be created:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -ChangeUser nemo
+    New user account for &#39;nemo&#39; has been created. You can select Options from the Tools menu in the Monitor to edit your user settings.
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<div class="line-block">
+<div class="line">If the option <strong>Tools (Power User Mode) &gt; Tools &gt; Configure Repository Options &gt; Use System User for the Deadline User</strong> is checked,</div>
+<div class="line">the command will have no effect, but no error will be reported.</div>
+</div>
+</div>
+</div>
+<div class="section" id="checkadminprivileges">
+<span id="checkadminprivileges-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">CheckAdminPrivileges</a><a class="headerlink" href="#checkadminprivileges" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Checks if the current user has admin privileges.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -CheckAdminPrivileges</strong> &lt;Verbose&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Verbose&gt;</p></td>
+<td><p>true/false</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -CheckAdminPrivileges true
+    Name:           DESKTOP-12A34B56\johnsmith
+    System:         False
+    Authenticated:  True
+    BuiltinAdmin:   False
+    Identity:       System.Security.Principal.WindowsIdentity
+    Groups:         Everyone,
+                    BUILTIN\Users,
+                    NT AUTHORITY\INTERACTIVE,
+                    CONSOLE LOGON,
+                    NT AUTHORITY\Authenticated Users,
+                    NT AUTHORITY\This Organization,
+                    MicrosoftAccount\johnsmith@email.com,
+                    NT AUTHORITY\Local account,
+                    LOCAL,
+                    NT AUTHORITY\Cloud Account Authentication
+
+    Success
+
+C:\&gt;deadlinecommand -CheckAdminPrivileges true
+    Success
+</pre></div>
+</div>
+</div>
+<div class="section" id="getcurrentusername">
+<span id="getcurrentusername-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetCurrentUserName</a><a class="headerlink" href="#getcurrentusername" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display the current Deadline user</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetCurrentUserName</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetCurrentUserName
+    johnsmith
+</pre></div>
+</div>
+</div>
+<div class="section" id="deleteuser">
+<span id="deleteuser-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">DeleteUser</a><a class="headerlink" href="#deleteuser" title="Permalink to this headline">¶</a></h3>
+<p>Deletes the user.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;User Name(s)&gt;</p></td>
+<td><p>The user name, or a list of names separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -DeleteUser johnsmith,janesmith
+    Deleted users: johnsmith,janesmith
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="user-groups">
+<h2><a class="toc-backref" href="#contents">User Groups</a><a class="headerlink" href="#user-groups" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="newusergroups">
+<span id="newusergroups-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">NewUserGroups</a><a class="headerlink" href="#newusergroups" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Creates new User Groups with the given user group names, if they do not exist already.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -NewUserGroups</strong> &lt;User Group Name(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;User Group Name(s)&gt;</p></td>
+<td><p>The user group name, or a list of user group names separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -NewUserGroups Artists
+    Create new User Group(s): Artists
+
+C:\&gt;deadlinecommand -NewUserGroups Artists
+    Failed to create any new User Groups, as all provided User Group names already exist.
+
+C:\&gt;deadlinecommand -NewUserGroups Artists,Producers
+    Create new User Group(s): Producers
+</pre></div>
+</div>
+</div>
+<div class="section" id="getusergroup">
+<span id="getusergroup-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetUserGroup</a><a class="headerlink" href="#getusergroup" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays all User names in the specified User Group.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetUserGroup</strong> &lt;User Group Name&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;User Group Name&gt;</p></td>
+<td><p>The user group name</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetUserGroup Everyone
+    janesmith
+    johnsmith
+    reneebarton
+    sandyallison
+    tylerjordan
+</pre></div>
+</div>
+</div>
+<div class="section" id="getusergroupnames">
+<span id="getusergroupnames-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetUserGroupNames</a><a class="headerlink" href="#getusergroupnames" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display all the user group names.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetUserGroupNames</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetUserGroupNames
+    Artists
+    Everyone
+    Producers
+</pre></div>
+</div>
+</div>
+<div class="section" id="addusertousergroup">
+<span id="addusertousergroup-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">AddUserToUserGroup</a><a class="headerlink" href="#addusertousergroup" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Adds a User to the specified User Group.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -AddUserToUserGroup</strong> &lt;User Name(s)&gt; &lt;User Group Name(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;User Name(s)&gt;</p></td>
+<td><p>The user name, or a list of user names separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;User Group Name(s)&gt;</p></td>
+<td><p>The user group name, or a list of user group names separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -AddUserToUserGroup jane,joe Artists
+    Added users jane,joe to groups Artists
+</pre></div>
+</div>
+<p>Adding a User multiple times to the same Group does not cause an error.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span><span class="n">deadlinecommand</span> <span class="o">-</span><span class="n">AddUserToUserGroup</span> <span class="n">jane</span> <span class="n">Artists</span><span class="p">,</span><span class="n">Producers</span>
+    <span class="n">Added</span> <span class="n">users</span> <span class="n">jane</span> <span class="n">to</span> <span class="n">groups</span> <span class="n">Artists</span><span class="p">,</span><span class="n">Producers</span>
+</pre></div>
+</div>
+<p>If some User Groups in the list do not exist, they will be ignored.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span><span class="n">deadlinecommand</span> <span class="o">-</span><span class="n">AddUserToUserGroup</span> <span class="n">jane</span> <span class="n">Artists</span><span class="p">,</span><span class="n">Zombies</span>
+    <span class="n">Added</span> <span class="n">users</span> <span class="n">jane</span> <span class="n">to</span> <span class="n">groups</span> <span class="n">Artists</span>
+
+<span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span><span class="n">deadlinecommand</span> <span class="o">-</span><span class="n">AddUserToUserGroup</span> <span class="n">jane</span> <span class="n">Zombies</span>
+    <span class="n">Unable</span> <span class="n">to</span> <span class="n">add</span> <span class="n">users</span> <span class="n">to</span> <span class="n">user</span> <span class="n">groups</span><span class="o">.</span>  <span class="n">No</span> <span class="n">valid</span> <span class="n">group</span> <span class="n">names</span> <span class="n">given</span>
+
+<span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span><span class="n">deadlinecommand</span> <span class="o">-</span><span class="n">AddUserToUserGroup</span> <span class="n">maria</span> <span class="n">Zombies</span>
+    <span class="n">Unable</span> <span class="n">to</span> <span class="n">add</span> <span class="n">users</span> <span class="n">to</span> <span class="n">user</span> <span class="n">groups</span><span class="o">.</span>  <span class="n">No</span> <span class="n">valid</span> <span class="n">user</span> <span class="n">names</span> <span class="n">given</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getusergroupsforuser">
+<span id="getusergroupsforuser-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetUserGroupsForUser</a><a class="headerlink" href="#getusergroupsforuser" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display all the user group names for the user.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetUserGroupsForUser</strong> &lt;User Name&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;User Name&gt;</p></td>
+<td><p>The user name</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetUserGroupsForUser jane
+    Artists
+    Producers
+    Everyone
+</pre></div>
+</div>
+</div>
+<div class="section" id="setuserforusergroup">
+<span id="setuserforusergroup-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetUserForUserGroup</a><a class="headerlink" href="#setuserforusergroup" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Sets the Users lists of the specified User Groups.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetUserForUserGroup</strong> &lt;User Name(s)&gt; &lt;User Group Name(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;User Name(s)&gt;</p></td>
+<td><p>The user name, or a list of user names separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;User Group Name(s)&gt;</p></td>
+<td><p>The user group name, or a list of user group names separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SetUserForUserGroup jane,joe Artists,Producers
+    Set users to jane,joe for groups Artists,Producers
+</pre></div>
+</div>
+<p>The User Group is set to the exact list specified. Excluding a user from the list will remove it from the User Group if it was in it:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SetUserForUserGroup jane,joe Artists,Producers
+    Set users to jane,joe for groups Artists,Producers
+
+C:\&gt;deadlinecommand -GetUserGroup Artists
+    jane
+    joe
+
+C:\&gt;deadlinecommand -GetUserGroup Producers
+    jane
+    joe
+
+C:\&gt;deadlinecommand -SetUserForUserGroup jane Artists,Producers
+    Set users to jane for groups Artists,Producers
+
+C:\&gt;deadlinecommand -GetUserGroup Artists
+    jane
+
+C:\&gt;deadlinecommand -GetUserGroup Producers
+    jane
+</pre></div>
+</div>
+</div>
+<div class="section" id="removeuserfromusergroup">
+<span id="removeuserfromusergroup-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">RemoveUserFromUserGroup</a><a class="headerlink" href="#removeuserfromusergroup" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Removes one or more Users from one or more User Groups.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -RemoveUserFromUserGroup</strong> &lt;User Name(s)&gt; &lt;User Group Name(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;User Name(s)&gt;</p></td>
+<td><p>The user name, or a list of user names separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;User Group Name(s)&gt;</p></td>
+<td><p>The user group name, or a list of user group names separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SetUserForUserGroup jane,joe Artists,Producers
+    Set users to jane,joe for groups Artists,Producers
+
+C:\&gt;deadlinecommand -RemoveUserFromUserGroup jane Artists,Producers
+    Removed users jane from groups Artists,Producers
+
+C:\&gt;deadlinecommand -GetUserGroup Artists
+    joe
+
+C:\&gt;deadlinecommand -GetUserGroup Producers
+    joe
+</pre></div>
+</div>
+<p>There is no warning or error if the User being removed is not in the User Group:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span><span class="n">deadlinecommand</span> <span class="o">-</span><span class="n">RemoveUserFromUserGroup</span> <span class="n">jane</span> <span class="n">Artists</span><span class="p">,</span><span class="n">Producers</span>
+    <span class="n">Removed</span> <span class="n">users</span> <span class="n">jane</span> <span class="kn">from</span> <span class="nn">groups</span> <span class="n">Artists</span><span class="p">,</span><span class="n">Producers</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="deleteusergroup">
+<span id="deleteusergroup-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">DeleteUserGroup</a><a class="headerlink" href="#deleteusergroup" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Deletes the User Group with the given User Group name.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -DeleteUserGroup</strong> &lt;User Group Name&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;User Group Name&gt;</p></td>
+<td><p>The name of the User Group to delete</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -DeleteUserGroup Artists
+    Successfully deleted User Group &#39;Artists&#39;
+
+C:\&gt;deadlinecommand -DeleteUserGroup Artists
+    User Group &#39;Artists&#39; can not be deleted as it does not exist.
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Users and User Groups - Command Arguments</a><ul>
+<li><a class="reference internal" href="#users">Users</a><ul>
+<li><a class="reference internal" href="#getusernames">GetUserNames</a></li>
+<li><a class="reference internal" href="#getusers">GetUsers</a></li>
+<li><a class="reference internal" href="#getuser">GetUser</a></li>
+<li><a class="reference internal" href="#setuser">SetUser</a></li>
+<li><a class="reference internal" href="#changeuser">ChangeUser</a></li>
+<li><a class="reference internal" href="#checkadminprivileges">CheckAdminPrivileges</a></li>
+<li><a class="reference internal" href="#getcurrentusername">GetCurrentUserName</a></li>
+<li><a class="reference internal" href="#deleteuser">DeleteUser</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#user-groups">User Groups</a><ul>
+<li><a class="reference internal" href="#newusergroups">NewUserGroups</a></li>
+<li><a class="reference internal" href="#getusergroup">GetUserGroup</a></li>
+<li><a class="reference internal" href="#getusergroupnames">GetUserGroupNames</a></li>
+<li><a class="reference internal" href="#addusertousergroup">AddUserToUserGroup</a></li>
+<li><a class="reference internal" href="#getusergroupsforuser">GetUserGroupsForUser</a></li>
+<li><a class="reference internal" href="#setuserforusergroup">SetUserForUserGroup</a></li>
+<li><a class="reference internal" href="#removeuserfromusergroup">RemoveUserFromUserGroup</a></li>
+<li><a class="reference internal" href="#deleteusergroup">DeleteUserGroup</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="command-line-arguments-pools-groups.html"
+                        title="previous chapter">Pools, Groups, and Limits - Command Arguments</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="command-line-arguments-cloud.html"
+                        title="next chapter">AWS Portal and Cloud - Command Arguments</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command-line-arguments-cloud.html" title="AWS Portal and Cloud - Command Arguments"
+             >next</a></li>
+        <li class="right" >
+          <a href="command-line-arguments-pools-groups.html" title="Pools, Groups, and Limits - Command Arguments"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" >Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Users and User Groups - Command Arguments</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

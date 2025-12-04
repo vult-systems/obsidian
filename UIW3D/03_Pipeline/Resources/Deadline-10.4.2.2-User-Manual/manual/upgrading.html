@@ -1,0 +1,284 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upgrading or Downgrading Deadline &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Upgrading or Downgrading Deadline Frequently Asked Questions (FAQ)" href="upgrading-faq.html" />
+    <link rel="prev" title="Migrating from Direct Connection to Remote Connection type" href="migrating-to-RCS-from-direct-connection.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="upgrading-faq.html" title="Upgrading or Downgrading Deadline Frequently Asked Questions (FAQ)"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="migrating-to-RCS-from-direct-connection.html" title="Migrating from Direct Connection to Remote Connection type"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" accesskey="U">Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Upgrading or Downgrading Deadline</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="upgrading-or-downgrading-deadline">
+<span id="upgrading-ref-label"></span><h1>Upgrading or Downgrading Deadline<a class="headerlink" href="#upgrading-or-downgrading-deadline" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This will guide you through the process of upgrading or downgrading an existing Deadline installation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Starting with Deadline 10.1.23, Deadline and its components do not require a license. For older versions, check whether your license file needs to be updated <strong>BEFORE</strong> installing the new version of Deadline.</p>
+</div>
+</div>
+<div class="section" id="versions-breaking-backwards-compatibility">
+<h2>Versions Breaking Backwards Compatibility<a class="headerlink" href="#versions-breaking-backwards-compatibility" title="Permalink to this headline">¶</a></h2>
+<p>This section contains notes about specific versions that break compatibility between different applications.</p>
+<div class="section" id="or-newer">
+<h3>10.4.1 or Newer<a class="headerlink" href="#or-newer" title="Permalink to this headline">¶</a></h3>
+<p>On Windows, Deadline version 10.4.1 or above will run Deadline Launcher on startup _only_ for the user that has run the installer. For those that wish to run the Deadline Launcher on multiple users, please either run the Deadline Client installer on multiple users, or configure Windows to startup Deadline Launcher at launch for each desired user.</p>
+<p>Deadline version 10.4.1 or above now checks for Extended Key Usage (EKU) fields on the RCS client and server X.509 certificates when using TLS. No action is needed if you use the X.509 certificates generated by the Deadline installer. If you generate your own certificates, you will need to make sure to properly specify the EKU field on the client and server certificates.</p>
+<p>Deadline Client applications for Deadline 10.4.1 and later can only connect to a Remote Connection Server (RCS) with a minimum version of 10.4.1. You must upgrade your RCS before upgrading any connecting Clients when upgrading to version 10.4.1.</p>
+</div>
+<div class="section" id="id1">
+<h3>10.4.0 or Newer<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Deadline Client applications for Deadline 10.4.0 and later can only connect to a Remote Connection Server (RCS) with a minimum version of 10.4.0. You must upgrade your RCS before upgrading any connecting Clients when upgrading to version 10.4.0.</p>
+<p>Deadline 10.4.0 and later uses a new format for Monitor layout and style files. If you load a layout file that was created by an earlier version, it will be converted into the new format, and it will no longer work with earlier versions of Deadline. A backup of the layout file will be created alongside it with “Legacy Backup” appended to the layout file name, which can be used with prior Deadline versions.</p>
+<p>Deadline 10.4.0 and later client installers change permissions to the <a class="reference internal" href="client-config.html#client-config-ref-label"><span class="std std-ref">system-wide client configuration folder</span></a>. Users now have read-only access, except for the <cite>logs</cite> folder which retains read and write access. Deadline will use the user-level configuration folder for any user-specific overrides.</p>
+</div>
+<div class="section" id="or-older-to-10-1-13-or-newer">
+<h3>10.1.12 or Older to 10.1.13 or Newer<a class="headerlink" href="#or-older-to-10-1-13-or-newer" title="Permalink to this headline">¶</a></h3>
+<p>Deadline Client applications for Deadline 10.1.13 and later can only connect to a Remote Connection Server (RCS) with a minimum version of 10.1.13. If you are upgrading from Deadline 10.1.12 or earlier, you must upgrade your RCS before upgrading any connecting Clients.</p>
+<p>Deadline Workers for Deadline 10.1.12 and earlier will not be able to render Arnold, Max, Maya, or RenderMan jobs with Usage Based Licensing (UBL) when connecting to a License Forwarder with a minimum version of 10.1.13. Due to this restriction, AWS Portal infrastructures launched from Deadline 10.1.13 and later can only support UBL for these applications when using AMIs with Deadline Worker versions 10.1.13 or later. If you have built <a class="reference internal" href="aws-custom-ami.html#customize-ami-aws-portal-ref-label"><span class="std std-ref">Custom Amazon Machin Images (AMIs)</span></a> for AWS Portal using these applications and require UBL, you will need to build and use new AMIs with a minimum version of 10.1.13.</p>
+</div>
+</div>
+<div class="section" id="major-upgrades-or-downgrades">
+<h2>Major Upgrades or Downgrades<a class="headerlink" href="#major-upgrades-or-downgrades" title="Permalink to this headline">¶</a></h2>
+<p>If upgrading to a new major version (for example, Deadline 9 to 10), or downgrading from a new major version (for example, Deadline 10 to 9), you will need to install a <strong>NEW</strong> Repository and Database, and you will need to reinstall the Client software. This is necessary because there are often breaking changes between <strong>MAJOR</strong> releases. MINOR releases (including beta releases) such as Deadline 9.0.8.4 or 9.0.7.0 can happily be installed over the top of an existing Deadline 9.0 installation, but <strong>NOT</strong> Deadline 10.0.</p>
+<p>Please note we do <strong>NOT</strong> officially support the archiving/importing workflow to transfer Deadline jobs from one <strong>MAJOR</strong> version to another. The reason for this is that MAJOR versions of Deadline allow us to carry out ‘breaking’ changes to our DB backend, so the dev team make no promises that the Deadline “job object” may or may not get touched. So, the official recommendation is always to let all jobs finish up rendering in one MAJOR version before moving over to the next. MINOR versions of Deadline are typically supported.</p>
+<p>You should also reinstall your integrated submission scripts on your workstations, since it’s possible these were changed between major releases. <em>If upgrading to Deadline 8 or later, it is absolutely necessary to reinstall these scripts</em>. See the Application Plugins documentation for more information on how to set up the integrated submission scripts (where applicable).</p>
+<p>Deadline licensing only takes into account the first two parts of the version number. For <strong>MAJOR</strong> version and <strong>MINOR</strong> version upgrades, a new license will be required. A new license is <strong>NOT</strong> required however for new <strong>PATCH</strong> versions. For example upgrading from Deadline 9.X.Y.Z to Deadline 10.A.B.C <strong>WOULD</strong> require a new license. Upgrading from Deadline 10.0.X.Y to Deadline 10.1.A.B <strong>WOULD</strong> also require a new license. Upgrading from Deadline 10.0.26.X to Deadline 10.0.27.Y <strong>WOULD NOT</strong> require a new license.</p>
+<p>The license server should also be upgraded to ensure it will work with newer releases in case there are incompatibilities with the previous version of the license server.</p>
+<p>Please refer to the following documentation for more information:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="install-db-repo.html#install-db-repo-ref-label"><span class="std std-ref">Database and Repository Installation Guide</span></a></p></li>
+<li><p><a class="reference internal" href="install-client.html#install-client-ref-label"><span class="std std-ref">Client Installation Guide</span></a></p></li>
+<li><p><a class="reference internal" href="licensing.html#licensing-ref-label"><span class="std std-ref">Licensing Guide</span></a></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="minor-upgrades-or-downgrades">
+<h2>Minor Upgrades or Downgrades<a class="headerlink" href="#minor-upgrades-or-downgrades" title="Permalink to this headline">¶</a></h2>
+<p>If upgrading or downgrading to a minor version that is part of the same major release cycle (for example, Deadline 10.0 to 10.0.9.2, or Deadline 10.0.28.2 to 10.1.0.7), you can simply install over the existing installation. If you have Automatic Upgrades / Downgrades enabled, you can have the Clients automatically upgrade or downgrade themselves after upgrading or downgrading the Database and Repository. Automatic Upgrades / Downgrades can be enabled in the Client Setup section of the <a class="reference internal" href="repository-config.html#client-setup-ref-label"><span class="std std-ref">Repository Configuration</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are upgrading from Deadline 10.0 to 10.1.1 and later (10.1.1+), there are important things to note:</p>
+<ul class="simple">
+<li><p>Auto-upgrading from Deadline 10.0 to 10.1.1+ is supported, but auto-downgrading from 10.1.1+ to 10.0 is not, unless 10.0 was previously installed on the machine.</p></li>
+<li><p><strong>If you are using the Remote Connection Server (RCS)</strong>, you need to upgrade the RCS to 10.1.1+ before upgrading all other Deadline Client installations to 10.1.1+. This ensures that the Clients can communicate properly with the RCS, because a 10.0 Client cannot communicate with a 10.1.1+ RCS.</p></li>
+<li><p><strong>If you are using a TLS-enabled Remote Connection Server (RCS)</strong>, note that a 10.0 Client will not be able to communicate with a 10.1.1+ RCS. To upgrade from 10.0 to 10.1.1+, you will need to upgrade to 10.1.0 first, and then upgrade again to the latest 10.1.1+ version.</p></li>
+<li><p><strong>If you are using AWS Portal</strong>, you need to upgrade every AWS Portal component. This includes the Deadline Client on the machine connecting to AWS Portal, the AWS Portal Link service, any existing AWS Portal infrastructure and instances, and the IAM policy for your AWS Portal account.</p></li>
+</ul>
+</div>
+<p>You can also enable Remote Administration in the Client Setup section of the <a class="reference internal" href="repository-config.html#client-setup-ref-label"><span class="std std-ref">Repository Configuration</span></a> under the Remote Control tab. This will make it easier to upgrade or downgrade your render nodes remotely.</p>
+<a class="reference internal image-reference" href="../_images/upgrade_cro_client_setup.png"><img alt="../_images/upgrade_cro_client_setup.png" src="../_images/upgrade_cro_client_setup.png" style="height: 500px;" /></a>
+<p>Note that this upgrade/downgrade method is only supported when upgrading or downgrading an existing Repository installation. For example, it is NOT recommended to install the Deadline 10.0.9.2 Repository to a new location and then have your 10.0 Clients upgrade by pointing them to the new Repository path. Instead, you should first <a class="reference internal" href="relocating.html#relocating-ref-label"><span class="std std-ref">move your Repository installation</span></a> and then do the upgrade once your 10.0 Clients are connected to the new Repository.</p>
+<p>To ensure Deadline’s Automatic Upgrade/Downgrade system works correctly; make sure the service account used to run Deadline Launcher has the ability to start and stop the service. This permission on Windows for example can be added to the service account by an Administrator user as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setacl</span><span class="o">.</span><span class="n">exe</span> \\<span class="n">computername</span>\<span class="n">deadline</span><span class="o">&lt;</span><span class="n">VERSION</span><span class="o">&gt;</span><span class="n">launcherservice</span> <span class="o">/</span><span class="n">service</span> <span class="o">/</span><span class="n">grant</span> <span class="o">&lt;</span><span class="n">serviceaccount</span><span class="o">&gt;</span> <span class="o">/</span><span class="n">start_stop</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;VERSION&gt;</span></code> is the Deadline major version, such as: <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p>
+</div>
+<div class="section" id="upgrading-or-downgrading-the-database-and-repository">
+<span id="upgrading-db-repo-ref-label"></span><h3>Upgrading or Downgrading the Database and Repository<a class="headerlink" href="#upgrading-or-downgrading-the-database-and-repository" title="Permalink to this headline">¶</a></h3>
+<p>Launch the new Repository installer, and choose the existing Repository folder for the Installation Directory. Then choose the option to connect to an existing MongoDB database, and use the same Database Settings you used when installing the previous version (they should be pre-populated for you).</p>
+<p><a class="reference internal" href="../_images/upgrade_repo_installer_01.png"><img alt="upgrade_repo_installer_01" src="../_images/upgrade_repo_installer_01.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/upgrade_repo_installer_02.png"><img alt="upgrade_repo_installer_02" src="../_images/upgrade_repo_installer_02.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/upgrade_repo_installer_03.png"><img alt="upgrade_repo_installer_03" src="../_images/upgrade_repo_installer_03.png" style="height: 300px;" /></a></p>
+<p>During the installation, all binaries, plugins, and scripts from the previous version will be backed up. You can find them in the backup folder in the Repository after the installation is complete. Note that any scripts or plugins in the ‘custom’ folder will not be affected when upgrading the Repository.</p>
+<p>After upgrading or downgrading the Database and Repository, you can then upgrade or downgrade the Clients.</p>
+</div>
+<div class="section" id="upgrading-or-downgrading-non-render-nodes-and-non-workstations-first">
+<span id="upgrading-or-downgrading-nonrender-nodes-ref-label"></span><h3>Upgrading or Downgrading Non-Render Nodes and Non-Workstations First<a class="headerlink" href="#upgrading-or-downgrading-non-render-nodes-and-non-workstations-first" title="Permalink to this headline">¶</a></h3>
+<p>Before upgrading or downgrading all of your Client machines, you should first upgrade or downgrade the following applications if you are running them on your render farm.</p>
+<ul class="simple">
+<li><p>Remote Connection Server</p></li>
+<li><p>Pulse</p></li>
+<li><p>Balancer (deprecated)</p></li>
+<li><p>Forwarder</p></li>
+<li><p>Web Service</p></li>
+</ul>
+<p>If you don’t have Automatic Upgrades / Downgrades enabled, you will have to upgrade or downgrade these applications manually, which involves running the Client Installer on the appropriate machines. See the <a class="reference internal" href="install-client.html#install-client-ref-label"><span class="std std-ref">Client Installation Guide</span></a> for more information.</p>
+<p>If you have Automatic Upgrades / Downgrades enabled, all you have to do is restart the applications from the Launcher (which will execute an automatic Launcher bootstrap process based on the client recognizing a version change in the repository). Additionally, if you have <a class="reference internal" href="repository-config.html#client-setup-ref-label"><span class="std std-ref">Remote Administration</span></a> enabled in the Repository configuration, you can easily execute a <a class="reference internal" href="remote-control.html#remote-worker-controls-ref-label"><span class="std std-ref">remote command</span></a> to restart the Workers/Pulses/etc from the Monitor.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Due to the removal of the Proxy Server in version 10.0.25, if doing a fresh install of versions 10.0.25 or higher, automatically downgrading to a version lower than 10.0.25 can cause issues with the Proxy Server. While it is recommended to use the <a class="reference internal" href="remote-connection-server.html#remote-connection-server-ref-label"><span class="std std-ref">Remote Connection Server</span></a> instead of the Proxy Server, you can mitigate the issues in the following ways:</p>
+<p>macOS</p>
+<ul class="simple">
+<li><p>The <cite>DeadlineProxyServer10.app</cite> will not exist if downgrading from a fresh install of 10.0.25 or greater, and therefore will not be able to run. If you must use the Proxy Server, you will need to run the Deadline Client installer for a previous version.</p></li>
+</ul>
+<p>Linux</p>
+<ul class="simple">
+<li><p>The <cite>deadlineproxyserver</cite> file will not have run permissions by default. You will need to add run permissions to it before it can run.</p></li>
+</ul>
+<p>Windows &amp; Linux</p>
+<ul class="simple">
+<li><p>The Deadline <a class="reference internal" href="launcher.html#launcher-menu-ref-label"><span class="std std-ref">Launcher menu</span></a> will not show the option to launch a Proxy Server. If you want to re-enable that option, add <cite>IncludeProxyServerInLauncherMenu=true</cite> in a new line in your local <cite>deadline.ini</cite> file.</p></li>
+</ul>
+</div>
+<p>This process is actually identical for the Pulse, Balancer (deprecated), and Forwarder, so let’s use the Pulse panel as an example. Right-click on the Pulse instance in the list and select Remote Control Pulse -&gt; Pulse Commands -&gt; Restart Pulse. Note that if you don’t see the Remote Control menu, you will have to enter Power User Mode from the Tools menu. This sends a remote command to the Launcher running on the remote machine to restart Pulse, which will trigger the upgrade. After Pulse has been restarted, you can check the Version column in the Pulse panel to confirm that it’s now running the new version.</p>
+<a class="reference internal image-reference" href="../_images/restart_pulse.png"><img alt="../_images/restart_pulse.png" src="../_images/restart_pulse.png" style="height: 400px;" /></a>
+<p>You can repeat this process for the Balancer (deprecated), and Forwarder as necessary. For the Web Service though, you’ll notice that there isn’t a panel in the Monitor for it. Currently, the only way to update the Web Service is to run the Client Installer on the machine that it’s running on.</p>
+<p>See the <a class="reference internal" href="remote-control.html#remote-control-ref-label"><span class="std std-ref">Remote Control</span></a> documentation for more information about the remote commands that are available.</p>
+</div>
+<div class="section" id="upgrading-or-downgrading-the-render-nodes">
+<h3>Upgrading or Downgrading the Render Nodes<a class="headerlink" href="#upgrading-or-downgrading-the-render-nodes" title="Permalink to this headline">¶</a></h3>
+<p>If you don’t have Automatic Upgrades / Downgrades enabled, you will have to upgrade or downgrade the Clients manually, which involves running the Client Installers on the machines. See the <a class="reference internal" href="install-client.html#install-client-ref-label"><span class="std std-ref">Client Installation Guide</span></a> for more information.</p>
+<p>If you have Automatic Upgrades / Downgrades enabled, all you have to do is restart the Worker application on each render node through the Launcher. The Client will notice that the Repository has been upgraded or downgraded, and will automatically upgrade or downgrade itself. In addition, the next time artists launch the Monitor on their workstations through the Launcher, their installation will also be upgraded or downgraded.</p>
+<p>To restart the Workers remotely, <a class="reference internal" href="repository-config.html#client-setup-ref-label"><span class="std std-ref">Remote Administration</span></a> must be enabled. Select the Workers you want to upgrade or downgrade in the Monitor while in Power User mode, then right click and select Remote Control -&gt; Restart Workers. If the Workers are currently rendering and you don’t want to disrupt them, you can choose the option to Restart Workers After Current Task instead. This option will allow the Workers to upgrade or downgrade after they finish rendering their current task to prevent the loss of any render time. See the <a class="reference internal" href="remote-control.html#remote-control-ref-label"><span class="std std-ref">Remote Control</span></a> documentation for more information.</p>
+<a class="reference internal image-reference" href="../_images/restart_worker.png"><img alt="../_images/restart_worker.png" src="../_images/restart_worker.png" style="height: 500px;" /></a>
+<p>After restarting the Workers, several Workers may appear offline or a message may pop up saying the certain Workers did not respond. This may occur because all the Workers are trying to upgrade or downgrade at once. Wait a little bit and eventually all the Workers should come back online. After the Workers have been restarted, you can check the Version column in the Worker panel to confirm that they’re all now running the new version.</p>
+</div>
+<div class="section" id="upgrading-or-downgrading-workstations">
+<h3>Upgrading or Downgrading Workstations<a class="headerlink" href="#upgrading-or-downgrading-workstations" title="Permalink to this headline">¶</a></h3>
+<p>This is a somewhat manual process, so it’s recommended that you send out a notification to your staff to let them know the upgrade is in place. The next time any of the artists or wranglers launch their Monitor (or any Deadline application) through their Launcher, the upgrade will take place automatically before launching the chosen application.</p>
+</div>
+<div class="section" id="upgrading-or-downgrading-draft">
+<span id="upgrading-draft-ref-label"></span><h3>Upgrading or Downgrading Draft<a class="headerlink" href="#upgrading-or-downgrading-draft" title="Permalink to this headline">¶</a></h3>
+<p>It’s not uncommon for a new version of Draft to be included with a minor release of Deadline. However, there might be situations where you want to upgrade or downgrade Deadline, but stick with the current version of Draft that you are using. To do so, simply follow these steps:</p>
+<ol class="arabic simple">
+<li><p>Run the Repository Installer as explained above to upgrade or downgrade Deadline. During installation, the Repository installer will back up the previous version of Draft to the “backup” folder in your Repository directory.</p></li>
+<li><p>Note the location where you installed the Repository. This will be referred to as <code class="docutils literal notranslate"><span class="pre">[REPOSITORY]</span></code> for the remaining steps.</p></li>
+<li><p>After the Repository installation has finished, navigate to <code class="docutils literal notranslate"><span class="pre">[REPOSITORY]/backup/mostRecent</span></code>. This folder contains everything that was backed up from the previous installation.</p></li>
+<li><p>Copy the contents of <code class="docutils literal notranslate"><span class="pre">[REPOSITORY]/backup/mostRecent/draft</span></code> to <code class="docutils literal notranslate"><span class="pre">[REPOSITORY]/draft</span></code>, and overwrite the existing files. This will update the Draft libraries that are used.</p></li>
+<li><p>Copy the contents of <code class="docutils literal notranslate"><span class="pre">[REPOSITORY]/backup/mostRecent/submission/Draft</span></code> to <code class="docutils literal notranslate"><span class="pre">[REPOSITORY]/submission/Draft</span></code>, and overwrite the existing files. This will update the Quick Draft options so that they match the version of Draft you’re using.</p></li>
+</ol>
+</div>
+<div class="section" id="upgrading-or-downgrading-aws-portal">
+<h3>Upgrading or Downgrading AWS Portal<a class="headerlink" href="#upgrading-or-downgrading-aws-portal" title="Permalink to this headline">¶</a></h3>
+<p>If you’re currently on a version older than Deadline 10.1.8, and wish to upgrade to latest Deadline, you <strong>must</strong> also upgrade to <a class="reference internal" href="aws-portal-installing.html#aws-portal-installing-ref-label"><span class="std std-ref">latest AWS Portal Server</span></a>. This is required as starting Deadline 10.1.8, we changed how Deadline’s AWS Identity and Access Management (IAM) resources are created, and we’ve started using <a class="reference external" href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html#aws-managed-policies">AWS Managed Policies</a>.</p>
+<p>Typically, upgrading or downgrading AWS Portal will require you to cancel any running Spot Fleet requests and stop any running Infrastructures. To learn more, see <a class="reference internal" href="aws-portal-updating-deadline-when-using-aws-portal.html#aws-portal-updating-deadline-when-using-aws-portal-ref-label"><span class="std std-ref">Instructions for Updating Deadline when using AWS Portal</span></a>.</p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Upgrading or Downgrading Deadline</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#versions-breaking-backwards-compatibility">Versions Breaking Backwards Compatibility</a><ul>
+<li><a class="reference internal" href="#or-newer">10.4.1 or Newer</a></li>
+<li><a class="reference internal" href="#id1">10.4.0 or Newer</a></li>
+<li><a class="reference internal" href="#or-older-to-10-1-13-or-newer">10.1.12 or Older to 10.1.13 or Newer</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#major-upgrades-or-downgrades">Major Upgrades or Downgrades</a></li>
+<li><a class="reference internal" href="#minor-upgrades-or-downgrades">Minor Upgrades or Downgrades</a><ul>
+<li><a class="reference internal" href="#upgrading-or-downgrading-the-database-and-repository">Upgrading or Downgrading the Database and Repository</a></li>
+<li><a class="reference internal" href="#upgrading-or-downgrading-non-render-nodes-and-non-workstations-first">Upgrading or Downgrading Non-Render Nodes and Non-Workstations First</a></li>
+<li><a class="reference internal" href="#upgrading-or-downgrading-the-render-nodes">Upgrading or Downgrading the Render Nodes</a></li>
+<li><a class="reference internal" href="#upgrading-or-downgrading-workstations">Upgrading or Downgrading Workstations</a></li>
+<li><a class="reference internal" href="#upgrading-or-downgrading-draft">Upgrading or Downgrading Draft</a></li>
+<li><a class="reference internal" href="#upgrading-or-downgrading-aws-portal">Upgrading or Downgrading AWS Portal</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="migrating-to-RCS-from-direct-connection.html"
+                        title="previous chapter">Migrating from Direct Connection to Remote Connection type</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="upgrading-faq.html"
+                        title="next chapter">Upgrading or Downgrading Deadline Frequently Asked Questions (FAQ)</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="upgrading-faq.html" title="Upgrading or Downgrading Deadline Frequently Asked Questions (FAQ)"
+             >next</a></li>
+        <li class="right" >
+          <a href="migrating-to-RCS-from-direct-connection.html" title="Migrating from Direct Connection to Remote Connection type"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" >Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Upgrading or Downgrading Deadline</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

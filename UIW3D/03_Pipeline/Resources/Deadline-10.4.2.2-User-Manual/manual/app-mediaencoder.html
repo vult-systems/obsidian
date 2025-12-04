@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Media Encoder &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Mental Ray Standalone" href="app-mental-ray.html" />
+    <link rel="prev" title="Maya" href="app-maya.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-mental-ray.html" title="Mental Ray Standalone"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-maya.html" title="Maya"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Media Encoder</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="media-encoder">
+<span id="app-mediaencoder-ref-label"></span><h1>Media Encoder<a class="headerlink" href="#media-encoder" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit Adobe Media Encoder jobs from the Monitor.</p>
+<a class="reference internal image-reference" href="../_images/sub_mediaencoder.png"><img alt="../_images/sub_mediaencoder.png" src="../_images/sub_mediaencoder.png" style="height: 500px;" /></a>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.</p>
+<p>The Adobe Media Encoder specific options are:</p>
+<ul class="simple">
+<li><p><strong>Selection Method</strong>: Choose the selection method by <em>file</em> or by <em>directory</em>.</p></li>
+<li><p><strong>File Extension(s)</strong>: A comma separated list of file extension(s) to search for supported file formats for batch submission, ie: mov,mp4,aep,aepx,prproj. Image file sequences are NOT supported.</p></li>
+<li><p><strong>Process Sub-Directories</strong>: Optionally choose to scan sub-directories as well for supported files.</p></li>
+<li><p><strong>Input Directory</strong>: Choose a root directory to scan for all supported video files.</p></li>
+<li><p><strong>Output Directory</strong>: Choose a root directory to output the generated media file(s).</p></li>
+<li><p><strong>Input File</strong>: The path to the media to be encoded. It may be a media file in any of the formats supported by AME, a Premiere Pro project (.prproj), or an FCP XML project (.xml).</p></li>
+<li><p><strong>Output File</strong>: A path to a file that will contain the encoded result. You don’t have to include a file extension as the preset *.epr file will potentially define it as well.</p></li>
+<li><p><strong>Preset File</strong>: The preset file to use. This file determines what to do with the input, and can be exported from Media Encoder presets.</p></li>
+<li><p><strong>Version</strong>: The version of Adobe Media Encoder to use for encoding.</p></li>
+<li><p><strong>Overwrite Output If Present</strong>: If enabled, AME will overwrite any file located at the output location with the new output.</p></li>
+<li><p><strong>Submit Preset File With Job</strong>: If enabled, the preset file will be uploaded to the Deadline Repository along with the Job (useful if your .epr file is local).</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Media Encoder plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Media Encoder plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_mediaencoder.png"><img alt="../_images/cp_mediaencoder.png" src="../_images/cp_mediaencoder.png" style="height: 400px;" /></a>
+<p><strong>Web Service Executables</strong></p>
+<ul>
+<li><p><strong>Web Service Executable</strong>: The path to the Adobe Media Encoder Web Service executable file used for encoding. Enter alternative paths on separate lines. Ensure you use <code class="docutils literal notranslate"><span class="pre">ame_webservice_console.exe</span></code> on Windows and <code class="docutils literal notranslate"><span class="pre">ame_webservice_agent</span></code> on macOS. Do <strong>NOT</strong> declare the path to the actual Adobe Media Encoder executable here!</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The path to Adobe Media Encoder’s webservice console (Windows) or agent (macOS) executable:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Windows</span><span class="p">:</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Program</span> <span class="n">Files</span>\<span class="n">Adobe</span>\<span class="n">Adobe</span> <span class="n">Media</span> <span class="n">Encoder</span> <span class="n">xxxx</span>\<span class="n">ame_webservice_console</span><span class="o">.</span><span class="n">exe</span>
+<span class="n">macOS</span><span class="p">:</span> <span class="o">/</span><span class="n">Applications</span><span class="o">/</span><span class="n">Adobe</span> <span class="n">Media</span> <span class="n">Encoder</span> <span class="n">xxxx</span><span class="o">/</span><span class="n">Adobe</span> <span class="n">Media</span> <span class="n">Encoder</span> <span class="n">xxxx</span><span class="o">.</span><span class="n">app</span><span class="o">/</span><span class="n">Contents</span><span class="o">/</span><span class="n">ame_webservice_console</span><span class="o">.</span><span class="n">app</span><span class="o">/</span><span class="n">Contents</span><span class="o">/</span><span class="n">MacOS</span><span class="o">/</span><span class="n">ame_webservice_agent</span>
+</pre></div>
+</div>
+<p>where xxxx is the YEAR such as 2017.</p>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<p><strong>Host Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Use Alternate IP Lookup (macOS only)</strong>: If enabled and only applicable on macOS, use an alternate method to return the current local IP address (optional). Default: False.</p></li>
+</ul>
+<p><strong>AME Process Handling</strong></p>
+<ul class="simple">
+<li><p><strong>Handle Existing AME Process</strong>: Either Do Nothing, FAIL on existing AME process or KILL the existing AME process if already running. Default: “Fail On Existing Process”.</p></li>
+<li><p><strong>AME Auto Shutdown</strong>: Automatically force shutdown of Adobe Media Encoder application when job completes. Default: True.</p></li>
+</ul>
+<p><strong>AME Job Handling</strong></p>
+<ul class="simple">
+<li><p><strong>AME On Job Complete</strong>: If desired, you can automatically archive or delete the Adobe Media Encoder job when it completes. Default: “Do Nothing”.</p></li>
+</ul>
+<div class="section" id="web-service">
+<h3>Web Service<a class="headerlink" href="#web-service" title="Permalink to this headline">¶</a></h3>
+<p>Deadline Workers that render Media Encoder jobs use the media encoder web service. To modify the web service port number or address you need to modify the <code class="docutils literal notranslate"><span class="pre">ame_webservice_config.ini</span></code> file. The <code class="docutils literal notranslate"><span class="pre">ame_webservice_config.ini</span></code> file is found in the same directory as the Adobe Media Encoder Web Service executable file. Note that the default port being used is 8080. This INI file may not exist in a fresh install of Adobe Media Encoder, in which case the default values will be used.</p>
+<p>Example of the config file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># leaving IP blank/commented out will default to whatever IP address the</span>
+<span class="c1"># web service is able to sniff out</span>
+<span class="n">ip</span> <span class="o">=</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">8080</span>
+
+<span class="c1"># restart_threshold:  if this value is set, the AME engine will restart itself</span>
+<span class="c1"># after x jobs are completed</span>
+<span class="c1">#restart_threshold = 10</span>
+
+<span class="c1"># job_history: if this value is set, the server will retain information on the</span>
+<span class="c1"># last x completed jobs</span>
+<span class="n">job_history</span> <span class="o">=</span> <span class="mi">100</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-mediaencoder-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>What file formats does Adobe Media Encoder support?</strong></p>
+<blockquote>
+<div><p>Adobe have published this list of known <a class="reference external" href="https://helpx.adobe.com/media-encoder/using/file-formats-supported-import.html">supported file formats</a> in AME.</p>
+</div></blockquote>
+<p><strong>Does Deadline Support Adobe Media Encoder 2021 or 2022?</strong></p>
+<blockquote>
+<div><p>Deadline is unable to support Media Encoder 2021 or any version of Media Encoder 2022 before 2022.5.  In order to verify the version you have installed you can follow this <a class="reference external" href="https://helpx.adobe.com/download-install/using/how-to-check-a-creative-cloud-app-version-.html">guide</a>.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Media Encoder error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Media Encoder</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a><ul>
+<li><a class="reference internal" href="#web-service">Web Service</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-maya.html"
+                        title="previous chapter">Maya</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-mental-ray.html"
+                        title="next chapter">Mental Ray Standalone</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-mental-ray.html" title="Mental Ray Standalone"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-maya.html" title="Maya"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Media Encoder</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

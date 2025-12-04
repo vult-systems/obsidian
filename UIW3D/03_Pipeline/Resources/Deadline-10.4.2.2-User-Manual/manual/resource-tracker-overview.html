@@ -1,0 +1,581 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resource Tracker Overview &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Resource Tracker Release History" href="resource-tracker-release-notes.html" />
+    <link rel="prev" title="Resource Tracker" href="index-resource-tracker.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="resource-tracker-release-notes.html" title="Resource Tracker Release History"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="index-resource-tracker.html" title="Resource Tracker"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-resource-tracker.html" accesskey="U">Resource Tracker</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Resource Tracker Overview</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="resource-tracker-overview">
+<span id="resource-tracker-overview-ref-label"></span><h1>Resource Tracker Overview<a class="headerlink" href="#resource-tracker-overview" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We <strong>strongly</strong> recommend setting up email notifications with the Resource Tracker. This will notify you when a Fleets status changes,
+allowing you to take any required actions. <a class="reference internal" href="#resource-tracker-email-notifications-ref-label"><span class="std std-ref">Email Notification Setup</span></a></p>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Resource Tracker is a service that monitors the health of instances started by Deadline in your AWS account.
+It monitors a heartbeat reported by each render node running Deadline Worker and terminates instances that are failing Deadline health checks, helping you avoid extra costs.
+To prevent canceling your fleets unnecessarily, Resource Tracker allows for a low amount (5% by default) of instances to fail their health checks without affecting the Fleet.
+Resource Tracker also monitors the health of your Spot Fleet Requests,
+and when the amount of instances that fail their health checks exceeds the fleet termination threshold (20% by default), it cancels that Fleet and prevents new Fleet launches.
+You can <a class="reference internal" href="#resource-tracker-fleet-fault-tolerance-and-termination-threshold-ref-label"><span class="std std-ref">adjust these thresholds</span></a> to fit your needs.
+Once you have solved the underlying issue, you can then restore normal operation by following the instructions in
+the <a class="reference internal" href="#resource-tracker-notifications-ref-label"><span class="std std-ref">Notifications</span></a> section below.</p>
+</div>
+<div class="section" id="resource-tracker-version">
+<span id="resource-tracker-version-ref-label"></span><h2>Resource Tracker Version<a class="headerlink" href="#resource-tracker-version" title="Permalink to this headline">¶</a></h2>
+<p>Starting from Deadline 10.0.10, Resource Tracker versioning was decoupled from Deadline versioning and the latest version of Resource Tracker will always be used.</p>
+<p>To check your current Resource Tracker version, go to your AWS account, then to CloudFormation -&gt; Stacks -&gt; DeadlineResourceTracker, and in the Outputs tab you can see the version under ResourceTrackerVersion key.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/resource_tracker_version_pic.png"><img alt="../_images/resource_tracker_version_pic.png" src="../_images/resource_tracker_version_pic.png" style="width: 409.0px; height: 196.5px;" /></a>
+</div></blockquote>
+</div>
+<div class="section" id="examples-of-failure">
+<h2>Examples of Failure<a class="headerlink" href="#examples-of-failure" title="Permalink to this headline">¶</a></h2>
+<p>Here are a few example scenarios where the Resource Tracker will intervene.</p>
+<p><strong>Deadline Worker Can’t Communicate to the Deadline Repository</strong></p>
+<p>When the Deadline Worker cannot connect to the Deadline Repository, the Resource Tracker will terminate the instance. That can happen if:</p>
+<ul class="simple">
+<li><p>The Remote Connection Server isn’t running.</p></li>
+<li><p>The instance hasn’t mounted the Repository network drive correctly.</p></li>
+<li><p>The instance loses its network connection.</p></li>
+</ul>
+<p><strong>The Deadline Repository won’t Allow Incoming Connections</strong></p>
+<p>Situations can arise where the Deadline Repository won’t accept incoming connections to it. In that case, the instances won’t be able to connect to the repository and will be terminated. That can happen if:</p>
+<ul class="simple">
+<li><p>The Repository loses network or internet connection (ex. power outage).</p></li>
+<li><p>The Repository or Remote Connection Server machine shuts down.</p></li>
+<li><p>AWS Portal Link is not running.</p></li>
+</ul>
+<p><strong>The Deadline Worker is Not Reporting its Health</strong></p>
+<p>When the Deadline Worker is not reporting its health information to the Resource Tracker, the instance will be terminated. That can happen if:</p>
+<ul class="simple">
+<li><p>The instance doesn’t have the Deadline Worker installed.</p></li>
+<li><p>The Deadline Worker crashes.</p></li>
+<li><p>The Deadline Worker is older than version <code class="docutils literal notranslate"><span class="pre">10.0.27</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="starting-the-resource-tracker">
+<h2>Starting the Resource Tracker<a class="headerlink" href="#starting-the-resource-tracker" title="Permalink to this headline">¶</a></h2>
+<p>A Resource Tracker service is automatically started the first time you create an AWS Resource with a compatible version of the AWS Portal or the Spot Event Plugin. If you’re working in multiple AWS regions, one Resource Tracker will be created for each region.</p>
+<p>For <a class="reference internal" href="aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">AWS Portal</span></a>, the Resource Tracker will be launched prior to you creating a new infrastructure. If you already have a compatible infrastructure, the Resource Tracker will be launched when you create a new Spot Fleet Request.</p>
+<p>The <a class="reference internal" href="event-spot.html#event-spot-ref-label"><span class="std std-ref">Spot Event Plugin</span></a> will launch the Resource Tracker on House Cleaning.</p>
+<div class="section" id="prerequisites">
+<h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h3>
+<p>Before you can run the Resource Tracker, you must configure some resources in your AWS account:</p>
+<ol class="arabic simple">
+<li><p>You must update your IAM permissions.</p>
+<ul class="simple">
+<li><p>For AWS Portal, <a class="reference internal" href="aws-portal-setup-creating-awsportal-user.html#aws-portal-setup-account-awsportal-user-setup-ref-label"><span class="std std-ref">update your AWSPortal IAM user to use our managed policies</span></a>.</p></li>
+<li><p>For the Spot Event Plugin, update your <a class="reference internal" href="event-spot-permissions.html#event-spot-credentials-ref-label"><span class="std std-ref">Spot Credentials</span></a> and <a class="reference internal" href="event-spot-permissions.html#event-spot-iam-instance-profile-ref-label"><span class="std std-ref">IAM Instance Role</span></a>.</p></li>
+</ul>
+</li>
+<li><p>You must create a <a class="reference internal" href="#resource-tracker-access-iam-role-ref-label"><span class="std std-ref">Resource Tracker IAM role</span></a>.</p>
+<ul class="simple">
+<li><p>For AWS Portal, this is done as part of the <a class="reference internal" href="aws-portal-advanced-installation-topics.html#aws-portal-iam-resources-ref-label"><span class="std std-ref">IAM resource creation step</span></a> of the AWS Portal Server installer.</p></li>
+<li><p>For the Spot Event Plugin, you must create the IAM role yourself.  <a class="reference internal" href="#resource-tracker-access-iam-role-ref-label"><span class="std std-ref">Learn more about how to create the Resource Tracker IAM Role</span></a>.</p></li>
+</ul>
+</li>
+<li><p>For the Spot Event Plugin, if you’re operating in a private subnet with no IGW/NAT gateway, you will need to create <a class="reference internal" href="event-spot-vpc-endpoints.html#event-spot-vpc-endpoints-ref-label"><span class="std std-ref">VPC Endpoints</span></a>.</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="resource-tracker-identity-and-access-management-iam-role">
+<span id="resource-tracker-access-iam-role-ref-label"></span><h2>Resource Tracker Identity and Access Management (IAM) Role<a class="headerlink" href="#resource-tracker-identity-and-access-management-iam-role" title="Permalink to this headline">¶</a></h2>
+<p>The Deadline Resource Tracker requires an IAM Role named “DeadlineResourceTrackerAccessRole” in order to access AWS resources in your account.</p>
+<ul class="simple">
+<li><p>For AWS Portal, this role is created automatically as part of the AWS Portal Server installer’s <a class="reference internal" href="aws-portal-advanced-installation-topics.html#aws-portal-iam-resources-ref-label"><span class="std std-ref">IAM resource creation step</span></a>.</p></li>
+<li><p>For the Spot Event Plugin, you must create the role manually as described below.</p></li>
+</ul>
+<p>This IAM role must have the following settings:</p>
+<ul class="simple">
+<li><p><strong>Trusted Entity:</strong> AWS Service: Lambda</p></li>
+<li><p><strong>Permissions policies:</strong> <a class="reference external" href="https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AWSThinkboxDeadlineResourceTrackerAccessPolicy">AWSThinkboxDeadlineResourceTrackerAccessPolicy</a> (AWS managed IAM policy)</p></li>
+<li><p><strong>Role name:</strong> DeadlineResourceTrackerAccessRole</p></li>
+</ul>
+<div class="section" id="creating-the-resource-tracker-iam-role">
+<h3>Creating the Resource Tracker IAM Role<a class="headerlink" href="#creating-the-resource-tracker-iam-role" title="Permalink to this headline">¶</a></h3>
+<p>To create the Resource Tracker IAM role:</p>
+<ol class="arabic">
+<li><p>Sign in to the <a class="reference external" href="https://console.aws.amazon.com">AWS Console</a>.</p></li>
+<li><p>Click on <strong>Services</strong> at the top of the AWS Console, and then click on <strong>IAM</strong> under “Security, Identity and Compliance”.</p></li>
+<li><p>On the “IAM” panel that appears, click <strong>Roles</strong>, and then click the <strong>Create Role</strong> button.</p>
+<a class="reference internal image-reference" href="../_images/resource_tracker_iam_role_creation_1.png"><img alt="../_images/resource_tracker_iam_role_creation_1.png" src="../_images/resource_tracker_iam_role_creation_1.png" style="width: 542.0px; height: 343.5px;" /></a>
+</li>
+<li><p>In the “Create role” panel that appears, choose the following:</p>
+<ul class="simple">
+<li><p>Under <strong>Select type of trusted entity</strong>, choose <strong>AWS service</strong>.</p></li>
+<li><p>Under <strong>Choose a use case</strong>, choose <strong>Lambda</strong>.</p></li>
+</ul>
+</li>
+<li><p>Click the <strong>Next: Permissions</strong> button to continue.</p>
+<a class="reference internal image-reference" href="../_images/resource_tracker_iam_role_creation_2.png"><img alt="../_images/resource_tracker_iam_role_creation_2.png" src="../_images/resource_tracker_iam_role_creation_2.png" style="width: 542.0px; height: 343.5px;" /></a>
+</li>
+<li><p>Search for <strong>AWSThinkboxDeadlineResourceTrackerAccessPolicy</strong> in the search box, and check it in the list below.</p></li>
+<li><p>Click the <strong>Next: Tags</strong> button to continue.</p>
+<a class="reference internal image-reference" href="../_images/resource_tracker_iam_role_creation_3.png"><img alt="../_images/resource_tracker_iam_role_creation_3.png" src="../_images/resource_tracker_iam_role_creation_3.png" style="width: 542.0px; height: 343.5px;" /></a>
+</li>
+<li><p>You can add tags with additional data to the role, but they are not required.</p></li>
+<li><p>Click the <strong>Next: Review</strong> button to continue.</p>
+<a class="reference internal image-reference" href="../_images/resource_tracker_iam_role_creation_4.png"><img alt="../_images/resource_tracker_iam_role_creation_4.png" src="../_images/resource_tracker_iam_role_creation_4.png" style="width: 542.0px; height: 343.5px;" /></a>
+</li>
+<li><p>In the <strong>Role name</strong> field, enter <strong>DeadlineResourceTrackerAccessRole</strong>.</p></li>
+<li><p>Verify that the information is correct, and click <strong>Create role</strong>.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<div class="section" id="compatibility">
+<h1>Compatibility<a class="headerlink" href="#compatibility" title="Permalink to this headline">¶</a></h1>
+<p>The Resource Tracker was released with version <code class="docutils literal notranslate"><span class="pre">10.0.27</span></code> of Deadline.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Be sure to upgrade ALL Deadline components to Deadline <code class="docutils literal notranslate"><span class="pre">10.0.27</span></code> or later to ensure that it will operate correctly.</p>
+</div>
+<div class="section" id="why-is-upgrading-important">
+<h2>Why is upgrading important?<a class="headerlink" href="#why-is-upgrading-important" title="Permalink to this headline">¶</a></h2>
+<p>The Resource Tracker may not function as expected if some components are not upgraded. This can result in:</p>
+<ul class="simple">
+<li><p>Normal functioning instances being terminated.</p></li>
+<li><p>Instances that are not functioning correctly not being terminated.</p></li>
+<li><p>Spot Fleet Request and their Instances may not be monitored by the Resource Tracker.</p></li>
+<li><p>Infrastructures failing to start.</p></li>
+<li><p>Spot Event Plugin failing to start.</p></li>
+</ul>
+</div>
+<div class="section" id="upgrading-aws-portal">
+<h2>Upgrading AWS Portal<a class="headerlink" href="#upgrading-aws-portal" title="Permalink to this headline">¶</a></h2>
+<p>General instructions for upgrading Deadline components can be found <a class="reference internal" href="upgrading.html#upgrading-ref-label"><span class="std std-ref">here</span></a>.</p>
+<p><strong>Stop AWS Portal Infrastructures</strong></p>
+<p>First, stop any running AWS Portal infrastructures.  See <a class="reference internal" href="aws-portal-updating-deadline-when-using-aws-portal.html#aws-portal-updating-deadline-when-using-aws-portal-stop-infrastructure-ref-label"><span class="std std-ref">here</span></a> for details.</p>
+<p><strong>Repository</strong></p>
+<p>Next, upgrade the Deadline Repository. The Deadline Repository should be upgraded following the instructions found <a class="reference internal" href="upgrading.html#upgrading-db-repo-ref-label"><span class="std std-ref">here</span></a>.</p>
+<p><strong>Non-Workstations &amp; Remote Connection Server</strong></p>
+<p>Next, upgrade non-render node and non-workstations. For AWS Portal, that means the Remote Connection Server and AWS Portal Link.</p>
+<p>Instructions for the Remote Connection Server can be found <a class="reference internal" href="upgrading.html#upgrading-or-downgrading-nonrender-nodes-ref-label"><span class="std std-ref">here</span></a>.</p>
+<p>To upgrade the AWS Portal Link. Install the latest Deadline Client on the machine followed by the latest AWS Portal Link installer.</p>
+<p><strong>IAM Policy</strong></p>
+<p>The IAM Policy we recommend using for AWS Portal has been updated. Updating your current policy is required for the new features to work. Follow the instructions in
+<a class="reference internal" href="aws-portal-setup-creating-awsportal-user.html#aws-portal-setup-account-awsportal-user-setup-ref-label"><span class="std std-ref">Creating the AWSPortal IAM User</span></a>.</p>
+<p><strong>Start AWS Portal Infrastructures</strong></p>
+<p>Start a new AWS Portal infrastructure. See <a class="reference internal" href="aws-portal/usage-infrastructure-creation.html#aws-portal-usage-infrastructure-creation-ref-label"><span class="std std-ref">Creating a Deadline AWS Portal Infrastructure</span></a> for more details.</p>
+<p><strong>Custom AMI Render Nodes</strong></p>
+<p>If you’re using a custom AMI for your render nodes, you’ll need to upgrade the version of the Deadline Worker. You can follow the instructions for customizing an AMI
+<a class="reference internal" href="aws-custom-ami.html#customize-ami-aws-portal-ref-label"><span class="std std-ref">here</span></a>. NOTE: In this case, your base AMI will be the AMI that needs upgrading. Install the new Deadline Client on the machine
+and image the machine. Use the new image from now on.</p>
+</div>
+<div class="section" id="upgrading-the-spot-event-plugin">
+<h2>Upgrading the Spot Event Plugin<a class="headerlink" href="#upgrading-the-spot-event-plugin" title="Permalink to this headline">¶</a></h2>
+<p>If currently running, disable the Spot Event Plugin, stop Pulse and cancel any running Spot Fleet Requests that the Spot Event Plugin has made before upgrading anything.</p>
+<p>General instructions for upgrading Deadline components can be found <a class="reference internal" href="upgrading.html#upgrading-ref-label"><span class="std std-ref">here</span></a>.</p>
+<p><strong>Repository</strong></p>
+<p>Start by upgrading the Deadline Repository. The Deadline Repository should be upgraded following the instructions found <a class="reference internal" href="upgrading.html#upgrading-db-repo-ref-label"><span class="std std-ref">here</span></a>.</p>
+<p><strong>Non-Workstations</strong></p>
+<p>Next, upgrade non-render nodes and non-workstations. For the Spot Event Plugin, that means updating Pulse.</p>
+<p>Instructions for Pulse can be found <a class="reference internal" href="upgrading.html#upgrading-or-downgrading-nonrender-nodes-ref-label"><span class="std std-ref">here</span></a>.</p>
+<p><strong>IAM Policy</strong></p>
+<p>There are the new IAM Policies that are required for the <a class="reference internal" href="event-spot-permissions.html#event-spot-credentials-ref-label"><span class="std std-ref">Spot Event Plugin credentials</span></a> and the <a class="reference internal" href="event-spot-permissions.html#event-spot-iam-instance-profile-ref-label"><span class="std std-ref">Render Node IAM instance profile</span></a>.</p>
+<p><strong>IAM Role</strong></p>
+<p>You must create an IAM role for the Resource Tracker to access resources in your AWS account.  <a class="reference internal" href="#resource-tracker-access-iam-role-ref-label"><span class="std std-ref">Learn more about how to create the Resource Tracker IAM Role</span></a>.</p>
+<p><strong>VPC Endpoints</strong></p>
+<p>If one or more of your EC2 instances are running inside a <em>private</em> subnet in your VPC, then you will need to provide a mechanism for those instances to be able to access the AWS web service endpoints used in the above IAM policies. A <a class="reference internal" href="event-spot-vpc-endpoints.html#event-spot-vpc-endpoints-ref-label"><span class="std std-ref">VPC endpoint</span></a> enables you to privately connect your VPC to supported AWS services and VPC endpoint services powered by PrivateLink without requiring an internet gateway, NAT device, VPN connection, or AWS Direct Connect connection.</p>
+<p><strong>Render Nodes</strong></p>
+<p>Update the Deadline Worker application on your custom AMI by starting a new instance of that AMI, connect to it and install the latest Deadline Client installer. Create a new AMI from the instance.</p>
+<p><strong>Spot Fleet Configuration</strong></p>
+<p>Once you have your new AMI created, you’ll need to make a new Spot Fleet configuration. Do not replace the AMI ids in your current configuration as that will result in errors. It’s best to create a
+new configuration. See <a class="reference internal" href="event-spot-fleet-request.html#event-spot-fleet-requests-ref-label"><span class="std std-ref">How to make a Spot Fleet configuration</span></a>. Finally, restart Pulse.</p>
+</div>
+</div>
+<div class="section" id="notifications">
+<span id="resource-tracker-notifications-ref-label"></span><h1>Notifications<a class="headerlink" href="#notifications" title="Permalink to this headline">¶</a></h1>
+<p>The status of your instances is indicated by a status label in the Deadline Monitor.</p>
+<p>Typically, a status of “Healthy” will be shown.</p>
+<img alt="../_images/resource_tracker_healthy.png" src="../_images/resource_tracker_healthy.png" />
+<p>If the amount of instances not working properly is higher than the fault tolerance but lower than the termination threshold, the status will change to “Warning”. If a Spot Fleet Request remains in the “Warning” state after the grace period ends, it will be marked as “Error”.</p>
+<img alt="../_images/resource_tracker_grace.png" src="../_images/resource_tracker_grace.png" />
+<p>If <strong>more than 20%</strong> of your instances are not functioning correctly, the status will change to “Error”. You can view which Spot Fleet Requests are in the “Error” state by double-clicking the label or by viewing the status label tooltip.</p>
+<img alt="../_images/resource_tracker_unhealthy.png" src="../_images/resource_tracker_unhealthy.png" />
+<p>You will be unable to create new Spot Fleet Requests or change the target capacity of existing requests when in the “Error” state. When something has gone wrong, we want to avoid starting more instances.
+This prevents you from being charged for instances that aren’t behaving as intended.</p>
+<p>Once you’ve resolved why your fleet(s) have errored you can manually reset the system.
+To do this, double-click on the status label. Enter your AWS Access Key and AWS Secret Key. Then click OK.</p>
+<img alt="../_images/resolve_unhealthy_state.png" src="../_images/resolve_unhealthy_state.png" />
+</div>
+<div class="section" id="custom-cloudwatch-events">
+<h1>Custom CloudWatch Events<a class="headerlink" href="#custom-cloudwatch-events" title="Permalink to this headline">¶</a></h1>
+<p>The Resource Tracker now generates CloudWatch Events when an instance is marked as Unhealthy or a Fleet’s health status changes. CloudWatch Events can be used automate specific actions or send out notifications when the health
+of your Fleets or Instances change. The Resource Tracker currently has three CloudWatch Events that it generates:</p>
+<ul>
+<li><dl>
+<dt><strong>Deadline Resource Tracker Lost Node Notification</strong>:</dt><dd><div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;version&#39;</span><span class="o">:</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;id&#39;</span><span class="o">:</span> <span class="s1">&#39;00000000-0000-0000-0000-00000000&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;detail-type&#39;</span><span class="o">:</span> <span class="s1">&#39;Deadline Resource Tracker Lost Node Notification&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;source&#39;</span><span class="o">:</span> <span class="s1">&#39;DeadlineResourceTracker.LostNodeReporter&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;account&#39;</span><span class="o">:</span> <span class="s1">&#39;00000000000&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;time&#39;</span><span class="o">:</span> <span class="s1">&#39;2019-10-21T15:34:54Z&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;region&#39;</span><span class="o">:</span> <span class="s1">&#39;&lt;aws_region_name&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;resources&#39;</span><span class="o">:</span> <span class="p">[],</span>
+    <span class="s1">&#39;detail&#39;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s1">&#39;instance_id&#39;</span><span class="o">:</span> <span class="s1">&#39;i-0ooo00o00o0&#39;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This event is fired whenever a render node Instance fails to publish its health information to the SQS Queue and is marked as “<strong>Unknown</strong>”
+for its health status.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt><strong>Deadline Resource Tracker Instance Unhealthy Notification</strong>:</dt><dd><div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;version&#39;</span><span class="o">:</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;id&#39;</span><span class="o">:</span> <span class="s1">&#39;00000000-0000-0000-0000-00000000&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;detail-type&#39;</span><span class="o">:</span> <span class="s1">&#39;Deadline Resource Tracker Instance Unhealthy Notification&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;source&#39;</span><span class="o">:</span> <span class="s1">&#39;DeadlineResourceTracker.InstanceHealthReporter&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;account&#39;</span><span class="o">:</span> <span class="s1">&#39;00000000000&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;time&#39;</span><span class="o">:</span> <span class="s1">&#39;2019-10-21T15:48:51Z&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;region&#39;</span><span class="o">:</span> <span class="s1">&#39;&lt;aws_region_name&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;resources&#39;</span><span class="o">:</span> <span class="p">[],</span>
+    <span class="s1">&#39;detail&#39;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s1">&#39;instance_id&#39;</span><span class="o">:</span> <span class="s1">&#39;i-0sdfsdaffasdf&#39;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This event is fired whenever a render node Instance is found to be in an unhealthy state.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt><strong>Deadline Resource Tracker Fleet Health State-Change Notification</strong>:</dt><dd><div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;version&#39;</span><span class="o">:</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;id&#39;</span><span class="o">:</span> <span class="s1">&#39;00000000-0000-0000-0000-00000000&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;detail-type&#39;</span><span class="o">:</span> <span class="s1">&#39;Deadline Resource Tracker Fleet Health State-Change Notification&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;source&#39;</span><span class="o">:</span> <span class="s1">&#39;DeadlineResourceTracker.FleetHealthReporter&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;account&#39;</span><span class="o">:</span> <span class="s1">&#39;00000000000&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;time&#39;</span><span class="o">:</span> <span class="s1">&#39;2019-10-21T15:35:07Z&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;region&#39;</span><span class="o">:</span> <span class="s1">&#39;&lt;aws_region_name&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;resources&#39;</span><span class="o">:</span> <span class="p">[],</span>
+    <span class="s1">&#39;detail&#39;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s1">&#39;fleet_id&#39;</span><span class="o">:</span> <span class="s1">&#39;sfr-00oo00o-00o0-0o00-0000-00o00oo0o0o0&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;capacity&#39;</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="s1">&#39;activity_status&#39;</span><span class="o">:</span> <span class="s1">&#39;fulfilled&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;healthy_node_count&#39;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">&#39;unhealthy_node_count&#39;</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="s1">&#39;grace_period_start_time&#39;</span><span class="o">:</span> <span class="s1">&#39;1970-01-01T00:00:00&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;status&#39;</span><span class="o">:</span> <span class="s1">&#39;Unhealthy-Fleet Terminated&#39;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This event is fired whenever a Fleet’s health status changes.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>You can learn more about CloudWatch Events from the <a class="reference external" href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/WhatIsCloudWatchEvents.html">AWS Documentation</a>.</p>
+<div class="section" id="aws-sns-email-notifications">
+<span id="resource-tracker-email-notifications-ref-label"></span><h2>AWS SNS Email Notifications<a class="headerlink" href="#aws-sns-email-notifications" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to setup AWS Simple Notification Service (SNS) email notifications for Resource Tracker CloudWatch Events. This would allow you to receive an email whenever a Fleet’s health
+status changes so you could take action based on the health status.</p>
+<dl>
+<dt>There are three steps for doing this:</dt><dd><ol class="arabic">
+<li><p>Setup SNS Topic &amp; Subscribe to it</p>
+<blockquote>
+<div><ol class="loweralpha">
+<li><p>Navigate to the SNS Console page in the AWS Console.</p></li>
+<li><p>Expand the hamburger menu on the left and click <strong>Topics</strong>.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/sns_setup_1.png"><img alt="../_images/sns_setup_1.png" src="../_images/sns_setup_1.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Click <strong>Create Topic</strong> button in the top right corner.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/sns_setup_2.png"><img alt="../_images/sns_setup_2.png" src="../_images/sns_setup_2.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Enter a name for your Topic. (i.e. DeadlineResourceTracker-FleetHealthTopic)</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/sns_setup_3.png"><img alt="../_images/sns_setup_3.png" src="../_images/sns_setup_3.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Click <strong>Create Topic</strong>.</p></li>
+</ol>
+</div></blockquote>
+</li>
+<li><dl>
+<dt>Subscribe to Topic</dt><dd><p>Now that you have your SNS Topic created, you need to subscribe an email address to it.</p>
+<ol class="loweralpha">
+<li><p>On your newly created SNS Topic’s page, make sure the <strong>Subscriptions</strong> tab is selected and click <strong>Create Subscription</strong> on the right hand side.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/sns_setup_4.png"><img alt="../_images/sns_setup_4.png" src="../_images/sns_setup_4.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Leave the first field, <strong>Topic ARN</strong>, as the default value and under the <strong>Protocol</strong> drop down menu, select <strong>Email</strong>.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/sns_setup_5.png"><img alt="../_images/sns_setup_5.png" src="../_images/sns_setup_5.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>In the <strong>Endpoint</strong> field, enter in the email address you want notifications to go to.</p></li>
+<li><p>Click <strong>Create Subscription</strong>. This will send a confirmation email to the email address you specified. Once you receive it, click the <strong>Confirm Subscription</strong> link provided to complete setup.</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Create CloudWatch Events Rule for SNS Topic</dt><dd><p>Now that we have an SNS Topic setup we need to link it to our CloudWatch Events via a CloudWatch Events Rule.</p>
+<ol class="loweralpha">
+<li><p>Navigate to the CloudWatch AWS Console page.</p></li>
+<li><p>In the column on the left, click on <strong>Rules</strong>.</p></li>
+<li><p>Click on the blue <strong>Create rule</strong> button.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/cloudwatch_rule_setup_1.png"><img alt="../_images/cloudwatch_rule_setup_1.png" src="../_images/cloudwatch_rule_setup_1.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>In the <strong>Event Source</strong> section, click the drop down menu and select <strong>Build custom event pattern</strong>.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/cloudwatch_rule_setup_2.png"><img alt="../_images/cloudwatch_rule_setup_2.png" src="../_images/cloudwatch_rule_setup_2.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>In the text box below the drop down menu, copy &amp; paste the following JSON block:</p>
+<blockquote>
+<div><div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;source&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="s2">&quot;DeadlineResourceTracker.FleetHealthReporter&quot;</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>In the <strong>Targets</strong> section, click <strong>Add target</strong>.</p></li>
+<li><p>In the Target drop down menu, select <strong>SNS Topic</strong>.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/cloudwatch_rule_setup_3.png"><img alt="../_images/cloudwatch_rule_setup_3.png" src="../_images/cloudwatch_rule_setup_3.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>In the <strong>Topic</strong> drop down menu, select the SNS Topic you created in the previous steps. In this example that would be <strong>DeadlineResourceTracker-FleetHealthTopic</strong></p></li>
+<li><p>Click the <strong>Configure input</strong> drop down.</p></li>
+<li><p>Select the <strong>Input Transformer</strong> radio button.</p></li>
+<li><p>In the <strong>Input Path</strong> text box copy &amp; paste the following JSON block:</p>
+<blockquote>
+<div><div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;fleet_id&quot;</span><span class="o">:</span> <span class="s2">&quot;$.detail.fleet_id&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;status&quot;</span><span class="o">:</span> <span class="s2">&quot;$.detail.status&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;capacity&quot;</span><span class="o">:</span> <span class="s2">&quot;$.detail.capacity&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;activity_status&quot;</span><span class="o">:</span> <span class="s2">&quot;$.detail.activity_status&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;healthy_node_count&quot;</span><span class="o">:</span> <span class="s2">&quot;$.detail.healthy_node_count&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;unhealthy_node_count&quot;</span><span class="o">:</span> <span class="s2">&quot;$.detail.unhealthy_node_count&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;grace_period_start_time&quot;</span><span class="o">:</span> <span class="s2">&quot;$.detail.grace_period_start_time&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This creates a mapping of the CloudWatch Events information that can be used to craft the sent email.</p>
+</div></blockquote>
+</li>
+<li><p>In the <strong>Input Template</strong> text box, copy &amp; paste the following string:</p>
+<blockquote>
+<div><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&quot;AWS Fleet &#39;&lt;fleet_id&gt;&#39; health status changed to &#39;&lt;status&gt;&#39;. The healthy node count is &lt;healthy_node_count&gt;; unhealthy node count is &lt;unhealthy_node_count&gt;; and the grace period start time was &lt;grace_period_start_time&gt;.&quot;
+</pre></div>
+</div>
+<p>This is what the email being sent will contain when the Resource Tracker fires a “DeadlineResourceTracker.FleetHealthReporter” Event. Note the information fields
+wrapped in “&lt;&gt;”. You can create a custom message from any of the fields in the JSON block from the previous step.</p>
+</div></blockquote>
+</li>
+<li><p>Click <strong>Configure details</strong>.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/cloudwatch_rule_setup_4.png"><img alt="../_images/cloudwatch_rule_setup_4.png" src="../_images/cloudwatch_rule_setup_4.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Give a <strong>Name</strong> to your Rule and an optional <strong>Description</strong>.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/cloudwatch_rule_setup_5.png"><img alt="../_images/cloudwatch_rule_setup_5.png" src="../_images/cloudwatch_rule_setup_5.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Click <strong>Create rule</strong>.</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+<p>You should now see a Success page and you are now setup to receive email notifications whenever Resource Tracker changes the health status of one of your Fleets!</p>
+<img alt="../_images/cloudwatch_rule_setup_6.png" src="../_images/cloudwatch_rule_setup_6.png" />
+</div>
+</div>
+<div class="section" id="fleet-fault-tolerance-and-termination-threshold">
+<span id="resource-tracker-fleet-fault-tolerance-and-termination-threshold-ref-label"></span><h1>Fleet Fault Tolerance and Termination Threshold<a class="headerlink" href="#fleet-fault-tolerance-and-termination-threshold" title="Permalink to this headline">¶</a></h1>
+<p>If the number of instances that are not functioning properly is small, the fleet is considered to be operating normally.
+This is called <strong>fleet fault tolerance</strong>.</p>
+<p>A fleet is put in a <strong>grace period</strong> (two hours by default), if the amount of instances not functioning properly in the fleet is higher than the fault tolerance but lower than the termination threshold.
+The fleet will be terminated, if the amount of instances that fail their health checks is not under the fleet fault tolerance by the end of the grace period.</p>
+<p>If the amount of instances that fail their health checks exceeds the <strong>fleet termination threshold</strong> (20% by default),
+Resource Tracker cancels the Fleet immediately and prevents new Fleet launches.</p>
+<p>These values are adjustable, but you have to re-adjust them when a new resource tracker is created.
+To adjust the values:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p>Log into the AWS Console and go to AWS Lambda</p></li>
+<li><p>Make sure that the right region is selected, i.e. the one where you request your fleets</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/aws-console-region.png"><img alt="../_images/aws-console-region.png" src="../_images/aws-console-region.png" style="width: 600px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Click on “DeadlineResourceTracker-FleetHealthReporter”</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/resource-tracker-lambda-functions.png"><img alt="../_images/resource-tracker-lambda-functions.png" src="../_images/resource-tracker-lambda-functions.png" style="width: 600px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Edit the values and click “Save”.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/fleet-health-reporter-lambda-function-code.png"><img alt="../_images/fleet-health-reporter-lambda-function-code.png" src="../_images/fleet-health-reporter-lambda-function-code.png" style="width: 600px;" /></a>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Resource Tracker Overview</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#resource-tracker-version">Resource Tracker Version</a></li>
+<li><a class="reference internal" href="#examples-of-failure">Examples of Failure</a></li>
+<li><a class="reference internal" href="#starting-the-resource-tracker">Starting the Resource Tracker</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#resource-tracker-identity-and-access-management-iam-role">Resource Tracker Identity and Access Management (IAM) Role</a><ul>
+<li><a class="reference internal" href="#creating-the-resource-tracker-iam-role">Creating the Resource Tracker IAM Role</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#compatibility">Compatibility</a><ul>
+<li><a class="reference internal" href="#why-is-upgrading-important">Why is upgrading important?</a></li>
+<li><a class="reference internal" href="#upgrading-aws-portal">Upgrading AWS Portal</a></li>
+<li><a class="reference internal" href="#upgrading-the-spot-event-plugin">Upgrading the Spot Event Plugin</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#notifications">Notifications</a></li>
+<li><a class="reference internal" href="#custom-cloudwatch-events">Custom CloudWatch Events</a><ul>
+<li><a class="reference internal" href="#aws-sns-email-notifications">AWS SNS Email Notifications</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#fleet-fault-tolerance-and-termination-threshold">Fleet Fault Tolerance and Termination Threshold</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index-resource-tracker.html"
+                        title="previous chapter">Resource Tracker</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="resource-tracker-release-notes.html"
+                        title="next chapter">Resource Tracker Release History</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="resource-tracker-release-notes.html" title="Resource Tracker Release History"
+             >next</a></li>
+        <li class="right" >
+          <a href="index-resource-tracker.html" title="Resource Tracker"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-resource-tracker.html" >Resource Tracker</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Resource Tracker Overview</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

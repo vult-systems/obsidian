@@ -1,0 +1,27 @@
+var class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper =
+[
+    [ "GetBooleanConfigEntry", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#af1d1846b4c22536aeeb51b0d1c5b6e33", null ],
+    [ "GetBooleanConfigEntryWithDefault", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#a596a6f8ed84b62366d57d870ec658dbe", null ],
+    [ "GetConfigEntry", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#a961dd99de1ade8bacae9231b47658e5b", null ],
+    [ "GetConfigEntryWithDefault", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#a319f5691509f984022a054af949d8797", null ],
+    [ "GetDoubleConfigEntryWithDefault", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#aefa13489b19d63bdcc6ee67f2a362187", null ],
+    [ "GetFloatConfigEntry", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#aab9a0e28b4989eac2c6a0639ba6ca527", null ],
+    [ "GetFloatConfigEntryWithDefault", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#a42bdcbe57cc3345737375021b70d1d1b", null ],
+    [ "GetIntegerConfigEntry", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#a9ea9c90ed98c5a836d7af3b031771ec4", null ],
+    [ "GetIntegerConfigEntryWithDefault", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#ab7499e6c122e42ba0eb1b3b88937d92e", null ],
+    [ "GetLongConfigEntry", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#a8329578f45fcbf5776a3d708a20bb993", null ],
+    [ "GetLongConfigEntryWithDefault", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#a5a62c9c9f877668d23e1a80e88950f5c", null ],
+    [ "AvailableHardwareTypesCallback", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#a1afccc73bc816d384c0722bab0f645d2", null ],
+    [ "AvailableOSImagesCallback", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#a2c6906afc8eeba4b51355255cfbad0dc", null ],
+    [ "CloneInstanceCallback", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#ac8d4f6795ece9d9841350980f2dbc075", null ],
+    [ "CreateImageCallback", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#a14bd8a3a0a2dbe01432bcb36867521ff", null ],
+    [ "CreateInstancesCallback", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#a3da85139a87f24a25c6b5caea60802ca", null ],
+    [ "GetActiveInstancesCallback", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#a56b27b086d0ca7b16233649a5d944509", null ],
+    [ "GetHostnameCallback", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#a886185c2cd07725c669dff97528cd3ca", null ],
+    [ "GetImageSourcesCallback", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#a726c404a81c553133307d8448e383d48", null ],
+    [ "RebootInstancesCallback", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#a2d1c0f1d836c8b7ca361db53e12137dd", null ],
+    [ "StartInstancesCallback", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#a2e551eac7c76abccb258961126f43f0d", null ],
+    [ "StopInstancesCallback", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#ad7d411d017558d2bcebd5b558aec9746", null ],
+    [ "TerminateInstancesCallback", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#ad58e48f236f43731f43b23f1cec84461", null ],
+    [ "VerifyAccessCallback", "class_deadline_1_1_cloud_1_1_cloud_plugin_wrapper.html#a5b4a4955f3fd94806c4de61e3ffb5b16", null ]
+];

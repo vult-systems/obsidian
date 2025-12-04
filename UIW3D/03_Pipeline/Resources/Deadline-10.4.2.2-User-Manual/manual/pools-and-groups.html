@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pools and Groups &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Limits and Machine Limits" href="limits.html" />
+    <link rel="prev" title="Job Scheduling" href="job-scheduling.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="limits.html" title="Limits and Machine Limits"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="job-scheduling.html" title="Job Scheduling"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" accesskey="U">Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Pools and Groups</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pools-and-groups">
+<span id="pools-and-groups-ref-label"></span><h1>Pools and Groups<a class="headerlink" href="#pools-and-groups" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-are-pools-and-groups">
+<h2>What are Pools and Groups?<a class="headerlink" href="#what-are-pools-and-groups" title="Permalink to this headline">¶</a></h2>
+<p>Groups can be used to organize your farm based on machine configurations (e.g., specs, installed software, etc). For example, if you have several 64-bit machines with 3ds Max installed, you could assign them to groups like
+3dsmax, or 3dsmax_64bit, or simply 3D. Groups have no impact on the order in which Jobs are rendered, they just help to ensure that Jobs render on machines with proper an appropriate hardware/software setup. If you don’t care
+about grouping your machines, you can simply use the default ‘none’ Group.</p>
+<p>Pools are similar to Groups, except that they do affect the order in which Jobs are rendered. Because of this, it is encouraged to use Pools for prioritizing different shows, shots, types of Jobs, etc. If you don’t want to
+set up Pools on your farm, you can simply use the default ‘none’ Pool. Note that the ‘none’ Pool always has the lowest priority of all the Pools.</p>
+<p>Jobs can be added to an optional Secondary Pool. When searching for a Job, a Worker does a first pass using the Primary Pool of the available Jobs. If the Worker doesn’t find any Jobs using the Primary Pool, it then makes a second pass using the Secondary Pool. This system can allow a Job to spread to a Secondary Pool as necessary, and it can also ease the configuration of Pools in the farm if there are lots of Pools and Workers. An example of this is shown below.</p>
+<p>Note that the Secondary Pool feature was designed for <a class="reference internal" href="job-scheduling.html#job-changing-scheduling-order"><span class="std std-ref">Job Scheduling Orders</span></a> that have Pool listed first, and might not work as expected otherwise. For example, if Priority is listed first, a job with lower priority that’s found during the initial Primary Pool scan will be preferred over a job with higher priority that’s found during the Secondary Pool scan. This is because the Secondary Pool scan is only performed if no jobs are found during the initial Primary Pool scan.</p>
+</div>
+<div class="section" id="managing-pools-and-groups">
+<span id="manage-pools-and-groups-ref-label"></span><h2>Managing Pools and Groups<a class="headerlink" href="#managing-pools-and-groups" title="Permalink to this headline">¶</a></h2>
+<p>Pools and Groups can be managed from the Monitor while in Power User mode (or as a User with the proper User Group privileges). Just select ‘Manage Pools’ (or ‘Manage Groups’) from the ‘Tools’ menu, or from the Worker panel’s right-click menu.</p>
+<p>The dialogs are very similar to each other, but the nuances between the two are described below in detail. Note that if you used the Worker panel’s right-click menu to open these dialogs, they will be pre-filtered to just show the Workers that you right-clicked on. They will also show the same columns that are currently being shown in the Worker list.</p>
+<div class="section" id="group-management-dialog">
+<h3>Group Management Dialog<a class="headerlink" href="#group-management-dialog" title="Permalink to this headline">¶</a></h3>
+<p>From here, you can manage individual Groups, and assign them to various Workers. It is a bit simpler than the Pool Management Dialog, which will be covered below in more detail, since it does not have to
+worry about the order of Groups for a given Worker.</p>
+<a class="reference internal image-reference" href="../_images/manage_groups.png"><img alt="../_images/manage_groups.png" src="../_images/manage_groups.png" style="height: 500px;" /></a>
+<p>The functions you can perform here are as follows:</p>
+<ul>
+<li><p><strong>Groups</strong>: This section displays existing Groups and allows you to manipulate them, or create new ones. Your selection here will determine which Groups will be affected by the Group Operations.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>New</strong>: This will create a new Group in the Repository, and allow you to assign the Group to different Workers. You will be prompted for a name for the new Group. Group names cannot be changed once the Group has been created. Adding a Group with the name of previously Deleted Group will effectively ‘re-instate’ that Group if it hasn’t been Purged yet (see below).</p></li>
+<li><p><strong>Delete</strong>: This will Delete all of the selected Groups from the Repository, and enable the option to Purge them (described below).</p></li>
+<li><p><strong>Purge Obsolete Groups on Close</strong>: This will purge any obsolete (deleted) Groups from existing Jobs and remove from any Workers that are currently assigned to it. They will be replaced with the Group selected in the drop down. Note that if you choose not to Purge the obsolete Groups right now, you can always return to this dialog and do it later.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Workers</strong>: This section displays a list of all known Workers that have connected to your Repository. Your selection here will determine which Workers will be affected by the Groups Operations.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Only Show Workers Assigned to a Selected Group</strong>: This option will filter the displayed Workers to only include the ones that are currently assigned to at least one of the selected Groups.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Group Operations</strong>: These operations are used to manipulate which Groups are assigned to which Workers. They typically require a selection of one or more Groups and one or more Workers to be active.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Add</strong>: This will add all of the selected Groups to all of the selected Workers, if it wasn’t already there.</p></li>
+<li><p><strong>Remove</strong>: This will remove all of the selected Groups from all of the selected Workers, if applicable.</p></li>
+<li><p><strong>Copy</strong>: This will copy the groups from the selected Worker to the clipboard.</p></li>
+<li><p><strong>Paste</strong>: This will paste the groups that were copied using the Copy button to the selected Workers.</p></li>
+<li><p><strong>Clear</strong>: This will clear all the groups from all of the selected Workers. This option does not require a Group to be selected.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="pool-management-dialog">
+<h3>Pool Management Dialog<a class="headerlink" href="#pool-management-dialog" title="Permalink to this headline">¶</a></h3>
+<p>The Pool Management dialog functions similarly to the Group Management dialog described above, but with a few added options to deal with managing Pool Ordering for individual Workers.</p>
+<a class="reference internal image-reference" href="../_images/manage_pools.png"><img alt="../_images/manage_pools.png" src="../_images/manage_pools.png" style="height: 500px;" /></a>
+<p>The functions you can perform here are as follows. Note that a lot of these overlap with the described Group Management functionality described in the previous section.</p>
+<ul>
+<li><p><strong>Pools</strong>: This section displays existing Pools and allows you to manipulate them, or create new ones. Your selection here will determine which Pools will be affected by the Pool Operations described below.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>New</strong>: This will create a new Pool in the Repository, and allow you to assign it to Workers. You will be prompted for a name for the new Pool; not that Pool names cannot be changed once the Pool has been created. Adding a Pool with the name of previously Deleted Pool will effectively ‘re-instate’ that Pool if it hasn’t been Purged yet (see below).</p></li>
+<li><p><strong>Delete</strong>: This will Delete all of the selected Pools from the Repository, and enable the option to Purge them (described below).</p></li>
+<li><p><strong>Purge Obsolete Pools on Close</strong>: This will purge any obsolete (deleted) Pools from existing Jobs and remove them from any Workers that may have them in their list. They will be replaced with the Pool selected in the drop down. Note that if you choose not to Purge the obsolete Pools right now, you can always return to this dialog and do it later.</p></li>
+<li><p><strong>Priority Distribution</strong>: This graph visualizes how many Workers have one of the selected Pools as #1 priority, #2 priority, etc. It also displays how many Workers are not currently assigned to the selected Pools.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Workers</strong>: This section displays a list of all known Workers that have connected to your Repository. Your selection here will determine which Workers will be affected by the Pool Operations described below.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Only Show Workers Assigned to a Selected Pool</strong>: This option will filter the displayed Workers to only include the ones that are currently assigned to at least one of the selected Pools.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Pool Operations</strong>: These operations are used to manipulate which Pools are assigned to which Workers. They typically require a selection of one or more Pools and one or more Workers to be active.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Add</strong>: This will add all of the selected Pools to all of the selected Workers, if it wasn’t already there.</p></li>
+<li><p><strong>Remove</strong>: This will remove all of the selected Pools from all of the selected Workers, if applicable.</p></li>
+<li><p><strong>Promote</strong>: This will bump up the selected Pools by one position in all of the selected Workers’ Pool lists. Any selected Workers that are not assigned to the selected Pool(s) are unaffected.</p></li>
+<li><p><strong>Demote</strong>: This will bump down the selected Pools by one position in all of the selected Workers’ Pool lists. Any selected Workers that are not assigned to the selected Pool(s) are unaffected. Note that a Pool cannot be demoted to be lower than the ‘none’ pool – the ‘none’ Pool is always assigned the lowest priority by Workers.</p></li>
+<li><p><strong>Copy</strong>: This will copy the pools from the selected Worker to the clipboard.</p></li>
+<li><p><strong>Paste</strong>: This will paste the pools that were copied using the Copy button to the selected Workers.</p></li>
+<li><p><strong>Clear</strong>: This will clear all the Pools from all of the selected Workers. This option does not require a Pool to be selected.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="preventing-workers-from-rendering-jobs-in-the-none-pool-or-group">
+<h3>Preventing Workers from Rendering Jobs in the ‘none’ Pool or Group<a class="headerlink" href="#preventing-workers-from-rendering-jobs-in-the-none-pool-or-group" title="Permalink to this headline">¶</a></h3>
+<p>In some cases, it may be useful to prevent on or more Workers from rendering Jobs that are assigned to the ‘none’ Pool or Group. For example, you may have a single machine that you want to only render Quicktime Jobs.
+Normally, you could add this machine to a ‘quicktime’ Group, but if there are noe Quicktime Jobs, the Worker could move on to Jobs that are in the ‘none’ Group. If you want this machine to only be available for Quicktime Jobs,
+you can configure it to exclue Jobs in the ‘none’ Group.</p>
+<p>The option to exclude Jobs in the ‘none’ Pool or Group can be found in the <a class="reference internal" href="worker-config.html#worker-config-ref-label"><span class="std std-ref">Worker Settings</span></a> in the Monitor.</p>
+</div>
+</div>
+<div class="section" id="pools-and-job-scheduling">
+<h2>Pools and Job Scheduling<a class="headerlink" href="#pools-and-job-scheduling" title="Permalink to this headline">¶</a></h2>
+<p>How pools affect the Job selection process is best explained through an example. Note that this example relies on a <a class="reference internal" href="job-scheduling.html#job-changing-scheduling-order"><span class="std std-ref">Scheduling Order</span></a> where Pools are the primary determining factor of
+scheduling (such as the default Pool -&gt; Priority -&gt; Submit Date scheme).</p>
+<p>Say we need to render Jobs for two different shows, and we’ve already created corresponding pools for each show in Deadline:</p>
+<ul class="simple">
+<li><p>show_a</p></li>
+<li><p>show_b</p></li>
+</ul>
+<p>Now say we have 10 machine in our render farm, and we want to give each show top priority on half of it. To do this, we’d just assign the pools to our Workers like this:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Workers 1-5:</dt><dd><ol class="arabic simple">
+<li><p>show_a</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Workers 6-10:</dt><dd><ol class="arabic simple">
+<li><p>show_b</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ul>
+<p>With this setup, if Jobs from both shows are in the queue, then Workers 1-5 will pick up the Jobs from show_a, while Workers 6-10 will work on Jobs from show_b. This effectively splits our farm in half,
+like we desired, but with this configuration Workers 1-5 would sit idle once show_a finishes production, even if there are plenty of show_b Jobs in the queue. The reverse would also be true if show_b production
+slows down while show_a is still ramping up.</p>
+<p>To accomplish this second goal of maximizing our resources, we’ll assign the Pools to our Workers as follows:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Workers 1-5:</dt><dd><ol class="arabic simple">
+<li><p>show_a</p></li>
+<li><p>show_b</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Workers 6-10:</dt><dd><ol class="arabic simple">
+<li><p>show_b</p></li>
+<li><p>show_a</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Now, Workers 1-5 will still give top priority to show_a Jobs, and Workers 6-10 will similarly give top priority to show_b Jobs. However, if there are no show_a Jobs currently in the queue, Workers 1-5 will start
+working on show_b Jobs until another show_a Job comes along. Similarly, Workers 6-10 would start working on show_a if no show_b Jobs were available.</p>
+<p>This concept is also extensible to any number of shows/pools, you just have to make sure to have an even Priority Distribution across your farm (the Priority Distribution graph should help with that).
+Here’s an example of what the Priority Distribution for a 3-show farm with 15 Workers could look like:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Workers 1-5:</dt><dd><ol class="arabic simple">
+<li><p>show_a</p></li>
+<li><p>show_b</p></li>
+<li><p>show_c</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Workers 6-10:</dt><dd><ol class="arabic simple">
+<li><p>show_b</p></li>
+<li><p>show_c</p></li>
+<li><p>show_a</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Workers 11-15:</dt><dd><ol class="arabic simple">
+<li><p>show_c</p></li>
+<li><p>show_a</p></li>
+<li><p>show_b</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="secondary-pools-and-job-scheduling">
+<h2>Secondary Pools and Job Scheduling<a class="headerlink" href="#secondary-pools-and-job-scheduling" title="Permalink to this headline">¶</a></h2>
+<p>How secondary pools affect the Job selection process is best explained through an example. Note that this example relies on a <a class="reference internal" href="job-scheduling.html#job-changing-scheduling-order"><span class="std std-ref">Scheduling Order</span></a> where Pools are the primary determining factor of
+scheduling (such as the default Pool -&gt; Priority -&gt; First-in First-out option). The Secondary Pool feature was designed for job scheduling orders that have Pool listed first, and might not work as expected otherwise.</p>
+<p>Let’s say you have 5 pools and 10 Workers. You want each pool to have top priority on 2 machines, but then be able to spread to the rest of them if they are idle. Without using the secondary pool system,
+you might have something like this:</p>
+<ul class="simple">
+<li><p>Workers 0-1: pool_1, pool_2, pool_3, pool_4, pool_5</p></li>
+<li><p>Workers 2-3: pool_2, pool_3, pool_4, pool_5, pool_1</p></li>
+<li><p>Workers 4-5: pool_3, pool_4, pool_5, pool_1, pool_2</p></li>
+<li><p>Workers 6-7: pool_4, pool_5, pool_1, pool_2, pool_3</p></li>
+<li><p>Workers 8-9: pool_5, pool_1, pool_2, pool_3, pool_4</p></li>
+</ul>
+<p>This can be tricky to maintain if you have to reorganize pools or new Workers are added to the farm. The new secondary pool system can make this easier:</p>
+<ul class="simple">
+<li><p>Workers 0-1: pool_1, pool_all</p></li>
+<li><p>Workers 2-3: pool_2, pool_all</p></li>
+<li><p>Workers 4-5: pool_3, pool_all</p></li>
+<li><p>Workers 6-7: pool_4, pool_all</p></li>
+<li><p>Workers 8-9: pool_5, pool_all</p></li>
+</ul>
+<p>In this case, all jobs could have pool_all as their secondary pool, and will spread to the rest of the farm if machines become available.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Pools and Groups</a><ul>
+<li><a class="reference internal" href="#what-are-pools-and-groups">What are Pools and Groups?</a></li>
+<li><a class="reference internal" href="#managing-pools-and-groups">Managing Pools and Groups</a><ul>
+<li><a class="reference internal" href="#group-management-dialog">Group Management Dialog</a></li>
+<li><a class="reference internal" href="#pool-management-dialog">Pool Management Dialog</a></li>
+<li><a class="reference internal" href="#preventing-workers-from-rendering-jobs-in-the-none-pool-or-group">Preventing Workers from Rendering Jobs in the ‘none’ Pool or Group</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pools-and-job-scheduling">Pools and Job Scheduling</a></li>
+<li><a class="reference internal" href="#secondary-pools-and-job-scheduling">Secondary Pools and Job Scheduling</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="job-scheduling.html"
+                        title="previous chapter">Job Scheduling</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="limits.html"
+                        title="next chapter">Limits and Machine Limits</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="limits.html" title="Limits and Machine Limits"
+             >next</a></li>
+        <li class="right" >
+          <a href="job-scheduling.html" title="Job Scheduling"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" >Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Pools and Groups</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

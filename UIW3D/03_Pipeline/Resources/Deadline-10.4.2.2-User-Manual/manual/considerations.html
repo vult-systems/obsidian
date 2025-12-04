@@ -1,0 +1,461 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Render Farm Considerations &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="System Requirements" href="system-requirements.html" />
+    <link rel="prev" title="AWS Thinkbox Deadline Shared Responsibility Model" href="shared-security-model.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="system-requirements.html" title="System Requirements"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="shared-security-model.html" title="AWS Thinkbox Deadline Shared Responsibility Model"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installing-deadline.html" accesskey="U">Installing Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Render Farm Considerations</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="render-farm-considerations">
+<span id="considerations-ref-label"></span><h1>Render Farm Considerations<a class="headerlink" href="#render-farm-considerations" title="Permalink to this headline">¶</a></h1>
+<p>This is a list of things that should be taken into consideration before installing Deadline.</p>
+<div class="section" id="shared-security-model">
+<h2>Shared Security Model<a class="headerlink" href="#shared-security-model" title="Permalink to this headline">¶</a></h2>
+<p>Before anything else, please start by reviewing the <a class="reference internal" href="shared-security-model.html#shared-security-model-ref-label"><span class="std std-ref">AWS Thinkbox Deadline Shared Responsibility Model</span></a>. It outlines what AWS Thinkbox is responsible for and what customers are responsible for, and should be considered before installing and using Deadline.</p>
+</div>
+<div class="section" id="rendering-software-and-licensing">
+<h2>Rendering Software and Licensing<a class="headerlink" href="#rendering-software-and-licensing" title="Permalink to this headline">¶</a></h2>
+<p>It is recommended that the rendering applications you plan to use for rendering (ie: 3ds Max, Maya, etc) be installed on all of your render nodes. It is preferable that you install an application to the same location on each machine, as this makes configuring the Deadline plugins easier.</p>
+<p>Note that some applications are able to be installed and run from a network location. This can make setup and configuration easier. Refer to rendering application’s documentation to see if this is supported.</p>
+<p>In addition, it is recommended that all licensing setup before attempting to render on your network. Deadline does not handle the licensing of 3rd party rendering applications, refer to the application’s documentation or contact its support team if you run into issues with licensing.</p>
+</div>
+<div class="section" id="store-assets-on-the-network">
+<h2>Store Assets On The Network<a class="headerlink" href="#store-assets-on-the-network" title="Permalink to this headline">¶</a></h2>
+<p>It is recommended that all assets (ie: scenes, footage, textures, etc) used by your render jobs be placed on a network share (preferably a server), which can be accessed via a shared path or a mapped network drive. This is important for two reasons:</p>
+<ul class="simple">
+<li><p>It ensures that all the Workers in your render farm have access to your asset files.</p></li>
+<li><p>It ensures that the Workers use the same version of the asset files that are used by your job.</p></li>
+</ul>
+<p>Note that you can optionally submit the scene file with the job. This results in the scene file being sent to the Repository or an alternate location, and then copied locally to the Worker that renders it. If the scene file contains relative asset paths, it is recommended to not submit the scene file with the job. As these relative paths will likely be broken when the Worker renders the scene from its local location.</p>
+<p>When rendering in a mixed operating system (OS) environment, you can configure Deadline to swap paths based on the operating system it is running on. The way this works is often specific to the rendering application that you are using, please refer to Cross-Platform Rendering Considerations section for the plugin that you are using for more information. You can access plugin specific documentation in the <a class="reference internal" href="../index-linear.html#plugin-ref-lable"><span class="std std-ref">Plugins</span></a> documentation.</p>
+</div>
+<div class="section" id="save-output-files-to-the-network">
+<h2>Save Output Files To The Network<a class="headerlink" href="#save-output-files-to-the-network" title="Permalink to this headline">¶</a></h2>
+<p>All output should be saved to a network share as well (preferably a server). This is important as it ensures that all the Workers in your render farm have access to the output path.</p>
+<p>When rendering in a mixed OS environment, you can configure Deadline to swap output paths based on the operating system it is running on. The way this works is often specific to the rendering application that you are using, so please refer to Cross-Platform Rendering Considerations section for the plugin that you are using for more information. You can access plugin specific documentation in the <a class="reference internal" href="../index-linear.html#plugin-ref-lable"><span class="std std-ref">Plugins</span></a> documentation.</p>
+</div>
+<div class="section" id="path-mapping">
+<h2>Path Mapping<a class="headerlink" href="#path-mapping" title="Permalink to this headline">¶</a></h2>
+<p>It is recommended to avoid using only drives when path mapping as it may cause problems when rendering. This is because on certain file types, such as vrscene and ifd files, Deadline performs path mapping on binary data. When a path is too short (for example: “Y:\”), there is the potential to accidentally match on a random set of binary data and corrupt it with a new path.</p>
+</div>
+<div class="section" id="remote-administration">
+<h2>Remote Administration<a class="headerlink" href="#remote-administration" title="Permalink to this headline">¶</a></h2>
+<p>Deadline has a Remote Administration feature that can be enabled in the Client Setup section of the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Options</span></a>, which can be accessed from the Monitor by selecting Tools -&gt; Configure Repository Options while in Power User Mode. This feature allows you to control all the render nodes remotely from a single machine, including starting and stopping the Worker application, and running arbitrary command line applications on each machine. However, this feature can be a potential security risk if you are not behind a firewall. If this is the case, we recommend that you keep this feature disabled.</p>
+</div>
+<div class="section" id="wins-dns-ad-ldap">
+<h2>WINS/DNS/AD/LDAP<a class="headerlink" href="#wins-dns-ad-ldap" title="Permalink to this headline">¶</a></h2>
+<p>It is assumed a studio will optionally already have a <a class="reference external" href="https://technet.microsoft.com/library/bb727015.aspx">WINS</a>/<a class="reference external" href="https://en.wikipedia.org/wiki/Domain_Name_System">DNS</a> server system setup, to ensure the resolving of hostnames to IP addresses works seamlessly with Deadline and optionally be part of a domain via <a class="reference external" href="https://en.wikipedia.org/wiki/Active_Directory">Active Directory</a> or <a class="reference external" href="https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol">LDAP</a> to handle security/user/file permissions.</p>
+</div>
+<div class="section" id="running-as-a-service-daemon">
+<span id="running-as-service-ref-label"></span><h2>Running as a Service/Daemon<a class="headerlink" href="#running-as-a-service-daemon" title="Permalink to this headline">¶</a></h2>
+<p>For those considering running some or all of your render nodes as a service/daemon, here is list of factors to consider:</p>
+<p><strong>UI</strong></p>
+<ul class="simple">
+<li><p>The UIs for almost all of our Deadline applications are hidden. This might be restrictive if you wish to ad-hoc remote into a machine to view the Worker/Pulse activity. Alternatively, you can always view the individual application logs and/or stream those logs ‘live’ to your Deadline Monitor.</p></li>
+</ul>
+<p><strong>Environment</strong></p>
+<ul class="simple">
+<li><p>Ensure any <a class="reference internal" href="environment.html#environment-ref-label"><span class="std std-ref">environment</span></a> variables are available for the user account running the service/daemon.</p></li>
+<li><p>Note the available settings if you intend to use the <a class="reference internal" href="environment.html#environment-render-as-user-ref-label"><span class="std std-ref">Render Jobs As Job’s User</span></a> feature, especially for Linux/macOS Workers where the service/daemon must have sudo privileges for this mode to work. See the <a class="reference internal" href="repository-config.html#user-settings-repository-options-ref-label"><span class="std std-ref">User Settings</span></a> options in the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Configuration</span></a> for additional options for su, sudo and HOME.</p></li>
+</ul>
+<p><strong>GPU</strong></p>
+<ul>
+<li><p>Note the lack of OpenGL on Windows unless ‘interact with desktop’ is enabled in the service properties.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>NVidia drivers (Quadro/GeForce) as of <strong>r361</strong> now support CUDA 7.5+ renderers within a service context. Make sure you update your <a class="reference external" href="https://www.nvidia.com/Download/index.aspx">graphics card drivers</a> to overcome the limitation as described below.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p>GPU renderers ONLY work in non-service mode as Windows expects a GPU card to be a graphics device only. Windows does NOT allow any background service to access the graphic card. Therefore you cannot run the client as a service if you want to use GPU rendering for the Redshift renderer in <a class="reference internal" href="app-maya.html#renderer-specific-options-ref-label"><span class="std std-ref">Maya</span></a> or <a class="reference internal" href="app-softimage.html#redshift-renderer-options-ref-label"><span class="std std-ref">Softimage</span></a>. An exception is the <a class="reference external" href="https://www.nvidia.com/object/tesla-supercomputing-solutions.html">Nvidia TCC</a> (Tesla Compute Cluster) capable cards such as Tesla, some Quadro and GeForce Titan cards. As the TCC driver is a computation and not a graphics driver, it can be accessed by a Windows service. However, in the case of Quadro/GeForce graphics cards, once the TCC driver is being used, then these cards can no longer be used as a displaying graphics card for the machine. Therefore, you will require at least 2 graphics cards in this configuration.</p></li>
+<li><p>Deadline has <a class="reference internal" href="worker-config.html#gpu-affinity-ref-label"><span class="std std-ref">GPU Affinity</span></a> settings that can be set for Workers, in the same way that CPU affinity can be set. These GPU affinity settings can be used by Deadline’s application plugins to set the GPUs to use for the render if the job’s renderer supports it. The GPU affinity settings are used by many plugins such as the <a class="reference internal" href="app-maya.html#renderer-specific-options-ref-label"><span class="std std-ref">Maya</span></a> and <a class="reference internal" href="app-softimage.html#redshift-renderer-options-ref-label"><span class="std std-ref">Softimage</span></a> plugins when a GPU based renderer such as RedShift is being used. For example, if you have two Workers running on a machine with 4 GPUs, you could set their affinity so that one Worker uses GPUs 0 and 1, and the other Worker uses GPUs 2 and 3. When these Workers render RedShift jobs, they will pass the GPUs they want to use to RedShift so that each render only uses 2 GPUs. Please consult the specific application plugin documentation for more information.</p></li>
+</ul>
+<p><strong>Idle Detection</strong></p>
+<ul class="simple">
+<li><p>On Windows, <a class="reference internal" href="local-worker.html#override-idle-detection-ref-label"><span class="std std-ref">Idle Detection</span></a> will NOT work if the Launcher is running as a service. This is because the service runs in an environment that is separate from the Desktop, and has no knowledge of any mouse or keyboard activity.</p></li>
+<li><p>On Linux, the Launcher uses <a class="reference internal" href="install-client.html#linux-install-ref-label"><span class="std std-ref">X11</span></a> to determine if there has been any mouse or keyboard activity. If <a class="reference internal" href="install-client.html#linux-install-ref-label"><span class="std std-ref">X11</span></a> is not available, <a class="reference internal" href="worker-config.html#worker-config-idle-detection-ref-label"><span class="std std-ref">Idle Detection</span></a> will NOT work. One such situation is when the launcher is running as a daemon.</p></li>
+<li><p>Due to the service/daemon restrictions, you may wish to consider running your ‘headless’ render nodes as a service/daemon but your workstations in ‘normal’ (non-service) mode so that user workstations will have <a class="reference internal" href="worker-config.html#worker-config-idle-detection-ref-label"><span class="std std-ref">Idle Detection</span></a> functionality.</p></li>
+</ul>
+<p><strong>Mapped Drives</strong></p>
+<ul class="simple">
+<li><p>Note, drives can be mapped when running as a service on Windows. Beware that if a user is logged in and has mapped drives set up for them, the Deadline Worker service won’t see them because they run in a different environment. However, if the drives are mapped in the service’s environment (which is what the Worker is doing), then they will work fine. In the <a class="reference internal" href="repository-config.html#mapped-drives-ref-label"><span class="std std-ref">Mapped Drives</span></a> section of the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Configuration</span></a> we provide a checkbox at the bottom of the page to control this configuration.</p></li>
+</ul>
+</div>
+<div class="section" id="rebooting-linux-nodes">
+<span id="considerations-reboot-ref-label"></span><h2>Rebooting Linux Nodes<a class="headerlink" href="#rebooting-linux-nodes" title="Permalink to this headline">¶</a></h2>
+<p>Linux requires elevated permissions for power related tasks such as rebooting or powering off the machine. The Deadline Launcher is responsible for issuing these commands on behalf of incoming requests (either via Remote Administration or Power Management), while the Worker is responsible for issuing these commands when it finishes its current task.</p>
+<p>This can be accomplished by using <cite>sudo</cite> to allow only the Launcher’s user to reboot the machine. Available in Deadline 7.1 and higher, ensure <cite>sudo</cite> is installed and to add the following line to the <cite>/etc/sudoers</cite> file (please use visudo to edit as it will ensure proper syntax):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">user_name</span> <span class="n">ALL</span><span class="o">=</span><span class="p">(</span><span class="n">ALL</span><span class="p">)</span> <span class="n">NOPASSWD</span><span class="p">:</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">poweroff</span><span class="p">,</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">reboot</span><span class="p">,</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">shutdown</span>
+</pre></div>
+</div>
+<p>Here, “user_name” should be replaced with the name of the user which the Launcher is running under. If the Worker was not started by the Launcher, the users (duplicate line for each) or user groups who may run the Worker. In the case of a user group, replace “user_name” with the name of the group prefixed with “&#64;”. For example, “&#64;deadline”. In most farms, users will not directly interact with the Worker, so Worker access to machine restart may not be required.</p>
+<p>Note that Deadline will attempt to run this command through <cite>sudo</cite> if it is installed on the system.</p>
+</div>
+<div class="section" id="automatic-updates">
+<h2>Automatic Updates<a class="headerlink" href="#automatic-updates" title="Permalink to this headline">¶</a></h2>
+<dl class="simple">
+<dt>Note ..</dt><dd><p>Using this feature requires the Deadline install to be world-writeable, and should therefore be used with caution</p>
+</dd>
+</dl>
+<p>Deadline has an Automatic Updates feature that can be enabled in the Client Setup section of the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Options</span></a>, which can be accessed from the Monitor by selecting Tools -&gt; Configure Repository Options while in Power User Mode. Enabling this feature makes minor Deadline upgrades easy, with little to no downtime. Refer to the <a class="reference internal" href="upgrading.html#upgrading-ref-label"><span class="std std-ref">Upgrading Documentation</span></a> for more information.</p>
+</div>
+<div class="section" id="setup-an-smtp-server-for-emails">
+<h2>Setup An SMTP Server for Emails<a class="headerlink" href="#setup-an-smtp-server-for-emails" title="Permalink to this headline">¶</a></h2>
+<p>Deadline can use email to notify users when their jobs have succeeded or failed. Email can also be used to notify system administrators of all sorts of events, like when Workers stall or when jobs fail. It is recommended that an SMTP server be setup so that you can make use of these features.</p>
+<p>You can configure the email notification settings in the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Options</span></a>, which can be accessed from the Monitor by selecting Tools -&gt; Configure Repository Options while in Power User Mode.</p>
+</div>
+<div class="section" id="auto-login-on-windows-server-render-nodes">
+<h2>Auto Login on Windows Server Render Nodes<a class="headerlink" href="#auto-login-on-windows-server-render-nodes" title="Permalink to this headline">¶</a></h2>
+<p>If you’re not running the Worker as a service, it can be set to start automatically when the render mode it is on starts up, but this requires that the render node login automatically. On Windows Server, this can be done by modifying the registry on each render node.</p>
+<p>These are the steps to setup your render node registry to login:</p>
+<ol class="arabic simple">
+<li><p>Ensure the Deadline Worker is configured to run on startup. By default, the Workers are set to start automatically when the machine logs in. This setting, as well as others, can be modified from the Launcher on each machine.</p></li>
+<li><p>Follow Microsoft’s instructions for <a class="reference external" href="https://support.microsoft.com/en-us/help/324737/how-to-turn-on-automatic-logon-in-windows">enabling automatic login on Windows</a>.</p></li>
+<li><p>The next time you restart the machine, it should login automatically as the specified user.</p></li>
+</ol>
+</div>
+<div class="section" id="app-nap-on-macos-render-nodes-and-workstations">
+<h2>App Nap on macOS Render Nodes and Workstations<a class="headerlink" href="#app-nap-on-macos-render-nodes-and-workstations" title="Permalink to this headline">¶</a></h2>
+<p>App Nap is a collection of new features that are availble macOS (10.9+) and later that helps conserve CPU energy use by “slowing down” or stopping applications that cannot be seen, for example if they are behind another window or the screen has been put to sleep. However, this can have an adverse affect on Deadline and the applications it is rendering with. Because of this, we recommend disabling App Nap and screen power saving modes (if applicable) on render nodes across the entire operating system by enabling the “Prevent App Nap” checkbox via right-click “Get Info” for each application on each machine or by following these steps in terminal:</p>
+<a class="reference internal image-reference" href="../_images/disable_app_nap.png"><img alt="Disable App Nap" src="../_images/disable_app_nap.png" style="height: 500px;" /></a>
+<ol class="arabic">
+<li><p>Open a terminal (the Terminal can be found in /Applications/Utilities).</p></li>
+<li><p>Run the following command (sudo rights required) and you must restart the machine</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">defaults</span> <span class="pre">write</span> <span class="pre">NSGlobalDomain</span> <span class="pre">NSAppSleepDisabled</span> <span class="pre">-bool</span> <span class="pre">YES</span></code></p>
+</div></blockquote>
+</li>
+</ol>
+<p>If you wish to re-enable App Nap, follow the steps above, but run the following command for (2) instead:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">defaults</span> <span class="pre">delete</span> <span class="pre">NSGlobalDomain</span> <span class="pre">NSAppSleepDisabled</span></code></p>
+</div></blockquote>
+<p>You can check the status of the setting (if it already exists on a machine) by the following command, where “1” means App Nap is disabled and “0” means it is enabled:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">defaults</span> <span class="pre">read</span> <span class="pre">NSGlobalDomain</span> <span class="pre">NSAppSleepDisabled</span></code></p>
+</div></blockquote>
+<p>If workstations are being used as render nodes, it is recommended to disable App Nap on them as well. However, if workstations are simply being used to submit and monitor render jobs, then this shouldn’t be necessary.</p>
+<p>On Macs which have built-in or connected external displays, once a screen saver has begun or the display has been put to sleep by power management, Deadline as well as other rendering applications will be throttled down to conserve energy, regardless of the per-app App Nap setting.</p>
+<p>Finally, the machine that is running Pulse should also have App Nap disabled, or at the very least, disabled for the Pulse applications. To disable App Nap for the Pulse application only, right-click (or Command-click) on the DeadlinePulse application in Finder, and select Get Info. Then in the General section, check the “Prevent App Nap” box. If Pulse is currently running, you will have to restart it for the changes to take effect.</p>
+</div>
+<div class="section" id="disable-wer-on-windows">
+<h2>Disable WER on Windows<a class="headerlink" href="#disable-wer-on-windows" title="Permalink to this headline">¶</a></h2>
+<p>When applications crash on Windows, the system holds the application open in memory and displays a series of helpful boxes asking if you want to submit the error report to Microsoft. While that’s super handy for all sorts of reasons, if there’s no one there to click the dialog (headless render node), Deadline will assume the application is still running and wait indefinitely by default.</p>
+<p>The registry fix below will stop that from popping up on render nodes that don’t have baby sitters. Meaning when the application crashes, it actually exits like we know it should. This change is system-wide, but can be configured
+per-user if you like by changing the registry hive used (HKEY_CURRENT_USER versus HKEY_LOCAL_MACHINE). Ensure you restart the machine after changing the registry setting and it is always recommended to take a backup before
+editing a machine’s registry. Copy the code below into a file: “DisableCrashReporting.reg” and double-click this file as a user with administrator privileges. Alternatively, you can manually add/edit the registry entry via
+“regedit.exe” or inject the registry silently via the command-line “regedit.exe /s DisableCrashReporting.reg”.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Windows</span> <span class="n">Registry</span> <span class="n">Editor</span> <span class="n">Version</span> <span class="mf">5.00</span>
+<span class="p">[</span><span class="n">HKEY_LOCAL_MACHINE</span>\<span class="n">SOFTWARE</span>\<span class="n">Microsoft</span>\<span class="n">Windows</span>\<span class="n">Windows</span> <span class="n">Error</span> <span class="n">Reporting</span><span class="p">]</span>
+<span class="s2">&quot;Disabled&quot;</span><span class="o">=</span><span class="n">dword</span><span class="p">:</span><span class="mi">00000001</span>
+</pre></div>
+</div>
+<p>For more information about the possible settings, see here: <a class="reference external" href="https://msdn.microsoft.com/en-us/library/bb513638.aspx/">MSDN article WER Settings</a>.</p>
+<p>It’s also possible to just default to sending them if you like, or to store the crash dumps in a safe place if you’re a developer.</p>
+</div>
+<div class="section" id="firewall-anti-virus-security-considerations">
+<span id="considerations-firewall-ref-label"></span><h2>Firewall, Anti-Virus &amp; Security Considerations<a class="headerlink" href="#firewall-anti-virus-security-considerations" title="Permalink to this headline">¶</a></h2>
+<p>Here is a checklist of items which should be considered by those responsible for deploying Deadline repository and client software.</p>
+<p>If you haven’t done so already, please review the <a class="reference internal" href="shared-security-model.html#shared-security-model-ref-label"><span class="std std-ref">AWS Thinkbox Deadline Shared Responsibility Model</span></a>.</p>
+<p>Ensure you consider additional configuration requirements for any software/hardware firewall clients, network switches, anti-virus software clients and Operating System specific security controls such as Windows UAC or SELinux (Security-Enhanced), which may attempt to block Deadline communication.</p>
+<p><strong>Windows UAC</strong></p>
+<p>Ensure Windows UAC is correctly configured to allow Deadline communication and the correct execution of the Deadline applications.</p>
+<p><strong>User Accounts for Render Nodes</strong></p>
+<p>The Deadline Worker is designed to run processes and code on remote machines; this is part of the rendering process. Because of this functionality, it is possible for Deadline to run processes or code that could be harmful to the machine. For example, a user could submit a command line job to Deadline that formats the root drive. While plugins that allow for arbitrary process/code execution like <strong>CommandLine</strong>, <strong>CommandScript</strong>, and <strong>Python</strong> are disabled by default, it is still recommended that you use best practices when choosing the user account that the Deadline Worker runs as.</p>
+<p>By default, the Deadline Worker starts processes as the user that it was launched by, so it is recommended that the user account that starts the Deadline Worker only have privileges that are necessary to complete the rendering of its tasks. For example, the rendering application probably doesn’t need write access to the root drive. Restricting privileges will reduce the blast radius of what malicious processes and code can do on that machine.</p>
+<p>When restricting a user account, keep in mind that some things are still required. For example:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>User accounts must have network access so that they can communicate with your file server and the Deadline Database.</p></li>
+<li><p>User accounts must have <a class="reference internal" href="install-db-repo.html#db-sharing-the-repository-ref-label"><span class="std std-ref">Deadline Repository access</span></a>.</p></li>
+</ol>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If render nodes are connected to a remote Repository via a <a class="reference internal" href="remote-connection-server.html#remote-connection-server-ref-label"><span class="std std-ref">Connection Server</span></a>, the same rules above apply to the Deadline Remote Connection Server.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is recommended to <strong>not</strong> run these applications under <code class="docutils literal notranslate"><span class="pre">Administrator</span></code> or <code class="docutils literal notranslate"><span class="pre">root</span></code> user accounts, unless there is good reason to do so. These user accounts do not have restricted privileges.</p>
+</div>
+<p><strong>Port Configuration</strong></p>
+<p>When setting up Deadline it is important that MongoDB, the Deadline Repository, and Deadline applications are able to communicate on your local or extended network with each other via their TCP or UDP ports. The table below lists out the default ports used by each application or feature. It is recommended that you only allowlist ports for applications and features that you are actively using.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Deadline 10 applications use the base port number of 17000. The base port number is used as the default for the Launcher, and then the rest are offset by one as per the table below.</p>
+</div>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 10%" />
+<col style="width: 15%" />
+<col style="width: 68%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Protocol</p></th>
+<th class="head"><p>Port Number</p></th>
+<th class="head"><p>Application / Service</p></th>
+<th class="head"><p>Comment</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>TCP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">17000</span></code></p></td>
+<td><p>Launcher</p></td>
+<td><p>Default TCP port - <a class="reference internal" href="launcher.html#launcher-ref-label"><span class="std std-ref">Launcher</span></a> listening port</p></td>
+</tr>
+<tr class="row-odd"><td><p>UDP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">17001</span></code></p></td>
+<td><p>Auto-Config</p></td>
+<td><p>Default UDP port - <a class="reference internal" href="pulse.html#pulse-ref-label"><span class="std std-ref">Pulse</span></a> listens for broadcasts on the UDP port</p></td>
+</tr>
+<tr class="row-even"><td><p>TCP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">17001</span></code></p></td>
+<td><p>Auto-Config</p></td>
+<td><p>Default TCP port - Pulse sends <a class="reference internal" href="auto-config.html#auto-config-ref-label"><span class="std std-ref">Auto-Config</span></a> data over TCP</p></td>
+</tr>
+<tr class="row-odd"><td><p>TCP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">17002</span></code></p></td>
+<td><p>Pulse</p></td>
+<td><p>Default TCP port - <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Configure Repository Options</span></a> - <a class="reference internal" href="pulse-config.html#pulse-config-ref-label"><span class="std std-ref">Pulse Settings</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>TCP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">17003</span></code></p></td>
+<td><p>Worker</p></td>
+<td><p>Default TCP port - <a class="reference internal" href="worker.html#worker-ref-label"><span class="std std-ref">Worker</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>TCP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">17004</span></code></p></td>
+<td><p>License Forwarder</p></td>
+<td><p>Default TCP port - <a class="reference internal" href="license-forwarder.html#license-forwarder-ref-label"><span class="std std-ref">License Forwarder</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>TCP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">17005</span></code></p></td>
+<td><p>License Forwarder Messaging</p></td>
+<td><p>Default TCP port - <a class="reference internal" href="license-forwarder.html#license-forwarder-ref-label"><span class="std std-ref">License Forwarder</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>TCP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">4000</span></code> and <code class="docutils literal notranslate"><span class="pre">4001</span></code></p></td>
+<td><p>AWS Asset Server</p></td>
+<td><p>Default TCP port - <a class="reference internal" href="aws-asset-server.html#asset-server-ref-label"><span class="std std-ref">AWS Asset Server</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>TCP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">4005</span></code> and <code class="docutils literal notranslate"><span class="pre">18000</span></code></p></td>
+<td><p>AWS Portal Link</p></td>
+<td><p>Default TCP ports for remote commands and status communications - <a class="reference internal" href="index-aws-portal-reference.html#aws-portal-reference-label"><span class="std std-ref">AWS Portal Link</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>TCP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8080</span></code></p></td>
+<td><p>RCS (http)</p></td>
+<td><p>Default TCP port - <a class="reference internal" href="remote-connection-server.html#remote-connection-server-ref-label"><span class="std std-ref">Remote Connection Server</span></a>. This is the default port the Remote Connection Server(s) will listen to without TLS enabled.</p></td>
+</tr>
+<tr class="row-even"><td><p>TCP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">4433</span></code></p></td>
+<td><p>RCS (https)</p></td>
+<td><p>Default TCP port - <a class="reference internal" href="remote-connection-server.html#remote-connection-server-ref-label"><span class="std std-ref">Remote Connection Server</span></a>. This is the default port the Remote Connection Server(s) will listen to with TLS enabled.</p></td>
+</tr>
+<tr class="row-odd"><td><p>TCP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8081</span></code></p></td>
+<td><p>Web Service (http)</p></td>
+<td><p>Default TCP port - <a class="reference internal" href="repository-config.html#repo-web-service-ref-label"><span class="std std-ref">Web Service</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>TCP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">443</span></code></p></td>
+<td><p>UBL</p></td>
+<td><p>Outbound TCP port for <a class="reference internal" href="licensing-usage-based.html#licensing-usage-based-ref-label"><span class="std std-ref">Usage-Based Licensing</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>TCP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">27100</span></code></p></td>
+<td><p>MongoDB</p></td>
+<td><p>Default TCP port for MongoDB installed by Deadline DB/Repo installer</p></td>
+</tr>
+<tr class="row-even"><td><p>TCP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">28100</span></code></p></td>
+<td><p>MongoDB Web API</p></td>
+<td><p>Access the http web site (optional) for database information</p></td>
+</tr>
+<tr class="row-odd"><td><p>UDP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">7</span></code></p></td>
+<td><p>WoL (Wake-On-Lan)</p></td>
+<td><p>Default UDP port - <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Configure Repository Options</span></a> - <a class="reference internal" href="repository-config.html#wake-on-lan-settings-ref-label"><span class="std std-ref">Wake On Lan Settings</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>UDP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">9</span></code></p></td>
+<td><p>WoL (Wake-On-Lan)</p></td>
+<td><p>Default UDP port - <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Configure Repository Options</span></a> - <a class="reference internal" href="repository-config.html#wake-on-lan-settings-ref-label"><span class="std std-ref">Wake On Lan Settings</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>UDP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">123</span></code></p></td>
+<td><p>NTP</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>TCP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">25</span></code></p></td>
+<td><p>SMTP</p></td>
+<td><p>For mail server to receive e-mail notifications from Workers and Pulse</p></td>
+</tr>
+<tr class="row-odd"><td><p>TCP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">587</span></code></p></td>
+<td><p>SMTP (submission)</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>TCP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">465</span></code></p></td>
+<td><p>SMTP TLS</p></td>
+<td><p>For sending notifications using TLS</p></td>
+</tr>
+<tr class="row-odd"><td><p>UDP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">161</span></code></p></td>
+<td><p>SNMP (GET requests)</p></td>
+<td><p>Default UDP port - Power Mgmt - <a class="reference internal" href="power-management.html#thermal-shutdown-ref-label"><span class="std std-ref">Thermal Sensors</span></a> (UDP <code class="docutils literal notranslate"><span class="pre">162</span></code> for SNMP Traps NOT used by Deadline)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>External Web Service Access</strong></p>
+<p>When making the Deadline Web Service available externally, ensure <cite>Require Authentication</cite> is enabled and that <cite>Allow Empty Passwords</cite> is turned off. See <a class="reference internal" href="repository-config.html#repo-web-service-ref-label"><span class="std std-ref">Web Service</span></a> documentation for more information.</p>
+</div>
+<div class="section" id="aws-ec2-considerations">
+<span id="considerations-ec2-ref-label"></span><h2>AWS EC2 Considerations<a class="headerlink" href="#aws-ec2-considerations" title="Permalink to this headline">¶</a></h2>
+<p><strong>EC2 Instance Metadata</strong></p>
+<p>When using Deadline applications in AWS (including AWS Portal and Spot Event Plugin), it is required that <a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html">Instance metadata</a> is enabled for all EC2 instances. Instance metadata is used to detect if Deadline is running in AWS, and instance reporting in the <a class="reference internal" href="resource-tracker-overview.html#resource-tracker-overview-ref-label"><span class="std std-ref">Resource Tracker</span></a>, <a class="reference internal" href="aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">AWS Portal</span></a>, and <a class="reference internal" href="event-spot.html#event-spot-ref-label"><span class="std std-ref">Spot Event Plugin</span></a>. Note that the IMDSv2 metadata service is <a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html">enabled by default</a>. More information on configuring instance metadata can be found in the <a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html#configuring-instance-metadata-options">AWS documentation</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As T-type instances are equipped with <a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html">Burstable CPU and governed by CPU Credits</a>, the instances can run out of credits causing CPU throttling issues on the machine. We strongly recommend to not use the T-type instances for Deadline components.</p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Render Farm Considerations</a><ul>
+<li><a class="reference internal" href="#shared-security-model">Shared Security Model</a></li>
+<li><a class="reference internal" href="#rendering-software-and-licensing">Rendering Software and Licensing</a></li>
+<li><a class="reference internal" href="#store-assets-on-the-network">Store Assets On The Network</a></li>
+<li><a class="reference internal" href="#save-output-files-to-the-network">Save Output Files To The Network</a></li>
+<li><a class="reference internal" href="#path-mapping">Path Mapping</a></li>
+<li><a class="reference internal" href="#remote-administration">Remote Administration</a></li>
+<li><a class="reference internal" href="#wins-dns-ad-ldap">WINS/DNS/AD/LDAP</a></li>
+<li><a class="reference internal" href="#running-as-a-service-daemon">Running as a Service/Daemon</a></li>
+<li><a class="reference internal" href="#rebooting-linux-nodes">Rebooting Linux Nodes</a></li>
+<li><a class="reference internal" href="#automatic-updates">Automatic Updates</a></li>
+<li><a class="reference internal" href="#setup-an-smtp-server-for-emails">Setup An SMTP Server for Emails</a></li>
+<li><a class="reference internal" href="#auto-login-on-windows-server-render-nodes">Auto Login on Windows Server Render Nodes</a></li>
+<li><a class="reference internal" href="#app-nap-on-macos-render-nodes-and-workstations">App Nap on macOS Render Nodes and Workstations</a></li>
+<li><a class="reference internal" href="#disable-wer-on-windows">Disable WER on Windows</a></li>
+<li><a class="reference internal" href="#firewall-anti-virus-security-considerations">Firewall, Anti-Virus &amp; Security Considerations</a></li>
+<li><a class="reference internal" href="#aws-ec2-considerations">AWS EC2 Considerations</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="shared-security-model.html"
+                        title="previous chapter">AWS Thinkbox Deadline Shared Responsibility Model</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="system-requirements.html"
+                        title="next chapter">System Requirements</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="system-requirements.html" title="System Requirements"
+             >next</a></li>
+        <li class="right" >
+          <a href="shared-security-model.html" title="AWS Thinkbox Deadline Shared Responsibility Model"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installing-deadline.html" >Installing Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Render Farm Considerations</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

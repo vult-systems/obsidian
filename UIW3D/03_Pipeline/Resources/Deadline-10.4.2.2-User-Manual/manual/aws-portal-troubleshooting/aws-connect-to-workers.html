@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connecting to the AWS Portal Worker Instances &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thinkbox.css" />
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Connecting to AWS Portal Worker with Session Manager" href="aws-connect-with-session-manager.html" />
+    <link rel="prev" title="Connecting to an Infrastructure From a Windows Machine" href="aws-connect-to-infrastructure-from-windows.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-connect-with-session-manager.html" title="Connecting to AWS Portal Worker with Session Manager"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="aws-connect-to-infrastructure-from-windows.html" title="Connecting to an Infrastructure From a Windows Machine"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Connecting to the AWS Portal Worker Instances</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="../aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<div class="section" id="connecting-to-the-aws-portal-worker-instances">
+<span id="aws-connect-workers-ref-label"></span><h1>Connecting to the AWS Portal Worker Instances<a class="headerlink" href="#connecting-to-the-aws-portal-worker-instances" title="Permalink to this headline">¶</a></h1>
+<p>If you would like to connect to your AWS Portal Worker instances for troubleshooting purposes use the following steps depending on what operating system you are connecting from and the operating
+system of the AWS Portal Worker Instance.</p>
+<div class="section" id="every-operating-system">
+<h2>Every Operating System<a class="headerlink" href="#every-operating-system" title="Permalink to this headline">¶</a></h2>
+<p>Your AWS Portal Worker must have an SSH keypair associated with to be able to access it. You can select which keypair to associate with your Spot Fleet when you start it. When starting a Spot Fleet
+Request ensure that you have selected Use Key Pair. From the adjacent drop down menu you can choose any key pair that’s in your AWS account in the same region as the Spot Fleet Request. We recommend using
+the DashKey as you don’t have to do anything to set the DashKey up. The following instructions will assume you are using the DashKey.</p>
+<img alt="../../_images/SelectKeyPair.png" src="../../_images/SelectKeyPair.png" />
+</div>
+<div class="section" id="connecting-to-an-aws-portal-worker-with-session-manager">
+<h2>Connecting to an AWS Portal Worker with Session Manager<a class="headerlink" href="#connecting-to-an-aws-portal-worker-with-session-manager" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="aws-connect-with-session-manager.html#aws-connect-with-session-manager-ref-label"><span class="std std-ref">Follow these instructions to use Session Manager to connect to an AWS Portal Worker</span></a></p>
+</div>
+<div class="section" id="connecting-to-a-linux-aws-portal-worker">
+<h2>Connecting to a Linux AWS Portal Worker<a class="headerlink" href="#connecting-to-a-linux-aws-portal-worker" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="aws-connect-to-linux-workers.html#aws-connect-to-linux-workers-ref-label"><span class="std std-ref">Follow these instructions if connecting to a Linux AWS Portal Worker</span></a></p>
+</div>
+<div class="section" id="connecting-to-a-windows-aws-portal-worker">
+<h2>Connecting to a Windows AWS Portal Worker<a class="headerlink" href="#connecting-to-a-windows-aws-portal-worker" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="aws-connect-to-windows-workers.html#aws-connect-to-windows-workers-ref-label"><span class="std std-ref">Follow these instructions if connecting to a Windows AWS Portal Worker</span></a></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Connecting to the AWS Portal Worker Instances</a><ul>
+<li><a class="reference internal" href="#every-operating-system">Every Operating System</a></li>
+<li><a class="reference internal" href="#connecting-to-an-aws-portal-worker-with-session-manager">Connecting to an AWS Portal Worker with Session Manager</a></li>
+<li><a class="reference internal" href="#connecting-to-a-linux-aws-portal-worker">Connecting to a Linux AWS Portal Worker</a></li>
+<li><a class="reference internal" href="#connecting-to-a-windows-aws-portal-worker">Connecting to a Windows AWS Portal Worker</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aws-connect-to-infrastructure-from-windows.html"
+                        title="previous chapter">Connecting to an Infrastructure From a Windows Machine</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="aws-connect-with-session-manager.html"
+                        title="next chapter">Connecting to AWS Portal Worker with Session Manager</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-connect-with-session-manager.html" title="Connecting to AWS Portal Worker with Session Manager"
+             >next</a></li>
+        <li class="right" >
+          <a href="aws-connect-to-infrastructure-from-windows.html" title="Connecting to an Infrastructure From a Windows Machine"
+             >previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Connecting to the AWS Portal Worker Instances</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

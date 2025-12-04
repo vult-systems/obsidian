@@ -1,0 +1,417 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fusion &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Fusion Quicktime" href="app-fusion-quicktime.html" />
+    <link rel="prev" title="FFmpeg" href="app-ffmpeg.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-fusion-quicktime.html" title="Fusion Quicktime"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-ffmpeg.html" title="FFmpeg"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Fusion</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="fusion">
+<span id="app-fusion-ref-label"></span><h1>Fusion<a class="headerlink" href="#fusion" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs from within Fusion by installing the <a class="reference internal" href="#app-fusion-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a>, or you can submit them from the Monitor. The instructions for installing the <a class="reference internal" href="#app-fusion-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<p>To submit from within Fusion, select Script -&gt; DeadlineFusionClient.</p>
+<p><a class="reference internal" href="../_images/integrated_fusion_iup.png"><img alt="integrated" src="../_images/integrated_fusion_iup.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_fusion.png"><img alt="monitor" src="../_images/sub_fusion.png" style="height: 400px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.</p>
+<ul class="simple">
+<li><p><strong>Fusion Comp</strong>: The flow/comp file to be rendered.</p></li>
+<li><p><strong>Frame List</strong>: The list of frames to render.</p></li>
+<li><p><strong>Frames Per Task</strong>: This is the number of frames that will be rendered at a time for each job task.</p></li>
+<li><p><strong>Proxy</strong>: The proxy level to use (not supported in command line mode).</p></li>
+<li><p><strong>Version</strong>: The version of Fusion to render with.</p></li>
+<li><p><strong>Build</strong>: Force 32 or 64 bit rendering. Default is None.</p></li>
+<li><p><strong>Use Frame List In Comp</strong>: Enable this option to pull the frame range from the comp file.</p></li>
+<li><p><strong>Check Saver Output</strong>: If checked, Deadline will check all savers to ensure they have saved their image file (not supported in command line mode). Note that this setting is just called “Check Output” in the Monitor submitter.</p></li>
+<li><p><strong>High Quality</strong>: Whether or not to render with high quality (not supported in command line mode).</p></li>
+<li><p><strong>Command Line Mode</strong>: Render using separate command line calls instead of keeping the scene loaded in memory between tasks. Using this feature disables the High Quality, Proxy, and Check Saver Output options. This uses the FusionCmd plugin, instead of the Fusion one.</p></li>
+<li><p><strong>Submit Comp File With Job</strong>: If this option is enabled, the flow/comp file will be submitted with the job, and then copied locally to the Worker machine during rendering. Note that this setting is just called “Submit Comp File” in the Monitor submitter.</p></li>
+</ul>
+<p>In-app submitter submission options.</p>
+<ul class="simple">
+<li><p><strong>Render First And Last Frames First</strong>: The first and last frame of the flow/comp will be rendered first, followed by the remaining frames in the sequence. Note that the Frame List above is ignored if this box is checked (the frame list is pulled from the flow/comp itself).</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Fusion and FusionCmd plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Fusion plugin from the list on the left.</p>
+<p>Note, if the executable supports a MAJOR.MINOR.REVISION (9.0.123) numbering system in its path, then you will need to configure the explicit exe path to the particular revision that you have installed on your machines. Deadline does not track every possible revision available or indeed where it might be custom installed to, so a studio should verify their exe paths are correct for each application version they choose to use with Deadline. Multiple exe paths can still be declared and the first one that is found on a particular Worker on a particular platform will be used from the exe list.</p>
+<div class="section" id="id1">
+<h3>Fusion<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="../_images/cp_fusion.png"><img alt="../_images/cp_fusion.png" src="../_images/cp_fusion.png" style="height: 400px;" /></a>
+<p><strong>Fusion Options</strong></p>
+<ul class="simple">
+<li><p><strong>Fusion Render Executable</strong>: The path to the Fusion Render Slave executable used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+<li><p><strong>Fusion Wait For Executable</strong>: If you use a proxy RenderSlave.exe, set this to the name of the renamed original.  For example, it might be set to RenderSlave_original.exe. Leave blank to disable this feature.</p></li>
+<li><p><strong>Fusion Version To Enforce</strong>: Deadline will only render Fusion jobs on Workers running this version of Fusion. Use a ; to separate alternative versions. Leave blank to disable this feature.</p></li>
+<li><p><strong>Fusion Worker Preference File</strong>: The path to a global RenderSlave.prefs preference file that is copied over before starting the Render Slave. Leave blank to disable this feature.</p></li>
+</ul>
+<p><strong>General Fusion Options</strong></p>
+<ul class="simple">
+<li><p><strong>Load Comp Timeout</strong>: Maximum time for Fusion to load a comp, in seconds.</p></li>
+<li><p><strong>Script Connect Timeout</strong>: Amount of time allowed for Fusion to start up and accept a script connection, in seconds.</p></li>
+</ul>
+<p><strong>Path Mapping For Mixed Farms (Fusion 8 and later)</strong></p>
+<ul class="simple">
+<li><p><strong>Enable Path Mapping</strong>: If enabled, a temporary Fusion file will be created locally on the Worker for rendering and Deadline will do path mapping directly in the Fusion file. Note that this feature can be switched off if there are no path mapping entries defined in Repository Options.</p></li>
+</ul>
+<p><strong>Fusion Quicktime Options</strong></p>
+<ul class="simple">
+<li><p><strong>Show Rendering Progress</strong>: If enabled, the progress will be displayed when a Fusion Quicktime job is rendering. Note that this is for Fusion Quicktime, submitted using the Fusion Quicktime submitter.</p></li>
+</ul>
+</div>
+<div class="section" id="fusioncmd">
+<h3>FusionCmd<a class="headerlink" href="#fusioncmd" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="../_images/cp_fusioncmd.png"><img alt="../_images/cp_fusioncmd.png" src="../_images/cp_fusioncmd.png" style="height: 400px;" /></a>
+<ul class="simple">
+<li><p><strong>Fusion Render Executable</strong>: The path to the Fusion Console Worker executable used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+<li><p><strong>Fusion Worker Preference File</strong>: The path to a global RenderSlave.prefs preference file that is copied over before starting the Render Slave. Leave blank to disable this feature.</p></li>
+</ul>
+<p><strong>Path Mapping For Mixed Farms (Fushion 8 and later)</strong></p>
+<ul class="simple">
+<li><p><strong>Enable Path Mapping</strong>: If enabled, a temporary FusionCmd file will be created locally on the Worker for rendering and Deadline will do path mapping directly in the FusionCmd file. Note that this feature can be switched off if there are no path mapping entries defined in Repository Options.</p></li>
+</ul>
+</div>
+<div class="section" id="pipeline-tools">
+<h3>Pipeline Tools<a class="headerlink" href="#pipeline-tools" title="Permalink to this headline">¶</a></h3>
+<p>When using the integrated submitter to submit through Fusion you have the ability to use any of the event plugins that you have enabled through the Deadline Monitor. This is done by opening the Pipeline Tools window via the Pipeline Tools button. This window is explained further in the <a class="reference internal" href="event-pipeline-tools.html#event-pipeline-tools-ref-label"><span class="std std-ref">Pipeline Tools</span></a> documentation.</p>
+</div>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-fusion-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to install the integrated Fusion submission script. This script allows for submitting Fusion render jobs to Deadline directly from within the Fusion editing GUI.</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/Fusion/Installers</span></code>.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<p><strong>Fusion 7 and earlier:</strong></p>
+<ul>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="n">Fusion</span>\<span class="n">Client</span>\<span class="n">DeadlineFusionClient</span><span class="o">.</span><span class="n">eyeonscript</span> <span class="n">to</span> <span class="p">[</span><span class="n">Fusion</span> <span class="n">Install</span> <span class="n">Directory</span><span class="p">]</span>\<span class="n">Scripts</span>\<span class="n">Comp</span>
+</pre></div>
+</div>
+</li>
+<li><p>Restart Fusion to find the DeadlineFusionClient option in the Script menu.</p></li>
+</ul>
+<p><strong>Fusion 8 and later:</strong></p>
+<ul>
+<li><p>On Windows, copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="n">Fusion</span>\<span class="n">Client</span>\<span class="n">DeadlineFusionClient</span><span class="o">.</span><span class="n">eyeonscript</span> <span class="n">to</span> <span class="o">%</span><span class="n">APPDATA</span><span class="o">%</span>\<span class="n">Blackmagic</span> <span class="n">Design</span>\<span class="n">Fusion</span>\<span class="n">Scripts</span>\<span class="n">Comp</span>
+</pre></div>
+</div>
+</li>
+<li><p>On macOS, copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="n">Fusion</span>\<span class="n">Client</span>\<span class="n">DeadlineFusionClient</span><span class="o">.</span><span class="n">eyeonscript</span> <span class="n">to</span> <span class="o">~/</span><span class="n">Library</span><span class="o">/</span><span class="n">Application</span> <span class="n">Support</span><span class="o">/</span><span class="n">Blackmagic</span> <span class="n">Design</span><span class="o">/</span><span class="n">Fusion</span><span class="o">/</span><span class="n">Scripts</span><span class="o">/</span><span class="n">Comp</span>
+</pre></div>
+</div>
+</li>
+<li><p>On Linux, copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="n">Fusion</span>\<span class="n">Client</span>\<span class="n">DeadlineFusionClient</span><span class="o">.</span><span class="n">eyeonscript</span> <span class="n">to</span> <span class="o">~/.</span><span class="n">fusion</span><span class="o">/</span><span class="n">BlackmagicDesign</span><span class="o">/</span><span class="n">Fusion</span><span class="o">/</span><span class="n">Scripts</span><span class="o">/</span><span class="n">Comp</span>
+</pre></div>
+</div>
+</li>
+<li><p>Restart Fusion to find the DeadlineFusionClient option in the Script menu.</p></li>
+</ul>
+</div>
+<div class="section" id="custom-sanity-check-setup">
+<h3>Custom Sanity Check Setup<a class="headerlink" href="#custom-sanity-check-setup" title="Permalink to this headline">¶</a></h3>
+<p>In the [Repository]/submission/Fusion/Main folder, you can create a file called CustomSanityChecks.eyeonscript. This script will be called by the main Fusion submission script before submission, and can be used to perform
+sanity checks. Within this script file, you must define this function, which is called by the main script:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">CustomDeadlineSanityChecks</span><span class="p">(</span><span class="n">comp</span><span class="p">)</span>
+    <span class="n">local</span> <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="o">...</span>
+
+    <span class="k">return</span> <span class="n">message</span>
+<span class="n">end</span>
+</pre></div>
+</div>
+<p>All your checks should be placed within this function. This function should return a message that contains the sanity check warnings. If an empty message is returned, then it is assumed the sanity check was a
+success and no warning is displayed to the user. Here is a simple example that checks if any CineFusion tools are being used in the comp file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">CustomDeadlineSanityChecks</span><span class="p">(</span><span class="n">comp</span><span class="p">)</span>
+    <span class="n">local</span> <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="o">-----------------------------------------------------</span>
+    <span class="o">--</span> <span class="n">RULE</span><span class="p">:</span> <span class="n">Check</span> <span class="n">to</span> <span class="n">make</span> <span class="n">sure</span> <span class="n">Cinefusion</span> <span class="ow">is</span> <span class="n">disabled</span>
+    <span class="o">-----------------------------------------------------</span>
+    <span class="n">cinefusionAttrs</span> <span class="o">=</span> <span class="n">fusion</span><span class="p">:</span><span class="n">GetRegAttrs</span><span class="p">(</span><span class="s2">&quot;CineFusion&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">cinefusionAttrs</span> <span class="o">==</span> <span class="n">nil</span><span class="p">)</span> <span class="n">then</span>
+        <span class="n">cinefusion_regID</span> <span class="o">=</span> <span class="n">cinefusionAttrs</span><span class="o">.</span><span class="n">REGS_ID</span>
+        <span class="n">local</span> <span class="n">i</span> <span class="o">=</span> <span class="n">nil</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">comp</span><span class="p">:</span><span class="n">GetToolList</span><span class="p">()</span> <span class="n">do</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">v</span><span class="p">:</span><span class="n">GetID</span><span class="p">()</span> <span class="o">==</span> <span class="n">cinefusion_regID</span><span class="p">)</span> <span class="n">then</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">v</span><span class="p">:</span><span class="n">GetAttrs</span><span class="p">()</span><span class="o">.</span><span class="n">TOOLB_PassThrough</span> <span class="o">==</span> <span class="n">false</span><span class="p">)</span> <span class="n">then</span>
+                    <span class="n">message</span> <span class="o">=</span> <span class="n">message</span> <span class="o">..</span>
+                        <span class="s2">&quot;CineFusion &#39;&quot;</span> <span class="o">..</span>
+                        <span class="n">v</span><span class="p">:</span><span class="n">GetAttrs</span><span class="p">()</span><span class="o">.</span><span class="n">TOOLS_Name</span> <span class="o">..</span>
+                        <span class="s2">&quot;&#39; should be disabled</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="n">end</span>
+            <span class="n">end</span>
+        <span class="n">end</span>
+    <span class="n">end</span>
+
+    <span class="k">return</span> <span class="n">message</span>
+<span class="n">end</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-fusion-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Fusion are supported?</strong></p>
+<blockquote>
+<div><p>Fusion 5 and later are supported.</p>
+</div></blockquote>
+<p><strong>What’s the difference between the Fusion and FusionCmd plugins?</strong></p>
+<blockquote>
+<div><p>The Fusion plugin starts the Fusion Render Node in server mode and uses eyeonscript to communicate with the Fusion renderer. Fusion and the comp remain loaded in memory between tasks to reduce overhead.
+This is usually the preferred way of rendering with Fusion.</p>
+<p>The FusionCmd plugin renders with Fusion by executing command lines, and can be used by selecting the Command Line mode option in the Fusion submitter. Because Fusion needs to be launched for each task,
+there is some additional overhead when using this plugin. In addition, the Proxy, High Quality, and Saver Output Checking features are not supported in this mode. However, this mode tends to print out better
+debugging information when there are problems (especially when the Fusion complains that it can’t load the comp), so we recommend using it to help figure out problems that may be occurring when using the Fusion plugin.</p>
+</div></blockquote>
+<p><strong>Can I use both workstation and render node licenses to render jobs in Deadline?</strong></p>
+<blockquote>
+<div><p>You can use workstation licenses to render, you just need to do a little tweaking to get this to work nicely. In the Plugin Configuration settings, you need to specify two paths for the render executable option.
+The first path will be the render node path, and the second will be the actual Fusion executable path. You then have to make sure that the render node is not installed on your workstations. Because you have specified
+two paths, Deadline will only use the second path if the first one doesn’t exist, which is why the render nodes can’t be installed on your workstations.</p>
+</div></blockquote>
+<p><strong>Why is it not possible to have to 2 instances of Fusion running?</strong></p>
+<blockquote>
+<div><p>With Fusion there is only one tcp/ip port to which eyeonscript (the scripting language used to run Fusion renders on a Worker computer) can connect. If Fusion is open on a Worker computer then the port will be in use and the
+Fusion Render Node will have to wait for the port to become available before rendering of Fusion jobs on that Worker can begin.</p>
+</div></blockquote>
+<p><strong>Fusion alone renders fine, but with Deadline, the Workers are failing on the last frame.</strong></p>
+<blockquote>
+<div><p>This is usally accompanied by this error message:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">INFO</span><span class="p">:</span> <span class="n">Checking</span> <span class="n">file</span> \\<span class="n">path</span>\<span class="n">to</span>\<span class="n">filename</span><span class="c1">####.ext</span>
+<span class="n">INFO</span><span class="p">:</span> <span class="n">Saver</span> <span class="s2">&quot;SaverName&quot;</span> <span class="n">did</span> <span class="ow">not</span> <span class="n">produce</span> <span class="n">output</span> <span class="n">file</span><span class="o">.</span>
+<span class="n">INFO</span><span class="p">:</span> <span class="n">Expected</span> <span class="n">file</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">path</span><span class="se">\t</span><span class="s2">o</span><span class="se">\f</span><span class="s2">ilename####.ext&quot;</span> <span class="n">to</span> <span class="n">exist</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>The issue likely has to do with the processing of fields as opposed to full frames. When processing your output as fields, the frames are rendered in two halves (for example, frame 1 would be rendered as 1.0 and 1.5).
+This error often occurs when the Global Timeline is not set to include the second half of the final frame. Simply adding a .5 to the Global End Time should resolve this issue.</p>
+<p>For example, let us assume that you are processing fields and your output range is 0 - 100. If the Global Timeline is set to be 0.0 - 100.0, Fusion will render everything, but Deadline will fail on the last frame.
+If the Global Timeline is set to be 0.0 - 100.5, Deadline will render everything just fine.</p>
+</div></blockquote>
+<p><strong>Is there a way to increase Deadline’s efficiency when rendering Fusion frames that only take a few seconds to complete?</strong></p>
+<blockquote>
+<div><p>Rendering these frames in groups (groups of 5 for example) tends to reduce the job’s overall rendering time. The group size can be set in the Fusion submission dialog using the Task Group Size option.</p>
+</div></blockquote>
+<p><strong>Does Fusion cache data between frames on the network, in the same way it does when rendering sequences locally?</strong></p>
+<blockquote>
+<div><p>Deadline renders each block of frames using the eyeonscript comp.render function. The Fusion Render Node is kept running between each block rendered, so when Fusion caches static results, it can be used by the next block
+of frames to be rendered on the same machine.</p>
+</div></blockquote>
+<p><strong>Fusion seems to be taking a long time to start up when rendering. What can I do to fix this?</strong></p>
+<blockquote>
+<div><p>If you are running Fusion off a remote share, this can occur when there is a large number of files in the Autosave folder. If this is the case, deleting the files in the Autosave folder should fix the problem.</p>
+</div></blockquote>
+<p><strong>Can I use relative paths in my Fusion comp when rendering with Deadline?</strong></p>
+<blockquote>
+<div><p>If your comp is on a network location, and everything is relative to that network path, you can use relative paths if you choose the option to not submit the comp file with the job. In this case, the Workers will load
+the comp directly over the network, and there shouldn’t be any problems with the relative paths. Just make sure that your render nodes resolve the paths the same way your workstation does.</p>
+</div></blockquote>
+<p><strong>Can’t find the RenderSlave and ConsoleSlave for Fusion 7.7 and higher?</strong></p>
+<blockquote>
+<div><p>Since Black Magic Design purchased Fusion from Eyeon, the executables have had a name change from Fusion 7.7 and higher as follows:</p>
+<ul class="simple">
+<li><p>Fusion = RenderSlave.exe (Eyeon) –&gt; FusionRenderNode.exe (Black Magic Design)</p></li>
+<li><p>FusionCmd = ConsoleSlave.exe (Eyeon) –&gt; FusionConsoleNode.exe (Black Magic Design)</p></li>
+</ul>
+<p>These changes can be made from the Monitor’s plugin-settings.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-message-and-meanings">
+<h2>Error Message and Meanings<a class="headerlink" href="#error-message-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Fusion error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><strong>Exception during render: Could not kill process with name fuscript because: Access is denied (System.ComponentModel.Win32Exception)</strong></p>
+<blockquote>
+<div><dl class="simple">
+<dt>This error usually occurs if the fuscript executable could not be stopped.  Starting in Fusion 9, the service “FusionServer” is automatically started which spawns an fuscript process which we cannot stop.  If you manually stop the</dt><dd><p>service on your render nodes then we will be able to start fuscript, and will be able to render.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p><strong>Exception during render: Failed to load the comp “[flowname].comp” in startjob.eyeonscript”?</strong></p>
+<blockquote>
+<div><p>This error usually occurs because the render node is missing a plugin that is referenced by the flow in question. Often this is because there is a plugin installed on the machine from which the job was submitted that
+is not in the Fusion Render Node plugin directory on the Worker machine. It is important to remember that the Fusion Render Node has a different plugin store than Fusion – even on the same machine – thus one should
+ensure that the needed plugins are copied/installed in both locations.</p>
+</div></blockquote>
+<p><strong>Exception during render: The fusion renderer reported that the render failed. Scroll down to the bottom of the log below for more details.</strong></p>
+<blockquote>
+<div><p>This can occur for a number of reasons, but often Fusion will print out the cause for the error. In the error log window, scroll to the end of the Worker Log capture which is near the bottom of the error message window,
+and there will be a part which looks something like the following message. This particular message indicates that a font was missing on the machine.</p>
+<p>INFO: Render started at Wed 8:17PM (Range: 198 to 198)
+INFO:
+INFO: Comments: Could not find font “SwitzerlandCondensed”
+INFO:
+INFO: Saver 1 failed at time 198
+INFO:
+INFO: Render failed at Wed 8:18PM! Last frame rendered: (none)!
+INFO:
+INFO: Render failed</p>
+<p>We’ve usually found that the problem behind this error was a plugin that was installed for Fusion, but not for the Fusion Render Node. Try updating your Fusion Render Node plugins to match your Fusion plugins exactly,
+and check whether the error still occurs.</p>
+</div></blockquote>
+<p><strong>Exception during render: Eyeonscript failed to make a connection in startjob.eyeonscript - check that Eyeonscript is set to no login required?</strong></p>
+<blockquote>
+<div><p>In order to connect to the Fusion Render Node and communicate with it, Deadline uses the eyeonscript, the scripting language provided for Fusion. The script connects to the Fusion Render Node via a socket connection,
+which by default requires a login username and password to connect.</p>
+<p>In order for Deadline to be able to render using a given Fusion Render Node, you must change its settings so that it no longer requires the username and password. This is done by running the Fusion Render Node, right
+clicking on the icon it creates, and choosing preferences. From there, pick the Script option, and you will see radio buttons, one of which says ‘No login required’. Make sure that that is the option selected, then click
+Save to save the preferences, and exit Fusion Render Node.</p>
+</div></blockquote>
+<p><strong>Exception during render: QXcbConnection: Could not connect to display</strong></p>
+<blockquote>
+<div><p>Fusion cannot be run as a service on Linux, as such you should not run the Deadline Worker as a service if you wish to execute Fusion jobs on Deadline.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Fusion</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a><ul>
+<li><a class="reference internal" href="#id1">Fusion</a></li>
+<li><a class="reference internal" href="#fusioncmd">FusionCmd</a></li>
+<li><a class="reference internal" href="#pipeline-tools">Pipeline Tools</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+<li><a class="reference internal" href="#custom-sanity-check-setup">Custom Sanity Check Setup</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-message-and-meanings">Error Message and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-ffmpeg.html"
+                        title="previous chapter">FFmpeg</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-fusion-quicktime.html"
+                        title="next chapter">Fusion Quicktime</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-fusion-quicktime.html" title="Fusion Quicktime"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-ffmpeg.html" title="FFmpeg"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Fusion</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

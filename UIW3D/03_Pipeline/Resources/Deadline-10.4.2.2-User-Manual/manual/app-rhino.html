@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rhino &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="RVIO" href="app-rvio.html" />
+    <link rel="prev" title="Rendition" href="app-rendition.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-rvio.html" title="RVIO"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-rendition.html" title="Rendition"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Rhino</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="rhino">
+<span id="app-rhino-ref-label"></span><h1>Rhino<a class="headerlink" href="#rhino" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>McNeel does not currently support running Rhino as a service. Please see <a class="reference internal" href="#app-rhino-faq-run-as-service-ref-label"><span class="std std-ref">FAQ</span></a> for further details.</p>
+</div>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs from within Rhino by installing the <a class="reference internal" href="#app-rhino-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a>, or you can submit them from the Monitor. The instructions for installing the <a class="reference internal" href="#app-rhino-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<a class="reference internal image-reference" href="../_images/sub_rhino.png"><img alt="../_images/sub_rhino.png" src="../_images/sub_rhino.png" style="height: 500px;" /></a>
+<p>To submit from within Rhino, left-click on the ‘Deadline’ button you created during the integrated submission script installation.</p>
+<a class="reference internal image-reference" href="../_images/rhino_deadline_button.png"><img alt="../_images/rhino_deadline_button.png" src="../_images/rhino_deadline_button.png" style="height: 200px;" /></a>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.</p>
+<p>The Rhino specific options are:</p>
+<ul class="simple">
+<li><p><strong>Rhino File</strong>: The Rhino file to be rendered.</p></li>
+<li><p><strong>Output File</strong>: The filename of the image(s) to be rendered.</p></li>
+<li><p><strong>Renderer</strong>: Specify the renderer to use.</p></li>
+<li><p><strong>Submit Rhino Scene File</strong>: If this option is enabled, the scene file will be submitted with the job, and then copied locally to the Worker machine during rendering.</p></li>
+<li><p><strong>Version</strong>: The Rhino Version to use.</p></li>
+<li><p><strong>View</strong>: Which view within the scene should be rendered. If left blank, the current view will be used.</p></li>
+</ul>
+</div>
+<div class="section" id="bongo-animation-rendering">
+<span id="rhino-bongo-rendering-ref-label"></span><h3>Bongo Animation Rendering<a class="headerlink" href="#bongo-animation-rendering" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Render Bongo Animation</strong>: If your Rhino file uses the Bongo animation plugin, you can enable a Bongo animation job.</p></li>
+<li><p><strong>Frame List</strong>: The list of frames to render (if rendering a Bongo animation).</p></li>
+<li><p><strong>Frames Per Task</strong>: This is the number of frames that will be rendered at a time for each job task (if rendering a Bongo animation).</p></li>
+<li><p><strong>Bongo Version</strong>: The Bongo Version to use.</p></li>
+</ul>
+</div>
+<div class="section" id="tile-rendering">
+<span id="rhino-tile-rendering-ref-label"></span><h3>Tile Rendering<a class="headerlink" href="#tile-rendering" title="Permalink to this headline">¶</a></h3>
+<p>The following options are available for tile rendering. Note that tile rendering is only available when submitting from within Rhino and is NOT available in Rhino 6 or with “V-Ray for Rhino” due to limitations in the V-Ray frame buffer.</p>
+<ul class="simple">
+<li><p><strong>Enable Tile Rendering</strong>: If enabled, the image will be rendered in regions and automatically assembled by Draft.</p></li>
+<li><p><strong>Use Jigsaw</strong>: Use <a class="reference internal" href="job-submitting.html#common-jigsaw-ref-label"><span class="std std-ref">Jigsaw</span></a> to determine the regions.</p></li>
+<li><p><strong>Tiles in X</strong>: The number of tiles to divide the regions horizontally into if not using Jigsaw.</p></li>
+<li><p><strong>Tiles in Y</strong>: The number of tiles to divide the regions vertically into if not using Jigsaw.</p></li>
+<li><p><strong>Submit Dependent Assembly Job</strong>: If this option is enabled then an assembly job will be sent.</p></li>
+<li><p><strong>Assemble Over</strong>: Determines what the tiles/regions will be assembled over; nothing, a single image or the same image as the final image.</p></li>
+<li><p><strong>Error on Missing Background</strong>: If this option is enabled, the render will fail if the background image specified does not exist.</p></li>
+<li><p><strong>Image File</strong>: The background image file to be used for assembly.</p></li>
+<li><p><strong>Cleanup Tiles After Assembly</strong>: If this option is enabled, the tiles will be deleted after the assembly job is completed.</p></li>
+<li><p><strong>Error on Missing Tiles</strong>: If this option is enabled, the assembly job will fail if it cannot find any of the tiles.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/rhino_regions.png"><img alt="../_images/rhino_regions.png" src="../_images/rhino_regions.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="supported-renderers">
+<h3>Supported Renderers<a class="headerlink" href="#supported-renderers" title="Permalink to this headline">¶</a></h3>
+<p>Deadline supports many of the Rhino renderers out of the box, including Rhino Render, Flamingo, V-Ray, Brazil, Penguin, and TreeFrog. If you are using a renderer that Deadline does not currently support, please contact
+<a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> and let us know!</p>
+<p>It is also possible to manually add new renderers to the list that Deadline supports. Go to \\your\repository\script\Submission\RhinoSubmission and open Renderers.ini in a text editor. You’ll see that this file contains the
+list of renderers that Deadline currently supports, one per line. Just add the missing renderer as a new line and save the file. Note that the name needs to match that of the renderer exactly!</p>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Rhino plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Rhino plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_rhino.png"><img alt="../_images/cp_rhino.png" src="../_images/cp_rhino.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Rhino Executable</strong>: The path to the Rhino executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-rhino-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to install the integrated Rhino submission script for different versions of Rhino. This script allows for submitting Rhino render Jobs to Deadline directly from within the Rhino editing GUI.</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/Rhino/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<p><strong>Rhino 5 and later</strong>:</p>
+<p>The following installation procedure is intended and has been tested for Rhino 5 and later.</p>
+<ul>
+<li><p>In Rhino, select ‘Tools’ -&gt; ‘Toolbar Layout’.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/rhino5_tb_layout.png"><img alt="../_images/rhino5_tb_layout.png" src="../_images/rhino5_tb_layout.png" style="height: 300px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Select the Toolbar Collection file that you want to add the Deadline submission button to, and then select ‘File’ -&gt; ‘Import Toolbars…’. Browse to <code class="docutils literal notranslate"><span class="pre">[Repository]\submission\Rhino\Client\</span></code> and select the ‘deadline.rui’ file.</p></li>
+<li><p>Check the box next to ‘Deadline’ and press ‘OK’.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/rhino5_tb_import.png"><img alt="../_images/rhino5_tb_import.png" src="../_images/rhino5_tb_import.png" style="height: 200px;" /></a>
+</div></blockquote>
+</li>
+<li><dl class="simple">
+<dt>There should now be a toolbar with a <strong>Deadline</strong> button on your screen, which you can dock anywhere you want.</dt><dd><ul class="simple">
+<li><p>Left-click on the button to submit a Rhino Job to Deadline.</p></li>
+<li><p>Right-click on the button to launch the Monitor.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p><strong>Rhino 4</strong>:</p>
+<p>The following installation procedure is intended and has been tested for Rhino 4.0. It is largely similar to the procedure described for Rhino 5 above, with some slight differences.</p>
+<ul>
+<li><p>In Rhino, select Tools -&gt; Toolbar Layout.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/rhino_toolbar.png"><img alt="../_images/rhino_toolbar.png" src="../_images/rhino_toolbar.png" style="height: 200px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Select the Toolbar collection file that you want to add the Deadline submission button to, then select Toolbar -&gt; Import. Browse to <code class="docutils literal notranslate"><span class="pre">[Repository]\submission\Rhino\Client\</span></code> and select the deadline.tb file.</p></li>
+<li><p>Check the box next to Deadline and press Import.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/rhino_import_window.png"><img alt="../_images/rhino_import_window.png" src="../_images/rhino_import_window.png" style="height: 200px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Select File -&gt; Save to save the changes to the selected Toolbar collection file.</p></li>
+<li><dl class="simple">
+<dt>There should now be a toolbar with a <strong>Deadline</strong> button on your screen, which you can dock.</dt><dd><ul class="simple">
+<li><p>Left-click on the button to submit a Rhino job to Deadline.</p></li>
+<li><p>Right-click on the button to launch the Monitor.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-rhino-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Rhino are supported?</strong></p>
+<blockquote>
+<div><p>Rhino 4 and later are supported.</p>
+</div></blockquote>
+<p id="app-rhino-faq-run-as-service-ref-label"><strong>Can Rhino run as a service?</strong></p>
+<blockquote>
+<div><p>No. Unfortunately, McNeel does not currently support running Rhino as a service. As a consequence you should not run Deadline Worker as a service either if you wish to execute Rhino jobs on Deadline.</p>
+</div></blockquote>
+<p><strong>Does Rhino need to be licensed on each render node?</strong></p>
+<blockquote>
+<div><p>Yes.</p>
+</div></blockquote>
+<p><strong>Is the Bongo plugin for animation supported?</strong></p>
+<blockquote>
+<div><p>Yes. The Rhino submission dialog has the option to render a Bongo animation.</p>
+</div></blockquote>
+<p><strong>Is V-Ray for Rhino fully supported?</strong></p>
+<blockquote>
+<div><p>Yes, except for Tile Rendering. Please see the <a class="reference internal" href="app-vray-dbr.html#app-vray-dbr-ref-label"><span class="std std-ref">V-Ray Distributed Rendering</span></a> plugin for details on how V-Ray interactive DBR in Rhino operates.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Rhino error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Rhino</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#bongo-animation-rendering">Bongo Animation Rendering</a></li>
+<li><a class="reference internal" href="#tile-rendering">Tile Rendering</a></li>
+<li><a class="reference internal" href="#supported-renderers">Supported Renderers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-rendition.html"
+                        title="previous chapter">Rendition</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-rvio.html"
+                        title="next chapter">RVIO</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-rvio.html" title="RVIO"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-rendition.html" title="Rendition"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Rhino</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Worker &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Command" href="command.html" />
+    <link rel="prev" title="Monitor" href="monitor.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command.html" title="Command"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="monitor.html" title="Monitor"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" accesskey="U">Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Worker</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="worker">
+<span id="worker-ref-label"></span><h1>Worker<a class="headerlink" href="#worker" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The Worker is the application that controls the rendering applications and should be running on any machine you want to to include in the rendering process.</p>
+<a class="reference internal image-reference" href="../_images/worker.png"><img alt="../_images/worker.png" src="../_images/worker.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="running-the-worker">
+<h2>Running the Worker<a class="headerlink" href="#running-the-worker" title="Permalink to this headline">¶</a></h2>
+<p>To start the Worker:</p>
+<ul class="simple">
+<li><p>On Windows, you can start the Worker from the Start Menu under Thinkbox\Deadline, or from the Launcher’s right-click menu.</p></li>
+<li><p>On Linux, you can start the Worker from a terminal window by running the deadlineworker script in the bin folder, or from the Launcher’s right-click menu.</p></li>
+<li><p>On macOS, you can start the Worker from Finder by running the deadlineworker application in Applications/Thinkbox/Deadline, or from the Launcher’s right-click menu.</p></li>
+</ul>
+<p>You can also configure the Worker to launch automatically when the <a class="reference internal" href="launcher.html#launcher-ref-label"><span class="std std-ref">Launcher</span></a> starts up. To enable this, just enable the Launch Worker At Startup option in the Launcher menu.</p>
+<p>The Worker can also be started from a command prompt or terminal window. For more information, see the <a class="reference internal" href="#worker-command-line-options-ref-label"><span class="std std-ref">Worker Command Line</span></a> documentation.</p>
+</div>
+<div class="section" id="licensing-deprecated">
+<h2>Licensing (DEPRECATED)<a class="headerlink" href="#licensing-deprecated" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Starting with Deadline 10.1.23, Deadline and its components do not require a license. This section is left for operators of older versions of Deadline. Please see the <a class="reference internal" href="floating-license-portal.html#floating-license-portal-ref-label"><span class="std std-ref">Thinkbox Floating License Portal</span></a> documentation if you require Deadline licenses.</p>
+</div>
+<p>The Worker requires a license to run, and more information on setting up licensing can be found in the <a class="reference external" href="https://docs.thinkboxsoftware.com/products/licensing/1.0/Licensing%20Guide/index.html">Licensing Guide</a>.</p>
+<p>The Worker only requires a license while rendering. If a Worker cannot get a license, it will continue to run, but it won’t be able to pick up jobs for rendering. In addition when a Worker becomes idle it will return it’s license. The Worker’s licensing information can be found under the Worker Information tab (see next section).</p>
+<p>If you have more then one Worker running on a machine they will all share the same licence.</p>
+</div>
+<div class="section" id="job-and-worker-information-tabs">
+<h2>Job and Worker Information Tabs<a class="headerlink" href="#job-and-worker-information-tabs" title="Permalink to this headline">¶</a></h2>
+<p>The Job Information tab shows information about the job currently being rendered. By default, the tab will show information about all render threads combined, but the drop down control gives the option to
+show information about a specific render thread. The Worker Information tab shows information about the Worker and the machine that it’s running on, including license information and resource usage (CPU and memory).</p>
+<a class="reference internal image-reference" href="../_images/worker_worker_info.png"><img alt="../_images/worker_worker_info.png" src="../_images/worker_worker_info.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="viewing-the-worker-log">
+<span id="viewing-worker-log-ref-label"></span><h2>Viewing the Worker Log<a class="headerlink" href="#viewing-the-worker-log" title="Permalink to this headline">¶</a></h2>
+<p>To view the Worker’s current log, simply press the Open Worker Log button at the bottom of the Worker window. This will open the Worker’s log in a new window to avoid impacting the performance of the main Worker application.</p>
+<a class="reference internal image-reference" href="../_images/worker_log.png"><img alt="../_images/worker_log.png" src="../_images/worker_log.png" style="height: 500px;" /></a>
+<p>If the Worker is running in the background or without an interface, you can connect to the Worker’s log from the command line. In a command prompt or terminal window, navigate to the Deadline bin folder (Windows or Linux)
+or the Resources folder (macOS) and run the following, where “WORKERNAME” is the name of the Worker you want to connect to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span> <span class="o">-</span><span class="n">ConnectToSlaveLog</span> <span class="s2">&quot;WORKERNAME&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="worker-menu-options">
+<h2>Worker Menu Options<a class="headerlink" href="#worker-menu-options" title="Permalink to this headline">¶</a></h2>
+<p>The available options are listed below. They are available in the Worker’s window, or from the Worker system tray icon’s right-click menu. Note that if the Worker is running in the background or without an interface,
+these options will be unavailable.</p>
+<div class="section" id="file-menu">
+<span id="worker-file-menu-ref-label"></span><h3>File Menu<a class="headerlink" href="#file-menu" title="Permalink to this headline">¶</a></h3>
+<p><strong>Change License Server</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Starting with Deadline 10.1.23, Deadline and its components do not require a license. This section is left for operators of older versions of Deadline. Please see the <a class="reference internal" href="floating-license-portal.html#floating-license-portal-ref-label"><span class="std std-ref">Thinkbox Floating License Portal</span></a> documentation if you require Deadline licenses.</p>
+<p>Change the license server that the Worker connects to.</p>
+</div>
+</div>
+<div class="section" id="options-menu">
+<h3>Options Menu<a class="headerlink" href="#options-menu" title="Permalink to this headline">¶</a></h3>
+<p><strong>Hide When Minimized</strong></p>
+<blockquote>
+<div><p>The Worker is hidden when minimized, but can be restored using the Worker icon in the system tray.</p>
+</div></blockquote>
+<p><strong>Minimize On Startup</strong></p>
+<blockquote>
+<div><p>Starts the Worker in the minimized state.</p>
+</div></blockquote>
+</div>
+<div class="section" id="control-menu">
+<h3>Control Menu<a class="headerlink" href="#control-menu" title="Permalink to this headline">¶</a></h3>
+<p><strong>Search For Jobs</strong></p>
+<blockquote>
+<div><p>If the Worker is sitting idle, this option can be used to force the Worker to search for a job immediately.</p>
+</div></blockquote>
+<p><strong>Cancel Current Task</strong></p>
+<blockquote>
+<div><p>If the Worker is currently rendering a task, this forces the Worker to cancel it.</p>
+</div></blockquote>
+<p><strong>Continue Running After Current Task Completion</strong></p>
+<blockquote>
+<div><p>Check to keep the Worker application running after it finishes its current task completion.</p>
+</div></blockquote>
+<p><strong>Stop/Restart Worker After Current Task Completion</strong></p>
+<blockquote>
+<div><p>Check to stop or restart the Worker application after it finishes its current task.</p>
+</div></blockquote>
+<p><strong>Shutdown/Restart Machine After Current Task Completion</strong></p>
+<blockquote>
+<div><p>Check to shutdown or restart the machine after the Deadline Worker finishes its current task.</p>
+</div></blockquote>
+<p>Please note that specific configuration should be done for Linux machines to allow them to shutdown or reboot themselves after a task has completed. See <a class="reference internal" href="considerations.html#considerations-reboot-ref-label"><span class="std std-ref">Rebooting Linux Nodes</span></a> for a few ideas.</p>
+</div>
+</div>
+<div class="section" id="command-line-options">
+<span id="worker-command-line-options-ref-label"></span><h2>Command Line Options<a class="headerlink" href="#command-line-options" title="Permalink to this headline">¶</a></h2>
+<p>To run the Worker from a command prompt or terminal window, navigate to the Deadline bin folder (Windows or Linux) or the Resources folder (macOS) and run the ‘deadlineworker’ application.
+To view all available command line arguments, you can run the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlineworker</span> <span class="o">-</span><span class="n">help</span>
+</pre></div>
+</div>
+<div class="section" id="available-options">
+<h3>Available Options<a class="headerlink" href="#available-options" title="Permalink to this headline">¶</a></h3>
+<p>To start a new instance of the Worker, use the -name option. If you already have multiple instances of the Worker configured, use the -name option to start a specific instance:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlineworker</span> <span class="o">-</span><span class="n">name</span> <span class="s2">&quot;second-worker&quot;</span>
+</pre></div>
+</div>
+<p>To start the Worker without a user interface, use the -nogui option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlineworker</span> <span class="o">-</span><span class="n">nogui</span>
+</pre></div>
+</div>
+<p>To start the Worker without the splash screen, use the -nosplash option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlineworker</span> <span class="o">-</span><span class="n">nosplash</span>
+</pre></div>
+</div>
+<p>To shut down the Worker if it’s already running, use the -shutdown option. This can be combined with the -name option if you have more than one Worker instance running and you want to shut down a specific instance:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlineworker</span> <span class="o">-</span><span class="n">shutdown</span>
+<span class="n">deadlineworker</span> <span class="o">-</span><span class="n">shutdown</span> <span class="o">-</span><span class="n">name</span> <span class="s2">&quot;second-worker&quot;</span>
+</pre></div>
+</div>
+<p>To control what a running Worker should do after it finishes rendering its current task, use the -aftertask option. The available options are Continue, StopSlave or RestartSlave.
+This can be combined with the -name option if you have more than one Worker instance running and you want to control a specific instance:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlineworker</span> <span class="o">-</span><span class="n">aftertask</span> <span class="n">RestartSlave</span>
+<span class="n">deadlineworker</span> <span class="o">-</span><span class="n">aftertask</span> <span class="n">RestartSlave</span> <span class="o">-</span><span class="n">name</span> <span class="s2">&quot;second-worker&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="worker-local-data-storage">
+<span id="worker-local-data-storage-ref-label"></span><h2>Worker Local Data Storage<a class="headerlink" href="#worker-local-data-storage" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The default location for job and plugin data has been moved as of Deadline 10.1.11. The default location used to be the same as the location of the <a class="reference internal" href="client-config.html#client-configuration-file-ref-label"><span class="std std-ref">**Per-User** deadline.ini Config File</span></a></p>
+</div>
+<p>When a Worker starts a job, it temporarily creates a local copy of the job’s “plugins” and “jobsData” folders, which are purged before starting the next job. Here are the default local job and plugin folder path locations for your Worker(s):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Windows: %PROGRAMDATA%\Thinkbox\Deadline[VERSION]\workers\[WORKERNAME]</p></li>
+<li><p>Linux: /var/lib/Thinkbox/Deadline[VERSION]/slave/[WORKERNAME]</p></li>
+<li><p>macOS: /Users/Shared/Thinkbox/Deadline[VERSION]/workers/[WORKERNAME]</p></li>
+</ul>
+</div></blockquote>
+<p>Note that the [VERSION] in the path will change based on the Deadline version number, and [WORKERNAME] represents the Worker’s name (to support multiple Workers on the same machine).</p>
+<p>This setting can be configured using the <a class="reference internal" href="auto-config.html#auto-config-ref-label"><span class="std std-ref">Auto Configuration</span></a> Local Data Path option or via <a class="reference internal" href="client-config.html#client-config-worker-data-root-ref-label"><span class="std std-ref">Client Configuration</span></a> “SlaveDataRoot” INI setting.</p>
+<p>Note that this should be a local path to avoid conflicts and maintain performance. As of Deadline 10.1.11, it <strong>must</strong> be accessible by all <a class="reference internal" href="user-management.html#user-management-ref-label"><span class="std std-ref">Deadline Users</span></a> if the <a class="reference internal" href="repository-config.html#user-settings-repository-options-ref-label"><span class="std std-ref">Render Jobs As User</span></a> feature is enabled.</p>
+<div class="section" id="local-data-storage-with-rendering-jobs-as-user-feature">
+<span id="local-data-storage-render-as-user-ref-label"></span><h3>Local Data Storage with “Rendering Jobs As User” Feature<a class="headerlink" href="#local-data-storage-with-rendering-jobs-as-user-feature" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These steps are deprecated as of Deadline 10.1.11. Follow the steps in <cite>Worker Local Data Storage &lt;worker_local_data_storage_ref_label&gt;</cite> to update the location where job and plugin data will be stored.</p>
+</div>
+<p>If you wish to relocate your local data storage (including each job’s plugins/jobsData folders and temporary job submission data via Monitor/DeadlineCommand) in combination with the Worker “Jobs Run-as User” feature <a class="reference internal" href="repository-config.html#user-settings-repository-options-ref-label"><span class="std std-ref">Rendering Jobs As User</span></a>; then the following configuration should be followed instead of relying purely on the <a class="reference internal" href="worker-config.html#worker-config-general-ref-label"><span class="std std-ref">Use ‘/tmp’ for Worker Data (Linux)</span></a> setting in <a class="reference internal" href="worker-config.html#worker-config-ref-label"><span class="std std-ref">Worker Configuration</span></a>. In the example below, you wish to redirect local data storage to a directory called: <code class="docutils literal notranslate"><span class="pre">deadline</span></code> under the generic <code class="docutils literal notranslate"><span class="pre">/tmp</span></code> location on your Linux machines:</p>
+<ol class="arabic">
+<li><p>Ensure <code class="docutils literal notranslate"><span class="pre">deadline.ini</span></code> by default located here: <code class="docutils literal notranslate"><span class="pre">/var/lib/Thinkbox/Deadline[VERSION]/deadline.ini</span></code> has this property: <code class="docutils literal notranslate"><span class="pre">SlaveDataRoot=</span></code> set to nothing.</p></li>
+<li><p>Ensure <a class="reference internal" href="auto-config.html#auto-config-ref-label"><span class="std std-ref">Auto Configuration</span></a> is not being used to set the above “Local Data Path” <code class="docutils literal notranslate"><span class="pre">SlaveDataRoot</span></code> value via Pulse.</p></li>
+<li><p>Ensure the directory path of your preferred root local ‘data’ path exists and has the correct read-write permissions for all users. In an ideal situation, the root ‘data’ folder <code class="docutils literal notranslate"><span class="pre">/tmp/deadline</span></code> in the example below is writable by everyone that will be impersonated. When the Deadline sandbox runs as a job user, it should create its own sub-folders, which should respect the current <code class="docutils literal notranslate"><span class="pre">umask</span></code> for file/folder creation on the system. This sub-folder will also be owned by that particular Deadline job user, so they don’t need to rely on wider permissions:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo mkdir -p /tmp/deadline
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Based on the same approach as the <a class="reference internal" href="deploy-client-centrally-managed.html#deploy-client-create-config-files-ref-label"><span class="std std-ref">Centrally Managed</span></a> Linux <code class="docutils literal notranslate"><span class="pre">.config</span></code> instructions; create a <code class="docutils literal notranslate"><span class="pre">deadline.config</span></code> file in the “../bin” directory of your Deadline client software (<code class="docutils literal notranslate"><span class="pre">/opt/Thinkbox/Deadline[VERSION]/bin</span></code>), which declares this environment variable:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">DEADLINE_LOCAL_USER_PATH</span><span class="o">=</span><span class="s2">&quot;/tmp/deadline/</span><span class="si">${</span><span class="nv">USER</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Ensure “Render Jobs As User” in <a class="reference internal" href="repository-config.html#user-settings-repository-options-ref-label"><span class="std std-ref">Repo Options</span></a> are as per the below image.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/local_data_storage_rendering_as_user.png"><img alt="../_images/local_data_storage_rendering_as_user.png" src="../_images/local_data_storage_rendering_as_user.png" style="height: 500px;" /></a>
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="configuring-network-compression-feature-in-worker">
+<span id="worker-faq-ref-label"></span><h3>Configuring Network Compression Feature in Worker<a class="headerlink" href="#configuring-network-compression-feature-in-worker" title="Permalink to this headline">¶</a></h3>
+<p>The network compression feature compresses RCS messages increasing performance and reducing network bandwidth. This feature is on by default. To disable this feature:</p>
+<ol class="arabic simple">
+<li><p>Open <code class="docutils literal notranslate"><span class="pre">deadline.ini</span></code>. On Linux, this file is typically: <code class="docutils literal notranslate"><span class="pre">/var/lib/Thinkbox/Deadline[VERSION]/deadline.ini</span></code>.</p></li>
+<li><p>Add the property: <code class="docutils literal notranslate"><span class="pre">NetworkCompressionEnabledClient=False</span></code> and then save the file.</p></li>
+<li><p>Restart the Deadline Worker.</p></li>
+</ol>
+<p>By default, network compression is done using the <code class="docutils literal notranslate"><span class="pre">Brotli</span></code> compression algorithm. This algorithm provides good overall performance. To switch to the alternate <code class="docutils literal notranslate"><span class="pre">GZip</span></code> compression algorithm:</p>
+<ol class="arabic simple">
+<li><p>Open <code class="docutils literal notranslate"><span class="pre">deadline.ini</span></code>. On Linux, this file is typically: <code class="docutils literal notranslate"><span class="pre">/var/lib/Thinkbox/Deadline[VERSION]/deadline.ini</span></code>.</p></li>
+<li><p>Add the property: <code class="docutils literal notranslate"><span class="pre">NetworkCompressionProvider=gzip</span></code> and then save the file.</p></li>
+<li><p>Restart the Deadline Worker.</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="faq">
+<h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Can I run the Worker on an artist’s workstation?</strong></p>
+<blockquote>
+<div><p>Yes. On Windows and Linux, you can set the Affinity in the <a class="reference internal" href="worker-config.html#worker-config-ref-label"><span class="std std-ref">Worker Settings</span></a> to help reduce the impact that the renders have on the artist’s workstation.</p>
+</div></blockquote>
+<p><strong>Can I run the Worker as a service or daemon?</strong></p>
+<blockquote>
+<div><p>Yes. If you’re running the Launcher as a service or daemon, then it will run the Worker in the background as well. See the <a class="reference internal" href="install-client.html#install-as-service-ref-label"><span class="std std-ref">Client Installation</span></a> documentation for more information.</p>
+</div></blockquote>
+<p><strong>The Worker keeps reporting errors for the same job instead of moving on to a different job. What can I do?</strong></p>
+<blockquote>
+<div><p>You can enable Bad Worker Detection in the <a class="reference internal" href="repository-config.html#config-failure-detection-ref-label"><span class="std std-ref">Repository Configuration</span></a> to have a Worker mark itself as bad for a job when it reports consecutive errors on it.</p>
+</div></blockquote>
+<p><strong>What does it mean when a Worker is stalled, and is this a bad thing?</strong></p>
+<blockquote>
+<div><p>Workers become stalled when they don’t update their status for a long period of time, and is often an indication that the Worker has crashed. A stalled Worker isn’t necessarily a bad thing, because it’s
+possible the Worker just wasn’t shutdown properly (it was killed from the Task Manager, for example). In either case, it’s a good idea to check the Worker machine and restart the Worker application if necessary.</p>
+</div></blockquote>
+<p><strong>On Linux, the Worker is reporting that the operating system is simply ‘Linux’, instead of showing the actual Linux distribution.</strong></p>
+<blockquote>
+<div><p>In order for the Worker to report the Linux distribution properly, you need to have lsb installed, and lsb_release needs to be in the path. You can use any package management application to install lsb.</p>
+</div></blockquote>
+<p><strong>On Linux, the Worker crashes shortly after starting up.</strong></p>
+<blockquote>
+<div><p>Please ensure you comply with our <a class="reference internal" href="system-requirements.html#system-requirements-linux-ref-label"><span class="std std-ref">System Requirements</span></a> for Linux.</p>
+</div></blockquote>
+<p><strong>The Worker says that it is untagged, what does that mean?</strong></p>
+<blockquote>
+<div><p>Workers on EC2 will attempt to tag the EC2 instance that they are running on with the Deadline version that it is running. See <a class="reference internal" href="worker-config.html#worker-tagging-ref-label"><span class="std std-ref">AWS Worker Tagging</span></a> for more information.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Worker</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#running-the-worker">Running the Worker</a></li>
+<li><a class="reference internal" href="#licensing-deprecated">Licensing (DEPRECATED)</a></li>
+<li><a class="reference internal" href="#job-and-worker-information-tabs">Job and Worker Information Tabs</a></li>
+<li><a class="reference internal" href="#viewing-the-worker-log">Viewing the Worker Log</a></li>
+<li><a class="reference internal" href="#worker-menu-options">Worker Menu Options</a><ul>
+<li><a class="reference internal" href="#file-menu">File Menu</a></li>
+<li><a class="reference internal" href="#options-menu">Options Menu</a></li>
+<li><a class="reference internal" href="#control-menu">Control Menu</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#command-line-options">Command Line Options</a><ul>
+<li><a class="reference internal" href="#available-options">Available Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#worker-local-data-storage">Worker Local Data Storage</a><ul>
+<li><a class="reference internal" href="#local-data-storage-with-rendering-jobs-as-user-feature">Local Data Storage with “Rendering Jobs As User” Feature</a></li>
+<li><a class="reference internal" href="#configuring-network-compression-feature-in-worker">Configuring Network Compression Feature in Worker</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="monitor.html"
+                        title="previous chapter">Monitor</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="command.html"
+                        title="next chapter">Command</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command.html" title="Command"
+             >next</a></li>
+        <li class="right" >
+          <a href="monitor.html" title="Monitor"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" >Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Worker</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

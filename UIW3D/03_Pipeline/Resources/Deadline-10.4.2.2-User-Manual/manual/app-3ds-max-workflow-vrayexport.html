@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3ds Max - Integrated Submitter Workflow - V-Ray Standalone &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3ds Max - Integrated Submitter - Scripting" href="app-3ds-max-smtd-scripting.html" />
+    <link rel="prev" title="3ds Max - Integrated Submitter Workflow - Phoenix FD Simulation" href="app-3ds-max-workflow-phoenixfd.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-3ds-max-smtd-scripting.html" title="3ds Max - Integrated Submitter - Scripting"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-3ds-max-workflow-phoenixfd.html" title="3ds Max - Integrated Submitter Workflow - Phoenix FD Simulation"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Max - Integrated Submitter Workflow - V-Ray Standalone</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ds-max-integrated-submitter-workflow-v-ray-standalone">
+<span id="app-3ds-max-workflow-vrayexport-ref-label"></span><h1>3ds Max - Integrated Submitter Workflow - V-Ray Standalone<a class="headerlink" href="#ds-max-integrated-submitter-workflow-v-ray-standalone" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="v-ray-standalone-workflow-overview">
+<h2>V-Ray Standalone Workflow Overview<a class="headerlink" href="#v-ray-standalone-workflow-overview" title="Permalink to this headline">¶</a></h2>
+<img alt="../_images/max_workflow_vraystandalone.png" class="align-right" src="../_images/max_workflow_vraystandalone.png" />
+<p>The V-Ray Standalone workflow lets you export the 3ds Max scene to VRSCENE format and submit for rendering with V-Ray Standalone on any supported OS.</p>
+</div>
+<div class="section" id="accessing-the-workflow">
+<h2>Accessing The Workflow<a class="headerlink" href="#accessing-the-workflow" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>This workflow will only be accessible in SMTD if the V-Ray for 3ds Max plugin has been installed on the workstation.</p></li>
+<li><p>To use the workflow, select the <strong>Submit V-RAY STANDALONE Render Job To Deadline</strong> entry from the <strong>Workflow:</strong> drop-down list on top of the SMTD UI.</p></li>
+</ul>
+<p><strong>User Interface</strong></p>
+<ul class="simple">
+<li><p>The workflow adds a <strong>VRay Job</strong> tab</p>
+<ul>
+<li><p>It contains a custom <strong>Submit To V-Ray Standalone</strong> rollout</p></li>
+<li><p>It features the standard <strong>Job Options</strong> rollout with some controls disabled.</p></li>
+<li><p>It features the standard <strong>Job Failure Detection</strong> rollout with no changes.</p></li>
+</ul>
+</li>
+<li><p>The standard <strong>Assets</strong>, <strong>Render</strong>, <strong>Options</strong> and <strong>Limits</strong> tabs will also be available with most of their default content.</p>
+<ul>
+<li><p>The <strong>Render</strong> tab only features the relevant <strong>Scene Tweaks</strong> and <strong>3ds Max Startup</strong> rollouts.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Submit Button Behavior</strong></p>
+<ul class="simple">
+<li><p>The SUBMIT button of SMTD will be disabled if the current renderer is not set to V-Ray</p></li>
+</ul>
+</div>
+<div class="section" id="custom-user-interface-controls">
+<h2>Custom User Interface Controls<a class="headerlink" href="#custom-user-interface-controls" title="Permalink to this headline">¶</a></h2>
+<p><strong>Export Mode</strong> radio buttons</p>
+<ul class="simple">
+<li><p>These radio buttons determine where the VRSCENE export will be performed.</p>
+<ul>
+<li><p><strong>Export VRSCENE On This Workstation</strong> - the <code class="docutils literal notranslate"><span class="pre">.vrscene</span></code> file will be exported locally by the submitting workstation.</p></li>
+<li><p><strong>Export VRSCENE On Deadline</strong> - the <code class="docutils literal notranslate"><span class="pre">.vrscene</span></code> will be exported by a MAXScript Job run on a Deadline Worker.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Export Animation</strong> drop down</p>
+<ul class="simple">
+<li><p>Controls the style of export to use when exporting an animation sequence.</p>
+<ul>
+<li><p><strong>Single File</strong> - The entire animation will be exported into a single <code class="docutils literal notranslate"><span class="pre">.vrscene</span></code> file</p></li>
+<li><p><strong>File Per Frame</strong> - Create one <code class="docutils literal notranslate"><span class="pre">.vrscene</span></code> file for each frame in the animation. Each <code class="docutils literal notranslate"><span class="pre">.vrscene</span></code> file will be
+self-contained. If you are exporting the <code class="docutils literal notranslate"><span class="pre">.vrscene</span></code> files on Deadline, this mode enables frame dependencies
+between the export and render job for increased parallelism. When the animation is sparse, such as animating world
+space transformations, this mode can consume more storage space than the <strong>File Per Frame (Incremental)</strong> export
+animation mode. For heavily animated scenes (e.g. animated geometry), this mode is faster and more space efficient.</p></li>
+<li><p><strong>File Per Frame (Incremental)</strong> - Creates an initial <code class="docutils literal notranslate"><span class="pre">.vrscene</span></code> file for the first frame which contains all of
+the initial geometry, materials, and renderer settings. <code class="docutils literal notranslate"><span class="pre">.vrscene</span></code> files created for subsequent frames will
+reference the first frame and only specify differential changes for the frame. For simple animations, such as world
+space transformations, this mode can reduce the size of the <code class="docutils literal notranslate"><span class="pre">.vrscene</span></code> files. This style of export is incompatible
+with frame dependencies. Rendering of all frames will depend on the first <code class="docutils literal notranslate"><span class="pre">.vrscene</span></code> file. When the scene is
+heavily animated (e.g. using animated geometry modifiers) this export mode degrades and <strong>Files Per Frame</strong> is
+preferential.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>VRSCENE Export Job Settings</strong> group of controls</p>
+<ul class="simple">
+<li><p>These controls are only applicable in <strong>Export VRSCENE On Deadline</strong> mode.</p></li>
+<li><p>They provide the alternative Pools, Group and On Job Completion options for the <code class="docutils literal notranslate"><span class="pre">.vrscene</span></code> Export Job.</p></li>
+</ul>
+</div>
+<div class="section" id="export-details">
+<h2>Export Details<a class="headerlink" href="#export-details" title="Permalink to this headline">¶</a></h2>
+<p><strong>Export VRSCENE On This Workstation</strong> mode:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">.vrscene</span></code> file will be exported to the folder specified as render output in the 3ds Max Render Setup dialog.</p></li>
+</ul>
+<p><strong>Export VRSCENE On Deadline</strong> mode:</p>
+<ul class="simple">
+<li><p>The 3ds Max scene will always be saved and submitted with the job, regardless of the relevant SMTD control.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">.vrscene</span></code> file will be exported to the folder specified as render output in the 3ds Max Render Setup dialog.</p></li>
+</ul>
+</div>
+<div class="section" id="workflow-script-files">
+<h2>Workflow Script Files<a class="headerlink" href="#workflow-script-files" title="Permalink to this headline">¶</a></h2>
+<p>This workflow consists of two script files:</p>
+<ul class="simple">
+<li><p><strong>SMTDWorkflow_VRayStandaloneExport.ms</strong> - the workflow definition</p></li>
+<li><p><strong>MAXScriptJob_VRayStandaloneExport.ms</strong> - the MAXScript Job file to be run by the Workers to perform the <code class="docutils literal notranslate"><span class="pre">.vrscene</span></code>
+export.</p></li>
+</ul>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3ds Max - Integrated Submitter Workflow - V-Ray Standalone</a><ul>
+<li><a class="reference internal" href="#v-ray-standalone-workflow-overview">V-Ray Standalone Workflow Overview</a></li>
+<li><a class="reference internal" href="#accessing-the-workflow">Accessing The Workflow</a></li>
+<li><a class="reference internal" href="#custom-user-interface-controls">Custom User Interface Controls</a></li>
+<li><a class="reference internal" href="#export-details">Export Details</a></li>
+<li><a class="reference internal" href="#workflow-script-files">Workflow Script Files</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-3ds-max-workflow-phoenixfd.html"
+                        title="previous chapter">3ds Max - Integrated Submitter Workflow - Phoenix FD Simulation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-3ds-max-smtd-scripting.html"
+                        title="next chapter">3ds Max - Integrated Submitter - Scripting</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-3ds-max-smtd-scripting.html" title="3ds Max - Integrated Submitter - Scripting"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-3ds-max-workflow-phoenixfd.html" title="3ds Max - Integrated Submitter Workflow - Phoenix FD Simulation"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Max - Integrated Submitter Workflow - V-Ray Standalone</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

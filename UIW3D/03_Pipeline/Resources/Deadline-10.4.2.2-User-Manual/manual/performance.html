@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Network Performance &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Path Mapping (Cross-Platform Rendering)" href="cross-platform.html" />
+    <link rel="prev" title="Remote Control" href="remote-control.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="cross-platform.html" title="Path Mapping (Cross-Platform Rendering)"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="remote-control.html" title="Remote Control"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" accesskey="U">Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Network Performance</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="network-performance">
+<span id="performance-ref-label"></span><h1>Network Performance<a class="headerlink" href="#network-performance" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This guide is intended to help you find and fix potential bottlenecks in your Deadline render farm. If you are noticing sluggish performance when you are using Deadline, there are a few things you can do to try and improve it.</p>
+</div>
+<div class="section" id="adjust-monitor-and-worker-settings">
+<h2>Adjust Monitor and Worker Settings<a class="headerlink" href="#adjust-monitor-and-worker-settings" title="Permalink to this headline">¶</a></h2>
+<p>There are a few Monitor and Worker settings in the Repository Options that you can tweak to help improve performance, and reduce load on both the network and the database. You can also use the Auto Adjust option to figure out the best default values to use based on the number of Workers in your farm. See the <a class="reference internal" href="repository-config.html#performance-settings-ref-label"><span class="std std-ref">Repository Options</span></a> documentation for more information.</p>
+<a class="reference internal image-reference" href="../_images/cro_performance_monitor_intervals.png"><img alt="../_images/cro_performance_monitor_intervals.png" src="../_images/cro_performance_monitor_intervals.png" style="height: 300px;" /></a>
+<a class="reference internal image-reference" href="../_images/cro_performance_worker_intervals.png"><img alt="../_images/cro_performance_worker_intervals.png" src="../_images/cro_performance_worker_intervals.png" style="height: 300px;" /></a>
+<a class="reference internal image-reference" href="../_images/cro_performance_event_intervals.png"><img alt="../_images/cro_performance_event_intervals.png" src="../_images/cro_performance_event_intervals.png" style="height: 300px;" /></a>
+</div>
+<div class="section" id="enable-throttling">
+<span id="performance-throttling-ref-label"></span><h2>Enable Throttling<a class="headerlink" href="#enable-throttling" title="Permalink to this headline">¶</a></h2>
+<p>Deadline supports a Worker Throttling feature, which is helpful if you’re submitting large files with your jobs. This can be used to limit the number of Workers that are copying over the Job files at the same time.
+The Throttling settings can be found in the Worker Settings section of the <a class="reference internal" href="repository-config.html#throttle-ref-label"><span class="std std-ref">Repository Options</span></a>.</p>
+<a class="reference internal image-reference" href="../_images/cro_worker_throttling.png"><img alt="../_images/cro_worker_throttling.png" src="../_images/cro_worker_throttling.png" style="height: 500px;" /></a>
+<p>For example, if you have 100 Workers, and you’re submitting 500MB scene files with your jobs, you may notice a performance hit if all 100 Workers try to copy over the Job and Plugin files at the same time.
+You could set the Worker Throttle Limit to 10, so that only 10 of those Workers will ever be copying those files at the same time. When it goes to render subsequent tasks for the same Job, it will not be affected
+by the throttling feature, since it already has the required files.</p>
+</div>
+<div class="section" id="utilize-limits-machine-limits">
+<h2>Utilize Limits / Machine Limits<a class="headerlink" href="#utilize-limits-machine-limits" title="Permalink to this headline">¶</a></h2>
+<p>Irrespective of Worker Throttling, if your scene files (Maya, 3dsMax, modo, etc) are referencing a large amount of external asset files (textures, geo caches), then at initial startup of this job on multiple machines, your network file storage solution may struggle with this ‘fire storm’ of i/o demand. To lower this demand on your file server, you can use <a class="reference internal" href="job-controlling.html#job-controlling-mlo-ref-label"><span class="std std-ref">Machine Limits</span></a> or <a class="reference internal" href="limits.html#limits-ref-label"><span class="std std-ref">Limits</span></a>. One of the aspects of the limits feature is the ability to tell the Worker to not return the stub until the particular task being rendered by the Worker in question has reached a certain percentage, which would presume it has downloaded all the assets it needs. Note that not all Plugins report task progress, which is a requirement of this feature to operate correctly.</p>
+<a class="reference internal image-reference" href="../_images/jp_machine_limit.png"><img alt="../_images/jp_machine_limit.png" src="../_images/jp_machine_limit.png" style="height: 500px;" /></a>
+<a class="reference internal image-reference" href="../_images/new_limit.png"><img alt="../_images/new_limit.png" src="../_images/new_limit.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="manage-job-auxiliary-files">
+<h2>Manage Job Auxiliary Files<a class="headerlink" href="#manage-job-auxiliary-files" title="Permalink to this headline">¶</a></h2>
+<p>If you are submitting your scene files with your Jobs, this can affect overall performance if the scene files are quite large. This is because whenever a Worker starts a new Job, it copies those Job files
+locally before rendering, including the Scene file if submitted with the Job. As mentioned in the previous section, if you have hundreds of Workers starting a Job with a large scene file, and your Repository
+hardware isn’t built to handle a large load, your performance will suffer.</p>
+<p>If enabling Throttling isn’t helping, another option (which can also be used in conjunction if you wish) is to configure Deadline to store these scene files in an alternate location (like a separate, dedicated file server).
+This can be done by configuring the Job Auxiliary Files settings in the <a class="reference internal" href="repository-config.html#job-settings-ref-label"><span class="std std-ref">Repository Options</span></a>.</p>
+<a class="reference internal image-reference" href="../_images/cro_js_auxiliary.png"><img alt="../_images/cro_js_auxiliary.png" src="../_images/cro_js_auxiliary.png" style="height: 500px;" /></a>
+<p>From here, you can choose a server that’s better equipped to handle the load, which will help improve the performance and stability of your Repository machine, especially if it is also hosting your Database backend.
+In a mixed farm environment, you need to ensure that the paths for each operating system resolve to the same location. Otherwise, a scene file submitted with the Job on one operating system will not be visible to a
+Worker running on another.</p>
+<p><strong>Note:</strong> If you are hosting more than one Repository, you should not point them to use the same auxiliary file location. As part of housecleaning, auxiliary files belonging to deleted, archived, or otherwise missing jobs are routinely deleted from this location. Since housecleaning cannot determine if an auxiliary folder belongs to a job from a different Repository, each Repository should have its own separate auxiliary file location to avoid deleting another Repository’s auxiliary files.</p>
+</div>
+<div class="section" id="local-rendering">
+<span id="performance-local-render-ref-label"></span><h2>Local Rendering<a class="headerlink" href="#local-rendering" title="Permalink to this headline">¶</a></h2>
+<p>If the application plugin supports it, with “Local Rendering” enabled, Deadline will render the frames locally to temp disk space before copying them over to the final network location once rendering has completed. This has been known to reduce the load on your network and file server; consequently, reducing the time to render completion. Please check individual app plugins to see if the host application can support this functionality.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Network Performance</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#adjust-monitor-and-worker-settings">Adjust Monitor and Worker Settings</a></li>
+<li><a class="reference internal" href="#enable-throttling">Enable Throttling</a></li>
+<li><a class="reference internal" href="#utilize-limits-machine-limits">Utilize Limits / Machine Limits</a></li>
+<li><a class="reference internal" href="#manage-job-auxiliary-files">Manage Job Auxiliary Files</a></li>
+<li><a class="reference internal" href="#local-rendering">Local Rendering</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="remote-control.html"
+                        title="previous chapter">Remote Control</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="cross-platform.html"
+                        title="next chapter">Path Mapping (Cross-Platform Rendering)</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="cross-platform.html" title="Path Mapping (Cross-Platform Rendering)"
+             >next</a></li>
+        <li class="right" >
+          <a href="remote-control.html" title="Remote Control"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" >Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Network Performance</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

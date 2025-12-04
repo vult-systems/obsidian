@@ -1,0 +1,1425 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workers - Command Arguments &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Jobs - Command Arguments" href="command-line-arguments-jobs.html" />
+    <link rel="prev" title="Clients and Logs - Command Arguments" href="command-line-arguments-clients.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command-line-arguments-jobs.html" title="Jobs - Command Arguments"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="command-line-arguments-clients.html" title="Clients and Logs - Command Arguments"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" accesskey="U">Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Workers - Command Arguments</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="workers-command-arguments">
+<span id="command-arguments-workers"></span><h1>Workers - Command Arguments<a class="headerlink" href="#workers-command-arguments" title="Permalink to this headline">¶</a></h1>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td colspan="2"><p><a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">Command Overview</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-repo.html#command-arguments-repo"><span class="std std-ref">Database and Repository</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-clients.html#command-arguments-clients"><span class="std std-ref">Clients and Logs</span></a></p></td>
+<td><p><a class="reference internal" href="#command-arguments-workers"><span class="std std-ref">Workers</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="command-line-arguments-jobs.html#command-arguments-jobs"><span class="std std-ref">Jobs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-tasks.html#command-arguments-tasks"><span class="std std-ref">Tasks</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-pools-groups.html#command-arguments-pools"><span class="std std-ref">Pools, Groups, and Limits</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-users.html#command-arguments-users"><span class="std std-ref">Users and User Groups</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-pathmapping.html#command-arguments-pathmapping"><span class="std std-ref">Path and Drive Mapping</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="command-line-arguments-cloud.html#command-arguments-cloud"><span class="std std-ref">AWS Portal and Cloud</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-scripting.html#command-arguments-scripting"><span class="std std-ref">Scripting</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-system.html#command-arguments-system"><span class="std std-ref">System Functions and Dialogs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-housekeeping.html#command-arguments-housekeeping"><span class="std std-ref">Scans, History, and Reports</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-version.html#command-arguments-version"><span class="std std-ref">Version and Help</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">We are in the process of transitioning from the term <strong>‘Slave’</strong> to <strong>‘Worker’</strong> throughout Deadline.</div>
+<div class="line">During this transition you may see both terms used interchangeably in our applications.</div>
+</div>
+</div>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#check-for-and-delete-workers" id="id1">Check For And Delete Workers</a></p>
+<ul>
+<li><p><a class="reference internal" href="#slaveexists" id="id2">SlaveExists</a></p></li>
+<li><p><a class="reference internal" href="#deleteslave" id="id3">DeleteSlave</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#access-worker-settings" id="id4">Access Worker Settings</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getslavenames" id="id5">GetSlaveNames</a></p></li>
+<li><p><a class="reference internal" href="#getslave" id="id6">GetSlave</a></p></li>
+<li><p><a class="reference internal" href="#getslaves" id="id7">GetSlaves</a></p></li>
+<li><p><a class="reference internal" href="#getslavesrenderingjob" id="id8">GetSlavesRenderingJob</a></p></li>
+<li><p><a class="reference internal" href="#getmachinesrenderingjob" id="id9">GetMachinesRenderingJob</a></p></li>
+<li><p><a class="reference internal" href="#getslaveinfo" id="id10">GetSlaveInfo</a></p></li>
+<li><p><a class="reference internal" href="#getslavesetting" id="id11">GetSlaveSetting</a></p></li>
+<li><p><a class="reference internal" href="#setslavesetting" id="id12">SetSlaveSetting</a></p></li>
+<li><p><a class="reference internal" href="#getslaveextrainfokeyvalue" id="id13">GetSlaveExtraInfoKeyValue</a></p></li>
+<li><p><a class="reference internal" href="#setslaveextrainfokeyvalue" id="id14">SetSlaveExtraInfoKeyValue</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#get-worker-reports" id="id15">Get Worker Reports</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getslavereportfilenames" id="id16">GetSlaveReportFilenames</a></p></li>
+<li><p><a class="reference internal" href="#getslavelogreportfilenames" id="id17">GetSlaveLogReportFilenames</a></p></li>
+<li><p><a class="reference internal" href="#getslaveerrorreportfilenames" id="id18">GetSlaveErrorReportFilenames</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#get-worker-limits" id="id19">Get Worker Limits</a></p>
+<ul>
+<li><p><a class="reference internal" href="#addslavestojobmachinelimitlist" id="id20">AddSlavesToJobMachineLimitList</a></p></li>
+<li><p><a class="reference internal" href="#removeslavesfromjobmachinelimitlist" id="id21">RemoveSlavesFromJobMachineLimitList</a></p></li>
+<li><p><a class="reference internal" href="#addslavestolimitgrouplist" id="id22">AddSlavesToLimitGroupList</a></p></li>
+<li><p><a class="reference internal" href="#removeslavesfromlimitgrouplist" id="id23">RemoveSlavesFromLimitGroupList</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="check-for-and-delete-workers">
+<h2><a class="toc-backref" href="#contents">Check For And Delete Workers</a><a class="headerlink" href="#check-for-and-delete-workers" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="slaveexists">
+<span id="slaveexists-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SlaveExists</a><a class="headerlink" href="#slaveexists" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays <code class="docutils literal notranslate"><span class="pre">True</span></code> if the specified Worker exists, <code class="docutils literal notranslate"><span class="pre">False</span></code> if it does not.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SlaveExists</strong>  &lt;Worker Name&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Worker Name&gt;</p></td>
+<td><p>The Worker name</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Assuming that a Worker called RN-001 exists, then</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SlaveExists RN-001
+    True
+C:\&gt;deadlinecommand -SlaveExists ICantBelieveThisIsAWorkerName
+    False
+</pre></div>
+</div>
+</div>
+<div class="section" id="deleteslave">
+<span id="deleteslave-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">DeleteSlave</a><a class="headerlink" href="#deleteslave" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Deletes the Worker from the Workers collection in the Database.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -DeleteSlave</strong>  &lt;Worker Name(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Worker Name(s)&gt;</p></td>
+<td><p>The Worker name, or a list of Worker names separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Assuming that a Worker called RN-001 exists, then</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -DeleteSlave RN-001
+    Deleted Workers: RN-001
+C:\&gt;deadlinecommand -DeleteSlave RN-001,RN-002
+    Deleted Workers: RN-001,RN-002
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">No check is performed to see if the specified Workers actually exist.</div>
+<div class="line">This is not destructive - if the Worker application is running, the deleted Worker will add itself back to the Database.</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="access-worker-settings">
+<h2><a class="toc-backref" href="#contents">Access Worker Settings</a><a class="headerlink" href="#access-worker-settings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getslavenames">
+<span id="getslavenames-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetSlaveNames</a><a class="headerlink" href="#getslavenames" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays the names of all Worker registered with the Database’s Workers list.</p>
+<p><strong>Aliases:</strong> <code class="docutils literal notranslate"><span class="pre">GetSlaveNames</span></code>, <code class="docutils literal notranslate"><span class="pre">Slaves</span></code></p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetSlaveNames</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>deadlinecommand -Slaves</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetSlaveNames
+    RN-001
+    RN-002
+    RN-003
+    RN-004
+    RN-005
+    ip-10-128-16-57
+    ip-10-128-16-183
+    ip-10-128-16-218
+    ip-10-128-17-65
+    ip-10-128-17-82
+</pre></div>
+</div>
+</div>
+<div class="section" id="getslave">
+<span id="getslave-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetSlave</a><a class="headerlink" href="#getslave" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display information for the named Worker.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetSlave</strong>  &lt;Worker Name(s)&gt;  [&lt;Use Ini Display&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Worker Name(s)&gt;</p></td>
+<td><p>The Worker name, or a list of Worker names separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Use Ini Display&gt;</p></td>
+<td><p>true/false (optional, default is false)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetSlave RN-001
+    AWSInfo=
+    Comment=
+    CompletedTasks=0
+    ConcurrentTasksLimit=0
+    ConfigName=
+    CpuAffinity=
+    CPUs=8
+    CPUUsage=14
+    CurrentJobGroup=
+    CurrentJobId=
+    CurrentJobName=
+    CurrentJobPool=
+    CurrentJobPriority=-1
+    CurrentJobUser=
+    CurrentPlugin=
+    CurrentTaskIds=
+    CurrentTaskNames=
+    CurrentTaskProgresses=
+    CurrentTaskRenderTimes=
+    CurrentTaskStatus=
+    Description=
+    DiskReads=0
+    DiskSpace=19453329408
+    DiskSpaceString=18.117 GB
+    DiskWrites=490029
+    Enabled=True
+    EnableIdleCpuThreshold=False
+    EnableIdleProcessCheck=False
+    EnableIdleRamMBThreshold=False
+    EnableIdleRamPercentThreshold=False
+    EnableIdleUserCheck=False
+    EventOptInArray=
+    EventOptIns=
+    EventOptInsStr={}
+    ExtraElements=
+    ExtraInfo0=
+    ExtraInfo1=
+    ExtraInfo2=
+    ExtraInfo3=
+    ExtraInfo4=
+    ExtraInfo5=
+    ExtraInfo6=
+    ExtraInfo7=
+    ExtraInfo8=
+    ExtraInfo9=
+    ExtraInfoDictionary=
+    FailedTasks=0
+    FinishTaskWhenStoppingIfNotIdle=False
+    FreeMemory=17210576896
+    FreeMode=False
+    GpuAffinity=
+    GroupMappingID=
+    Groups=
+    GroupsString=
+    HostMachineIPAddressOverride=
+    HostName=RN-001
+    ID=rn-001
+    IdleCpuThreshold=50
+    IdleMinutes=10
+    IdleProcessNames=
+    IdleRamMBThreshold=4096
+    IdleRamPercentThreshold=50
+    IdleUserNames=
+    IPAddress=192.168.18.7
+    IsAWSPortalInstance=False
+    IsCloudSlave=False
+    IsLicensedByUsage=True
+    IsLicensePermanent=False
+    IsRunningAsService=False
+    LastReadRepoTime=Jan 01/01  00:00:00
+    LastReadTime=Jan 01/01  00:00:00
+    LastWriteTime=Jun 19/20  23:24:40
+    LicenseDaysLeftToExpiry=4
+    LicenseLastErrorMessage=
+    LicenseMode=UsageBased
+    LicenseServer=(could not detect servers)
+    LimitGroupStubs=
+    ListeningPort=62152
+    MACAddress=00:05:9A:3C:7A:00
+    MacAddressOverride=
+    MachineArchitecture=x64
+    MachineCPUs=8
+    MachineCPUUsage=14
+    MachineDiskSpace=19453329408
+    MachineFreeMemory=17210576896
+    MachineIPAddress=192.168.18.7
+    MachineMACAddress=00:01:9A:3D:7C:10
+    MachineMemory=34234511360
+    MachineOperatingSystem=Windows 10 Enterprise
+    MachineProcessorSpeed=2592
+    MachineRealName=RN-001
+    MachineUserName=SomeUser
+    MachineVideoCard=Intel(R) HD Graphics 530
+    Memory=34234511360
+    NetworkReceived=1330
+    NetworkSent=695
+    NormalizedRenderTimeMultiplier=1
+    NormalizedTimeoutMultiplier=1
+    OnLastTaskComplete=Continue Running
+    OnlyStopSlaveIfStartedByIdleDetection=False
+    OSShortName=Windows 10 Enterprise
+    OverrideCpuAffinity=False
+    OverrideGpuAffinity=False
+    OverrideListeningPort=False
+    OverrideSlaveScheduling=False
+    Pools=
+    PoolsString=
+    ProcessorArchitecture=x64
+    ProcessorSpeed=2592
+    Region=
+    RenderingTime=0
+    SchedulingMode=AllJobs
+    SlaveComment=
+    SlaveCompletedTasks=0
+    SlaveConcurrentTasksLimit=0
+    SlaveConfigName=
+    SlaveCpuAffinity=
+    SlaveCurrentJobGroup=
+    SlaveCurrentJobId=
+    SlaveCurrentJobName=
+    SlaveCurrentJobPool=
+    SlaveCurrentJobPriority=-1
+    SlaveCurrentJobUserName=
+    SlaveCurrentPlugin=
+    SlaveCurrentTaskIds=
+    SlaveCurrentTaskNames=
+    SlaveCurrentTaskProgresses=
+    SlaveCurrentTaskRenderTimes=
+    SlaveCurrentTaskStatus=
+    SlaveDescription=
+    SlaveEnabled=True
+    SlaveEnableIdleCpuThreshold=False
+    SlaveEnableIdleProcessCheck=False
+    SlaveEnableIdleRamMBThreshold=False
+    SlaveEnableIdleRamPercentThreshold=False
+    SlaveEnableIdleUserCheck=False
+    SlaveExtraInfo0=
+    SlaveExtraInfo1=
+    SlaveExtraInfo2=
+    SlaveExtraInfo3=
+    SlaveExtraInfo4=
+    SlaveExtraInfo5=
+    SlaveExtraInfo6=
+    SlaveExtraInfo7=
+    SlaveExtraInfo8=
+    SlaveExtraInfo9=
+    SlaveExtraInfoDictionary=
+    SlaveFailedTasks=0
+    SlaveFinishTaskWhenStoppingIfNotIdle=False
+    SlaveFreeMode=False
+    SlaveGpuAffinity=
+    SlaveGroups=
+    SlaveHostMachineIPAddressOverride=
+    SlaveIdleCpuThreshold=50
+    SlaveIdleMinutes=10
+    SlaveIdleProcessNames=
+    SlaveIdleRamMBThreshold=4096
+    SlaveIdleRamPercentThreshold=50
+    SlaveIdleUserNames=
+    SlaveIsActive=True
+    SlaveIsLicensedByUsage=True
+    SlaveIsLicensePermanent=False
+    SlaveLastLicenseErrorMessage=
+    SlaveLastMessage=
+    SlaveLicenseDaysLeftToExpiry=4
+    SlaveLicenseServer=(could not detect servers)
+    SlaveLimitGroupStubs=
+    SlaveListeningPort=5054
+    SlaveMacAddressOverride=
+    SlaveMessage=
+    SlaveName=RN-001
+    SlaveNormalizedRenderTimeMultiplier=1
+    SlaveNormalizedTimeoutMultiplier=1
+    SlaveOnLastTaskComplete=Continue Running
+    SlaveOnlyStopSlaveIfStartedByIdleDetection=False
+    SlaveOverrideCpuAffinity=False
+    SlaveOverrideGpuAffinity=False
+    SlaveOverrideListeningPort=False
+    SlaveOverrideSlaveScheduling=False
+    SlavePools=
+    SlaveRegion=
+    SlaveRenderingTime=0
+    SlaveRunningTime=51
+    SlaveSchedulingMode=AllJobs
+    SlaveSettingsGroups=
+    SlaveSettingsPools=
+    SlaveStartSlaveIfIdle=False
+    SlaveState=Idle
+    SlaveStatus=Idle
+    SlaveStopSlaveIfNotIdle=False
+    SlaveUserJobsModeNames=
+    StartSlaveIfIdle=False
+    StateDateTime=Jun 19/20  23:24:20
+    StopSlaveIfNotIdle=False
+    SwapUsage=535822336
+    UpdateDateTime=Jun 19/20  23:24:40
+    UpTimeSeconds=51
+    UserJobsModeNames=
+    UserName=SomeUser
+    UseTmpDataPath=False
+    Version=v10.1.2.2 Release (d9f8db73b)
+    VideoCard=Intel(R) HD Graphics 530
+    WorkerStartTime=Jan 01/01  00:00:00
+</pre></div>
+</div>
+</div>
+<div class="section" id="getslaves">
+<span id="getslaves-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetSlaves</a><a class="headerlink" href="#getslaves" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays information for all the Worker names.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetSlaves</strong>  [&lt;Use Ini Display&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Use Ini Display&gt;</p></td>
+<td><p>true/false (optional, default is false)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="getslavesrenderingjob">
+<span id="getslavesrenderingjob-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetSlavesRenderingJob</a><a class="headerlink" href="#getslavesrenderingjob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display the Workers that are rendering the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetSlavesRenderingJob</strong>  &lt;Job ID&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="getmachinesrenderingjob">
+<span id="getmachinesrenderingjob-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetMachinesRenderingJob</a><a class="headerlink" href="#getmachinesrenderingjob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display the machine names of the Workers that are rendering the specified Job.</p>
+<p>If the second parameter is <code class="docutils literal notranslate"><span class="pre">True</span></code>, the machine IP addresses will be shown instead.</p>
+<p>If the third parameter is <code class="docutils literal notranslate"><span class="pre">True</span></code>, then duplicate machine names and IP addresses will be shown.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetMachinesRenderingJob</strong>  &lt;Job ID&gt; [&lt;Get IP Address&gt;] [&lt;Get Duplicates&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Get IP Address&gt;</p></td>
+<td><p>true/false (optional, default is false)</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Get Duplicates&gt;</p></td>
+<td><p>true/false (optional, default is false)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="getslaveinfo">
+<span id="getslaveinfo-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetSlaveInfo</a><a class="headerlink" href="#getslaveinfo" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Gets the info value for the named Worker.</p>
+<p>For a list of available info key names, see the Example output of the command <a class="reference internal" href="#getslave-dlc-ref-label"><span class="std std-ref">GetSlave</span></a></p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetSlaveInfo</strong>  &lt;Worker Name&gt; &lt;Worker Info Name&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Worker Name&gt;</p></td>
+<td><p>The Worker name</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Worker Info Name&gt;</p></td>
+<td><p>The name of the info</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetSlaveInfo RN-001 DiskSpace
+    19447320576
+</pre></div>
+</div>
+</div>
+<div class="section" id="getslavesetting">
+<span id="getslavesetting-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetSlaveSetting</a><a class="headerlink" href="#getslavesetting" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Gets the value of a setting for the Worker.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#setslavesetting-dlc-ref-label"><span class="std std-ref">SetSlaveSetting</span></a> for a command to set these values.</p>
+</div>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetSlaveSetting</strong>  &lt;Worker Name&gt; &lt;Worker Setting&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Worker Name&gt;</p></td>
+<td><p>The Worker name</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Worker Setting&gt;</p></td>
+<td><p>The Worker setting</p></td>
+</tr>
+</tbody>
+</table>
+<p>The following Settings can be accessed in the Worker using <code class="docutils literal notranslate"><span class="pre">GetSlaveSetting</span></code> and <a class="reference internal" href="#setslavesetting-dlc-ref-label"><span class="std std-ref">SetSlaveSetting</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">Most settings can be specified without “Slave” prefix, e.g. <strong>SlaveComment</strong> and <strong>Comment</strong> have the same effect.</div>
+<div class="line">The only exception is <strong>SlaveName</strong> which cannot be shortened to <strong>Name</strong>.</div>
+</div>
+</div>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Setting Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Slave<strong>Enabled</strong></p></td>
+<td><p>True if the Worker is enabled, False if the Worker is disabled.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>Groups</strong></p></td>
+<td><p>The Groups that the Worker has been assigned to.  Read-only.</p></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>Pools</strong></p></td>
+<td><p>The Pools that the Worker has been assigned to. Read-only.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>General Settings</em></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>SlaveName</strong></p></td>
+<td><p>The Worker’s name.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>Description</strong></p></td>
+<td><p>A description of the Worker.</p></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>Comment</strong></p></td>
+<td><p>Brief comment regarding the Worker.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>NormalizedRenderTimeMultiplier</strong></p></td>
+<td><p>Used to calculate the normalized render time of the Worker. The value must be between 0.01 and 100.0 inclusive.</p></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>NormalizedTimeoutMultiplier</strong></p></td>
+<td><p>Used to calculate the normalized timeout for the Worker. The value must be between 0.01 and 100.0 inclusive.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>ConcurrentTasksLimit</strong></p></td>
+<td><p>Limits the number of concurrent tasks the Worker can dequeue.
+The value must be between 0 and 16 inclusive.
+Set to 0 to use the Worker’s processor count.</p></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>HostMachineIPAddressOverride</strong></p></td>
+<td><p>If non-empty, this host name or IP address will be used for remote communication with the Worker.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>OverrideListeningPort</strong></p></td>
+<td><p>When set to True, the Worker should listen on the port specified by <code class="docutils literal notranslate"><span class="pre">ListeningPort</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>ListeningPort</strong></p></td>
+<td><p>The port to listen on if <code class="docutils literal notranslate"><span class="pre">SlaveOverridePort</span></code> is set to True.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>HostMachineIPAddressOverride</strong></p></td>
+<td><p>If not empty, this host name or IP address will be used for remote communication with the Worker.</p></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>MacAddressOverride</strong></p></td>
+<td><p>If not empty, this is used to override the MAC address for the Worker.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>Idle Detection Settings</em></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>OverrideSlaveScheduling</strong></p></td>
+<td><p>True if the Worker settings should override the global Worker Scheduling settings.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>StartSlaveIfIdle</strong></p></td>
+<td><p>When set to True, starts the Worker if the machine has been idle for the number of minutes specified in <code class="docutils literal notranslate"><span class="pre">SlaveIdleMinutes</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>IdleMinutes</strong></p></td>
+<td><p>The number of minutes the Worker must be idle for before starting if <code class="docutils literal notranslate"><span class="pre">SlaveStartSlaveIfIdle</span></code> is True.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>EnableIdleCpuThreshold</strong></p></td>
+<td><p>When set to True, the Worker will not start when the machine is idle unless the current CPU usage of the machine is lower than the value in <code class="docutils literal notranslate"><span class="pre">SlaveIdleCpuThreshold</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>IdleCpuThreshold</strong></p></td>
+<td><p>If CPU threshold checking is enabled, the Worker will not start when the machine is idle unless the current CPU usage of the machine is lower than this value.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>EnableIdleRamPercentThreshold</strong></p></td>
+<td><p>When set to True, the Worker will not start when the machine is idle unless the current RAM usage of the machine is lower than the value (as a percentage) in <code class="docutils literal notranslate"><span class="pre">SlaveEnableRamPercentThreshold</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>IdleRamPercentThreshold</strong></p></td>
+<td><p>If RAM Percent threshold checking is enabled, the Worker will not start when the machine is idle unless the current RAM usage of the machine is lower than this value (as a percentage).</p></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>EnableIdleRamMBThreshold</strong></p></td>
+<td><p>When set to True, the Worker will not start when the machine is idle unless the current RAM usage of the machine is lower than the value (in Megabytes) in <code class="docutils literal notranslate"><span class="pre">SlaveEnableIdleRamMBThreshold</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>IdleRamMBThreshold</strong></p></td>
+<td><p>If RAM MB threshold checking is enabled, the Worker will not start when the machine is idle unless the current RAM usage of the machine is lower than this value (in Megabytes).</p></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>EnableIdleProcessCheck</strong></p></td>
+<td><p>When set to True, the Worker will not start when the machine is idle if any processes in <code class="docutils literal notranslate"><span class="pre">SlaveIdleProcessNames</span></code> are currently running on the machine.</p></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>IdleProcessNames</strong></p></td>
+<td><p>The Worker will not start when the machine is idle if any processes in this list are currently running on the machine. Read-only.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>EnableIdleUserCheck</strong></p></td>
+<td><p>When set to True, the Worker will not start when the machine is idle if the launcher is running as one of the users in <code class="docutils literal notranslate"><span class="pre">SlaveIdleUserNames</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>IdleUserNames</strong></p></td>
+<td><p>If user checking is enabled, the Worker will not start when the machine is idle if the launcher is running as this user. Read-only.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>StopSlaveIfNotIdle</strong></p></td>
+<td><p>When set to True, stops the Worker if the machine is no longer idle.</p></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>OnlyStopSlaveIfStartedByIdleDetection</strong></p></td>
+<td><p>When set to True, only stops the Worker if it was started by idle detection.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>FinishTaskWhenStoppingIfNotIdle</strong></p></td>
+<td><p>When set to True, a Worker should finish its current task before shutting down when the machine is no longer idle.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>Job Dequeueing Settings</em></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>SchedulingMode</strong></p></td>
+<td><p>Scheduling modes for a Worker, which affects how it dequeues Jobs.
+If set to <code class="docutils literal notranslate"><span class="pre">MachineJobs</span></code>, it will only render Jobs submitted by the user of the machine running the Worker.
+If set to <code class="docutils literal notranslate"><span class="pre">UserJobs</span></code>, it will only render Jobs for users in the <code class="docutils literal notranslate"><span class="pre">SlaveUserJobsModeNames</span></code> list.
+Default is <code class="docutils literal notranslate"><span class="pre">AllJobs</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>UserJobsModeNames</strong></p></td>
+<td><p>If <code class="docutils literal notranslate"><span class="pre">SlaveSchedulingMode</span></code> is set to <code class="docutils literal notranslate"><span class="pre">UserJobs</span></code>, it will only render Jobs for users in this list. Read-only.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>CPU Affinity Settings</em></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>OverrideCpuAffinity</strong></p></td>
+<td><p>Enable to override the Worker’s CPU affinity (Windows and Linux only).</p></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>CpuAffinity</strong></p></td>
+<td><p>The list of specific CPUs to use if <code class="docutils literal notranslate"><span class="pre">SlaveOverrideCpuAffinity</span></code> is set to True.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>GPU Affinity Settings</em></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>OverrideGpuAffinity</strong></p></td>
+<td><p>Enable to override the Worker’s GPU affinity.</p></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>GpuAffinity</strong></p></td>
+<td><p>The list of specific GPUs to use if <code class="docutils literal notranslate"><span class="pre">SlaveOverrideGpuAffinity</span></code> is set to True.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>Extra Info Settings</em></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>ExtraInfo0</strong></p></td>
+<td><p>One of the Worker’s ten Extra Info fields.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>ExtraInfo1</strong></p></td>
+<td><p>One of the Worker’s ten Extra Info fields.</p></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>ExtraInfo2</strong></p></td>
+<td><p>One of the Worker’s ten Extra Info fields.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>ExtraInfo3</strong></p></td>
+<td><p>One of the Worker’s ten Extra Info fields.</p></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>ExtraInfo4</strong></p></td>
+<td><p>One of the Worker’s ten Extra Info fields.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>ExtraInfo5</strong></p></td>
+<td><p>One of the Worker’s ten Extra Info fields.</p></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>ExtraInfo6</strong></p></td>
+<td><p>One of the Worker’s ten Extra Info fields.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>ExtraInfo7</strong></p></td>
+<td><p>One of the Worker’s ten Extra Info fields.</p></td>
+</tr>
+<tr class="row-even"><td><p>Slave<strong>ExtraInfo8</strong></p></td>
+<td><p>One of the Worker’s ten Extra Info fields.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Slave<strong>ExtraInfo9</strong></p></td>
+<td><p>One of the Worker’s ten Extra Info fields.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://docs.thinkboxsoftware.com/products/deadline/10.3/2_Scripting%20Reference/class_deadline_1_1_slaves_1_1_slave_settings.html">Deadline Scripting Documentation - Slave Settings</a></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">The ExtraInfoKey values cannot be accessed via the <code class="docutils literal notranslate"><span class="pre">GetSlaveSetting</span></code> and <code class="docutils literal notranslate"><span class="pre">SetSlaveSetting</span></code> commands.</div>
+<div class="line">See the dedicated functions <a class="reference internal" href="#getslaveextrainfokeyvalue-dlc-ref-label"><span class="std std-ref">GetSlaveExtraInfoKeyValue</span></a> and <a class="reference internal" href="#getslaveextrainfokeyvalue-dlc-ref-label"><span class="std std-ref">GetSlaveExtraInfoKeyValue</span></a>.</div>
+</div>
+</div>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -Prompt
+GetSlaveSetting RN-001 SlaveDescription
+    Local Render Node 001
+GetSlaveSetting RN-001 Description
+    Local Render Node 001
+GetSlaveSetting RN-001 Comment
+    This machine is rather slow, avoid when rendering heavy Jobs
+GetSlaveSetting RN-001 SlaveSchedulingMode
+    AllJobs
+GetSlaveSetting RN-001 ConcurrentTasksLimit
+    0
+GetSlaveSetting RN-001 Enabled
+    True
+GetSlaveSetting RN-001 EnableIdleCpuThreshold
+    False
+GetSlaveSetting RN-001 EnableIdleProcessCheck
+    False
+GetSlaveSetting RN-001 EnableIdleRamMBThreshold
+    False
+GetSlaveSetting RN-001 EnableIdleRamPercentThreshold
+    False
+GetSlaveSetting RN-001 EnableIdleUserCheck
+    False
+Exit
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="setslavesetting">
+<span id="setslavesetting-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetSlaveSetting</a><a class="headerlink" href="#setslavesetting" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Sets the value of a setting for the Worker.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="#getslavesetting-dlc-ref-label"><span class="std std-ref">GetSlaveSetting</span></a> for a list of valid Worker Settings accessible to this command.</div>
+<div class="line">Note that some are marked as Read-only in the Description column and can only be read but not set.</div>
+</div>
+</div>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetSlaveSetting</strong>  &lt;Worker Name(s)&gt; &lt;Worker Setting&gt; &lt;Value&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Worker Name(s)&gt;</p></td>
+<td><p>The Worker name, or a list of Worker names separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Worker Setting&gt;</p></td>
+<td><p>The Worker setting</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Value&gt;</p></td>
+<td><p>The new value</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -Prompt
+SetSlaveSetting RN-002 SlaveDescription &quot;Local Render Node 002&quot;
+    Set SlaveDescription to Local Render Node 002.
+SetSlaveSetting RN-002 Comment &quot;This is a fast machine&quot;
+    Set Comment to This is a fast machine.
+SetSlaveSetting RN-002 SlaveSchedulingMode UserJobs
+    Set SlaveSchedulingMode to UserJobs.
+SetSlaveSetting RN-002 Vogon &quot;Poetry&quot;
+    Error: setting &#39;Vogon&#39; not found.
+Exit
+
+C:\&gt;
+</pre></div>
+</div>
+<img alt="../_images/command-workersettings-dialog1.png" src="../_images/command-workersettings-dialog1.png" />
+<img alt="../_images/command-workersettings-dialog2.png" src="../_images/command-workersettings-dialog2.png" />
+</div>
+<div class="section" id="getslaveextrainfokeyvalue">
+<span id="getslaveextrainfokeyvalue-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetSlaveExtraInfoKeyValue</a><a class="headerlink" href="#getslaveextrainfokeyvalue" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Gets the value from the extra info dictionary.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetSlaveExtraInfoKeyValue</strong>  &lt;Worker Name&gt; &lt;Extra Info Key&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Worker Name&gt;</p></td>
+<td><p>The name of the Worker</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Extra Info Key&gt;</p></td>
+<td><p>The extra info key to get.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SetSlaveExtraInfoKeyValue RN-001 MyCustomValue JurassicParkByFriday
+    Set the key: MyCustomValue to: JurassicParkByFriday
+
+C:\&gt;deadlinecommand -GetSlaveExtraInfoKeyValue RN-001 MyCustomValue
+    JurassicParkByFriday
+</pre></div>
+</div>
+</div>
+<div class="section" id="setslaveextrainfokeyvalue">
+<span id="setslaveextrainfokeyvalue-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetSlaveExtraInfoKeyValue</a><a class="headerlink" href="#setslaveextrainfokeyvalue" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Sets the value of the specified key within the extra info dictionary.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetSlaveExtraInfoKeyValue</strong>  &lt;Worker Name&gt; &lt;Extra Info Key&gt;  &lt;Value&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Worker Name&gt;</p></td>
+<td><p>The name of the Worker.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Extra Info Key&gt;</p></td>
+<td><p>The extra info key to get.</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Value&gt;</p></td>
+<td><p>The new value</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<blockquote>
+<div><p><a class="reference internal" href="#getslaveextrainfokeyvalue-dlc-ref-label"><span class="std std-ref">See previous example</span></a></p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="get-worker-reports">
+<h2><a class="toc-backref" href="#contents">Get Worker Reports</a><a class="headerlink" href="#get-worker-reports" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getslavereportfilenames">
+<span id="getslavereportfilenames-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetSlaveReportFilenames</a><a class="headerlink" href="#getslavereportfilenames" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Gets the report filenames for the Worker.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetSlaveReportFilenames</strong>  &lt;Worker Name&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Worker Name&gt;</p></td>
+<td><p>The Worker name</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetSlaveReportFilenames RN-001
+    reports\slaves\63\c\5deac5ad68eb13dc3c50c63c.bz2
+    reports\slaves\b2\c\5deac64ec893e88a981b6b2c.bz2
+    reports\slaves\b2\f\5deacab3c893e88a981b6b2f.bz2
+    reports\slaves\b3\5\5dead3cbc893e88a981b6b35.bz2
+    reports\slaves\c4\3\5e1f5fa34e592472e48bbc43.bz2
+    reports\slaves\87\e\5e1f5ffd1c0bbe603c3a087e.bz2
+    reports\slaves\88\4\5e1f96801c0bbe603c3a0884.bz2
+    reports\slaves\88\6\5e1f978e1c0bbe603c3a0886.bz2
+</pre></div>
+</div>
+</div>
+<div class="section" id="getslavelogreportfilenames">
+<span id="getslavelogreportfilenames-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetSlaveLogReportFilenames</a><a class="headerlink" href="#getslavelogreportfilenames" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Gets the log report filenames for the Worker.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetSlaveLogReportFilenames</strong>  &lt;Worker Name&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Worker Name&gt;</p></td>
+<td><p>The Worker name</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="getslaveerrorreportfilenames">
+<span id="getslaveerrorreportfilenames-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetSlaveErrorReportFilenames</a><a class="headerlink" href="#getslaveerrorreportfilenames" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Gets the error report filenames for the Worker.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetSlaveErrorReportFilenames</strong>  &lt;Worker Name&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Worker Name&gt;</p></td>
+<td><p>The Worker name</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="get-worker-limits">
+<h2><a class="toc-backref" href="#contents">Get Worker Limits</a><a class="headerlink" href="#get-worker-limits" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="addslavestojobmachinelimitlist">
+<span id="addslavestojobmachinelimitlist-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">AddSlavesToJobMachineLimitList</a><a class="headerlink" href="#addslavestojobmachinelimitlist" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Adds Workers to the Job’s listed Workers.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -AddSlavesToJobMachineLimitList</strong>  &lt;Job ID(s)&gt;  &lt;Workers&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Workers&gt;</p></td>
+<td><p>The Workers to add, separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="removeslavesfromjobmachinelimitlist">
+<span id="removeslavesfromjobmachinelimitlist-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">RemoveSlavesFromJobMachineLimitList</a><a class="headerlink" href="#removeslavesfromjobmachinelimitlist" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Removes Workers from the Job’s listed Workers.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -RemoveSlavesFromJobMachineLimitList</strong>  &lt;Job ID(s)&gt;  &lt;Workers&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Workers&gt;</p></td>
+<td><p>The Workers to remove, separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="addslavestolimitgrouplist">
+<span id="addslavestolimitgrouplist-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">AddSlavesToLimitGroupList</a><a class="headerlink" href="#addslavestolimitgrouplist" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Adds Workers to the Limit’s listed Workers.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -AddSlavesToLimitGroupList</strong>  &lt;Limit Name(s)&gt;  &lt;Workers&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Limit Name(s)&gt;</p></td>
+<td><p>The limit name, or a list of limit names separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Workers&gt;</p></td>
+<td><p>The Workers to add, separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="removeslavesfromlimitgrouplist">
+<span id="removeslavesfromlimitgrouplist-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">RemoveSlavesFromLimitGroupList</a><a class="headerlink" href="#removeslavesfromlimitgrouplist" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Removes Workers from the limit’s listed Workers.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -RemoveSlavesFromLimitGroupList</strong>  &lt;Limit Name(s)&gt;  &lt;Workers&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Limit Name(s)&gt;</p></td>
+<td><p>The limit name, or a list of limit names separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Workers&gt;</p></td>
+<td><p>The Workers to remove, separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Workers - Command Arguments</a><ul>
+<li><a class="reference internal" href="#check-for-and-delete-workers">Check For And Delete Workers</a><ul>
+<li><a class="reference internal" href="#slaveexists">SlaveExists</a></li>
+<li><a class="reference internal" href="#deleteslave">DeleteSlave</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#access-worker-settings">Access Worker Settings</a><ul>
+<li><a class="reference internal" href="#getslavenames">GetSlaveNames</a></li>
+<li><a class="reference internal" href="#getslave">GetSlave</a></li>
+<li><a class="reference internal" href="#getslaves">GetSlaves</a></li>
+<li><a class="reference internal" href="#getslavesrenderingjob">GetSlavesRenderingJob</a></li>
+<li><a class="reference internal" href="#getmachinesrenderingjob">GetMachinesRenderingJob</a></li>
+<li><a class="reference internal" href="#getslaveinfo">GetSlaveInfo</a></li>
+<li><a class="reference internal" href="#getslavesetting">GetSlaveSetting</a></li>
+<li><a class="reference internal" href="#setslavesetting">SetSlaveSetting</a></li>
+<li><a class="reference internal" href="#getslaveextrainfokeyvalue">GetSlaveExtraInfoKeyValue</a></li>
+<li><a class="reference internal" href="#setslaveextrainfokeyvalue">SetSlaveExtraInfoKeyValue</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#get-worker-reports">Get Worker Reports</a><ul>
+<li><a class="reference internal" href="#getslavereportfilenames">GetSlaveReportFilenames</a></li>
+<li><a class="reference internal" href="#getslavelogreportfilenames">GetSlaveLogReportFilenames</a></li>
+<li><a class="reference internal" href="#getslaveerrorreportfilenames">GetSlaveErrorReportFilenames</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#get-worker-limits">Get Worker Limits</a><ul>
+<li><a class="reference internal" href="#addslavestojobmachinelimitlist">AddSlavesToJobMachineLimitList</a></li>
+<li><a class="reference internal" href="#removeslavesfromjobmachinelimitlist">RemoveSlavesFromJobMachineLimitList</a></li>
+<li><a class="reference internal" href="#addslavestolimitgrouplist">AddSlavesToLimitGroupList</a></li>
+<li><a class="reference internal" href="#removeslavesfromlimitgrouplist">RemoveSlavesFromLimitGroupList</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="command-line-arguments-clients.html"
+                        title="previous chapter">Clients and Logs - Command Arguments</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="command-line-arguments-jobs.html"
+                        title="next chapter">Jobs - Command Arguments</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command-line-arguments-jobs.html" title="Jobs - Command Arguments"
+             >next</a></li>
+        <li class="right" >
+          <a href="command-line-arguments-clients.html" title="Clients and Logs - Command Arguments"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" >Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Workers - Command Arguments</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

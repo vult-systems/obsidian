@@ -1,0 +1,436 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deprecated AWSPortal IAM Policy (For Deadline 10.1.7 and Earlier) &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Resource Tracker" href="index-resource-tracker.html" />
+    <link rel="prev" title="AWSPortal Admin IAM Managed Policy" href="aws-portal-setup-awsthinkboxawsportaladminpolicy-readme.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="index-resource-tracker.html" title="Resource Tracker"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="aws-portal-setup-awsthinkboxawsportaladminpolicy-readme.html" title="AWSPortal Admin IAM Managed Policy"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Deprecated AWSPortal IAM Policy (For Deadline 10.1.7 and Earlier)</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<div class="section" id="deprecated-awsportal-iam-policy-for-deadline-10-1-7-and-earlier">
+<span id="aws-portal-setup-account-deprecated-policy-text-ref-label"></span><h1>Deprecated AWSPortal IAM Policy (For Deadline 10.1.7 and Earlier)<a class="headerlink" href="#deprecated-awsportal-iam-policy-for-deadline-10-1-7-and-earlier" title="Permalink to this headline">¶</a></h1>
+<p>The IAM policy document below was intended to be attached to Deadline’s AWSPortal IAM User for Deadline 10.1.7 and earlier.
+For Deadline 10.1.8 or later, use our new <a class="reference internal" href="aws-portal-setup-creating-awsportal-user.html#aws-portal-setup-account-awsportal-user-setup-ref-label"><span class="std std-ref">AWS-Managed IAM Policies</span></a> instead.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>We recommend that you do not use this policy because it grants excessive permissions.
+We recommend that you upgrade to Deadline 10.1.8 or later and use our new <a class="reference internal" href="aws-portal-setup-creating-awsportal-user.html#aws-portal-setup-account-awsportal-user-setup-ref-label"><span class="std std-ref">AWS-Managed IAM Policies</span></a> instead.</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Statement&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;Stmt1503340968000&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;ec2:AllocateAddress&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:CreateInternetGateway&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:CreateNatGateway&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:CreateRoute&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:CreateRouteTable&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:CreateSecurityGroup&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:CreateSubnet&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:CreateTags&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:CreateVpc&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:AuthorizeSecurityGroupIngress&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DescribeImages&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DescribeInstances&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DescribeInternetGateways&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DescribeSecurityGroups&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DescribeSpotFleetInstances&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DescribeSpotFleetRequests&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DescribeSpotPriceHistory&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DescribeSubnets&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DescribeVpcs&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DeleteVpc&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:ReleaseAddress&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DeleteInternetGateway&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DescribeAddresses&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:RequestSpotFleet&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:RevokeSecurityGroupIngress&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:ModifyVpcAttribute&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DescribeRouteTables&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DeleteRouteTable&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DeleteSecurityGroup&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DeleteSubnet&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:AttachInternetGateway&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:AssociateRouteTable&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DeleteRoute&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DeleteNatGateway&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DetachInternetGateway&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DescribeNatGateways&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DisassociateRouteTable&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:RunInstances&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:ModifyInstanceAttribute&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:TerminateInstances&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:AssociateAddress&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DisassociateAddress&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:GetConsoleOutput&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:ModifySpotFleetRequest&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:CancelSpotFleetRequests&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DescribeAvailabilityZones&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:ImportKeyPair&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DescribeKeyPairs&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DescribeSpotFleetRequestHistory&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:CreateVpcEndpoint&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DescribeVpcEndpoints&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DeleteVpcEndpoints&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;*&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;Stmt1503341224000&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;iam:CreateAccessKey&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:DeleteAccessKey&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:AttachRolePolicy&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:AttachUserPolicy&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:DetachRolePolicy&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:CreatePolicy&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:CreatePolicyVersion&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:CreateRole&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:DeleteRole&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:CreateUser&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:DeletePolicyVersion&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:GetPolicy&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:GetRole&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:GetRolePolicy&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:GetUser&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:ListEntitiesForPolicy&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:ListPolicyVersions&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:CreateInstanceProfile&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:GetInstanceProfile&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:AddRoleToInstanceProfile&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:RemoveRoleFromInstanceProfile&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:PutRolePolicy&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:DeleteRolePolicy&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:DeleteInstanceProfile&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:PassRole&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:ListAccessKeys&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:CreateServiceLinkedRole&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;*&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;Stmt1503341437000&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;s3:CreateBucket&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:DeleteBucket&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:GetBucketLocation&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:GetBucketLogging&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:GetBucketVersioning&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:ListAllMyBuckets&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:PutBucketAcl&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:PutBucketCORS&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:PutBucketVersioning&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:GetBucketAcl&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:GetObject&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:PutBucketLogging&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:DeleteObject&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:PutObject&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:DeleteBucketPolicy&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:ListBucket&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:ListBucketVersions&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:DeleteObjectVersion&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:PutBucketPolicy&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:PutEncryptionConfiguration&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:PutLifecycleConfiguration&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:PutBucketTagging&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;s3:DeleteBucketTagging&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;*&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;Stmt1496243120000&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;cloudformation:CreateStack&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;cloudformation:DeleteStack&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;cloudformation:DescribeStacks&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;cloudformation:DescribeStackEvents&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;cloudformation:DescribeStackResources&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;cloudformation:ListStacks&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;cloudformation:EstimateTemplateCost&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;cloudformation:ListStackResources&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;cloudformation:CreateChangeSet&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;cloudformation:DescribeChangeSet&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;cloudformation:ExecuteChangeSet&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;cloudformation:UpdateTerminationProtection&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;cloudformation:DeleteChangeSet&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;*&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;Stmt1506545147000&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;logs:DescribeLogGroups&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;logs:DescribeLogStreams&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;logs:GetLogEvents&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;logs:CreateLogGroup&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;logs:PutRetentionPolicy&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;logs:DeleteRetentionPolicy&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;*&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;DynamoDBPermissions&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;dynamodb:CreateTable&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;dynamodb:DescribeTable&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;dynamodb:DeleteTable&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;dynamodb:TagResource&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;dynamodb:UntagResource&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;dynamodb:ListTagsOfResource&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;dynamodb:BatchWriteItem&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;dynamodb:Scan&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;SQSPermissions&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;sqs:CreateQueue&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sqs:GetQueueAttributes&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sqs:DeleteQueue&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sqs:GetQueueUrl&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sqs:ListQueueTags&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sqs:UntagQueue&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sqs:TagQueue&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;LambdaPermissions&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;lambda:GetFunction&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lambda:CreateFunction&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lambda:DeleteFunction&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lambda:GetFunctionConfiguration&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lambda:CreateEventSourceMapping&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lambda:GetEventSourceMapping&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lambda:DeleteEventSourceMapping&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lambda:AddPermission&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;EventPermissions&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;events:PutRule&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;events:DescribeRule&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;events:RemoveTargets&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;events:DeleteRule&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;events:PutTargets&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AutoScalingPermissions&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;application-autoscaling:DescribeScalableTargets&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;application-autoscaling:RegisterScalableTarget&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;application-autoscaling:DeregisterScalableTarget&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;application-autoscaling:DescribeScalingPolicies&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;application-autoscaling:PutScalingPolicy&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;application-autoscaling:DeleteScalingPolicy&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;STSPermissions&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;sts:GetCallerIdentity&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;SecretsManagerPermissions&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;secretsmanager:CreateSecret&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;secretsmanager:DeleteSecret&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;secretsmanager:UpdateSecret&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;secretsmanager:DescribeSecret&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;secretsmanager:TagResource&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;*&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;KMSPermissions&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+               <span class="s2">&quot;kms:CreateKey&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;kms:DescribeKey&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;kms:Encrypt&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;kms:GenerateDataKey&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;kms:EnableKeyRotation&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;kms:ListKeys&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;kms:ListKeyPolicies&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;kms:ListResourceTags&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;kms:PutKeyPolicy&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;kms:UpdateKeyDescription&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;kms:ScheduleKeyDeletion&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;kms:TagResource&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;*&quot;</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For further security, consider adding an IP address condition to each of these statements. Place this text after the “Resource” entry in each of the statements.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;Condition&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;IpAddress&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;aws:SourceIp&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="s2">&quot;&lt;your_public_ip_address&gt;&quot;</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This way, only API calls from your IP address will be accepted by AWS.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aws-portal-setup-awsthinkboxawsportaladminpolicy-readme.html"
+                        title="previous chapter">AWSPortal Admin IAM Managed Policy</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="index-resource-tracker.html"
+                        title="next chapter">Resource Tracker</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="index-resource-tracker.html" title="Resource Tracker"
+             >next</a></li>
+        <li class="right" >
+          <a href="aws-portal-setup-awsthinkboxawsportaladminpolicy-readme.html" title="AWSPortal Admin IAM Managed Policy"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Deprecated AWSPortal IAM Policy (For Deadline 10.1.7 and Earlier)</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

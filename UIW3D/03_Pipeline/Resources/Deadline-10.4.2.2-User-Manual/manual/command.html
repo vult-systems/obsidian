@@ -1,0 +1,452 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Command &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Database and Repository - Command Arguments" href="command-line-arguments-repo.html" />
+    <link rel="prev" title="Worker" href="worker.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command-line-arguments-repo.html" title="Database and Repository - Command Arguments"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="worker.html" title="Worker"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" accesskey="U">Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Command</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="command">
+<span id="command-ref-label"></span><h1>Command<a class="headerlink" href="#command" title="Permalink to this headline">¶</a></h1>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td colspan="2"><p><a class="reference internal" href="#command-ref-label"><span class="std std-ref">Command Overview</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-repo.html#command-arguments-repo"><span class="std std-ref">Database and Repository</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-clients.html#command-arguments-clients"><span class="std std-ref">Clients and Logs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-workers.html#command-arguments-workers"><span class="std std-ref">Workers</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="command-line-arguments-jobs.html#command-arguments-jobs"><span class="std std-ref">Jobs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-tasks.html#command-arguments-tasks"><span class="std std-ref">Tasks</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-pools-groups.html#command-arguments-pools"><span class="std std-ref">Pools, Groups, and Limits</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-users.html#command-arguments-users"><span class="std std-ref">Users and User Groups</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-pathmapping.html#command-arguments-pathmapping"><span class="std std-ref">Path and Drive Mapping</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="command-line-arguments-cloud.html#command-arguments-cloud"><span class="std std-ref">AWS Portal and Cloud</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-scripting.html#command-arguments-scripting"><span class="std std-ref">Scripting</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-system.html#command-arguments-system"><span class="std std-ref">System Functions and Dialogs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-housekeeping.html#command-arguments-housekeeping"><span class="std std-ref">Scans, History, and Reports</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-version.html#command-arguments-version"><span class="std std-ref">Version and Help</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">deadlinecommand</span></code> application is a command line tool for the Deadline render farm management system. It can be used to control, query, and submit jobs to the farm.</p>
+</div>
+<div class="section" id="syntax">
+<h2>Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">deadlinecommand</span></code> application accepts the command line arguments in the following forms:</p>
+<ul class="simple">
+<li><p>No special characters, for example <code class="docutils literal notranslate"><span class="pre">deadlinecommand</span> <span class="pre">help</span></code></p></li>
+<li><p>The command argument can be prefixed with a hyphen, for example <code class="docutils literal notranslate"><span class="pre">deadlinecommand</span> <span class="pre">-help</span></code></p></li>
+<li><p>The command argument can be prefixed with a double hyphen, for example <code class="docutils literal notranslate"><span class="pre">deadlinecommand</span> <span class="pre">--help</span></code></p></li>
+</ul>
+<p>In addition, the command arguments are <strong>Case-Insensitive</strong> on all operating systems.
+This means that</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">deadlinecommand</span> <span class="pre">help</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">deadlinecommand</span> <span class="pre">Help</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">deadlinecommand</span> <span class="pre">HELP</span></code></p></li>
+</ul>
+<p>are all equivalent.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<div class="line-block">
+<div class="line">Microsoft Windows is naturally case-insensitive, so <code class="docutils literal notranslate"><span class="pre">deadlinecommand</span></code>, <code class="docutils literal notranslate"><span class="pre">deadlineCommand</span></code> and <code class="docutils literal notranslate"><span class="pre">DeadlineCommand</span></code> are all equivalent.</div>
+<div class="line">However, we recommend using <strong>lowercase</strong> <code class="docutils literal notranslate"><span class="pre">deadlinecommand</span></code> to ensure <strong>cross-platform compatibility</strong> with Linux and macOS operating systems!</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">Throughout the documentation of the command line arguments, we use mostly the single hyphen and the capitalization listed by the <code class="docutils literal notranslate"><span class="pre">-Help</span></code> command to make the examples easier to read.</div>
+<div class="line">Feel free to use whatever syntax looks best to you.</div>
+</div>
+</div>
+</div>
+<div class="section" id="running-background-commands">
+<span id="background-command-ref-label"></span><h2>Running Background Commands<a class="headerlink" href="#running-background-commands" title="Permalink to this headline">¶</a></h2>
+<p>Deadline ships with a <code class="docutils literal notranslate"><span class="pre">deadlinecommandbg</span></code> application which is identical to <code class="docutils literal notranslate"><span class="pre">deadlinecommand</span></code>, except that it is executed in the background.</p>
+<p>When using <code class="docutils literal notranslate"><span class="pre">deadlinecommandbg</span></code>, the output and exit code are written to the Deadline temp folder as <code class="docutils literal notranslate"><span class="pre">dsubmitoutput.txt</span></code> and <code class="docutils literal notranslate"><span class="pre">dsubmitexitcode.txt</span></code> respectively.
+If you want to control where these files get written to, you can use the <code class="docutils literal notranslate"><span class="pre">-outputFiles</span></code> option, followed by the paths to the output and exit code file names.</p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommandbg</span> <span class="o">-</span><span class="n">outputFiles</span> <span class="n">c</span><span class="p">:</span>\<span class="n">output</span><span class="o">.</span><span class="n">txt</span> <span class="n">c</span><span class="p">:</span>\<span class="n">exitcode</span><span class="o">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">Pools</span>
+</pre></div>
+</div>
+<p>You can find the <code class="docutils literal notranslate"><span class="pre">deadlinecommand</span></code> and <code class="docutils literal notranslate"><span class="pre">deadlinecommandbg</span></code> applications in the Deadline <code class="docutils literal notranslate"><span class="pre">bin</span></code> folder (Windows or Linux) or the <code class="docutils literal notranslate"><span class="pre">Resources</span></code> folder (macOS).</p>
+</div>
+<div class="section" id="command-line-options">
+<h2>Command Line Options<a class="headerlink" href="#command-line-options" title="Permalink to this headline">¶</a></h2>
+<p>The supported command line options and their usage instructions can be printed out by running <code class="docutils literal notranslate"><span class="pre">deadlinecommand</span></code> from a command prompt or terminal with the optional <code class="docutils literal notranslate"><span class="pre">-Help</span></code> argument.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span> <span class="o">-</span><span class="n">Help</span>
+</pre></div>
+</div>
+<p>or simply:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span>
+</pre></div>
+</div>
+<p>To get usage information for a specific command, specify the command name after the <code class="docutils literal notranslate"><span class="pre">-Help</span></code> argument:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span> <span class="o">-</span><span class="n">Help</span> <span class="n">SubmitCommandLineJob</span>
+</pre></div>
+</div>
+<p>The output will look like</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Deadline Client Version 10.1.13.2 Release  (4c7391f76)
+FranticX Client Version 2.4.0.0 Release  (68e44cb16)
+A command line query and control application for the Deadline render queue system
+c 2002-2021 Thinkbox Software Inc
+
+SubmitCommandLineJob &lt;executable [Value]&gt; &lt;arguments [Value]&gt; &lt;frames [Value]&gt; &lt;chunksize [Value]&gt; &lt;pool [Value]&gt; &lt;group [Value]&gt; &lt;priority [Value]&gt; &lt;name [Value]&gt; &lt;department [Value]&gt; &lt;initialstatus [Value]&gt; &lt;prop [Key=Value]&gt;
+  Submits a generic command line job to Deadline. The &lt;STARTFRAME&gt; and
+  &lt;ENDFRAME&gt; strings in the command line arguments will be replaced with the
+  actual start and end frame for each task. The &lt;QUOTE&gt; string in the command
+  line arguments will be replaced with a &#39;&quot;&#39; character.
+    executable [Value]       Required: The command line executable.
+    arguments [Value]        Optional: The command line arguments.
+    frames [Value]           Required: The frame range to render.
+    chunksize [Value]        Optional: The task chunk size.
+    pool [Value]             Optional: The pool the job belongs to.
+    group [Value]            Optional: The group the job belongs to.
+    priority [Value]         Optional: The job priority (0 is the lowest).
+    name [Value]             Optional: The job name.
+    department [Value]       Optional: The job department.
+    initialstatus [Value]    Optional: The job&#39;s initial state
+                             (Active/Suspended).
+    prop [Key=Value]         Optional: Extra submission properties in the
+                             form Key=Value.
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<div class="line-block">
+<div class="line">For detailed documentation of available command line options, use the <a class="reference internal" href="#command-ref-label"><span class="std std-ref">navigation bar on top of this page.</span></a></div>
+</div>
+</div>
+</div>
+<div class="section" id="secrets-management-sub-command">
+<span id="command-secrets-management-ref-label"></span><h2>Secrets Management Sub-Command<a class="headerlink" href="#secrets-management-sub-command" title="Permalink to this headline">¶</a></h2>
+<p>The Secrets sub-command can be used to perform <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-admin-commands-ref-label"><span class="std std-ref">Administrator Commands</span></a> of Deadline <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-ref-label"><span class="std std-ref">Secrets Management</span></a>. To get a list of available commands you can run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span> <span class="n">Secrets</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="long-command-lines">
+<span id="long-command-lines-ref-label"></span><h2>Long Command Lines<a class="headerlink" href="#long-command-lines" title="Permalink to this headline">¶</a></h2>
+<p>Some operating systems have a limit on the number of characters in an individual command line. This can cause problems if you are using <code class="docutils literal notranslate"><span class="pre">deadlinecommand</span></code> with a large number of command line options.</p>
+<p>To work around this issue, you can create a text file with one command line option per line, and pass that file as the only argument to <code class="docutils literal notranslate"><span class="pre">deadlinecommand</span></code> or <code class="docutils literal notranslate"><span class="pre">deadlinecommandbg</span></code>.</p>
+<p>For example, you can create a file called <code class="docutils literal notranslate"><span class="pre">args.txt</span></code> that looks like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">SubmitMultipleJobs</span>
+<span class="o">-</span><span class="n">Dependent</span>
+<span class="o">-</span><span class="n">Job</span>
+\\<span class="n">path</span>\<span class="n">to</span>\<span class="n">job_1_info_file</span><span class="o">.</span><span class="n">txt</span>
+\\<span class="n">path</span>\<span class="n">to</span>\<span class="n">job_1_plugin_file</span><span class="o">.</span><span class="n">txt</span>
+<span class="o">-</span><span class="n">Job</span>
+\\<span class="n">path</span>\<span class="n">to</span>\<span class="n">job_2_info_file</span><span class="o">.</span><span class="n">txt</span>
+\\<span class="n">path</span>\<span class="n">to</span>\<span class="n">job_2_plugin_file</span><span class="o">.</span><span class="n">txt</span>
+<span class="o">-</span><span class="n">Job</span>
+\\<span class="n">path</span>\<span class="n">to</span>\<span class="n">job_3_info_file</span><span class="o">.</span><span class="n">txt</span>
+\\<span class="n">path</span>\<span class="n">to</span>\<span class="n">job_3_plugin_file</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>You would then pass it to deadlinecommand like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span> <span class="n">args</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>Note the inclusion of the extra <code class="docutils literal notranslate"><span class="pre">-Dependent</span></code> flag above which makes each job in the list of jobs specified dependent on the previous job. This is shorthand for specifying <code class="docutils literal notranslate"><span class="pre">-DependsOnPrevious</span></code> for each job being submitted.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Remember to remove the <code class="docutils literal notranslate"><span class="pre">-Dependent</span></code> flag if you wish your jobs to process potentially in parallel to each other depending on your job scheduling order.</p>
+</div>
+</div>
+<div class="section" id="running-commands-for-a-specific-repository">
+<h2>Running Commands for a Specific Repository<a class="headerlink" href="#running-commands-for-a-specific-repository" title="Permalink to this headline">¶</a></h2>
+<p>Any command can be run against a specified Deadline Repository. To do this, run the <a class="reference internal" href="command-line-arguments-scripting.html#runcommandforrepository-dlc-ref-label"><span class="std std-ref">RunCommandForRepository</span></a> command.
+<code class="docutils literal notranslate"><span class="pre">RunCommandForRepository</span></code> takes in 2 arguments in addition to a command and its arguments.</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>First you will need to specify a <strong>Connection Type</strong>, either</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Direct</span></code> (to use the traditional Repository path), or</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Remote</span></code> (to use a Remote Connection Server).</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Then you will need to specify a <strong>Connection String</strong>. A Connection String is either</dt><dd><ul class="simple">
+<li><p>a path to a Repository, or</p></li>
+<li><p>the URL, port and certificate to a Remote Connection Server.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Enter the command you would like to run with all of its usual arguments.</p></li>
+</ol>
+<p>For example, this is how you would run <code class="docutils literal notranslate"><span class="pre">GetUserNames</span></code> on a traditional, direct, Deadline Repository connection:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span> <span class="n">RunCommandForRepository</span> <span class="n">Direct</span> \\<span class="n">Deadline</span>\<span class="n">demo10</span> <span class="n">GetUserNames</span>
+</pre></div>
+</div>
+<p>To run <code class="docutils literal notranslate"><span class="pre">NewUserGroups</span></code> where ‘groupName’ is the name of the Group being added to the Deadline Repository via a Remote Connection Server at ‘demo.thinkboxsoftware.com’:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>deadlinecommand RunCommandForRepository Remote demo.thinkboxsoftware.com:7890(\path\to\certificate.crt) NewUserGroups groupName
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage-examples">
+<h2>Usage Examples<a class="headerlink" href="#usage-examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="submitting-a-job">
+<h3>Submitting a Job<a class="headerlink" href="#submitting-a-job" title="Permalink to this headline">¶</a></h3>
+<p>Submitting a Job does not require a dedicated Command argument - only the Job submission files are required, followed by any optional auxiliary files.</p>
+<p>To submit a 3ds Max scene (ie. C:\MyScene.max), you must first create a Job submission info file (ie. C:\job_info.job) and a 3dsmax plugin info file (ie. C:\max_info.job). See the
+<a class="reference internal" href="manual-submission.html#manual-submission-ref-label"><span class="std std-ref">Manual Job Submission</span></a> documentation for more information.</p>
+<p>Once the files are created, you can submit the Job using this command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>deadlinecommand &quot;C:\job_info.job&quot; &quot;C:\max_info.job&quot; &quot;C:\MyScene.max&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="querying-for-jobs-using-filters">
+<h3>Querying For Jobs Using Filters<a class="headerlink" href="#querying-for-jobs-using-filters" title="Permalink to this headline">¶</a></h3>
+<p>To query the Database for all Jobs that belong to jsmith or cdavis:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>deadlinecommand -GetJobsFilter UserName=jsmith UserName=cdavis
+</pre></div>
+</div>
+<p>To query for all of jsmith’s jobs with completed status:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>deadlinecommand -GetJobsFilterAnd UserName=jsmith Status=completed
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="command-line-arguments-jobs.html#getjobsfilter-dlc-ref-label"><span class="std std-ref">GetJobsFilter</span></a> and <a class="reference internal" href="command-line-arguments-jobs.html#getjobsfilterand-dlc-ref-label"><span class="std std-ref">GetJobsFilterAnd</span></a> for details.</p>
+</div>
+</div>
+<div class="section" id="checking-which-workers-assigned-to-a-specific-pool">
+<h3>Checking Which Workers Assigned To A Specific Pool<a class="headerlink" href="#checking-which-workers-assigned-to-a-specific-pool" title="Permalink to this headline">¶</a></h3>
+<p>To check which Workers are assigned to the 3dsmax pool:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>deadlinecommand -GetSlaveNamesInPool 3dsmax Assigned
+</pre></div>
+</div>
+<p>To check which Workers are excluded from the Nuke pool:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>deadlinecommand -GetSlaveNamesInPool Nuke Excluded
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="command-line-arguments-pools-groups.html#getslavenamesinpool-dlc-ref-label"><span class="std std-ref">GetSlaveNamesInPool</span></a> for details.</p>
+</div>
+</div>
+<div class="section" id="querying-for-task-information">
+<h3>Querying For Task Information<a class="headerlink" href="#querying-for-task-information" title="Permalink to this headline">¶</a></h3>
+<p>To query the Job with Job ID “546cc87357dbb04344a5c6b5” for Task information:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>deadlinecommand -GetJobTasks 546cc87357dbb04344a5c6b5
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="command-line-arguments-tasks.html#getjobtasks-dlc-ref-label"><span class="std std-ref">GetJobTasks</span></a> for details.</p>
+</div>
+</div>
+<div class="section" id="retrieving-and-changing-job-status">
+<h3>Retrieving and Changing Job Status<a class="headerlink" href="#retrieving-and-changing-job-status" title="Permalink to this headline">¶</a></h3>
+<p>To retrieve the Status of the Job with ID “546cc87357dbb04344a5c6b5”:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>deadlinecommand -GetJob 546cc87357dbb04344a5c6b5
+</pre></div>
+</div>
+<p>To retrieve all Job details:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>deadlinecommand -GetJobDetails  546cc87357dbb04344a5c6b5
+</pre></div>
+</div>
+<p>To suspend the Job:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>deadlinecommand -SuspendJob 546cc87357dbb04344a5c6b5
+deadlinecommand -SuspendJobNonRenderingTasks 546cc87357dbb04344a5c6b5
+</pre></div>
+</div>
+<p>To resume the job:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>deadlinecommand -ResumeJob 546cc87357dbb04344a5c6b5
+</pre></div>
+</div>
+<p>To requeue the job:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>deadlinecommand -RequeueJob 546cc87357dbb04344a5c6b5
+</pre></div>
+</div>
+<p>To delete the job:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>deadlinecommand -DeleteJob 546cc87357dbb04344a5c6b5
+</pre></div>
+</div>
+<p>To archive the job:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>deadlinecommand -ArchiveJob 546cc87357dbb04344a5c6b5
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="command-line-arguments-jobs.html#modify-job-states-dlc-ref-label"><span class="std std-ref">Modify Job States</span></a> for details on the above commands, and more commands related to modifying the Job Status.</p>
+</div>
+</div>
+<div class="section" id="sending-an-email">
+<h3>Sending An Email<a class="headerlink" href="#sending-an-email" title="Permalink to this headline">¶</a></h3>
+<p>To send the message to jsmith&#64;mycompany.com(cc cjones&#64;mycompany.com):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>deadlinecommand -SendeMail -To jsmith@mycompany.com -CC cjones@mycompany.com
+-Subject &quot;the subject&quot; -Message &quot;C:\MyMessage.html&quot;
+</pre></div>
+</div>
+<p>To send the same message with the attachment “C:\MyAttachment.txt”:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>deadlinecommand -SendeMail -To jsmith@mycompany.com -CC cjones@mycompany.com
+-Subject &quot;the subject&quot; -Message &quot;C:\MyMessage.html&quot; -Attach &quot;C:\MyAttachment.txt&quot;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">The <code class="docutils literal notranslate"><span class="pre">-To</span></code>, <code class="docutils literal notranslate"><span class="pre">-Subject</span></code>, and <code class="docutils literal notranslate"><span class="pre">-Message</span></code> options are required.</div>
+<div class="line">The other options like <code class="docutils literal notranslate"><span class="pre">-CC</span></code> and <code class="docutils literal notranslate"><span class="pre">-Attachment</span></code> are optional.</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="command-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>What’s the difference between the deadlinecommand and deadlinecommandbg applications?</strong></p>
+<blockquote>
+<div><p>The <code class="docutils literal notranslate"><span class="pre">deadlinecommandbg</span></code> application is identical to <code class="docutils literal notranslate"><span class="pre">deadlinecommand</span></code>, except that it is executed in the background. When using <code class="docutils literal notranslate"><span class="pre">deadlinecommandbg</span></code>, the exit code and output are written to the Deadline temp directory as
+<code class="docutils literal notranslate"><span class="pre">dsubmitexitcode.txt</span></code> and <code class="docutils literal notranslate"><span class="pre">dsubmitoutput.txt</span></code> respectively. Please see <a class="reference internal" href="#background-command-ref-label"><span class="std std-ref">Running Background Commands</span></a>.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Command</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#syntax">Syntax</a></li>
+<li><a class="reference internal" href="#running-background-commands">Running Background Commands</a></li>
+<li><a class="reference internal" href="#command-line-options">Command Line Options</a></li>
+<li><a class="reference internal" href="#secrets-management-sub-command">Secrets Management Sub-Command</a></li>
+<li><a class="reference internal" href="#long-command-lines">Long Command Lines</a></li>
+<li><a class="reference internal" href="#running-commands-for-a-specific-repository">Running Commands for a Specific Repository</a></li>
+<li><a class="reference internal" href="#usage-examples">Usage Examples</a><ul>
+<li><a class="reference internal" href="#submitting-a-job">Submitting a Job</a></li>
+<li><a class="reference internal" href="#querying-for-jobs-using-filters">Querying For Jobs Using Filters</a></li>
+<li><a class="reference internal" href="#checking-which-workers-assigned-to-a-specific-pool">Checking Which Workers Assigned To A Specific Pool</a></li>
+<li><a class="reference internal" href="#querying-for-task-information">Querying For Task Information</a></li>
+<li><a class="reference internal" href="#retrieving-and-changing-job-status">Retrieving and Changing Job Status</a></li>
+<li><a class="reference internal" href="#sending-an-email">Sending An Email</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="worker.html"
+                        title="previous chapter">Worker</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="command-line-arguments-repo.html"
+                        title="next chapter">Database and Repository - Command Arguments</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command-line-arguments-repo.html" title="Database and Repository - Command Arguments"
+             >next</a></li>
+        <li class="right" >
+          <a href="worker.html" title="Worker"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" >Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Command</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

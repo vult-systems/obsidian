@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Scheduling &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Pools and Groups" href="pools-and-groups.html" />
+    <link rel="prev" title="Pulse Configuration" href="pulse-config.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="pools-and-groups.html" title="Pools and Groups"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="pulse-config.html" title="Pulse Configuration"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" accesskey="U">Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Job Scheduling</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="job-scheduling">
+<span id="job-scheduling-ref-label"></span><h1>Job Scheduling<a class="headerlink" href="#job-scheduling" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="how-a-job-is-selected-by-a-worker">
+<h2>How a Job is Selected by a Worker<a class="headerlink" href="#how-a-job-is-selected-by-a-worker" title="Permalink to this headline">¶</a></h2>
+<p>By default, a job is selected by a Worker based on the following properties, in this order:</p>
+<ol class="arabic">
+<li><p>The <a class="reference internal" href="pools-and-groups.html#pools-and-groups-ref-label"><span class="std std-ref">Pools and Groups</span></a> that the Job has been submitted to.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>A Worker will only select a Job if it has been assigned to the Pool and Group to which the Job belongs.</p></li>
+<li><p>Pools are priority-based, so a Worker will favour Jobs in Pools that are higher on its priority list. This ordering can be configured on a per-Worker basis through the <a class="reference internal" href="pools-and-groups.html#manage-pools-and-groups-ref-label"><span class="std std-ref">Manage Pools</span></a>
+utility.</p></li>
+<li><p>Groups are not priority-based, and are typically just used to ensure that Jobs render on machines with appropriate hardware and software configurations.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>The Job’s Priority:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>By default, a Job has a numeric Priority ranging from 0 to 100, where 0 is the lowest priority and 100 is the highest priority. You can adjust the maximum Job priority in the
+Job Settings section of the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Configuration</span></a>.</p></li>
+<li><p>Everything else being equal, the highest Priority Job will always be chosen first when a Worker is selecting its next Job.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>The Date and Time at which the Job was submitted:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>This is set automatically and is the timestamp of when the Job was submitted to Deadline.</p></li>
+<li><p>Everything else being equal, an older Job will take priority over a newer Job when a Worker is looking for a new one.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>The Job’s <a class="reference internal" href="limits.html#limits-ref-label"><span class="std std-ref">Limits and Machine Limits</span></a></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>With Limits, if a Job has the highest priority, but requires a Limit that is maxed out, a Worker will try to select a different Job.</p></li>
+<li><p>A Machine Limit is a special type of Limit that restricts the number of machines that can render that particular Job at the same time.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="changing-the-scheduling-order">
+<span id="job-changing-scheduling-order"></span><h2>Changing the Scheduling Order<a class="headerlink" href="#changing-the-scheduling-order" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to change the order in which Jobs are scheduled in the Job Settings section of the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Configuration</span></a>.</p>
+<a class="reference internal image-reference" href="../_images/cro_js_job.png"><img alt="../_images/cro_js_job.png" src="../_images/cro_js_job.png" style="height: 500px;" /></a>
+<p>The following options are available:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>First-in First-Out</strong>: Job order will be based solely on submission date, and will be rendered in the order they are submitted.</p></li>
+<li><p><strong>Pool, First-in First-Out</strong>: Job order will be based on the job’s pool first, with submission date being the tie-breaker.</p></li>
+<li><p><strong>Pool, Priority, First-in First-Out</strong>: This is the default scheduling order that is used. Job order will be based on the job’s pool, then priority, with submission date being the tie-breaker.</p></li>
+<li><p><strong>Priority, First-in First-Out</strong>: Job order will be based on the job’s priority first, with submission date being the tie-breaker.</p></li>
+<li><p><strong>Priority, Pool, First-in First-Out</strong>: Job order will be based on the job’s priority, then pool, with submission date being the tie-breaker.</p></li>
+<li><p><strong>Balanced</strong>: Job order will be balanced so that each job has the same number of Workers rendering them at a time.</p></li>
+<li><p><strong>Pool, Balanced</strong>: Job order will be based on the job’s pool first, with a balance being applied to jobs that are in the same pool.</p></li>
+<li><p><strong>Pool, Priority, Balanced</strong>: Job order will be based on the job’s pool, then priority, with a balance being applied to jobs that have the same pool and priority.</p></li>
+<li><p><strong>Priority, Balanced</strong>: Job order will be based on the job’s priority first, with a balance being applied to jobs that have the same priority.</p></li>
+<li><p><strong>Priority, Pool, Balanced</strong>: Job order will be based on the job’s priority, then pool, with a balance being applied to jobs that have the same pool and priority.</p></li>
+<li><p><strong>Weighted, First-in First-out</strong>: A weighted system that takes priority, submission time, number of rendering tasks, and number of job errors into account, but does not take pools into account. If two or more jobs have the same calculated weight, the submission date will act as the tie-breaker.</p></li>
+<li><p><strong>Pool, Weighted, First-in First-out</strong>: A weighted system that still respects pool priority. If two or more jobs have the same calculated weight, the submission date will act as the tie-breaker.</p></li>
+<li><p><strong>Weighted, Balanced</strong>: A weighted system that takes priority, submission time, number of rendering tasks, and number of job errors into account, but does not take pools into account. A balance will be applied to jobs that have the same calculated weight.</p></li>
+<li><p><strong>Pool, Weighted, Balanced</strong>: A weighted system that still respects pool priority. A balance will be applied to jobs that have the same calculated weight.</p></li>
+</ul>
+</div></blockquote>
+<p>Note that the Secondary Pool feature was designed for job scheduling orders that have Pool listed first, and might not work as expected otherwise. For example, if Priority is listed first, a job with lower priority that’s found during the initial Primary Pool scan will be preferred over a job with higher priority that’s found during the Secondary Pool scan. This is because the Secondary Pool scan is only performed if no jobs are found during the initial Primary Pool scan. See the <a class="reference internal" href="pools-and-groups.html#pools-and-groups-ref-label"><span class="std std-ref">Pools and Groups</span></a> documentation for more information.</p>
+<div class="section" id="balanced-scheduling">
+<h3>Balanced Scheduling<a class="headerlink" href="#balanced-scheduling" title="Permalink to this headline">¶</a></h3>
+<p>For the balanced options, you can can have Workers give the job they are currently working on more priority using the Rendering Task Buffer. This can help prevent Workers from jumping between jobs. For example, if this is set to 3, a Worker will only drop its current job for another one if the other job has more than 3 less rendering tasks than the current job.</p>
+</div>
+<div class="section" id="weighted-scheduling">
+<h3>Weighted Scheduling<a class="headerlink" href="#weighted-scheduling" title="Permalink to this headline">¶</a></h3>
+<p>For the weighted options, you can control how much weight is applied to the job priority, submission time, number of rendering tasks, and number of errors. You can also give weight to the job that the Worker is currently working on using the Rendering Task Buffer. The buffer is subtracted from the rendering task count for the current job, which pushes it higher in the queue.</p>
+<p>Deadline then sorts by this weight so that jobs with the largest weight value have the higher priority. Note that the weight values can be negative. For example, if you set a negative weight value to the number of job errors, a job with more errors will end up having a lower overall weight so that precedence is given to other jobs in the queue.</p>
+<p>Here is how the weight is calculated:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">weight</span> <span class="o">=</span> <span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">Priority</span> <span class="o">*</span> <span class="n">PW</span><span class="p">)</span> <span class="o">+</span>
+         <span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">Errors</span> <span class="o">*</span> <span class="n">EW</span><span class="p">)</span> <span class="o">+</span>
+         <span class="p">((</span><span class="n">NOW</span> <span class="o">-</span> <span class="n">job</span><span class="o">.</span><span class="n">SubmissionTimeSeconds</span><span class="p">)</span> <span class="o">*</span> <span class="n">SW</span><span class="p">)</span> <span class="o">+</span>
+         <span class="p">((</span><span class="n">job</span><span class="o">.</span><span class="n">RenderingTasks</span> <span class="o">-</span> <span class="n">RB</span><span class="p">)</span> <span class="o">*</span> <span class="n">RW</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Where:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>PW = priority weight</p></li>
+<li><p>EW = error weight</p></li>
+<li><p>SW = submission time weight</p></li>
+<li><p>RW = rendering task weight</p></li>
+<li><p>RB = rendering task buffer</p></li>
+<li><p>NOW = the current repository time</p></li>
+</ul>
+</div></blockquote>
+<p>Note that because the job submission time is measured in seconds, it will have the greatest impact on the overall weight. Reducing the SW value can help reduce the submission time’s impact on the weight value.</p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Job Scheduling</a><ul>
+<li><a class="reference internal" href="#how-a-job-is-selected-by-a-worker">How a Job is Selected by a Worker</a></li>
+<li><a class="reference internal" href="#changing-the-scheduling-order">Changing the Scheduling Order</a><ul>
+<li><a class="reference internal" href="#balanced-scheduling">Balanced Scheduling</a></li>
+<li><a class="reference internal" href="#weighted-scheduling">Weighted Scheduling</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pulse-config.html"
+                        title="previous chapter">Pulse Configuration</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pools-and-groups.html"
+                        title="next chapter">Pools and Groups</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="pools-and-groups.html" title="Pools and Groups"
+             >next</a></li>
+        <li class="right" >
+          <a href="pulse-config.html" title="Pulse Configuration"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" >Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Job Scheduling</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

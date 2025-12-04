@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Natron &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Nuke" href="app-nuke.html" />
+    <link rel="prev" title="Naiad" href="app-naiad.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-nuke.html" title="Nuke"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-naiad.html" title="Naiad"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Natron</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="natron">
+<span id="app-natron-ref-label"></span><h1>Natron<a class="headerlink" href="#natron" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit Natron jobs from the Monitor.</p>
+<p><a class="reference internal" href="../_images/sub_natron.png"><img alt="mon1" src="../_images/sub_natron.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_natron_options.png"><img alt="mon2" src="../_images/sub_natron_options.png" style="height: 400px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.
+The Natron specific options are:</p>
+<ul class="simple">
+<li><p><strong>Writer Node To Render</strong>: A custom writer node to render can be specified here. This is optional and can be left blank.</p></li>
+<li><p><strong>Frame List</strong>: Override the frame list of writer node frames to render. This is optional and can be left blank.</p></li>
+<li><p><strong>Frames Per Task</strong>: This is the number of frames that will be rendered at a time for each job task. Default is 1.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="cross-platform-rendering-considerations">
+<h2>Cross-Platform Rendering Considerations<a class="headerlink" href="#cross-platform-rendering-considerations" title="Permalink to this headline">¶</a></h2>
+<p>In order to perform cross-platform rendering with Natron, you must setup Mapped Paths so that Deadline can swap out Read Node and Write Node file paths where appropriate. You can access the Mapped Paths Setup in the Monitor while in
+power user mode by selecting Tools -&gt; Configure Repository. You’ll find the Mapped Paths Setup in the list on the left.</p>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Natron plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Natron plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_natron.png"><img alt="../_images/cp_natron.png" src="../_images/cp_natron.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Natron Executable</strong>: The path to the Natron executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+<p><strong>Path Mapping (For Mixed Farms)</strong></p>
+<ul class="simple">
+<li><p><strong>Enable Path Mapping</strong>: If enabled, a temporary Natron file will be created locally on the Worker for rendering because Deadline does the path mapping directly in the Natron file. This feature can be turned off if there are no Path Mapping entries defined in the Repository Options.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-natron-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Natron are supported?</strong></p>
+<blockquote>
+<div><p>Natron 0.9 and later are supported.</p>
+</div></blockquote>
+<p><strong>Why doesn’t Deadline Worker/Monitor report Natron’s task progress?</strong></p>
+<blockquote>
+<div><p>Currently (v1.0), Natron has limited task reporting although when specifying a particular writer node and frame list then frame progress is supported.</p>
+</div></blockquote>
+<p><strong>How do I specify a frame range to be rendered?</strong></p>
+<blockquote>
+<div><p>Unfortunately, Natron does not currently support specifying a frame range to be rendered, but renders by default the settings within the Natron project file per writer node. If you optionally, specify a writer node to be rendered under advanced options in the Monitor submission UI, then it is possible to specify a particular frame range and number of frames per task for this writer node.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Natron error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Natron</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cross-platform-rendering-considerations">Cross-Platform Rendering Considerations</a></li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-naiad.html"
+                        title="previous chapter">Naiad</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-nuke.html"
+                        title="next chapter">Nuke</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-nuke.html" title="Nuke"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-naiad.html" title="Naiad"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Natron</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

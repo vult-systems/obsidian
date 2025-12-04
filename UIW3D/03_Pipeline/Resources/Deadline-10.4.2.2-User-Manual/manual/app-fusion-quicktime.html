@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fusion Quicktime &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Generation" href="app-generation.html" />
+    <link rel="prev" title="Fusion" href="app-fusion.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-generation.html" title="Generation"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-fusion.html" title="Fusion"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Fusion Quicktime</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="fusion-quicktime">
+<span id="app-fusion-quicktime-ref-label"></span><h1>Fusion Quicktime<a class="headerlink" href="#fusion-quicktime" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit Fusion Quicktime jobs from the Monitor.</p>
+<a class="reference internal image-reference" href="../_images/sub_fusion_quicktime.png"><img alt="../_images/sub_fusion_quicktime.png" src="../_images/sub_fusion_quicktime.png" style="height: 500px;" /></a>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.</p>
+<p><strong>Fusion Options</strong></p>
+<ul class="simple">
+<li><p><strong>Fusion Version</strong>: Select the version of Fusion to generate the Quicktime with.</p></li>
+<li><p><strong>Build</strong>: Force 32 or 64 bit rendering.</p></li>
+<li><p><strong>Load/Save Preset</strong>: Allows you to save your Fusion Quicktime options to a preset file, so that you can load them again later.</p></li>
+</ul>
+<p><strong>Input/Output Options</strong></p>
+<ul>
+<li><p><strong>Input Images</strong>: The frames you would like to generate the Quicktime from. If a sequence of frames exist in the same folder, Deadline will automatically collect the range of the frames and will set the Frame Range field accordingly.</p></li>
+<li><p><strong>Frames</strong>: The frame range used to generate the Quicktime.</p></li>
+<li><p><strong>Frame Rate</strong>: The frame rate of the Quicktime.</p></li>
+<li><p><strong>Override Start</strong>: Allows the starting frame in the quicktime to be overridden. For example, if you are making a quicktime from images with a range 101-150, you can override the start frame to be 1, and the range in the quicktime will appear as 1-50.</p></li>
+<li><p><strong>Output Movie File</strong>: The name of the Quicktime to be generated.</p></li>
+<li><p><strong>Codec</strong>: The codec format to use for the Quicktime.</p></li>
+<li><p><strong>On Missing Frames</strong>: What the generator will do when a frame is missing or is unable to load. There are 4 options:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Fail</strong>: Nothing will be generated until the missing frame becomes available.</p></li>
+<li><p><strong>Hold Previous</strong>: The last valid frame will be included instead of the missing frame.</p></li>
+<li><p><strong>Output Black</strong>: A black frame will be included instead of the missing frame.</p></li>
+<li><p><strong>Wait</strong>: The generator will wait until the missing frame becomes available.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p><strong>Quicktime Options</strong></p>
+<ul class="simple">
+<li><p><strong>BG Plate</strong>: Specify an optional background plate. The Quicktime will render using the selected file as the background.</p></li>
+<li><p><strong>Template</strong>: Specify an optional comp template. See the Template documentation below for more information.</p></li>
+<li><p><strong>Artist Name</strong>: if you have a text tool with “artist” in its name in the selected template comp, its text will be set to the name that is specified.</p></li>
+<li><p><strong>Curve Correction</strong>: Select to turn on the color curves tool (available when using templates only).</p></li>
+<li><p><strong>Quality %</strong>: The quality of the Quicktime.</p></li>
+<li><p><strong>Proxy</strong>: The ratio of pixels to render (for example, if set to 4, one out of every four pixels will be rendered).</p></li>
+<li><p><strong>Gamma</strong>: The gamma level of the Quicktime.</p></li>
+<li><p><strong>Exposure Compensation</strong>: The “stops” value used to calculate the gain parameter of the Brightness/Contrast tool. The gain parameter is calculated by using the value pow(2,stops).</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="quicktime-templates">
+<h2>Quicktime Templates<a class="headerlink" href="#quicktime-templates" title="Permalink to this headline">¶</a></h2>
+<p>A comp template can be specified to put all the messages and watermarks that you want into the Quicktime. It has some standardized comp naming conventions so that the renderer can set some standard text tool values, as well as the input and output images. Here is an example of a very simple template file.</p>
+<a class="reference internal image-reference" href="../_images/fusion_quicktime_template.png"><img alt="../_images/fusion_quicktime_template.png" src="../_images/fusion_quicktime_template.png" style="height: 500px;" /></a>
+<p>As you can see, this simple template consists of a loader, a saver, a text tool, and a merge tool. This template simply merges the text tool with the loader so that “This is a test” appears in your Quicktime. You can create your own template files, but they must meet the following requirements. As long as these requirements are met, you can add whatever you like between the loader and the saver.</p>
+<ul class="simple">
+<li><p>There must be exactly one loader and one saver.</p></li>
+<li><p>The loader must have a dummy file name specified (the file doesn’t have to exist).</p></li>
+</ul>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The Fusion Quicktime submitter submits jobs to the Fusion plugin. See the <a class="reference internal" href="app-fusion.html#app-fusion-ref-label"><span class="std std-ref">Fusion Plugin Guide</span></a> for information on configuring the Fusion plugin.</p>
+</div>
+<div class="section" id="faq">
+<span id="app-fusion-quicktime-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Fusion are supported?</strong></p>
+<blockquote>
+<div><p>Fusion 5 and later are supported.</p>
+</div></blockquote>
+<p><strong>How is this different than submitting regular Quicktime jobs?</strong></p>
+<blockquote>
+<div><p>Regular Quicktime jobs are more generic, and provide more general Quicktime options. Fusion Quicktime jobs are more customizable (ie: using templates), but requires Fusion to render.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-message-and-meanings">
+<h2>Error Message and Meanings<a class="headerlink" href="#error-message-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>The Fusion Quicktime submitter submits jobs to the Fusion plugin. See the <a class="reference internal" href="app-fusion.html#app-fusion-ref-label"><span class="std std-ref">Fusion Plugin Guide</span></a> for Fusion error messages and meanings.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Fusion Quicktime</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#quicktime-templates">Quicktime Templates</a></li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-message-and-meanings">Error Message and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-fusion.html"
+                        title="previous chapter">Fusion</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-generation.html"
+                        title="next chapter">Generation</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-generation.html" title="Generation"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-fusion.html" title="Fusion"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Fusion Quicktime</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

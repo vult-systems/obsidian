@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Houdini Karma &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="HServer" href="app-hserver.html" />
+    <link rel="prev" title="Houdini" href="app-houdini.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-hserver.html" title="HServer"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-houdini.html" title="Houdini"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Houdini Karma</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="houdini-karma">
+<span id="app-houdini-karma-ref-label"></span><h1>Houdini Karma<a class="headerlink" href="#houdini-karma" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit Houdini Karma jobs from the Monitor.</p>
+<p>The Deadline ROP in Houdini and the integrated Deadline submission script for Houdini have not been explicitly configured to support Karma renders/export workflows.</p>
+<p><a class="reference internal" href="../_images/sub_houdini_karma.png"><img alt="monitor" src="../_images/sub_houdini_karma.png" style="height: 400px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.
+The following Houdini specific options are used when submitting with the Monitor submitter:</p>
+<ul class="simple">
+<li><p><strong>Render Node</strong>: The ROP to render with.</p></li>
+<li><p><strong>Ignore Inputs</strong>: If enabled, only the selected ROP will be rendered. No dependencies will rendered.</p></li>
+<li><p><strong>Build to Force</strong>: Force 32 or 64 bit rendering.</p></li>
+</ul>
+</div>
+<div class="section" id="troubleshooting-render-issues">
+<h3>Troubleshooting Render Issues<a class="headerlink" href="#troubleshooting-render-issues" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="troubleshooting.html#troubleshooting-ref-label"><span class="std std-ref">troubleshooting guide</span></a> does not handle some differences specific to Houdini rendering, this guide will focus on the specifics related to how Deadline runs Houdini renders.</p>
+<p>To start we’ll need the error report, as that has the command we’ll need as well as the name of the render node we’ll be testing on. It’s important to test on the same render node that had the error. This way if the issue is related to the configuration of the individual render node we’ll be testing for it. You can find the name of the render node at the end of the task report on the line with “Worker Name:”.</p>
+<p>Search that log for a line that contains the phrase “Full Command”, here is one taken right out of a task report:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2024</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">02</span> <span class="mi">16</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span>  <span class="mi">0</span><span class="p">:</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Full</span> <span class="n">Command</span><span class="p">:</span> <span class="s2">&quot;C:\Program Files\Side Effects Software\Houdini 20.0.000</span><span class="se">\b</span><span class="s2">in\Hython.exe&quot;</span> <span class="s2">&quot;C:\ProgramData\Thinkbox\Deadline10\workers</span><span class="se">\r</span><span class="s2">ender_node1\plugins</span><span class="se">\60</span><span class="s2">ccf1c4fe540a0470ff804c\hrender_dl.py&quot;</span> <span class="o">-</span><span class="n">f</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="o">-</span><span class="n">o</span> <span class="s2">&quot;Z:/assets/farm_test.$F4.exr&quot;</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">stage</span><span class="o">/</span><span class="n">lopnet1</span><span class="o">/</span><span class="n">usdrender_rop1</span> <span class="o">-</span><span class="n">tempdir</span> <span class="s2">&quot;C:\ProgramData\Thinkbox\Deadline10\workers</span><span class="se">\r</span><span class="s2">ender_node1\jobsData</span><span class="se">\60</span><span class="s2">ccf1c4fe540a0470ff804c</span><span class="se">\0</span><span class="s2">_tempzdETq0&quot;</span> <span class="o">-</span><span class="n">arnoldAbortOnLicenseFail</span> <span class="mi">1</span> <span class="s2">&quot;C:/ProgramData/Thinkbox/Deadline10/workers/render_node1/jobsData/60ccf1c4fe540a0470ff804c/my_test_scene.hip&quot;</span>
+</pre></div>
+</div>
+<p>Now strip the timestamp, and everything that isn’t the actual command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;C:\Program Files\Side Effects Software\Houdini 20.0.000</span><span class="se">\b</span><span class="s2">in\Hython.exe&quot;</span> <span class="s2">&quot;C:\ProgramData\Thinkbox\Deadline10\workers</span><span class="se">\r</span><span class="s2">ender_node1\plugins</span><span class="se">\60</span><span class="s2">ccf1c4fe540a0470ff804c\hrender_dl.py&quot;</span> <span class="o">-</span><span class="n">f</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="o">-</span><span class="n">o</span> <span class="s2">&quot;Z:/assets/farm_test.$F4.exr&quot;</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">stage</span><span class="o">/</span><span class="n">lopnet1</span><span class="o">/</span><span class="n">usdrender_rop1</span> <span class="o">-</span><span class="n">tempdir</span> <span class="s2">&quot;C:\ProgramData\Thinkbox\Deadline10\workers</span><span class="se">\r</span><span class="s2">ender_node1\jobsData</span><span class="se">\60</span><span class="s2">ccf1c4fe540a0470ff804c</span><span class="se">\0</span><span class="s2">_tempzdETq0&quot;</span> <span class="o">-</span><span class="n">arnoldAbortOnLicenseFail</span> <span class="mi">1</span> <span class="s2">&quot;C:/ProgramData/Thinkbox/Deadline10/workers/render_node1/jobsData/60ccf1c4fe540a0470ff804c/my_test_scene.hip&quot;</span>
+</pre></div>
+</div>
+<p>The next issue is that this command references a couple files in temporary locations that are more than likely gone at this point or have been copied to the render node by the Worker.</p>
+<p>First we need the script that we pass to Houdini called hrender_dl.py. This is in DeadlineRepository10/plugins/HoudiniKarma. Copy it to the render node where it’ll be easy to reference. In this example we copy it to the Windows desktop of the user the Worker runs under, named ‘render’.</p>
+<p>Second we need the path to the .hip file. You likely don’t need to move the file as it should be readable from where it is for rendering anyways. The exception is if the job was submitted with ‘Submit Houdini Scene’, in which case the path will be to a temporary location and will need to be copied to the render node.</p>
+<p>Third we need to provide a temporary directory for rendering, the desktop will do for us here.</p>
+<p>With those, our new command looks like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;C:\Program Files\Side Effects Software\Houdini 19.5.493</span><span class="se">\b</span><span class="s2">in\Hython.exe&quot;</span> <span class="s2">&quot;C:\Users</span><span class="se">\r</span><span class="s2">ender\Desktop\hrender_dl.py&quot;</span> <span class="o">-</span><span class="n">f</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="o">-</span><span class="n">o</span> <span class="s2">&quot;Z:/assets/farm_test.$F4.exr&quot;</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">stage</span><span class="o">/</span><span class="n">lopnet1</span><span class="o">/</span><span class="n">usdrender_rop1</span> <span class="o">-</span><span class="n">tempdir</span> <span class="s2">&quot;C:\Users</span><span class="se">\r</span><span class="s2">ender\Desktop</span><span class="se">\&quot;</span><span class="s2"> -arnoldAbortOnLicenseFail 1 &quot;</span><span class="n">Z</span><span class="p">:</span><span class="o">/</span><span class="n">projects</span><span class="o">/</span><span class="n">my_test_scene</span><span class="o">.</span><span class="n">hip</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>The next step is to actually run the command from the Command Prompt, Terminal or Shell as applicable to your operating system.</p>
+<p>There are steps you can take now that you’ve run the render externally. In some cases Houdini render errors are multiple lines long and this test will show all lines of the error where Deadline would have cancelled the task before everything was printed.</p>
+<p>If the render still fails, then the issue would be either in the scene or in the render node itself. Try testing with a simpler scene, or on a different render node to identify which of the two is the issue.</p>
+</div>
+<div class="section" id="usd-exporting-and-karma-standalone">
+<h3>USD Exporting and Karma Standalone<a class="headerlink" href="#usd-exporting-and-karma-standalone" title="Permalink to this headline">¶</a></h3>
+<p>The Houdini Karma submitter allows you to submit a job that will export the scene to USD files, and then submit a dependent <a class="reference internal" href="app-karma.html#app-karma-ref-label"><span class="std std-ref">Karma Standalone</span></a> job to render the exported USD files.</p>
+<p><a class="reference internal" href="../_images/sub_houdini_karma_export.png"><img alt="monitor2" src="../_images/sub_houdini_karma_export.png" style="height: 400px;" /></a></p>
+<p>To enable this flow, the submitted Houdini scene must contain a USD ROP in order to export USD files. This ROP defines the USD file export options.</p>
+<p>When submitting from the Monitor, enable the Override Export USD option and specify the USD ROP as the Render Node.</p>
+<p>The general Deadline options for the Karma Standalone job are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. The Karma Standalone specific options are:</p>
+<ul class="simple">
+<li><p><strong>Karma Threads</strong>: The number of threads to use for the Karma standalone job.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Houdini Karma plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Houdini plugin from the list on the left.</p>
+<p>Note, if the executable supports a MAJOR.MINOR.REVISION (9.0.123) numbering system in its path, then you will need to configure the explicit exe path to the particular revision that you have installed on your machines. Deadline does not track every possible revision available or indeed where it might be custom installed to, so a studio should verify their exe paths are correct for each application version they choose to use with Deadline. Multiple exe paths can still be declared and the first one that is found on a particular Worker on a particular platform will be used from the exe list.</p>
+<a class="reference internal image-reference" href="../_images/cp_houdini_karma.png"><img alt="../_images/cp_houdini_karma.png" src="../_images/cp_houdini_karma.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Hython Executable</strong>: The path to the hython executable. It can be found in the Houdini bin folder. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+<p><strong>Licensing Options</strong></p>
+<ul class="simple">
+<li><p><strong>Workers To Use Escape License</strong>: A list of Workers that should use a Houdini Escape license instead of a Batch license. Use a , to separate multiple Worker names, for example: worker001,worker002,worker003</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-houdini-karma-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Houdini Karma are supported by Deadline?</strong></p>
+<blockquote>
+<div><p>Houdini Karma 20.0 and later is supported.</p>
+</div></blockquote>
+<p><strong>Which Houdini license(s) are required to render with Deadline?</strong></p>
+<blockquote>
+<div><p>Deadline uses Hython to render, which uses hbatch licenses. If those are not available, it will try to use a Master License instead.</p>
+</div></blockquote>
+<p><strong>Are HQueue Simulation nodes supported?</strong></p>
+<blockquote>
+<div><p>Currently there is no explicit Karma integration with HQueue Simulation nodes.</p>
+</div></blockquote>
+<p><strong>Does Path Mapping work in Houdini Karma?</strong></p>
+<blockquote>
+<div><p>No. Path mapping for USD files must be handled using Output Resolvers in the Houdini scene nodes. Please refer to <a class="reference external" href="https://www.sidefx.com/docs/houdini/solaris/usd.html">Houdini USD documentation</a> for more information. Avoid using absolute USD file paths, use relative path references instead. Use forward slashes in the paths even on Windows.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Houdini error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please email <a class="reference external" href="https://www.awsthinkbox.com/support/">Deadline Support</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Houdini Karma</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#troubleshooting-render-issues">Troubleshooting Render Issues</a></li>
+<li><a class="reference internal" href="#usd-exporting-and-karma-standalone">USD Exporting and Karma Standalone</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-houdini.html"
+                        title="previous chapter">Houdini</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-hserver.html"
+                        title="next chapter">HServer</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-hserver.html" title="HServer"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-houdini.html" title="Houdini"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Houdini Karma</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

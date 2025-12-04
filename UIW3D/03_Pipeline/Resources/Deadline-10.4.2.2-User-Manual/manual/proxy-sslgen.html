@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSL Certificate Generation &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="NGINX Web Server" href="proxy-nginx.html" />
+    <link rel="prev" title="Plugin Sandboxing" href="plugin-sandboxing.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="proxy-nginx.html" title="NGINX Web Server"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="plugin-sandboxing.html" title="Plugin Sandboxing"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" accesskey="U">Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">SSL Certificate Generation</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ssl-certificate-generation">
+<span id="ssl-cert-gen-ref-label"></span><h1>SSL Certificate Generation<a class="headerlink" href="#ssl-certificate-generation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>For the purposes of a Client machine authenticating a Server and vice versa, a minimum of three x509 certificate/key pairs are needed:</p>
+<ul class="simple">
+<li><p>A certificate authority (CA)</p></li>
+<li><p>A Server certificate</p></li>
+<li><p>A Client certificate</p></li>
+</ul>
+<p>Deadline Clients expect the Client certificate and private key to be in PKCS#12 format (*.pfx or *.p12 file), which can be password-protected.
+Additionally, it is recommended that this PKCS#12 file contain a copy of the CA certificate (NOT its private key), allowing Deadline to validate the Server’s certificate without needing to add the CA to the OS’s list of trusted roots.</p>
+<p>These certificates can be generated with any certifiate authority (CA) system. The documentation below outlines an example of how to generate these certificates and keys using OpenSSL.</p>
+<div class="section" id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://www.openssl.org/">OpenSSL</a></p></li>
+</ol>
+</div>
+<div class="section" id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<p>This section will go over how to generate each one of these using the utility script linked in the overview above.</p>
+<p>NOTE: While the certificates themselves (*.crt) can be transported without much worry (they can be considered public knowledge), private keys (.key) are more sensitive in nature.
+Knowledge of any of the private keys would allow impersonation of a valid Client or Server (or both) in the system; as such, these files should be password-protected whenever possible, and always maintained with restrictive file permissions/ACLs.
+Note that sometimes, both the certificate and private key are combined into a single file for convenience (generally in *.pem, *.pfx, or *.p12 files).</p>
+<p>The ‘-days’ option in the commands below sets the expiry date for each certificate. These can be customized as needed, keeping in mind that certificates will need to be re-generated and replaced before their expiry dates to avoid connectivity issues. The examples below are set to 10 years (3650 days) for the CA certificate, and 1 year (365 days) for the server and client certificates.</p>
+<p><strong>1. Generate a new Certificate Authority</strong></p>
+<p>The Certificate Authority (CA) is used to sign other certificates, indicating that they can be trusted as authentic.
+In this way, trusting a root CA in turns implies trust of all certificates that were (or will be) signed by that CA; this is the mechanism that Deadline leverages to authenticate clients and servers when negotiating secure communication.
+For this reason, it is important that the CA machine is secure, and that permissions for the CA key is restricted to users who need it to perform certificate signing operations.</p>
+<p>To generate a new CA, run the following commands:</p>
+<ol class="arabic">
+<li><p>Generate the new CA key:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">openssl</span> <span class="n">genpkey</span> <span class="o">-</span><span class="n">algorithm</span> <span class="n">RSA</span> <span class="o">-</span><span class="n">out</span> <span class="n">ca</span><span class="o">.</span><span class="n">key</span>
+</pre></div>
+</div>
+</li>
+<li><p>Generate the CA certificate based on the new CA key by running the following command and entering the requested information, with the ‘Common Name’ set to ‘CA’.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">openssl</span> <span class="n">req</span> <span class="o">-</span><span class="n">new</span> <span class="o">-</span><span class="n">x509</span> <span class="o">-</span><span class="n">key</span> <span class="n">ca</span><span class="o">.</span><span class="n">key</span> <span class="o">-</span><span class="n">out</span> <span class="n">ca</span><span class="o">.</span><span class="n">crt</span> <span class="o">-</span><span class="n">days</span> <span class="mi">3650</span>
+</pre></div>
+</div>
+</li>
+<li><p>Create a file named <cite>usage.cnf</cite> in the same location as the CA certificates created above, with the following contents:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">serverAuth</span><span class="p">]</span>
+<span class="n">extendedKeyUsage</span> <span class="o">=</span> <span class="n">serverAuth</span>
+
+<span class="p">[</span><span class="n">clientAuth</span><span class="p">]</span>
+<span class="n">extendedKeyUsage</span> <span class="o">=</span> <span class="n">clientAuth</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>This will create a ‘ca.crt’ and ‘ca.key’ file in the current directory. The public portion of this (the *.crt file) will need to be distributed to the Client and Server machines, so that they can validate each other’s certificates (that will be signed by this CA). This can be done by packaging the *.crt in a PFX file (see last step). On the other hand, the private portion of this (the key) should be closely guarded. Access to the private key of a Certificate Authority allows creation of new client certificates, which would automatically be trusted by the server.</p>
+<p><strong>2. Generate the server certificate</strong></p>
+<p>This is the certificate that the Server will use for the purposes of identifying itself when negotiating TLS connections. It will be signed by the CA that was generated in Step 1.</p>
+<p>To generate the server certificate, follow these steps, replacing ‘&lt;server_name&gt;’ with the name of the RCS server machine.</p>
+<ol class="arabic">
+<li><p>On the RCS server, generate the key and signing request by running the following command. Enter the organization information as prompted, with the ‘Common Name’ set to the server name. The ‘challenge password’ and ‘optional company name’ can be left blank.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">openssl</span> <span class="n">req</span> <span class="o">-</span><span class="n">new</span> <span class="o">-</span><span class="n">nodes</span> <span class="o">-</span><span class="n">keyout</span> <span class="o">&lt;</span><span class="n">server_name</span><span class="o">&gt;.</span><span class="n">key</span> <span class="o">-</span><span class="n">out</span> <span class="o">&lt;</span><span class="n">server_name</span><span class="o">&gt;-</span><span class="n">req</span><span class="o">.</span><span class="n">pem</span>
+</pre></div>
+</div>
+</li>
+<li><p>Copy the ‘&lt;server_name&gt;-req.pem’ file to the CA machine.</p></li>
+<li><p>On the CA machine, generate the certificate based on the signing request:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">openssl</span> <span class="n">x509</span> <span class="o">-</span><span class="n">req</span> <span class="o">-</span><span class="n">days</span> <span class="mi">365</span> <span class="o">-</span><span class="ow">in</span> <span class="o">&lt;</span><span class="n">server_name</span><span class="o">&gt;-</span><span class="n">req</span><span class="o">.</span><span class="n">pem</span> <span class="o">-</span><span class="n">out</span> <span class="o">&lt;</span><span class="n">server_name</span><span class="o">&gt;.</span><span class="n">crt</span> <span class="o">-</span><span class="n">CA</span> <span class="n">ca</span><span class="o">.</span><span class="n">crt</span> <span class="o">-</span><span class="n">CAkey</span> <span class="n">ca</span><span class="o">.</span><span class="n">key</span> <span class="o">-</span><span class="n">extfile</span> <span class="n">usage</span><span class="o">.</span><span class="n">cnf</span> <span class="o">-</span><span class="n">extensions</span> <span class="n">serverAuth</span>
+</pre></div>
+</div>
+</li>
+<li><p>Copy the resulting ‘&lt;server_name&gt;.crt’ and ‘ca.crt’ files to the RCS server.</p></li>
+<li><p>On the RCS server machine, create the PKCS#12 (pfx) file for use with Deadline RCS by running the following command. This file will include the client private key and certificate.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">openssl</span> <span class="n">pkcs12</span> <span class="o">-</span><span class="n">export</span> <span class="o">-</span><span class="ow">in</span> <span class="o">&lt;</span><span class="n">server_name</span><span class="o">&gt;.</span><span class="n">crt</span> <span class="o">-</span><span class="n">inkey</span> <span class="o">&lt;</span><span class="n">server_name</span><span class="o">&gt;.</span><span class="n">key</span> <span class="o">-</span><span class="n">out</span> <span class="o">&lt;</span><span class="n">server_name</span><span class="o">&gt;.</span><span class="n">pfx</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>The ‘&lt;server_name&gt;.pfx’ and ‘ca.crt’ files will be used to configure the RCS. The pfx and key files should be secured on the RCS server with restrictive file permissions granting read access only to the user(s) that will run the RCS process.</p>
+<p><strong>3. Generate the client certificate(s)</strong></p>
+<p>This is a certificate that will be used by Deadline clients to authenticate themselves, and you can create more than one. While they don’t need to be signed by the same CA as the Server certificate, the Server will need to trust the root that <em>does</em> sign it (either by having it specified explicitly, or present in the OS-level trusted store).</p>
+<p>While it is highly recommended to generate a separate client certificate for each client machine for optimal security, a single client pfx file can be shared across multiple clients if needed.</p>
+<p>To generate a client certificate signed with the CA created in Step 1, run the following commands, replacing &lt;client_name&gt; with a name or identifier for the client:</p>
+<ol class="arabic">
+<li><p>On the client machine, generate the key and signing request. Enter the organization information as prompted, with the ‘Common Name’ set to the client name. The ‘challenge password’ and ‘optional company name’ can be left blank.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">openssl</span> <span class="n">req</span> <span class="o">-</span><span class="n">new</span> <span class="o">-</span><span class="n">nodes</span> <span class="o">-</span><span class="n">keyout</span> <span class="o">&lt;</span><span class="n">client_name</span><span class="o">&gt;.</span><span class="n">key</span> <span class="o">-</span><span class="n">out</span> <span class="o">&lt;</span><span class="n">client_name</span><span class="o">&gt;-</span><span class="n">req</span><span class="o">.</span><span class="n">pem</span>
+</pre></div>
+</div>
+</li>
+<li><p>Copy the ‘&lt;client_name&gt;-req.pem’ file to the CA machine</p></li>
+<li><p>On the CA machine, generate the certificate based on the signing request:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">openssl</span> <span class="n">x509</span> <span class="o">-</span><span class="n">req</span> <span class="o">-</span><span class="n">days</span> <span class="mi">365</span> <span class="o">-</span><span class="ow">in</span> <span class="o">&lt;</span><span class="n">client_name</span><span class="o">&gt;-</span><span class="n">req</span><span class="o">.</span><span class="n">pem</span> <span class="o">-</span><span class="n">out</span> <span class="o">&lt;</span><span class="n">client_name</span><span class="o">&gt;.</span><span class="n">crt</span> <span class="o">-</span><span class="n">CA</span> <span class="n">ca</span><span class="o">.</span><span class="n">crt</span> <span class="o">-</span><span class="n">CAkey</span> <span class="n">ca</span><span class="o">.</span><span class="n">key</span> <span class="o">-</span><span class="n">extfile</span> <span class="n">usage</span><span class="o">.</span><span class="n">cnf</span> <span class="o">-</span><span class="n">extensions</span> <span class="n">clientAuth</span>
+</pre></div>
+</div>
+</li>
+<li><p>Copy the resulting ‘&lt;client_name&gt;.crt’ and ‘ca.crt’ files to the client machine.</p></li>
+<li><p>On the client machine, create the PKCS#12 (pfx) file for use with Deadline Client by running the following command. This file will include the client private key and certificate, and the CA certificate. Entering an export password is recommended to protect the private key. If an export password is entered, it will need to be entered in the Deadline Client connection configuration when specifying the certificate.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">openssl</span> <span class="n">pkcs12</span> <span class="o">-</span><span class="n">export</span> <span class="o">-</span><span class="ow">in</span> <span class="o">&lt;</span><span class="n">client_name</span><span class="o">&gt;.</span><span class="n">crt</span> <span class="o">-</span><span class="n">inkey</span> <span class="o">&lt;</span><span class="n">client_name</span><span class="o">&gt;.</span><span class="n">key</span> <span class="o">-</span><span class="n">certfile</span> <span class="n">ca</span><span class="o">.</span><span class="n">crt</span> <span class="o">-</span><span class="n">out</span> <span class="o">&lt;</span><span class="n">client_name</span><span class="o">&gt;.</span><span class="n">pfx</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>This will place a ‘&lt;client_name&gt;.pfx’ file in the current directory. This file can be specifed in the Deadline client configuration when configuring the connection to the Deadline RCS.</p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">SSL Certificate Generation</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="plugin-sandboxing.html"
+                        title="previous chapter">Plugin Sandboxing</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="proxy-nginx.html"
+                        title="next chapter">NGINX Web Server</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="proxy-nginx.html" title="NGINX Web Server"
+             >next</a></li>
+        <li class="right" >
+          <a href="plugin-sandboxing.html" title="Plugin Sandboxing"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" >Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">SSL Certificate Generation</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

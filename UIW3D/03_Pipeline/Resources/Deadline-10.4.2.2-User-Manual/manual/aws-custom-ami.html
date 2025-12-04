@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Amazon Machine Image Customization &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The AWS Portal Asset Transfer System (Advanced)" href="aws-portal-asset-transfer-system/index.html" />
+    <link rel="prev" title="AWS Account Considerations" href="aws-account-considerations.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-asset-transfer-system/index.html" title="The AWS Portal Asset Transfer System (Advanced)"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="aws-account-considerations.html" title="AWS Account Considerations"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Amazon Machine Image Customization</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<div class="section" id="amazon-machine-image-customization">
+<span id="customize-ami-aws-portal-ref-label"></span><h1>Amazon Machine Image Customization<a class="headerlink" href="#amazon-machine-image-customization" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>An Amazon Machine Image (AMI) is a snapshot of an EC2 instance in time. If you launch an instance based off of an AMI the new instance will look like the instance that the AMI was based off of.
+Further reading on <a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html">AMIs</a>.</p>
+<p>If AWS Portal does not offer the software/plugins that you need, it is possible to customize one of the pre-packaged AMIs (Amazon Machine Image) to fit your environment. By creating an
+EC2 instance from one of the AWS Portal AMIs you can install the software and plugins needed, create your own AMI and specify it when launching a fleet.</p>
+</div>
+<div class="section" id="finding-which-ami-to-start-from">
+<h2>Finding Which AMI to Start From<a class="headerlink" href="#finding-which-ami-to-start-from" title="Permalink to this headline">¶</a></h2>
+<p>The first step to creating a Custom AMI is to choose the base AWS Portal AMI to start from. Go to AWS Management Console &gt; Services &gt; Search for EC2 and select it.</p>
+<a class="reference internal image-reference" href="../_images/SelectEC2.png"><img alt="../_images/SelectEC2.png" src="../_images/SelectEC2.png" style="width: 860.0px; height: 645.5px;" /></a>
+<p>On the left side of the screen select Images &gt; AMIs</p>
+<a class="reference internal image-reference" href="../_images/AMILocation.png"><img alt="../_images/AMILocation.png" src="../_images/AMILocation.png" style="width: 860.0px; height: 645.5px;" /></a>
+<p>Now you need to search for the appropriate AMI to base your image off of. First in the search bar switch “Owned by me” to “Public Images”. Next click the search bar and select “Owner” then
+enter “357466774442” and hit enter.</p>
+<p>This will show you all of the public AMIs that are owned by Thinkbox Software. Next decide which operating system you would like to create an ami for
+either Windows or Linux, then decide the Deadline service pack you would like to start from. Once you have decided this add “Deadline Worker Base Image Operating System Deadline Version” to the
+search bar and hit enter, so for example if you wanted Deadline service pack 13 on Linux you would add “Deadline Worker Base Image Linux 10.0.29” to the search bar. Before launching the instance
+it is important that you verify that the owner of the AMI is “357466774442”. This is the only account you will find official Thinkbox AMIs in.</p>
+<p>You can now find the base AMI you would like to start
+from. If you would like to start from scratch you can use “Deadline Worker Base Image Linux” or “Deadline Worker Base Image Windows”. These AMIs only have installed on them Deadline, common dependencies for 3D applications,
+and software for the AMI to work with AWS Portal. You can also start from one of the AMIs that already have a 3D application installed on them. For example if you would like to make an AMI that
+has your custom plugin for Maya on it you would start from “Deadline Worker Base Image Linux 2 10.0.29.0 with Maya 2017_Update4 and V-Ray 41201 and Arnold 3.0.0.2”.</p>
+<p>For AMIs before version 10.0.29.0 you will have to search “Deadline Slave Base Image” instead of “Deadline Worker Base Image”.</p>
+<a class="reference internal image-reference" href="../_images/FindingBaseAMI.png"><img alt="../_images/FindingBaseAMI.png" src="../_images/FindingBaseAMI.png" style="width: 759.5px; height: 345.5px;" /></a>
+</div>
+<div class="section" id="launching-the-ec2-instance">
+<h2>Launching the EC2 Instance<a class="headerlink" href="#launching-the-ec2-instance" title="Permalink to this headline">¶</a></h2>
+<p>The next step in creating a custom AMI is to launch an EC2 instance from the base AMI. This is accomplished by right clicking the AMI you have selected and clicking Launch.</p>
+<a class="reference internal image-reference" href="../_images/aws_ami_creation_launch_base.png"><img alt="../_images/aws_ami_creation_launch_base.png" src="../_images/aws_ami_creation_launch_base.png" style="width: 1087.5px; height: 281.25px;" /></a>
+<p>Launch the instance into the default or your own VPC (Virtual Private Cloud). If you do not have a VPN (Virtual Private Network) setup, you will need to assign a <a class="reference external" href="https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-ip-addressing.html#vpc-public-ip">public ip</a> to the instance in order to make it accessible via the internet to connect remotely.
+The root volume will need enough space allocated for the software being installed. Create or assign a security group that allows you to connect to the instance. RDP (Remote Desktop Protocol) on port TCP 3389 for Windows or SSH (Secure Shell) on port TCP 22 for Linux. Assign your networks public ip, xxx.xxx.xxx.xxx/32 to lock down who can connect, MyIP can be selected as the source to autofill the ip.</p>
+<p>Additional information on launching an Amazon EC2 Instance can be found in the AWS <a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/launching-instance.html">Launching an Instance</a> documentation.</p>
+</div>
+<div class="section" id="connect-to-the-instance">
+<h2>Connect to the Instance<a class="headerlink" href="#connect-to-the-instance" title="Permalink to this headline">¶</a></h2>
+<p>Once the instance has been launched and is in a Running state you can connect to the instance to make modifications. Depending on the operating system of the isntance you will need to follow the <a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html#ec2-connect-to-instance-linux">Linux/Mac</a> or <a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/connecting_to_windows_instance.html">Windows</a> connection documentation.</p>
+</div>
+<div class="section" id="software-installation">
+<h2>Software Installation<a class="headerlink" href="#software-installation" title="Permalink to this headline">¶</a></h2>
+<p>To install software you will need to transfer or download the installers to the instance. If the installers are accessible via the internet or S3 they can be downloaded. The following links outline methods for transferring data to Linux or Windows instances from your local network.</p>
+<p>Transfer Data to a Linux instance using:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html#AccessingInstancesLinuxSCP">SCP</a></p></li>
+</ul>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html#putty-scp">PuTTYSCP</a></p></li>
+</ul>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html#Transfer_WinSCP">WinSCP</a></p></li>
+</ul>
+<p>Transferring files to a <a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/connecting_to_windows_instance.html#AccessingInstancesWindowsFileTransfer">Windows Instance</a>.</p>
+</div>
+<div class="section" id="create-an-ami">
+<h2>Create an AMI<a class="headerlink" href="#create-an-ami" title="Permalink to this headline">¶</a></h2>
+<p>Now that you have setup your instance how you would like it, you can create a snapshot of it by creating an AMI.</p>
+<div class="section" id="linux">
+<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h3>
+<p>Once the Linux instance has been configured go to AWS Management Console &gt; EC2 &gt; Instance. Right click your instance, select Image &gt; Create Image. Then input the Image Name, Note that Image
+Names must be unique per region per account. Click Create Image after you have input the Image Name.</p>
+<a class="reference internal image-reference" href="../_images/aws_create_linux_ami.png"><img alt="../_images/aws_create_linux_ami.png" src="../_images/aws_create_linux_ami.png" style="width: 1133.25px; height: 275.25px;" /></a>
+</div>
+<div class="section" id="id1">
+<h3>Windows<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Once the Windows instance has been configured, you <em>must</em> stop the Deadline Launcher Service. To do this, open the start menu and type “Powershell”. “Windows Powershell” should come up as the first item in the search results.
+Hit Enter and a Powershell window will open. In the powershell Window, run the following command:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">Stop-Service</span> <span class="pre">-Name</span> <span class="pre">&quot;deadline10launcherservice&quot;</span></code></p>
+</div></blockquote>
+<p>Next, run EC2LaunchSettings from the start menu. Enable “Set Computer Name” and then execute “Shutdown without Sysprep”.</p>
+<a class="reference internal image-reference" href="../_images/aws_custom_ami_ec2launch.png"><img alt="../_images/aws_custom_ami_ec2launch.png" src="../_images/aws_custom_ami_ec2launch.png" style="width: 324.0px; height: 491.25px;" /></a>
+<p>Once the EC2 instance has been stopped, Right click your instance, select Image &gt; Create Image. Then input the Image Name, Note that Image
+Names must be unique per region per account. Click Create Image after you have input the Image Name.</p>
+<a class="reference internal image-reference" href="../_images/aws_create_windows_ami.png"><img alt="../_images/aws_create_windows_ami.png" src="../_images/aws_create_windows_ami.png" style="width: 1107.75px; height: 269.25px;" /></a>
+</div>
+</div>
+<div class="section" id="launch-a-custom-ami-with-aws-portal">
+<h2>Launch a Custom AMI with AWS Portal<a class="headerlink" href="#launch-a-custom-ami-with-aws-portal" title="Permalink to this headline">¶</a></h2>
+<p>Once the status has changed from pending to available, the AMI is ready to be used. This information can be found in the AWS Management Console at Services &gt; EC2 &gt; AMIs &gt; Owned by me &gt; AMI Name.</p>
+<a class="reference internal image-reference" href="../_images/aws_ami_created.png"><img alt="../_images/aws_ami_created.png" src="../_images/aws_ami_created.png" style="width: 1103.25px; height: 121.5px;" /></a>
+<p>When launching a fleet enable “Use AMI ID” and either copy and paste the AMI ID from the AWS Web Console or click the “My AMIs” button and select the AMI you have created from the drop down menu.</p>
+<a class="reference internal image-reference" href="../_images/aws_select_custom_ami.png"><img alt="../_images/aws_select_custom_ami.png" src="../_images/aws_select_custom_ami.png" style="width: 603.0px; height: 617.25px;" /></a>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Amazon Machine Image Customization</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#finding-which-ami-to-start-from">Finding Which AMI to Start From</a></li>
+<li><a class="reference internal" href="#launching-the-ec2-instance">Launching the EC2 Instance</a></li>
+<li><a class="reference internal" href="#connect-to-the-instance">Connect to the Instance</a></li>
+<li><a class="reference internal" href="#software-installation">Software Installation</a></li>
+<li><a class="reference internal" href="#create-an-ami">Create an AMI</a><ul>
+<li><a class="reference internal" href="#linux">Linux</a></li>
+<li><a class="reference internal" href="#id1">Windows</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#launch-a-custom-ami-with-aws-portal">Launch a Custom AMI with AWS Portal</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aws-account-considerations.html"
+                        title="previous chapter">AWS Account Considerations</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="aws-portal-asset-transfer-system/index.html"
+                        title="next chapter">The AWS Portal Asset Transfer System (Advanced)</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-asset-transfer-system/index.html" title="The AWS Portal Asset Transfer System (Advanced)"
+             >next</a></li>
+        <li class="right" >
+          <a href="aws-account-considerations.html" title="AWS Account Considerations"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Amazon Machine Image Customization</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

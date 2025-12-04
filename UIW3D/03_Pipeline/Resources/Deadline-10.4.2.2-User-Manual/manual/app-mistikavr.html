@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mistika VR &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Mocha Pro" href="app-mocha.html" />
+    <link rel="prev" title="MicroStation" href="app-microstation.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-mocha.html" title="Mocha Pro"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-microstation.html" title="MicroStation"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Mistika VR</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mistika-vr">
+<span id="app-mistikavr-ref-label"></span><h1>Mistika VR<a class="headerlink" href="#mistika-vr" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit Mistika VR jobs from within Mistika VR by <a class="reference internal" href="#app-mistikavr-integrated-submission-script-label"><span class="std std-ref">configuring the commands file</span></a> or from the Monitor, and process them on either Windows or macOS.</p>
+<a class="reference internal image-reference" href="../_images/sub_mistikavr.png"><img alt="../_images/sub_mistikavr.png" src="../_images/sub_mistikavr.png" style="height: 500px;" /></a>
+<p>To submit from within Mistika VR, define the frame range you want to render using the yellow bars, then select ‘File’ -&gt; ‘Render’, configure your options and click ‘Add to Render Queue’.</p>
+<a class="reference internal image-reference" href="../_images/mistikavr_integrated_submission.png"><img alt="../_images/mistikavr_integrated_submission.png" src="../_images/mistikavr_integrated_submission.png" style="height: 500px;" /></a>
+<a class="reference internal image-reference" href="../_images/mistikavr_integrated_submitter.png"><img alt="../_images/mistikavr_integrated_submitter.png" src="../_images/mistikavr_integrated_submitter.png" style="height: 500px;" /></a>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation.</p>
+<p>The Mistika VR specific options are:</p>
+<ul class="simple">
+<li><p><strong>Mistika File</strong>: The Mistika <code class="docutils literal notranslate"><span class="pre">.rnd</span></code> file to be rendered.</p></li>
+<li><p><strong>Image Render</strong>: Check this box if the Mistika file to be rendered corresponds to an image sequence render. If submitting through Mistika VR, the value of this box will automatically be set.</p></li>
+<li><p><strong>Submit Mistika File With The Job</strong>: If this option is enabled, the Mistika render file will be submitted with the job, and then copied locally to the Worker machine during rendering.</p></li>
+<li><p><strong>Frame List</strong>: The list of frames to render. Only available when rendering an image sequence. The frames should be within the range specified in Mistika VR if rendering an image sequence.</p></li>
+<li><p><strong>Frames Per Task</strong>: This is the number of frames that will be rendered at a time for each job task. Only available when rendering an image sequence.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Mistika VR plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the MistikaVR plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_mistikavr.png"><img alt="../_images/cp_mistikavr.png" src="../_images/cp_mistikavr.png" style="height: 500px;" /></a>
+<p><strong>Mistika VR Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Mistika VR Executable</strong>: The path to the Mistika VR executable. Enter alternative paths on separate lines.</p></li>
+</ul>
+<p><strong>Path Mapping (For Mixed Farms)</strong></p>
+<ul class="simple">
+<li><p><strong>Enable Path Mapping</strong>: If enabled, a temporary Mistika VR file will be created locally on the Worker for rendering because Deadline does the path mapping directly in the Mistika VR file. This feature can be turned off if there are no Path Mapping entries defined in the Repository Options.</p></li>
+</ul>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-mistikavr-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to install the integrated Mistika VR submission script. This script allows for submitting Mistika VR render jobs to Deadline directly from within the Mistika VR editing GUI. The script has been tested with Mistika VR version 8.8.3 and later.</p>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<p>The installation of the integrated submitter involves writing shell commands in a file <code class="docutils literal notranslate"><span class="pre">runBatch.cfg</span></code> that gets executed by Mistika VR. A template of this file can be generated by clicking on the ‘Add to Render Queue’ button in Mistika VR for the first time, then clicking ‘Edit commands file’. Alternatively, you can create a blank file named <code class="docutils literal notranslate"><span class="pre">runBatch.cfg</span></code> in the correct folder, depending on which operating system you are using.</p>
+<p><strong>Windows</strong></p>
+<p>On Windows, the cfg file is located at <code class="docutils literal notranslate"><span class="pre">C:\ProgramData\SGO\VR-ENV\runBatch.cfg</span></code>. Add the following line to the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&quot;[Deadline Install Directory]\bin\deadlinecommand.exe&quot; -executescript &quot;[Repository]\scripts\Submission\MistikaVRSubmission.py&quot; {$runBatchPathRnd} $runBatchRndName $runBatchRange $runBatchDevice {$runBatchPathMedia}
+
+where
+[Deadline Install Directory] is the folder where Deadline was installed, such as C:\Program Files\Thinkbox\Deadline&lt;VERSION&gt;
+[Repository] is your Deadline Repository 10 path, such as C:\DeadlineRepository&lt;VERSION&gt;
+</pre></div>
+</div>
+<p><strong>macOS</strong></p>
+<p>On macOS, the cfg file is located at <code class="docutils literal notranslate"><span class="pre">/Users/Shared/SGO/VR-ENV/runBatch.cfg</span></code>. Add the following line to the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[Deadline Install Directory]/DeadlineCommand10.app/Contents/MacOS/DeadlineCommand10 -executescript [Repository]/scripts/Submission/MistikaVRSubmission.py {$runBatchPathRnd} $runBatchRndName $runBatchRange $runBatchDevice {$runBatchPathMedia}
+
+where
+[Deadline Install Directory] is the folder where Deadline was installed, such as /Applications/Thinkbox/Deadline&lt;VERSION&gt;
+[Repository] is the Deadline Repository 10 path, such as /Applications/Thinkbox/DeadlineRepository&lt;VERSION&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;VERSION&gt;</span></code> is the Deadline major version such as: <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p>
+</div>
+</div>
+<div class="section" id="verify-installation">
+<h3>Verify Installation<a class="headerlink" href="#verify-installation" title="Permalink to this headline">¶</a></h3>
+<p>Open Mistika VR and click on ‘File’ -&gt; ‘Render’ -&gt; ‘Add to Render Queue’. A Deadline submitter should pop up. If it does not appear, there may be another command in <code class="docutils literal notranslate"><span class="pre">runBatch.cfg</span></code> interfering with the Deadline command.</p>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-mistikavr-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>What versions of Mistika VR are supported?</strong></p>
+<blockquote>
+<div><p>Deadline supports version 8.8 and upwards.</p>
+</div></blockquote>
+<p><strong>Can I submit and process on different platforms?</strong></p>
+<blockquote>
+<div><p>Yes. We support path mapping of the input <code class="docutils literal notranslate"><span class="pre">.rnd</span></code> file and its contents. Ensure you configure <a class="reference internal" href="cross-platform.html#cross-platform-ref-label"><span class="std std-ref">Path Mapping</span></a> in the Repository configuration.</p>
+</div></blockquote>
+<p><strong>What is this Image Render box in the submitter for?</strong></p>
+<blockquote>
+<div><p>The <code class="docutils literal notranslate"><span class="pre">.rnd</span></code> file does not give us enough information to determine whether or not an image sequence is being rendered, so you would have to check it yourself if submitting through Deadline Monitor. If submitting through Mistika VR, we have the information required to automatically check that box.</p>
+</div></blockquote>
+<p><strong>My video renders are showing up as 1 frame in the Deadline Monitor. Is this normal?</strong></p>
+<blockquote>
+<div><p>Yes, this is expected behaviour.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Mistika VR error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><strong>Detected a render error: [Start frame is lesser than clip boundary]</strong></p>
+<p><strong>Detected a render error: [End frame is greather than clip boundary]</strong></p>
+<blockquote>
+<div><p>The frame range specified in the Deadline submitter is outside of the frame range specified by the yellow bars inside Mistika VR at the time the <code class="docutils literal notranslate"><span class="pre">.rnd</span></code> file was generated. Either generate a new file with a larger range inside Mistika VR, or decrease the range when submitting the job through the Deadline submitter.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Mistika VR</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+<li><a class="reference internal" href="#verify-installation">Verify Installation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-microstation.html"
+                        title="previous chapter">MicroStation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-mocha.html"
+                        title="next chapter">Mocha Pro</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-mocha.html" title="Mocha Pro"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-microstation.html" title="MicroStation"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Mistika VR</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

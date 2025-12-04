@@ -1,0 +1,410 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VRED &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="VRED Cluster" href="app-vred-cluster.html" />
+    <link rel="prev" title="V-Ray Vrimg2Exr" href="app-vray-vrimg2exr.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-vred-cluster.html" title="VRED Cluster"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-vray-vrimg2exr.html" title="V-Ray Vrimg2Exr"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">VRED</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="vred">
+<span id="app-vred-ref-label"></span><h1>VRED<a class="headerlink" href="#vred" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The current version of Deadline <strong>only</strong> supports VRED <strong>2020.0-2024.0</strong> (inclusive). Due to the recency of the VRED 2024.0 release (at the time of writing), there may be minor bugfixes required in Deadline to ensure reliable support of VRED 2024. Please review new installation steps that are specific to VRED 2024 (and beyond).</p>
+<p>To run the Linux version of VRED Render Node (VREDServerNode executable), please ensure that you run Linux with the appropriate dependencies – including a stable release of the GNU C Library with X-Server installed, per Autodesk’s System Requirement guidelines (referenced below by VRED version):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/System-requirements-for-Autodesk-VRED-2020-products.html">VRED 2020</a></p></li>
+<li><p><a class="reference external" href="https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/System-requirements-for-Autodesk-VRED-2021-products.html">VRED 2021</a></p></li>
+<li><p><a class="reference external" href="https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/System-requirements-for-Autodesk-VRED-2022-products.html">VRED 2022</a></p></li>
+<li><p><a class="reference external" href="https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/System-requirements-for-Autodesk-VRED-2023-products.html">VRED 2023</a></p></li>
+<li><p><a class="reference external" href="https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/System-requirements-for-Autodesk-VRED-2024-products.html">VRED 2024</a></p></li>
+</ul>
+</div></blockquote>
+<p>Please note the hardware requirements and ensure replacement OpenGL libraries such as <a class="reference internal" href="#app-vred-error-message-mesa-ref-label"><span class="std std-ref">MESA</span></a> are available for headless machines.</p>
+</div>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs from within VRED by installing the <a class="reference internal" href="#app-vred-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a>, or you can submit them from the Monitor. The instructions for installing the <a class="reference internal" href="#app-vred-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<p><a class="reference internal" href="../_images/integrated_vred.png"><img alt="integrated" src="../_images/integrated_vred.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/integrated_vred_options.png"><img alt="options" src="../_images/integrated_vred_options.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_vred.png"><img alt="monitor" src="../_images/sub_vred.png" style="height: 400px;" /></a></p>
+<p>To submit from within VRED, press the Submit to Deadline button in the Thinkbox Menu. If the Submit to Deadline button is missing, check to make sure that the submitter is installed correctly then restart VRED.</p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.</p>
+<p>VRED-specific options follow:</p>
+<ul class="simple">
+<li><p><strong>Version</strong>: Which version of VRED to use (12.X=2020.X, 13.X=2021.X, 14.X=2022.X, 15.X=2023.X, 16.X=2024.X). Substitute ‘X’ with VRED’s minor version number.</p></li>
+</ul>
+<p><strong>[VRED Options Tab]</strong></p>
+<ul class="simple">
+<li><p><strong>Job Type</strong>: What type of job to submit (Render, Render Queue, Sequencer)</p></li>
+<li><p><strong>Submit VRED Project File</strong>: If this option is enabled, the project file will be submitted with the job, and then copied locally to the Worker machine during rendering.</p></li>
+<li><p><strong>Render View/Camera</strong>: The name of the viewpoint or camera from which to render.</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Note: If there is an identically-named camera to a viewpoint’s name, then that viewpoint will take precedence as the rendered view.</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p><strong>Image Size Presets</strong>: Popular presets for common image sizes/resolutions</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Note: This option functions similar to its equivalent in the stock Render Options window</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p><strong>Image Size</strong>: The image size in pixels (width and height)</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Note: If an image size preset is chosen, then the corresponding amount of pixels for horizontal and vertical resolution are automatically filled in. Otherwise, you can specify a custom resolution.</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p><strong>Printing Size</strong>: The printing size in centimeters (width and height)</p></li>
+<li><p><strong>Resolution (px/inch)</strong>: The printing resolution in pixels per inch (width and height)</p></li>
+<li><p><strong>Render Animation</strong>: If checked, allows one to specify animation clip settings including: animation clip, frame range to render</p></li>
+<li><p><strong>Use GPU Raytracing</strong>: Attempts to apply GPU raytracing to the rendering process (if sufficient hardware is available)</p></li>
+<li><p><strong>Render Quality</strong>: Rendering method - including number of image samples used. Raytracing is the default.</p></li>
+<li><p><strong>Type</strong> The animation type (Clip or Timeline)</p></li>
+<li><p><strong>Animation Clip</strong>: A pre-defined animation, where its frames will be distributed for rendering.</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Note: Upon selecting an animation clip entry, if “Use Clip Range” is enabled, then a corresponding frame range will update to reflect that animation clip’s timeline.</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p><strong>Use Clip Range</strong> If enabled, then whole animation clip will be rendered. Otherwise, only a sequence from the selected clip will be rendered.</p></li>
+<li><p><strong>Frame Range</strong>: The start and end frames to render (separate by a hyphen)</p></li>
+<li><p><strong>Frames Per Task</strong>: The amount of frames that a Deadline worker node should render as one complete task</p></li>
+<li><p><strong>Sequence Name</strong>: The name of the sequence to render; if empty all sequences will be rendered.</p></li>
+</ul>
+<p><strong>[Additional Options]</strong></p>
+<ul class="simple">
+<li><p><strong>Dimensions</strong>: The dimensions of the final rendered image.</p></li>
+<li><p><strong>Super Sampling Factor</strong>: The super sampling factor to use when rendering.</p></li>
+<li><p><strong>Background Color</strong>: The color of the background to use when rendering.</p></li>
+<li><p><strong>Include Alpha Channel</strong>: Whether or not the the alpha channel should be included.</p></li>
+<li><p><strong>Premultiply Alpha</strong>: Whether or not the alpha channel should be premultiplied.</p></li>
+<li><p><strong>Tonemap HDR</strong>: Whether or not tonemapping should be applied to .hdr files.</p></li>
+<li><p><strong>DPI</strong>: Dots per inch when rendering a still frame.</p></li>
+<li><p><strong>Export Render Passes</strong>: If the render quality is set to raytracing you can export separate render passes.</p></li>
+<li><p><strong>Export Meta Data</strong>: Whether or not Meta Data should be embedded into the rendered files.</p></li>
+</ul>
+</div>
+<div class="section" id="region-rendering-options">
+<span id="vred-region-rendering-ref-label"></span><h3>Region Rendering Options<a class="headerlink" href="#region-rendering-options" title="Permalink to this headline">¶</a></h3>
+<p>If submitting from the integrated submitter you can choose to submit a region rendering job. You can also submit a dependent assembly job to assemble the image when the main region job completes.</p>
+<a class="reference internal image-reference" href="../_images/vred_region_options.png"><img alt="../_images/vred_region_options.png" src="../_images/vred_region_options.png" style="height: 400px;" /></a>
+<p>The following options are available:</p>
+<ul class="simple">
+<li><p><strong>Enable Region Rendering</strong>: If enabled, the frame will be split into multiple tiles that are rendered individually and can be assembled after.</p></li>
+<li><p><strong>Submit Dependent Assembly Job</strong>: Submit a job dependent on the region job that will assemble the tiles. If doing a Jigsaw animation, a separate job will be created for each differently named output file.</p></li>
+<li><p><strong>Cleanup Tiles after Assembly</strong>: If enabled, the tiles will be deleted after assembly.</p></li>
+<li><p><strong>Error on Missing Tiles</strong>: If enabled, the assembly job will fail if any of the tiles are missing.</p></li>
+<li><p><strong>Error on Missing Background</strong>: If enabled, the Draft Tile Assembler job will fail if the background file is missing.</p></li>
+<li><p><strong>Assemble over</strong>: Determine what the Draft Tile Assembler should assemble over. Options are a blank image, previous output, or specified file.</p></li>
+<li><p><strong>Background Image File</strong>: If “specified file” is selected, this option specifies the background image that will be used during tile assembly.</p></li>
+</ul>
+</div>
+<div class="section" id="troubleshooting-render-issues">
+<h3>Troubleshooting Render Issues<a class="headerlink" href="#troubleshooting-render-issues" title="Permalink to this headline">¶</a></h3>
+<p>This guide will explain how to isolate a render issue away from the Deadline Worker application.</p>
+<p>Please try walking through the steps below. Our goal is to recreate the issue outside of the Deadline Worker environment, to see if there is an issue with the scene file / render machine.</p>
+<p>Note that VRED dynamically creates a Python script for every task, which must be fetched in order to troubleshoot.</p>
+<p>The steps here use Windows paths. Deadline’s temporary directories are stored in the <a class="reference internal" href="worker.html#worker-local-data-storage-ref-label"><span class="std std-ref">Worker Local Data Storage</span></a>, refer to that page for your operating system’s equivalent.</p>
+<ol class="arabic simple">
+<li><p>First we need a copy of the script used for rendering. To do this, requeue the job that fails and after a Worker creates a failing task report mark the Worker disabled from the Monitor.</p></li>
+<li><p>Become a power user from the Tools menu at the top of the Monitor.</p></li>
+<li><p>Right click the Worker and choose ‘Disable’. We do this to preserve the Worker’s temporary directory as we’ll need to pull a file from it.</p></li>
+</ol>
+<p>4. From a task report find the line starting with ‘Full Command’.
+In this example case, that line is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2023</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">10</span> <span class="mi">16</span><span class="p">:</span><span class="mi">07</span><span class="p">:</span><span class="mi">17</span><span class="p">:</span>  <span class="mi">0</span><span class="p">:</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Full</span> <span class="n">Command</span><span class="p">:</span> <span class="s2">&quot;C:\Program Files\Autodesk\VREDPro-16.0\Bin\WIN64\VREDPro.exe&quot;</span> <span class="s2">&quot;C:\ProgramData\Thinkbox\Deadline10\workers\worker-name\jobsData</span><span class="se">\652</span><span class="s2">5d8cd0c7423a9f8e261e9</span><span class="se">\t</span><span class="s2">est-file.vpb&quot;</span> <span class="s2">&quot;C:\ProgramData\Thinkbox\Deadline10\workers\worker-name\jobsData</span><span class="se">\652</span><span class="s2">5d8cd0c7423a9f8e261e9</span><span class="se">\t</span><span class="s2">hread0_tempF8Fgq0\VRED_RenderScript.py&quot;</span> <span class="o">-</span><span class="n">nogui</span>
+</pre></div>
+</div>
+<p>5. Go to the <code class="docutils literal notranslate"><span class="pre">C:\ProgramData\Thinkbox\Deadline10\workers\worker-name\jobsData\</span></code> directory on the render node. This is the Worker Local Data Storage It’s important we test on the render node that the job failed on, in case this is a local configuration issue. Within it is a folder the Worker uses as a temporary working space for jobs being rendered. Inside it or in one of its sub-folders will be VRED_RenderScript.py. Make a copy of that file on the render node and make a note of where.
+The VRED_RenderScript.py is the file that is written dynamically for each submitted job.</p>
+<p>With the executable path, the scene file and that script you can now impersonate the Worker on a command prompt:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;C:\Program Files\Autodesk\VREDPro-16.0\Bin\WIN64\VREDPro.exe&quot;</span> <span class="s2">&quot;\path</span><span class="se">\t</span><span class="s2">o</span><span class="se">\t</span><span class="s2">est-file.vpb&quot;</span> <span class="s2">&quot;\path</span><span class="se">\t</span><span class="s2">o\VRED_RenderScript.py&quot;</span> <span class="o">-</span><span class="n">nogui</span>
+</pre></div>
+</div>
+<p>Check the resulting output for errors or warnings. If the render succeeds without issue, make a copy of the text log and contact support, having both the failing log and working log will help in troubleshooting.</p>
+<p>Re-enable the Worker that was disabled in step 1 by right clicking the Worker and choosing ‘Enable’.</p>
+<p>If the render still fails, then the issue would be either in the scene or in the render node itself. Try testing with a simpler scene, or on a different render node to identify which of the two is the issue.</p>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the VRED plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the VRED plugin from the list on the left.
+Support is included for VRED versions that are listed at the top of this guide.</p>
+<p>Note, if the executable supports a MAJOR.MINOR.REVISION (9.0.123) numbering system in its path, then you will need to configure the explicit exe path to the particular revision that you have installed on your machines. Deadline does not track every possible revision available or indeed where it might be custom installed to, so a studio should verify their exe paths are correct for each application version they choose to use with Deadline. Multiple exe paths can still be declared and the first one that is found on a particular Worker on a particular platform will be used from the exe list.</p>
+<a class="reference internal image-reference" href="../_images/cp_vred.png"><img alt="../_images/cp_vred.png" src="../_images/cp_vred.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>VRED Executable</strong>: The path to the VRED executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+<p>Ensure you use the following VRED executables only:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>VRED Pro</strong> (requires a VREDPro license)</dt><dd><ul>
+<li><p>Windows: VREDPro.exe</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>VRED Server Node or VRED Core</strong> (requires an ‘Autodesk Raytracing Cluster Module for Autodesk VRED 20xx’ license where xx is the YEAR)</dt><dd><ul>
+<li><p>Windows: VREDServerNode.exe</p></li>
+<li><p>Linux: VREDServerNode</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-vred-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to install the integrated VRED submission script. This script allows for submitting VRED render jobs to Deadline directly from within the VRED editing GUI.</p>
+<div class="section" id="additional-notes">
+<h3>Additional notes<a class="headerlink" href="#additional-notes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Submit VRED to Deadline dialog window is always-on-top and non-modal (main VRED UI is accessible)</p></li>
+<li><p>As a convenience, the Script Editor is set to be always-on-top for older versions of VRED</p></li>
+<li><dl class="simple">
+<dt>Many option values (or settings) in the Submit VRED to Deadline UI (VRED Options tab) Setting values will persist:</dt><dd><ul>
+<li><p>Settings include: Image Size Preset, Animation Clip, Animation Type, Use Clip Range, Render Job Type, Render Animation, GPU Ray Tracing</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Render output defaults to .PNG file output format</p></li>
+<li><p>Note: timeline will only briefly become visible (if it wasn’t already visible) upon opening the Submit VRED to Deadline UI.</p></li>
+</ul>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<p>Due to technical limitations in VRED, we are unable to provide an automated submitter installer at this time. The script and the following installation procedure has been tested with VRED 2016 and later.</p>
+<p>On <strong>Windows</strong>, copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="n">VRED</span>\<span class="n">Client</span>\<span class="n">DeadlineVREDClient</span><span class="o">.</span><span class="n">py</span> <span class="n">to</span> <span class="p">[</span><span class="n">VRED</span> <span class="n">Install</span> <span class="n">Directory</span><span class="p">]</span>\<span class="n">lib</span>\<span class="n">python</span>\<span class="n">Lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>
+</pre></div>
+</div>
+<p>From within VRED open the preferences window ( Edit -&gt; Preferences ) and add the following lines to the script tab:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">DeadlineVREDClient</span>
+<span class="n">DeadlineVREDClient</span><span class="o">.</span><span class="n">InstallDeadline</span><span class="p">(</span> <span class="n">vrMainWindow</span> <span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/vred_installation.png"><img alt="../_images/vred_installation.png" src="../_images/vred_installation.png" style="height: 400px;" /></a>
+<p>When using <strong>VRED 2024</strong> or later, you will need to disable the <strong>Python Sandbox</strong> option (found in the main Preferences dialog under the Script tab).
+Note: the Python Sandbox option disallows important custom or non-standard Python modules (including Deadline); disabling Python Sandbox
+allows Deadline to function correctly. Please assess any security concerns you might have in advance of disabling the Python Sandbox option.</p>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-vred-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Can VRED render non-GUI via Deadline?</strong></p>
+<blockquote>
+<div><p>Yes. We already pass an additional argument at render time (-nogui) to force a non-GUI session of VRED Pro is run during network rendering. If you would prefer to save on your VRED Pro license being used in non-GUI mode, then please consider using “VRED Server Node” instead which has no GUI. See the next FAQ for more information.</p>
+</div></blockquote>
+<p><strong>Is VRED via Deadline able to render using VRED Server Node (render node) Licenses?</strong></p>
+<blockquote>
+<div><p>Yes. In order to render using VRED Server Node (render node) licenses (and save using expensive VREDPro licenses) you should edit the VRED Render Executable path to “VREDServerNode.exe” instead of “VREDPro.exe”. Note, you must actually own some “Autodesk VRED Render Node 20xx” licenses (where xx is the YEAR) to be able to use the “VREDServerNode.exe” executable as it does NOT use the same license that “VREDPro.exe” uses. Please note that we believe these “Autodesk VRED Render Node” licenses are actually referred to on the ADSK pricing list as “Autodesk Raytracing Cluster Module for Autodesk VRED 20xx” if you have trouble finding them via your ADSK reseller. In your Flexlm license file, the various licensed products will have these initials: VRED Server (VRDSRV), VRED Render Node (RCMVRD), and VRED Professional (VRDPRO), which will help you verify you have the correct licensing in place.</p>
+</div></blockquote>
+<p><strong>Can VRED be run as a service?</strong></p>
+<blockquote>
+<div><p>VRED can sometimes crash when running as a service. If VRED appears crashed, try running the Worker as a normal application instead of as a service to see if that fixes the problem.</p>
+</div></blockquote>
+<p><strong>Is macOS supported?</strong></p>
+<blockquote>
+<div><p>No.</p>
+</div></blockquote>
+<p><strong>Is VRED supported on Linux?</strong></p>
+<blockquote>
+<div><p>Yes, only the non-gui application ‘VREDServerNode’ is supported on Linux (use ‘clusterService’ for VREDCluster plugin).</p>
+</div></blockquote>
+<p><strong>VRED can’t find a display on my linux render node.  Is there anything I can do about this?</strong></p>
+<blockquote>
+<div><p>Yes, The first thing you need to do is make sure that you have the correct packages installed.  This can be done by running the following commands. On Ubuntu use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libXrender1</span> <span class="n">libXcomposite1</span> <span class="n">libXxf86vm1</span> <span class="n">libXdamage1</span> <span class="n">libXfixes3</span> <span class="n">libXdmcp6</span>
+</pre></div>
+</div>
+<p>If you are using CentOS/RHEL use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="n">libXrender</span> <span class="n">libXcomposite</span> <span class="n">libXxf86vm</span> <span class="n">libXdamage</span> <span class="n">libXfixes</span> <span class="n">libXdmcp</span>
+</pre></div>
+</div>
+<p>The second thing that you need to do is make sure that the DISPLAY Environment Variable is set to “:0.0” if the Worker is running as a service in the application’s launch shell script file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">DISPLAY</span><span class="o">=</span><span class="p">:</span><span class="mf">0.0</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>In VRED the Deadline menu does not show up. What can I do?</strong></p>
+<blockquote>
+<div><p>In VRED you have to either open up a scene or create a new scene in order for the Deadline menu to show up.  This is because VRED runs it’s preferences scripts before it initializes all of the VRED variables.</p>
+</div></blockquote>
+<p><strong>Is VRED Design supported by Deadline?</strong></p>
+<blockquote>
+<div><p>VRED Design is not supported for rendering or submitting from due to VRED Design’s Python API being “Read Only”, meaning we are unable to run external scripts, like our integrated submitters or plugin rendering logic.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known VRED error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><strong>Error: FailRenderException : VRED “14.X” render executable was not found in the semicolon separated list.</strong></p>
+<blockquote>
+<div><p>If you encounter this error message in Job Report, Deadline is unable to find executable path for VRED application.</p>
+<p>Note that this may mean the specific version is not supported by Deadline officially.</p>
+<p>However, you can do the following self-troubleshooting method to render using the current VRED version.</p>
+<blockquote>
+<div><p>You can add current VRED version in the following files:
+[Repository]submissionVREDpluginsVREDVRED.param
+[Repository]submissionVREDpluginsVREDVRED.options</p>
+</div></blockquote>
+</div></blockquote>
+<p id="app-vred-error-message-mesa-ref-label"><strong>STDOUT: vrEGL: couldn’t find ‘libEGL.so’!</strong></p>
+<blockquote>
+<div><p>If you are using a headless Linux-based Render Node (i.e. no physical graphics card installed), you will need to install a replacement for OpenGL such as MESA to avoid the missing OpenGL libraries message as well as ensure X-server is running as per Autodesk VRED System Requirements guidelines (listed at the top):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="o">-</span><span class="n">s</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yum</span> <span class="n">install</span> <span class="n">redhat</span><span class="o">-</span><span class="n">lsb</span> <span class="n">libX11</span> <span class="n">libXext</span> <span class="n">mesa</span><span class="o">-</span><span class="n">libGL</span> <span class="n">mesa</span><span class="o">-</span><span class="n">libGLU</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yum</span> <span class="n">groupinstall</span> <span class="s2">&quot;X Window System&quot;</span>
+</pre></div>
+</div>
+<p>Reboot machine, run-level set correctly</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">VRED</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#region-rendering-options">Region Rendering Options</a></li>
+<li><a class="reference internal" href="#troubleshooting-render-issues">Troubleshooting Render Issues</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#additional-notes">Additional notes</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-vray-vrimg2exr.html"
+                        title="previous chapter">V-Ray Vrimg2Exr</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-vred-cluster.html"
+                        title="next chapter">VRED Cluster</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-vred-cluster.html" title="VRED Cluster"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-vray-vrimg2exr.html" title="V-Ray Vrimg2Exr"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">VRED</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

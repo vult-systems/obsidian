@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Archiving Jobs &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Monitor and User Settings" href="user-settings.html" />
+    <link rel="prev" title="Controlling Jobs" href="job-controlling.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="user-settings.html" title="Monitor and User Settings"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="job-controlling.html" title="Controlling Jobs"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-getting-started.html" accesskey="U">Getting Started With Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Archiving Jobs</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="archiving-jobs">
+<span id="job-archiving-ref-label"></span><h1>Archiving Jobs<a class="headerlink" href="#archiving-jobs" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Deadline allows you to archive jobs, which is useful if you want to keep a backup of every job you’ve rendered, or if you want to remove a job from one farm and place it in another. It can also be used to give a problematic job to <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> for testing purposes.</p>
+<p>Jobs can be archived automatically or manually. When a job is archived, its job and task information are exported as JSON to separate text files. These files are placed in a zip file with any auxiliary files that were submitted with the job, and any reports the job currently has. The name of the zip file will contain the job’s user, plugin, name, and ID (to guarantee uniqueness). It will have the following format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">USER__PLUGIN__JOBNAME__JOBID</span><span class="o">.</span><span class="n">zip</span>
+</pre></div>
+</div>
+<p>Typically, this zip file is placed in the jobsArchived folder in the Repository. However, when manually archiving a job, you have the option to choose an alternative archive location.</p>
+</div>
+<div class="section" id="manual-job-archiving">
+<h2>Manual Job Archiving<a class="headerlink" href="#manual-job-archiving" title="Permalink to this headline">¶</a></h2>
+<p>Users can manually archive a job by right-clicking on it in the job list in the Monitor and selecting Archive Job. This will bring up the following window:</p>
+<img alt="../_images/archive_job.png" src="../_images/archive_job.png" />
+<p>By default, it will save the archive to the jobsArchived folder in the Repository. However, you can choose a different folder to archive the job. You can also choose whether or not to delete the job from the database after archiving it. Once case where you might not want to delete it is if you are archiving a job to send to <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> for testing purposes.</p>
+<p>If the Job panel is not visible, see the <a class="reference internal" href="monitor.html#monitor-panel-features-ref-label"><span class="std std-ref">Panel Features</span></a> documentation for instructions on how to create new panels in the Monitor.</p>
+</div>
+<div class="section" id="automatic-job-archiving">
+<h2>Automatic Job Archiving<a class="headerlink" href="#automatic-job-archiving" title="Permalink to this headline">¶</a></h2>
+<p>When submitting a job, users can set the On Job Complete setting to Archive. When the job finishes, it will automatically be archived to the jobsArchived folder in the Repository.</p>
+<a class="reference internal image-reference" href="../_images/on_complete_archive.png"><img alt="../_images/on_complete_archive.png" src="../_images/on_complete_archive.png" style="height: 500px;" /></a>
+<p>Administrators can also configure Deadline to automatically archive all jobs after they have finished rendering and place them in the jobsArchived folder in the Repository. This can be done in the Job Settings section of the <a class="reference internal" href="repository-config.html#job-settings-ref-label"><span class="std std-ref">Repository Options</span></a>.</p>
+<a class="reference internal image-reference" href="../_images/cro_js_cleanup_archive.png"><img alt="../_images/cro_js_cleanup_archive.png" src="../_images/cro_js_cleanup_archive.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="importing-archived-jobs">
+<h2>Importing Archived Jobs<a class="headerlink" href="#importing-archived-jobs" title="Permalink to this headline">¶</a></h2>
+<p>To import an archived job, simply select File -&gt; Import Archived Jobs in the Monitor and choose one or more zip files containing archived jobs.</p>
+<a class="reference internal image-reference" href="../_images/job_import.png"><img alt="../_images/job_import.png" src="../_images/job_import.png" style="height: 400px;" /></a>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Archiving Jobs</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#manual-job-archiving">Manual Job Archiving</a></li>
+<li><a class="reference internal" href="#automatic-job-archiving">Automatic Job Archiving</a></li>
+<li><a class="reference internal" href="#importing-archived-jobs">Importing Archived Jobs</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="job-controlling.html"
+                        title="previous chapter">Controlling Jobs</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="user-settings.html"
+                        title="next chapter">Monitor and User Settings</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="user-settings.html" title="Monitor and User Settings"
+             >next</a></li>
+        <li class="right" >
+          <a href="job-controlling.html" title="Controlling Jobs"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-getting-started.html" >Getting Started With Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Archiving Jobs</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

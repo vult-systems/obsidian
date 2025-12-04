@@ -1,0 +1,292 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mocha Pro &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="modo" href="app-modo.html" />
+    <link rel="prev" title="Mistika VR" href="app-mistikavr.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-modo.html" title="modo"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-mistikavr.html" title="Mistika VR"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Mocha Pro</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mocha-pro">
+<span id="app-mocha-ref-label"></span><h1>Mocha Pro<a class="headerlink" href="#mocha-pro" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs from within Mocha Pro by installing the <a class="reference internal" href="#app-mocha-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a>, or you can submit them from the Monitor. The instructions for installing the <a class="reference internal" href="#app-mocha-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<p>To submit from within Mocha Pro, select ‘Submit To Deadline’ from the Deadline menu.</p>
+<p><a class="reference internal" href="../_images/integrated_mocha.png"><img alt="int" src="../_images/integrated_mocha.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_mocha.png"><img alt="mon" src="../_images/sub_mocha.png" style="height: 400px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="../_images/mocha_render_options.png"><img alt="render" src="../_images/mocha_render_options.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/mocha_export_options.png"><img alt="export" src="../_images/mocha_export_options.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/mocha_hybrid_options.png"><img alt="hybrid" src="../_images/mocha_hybrid_options.png" style="height: 400px;" /></a></p>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.</p>
+<p>The Mocha Pro specific options are:</p>
+<p><strong>Common Options</strong></p>
+<ul class="simple">
+<li><p><strong>Version</strong>: The version of Mocha Pro to render/export with.</p></li>
+<li><p><strong>Submit Mocha Project File With Job</strong>: If this option is enabled, the project file will be submitted with the job, and then copied locally to the Worker machine during rendering.</p></li>
+<li><p><strong>Mocha Project File</strong>: The Mocha Pro project to be rendered/exported. If the file’s location is not directly accessible by the Worker(s), you need to check ‘Submit Mocha Project File With Job’.</p></li>
+<li><p><strong>Output Directory</strong>: The directory where the render/export output will be written to. The location must be accessible by the Worker(s).</p></li>
+<li><p><strong>Frame Index Width</strong>: The number of digits allocated for the index portion of the file name. If the number is not large enough to accomodate all output frame indices, it will be ignored and the minimum required number of digits will be used instead.</p></li>
+<li><p><strong>Frame Offset</strong>: If the project frame range does not start with 0, please specify the offset.</p></li>
+<li><p><strong>Job Type</strong>: One of the two basic job types Mocha Pro supports, render or export.</p></li>
+<li><p><strong>Job Sub Type</strong>: Available job sub types depend on the job type.</p></li>
+</ul>
+<p><strong>Render Options</strong></p>
+<ul class="simple">
+<li><p><strong>File Extension</strong>: The output file extension.</p></li>
+<li><p><strong>Clip View Index</strong>: By default, this is zero (0), but if you are working with a multi-view clip, you can set the index here. In stereo mode, Left and Right views are 0 and 1 respectively.</p></li>
+<li><p><strong>Output Prefix</strong>: The output prefix goes before the frame number in the file name.</p></li>
+<li><p><strong>Output Suffix</strong>: The output suffix goes after the frame number in the file name.</p></li>
+<li><dl class="simple">
+<dt><strong>Layers</strong>: The layers to render. When specifying which layers to render, follow these rules:</dt><dd><ul>
+<li><p>if you want to render all layers inside a group, put the group name followed by a colon (e.g. myGroup:)</p></li>
+<li><p>if you want to render only some layers inside a group, put the group name followed by a colon and then list group’s individual layer names separating them by a comma (e.g. myGroup: layer1, layer2)</p></li>
+<li><p>if you want to render ungrouped layers, list their names separating them by a comma (layer1, layer2)</p></li>
+<li><p>you can render multiple groups as well as ungrouped layers but you must specify one group per line and have ungrouped layers on a separate line</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p><strong>Export Options</strong></p>
+<ul class="simple">
+<li><p><strong>Exporter Name</strong>: The name of the exporter. The exporters list can be accessed in &lt;repository&gt;/plugins/Mocha/Exporters.txt.</p></li>
+<li><p><strong>File Name</strong>: The exporter output file name. Please include the file extension applicable for the selected exporter.</p></li>
+<li><p><strong>View Names</strong>: List of names or abbreviations of views to export (use comma as the delimiter). When in stereo mode, Left(L) will be used by default.</p></li>
+<li><p><strong>Frame Time</strong>: The frame time argument is used when working with tracking data exporters.</p></li>
+<li><p><strong>Colorize</strong>: Used to export the colored version of the mattes.</p></li>
+<li><p><strong>Remove Lens Distortion</strong>: Mimes the Remove Lens Distortion checkbox of the Export Tracking Data dialog.</p></li>
+<li><p><strong>Stabilize</strong>: Mimes the Stabilize checkbox of the Export Tracking Data dialog.</p></li>
+<li><p><strong>Invert</strong>: Mimes the Invert checkbox in Mocha’s Export Tracking Data dialog.</p></li>
+</ul>
+<p>Please note that Rendered Shapes, while being an exporter type, uses a mix of the usual render and export options.</p>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Mocha Pro plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Mocha plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/mocha_plugin_options.png"><img alt="../_images/mocha_plugin_options.png" src="../_images/mocha_plugin_options.png" style="height: 400px;" /></a>
+<ul class="simple">
+<li><p><strong>Python Executables</strong>: Mocha’s custom version of Python.</p></li>
+<li><p><strong>Mocha Render Executables</strong>: Mocha’s executable used for the render jobs.</p></li>
+<li><p><strong>Mocha Export Executables</strong>: Mocha’s executable used for the export jobs.</p></li>
+</ul>
+<p>Please note that if you have Mocha Pro installed on different platforms, you will need to provide multiple paths on separate lines to accommodate for different locations of the executables.</p>
+<p><strong>Common Settings</strong></p>
+<ul>
+<li><dl>
+<dt><strong>Verbosity Level</strong>: Defines the depth of log output Mocha Pro provides. The levels:</dt><dd><div class="line-block">
+<div class="line">v0: Critical (this level is always enabled)</div>
+<div class="line">v1: Errors</div>
+<div class="line">v2: Warnings</div>
+<div class="line">v3: Info</div>
+<div class="line">v4: Debug</div>
+</div>
+</dd>
+</dl>
+</li>
+<li><p><strong>Enable Path Mapping</strong>: If enabled, a temporary Mocha file will be created locally on the Worker for rendering and Deadline will do path mapping directly in the Mocha file. Note that this feature can be switched off if there are no path mapping entries defined in Repository Options.</p></li>
+</ul>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-mocha-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to install the integrated Mocha Pro submission script. This script allows for submitting Mocha’s render and export jobs to Deadline directly from within the Mocha Pro editing GUI.</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;repository&gt;/submission/Mocha/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Copy <code class="docutils literal notranslate"><span class="pre">[repository]/submission/Mocha/Client/DeadlineMochaClient.py</span></code> to the Mocha’s Script folder. When Mocha Pro is installed, by default the folder gets created here:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Windows: <code class="docutils literal notranslate"><span class="pre">C:/Users/&lt;username&gt;/AppData/Roaming/Imagineer</span> <span class="pre">Systems</span> <span class="pre">Ltd/Scripts</span></code></p></li>
+<li><p>macOS: <code class="docutils literal notranslate"><span class="pre">~/Library/Application</span> <span class="pre">Support/Imagineer</span> <span class="pre">Systems</span> <span class="pre">Ltd/Scripts</span></code></p></li>
+<li><p>Linux: <code class="docutils literal notranslate"><span class="pre">~/.config/Imagineer</span> <span class="pre">Systems</span> <span class="pre">Ltd/Scripts</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>In the Scripts folder, there should a file called init.py. If it doesn’t exist, create it.</p></li>
+<li><p>Add the following lines to init.py:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">DeadlineMochaClient</span>
+<span class="n">DeadlineMochaClient</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="verify-installation">
+<h3>Verify Installation<a class="headerlink" href="#verify-installation" title="Permalink to this headline">¶</a></h3>
+<p>The next time you launch Mocha Pro, there should be a Deadline menu with the option to <strong>Submit to Deadline</strong>.</p>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-mocha-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Mocha Pro are supported?</strong></p>
+<blockquote>
+<div><p>Mocha Pro 5</p>
+</div></blockquote>
+<p><strong>On which platforms is Mocha Pro supported?</strong></p>
+<blockquote>
+<div><p>Mocha Pro 5 is supported on Windows, macOS, and Linux.</p>
+</div></blockquote>
+<p><strong>How can I modify the list of available exporters?</strong></p>
+<ol class="arabic">
+<li><p>Navigate to Mocha’s export executable which can found in Mocha’s installation directory, and by default is located at:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Windows: <code class="docutils literal notranslate"><span class="pre">C:/Program</span> <span class="pre">Files/Imagineer</span> <span class="pre">Systems</span> <span class="pre">Ltd/&lt;MochaProVersionFolder&gt;/Python</span></code></p></li>
+<li><p>macOS: <code class="docutils literal notranslate"><span class="pre">~/Applications/&lt;MochaProVersionFolder&gt;/Contents/MacOS</span></code></p></li>
+<li><p>Linux: <code class="docutils literal notranslate"><span class="pre">~/opt/isl/&lt;MochaProVersionFolder&gt;/Python</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Open terminal (command line prompt) and execute mochaexport.py via Python with “-L” flag:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">mochaexport</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">L</span>
+</pre></div>
+</div>
+</li>
+<li><p>The command should print a list of available exporters. Copy and past them into Exporters.txt which can be found in <code class="docutils literal notranslate"><span class="pre">&lt;repository&gt;/plugins/Mocha</span></code>.</p></li>
+<li><p>If you wish, you can add custom exporters under title ‘Custom data exporters’.</p></li>
+</ol>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Mocha error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Mocha Pro</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+<li><a class="reference internal" href="#verify-installation">Verify Installation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-mistikavr.html"
+                        title="previous chapter">Mistika VR</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-modo.html"
+                        title="next chapter">modo</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-modo.html" title="modo"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-mistikavr.html" title="Mistika VR"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Mocha Pro</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

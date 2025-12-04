@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mantra Standalone &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Maxwell" href="app-maxwell.html" />
+    <link rel="prev" title="LuxWorker" href="app-luxworker.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-maxwell.html" title="Maxwell"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-luxworker.html" title="LuxWorker"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Mantra Standalone</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mantra-standalone">
+<span id="app-mantra-ref-label"></span><h1>Mantra Standalone<a class="headerlink" href="#mantra-standalone" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit Mantra Standalone jobs from the Monitor.</p>
+<a class="reference internal image-reference" href="../_images/sub_mantra.png"><img alt="../_images/sub_mantra.png" src="../_images/sub_mantra.png" style="height: 500px;" /></a>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.
+The Mantra specific options are:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>IFD File</strong>: Specify the Mantra IFD file(s) to render.</dt><dd><ul>
+<li><p>If you are submitting a sequence of .IFD files, select one of the numbered frames in the sequence, and the frame range will automatically be detected if Calculate Frames From IFD File is enabled. The frames you choose to render should correspond to the numbers in the .IFD files.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>Output File</strong>: The output file path.</p></li>
+<li><p><strong>Version</strong>: The Mantra version to render with.</p></li>
+<li><p><strong>Threads</strong>: The number of threads to use for rendering.</p></li>
+<li><p><strong>Additional Arguments</strong>: Additional command line arguments to pass to the renderer.</p></li>
+</ul>
+</div>
+<div class="section" id="tile-rendering-options">
+<h3>Tile Rendering Options<a class="headerlink" href="#tile-rendering-options" title="Permalink to this headline">¶</a></h3>
+<p>Enable Tile Rendering to split up a single frame into multiple tiles.</p>
+<ul class="simple">
+<li><p><strong>Enable Tile Rendering</strong>: If enabled, the frame will be split into multiple tiles that are rendered individually and can be assembled after.</p></li>
+<li><p><strong>Tiles In X</strong>: Number of horizontal tiles.</p></li>
+<li><p><strong>Tiles In Y</strong>: Number of vertical tiles.</p></li>
+<li><p><strong>Single Frame Tile Job Enabled</strong>: Enable to submit all tiles in a single job.</p></li>
+<li><p><strong>Single Job Frame</strong>: The frame that will be split up.</p></li>
+<li><p><strong>Submit Dependent Assembly Job</strong>: Submit a job dependent on the tile job that will assemble the tiles.</p></li>
+<li><p><strong>Cleanup Tiles after Assembly</strong>: If selected the tiles will be deleted after assembly.</p></li>
+<li><p><strong>Error on Missing Tiles</strong>: If enabled, then if any of the tiles are missing the assembly job will fail.</p></li>
+<li><p><strong>Assemble Over</strong>: Determine what the Draft Tile Assembler should assemble over be it a blank image, previous output or a specified file.</p></li>
+<li><p><strong>Error on Missing Background</strong>: If enabled, then if the background file is missing the job will fail.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Mantra plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Mantra plugin from the list on the left.</p>
+<p>Note, if the executable supports a MAJOR.MINOR.REVISION (9.0.123) numbering system in its path, then you will need to configure the explicit exe path to the particular revision that you have installed on your machines. Deadline does not track every possible revision available or indeed where it might be custom installed to, so a studio should verify their exe paths are correct for each application version they choose to use with Deadline. Multiple exe paths can still be declared and the first one that is found on a particular Worker on a particular platform will be used from the exe list.</p>
+<a class="reference internal image-reference" href="../_images/cp_mantra.png"><img alt="../_images/cp_mantra.png" src="../_images/cp_mantra.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Mantra Executable</strong>: The path to the Mantra executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+<p><strong>Path Mapping (For Mixed Farms)</strong></p>
+<ul class="simple">
+<li><p><strong>Enable Path Mapping</strong>: If enabled, a temporary IFD file will be created locally on the Worker for rendering because Deadline does the path mapping directly in the IFD file. This feature can be turned off if there are no Path Mapping entries defined in the Repository Options.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-mantra-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Mantra are supported by Deadline?</strong></p>
+<blockquote>
+<div><p>Mantra for Houdini 7 and later is supported by Deadline.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Mantra error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Mantra Standalone</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#tile-rendering-options">Tile Rendering Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-luxworker.html"
+                        title="previous chapter">LuxWorker</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-maxwell.html"
+                        title="next chapter">Maxwell</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-maxwell.html" title="Maxwell"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-luxworker.html" title="LuxWorker"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Mantra Standalone</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

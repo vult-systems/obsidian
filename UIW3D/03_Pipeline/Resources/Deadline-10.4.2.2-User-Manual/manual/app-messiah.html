@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Messiah &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="MetaFuze" href="app-metafuze.html" />
+    <link rel="prev" title="Mental Ray Standalone" href="app-mental-ray.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-metafuze.html" title="MetaFuze"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-mental-ray.html" title="Mental Ray Standalone"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Messiah</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="messiah">
+<span id="app-messiah-ref-label"></span><h1>Messiah<a class="headerlink" href="#messiah" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="plugin-installation">
+<span id="app-messiah-plugin-installation-ref-label"></span><h2>Plugin Installation<a class="headerlink" href="#plugin-installation" title="Permalink to this headline">¶</a></h2>
+<p>The Messiah plugin is no longer included in new installations of Deadline by default, but it is still supported.</p>
+<p>The following steps will lead you through the process of downloading and configuring the Messiah plugin to work just as it does in previous versions of Deadline.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Messiah is only supported on Windows operating systems.</p>
+</div>
+<div class="section" id="download-the-plugin-package">
+<h3>Download the Plugin Package<a class="headerlink" href="#download-the-plugin-package" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Before you begin, make sure the Deadline Monitor is <strong>not</strong> running.</p></li>
+<li><p>All the files required for using Messiah with Deadline are available on our <a class="reference external" href="https://downloads.thinkboxsoftware.com">downloads site</a> as a zip archive.</p></li>
+<li><p>Click the ‘Plugins’ link at the bottom of the Downloads site.</p></li>
+<li><p>Find the archive file under the ‘Messiah’ heading on the plugins download page and download it.</p></li>
+<li><p>Extract the archive file you just downloaded.</p></li>
+<li><dl class="simple">
+<dt>Copy the Messiah files to their appropriate locations in your Deadline Repository installation:</dt><dd><ul>
+<li><p>Copy the <code class="docutils literal notranslate"><span class="pre">Messiah</span></code> <strong>folder</strong> from <code class="docutils literal notranslate"><span class="pre">[Extracted</span> <span class="pre">Messiah</span> <span class="pre">Archive]/plugins</span></code> to <code class="docutils literal notranslate"><span class="pre">[Deadline</span> <span class="pre">Repository]/plugins</span></code></p></li>
+<li><p>Copy the <code class="docutils literal notranslate"><span class="pre">Messiah</span></code> <strong>folder</strong> from <code class="docutils literal notranslate"><span class="pre">[Extracted</span> <span class="pre">Messiah</span> <span class="pre">Archive]/submission</span></code> to <code class="docutils literal notranslate"><span class="pre">[Deadline</span> <span class="pre">Repository]/submission</span></code></p></li>
+<li><p>Copy the <code class="docutils literal notranslate"><span class="pre">MessiahSubmission.py</span></code> <strong>file</strong> from <code class="docutils literal notranslate"><span class="pre">[Extracted</span> <span class="pre">Messiah</span> <span class="pre">Archive]/scripts/Submission</span></code> to <code class="docutils literal notranslate"><span class="pre">[Deadline</span> <span class="pre">Repository]/scripts/Submission</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>You can now submit Messiah jobs through the Deadline UI by navigating to <code class="docutils literal notranslate"><span class="pre">Submit</span> <span class="pre">&gt;</span> <span class="pre">3D</span> <span class="pre">&gt;</span> <span class="pre">Messiah</span></code> in the Deadline Monitor.</p></li>
+</ul>
+<p>If you would like to further configure the Messiah plugin or install the integrated Deadline submitter, you are now set up to follow the guides below:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#app-messiah-plugin-configuration-ref-label"><span class="std std-ref">Configuring the Messiah Plugin</span></a></p></li>
+<li><p><a class="reference internal" href="#app-messiah-integrated-submission-script-label"><span class="std std-ref">Installing the Messiah Integrated Deadline Submitter</span></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs from within Messiah by installing the <a class="reference internal" href="#app-messiah-integrated-submission-script-label"><span class="std std-ref">integrated submission plugin</span></a>, or you can submit them from the Monitor. The instructions for installing the <a class="reference internal" href="#app-messiah-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<a class="reference internal image-reference" href="../_images/sub_messiah.png"><img alt="../_images/sub_messiah.png" src="../_images/sub_messiah.png" style="height: 500px;" /></a>
+<p>To submit from within Messiah, select the Customize tab, and then from the drop down, select Submit To Deadline. Click the Submit Messiah Job button to launch the submitter.</p>
+<a class="reference internal image-reference" href="../_images/integrated_messiah.png"><img alt="../_images/integrated_messiah.png" src="../_images/integrated_messiah.png" style="height: 300px;" /></a>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation. The Messiah specific options are:</p>
+<ul class="simple">
+<li><p><strong>Messiah File</strong>: The scene file to render.</p></li>
+<li><p><strong>Content Folder</strong>: This is the folder that contains the Messiah scene assets. It is recommended that you have a network accessible content folder when network rendering with Messiah.</p></li>
+<li><p><strong>Output Folder</strong>: The folder where the output files will be saved (including images from all enabled buffers). If left blank, the output folders in the scene file will be used.</p></li>
+<li><p><strong>Threads</strong>: The number of threads to use for rendering.</p></li>
+<li><p><strong>Build To Force</strong>: The build of Messiah to force.</p></li>
+<li><p><strong>Frame Resolution</strong>: Override the width and height of the output images. If a value is set to 0, the value from the scene file will be respected.</p></li>
+<li><p><strong>Antialiasing</strong>: Override the antialiasing settings in the scene file.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<span id="app-messiah-plugin-configuration-ref-label"></span><h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Messiah plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Messiah plugin from the list on the left.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you do not see ‘Messiah’ in the plugins list, then you will need to install the plugin before completing the following steps.
+Consult the <a class="reference internal" href="#app-messiah-plugin-installation-ref-label"><span class="std std-ref">Messiah Plugin Installation</span></a> guide to install the Messiah plugin on Deadline.</p>
+</div>
+<a class="reference internal image-reference" href="../_images/cp_messiah.png"><img alt="../_images/cp_messiah.png" src="../_images/cp_messiah.png" style="height: 400px;" /></a>
+<p><strong>Messiah Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Messiah Host Library</strong>: The path to the messiahHOST.dll library. Enter alternative paths on separate lines.</p></li>
+</ul>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-messiah-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to install the integrated Messiah submission plugin. This plugin allows for submitting Messiah render jobs to Deadline directly from within the Messiah editing GUI. Note that this has
+only been tested with Messiah version 5.</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you cannot find the <cite>[Repository]/submission/Messiah</cite> directory when following the steps below, then you will need to install the Messiah plugin first.
+Consult the <a class="reference internal" href="#app-messiah-plugin-installation-ref-label"><span class="std std-ref">Messiah Plugin Installation</span></a> guide to install the Messiah plugin on Deadline before attempting to install the integrated submitter in Messiah.</p>
+</div>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/Messiah/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<p><strong>Messiah 32 Bit</strong></p>
+<ul>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="n">Messiah</span>\<span class="n">Client</span>\<span class="n">DeadlineMessiahClient32</span><span class="o">.</span><span class="n">mp</span> <span class="n">to</span> <span class="p">[</span><span class="n">Messiah</span> <span class="mi">32</span> <span class="n">Bit</span> <span class="n">Install</span> <span class="n">Directory</span><span class="p">]</span>\<span class="n">Plugins</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p><strong>Messiah 64 Bit</strong></p>
+<ul>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="n">Messiah</span>\<span class="n">Client</span>\<span class="n">DeadlineMessiahClient64</span><span class="o">.</span><span class="n">mp</span> <span class="n">to</span> <span class="p">[</span><span class="n">Messiah</span> <span class="mi">64</span> <span class="n">Bit</span> <span class="n">Install</span> <span class="n">Directory</span><span class="p">]</span>\<span class="n">Plugins</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="verify-installation">
+<h3>Verify Installation<a class="headerlink" href="#verify-installation" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Restart Messiah.</p></li>
+<li><p>You will find the <strong>Submit To Deadline</strong> option in the drop down under the Customize tab.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-messiah-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Messiah are supported by Deadline?</strong></p>
+<blockquote>
+<div><p>Messiah 5 is currently supported.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Messiah error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Messiah</a><ul>
+<li><a class="reference internal" href="#plugin-installation">Plugin Installation</a><ul>
+<li><a class="reference internal" href="#download-the-plugin-package">Download the Plugin Package</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+<li><a class="reference internal" href="#verify-installation">Verify Installation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-mental-ray.html"
+                        title="previous chapter">Mental Ray Standalone</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-metafuze.html"
+                        title="next chapter">MetaFuze</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-metafuze.html" title="MetaFuze"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-mental-ray.html" title="Mental Ray Standalone"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Messiah</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

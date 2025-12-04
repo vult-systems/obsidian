@@ -1,0 +1,331 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Standalone Python API &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Python 3 Upgrade Guide" href="python-upgrade.html" />
+    <link rel="prev" title="Web Service Scripts" href="web-service-scripts.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="python-upgrade.html" title="Python 3 Upgrade Guide"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="web-service-scripts.html" title="Web Service Scripts"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-scripting.html" accesskey="U">Scripting</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Standalone Python API</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="standalone-python-api">
+<span id="standalone-python-ref-label"></span><h1>Standalone Python API<a class="headerlink" href="#standalone-python-api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The Standalone Python API can be used in Python for communicating with the HTTP API (documented in <a class="reference internal" href="rest-overview.html#rest-overview-ref-label"><span class="std std-ref">REST Overview</span></a>). In order to use the HTTP API you must have the <a class="reference internal" href="web-service.html#web-service-ref-label"><span class="std std-ref">Web Service</span></a> running on a machine whose address and port number you know. For a list of the API’s functions and how they are used go to the
+<a class="reference external" href="https://downloads.thinkboxsoftware.com/">Deadline Downloads</a> page and download the documentation. Essentially, our Standalone Python API is a Python wrapper API around our RESTful HTTP API.</p>
+<p>Note, as all communication to Deadline travels through the machine running the <a class="reference internal" href="web-service.html#web-service-ref-label"><span class="std std-ref">Web Service</span></a> and not the local host, there are consequences that should be considered carefully. Any file paths provided need to be valid on the <a class="reference internal" href="web-service.html#web-service-ref-label"><span class="std std-ref">Web Service</span></a> machine, including any differences between operating systems if for example, your local host is running Windows but the <a class="reference internal" href="web-service.html#web-service-ref-label"><span class="std std-ref">Web Service</span></a> machine is Linux. In the case of submitting a job, the job’s username will be the user account currently running the <a class="reference internal" href="web-service.html#web-service-ref-label"><span class="std std-ref">Web Service</span></a>, NOT the submitting local user, unless a UserName is provided in the job info.</p>
+</div>
+<div class="section" id="set-up">
+<h2>Set-up<a class="headerlink" href="#set-up" title="Permalink to this headline">¶</a></h2>
+<p>In order to use the Standalone Python API you must have <strong>Python 3.10+</strong> installed. Copy the “<strong>Deadline</strong>” Folder containing the Standalone Python API
+from <strong>\\your\repository\api\python</strong> to the “<strong>site-packages</strong>” folder of your Python installation and the API is ready to use.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are using the Deadline Python API version 10.1.15 or older, it is highly recommended to upgrade to version 10.1.16 or newer. The newer server supports secure TLS and has many performance improvements.</p>
+</div>
+</div>
+<div class="section" id="web-service-configuration-in-deadline-client-installation">
+<h2>Web Service configuration in Deadline Client Installation<a class="headerlink" href="#web-service-configuration-in-deadline-client-installation" title="Permalink to this headline">¶</a></h2>
+<p>As part of the Client Installation, you can also choose to configure the current machine as a Web Service Server. In general this is not necessary, and as such is an optional part of the configuration – it must explicitly be selected at the Component Selection screen.</p>
+<a class="reference internal image-reference" href="../_images/webservice_components.png"><img alt="../_images/webservice_components.png" src="../_images/webservice_components.png" style="height: 420px;" /></a>
+<p>If you have selected the option to configure the current machine as a Web Service server, you will be prompted with configuration screens for the Web Service.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These configuration screens only come up once the regular configuration screens have been filled out.
+They do not appear immediately after the Component Selection screen.</p>
+</div>
+<a class="reference internal image-reference" href="../_images/webservice_set_up.png"><img alt="../_images/webservice_set_up.png" src="../_images/webservice_set_up.png" style="height: 420px;" /></a>
+<p>The first page consists of a few different settings:</p>
+<ul class="simple">
+<li><p><strong>User/Group running the Web Service</strong>: This is the user (or user group) that will be expected to run the Web Service server process. This value will dictate the initial permissions on files needed by the Web Service server, and the user listed on the HTTP.SYS URL Reservation (Windows only).</p></li>
+<li><p><strong>Unsecured port for Deadline Web Service</strong>: This is the port on which the Server will listen for incoming HTTP requests. On Windows, this will also be the port listed on the HTTP.SYS URL Reservation created by the installer.</p></li>
+<li><dl class="simple">
+<dt><strong>Require Web Service clients to use TLS</strong>: If enabled, the Web Service server will serve Web Service clients exclusively over an encrypted connection. It will require Web Service clients to provide a valid x509 certificate when connecting.</dt><dd><ul>
+<li><p><strong>Secured Port</strong>: If TLS is enabled, remote connections will need to connect to this TLS port (and not the unsecured HTTP port).</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>HTTP-only configurations should <em>only</em> be used internally within a closed network, and should not be exposed to the internet.</p>
+</div>
+<a class="reference internal image-reference" href="../_images/webservice_choose_certs.png"><img alt="../_images/webservice_choose_certs.png" src="../_images/webservice_choose_certs.png" style="height: 420px;" /></a>
+<p>If TLS was enabled, this next page allows for configuration of the x509 certificates that the Web Service server will use to serve Web Service clients over TLS.</p>
+<ul class="simple">
+<li><p><strong>Generate New Web Service Certificates</strong>: Select this option if you do not have a set of certificates to use.</p></li>
+<li><dl class="simple">
+<dt><strong>Use Existing Web Service Certificates</strong>: Select this option if you’ve already generated a set of certificates to use (either externally or previously through the installer).</dt><dd><ul>
+<li><p><strong>Server Certificate</strong>: The path to a Server x509 certificate, in PKCS#12 (*.pfx, *.p12) format. This must include the private key alongside the certificate.</p></li>
+<li><p><strong>CA Certificate</strong>: The path to a trusted root CA that should be used to validate incoming client certificates.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<a class="reference internal image-reference" href="../_images/webservice_certs_generation.png"><img alt="../_images/webservice_certs_generation.png" src="../_images/webservice_certs_generation.png" style="height: 420px;" /></a>
+<p>This page is the final page for configuring the Web Service, and only appears if ‘Generate New Web Service Certificates’ was selected in the previous step.
+It contains settings related to generating the CA, server, and Web Service client certificates.</p>
+<ul class="simple">
+<li><p><strong>Certificate Directory</strong>: This is the directory in which the set of generated certificates will be placed.</p></li>
+<li><p><strong>Web Service Certificate Password</strong>: You may specify a password that will be used to encrypt the Client certificate and key. If specified, it will need to be provided by Web Service clients connecting using this certificate. If you do not wish to set a password, leave this field blank.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Once the certificates have been generated, the ‘Deadline10WebServiceClient.pfx’ file should be securely moved to client machines that are expected to connect to this Web Service Server; it will be needed at connection time.
+In addition, the user(s) running the Web Service client processes will need to be granted Read access to the file (the installer creates the file with restrictive permissions).</p>
+</div>
+</div>
+<div class="section" id="using-the-api">
+<h2>Using the API<a class="headerlink" href="#using-the-api" title="Permalink to this headline">¶</a></h2>
+<p>A DeadlineCon object must be created which is used to communicate with the web service to send and receive requests. First enter “import Deadline.DeadlineConnect as Connect”, then create your connection object
+“connectionObject = Deadline.DeadlineConnect.DeadlineCon(‘WebServiceName’, WebServicePortNumber)”, where ‘WebServiceName’ is the DNS name or IP address of the machine currently running the web service and ‘WebServicePortNumber’ is the web service port number as configured in the Web Service settings in the Repository Options. By default it is: 8081.
+The “connectionObject” variable can now be used to communicate requests to the web service.</p>
+<p>Example: Getting group names and suspending a job</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">Deadline.DeadlineConnect</span> <span class="kn">import</span> <span class="n">DeadlineCon</span> <span class="k">as</span> <span class="n">Connect</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">con</span> <span class="o">=</span> <span class="n">Connect</span><span class="p">(</span><span class="s1">&#39;WebServiceName&#39;</span><span class="p">,</span> <span class="mi">8081</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">con</span><span class="o">.</span><span class="n">Groups</span><span class="o">.</span><span class="n">GetGroupNames</span><span class="p">()</span>
+<span class="go">[u&#39;none&#39;, u&#39;group1&#39;, u&#39;group2&#39;, u&#39;group3&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">jobId</span> <span class="o">=</span> <span class="n">validjobID</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">con</span><span class="o">.</span><span class="n">Jobs</span><span class="o">.</span><span class="n">SuspendJob</span><span class="p">(</span><span class="n">jobId</span><span class="p">)</span>
+<span class="go">&#39;Success&#39;</span>
+</pre></div>
+</div>
+<p>Details on the API functions can be found in the <a class="reference external" href="https://docs.thinkboxsoftware.com/">Deadline documentation</a>.</p>
+</div>
+<div class="section" id="using-the-api-with-tls">
+<h2>Using the API with TLS<a class="headerlink" href="#using-the-api-with-tls" title="Permalink to this headline">¶</a></h2>
+<p>Deadline Web Service now supports TLS connections. The connecting procedure is similar to non-TLS. A DeadlineCon object must be created which is used to communicate with the web service to send and receive requests.
+First enter “import Deadline.DeadlineConnect as Connect”, then create your connection object <cite>connectionObject = Deadline.DeadlineConnect.DeadlineCon(‘WebServiceName’, WebServiceTLSPortNumber, True, ‘Path/To/CAcert’, False)</cite>,
+where <cite>WebServiceName</cite> is the DNS name or IP address of the machine currently running the web service and <cite>WebServiceTLSPortNumber</cite> is the web service tls port number can be configured through <a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">Command</span></a> or through
+the <a class="reference internal" href="install-client.html#install-client-ref-label"><span class="std std-ref">Client Installation (Advanced)</span></a>. The first boolean value indicates whether or not to enable TLS. <cite>Path/To/CAcert</cite> is the ca certicate generated by client installer, you can also generate your own set of certificates. By default it is: 4434.
+The second boolean value sets whether or not the Web Service will validate responses and is highly recommended to be set to False. The <cite>connectionObject</cite> variable can now be used to communicate requests to the web service.</p>
+<p>Example: Getting group names and suspending a job</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">Deadline.DeadlineConnect</span> <span class="kn">import</span> <span class="n">DeadlineCon</span> <span class="k">as</span> <span class="n">Connect</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">con</span> <span class="o">=</span> <span class="n">Connect</span><span class="p">(</span><span class="s1">&#39;WebServiceName&#39;</span><span class="p">,</span> <span class="mi">4434</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="s2">&quot;\Path\To\ca.crt&quot;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">con</span><span class="o">.</span><span class="n">Groups</span><span class="o">.</span><span class="n">GetGroupNames</span><span class="p">()</span>
+<span class="go">[u&#39;none&#39;, u&#39;group1&#39;, u&#39;group2&#39;, u&#39;group3&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">jobId</span> <span class="o">=</span> <span class="n">validjobID</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">con</span><span class="o">.</span><span class="n">Jobs</span><span class="o">.</span><span class="n">SuspendJob</span><span class="p">(</span><span class="n">jobId</span><span class="p">)</span>
+<span class="go">&#39;Success&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="authenticating">
+<h2>Authenticating<a class="headerlink" href="#authenticating" title="Permalink to this headline">¶</a></h2>
+<p>If your Web Service has authentication enabled then you must set up authentication for the Python API. This can be achieved through the
+“EnableAuthentication” and “SetAuthenticationCredentials” functions. Setting your authentication credentials allows
+the Python API to use them for as long as that instance of python is running.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">Deadline.DeadlineConnect</span> <span class="kn">import</span> <span class="n">DeadlineCon</span> <span class="k">as</span> <span class="n">Connect</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">con</span> <span class="o">=</span> <span class="n">Connect</span><span class="p">(</span><span class="s1">&#39;WebServiceName&#39;</span><span class="p">,</span> <span class="mi">8081</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">con</span><span class="o">.</span><span class="n">Groups</span><span class="o">.</span><span class="n">GetGroupNames</span><span class="p">()</span>
+<span class="go">&quot;Error: HTTP Status Code 401. Authentication with the Web Service failed.</span>
+<span class="go">Please ensure that the authentication credentials are set, are correct, and</span>
+<span class="go">that authentication mode is enabled.&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">con</span><span class="o">.</span><span class="n">AuthenticationModeEnabled</span><span class="p">()</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">con</span><span class="o">.</span><span class="n">EnableAuthentication</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">con</span><span class="o">.</span><span class="n">AuthenticationModeEnabled</span><span class="p">()</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">con</span><span class="o">.</span><span class="n">SetAuthenticationCredentials</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">con</span><span class="o">.</span><span class="n">Groups</span><span class="o">.</span><span class="n">GetGroupNames</span><span class="p">()</span>
+<span class="go">[u&#39;none&#39;, u&#39;group1&#39;, u&#39;group2&#39;, u&#39;group3&#39;]</span>
+</pre></div>
+</div>
+<p>By default “SetAuthenticationCredentials” also enables authentication, so it is not actually necessary to explicitly
+call “EnableAuthentication” as well. If you want to store your credentials without enabling authentication you may do so
+as well using the optional third parameter.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">con</span><span class="o">.</span><span class="n">SetAuthenticationCredentials</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="api-functions">
+<h2>API Functions<a class="headerlink" href="#api-functions" title="Permalink to this headline">¶</a></h2>
+<p>All of the Standalone Python API functions return a Python dictionary, a Python list, or a Python string. Lists often contain dictionaries.</p>
+<p>Examples: Getting a list, a list containing dictionaries, a dictionary, and a string back.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">groupNames</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">Groups</span><span class="o">.</span><span class="n">GetGroupNames</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">groupNames</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">group1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">jobs</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">Jobs</span><span class="o">.</span><span class="n">GetJobs</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">jobs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;FailedChunks&#39;</span><span class="p">]</span>
+<span class="go">12</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">task</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">Tasks</span><span class="o">.</span><span class="n">GetJobTask</span><span class="p">(</span><span class="n">jobId</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">task</span><span class="p">[</span><span class="s2">&quot;Errs&quot;</span><span class="p">]</span>
+<span class="go">8</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">root</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">GetRootDirectory</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">root</span>
+<span class="go">&#39;C:/DeadlineRepository&#39;</span>
+</pre></div>
+</div>
+<p>Example: Getting a job, changing the pool and priority then saving it.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">job</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">Jobs</span><span class="o">.</span><span class="n">GetJob</span><span class="p">(</span><span class="n">jobId</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">job</span><span class="p">[</span><span class="s1">&#39;Props&#39;</span><span class="p">][</span><span class="s1">&#39;Pool&#39;</span><span class="p">])</span>
+<span class="go">none</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">job</span><span class="p">[</span><span class="s1">&#39;Props&#39;</span><span class="p">][</span><span class="s1">&#39;Pool&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="s1">&#39;jobPool&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">job</span><span class="p">[</span><span class="s1">&#39;Props&#39;</span><span class="p">][</span><span class="s1">&#39;Pool&#39;</span><span class="p">])</span>
+<span class="go">jobPool</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">job</span><span class="p">[</span><span class="s1">&#39;Props&#39;</span><span class="p">][</span><span class="s1">&#39;Pri&#39;</span><span class="p">]))</span>
+<span class="go">50</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">job</span><span class="p">[</span><span class="s1">&#39;Props&#39;</span><span class="p">][</span><span class="s1">&#39;Pri&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">75</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">job</span><span class="p">[</span><span class="s1">&#39;Props&#39;</span><span class="p">][</span><span class="s1">&#39;Pri&#39;</span><span class="p">])</span>
+<span class="go">75</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">con</span><span class="o">.</span><span class="n">Jobs</span><span class="o">.</span><span class="n">SaveJob</span><span class="p">(</span><span class="n">job</span><span class="p">)</span>
+<span class="go">&#39;Success&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">job</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">Jobs</span><span class="o">.</span><span class="n">GetJob</span><span class="p">(</span><span class="n">jobId</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">job</span><span class="p">[</span><span class="s1">&#39;Props&#39;</span><span class="p">][</span><span class="s1">&#39;Pool&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">job</span><span class="p">[</span><span class="s1">&#39;Props&#39;</span><span class="p">][</span><span class="s1">&#39;Pri&#39;</span><span class="p">])</span>
+<span class="go">jobPool 75</span>
+</pre></div>
+</div>
+<p>Example: Submitting a ‘reserve’ VraySpawner job using Python dictionaries.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">Deadline.DeadlineConnect</span> <span class="k">as</span> <span class="nn">Connect</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="n">Deadline</span> <span class="o">=</span> <span class="n">Connect</span><span class="o">.</span><span class="n">DeadlineCon</span><span class="p">(</span><span class="s1">&#39;WebServiceName&#39;</span><span class="p">,</span> <span class="mi">8081</span><span class="p">)</span>
+
+    <span class="n">JobInfo</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;Name&quot;</span><span class="p">:</span> <span class="s2">&quot;Submitted via Python&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;UserName&quot;</span><span class="p">:</span> <span class="s2">&quot;UserName&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Frames&quot;</span><span class="p">:</span> <span class="s2">&quot;0-1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Plugin&quot;</span><span class="p">:</span> <span class="s2">&quot;VraySpawner&quot;</span>
+    <span class="p">}</span>
+
+    <span class="n">PluginInfo</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;Max2014&quot;</span>
+    <span class="p">}</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">newJob</span> <span class="o">=</span> <span class="n">Deadline</span><span class="o">.</span><span class="n">Jobs</span><span class="o">.</span><span class="n">SubmitJob</span><span class="p">(</span><span class="n">JobInfo</span><span class="p">,</span> <span class="n">PluginInfo</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">newJob</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sorry, Web Service is currently down!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="manual-submission.html#manual-submission-ref-label"><span class="std std-ref">Manual Job Submission</span></a> page documents all the <a class="reference internal" href="manual-submission.html#job-info-ref-label"><span class="std std-ref">Job Info</span></a> options available, which can be used in the above example in the Python <em>JobInfo</em> dictionary. Please consult the specific Application Plugin for the required and optional <a class="reference internal" href="manual-submission.html#plugin-info-ref-label"><span class="std std-ref">Plugin Info</span></a> KEY=VALUE pairs required for the <em>PluginInfo</em> dictionary. Note, when submitting a job, the <em>JobInfo</em> and <em>PluginInfo</em> dictionaries should contain ALL the minimum necessary KEY=VALUE pairs to successfully run this plugin job type in Deadline. As the KEY=VALUE pairs are internal and change depending on the application plugin, it is recommended you submit a job normally to Deadline and then inspect the job’s <a class="reference internal" href="job-controlling.html#job-submission-params-ref-label"><span class="std std-ref">Submission Params</span></a> to see what KEY=VALUE pairs should be submitted for this job type. You can also use the “Export” button to take a copy of the <em>JobInfo</em> and <em>PluginInfo</em> files to submit the job using these files instead of via Python dictionaries.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Standalone Python API</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#set-up">Set-up</a></li>
+<li><a class="reference internal" href="#web-service-configuration-in-deadline-client-installation">Web Service configuration in Deadline Client Installation</a></li>
+<li><a class="reference internal" href="#using-the-api">Using the API</a></li>
+<li><a class="reference internal" href="#using-the-api-with-tls">Using the API with TLS</a></li>
+<li><a class="reference internal" href="#authenticating">Authenticating</a></li>
+<li><a class="reference internal" href="#api-functions">API Functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="web-service-scripts.html"
+                        title="previous chapter">Web Service Scripts</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="python-upgrade.html"
+                        title="next chapter">Python 3 Upgrade Guide</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="python-upgrade.html" title="Python 3 Upgrade Guide"
+             >next</a></li>
+        <li class="right" >
+          <a href="web-service-scripts.html" title="Web Service Scripts"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-scripting.html" >Scripting</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Standalone Python API</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

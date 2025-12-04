@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Usage-Based Licensing Setup &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thinkbox.css" />
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Configure Limits" href="configure-limits.html" />
+    <link rel="prev" title="(Unsupported) Purchasing Legacy Thinkbox Usage-Based Licensing" href="usage-based-licensing.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="configure-limits.html" title="Configure Limits"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="usage-based-licensing.html" title="(Unsupported) Purchasing Legacy Thinkbox Usage-Based Licensing"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Usage-Based Licensing Setup</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="../aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<div class="section" id="usage-based-licensing-setup">
+<span id="aws-portal-licensing-setup-ref-label"></span><h1>Usage-Based Licensing Setup<a class="headerlink" href="#usage-based-licensing-setup" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Topics covered in this page refer to legacy Thinkbox usage-based licensing (UBL), which is no longer available as of September 30, 2025. The UBL feature in Deadline 10 is now available through <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> UBL. For detailed setup instructions, please see the <a class="reference internal" href="../licensing-usage-based.html#licensing-usage-based-ref-label"><span class="std std-ref">Deadline Cloud UBL Documentation</span></a>.</p>
+<p>For more details, please refer to <a class="reference external" href="https://marketplace.thinkboxsoftware.com/">the marketplace website</a>.</p>
+</div>
+<p>This section details how to setup Deadline and the AWS Portal to use your Usage-Based Licensing account. You will need to enter your Cloud License Server URL and Activation Code into the Deadline
+Monitor, and you will need to tell AWS Portal which directory to upload certificates from.</p>
+<p>These steps only need to be done the first time you setup UBL.</p>
+<div class="section" id="configuring-deadline">
+<h2>Configuring Deadline<a class="headerlink" href="#configuring-deadline" title="Permalink to this headline">¶</a></h2>
+<p>Before you can start using Usage-Based Licensing, you must enter the Cloud License Server URL and Activation Code in the <a class="reference internal" href="../repository-config.html#repo-usage-based-licensing-ref-label"><span class="std std-ref">Repository Options</span></a>.
+This can be done from the Deadline Monitor while in Power User Mode (ensure <code class="docutils literal notranslate"><span class="pre">Tools</span> <span class="pre">-&gt;</span> <span class="pre">Power</span> <span class="pre">User</span> <span class="pre">Mode</span></code> is checked). Then select <code class="docutils literal notranslate"><span class="pre">Tools</span> <span class="pre">-&gt;</span> <span class="pre">Configure</span> <span class="pre">Repository</span> <span class="pre">Options</span></code> from the menu, and select <code class="docutils literal notranslate"><span class="pre">Usage-Based</span> <span class="pre">Licensing</span></code> from the list on the left.</p>
+<a class="reference internal image-reference" href="../../_images/cro_usage_based_licensing.png"><img alt="../../_images/cro_usage_based_licensing.png" src="../../_images/cro_usage_based_licensing.png" style="height: 400px;" /></a>
+</div>
+<div class="section" id="configure-aws-portal">
+<span id="aws-portal-licensing-setup-configure-aws-portal-ref-label"></span><h2>Configure AWS Portal<a class="headerlink" href="#configure-aws-portal" title="Permalink to this headline">¶</a></h2>
+<p>Open the AWS Portal Panel in the Deadline Monitor by clicking <code class="docutils literal notranslate"><span class="pre">View</span> <span class="pre">-&gt;</span> <span class="pre">New</span> <span class="pre">Panel</span> <span class="pre">-&gt;</span> <span class="pre">AWS</span> <span class="pre">Portal</span></code>. The first time you open the AWS Portal panel.
+Login with your AWS Access Key and Secret Access Key.</p>
+<a class="reference internal image-reference" href="../../_images/AWSPanelLogin.png"><img alt="../../_images/AWSPanelLogin.png" src="../../_images/AWSPanelLogin.png" style="height: 400px;" /></a>
+<p>Open the AWS Portal Settings by clicking on the gear on the left of the panel.</p>
+<a class="reference internal image-reference" href="../../_images/AWSPanelDefaultGearHighlighted.png"><img alt="../../_images/AWSPanelDefaultGearHighlighted.png" src="../../_images/AWSPanelDefaultGearHighlighted.png" style="height: 400px;" /></a>
+<p>In the ‘Advanced’ tab, set the directory you unzipped your certificates to as your ‘Sync Cert Directory’.</p>
+<a class="reference internal image-reference" href="../../_images/AWSPanelConfigurePortalSettingsAdvancedTab.png"><img alt="../../_images/AWSPanelConfigurePortalSettingsAdvancedTab.png" src="../../_images/AWSPanelConfigurePortalSettingsAdvancedTab.png" style="height: 400px;" /></a>
+<p><a class="reference internal" href="configure-limits.html#aws-portal-configure-limits-ref-label"><span class="std std-ref">Step 3: Configure Limits &gt;&gt;</span></a></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Usage-Based Licensing Setup</a><ul>
+<li><a class="reference internal" href="#configuring-deadline">Configuring Deadline</a></li>
+<li><a class="reference internal" href="#configure-aws-portal">Configure AWS Portal</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="usage-based-licensing.html"
+                        title="previous chapter">(Unsupported) Purchasing Legacy Thinkbox Usage-Based Licensing</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="configure-limits.html"
+                        title="next chapter">Configure Limits</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="configure-limits.html" title="Configure Limits"
+             >next</a></li>
+        <li class="right" >
+          <a href="usage-based-licensing.html" title="(Unsupported) Purchasing Legacy Thinkbox Usage-Based Licensing"
+             >previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Usage-Based Licensing Setup</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,289 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Limits and Machine Limits &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Job Failure Detection" href="failure-detection.html" />
+    <link rel="prev" title="Pools and Groups" href="pools-and-groups.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="failure-detection.html" title="Job Failure Detection"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="pools-and-groups.html" title="Pools and Groups"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" accesskey="U">Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Limits and Machine Limits</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="limits-and-machine-limits">
+<span id="limits-ref-label"></span><h1>Limits and Machine Limits<a class="headerlink" href="#limits-and-machine-limits" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Limits are used to restrict access to a certain resource that can be shared by multiple jobs.</p>
+<p>For example, it’s not uncommon for a render farm to have more render nodes than floating licenses for a specific rendering application or plugin. In this situation, contention for floating licenses can lead to license errors when those floating licenses have been exhausted, and these license errors can lead to wasted render time and reduced productivity. License Limits can be used to in this case to restrict access to a particular floating license.</p>
+<p>Another example is shared data on a file server. Many Jobs could require access to the same data, like textures, particle caches, etc, which normally isn’t an issue (since they’re on a file server). However, perhaps the file server isn’t capable of serving that data to a large number of render nodes simultaneously, or perhaps the network doesn’t have the bandwidth to transfer that much data at once. This situation can lead to file server or network instability, which can lead to increased render times or errors. Resource Limits can be used in this case to restrict access to non-license resource.</p>
+<p>Machine Limits function similarly, but are on a per-Job basis. Instead of limiting how many Workers can render a group of Jobs, they limit the number of Workers that can render one particular Job.
+This is useful if you want to prevent a job from potentially taking up the entire farm.</p>
+<p>Finally, plugin Limits ensure 1 or more Limits are always applied to a certain application plugin, no matter how many Jobs are being processed.</p>
+</div>
+<div class="section" id="job-machine-limits">
+<h2>Job Machine Limits<a class="headerlink" href="#job-machine-limits" title="Permalink to this headline">¶</a></h2>
+<p>Machine Limits are a per-Job option, and can be managed through the Job’s Properties window, which you can get to by right-clicking on the Job and selecting ‘Modify Job Properties’.
+More information on the available Machine Limit settings can be found in the <a class="reference internal" href="job-controlling.html#job-controlling-mlo-ref-label"><span class="std std-ref">Controlling Jobs</span></a> documentation.</p>
+<a class="reference internal image-reference" href="../_images/jp_machine_limit.png"><img alt="../_images/jp_machine_limit.png" src="../_images/jp_machine_limit.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="plugin-limits">
+<span id="limits-plugin-ref-label"></span><h2>Plugin Limits<a class="headerlink" href="#plugin-limits" title="Permalink to this headline">¶</a></h2>
+<p>Plugin Limits are a per-Plugin (application) option, and can be managed through <a class="reference internal" href="plugin-config.html#generic-plugin-options-ref-label"><span class="std std-ref">Configure Plugins…</span></a> under Tools when in Power User mode. Plugin level limits via the <strong>Set Limits</strong> button allows you to assign one or more limits to always be applied to a certain application plugin. This ensures that limit is applied to all jobs that process using that specific plugin in your farm.</p>
+<a class="reference internal image-reference" href="../_images/limit_plugin.png"><img alt="../_images/limit_plugin.png" src="../_images/limit_plugin.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="limits">
+<span id="global-limits-ref-label"></span><h2>Limits<a class="headerlink" href="#limits" title="Permalink to this headline">¶</a></h2>
+<p>Deadline 10 introduces the concept of Limit types, and there are two types:</p>
+<ul class="simple">
+<li><p>License Limits: These are used to restrict access to floating licenses, which helps avoid errors when those licenses are exhausted. They also enable 3rd Party Usage-Based Licensing (UBL).</p></li>
+<li><p>Resource Limits: These are used to restrict access to non-license resources, such as large data caches.</p></li>
+</ul>
+<p>Jobs (or plugins) can be configured to require one or more Limits, and a Worker will only render a job if it is able to acquire a ‘Stub’ for each Limit. Every Stub that is acquired for a Limit counts against that Limit’s usage. For example, if a Limit has a maximum of 10, and 8 Stubs have been acquired by different Workers, then only 2 more Stubs are available. If all the Stubs for a Limit have been acquired, then no more Workers will be able to pick up jobs that require that Limit. When a Worker finishes a job, it returns any unused Stubs so that other Workers can acquire them.</p>
+<p>Both types of Limits can be managed from the <strong>Limits</strong> panel in the Monitor while in Power User mode (or as a user with appropriate User Group privileges). This list shows all the Limits that are in your Repository. It also displays useful information about each Limit, such as its Name, Status, Limit Type, and the number of Limit Stubs that are currently in use.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Limit types were introduced in Deadline 10.0.9. If you’re upgrading from an earlier version of Deadline 10, any existing Limits will have their type assigned automatically, and will function as normal. There is no need to edit them.</p>
+</div>
+<p>By default, the Limits panel will show both types of Limits, and you
+can use the Limit Type quick filter to filter out one of the types if you wish. Simply toggle on the Quick Filter button in the top left corner of the Limits panel, and select the Limit Type that you want to see in the Quick Filter panel that appears on the left.</p>
+<a class="reference internal image-reference" href="../_images/limits_right_click.png"><img alt="../_images/limits_right_click.png" src="../_images/limits_right_click.png" style="height: 300px;" /></a>
+<p>You can access many options for the Limits by right-clicking on them, and you can create a new License or Resource Limit by clicking on the [+] button in the top left corner of the Limits panel. If the Limits panel is not visible, see the <a class="reference internal" href="monitor.html#monitor-panel-features-ref-label"><span class="std std-ref">Panel Features</span></a> documentation for instructions on how to create new panels in the Monitor.</p>
+<a class="reference internal image-reference" href="../_images/limits_create_new_limit.png"><img alt="../_images/limits_create_new_limit.png" src="../_images/limits_create_new_limit.png" style="height: 300px;" /></a>
+<div class="section" id="new-license-limit">
+<h3>New License Limit<a class="headerlink" href="#new-license-limit" title="Permalink to this headline">¶</a></h3>
+<p>Use this option to add a new License Limit to your Repository. This is also accessible using the shortcut <strong>Ctrl + N</strong>.</p>
+<a class="reference internal image-reference" href="../_images/limits_create_new_license_limit.png"><img alt="../_images/limits_create_new_license_limit.png" src="../_images/limits_create_new_license_limit.png" style="height: 550px;" /></a>
+<p>You can modify the following settings for the new License Limit:</p>
+<p><strong>License Name</strong></p>
+<blockquote>
+<div><p>The name of the new License Limit. Note that this setting <em>cannot</em> be changed once the Limit has been created.</p>
+</div></blockquote>
+<p><strong>Usage Level</strong></p>
+<blockquote>
+<div><p>The level at which a Limit Count will be checked out. ‘Worker’ is the default, and will require each Worker to acquire a Stub; if ‘Machine’ is selected, only a single Stub will be required for all Workers on the same machine. Conversely, if ‘Task’ is selected, Workers will try to acquire one Stub per concurrent Render Thread. Note that this setting cannot be changed after Limit creation.</p>
+</div></blockquote>
+<p><strong>Enable Existing Licenses Usage</strong></p>
+<blockquote>
+<div><p>This option should be enabled if you are using this Limit to manage floating/network licenses. If you are only using this Limit for 3rd Party UBL, you can leave this disabled.</p>
+<ul class="simple">
+<li><p><strong>Unlimited Licenses</strong>: If you happen to have unlimited floating/network licenses, you can enable this option, and there will be no restriction on the number of Stubs that can be acquired for this Limit. This isn’t the typical use case though, and if this option is enabled, you can’t use 3rd Party UBL because it only activates when the existing license threshold has been reached.</p></li>
+<li><p><strong>License Count</strong>: If you have a finite amount of floating/network licenses (which is the typical use case), this is the number of licenses you have. If you are also using 3rd Party UBL, it will activate when these existing licenses have been exhausted.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Use Usage-Based Licensing</strong></p>
+<blockquote>
+<div><p>This option should be enabled if you are using <a class="reference internal" href="licensing-usage-based.html#licensing-3rd-party-ubl-ref-label"><span class="std std-ref">3rd Party Usage-Based Licensing</span></a>. If this is used in combination with Existing Licenses, it will only activate when those existing licenses have been exhausted (which means you can’t use the Unlimited Licenses option). If this option is used on its own, then any Worker that acquires a Stub for this Limit will consume 3rd Party UBL.</p>
+<ul class="simple">
+<li><p><strong>UBL Application</strong>: This is the application that 3rd Party UBL is being used for (one application per Limit). If you are using 3rd Party UBL with multiple applications, you will need to create a Limit for each application.</p></li>
+<li><p><strong>Unlimited UBL</strong>: Use this option if you don’t want to restrict the number of Workers that can use 3rd Party UBL. This can be useful if the Worker count for your farm fluctuates, and you want to ensure that all Workers can use 3rd Party UBL.</p></li>
+<li><p><strong>UBL Count</strong>: Use this option if you want to restrict the number of Workers that can use 3rd Party UBL. This can be useful if you want to keep costs down.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Workers on Allow List and Deny List</strong></p>
+<blockquote>
+<div><p>If Workers are on a deny list, they will never try to render jobs associated with this Limit. If Workers are on an allow list, then they are the only ones that will try to render jobs associated with this Limit. Note that an empty deny list and an empty allow list are functionally equivalent, and have no impact on which machines the job renders on.</p>
+</div></blockquote>
+<p><strong>Workers Excluded From Limit</strong></p>
+<blockquote>
+<div><p>These Workers will ignore this Limit and won’t contribute to the Limit Count. This is useful if you are juggling a mix of floating and node-locked licenses, in which case your machines with node-locked licenses should be placed on this list.</p>
+</div></blockquote>
+</div>
+<div class="section" id="new-resource-limit">
+<h3>New Resource Limit<a class="headerlink" href="#new-resource-limit" title="Permalink to this headline">¶</a></h3>
+<p>Use this option to add a new Resource Limit to your Repository. This is also accessible using the shortcut <strong>Ctrl + E</strong>.</p>
+<a class="reference internal image-reference" href="../_images/limits_create_new_resource_limit.png"><img alt="../_images/limits_create_new_resource_limit.png" src="../_images/limits_create_new_resource_limit.png" style="height: 550px;" /></a>
+<p>You can modify the following settings for the new Resource Limit:</p>
+<p><strong>Resource Name</strong></p>
+<blockquote>
+<div><p>The name of the new Resource Limit. Note that this setting <em>cannot</em> be changed once the Limit has been created.</p>
+</div></blockquote>
+<p><strong>Usage Level</strong></p>
+<blockquote>
+<div><p>The level at which a Resource Count will be checked out. ‘Worker’ is the default, and will require each Worker to acquire a Stub; if ‘Machine’ is selected, only a single Stub will be required for all Workers on the same machine. Conversely, if ‘Task’ is selected, Workers will try to acquire one Stub per concurrent Render Thread. Note that this setting <em>cannot</em> be changed after Limit creation.</p>
+</div></blockquote>
+<p><strong>Unlimited Resources</strong></p>
+<blockquote>
+<div><p>If selected, then the Resource Limit can be used by an unlimited number of Workers. Setting this will ignore the Resource Count value.</p>
+</div></blockquote>
+<p><strong>Resource Count</strong></p>
+<blockquote>
+<div><p>The maximum number of simultaneous uses (Stubs) that this Resource Limit can support at any given time. What counts as a ‘use/Stub’ is based on the Usage Level set above. Setting the Resource Count to 0 will result in no Jobs being rendered that require this Limit, but this can be useful if you want to temporarily disable a Limit without deleting it.</p>
+</div></blockquote>
+<p><strong>Release at Task Progress</strong></p>
+<blockquote>
+<div><p>If enabled, Workers will release their Resource Limit stub when the current Task reaches the specified percentage. Note that support for Task progress depends on the plugin that the Job uses for rendering, and not all plugins support Task progress.</p>
+</div></blockquote>
+<p><strong>Workers on Allow List and Deny List</strong></p>
+<blockquote>
+<div><p>If Workers (or Machines, depending on Level selected above) are on a deny list, they will never try to render jobs associated with this Limit. If Workers/Machines are on an allow list, then they are the only ones that will try to render jobs associated with this Limit. Note that an empty deny list and an empty allow list are functionally equivalent, and have no impact on which machines the job renders on.</p>
+</div></blockquote>
+<p><strong>Workers Excluded From Limit</strong></p>
+<blockquote>
+<div><p>These Workers (or Machines, depending on Level selected above) will ignore this resource Limit and won’t contribute to the Resource Count.</p>
+</div></blockquote>
+</div>
+<div class="section" id="clone-limit">
+<h3>Clone Limit<a class="headerlink" href="#clone-limit" title="Permalink to this headline">¶</a></h3>
+<p>This option allows you to create a new Limit while using an existing Limit as a template. It will bring up a dialog interface associated to the type of the selected limit, that is very similar to the one pictured in Create New Limit section, with all the same options.
+This option is handy if you want to create a Limit that is very similar to an existing one but with a small variation.</p>
+</div>
+<div class="section" id="modify-limit-properties">
+<h3>Modify Limit Properties<a class="headerlink" href="#modify-limit-properties" title="Permalink to this headline">¶</a></h3>
+<p>This option allows you to edit the settings for an existing Limit. All of the settings described in both New Limit sections above can be changed except for the Limit’s Name
+and Usage Level, which cannot be changed once the Limit has been created.</p>
+</div>
+<div class="section" id="reset-limit-usage-count">
+<h3>Reset Limit Usage Count<a class="headerlink" href="#reset-limit-usage-count" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes a Limit Stub will get orphaned, meaning that it is counting against the Limit’s usage count, but no machines are actually using it. After a while, Deadline will eventually
+clean up these orphaned Limit Stubs. This option provides the means to delete all existing Stubs immediately (whether they are orphaned or not), which will require Workers to acquire them again.</p>
+</div>
+<div class="section" id="delete-limit">
+<h3>Delete Limit<a class="headerlink" href="#delete-limit" title="Permalink to this headline">¶</a></h3>
+<p>Removes an existing Limit from your Repository. Any Jobs associated with deleted Limits will still be able to render, but they will print out Warnings indicating that the Limit no longer exists.</p>
+</div>
+</div>
+<div class="section" id="limits-and-job-scheduling">
+<h2>Limits and Job Scheduling<a class="headerlink" href="#limits-and-job-scheduling" title="Permalink to this headline">¶</a></h2>
+<p>Although Limits and Job Machine Limits aren’t priority-based like Pools, they do have an impact on job scheduling. Here are some examples.</p>
+<p><strong>Limits</strong></p>
+<ul class="simple">
+<li><p>If a job is assigned to a Limit, and that Limit is currently maxed out, the job will not be picked up by any additional Workers.</p></li>
+<li><p>If a job is assigned to a Limit, and that Limit has an allow list, the job will only render on the Workers in that allow list.</p></li>
+<li><p>If a job is assigned to two Limits, and one of those Limits is currently maxed out, the job will not be picked up by any additional Workers. This is because a Worker must be able to acquire all Limits that the job requires.</p></li>
+<li><p>If a job is assigned to two Limits, and one of those Limits has worker001 on its deny list, worker001 will never pick up the job. This is because a Worker must be able to acquire all Limits that the job requires.</p></li>
+</ul>
+<p><strong>Job Machine Limits</strong></p>
+<ul class="simple">
+<li><p>If a job has a Machine Limit greater than 0, and that Limit is currently maxed out, the job will not be picked up by any additional Workers.</p></li>
+<li><p>If a job has an allow list, the job will only render on the Workers in that allow list.</p></li>
+</ul>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Limits and Machine Limits</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#job-machine-limits">Job Machine Limits</a></li>
+<li><a class="reference internal" href="#plugin-limits">Plugin Limits</a></li>
+<li><a class="reference internal" href="#limits">Limits</a><ul>
+<li><a class="reference internal" href="#new-license-limit">New License Limit</a></li>
+<li><a class="reference internal" href="#new-resource-limit">New Resource Limit</a></li>
+<li><a class="reference internal" href="#clone-limit">Clone Limit</a></li>
+<li><a class="reference internal" href="#modify-limit-properties">Modify Limit Properties</a></li>
+<li><a class="reference internal" href="#reset-limit-usage-count">Reset Limit Usage Count</a></li>
+<li><a class="reference internal" href="#delete-limit">Delete Limit</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#limits-and-job-scheduling">Limits and Job Scheduling</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pools-and-groups.html"
+                        title="previous chapter">Pools and Groups</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="failure-detection.html"
+                        title="next chapter">Job Failure Detection</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="failure-detection.html" title="Job Failure Detection"
+             >next</a></li>
+        <li class="right" >
+          <a href="pools-and-groups.html" title="Pools and Groups"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" >Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Limits and Machine Limits</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

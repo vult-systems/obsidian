@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creating an AWSPortal IAM User &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Installing The Deadline Client for AWS Portal" href="aws-portal-setup-installing-the-deadline-client.html" />
+    <link rel="prev" title="Creating an Admin IAM User" href="aws-portal-setup-creating-admin-user.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-setup-installing-the-deadline-client.html" title="Installing The Deadline Client for AWS Portal"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="aws-portal-setup-creating-admin-user.html" title="Creating an Admin IAM User"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Creating an AWSPortal IAM User</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<div class="section" id="creating-an-awsportal-iam-user">
+<span id="aws-portal-setup-account-awsportal-user-setup-ref-label"></span><h1>Creating an AWSPortal IAM User<a class="headerlink" href="#creating-an-awsportal-iam-user" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have not already created an Admin user, instructions for creating one can be found here: <a class="reference internal" href="aws-portal-setup-creating-admin-user.html#aws-portal-setup-account-admin-user-setup-ref-label"><span class="std std-ref">Creating an Admin IAM User</span></a>.</p>
+</div>
+<p>First, log into the <a class="reference external" href="https://console.aws.amazon.com">AWS Console</a> using the aws account you created.</p>
+<p>Click on <cite>Services</cite> at the top of the AWS Console,
+and find the <cite>IAM</cite> section under <cite>Security, Identity and Compliance</cite>. Select <cite>Users</cite></p>
+<a class="reference internal image-reference" href="../_images/aws_console_iam_user.png"><img alt="../_images/aws_console_iam_user.png" src="../_images/aws_console_iam_user.png" style="width: 668.0px; height: 423.0px;" /></a>
+<p>Click on the <cite>Add user</cite> button at the top. Enter the User Name <cite>AWSPortal</cite> and select the <cite>Programmatic Access</cite>
+checkbox. Click on the <cite>Next: Permissions</cite> button to proceed.</p>
+<a class="reference internal image-reference" href="../_images/aws_console_iam_user_add_user.png"><img alt="../_images/aws_console_iam_user_add_user.png" src="../_images/aws_console_iam_user_add_user.png" style="width: 668.0px; height: 423.0px;" /></a>
+<p>Search for <a class="reference internal" href="aws-portal-setup-awsthinkboxawsportaladminpolicy-readme.html#aws-portal-setup-awsthinkboxawsportaladminpolicy-readme-ref-label"><span class="std std-ref">AWSThinkboxAWSPortalAdminPolicy</span></a> and <cite>AWSThinkboxDeadlineResourceTrackerAdminPolicy</cite> in the search box and check them in the list below.
+Continue by clicking on the <cite>Next: Review</cite> button.</p>
+<a class="reference internal image-reference" href="../_images/aws_console_iam_user_attach_policy.png"><img alt="../_images/aws_console_iam_user_attach_policy.png" src="../_images/aws_console_iam_user_attach_policy.png" style="width: 661.0px; height: 423.0px;" /></a>
+<p>You can add tags with additional data to the user but they are not required.
+Click on the <cite>Next: Review</cite> button to continue.</p>
+<a class="reference internal image-reference" href="../_images/aws_console_iam_user_add_tags.png"><img alt="../_images/aws_console_iam_user_add_tags.png" src="../_images/aws_console_iam_user_add_tags.png" style="width: 668.0px; height: 423.0px;" /></a>
+<p>Verify that it looks correct and click <cite>Create user</cite>.</p>
+<a class="reference internal image-reference" href="../_images/aws_console_iam_user_review.png"><img alt="../_images/aws_console_iam_user_review.png" src="../_images/aws_console_iam_user_review.png" style="width: 658.0px; height: 423.5px;" /></a>
+<p>Once the user is created you’ll see a confirmation screen. Here you’ll be able to get your Access Key and Secret Key,
+which you’ll need <a class="reference internal" href="aws-portal-configuration-reference.html#aws-portal-configuration-reference-ref-label"><span class="std std-ref">when you login to AWS Portal console the first time</span></a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This is the only time you’ll be able to get your Secret Key,
+so be sure to note it down, or press the ‘Download .csv’ button to download a
+file which contains both keys.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This secret key can be used to access your AWS account. It is important that <a class="reference internal" href="shared-security-model.html#shared-security-model-ref-label"><span class="std std-ref">you keep it stored securely</span></a>.
+Please refer <a class="reference external" href="https://docs.aws.amazon.com/general/latest/gr/aws-access-keys-best-practices.html">AWS Guidelines</a> for standard best practices for management of AWS access keys.</p>
+</div>
+<a class="reference internal image-reference" href="../_images/aws_console_iam_user_complete.png"><img alt="../_images/aws_console_iam_user_complete.png" src="../_images/aws_console_iam_user_complete.png" style="width: 668.0px; height: 423.0px;" /></a>
+</div>
+<div class="section" id="adding-additional-inline-policies-to-awsportal-iam-user">
+<h1>Adding Additional Inline Policies to AWSPortal IAM User<a class="headerlink" href="#adding-additional-inline-policies-to-awsportal-iam-user" title="Permalink to this headline">¶</a></h1>
+<p>You will need to add additional policies to your <cite>AWSPortal</cite> IAM user after creation.
+To do this, the following outlines how to create a policy that will allow your AWS Portal infrastructure to be deployed using your AWS Portal IAM User.</p>
+<p>Navigate to the user. Click on <cite>Services</cite> at the top of the AWS Console,
+and find the <cite>IAM</cite> section under <cite>Security, Identity and Compliance</cite>. Select <cite>Users</cite>.</p>
+<p>Click on the IAM user that you created (i.e. the <cite>AWSPortal</cite> user).</p>
+<p>Click on <cite>Add permissions</cite>, followed by <cite>Create inline policy</cite>.</p>
+<a class="reference internal image-reference" href="../_images/aws_console_iam_add_inline_policy.png"><img alt="../_images/aws_console_iam_add_inline_policy.png" src="../_images/aws_console_iam_add_inline_policy.png" style="width: 536.5px; height: 289.0px;" /></a>
+<p>Click the <cite>JSON`</cite> tab and paste in the following:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;Statement&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;ec2:CreateTags&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ec2:DeleteTags&quot;</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;arn:aws:ec2:*:*:vpc-endpoint/*&quot;</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/aws_console_iam_add_policy_json.png"><img alt="../_images/aws_console_iam_add_policy_json.png" src="../_images/aws_console_iam_add_policy_json.png" style="width: 541.0px; height: 405.5px;" /></a>
+<p>Click <cite>Next</cite>.
+Enter the Policy name <cite>AllowAWSPortalInfrastructureTagging</cite> and click <cite>Create policy</cite> to proceed.</p>
+<a class="reference internal image-reference" href="../_images/aws_console_iam_add_policy_name.png"><img alt="../_images/aws_console_iam_add_policy_name.png" src="../_images/aws_console_iam_add_policy_name.png" style="width: 541.5px; height: 404.5px;" /></a>
+<p><a class="reference internal" href="aws-portal-setup-installing-the-deadline-client.html#aws-portal-setup-installing-the-client-ref-label"><span class="std std-ref">Next: Installing the Deadline Client &gt;&gt;</span></a></p>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Creating an AWSPortal IAM User</a></li>
+<li><a class="reference internal" href="#adding-additional-inline-policies-to-awsportal-iam-user">Adding Additional Inline Policies to AWSPortal IAM User</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aws-portal-setup-creating-admin-user.html"
+                        title="previous chapter">Creating an Admin IAM User</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="aws-portal-setup-installing-the-deadline-client.html"
+                        title="next chapter">Installing The Deadline Client for AWS Portal</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-setup-installing-the-deadline-client.html" title="Installing The Deadline Client for AWS Portal"
+             >next</a></li>
+        <li class="right" >
+          <a href="aws-portal-setup-creating-admin-user.html" title="Creating an Admin IAM User"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Creating an AWSPortal IAM User</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

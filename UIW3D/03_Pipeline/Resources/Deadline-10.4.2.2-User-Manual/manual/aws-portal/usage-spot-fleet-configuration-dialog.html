@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3. AWS Portal Spot Fleet &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thinkbox.css" />
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4. Spot Fleet Launch Instructions" href="usage-spot-fleet-steps.html" />
+    <link rel="prev" title="2. Creating a Deadline AWS Portal Infrastructure" href="usage-infrastructure-creation.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="usage-spot-fleet-steps.html" title="4. Spot Fleet Launch Instructions"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="usage-infrastructure-creation.html" title="2. Creating a Deadline AWS Portal Infrastructure"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="usage-overview.html" accesskey="U">Using AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">3. </span>AWS Portal Spot Fleet</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="../aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<div class="section" id="aws-portal-spot-fleet">
+<span id="aws-portal-usage-spot-fleet-configuration-dialog-ref-label"></span><h1><span class="section-number">3. </span>AWS Portal Spot Fleet<a class="headerlink" href="#aws-portal-spot-fleet" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2><span class="section-number">3.1. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>AWS Portal Spot Fleets are used to acquire and manage your render nodes on AWS. Launching a Spot Fleet is required to render
+with AWS Portal. Step by step instructions on launching a Spot Fleet with AWS Portal can be found <a class="reference internal" href="usage-spot-fleet-steps.html#aws-portal-usage-spot-fleet-steps-ref-label"><span class="std std-ref">here</span></a>.
+On this page, we will go through the various pieces that are configurable in a Deadline AWS Portal Spot Fleet, as well as some general information AWS EC2 Spot.</p>
+<p>You can find more information about AWS Portal in general <a class="reference internal" href="../aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You will need a running instance of the Deadline Remote Connection Server to launch a Spot Fleet. You can find more information on the Deadline RCS <a class="reference internal" href="../remote-connection-server.html#remote-connection-server-ref-label"><span class="std std-ref">here</span></a>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You will need to have a working Deadline AWS Portal infrastructure running in order to launch a Spot Fleet. You can find more information on AWS Portal infrastructures and launching them <a class="reference internal" href="usage-infrastructure-overview.html#aws-portal-usage-infrastructure-overview-ref-label"><span class="std std-ref">here</span></a></p>
+</div>
+<div class="section" id="aws-ec2-spot">
+<h3><span class="section-number">3.1.1. </span>AWS EC2 Spot<a class="headerlink" href="#aws-ec2-spot" title="Permalink to this headline">¶</a></h3>
+<p>AWS Portal uses Spot Fleets to fulfil your cloud rendering needs. AWS EC2 Spot instances allow you to use AWS hardware
+at a reduced price because they consist of machines that are not currently being used by On-Demand customers and they can
+be interrupted. Deadline has chosen to use Spot for our AWS Portal cloud instances because of the major cost savings it
+allows for our customers when rendering in the cloud. You can find more information on AWS Spot and Spot Fleets <a class="reference external" href="https://aws.amazon.com/ec2/spot/">here</a>.</p>
+<p>The Spot instances that are launched will be used to run the Deadline Worker, which in turn will facilitate your cloud rendering. Once your
+fleet has been fulfilled, your Workers should appear in the <strong>Worker List</strong> after a short amount of time and then you are ready to render with AWS Portal.</p>
+</div>
+</div>
+<div class="section" id="spot-fleet-configuration-dialog">
+<span id="aws-portal-usage-spot-fleet-configuration-dialog-breakdown-ref-label"></span><h2><span class="section-number">3.2. </span>Spot Fleet Configuration Dialog<a class="headerlink" href="#spot-fleet-configuration-dialog" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>Spot Fleet Configuration Dialog</strong> is where you can adjust all aspects of the Spot Fleet you are about to create.
+A detailed description of the contents of this dialog can be found bellow.</p>
+</div>
+<div class="section" id="software-tab-and-general-settings">
+<span id="aws-portal-usage-spot-fleet-configuration-software-tab-ref-label"></span><h2><span class="section-number">3.3. </span>Software Tab and General Settings<a class="headerlink" href="#software-tab-and-general-settings" title="Permalink to this headline">¶</a></h2>
+<p>This is the main tab you will see when creating a Spot Fleet with Deadline AWS Portal. It has options
+for setting your max price, target capacity, instance type preset you want, and the software you want
+to appear on your instance. Generally, when creating a fleet of render nodes this is the page that you will
+be using the most.</p>
+<img alt="../../_images/spot-fleet-configuration-dialog.png" src="../../_images/spot-fleet-configuration-dialog.png" />
+<div class="section" id="general-settings">
+<h3><span class="section-number">3.3.1. </span>General Settings<a class="headerlink" href="#general-settings" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Maximum Price</strong>: This is the maximum price you will want to pay for an instance. You can find more information about pricing <a class="reference internal" href="../aws-portal-costs.html#aws-portal-costs-ref-label"><span class="std std-ref">here</span></a>.</p></li>
+<li><p><strong>Target Capacity</strong>: The target number of instances you want your fleet to have. The number of instances actually launched might be differ from your requested number based on availability. You are only charged for instances that are actually assigned to you.</p></li>
+<li><p><strong>Instance Type Presets</strong>: A collection of instance types that have been grouped together to make selecting the right size easier. Fine grain control of which instances are permitted in your fleet can be achieved through the <a class="reference internal" href="#aws-portal-usage-spot-fleet-configuration-instance-type-tab-ref-label"><span class="std std-ref">Instance Type Tab</span></a>. For can find more information about AWS EC2 instance types <a class="reference external" href="https://aws.amazon.com/ec2/instance-types/">here</a>.</p></li>
+<li><p><strong>Key Pair</strong>: The SSH key pair you want to use for your instances. The key is required if you want to remotely access your instances from an SSH client once they have launched. We recommend leaving the default settings and using the <strong>DashKey</strong>. You can learn more about the <strong>DashKey</strong> <a class="reference internal" href="../aws-portal-troubleshooting/aws-connect-to-infrastructure.html#dashkey"><span class="std std-ref">here</span></a>.</p></li>
+</ul>
+</div>
+<div class="section" id="software-tab">
+<h3><span class="section-number">3.3.2. </span>Software Tab<a class="headerlink" href="#software-tab" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Use AMI ID</strong>: Check this box if you would like to use a custom AMI. Once checked, you can enter the AMI ID in the text field that will become enabled. You can learn more about creating custom AWS AMIs <a class="reference internal" href="../aws-custom-ami.html#customize-ami-aws-portal-ref-label"><span class="std std-ref">here</span></a>.</p></li>
+<li><p><strong>My AMIs</strong>: Opens a dialog containing a drop down menu of the AMIs associated with your AWS account.</p></li>
+<li><p><strong>Software Selection View</strong>: Select an item in the view to select an AMI with the pre-bundled software that you want to use. You can learn about the available software packages <a class="reference internal" href="../aws-portal-supported-software.html#aws-portal-supported-software-ref-label"><span class="std std-ref">here</span></a>.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="instance-type-tab">
+<span id="aws-portal-usage-spot-fleet-configuration-instance-type-tab-ref-label"></span><h2><span class="section-number">3.4. </span>Instance Type Tab<a class="headerlink" href="#instance-type-tab" title="Permalink to this headline">¶</a></h2>
+<p>The Instance Type tab lets you have finer grain control over which EC2 instance types will be allowed
+in your Spot Fleet. Using the left and right arrow buttons, you can add or remove instance types that
+will be obtained by your Spot Fleet. The price that is beside the instance type reflects the cost per hour
+of compute time for that instance type. More information on AWS EC2 instance types can be found <a class="reference external" href="https://aws.amazon.com/ec2/instance-types/">here</a>.
+More information on AWS Spot pricing can be found <a class="reference external" href="https://aws.amazon.com/ec2/spot/pricing/">here</a>.</p>
+<img alt="../../_images/spot-fleet-configuration-dialog-instance-tab.png" src="../../_images/spot-fleet-configuration-dialog-instance-tab.png" />
+<ul class="simple">
+<li><p><strong>Instance Types</strong>: The AWS instance types in the <strong>Unlselected</strong> left box are types that will not be in your Spot Fleet. The instance types in the <strong>Selected</strong> right box are ones that are permitted to be in your Spot Fleet. Your fleet will contain a mix of the instance types selected depending on availability and price.</p></li>
+<li><p><strong>Auto Adjust Deadline Performance Settings</strong>: Check this if you want Deadline to automatically the performance settings of your render farm. You can learn more about Deadline Repository Performance Settings <a class="reference internal" href="../repository-config.html#performance-settings-ref-label"><span class="std std-ref">here</span></a>.</p></li>
+</ul>
+</div>
+<div class="section" id="worker-settings-tab">
+<span id="aws-portal-usage-spot-fleet-configuration-worker-settings-tab-ref-label"></span><h2><span class="section-number">3.5. </span>Worker Settings Tab<a class="headerlink" href="#worker-settings-tab" title="Permalink to this headline">¶</a></h2>
+<p>The Worker Settings tab allows you to configure some settings for the Deadline Workers that will exist
+on your Spot Fleet instances. You can configure the auto shutdown settings for the instance, as well as
+other Deadline render farm management features.</p>
+<img alt="../../_images/spot-fleet-configuration-dialog-worker.png" src="../../_images/spot-fleet-configuration-dialog-worker.png" />
+<ul class="simple">
+<li><p><strong>Request Type</strong>: Select whether you want your instances to be <strong>Maintain Instances</strong> or <strong>Auto Shutdown Instances</strong>. Maintain instances will attempt to keep your fleet at the specified target account by launching another instance if one gets terminated for any reason. Auto Shutdown will terminate an instance if they have been idle for a specified amount of time the is selected with the number picker. These instances will not be replenished if terminated for any reason.</p></li>
+<li><p><strong>Groups and Pools</strong>: Select the <strong>Groups</strong> and <strong>Pools</strong> you want your Workers to be a part of by clicking on the
+<strong>…</strong> button. A dialog will pop up that will allow you to manage your pools or groups respectively. You can learn
+more about Pools and Groups <a class="reference internal" href="../pools-and-groups.html#pools-and-groups-ref-label"><span class="std std-ref">here</span></a>.</p>
+<ul>
+<li><p>Note: Automatic Pools &amp; Groups assignment requires that the AWS Portal Event Plugin be <a class="reference internal" href="../aws-portal-troubleshooting/spot_fleet_instances_missing_groups_and_or_pools.html#spot-fleet-instances-missing-groups-and-or-pools-label"><span class="std std-ref">enabled</span></a>.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="aws-settings-tab">
+<span id="aws-portal-usage-spot-fleet-configuration-aws-settings-tab-ref-label"></span><h2><span class="section-number">3.6. </span>AWS Settings Tab<a class="headerlink" href="#aws-settings-tab" title="Permalink to this headline">¶</a></h2>
+<p>The AWS Settings tab lets you adjust AWS specific settings of your Spot Fleet. Currently, this is just choosing
+which AWS Availability Zones you want your instances to come from. You can learn more about AWS Availability Zones <a class="reference external" href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html">here</a>.</p>
+<img alt="../../_images/spot-fleet-configuration-dialog-aws.png" src="../../_images/spot-fleet-configuration-dialog-aws.png" />
+<ul class="simple">
+<li><p><strong>Availability Zones</strong>: Check or un-check the availability zones that you want to use for your Spot Fleet.</p></li>
+</ul>
+</div>
+<div class="section" id="tags-tab">
+<span id="aws-portal-usage-spot-fleet-configuration-tags-tab-ref-label"></span><h2><span class="section-number">3.7. </span>Tags Tab<a class="headerlink" href="#tags-tab" title="Permalink to this headline">¶</a></h2>
+<p>The Tags tab allows you to add your own meta data to the resources acquired by your Spot Fleet. This
+is used to aid in the management of your fleet/resources. Tags can be very useful for cost allocation in billing.
+You can learn more about tags <a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">here</a> and costs <a class="reference internal" href="../aws-account-considerations.html#aws-account-considerations-ref-label"><span class="std std-ref">here</span></a>.</p>
+<img alt="../../_images/spot-fleet-configuration-dialog-tags.png" src="../../_images/spot-fleet-configuration-dialog-tags.png" />
+<ul class="simple">
+<li><p><strong>Tag List</strong>: This is the list of tags that you currently have assigned to your Spot Fleet. You can select a row to <strong>Remove</strong> or <strong>Edit</strong> the entry.</p></li>
+<li><p><strong>Key and Value Fields</strong>: Enter in the key and value you want for a new tag in these text boxes.</p></li>
+<li><p><strong>Add</strong>: Adds the text that is currently in the <strong>Key</strong> and <strong>Value</strong> text fields when clicked.</p></li>
+<li><p><strong>Remove</strong>: Removes the currently selected tag key/value pair in the <strong>Tag List</strong>.</p></li>
+<li><p><strong>Edit</strong>: Opens a dialog that will allow you to edit the key and value fields of the currently selected key/value pair in the <strong>Tag List</strong>.</p></li>
+</ul>
+</div>
+<div class="section" id="dashkey-and-aws-key-pairs">
+<span id="aws-portal-usage-dashkey-more-info-ref-label"></span><h2><span class="section-number">3.8. </span>DashKey and AWS Key Pairs<a class="headerlink" href="#dashkey-and-aws-key-pairs" title="Permalink to this headline">¶</a></h2>
+<p>The Key Pair field allows you to select an Amazon EC2 Key Pair to be added
+to your render nodes. This allows you to use an SSH client to log into your
+render nodes for debugging purposes. Using a key pair is completely optional.</p>
+<p>Because render nodes do not have a public IP address, you will first need to
+use an SSH client to connect to your infrastructure, and then you can use an
+SSH client installed on the infrastructure to connect to the render node.
+In order to use SSH to access the render node from the infrastructure you will
+need to transfer the private key of the key pair you are using to the infrastructure.
+More information on this work flow can be found
+<a class="reference external" href="https://aws.amazon.com/blogs/security/securely-connect-to-linux-instances-running-in-a-private-amazon-vpc/">here</a>.</p>
+<p>To show up in the drop down, the key pair must have been created in the AWS region
+which your infrastructure was created in. Alternatively you can select the DashKey
+which is the key used by your infrastructure itself. The private key file
+for the DashKey is located in the installation directory of AWSPortalLink.
+If you select DashKey It will be added as an EC2 Key Pair
+in the region your infrastructure is located in when you start your render nodes.
+If you don’t wish to associate a key pair with your render nodes, you can un-select the
+“Use Key Pair” check box.</p>
+<p>More information on how to create Amazon EC2 Key Pairs can be found
+<a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html">here</a>.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3. AWS Portal Spot Fleet</a><ul>
+<li><a class="reference internal" href="#overview">3.1. Overview</a><ul>
+<li><a class="reference internal" href="#aws-ec2-spot">3.1.1. AWS EC2 Spot</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spot-fleet-configuration-dialog">3.2. Spot Fleet Configuration Dialog</a></li>
+<li><a class="reference internal" href="#software-tab-and-general-settings">3.3. Software Tab and General Settings</a><ul>
+<li><a class="reference internal" href="#general-settings">3.3.1. General Settings</a></li>
+<li><a class="reference internal" href="#software-tab">3.3.2. Software Tab</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#instance-type-tab">3.4. Instance Type Tab</a></li>
+<li><a class="reference internal" href="#worker-settings-tab">3.5. Worker Settings Tab</a></li>
+<li><a class="reference internal" href="#aws-settings-tab">3.6. AWS Settings Tab</a></li>
+<li><a class="reference internal" href="#tags-tab">3.7. Tags Tab</a></li>
+<li><a class="reference internal" href="#dashkey-and-aws-key-pairs">3.8. DashKey and AWS Key Pairs</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="usage-infrastructure-creation.html"
+                        title="previous chapter"><span class="section-number">2. </span>Creating a Deadline AWS Portal Infrastructure</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="usage-spot-fleet-steps.html"
+                        title="next chapter"><span class="section-number">4. </span>Spot Fleet Launch Instructions</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="usage-spot-fleet-steps.html" title="4. Spot Fleet Launch Instructions"
+             >next</a></li>
+        <li class="right" >
+          <a href="usage-infrastructure-creation.html" title="2. Creating a Deadline AWS Portal Infrastructure"
+             >previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="usage-overview.html" >Using AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">3. </span>AWS Portal Spot Fleet</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

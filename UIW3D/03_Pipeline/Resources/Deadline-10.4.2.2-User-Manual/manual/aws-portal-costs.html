@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AWS Portal Cost Structure &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="AWS Portal Frequently Asked Questions (FAQ)" href="aws-portal-faq.html" />
+    <link rel="prev" title="AWS Portal Introduction" href="aws-portal-intro.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-faq.html" title="AWS Portal Frequently Asked Questions (FAQ)"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="aws-portal-intro.html" title="AWS Portal Introduction"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWS Portal Cost Structure</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<div class="section" id="aws-portal-cost-structure">
+<span id="aws-portal-costs-ref-label"></span><h1>AWS Portal Cost Structure<a class="headerlink" href="#aws-portal-cost-structure" title="Permalink to this headline">¶</a></h1>
+<p>AWS Portal is made up of many components, each with their own cost. To help you understand where your bill is coming from, we’ll outline these different components and how to understand their pricing.</p>
+<div class="section" id="deadline-licensing">
+<h2>Deadline Licensing<a class="headerlink" href="#deadline-licensing" title="Permalink to this headline">¶</a></h2>
+<p>Deadline Workers 10.1 and later are not required to have a license when running on an AWS EC2 instance.
+For older versions of Deadline see the corresponding documentation version.</p>
+</div>
+<div class="section" id="aws-portal-components">
+<h2>AWS Portal Components<a class="headerlink" href="#aws-portal-components" title="Permalink to this headline">¶</a></h2>
+<p>AWS Portal is composed of many different AWS services, each with an associated cost. Below we list the six different cost components for AWS Portal that make up your bill.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Once AWS Portal is setup, you can use <a class="reference external" href="https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/billing-what-is.html">AWS Billing And Management</a> to help understand your monthly bill for AWS Components.</p>
+</div>
+<div class="section" id="spot-fleets">
+<h3>Spot Fleets<a class="headerlink" href="#spot-fleets" title="Permalink to this headline">¶</a></h3>
+<p>These are the collections of EC2 Spot Instances that you’re running. Your Spot Fleet has an associated target capacity and a maximum amount you’re willing to pay per instance hour. You can view the current price of your Spot Instances in the AWS Portal Panel in the Deadline Monitor. For the majority of customers this will be the largest portion of the bill.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The actual amount you will be charged is the Spot price at the time your Spot Instances are running, which will be less than or equal to your maximum price per instance.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Linux instances are billed per second of usage, while Windows instances are billed per hour.</p>
+</div>
+<p>For more information on how Spot Fleets work and their pricing, head over to the <a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet.html">Spot Fleet documentation</a>.</p>
+</div>
+<div class="section" id="infrastructure">
+<h3>Infrastructure<a class="headerlink" href="#infrastructure" title="Permalink to this headline">¶</a></h3>
+<p>AWS Portal infrastructure is an instance that needs to be running to render with AWS and consists of several AWS services that act as the gateway to your AWS render nodes. Due to this complexity we’ve built a pricing tool, that estimates the cost of your infrastructure running 24/7 for a month. To use the pricing tool, follow these instructions:</p>
+<ul>
+<li><p>Open the Deadline Monitor and, in power user mode, navigate to the AWS Portal panel and login.</p></li>
+<li><p>Open the <code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">Infrastructure</span></code> dialog by clicking on the <code class="docutils literal notranslate"><span class="pre">+</span></code> button in the top left-hand corner of the AWS Portal panel.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/AWSPanelDefaultPlusHighlighted.png"><img alt="../_images/AWSPanelDefaultPlusHighlighted.png" src="../_images/AWSPanelDefaultPlusHighlighted.png" style="width: 481.2px; height: 379.2px;" /></a>
+</div></blockquote>
+</li>
+<li><p>You’ll then be greeted with the following dialog:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/AWSPanelNewInfrastructure.png"><img alt="../_images/AWSPanelNewInfrastructure.png" src="../_images/AWSPanelNewInfrastructure.png" style="width: 489.0px; height: 294.0px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Clicking on <code class="docutils literal notranslate"><span class="pre">Estimate</span> <span class="pre">Monthly</span> <span class="pre">Infrastructure</span> <span class="pre">Cost</span></code> will take you to a website that estimates the cost of your infrastructure.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is the <strong>monthly</strong> estimation for the cost of your infrastructure with the assumption that it is running <strong>24/7</strong>. This may or may not reflect your actual usage.</p>
+</div>
+</div>
+<div class="section" id="s3">
+<h3>S3<a class="headerlink" href="#s3" title="Permalink to this headline">¶</a></h3>
+<p>As part of the asset transfer system in AWS Portal, we have an S3 bucket that’s used as a cache for your assets and render outputs. Up-to-date prices are available on the <a class="reference external" href="https://aws.amazon.com/s3/pricing/">S3 pricing page</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently, the S3 bucket is created by Deadline, but it must be manually deleted from your <a class="reference external" href="https://console.aws.amazon.com/s3/">AWS Console</a>.</p>
+</div>
+</div>
+<div class="section" id="software-licensing">
+<h3>Software Licensing<a class="headerlink" href="#software-licensing" title="Permalink to this headline">¶</a></h3>
+<p>You’re able to use your existing floating licenses with dynamic licensing mode or you can use Usage-Based Licensing from the <a class="reference external" href="https://marketplace.thinkboxsoftware.com/">Thinkbox Marketplace</a>.</p>
+</div>
+<div class="section" id="egress">
+<h3>Egress<a class="headerlink" href="#egress" title="Permalink to this headline">¶</a></h3>
+<p>The act of transferring data (ie. assets and render output) “out” of Amazon EC2 also has a cost associated with it. Tiered pricing information can be found on the <a class="reference external" href="https://aws.amazon.com/ec2/pricing/on-demand/">EC2 Pricing page</a> by navigating down to the <strong>Data Transfer</strong> section.</p>
+</div>
+<div class="section" id="cloudwatch">
+<h3>Cloudwatch<a class="headerlink" href="#cloudwatch" title="Permalink to this headline">¶</a></h3>
+<p>This is where your AWS Portal logs are stored. Logs are deleted after 60 days by default. You can change the duration by right-clicking on a Completed Infrastructure and selecting ‘Log Retention Policy’.</p>
+<a class="reference internal image-reference" href="../_images/AWSPanelLogRetention.png"><img alt="../_images/AWSPanelLogRetention.png" src="../_images/AWSPanelLogRetention.png" style="width: 851.25px; height: 616.5px;" /></a>
+<p>You can find up-to-date prices on the <a class="reference external" href="https://aws.amazon.com/cloudwatch/pricing/">Cloudwatch pricing page</a>.</p>
+<p><a class="reference internal" href="aws-portal-faq.html#aws-portal-faq-ref-label"><span class="std std-ref">Next: AWS Portal FAQ &gt;&gt;</span></a></p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">AWS Portal Cost Structure</a><ul>
+<li><a class="reference internal" href="#deadline-licensing">Deadline Licensing</a></li>
+<li><a class="reference internal" href="#aws-portal-components">AWS Portal Components</a><ul>
+<li><a class="reference internal" href="#spot-fleets">Spot Fleets</a></li>
+<li><a class="reference internal" href="#infrastructure">Infrastructure</a></li>
+<li><a class="reference internal" href="#s3">S3</a></li>
+<li><a class="reference internal" href="#software-licensing">Software Licensing</a></li>
+<li><a class="reference internal" href="#egress">Egress</a></li>
+<li><a class="reference internal" href="#cloudwatch">Cloudwatch</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aws-portal-intro.html"
+                        title="previous chapter">AWS Portal Introduction</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="aws-portal-faq.html"
+                        title="next chapter">AWS Portal Frequently Asked Questions (FAQ)</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-faq.html" title="AWS Portal Frequently Asked Questions (FAQ)"
+             >next</a></li>
+        <li class="right" >
+          <a href="aws-portal-intro.html" title="AWS Portal Introduction"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWS Portal Cost Structure</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

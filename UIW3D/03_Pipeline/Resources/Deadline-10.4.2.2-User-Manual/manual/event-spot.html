@@ -1,0 +1,318 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spot Event Plugin &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Spot Event Plugin - AWS Permissions" href="event-spot-permissions.html" />
+    <link rel="prev" title="Shotgun" href="event-shotgun.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-spot-permissions.html" title="Spot Event Plugin - AWS Permissions"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="event-shotgun.html" title="Shotgun"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" accesskey="U">Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Spot Event Plugin</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="spot-event-plugin">
+<span id="event-spot-ref-label"></span><h1>Spot Event Plugin<a class="headerlink" href="#spot-event-plugin" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 22%" />
+<col style="width: 18%" />
+<col style="width: 19%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#event-spot-ref-label"><span class="std std-ref">Spot Event Plugin</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-permissions.html#event-spot-iam-policies-ref-label"><span class="std std-ref">AWS Permissions Setup</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-ami.html#event-spot-ami-ref-label"><span class="std std-ref">Amazon Machine Images</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-fleet-request.html#event-spot-fleet-requests-ref-label"><span class="std std-ref">Spot Fleet Requests</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-config-credentials.html#event-spot-config-credentials-ref-label"><span class="std std-ref">Security Credentials Configuration</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="event-spot-fleet-configurations.html#event-spot-fleet-configurations-ref-label"><span class="std std-ref">Spot Fleet Configuration</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-configuration-options.html#event-spot-configure-event-plugin-dialog-ref-label"><span class="std std-ref">Spot Event Configuration Options</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-config-utility.html#event-spot-config-utility-ref-label"><span class="std std-ref">Spot Event Configuration Utility</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-deadline-connect.html#event-spot-deadline-connect-ref-label"><span class="std std-ref">Deadline Connectivity Configuration</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-vpc-endpoints.html#event-spot-vpc-endpoints-ref-label"><span class="std std-ref">VPC Endpoints Configuration</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="event-spot-multi-region.html#event-spot-fleet-multi-region-ref-label"><span class="std std-ref">Multiple Region Support</span></a></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="overview">
+<span id="event-spot-overview-ref-label"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>Spot Event Plugin</strong> can scale cloud-based Amazon EC2 Spot instances dynamically based on the queued Jobs and Tasks in the Deadline Database.</p>
+<p>It associates JSON dictionary <strong>Spot Fleet Requests</strong> with named Deadline Worker <strong>Groups</strong>, allowing multiple Spot Fleets with different hardware and software specifications to be launched for different types of Jobs based on their Group assignment.</p>
+<div class="section" id="what-is-amazon-ec2-spot">
+<span id="event-spot-what-is-spot-ref-label"></span><h3>What Is Amazon EC2 Spot?<a class="headerlink" href="#what-is-amazon-ec2-spot" title="Permalink to this headline">¶</a></h3>
+<p>Amazon EC2 Spot Instances let you take advantage of unused EC2 capacity in the Amazon Web Services cloud at steep discounts.</p>
+<p>EC2 Spot instances are identical to On-Demand EC2 instances of the same type and size, except for the following details:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>The cost can be up to 90% lower than On-Demand instances.</dt><dd><ul>
+<li><p>The cost varies slightly between AWS Regions, Availability Zones (AZ), instance families and sizes, and time of day based on supply and demand.</p></li>
+<li><p>The cost can never exceed the On-Demand price.</p></li>
+<li><p>Take a look at the <a class="reference external" href="https://aws.amazon.com/ec2/spot/pricing/">AWS Spot pricing page</a> for current pricing.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>If capacity is insufficient to provide On-Demand instances to customers, AWS can terminate Spot instances.</dt><dd><ul>
+<li><p>If an instance is reclaimed by AWS within the first hour, you will not be charged for that hour.</p></li>
+<li><p>After the first hour, you won’t be charged for a partial hour of a reclaimed Windows instance, while a Linux instance will be charged for the usage in seconds.</p></li>
+<li><p>Another Spot Instance from a different capacity pool (different AZ, different instance size or instance type) specified in the Spot Fleet Request may replace the reclaimed instance, maintaining the requested target capacity.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>You can learn more about Spot Instances on the <a class="reference external" href="https://aws.amazon.com/ec2/spot/">AWS Spot Instance Website</a>.</p>
+</div>
+</div>
+<div class="section" id="lifecycle">
+<span id="event-spot-lifecycle-ref-label"></span><h3>Lifecycle<a class="headerlink" href="#lifecycle" title="Permalink to this headline">¶</a></h3>
+<p>The Spot Event Plugin controls the lifecycle of multiple Spot Fleet Requests by scaling up and down the Target Capacity of the Spot Fleets.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>In order to maintain the Spot Fleet Requests, the Spot Event Plugin triggers after <a class="reference internal" href="repository-config.html#house-cleaning-settings-label"><span class="std std-ref">House Cleaning</span></a>.</p></li>
+<li><p>When the Event triggers, the Spot Event Plugin determines the number of Workers that could be actively working at the same time for each <a class="reference internal" href="pools-and-groups.html#pools-and-groups-ref-label"><span class="std std-ref">Group</span></a>.</p></li>
+<li><p>Next, for each configured Group it will create or modify a Spot Fleet Request that will contain a number of instances equal to the available work up to the maximum capacity set by the user.</p></li>
+<li><p>Once the Spot Fleet Requests have been fulfilled and the Workers have started, they will automatically assign themselves to the <strong>Group</strong> they were created for and optionally one or more <strong>Pools</strong>.</p></li>
+<li><p>Finally, when the Worker is either no longer rendering, or the Spot instance is going to be <a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-interruptions.html">interrupted,</a> the Worker will</p>
+<ul>
+<li><p>Mark itself as Offline,</p></li>
+<li><p>Optionally remove itself from the Workers list,</p></li>
+<li><p>Terminate itself.</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="determining-targets">
+<span id="event-spot-targets-ref-label"></span><h3>Determining Targets<a class="headerlink" href="#determining-targets" title="Permalink to this headline">¶</a></h3>
+<p>For every <strong>Group</strong> you have configured, the Spot Event Plugin will scale the target number of instances based on the state of your farm during House Cleaning.
+Here are some of the factors it takes into account:</p>
+<ul class="simple">
+<li><p><strong>State</strong>: Only Queued Tasks are considered eligible to work on.</p></li>
+<li><p><strong>Allow Lists</strong>: If a job has an allow list then no Spot instances will be started for it.</p></li>
+<li><p><strong>Limits</strong>: The number of available Limit stubs you have will constrain the number of instances to start.</p></li>
+<li><p><strong>Machine Limits</strong>: The machine limits for individual jobs are taken into account for determining the available work for that job.</p></li>
+<li><p><strong>Concurrent Tasks</strong>: If Concurrent Tasks are enabled on a Job and on its Plugin, then they will be taken into account.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Spot Event Plugin assumes that each AMI is configured to only start 1 Worker.
+Due to this, we treat Worker Level limits the same as Machine Level Limits.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you select an instance type with fewer CPU’s than the number of concurrent tasks for your jobs, you may not receive the number of instances you are expecting.
+This is done because Deadline can cap the number of Concurrent Tasks to the number of CPUs on your machine.</p>
+</div>
+</div>
+<div class="section" id="resource-tracker">
+<span id="event-spot-resource-tracker-ref-label"></span><h3>Resource Tracker<a class="headerlink" href="#resource-tracker" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="resource-tracker-overview.html#resource-tracker-overview-ref-label"><span class="std std-ref">Resource Tracker</span></a> is an optional, but highly recommended, service that monitors the health of instances started by Deadline in your AWS account.</p>
+<p>It monitors a heartbeat reported by each render node and terminates any instances that are in an unhealthy state.</p>
+<p>If enough instances are failing, the Resource Tracker will cancel the Spot Fleet.</p>
+</div>
+</div>
+<div class="section" id="prerequisites">
+<span id="event-spot-prerequisites-ref-label"></span><h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>Before you can use the Spot Event Plugin, you will need the following:</p>
+<ul class="simple">
+<li><p>An AWS account. <a class="reference external" href="https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/">Create one if necessary</a>.</p></li>
+<li><p>A <a class="reference internal" href="remote-connection-server.html#remote-connection-server-ref-label"><span class="std std-ref">Remote Connection Server (RCS)</span></a> or <a class="reference internal" href="pulse.html#pulse-ref-label"><span class="std std-ref">Pulse</span></a> set up as part of your render farm.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>All SEP components: Workers, RCS, or Pulse instances <strong>MUST</strong> be configured with <strong>UTC</strong> time format.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Ensure “House Cleaning Interval” in <a class="reference internal" href="repository-config.html#house-cleaning-settings-label"><span class="std std-ref">Configure Repository Options</span></a> -&gt; “House Cleaning” is <strong>NOT</strong> set below 30 seconds (default=60 seconds) and the setting: “Allow Workers to Perform House Cleaning If Pulse is not Running” is <em>disabled</em> as shown below in <a class="reference internal" href="repository-config.html#house-cleaning-settings-label"><span class="std std-ref">Configure Repository Options</span></a>. Consider running at least one other instance of Pulse on another machine for <a class="reference internal" href="pulse-config.html#pulse-config-redundancy-ref-label"><span class="std std-ref">redundancy</span></a>.</p>
+<p>If you are using <a class="reference internal" href="event-spot-multi-region.html#event-spot-fleet-multi-region-ref-label"><span class="std std-ref">Multiple Regions</span></a> you may need to set the OnHouseCleaning Interval longer than 60 seconds to ensure that there is enough time for the Spot Event Plugin to manage all configured AWS regions before the next iteration of OnHouseCleaning.</p>
+</div>
+</div>
+<div class="section" id="setup">
+<span id="event-spot-setup-ref-label"></span><h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>The following setup is required in order to use the Spot Event Plugin :</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="event-spot-permissions.html#event-spot-iam-policies-ref-label"><span class="std std-ref">Create the IAM Policies, IAM User, and IAM Roles</span></a>.</p></li>
+<li><p><a class="reference internal" href="event-spot-ami.html#event-spot-ami-ref-label"><span class="std std-ref">Create at least one Amazon Machine Image (AMI) with Deadline Client configured to connect to your Repository, and any 3rd party software required</span></a>.</p></li>
+<li><p><a class="reference internal" href="event-spot-fleet-request.html#event-spot-fleet-requests-ref-label"><span class="std std-ref">Create a Spot Fleet Request using the AMI from the previous step</span></a>.</p></li>
+</ul>
+<div class="section" id="event-plugin-configuration">
+<h3>Event Plugin Configuration<a class="headerlink" href="#event-plugin-configuration" title="Permalink to this headline">¶</a></h3>
+<p>After creating your IAM Policies and creating your Spot Fleet, you are now ready to configure the Spot Event Plugin.</p>
+<p>To perform this step, enter <strong>Power User</strong> mode and select <strong>Tools &gt; Configure Events</strong> from the Monitor’s menu.
+Then select the <strong>Spot</strong> entry from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cep_spot.png"><img alt="../_images/cep_spot.png" src="../_images/cep_spot.png" style="height: 400px;" /></a>
+<p>As part of configuring the Spot Event Plugin, you will need to configure the following sections:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="event-spot-config-credentials.html#event-spot-config-credentials-ref-label"><span class="std std-ref">Security Credentials</span></a></p></li>
+<li><p><a class="reference internal" href="event-spot-fleet-configurations.html#event-spot-fleet-configurations-ref-label"><span class="std std-ref">Spot Fleet Request Configurations</span></a></p></li>
+</ul>
+<p>An additional <a class="reference internal" href="event-spot-config-utility.html#event-spot-config-utility-ref-label"><span class="std std-ref">Spot Event Configuration Utility</span></a> can be used to edit existing Spot Fleet Request Configurations, or create Configurations from existing ones.</p>
+</div>
+</div>
+<div class="section" id="security">
+<h2>Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="aws-thinkbox-managed-policies.html#aws-thinkbox-managed-policies-ref-label"><span class="std std-ref">AWS managed policies</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="additonal-information">
+<h2>Additonal Information<a class="headerlink" href="#additonal-information" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="event-spot-deadline-connect.html#event-spot-deadline-connect-ref-label"><span class="std std-ref">Configuring Deadline Connectivity</span></a></p></li>
+<li><p><a class="reference internal" href="event-spot-vpc-endpoints.html#event-spot-vpc-endpoints-ref-label"><span class="std std-ref">VPC Endpoints</span></a></p></li>
+<li><p><a class="reference internal" href="considerations.html#considerations-ec2-ref-label"><span class="std std-ref">AWS EC2 Considerations</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="event-spot-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Does the AWS Portal work with this Spot Event Plugin?</strong></p>
+<p>No. Both components can technically be run at the same time but they do not complement each other.</p>
+<p><strong>Does the Spot Event Plugin take Deadline ‘Pools’ into account when calculating number of EC2 Spot Instances to request?</strong></p>
+<p>No. You should use Deadline <strong>Groups</strong> to configure which Deadline jobs are run on Spot instances in AWS EC2. However, you can configure an order based, comma-separated string of the <strong>Pool</strong> names you would like to be assigned to all the Deadline Workers which are started on EC2 Spot for the relevant Deadline <strong>Group</strong> that made the Spot request.</p>
+<p><strong>Can I use Limits to control the number of Spot instances provisioned by the Spot Event Plugin?</strong></p>
+<p>Yes. Deadline Resource and License Limits at the app plugin and job level are taken into account when calculating the number of Spot instances to be requested per Deadline Group configured in your Spot Fleet JSON configuration file.</p>
+<p><strong>Do I need software licenses (floating or Usage-based) to render with Spot Event Plugin?</strong></p>
+<p>Deadline does not require any licenses for it to run. You will still need licenses for your rendering software if they require one.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Spot Event Plugin</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a><ul>
+<li><a class="reference internal" href="#what-is-amazon-ec2-spot">What Is Amazon EC2 Spot?</a></li>
+<li><a class="reference internal" href="#lifecycle">Lifecycle</a></li>
+<li><a class="reference internal" href="#determining-targets">Determining Targets</a></li>
+<li><a class="reference internal" href="#resource-tracker">Resource Tracker</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#setup">Setup</a><ul>
+<li><a class="reference internal" href="#event-plugin-configuration">Event Plugin Configuration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#security">Security</a></li>
+<li><a class="reference internal" href="#additonal-information">Additonal Information</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="event-shotgun.html"
+                        title="previous chapter">Shotgun</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="event-spot-permissions.html"
+                        title="next chapter">Spot Event Plugin - AWS Permissions</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-spot-permissions.html" title="Spot Event Plugin - AWS Permissions"
+             >next</a></li>
+        <li class="right" >
+          <a href="event-shotgun.html" title="Shotgun"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" >Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Spot Event Plugin</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

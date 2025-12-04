@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maxwell &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Maya" href="app-maya.html" />
+    <link rel="prev" title="Mantra Standalone" href="app-mantra.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-maya.html" title="Maya"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-mantra.html" title="Mantra Standalone"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Maxwell</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="maxwell">
+<span id="app-maxwell-ref-label"></span><h1>Maxwell<a class="headerlink" href="#maxwell" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit Maxwell jobs from the Monitor or via an in-app submitter such as <a class="reference internal" href="app-maya.html#app-maya-ref-label"><span class="std std-ref">MayaBatch</span></a> as an export job.</p>
+<a class="reference internal image-reference" href="../_images/sub_maxwell.png"><img alt="../_images/sub_maxwell.png" src="../_images/sub_maxwell.png" style="height: 500px;" /></a>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.
+The Maxwell specific options are:</p>
+<p><strong>Maxwell Options</strong></p>
+<ul class="simple">
+<li><p><strong>Maxwell File(s)</strong>: The Maxwell files to be rendered. Can be a single file, or a sequence of files.</p></li>
+<li><p><strong>Version</strong>: The version of Maxwell to render with.</p></li>
+<li><p><strong>Verbosity</strong>: Set the amount of information that Maxwell should output while rendering.</p></li>
+<li><p><strong>Single Frame Job</strong>: This should be checked if you’re submitting a single Maxwell file only.</p></li>
+<li><p><strong>Build To Force</strong>: Force 32 bit or 64 bit rendering.</p></li>
+<li><p><strong>Threads</strong>: The number of threads to use during rendering. Specify 0 to use the default setting.</p></li>
+</ul>
+<p><strong>Co-op Rendering</strong></p>
+<ul class="simple">
+<li><p><strong>Cooperative Rendering</strong>: Enable this to use Maxwell’s co-op rendering feature to render the same image across multiple computers. You can then use Maxwell to combine the resulting output after the rendering has completed.</p></li>
+<li><p><strong>Split Co-op Renders Into Separate Jobs</strong>: By default, a co-op render is submitted as a single job, where each task represents a different seed. If this option is enabled, a separate job will represent each seed.</p></li>
+<li><p><strong>Adjust Sampling Overrides For Cooperative Rendering</strong>: If this option is enabled, the sampling level given to each Worker will be reduced accordingly to ensure that final merged sampling level will match the requested one.</p></li>
+<li><p><strong>Number of Co-op Renders</strong>: The number of co-op render jobs to submit to Deadline.</p></li>
+<li><p><strong>Auto-Merge Files</strong>: Enable this option to auto-merge the co-op renders into the final image.</p></li>
+<li><p><strong>Fail On Missing Intermediate Files</strong>: If enabled, the auto-merge will fail if any co-op renders are missing.</p></li>
+<li><p><strong>Delete Intermediate Files</strong>: If enabled, the co-op renders will be deleted after the final image is merged together.</p></li>
+</ul>
+<p><strong>Output Options</strong></p>
+<ul class="simple">
+<li><p><strong>Output MXI File</strong>: Optionally configure the output path for the MXI file which can be used to resume the render later. Note that this is required for co-op rendering though.</p></li>
+<li><p><strong>Output Image File</strong>: Optionally configure the output path for the image file.</p></li>
+<li><p><strong>Render Camera</strong>: Optionally specify which camera to render with.</p></li>
+<li><p><strong>Enable Local Rendering</strong>: If enabled, Deadline will save the output locally and then copy it to the final network location.</p></li>
+<li><p><strong>Resume Rendering From MXI File</strong>: If enabled, Maxwell will use the specified MXI file to resume the render if it exists. If you suspend the job in Deadline, it will pick up from where it left off when it resumes.</p></li>
+</ul>
+<p><strong>Overrides</strong></p>
+<ul class="simple">
+<li><p><strong>Override Time</strong>: Enable to override the max rendering time setting in the Maxwell file (minutes).</p></li>
+<li><p><strong>Override Sampling</strong>: Enable to override the max sampling setting in the Maxwell file.</p></li>
+</ul>
+<p><strong>Extra Sampling (requires Maxwell 3.1 or later)</strong></p>
+<ul class="simple">
+<li><p><strong>Override Extra Sampling</strong>: If the extra sampling settings should be overridden.</p></li>
+<li><p><strong>Enabled</strong>: If extra sampling is enabled.</p></li>
+<li><p><strong>Sampling Level</strong>: The extra sampling level.</p></li>
+<li><p><strong>Invert Mask</strong>: If the extra sampling alpha mask must be inverted.</p></li>
+<li><p><strong>Mask</strong>: The extra sampling mask.</p></li>
+<li><p><strong>Custom Alpha</strong>: The custom alpha name that will be used for the extra sampling mask (if Mask is set to Custom Alpha).</p></li>
+<li><p><strong>Bitmap File</strong>: The bitmap file that will be used for the extra sampling mask (if Mask is set to Bitmap).</p></li>
+</ul>
+<p><strong>Command Line Options</strong></p>
+<ul class="simple">
+<li><p><strong>Additional Arguments</strong>: Additional command line arguments to pass to the renderer.</p></li>
+</ul>
+</div>
+<div class="section" id="resuming-a-render">
+<h3>Resuming a Render<a class="headerlink" href="#resuming-a-render" title="Permalink to this headline">¶</a></h3>
+<p>When specifying an MXI file, you now have the option to have Maxwell use it to resume a render job if that MXI file already exists. This means that if you suspend a Maxwell job from the Monitor mid-render, it will resume from
+where it left off when you resume the job.</p>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Maxwell plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Maxwell plugin from the list on the left.</p>
+<p>Note, if the executable supports a MAJOR.MINOR.REVISION (9.0.123) numbering system in its path, then you will need to configure the explicit exe path to the particular revision that you have installed on your machines. Deadline does not track every possible revision available or indeed where it might be custom installed to, so a studio should verify their exe paths are correct for each application version they choose to use with Deadline. Multiple exe paths can still be declared and the first one that is found on a particular Worker on a particular platform will be used from the exe list.</p>
+<a class="reference internal image-reference" href="../_images/cp_maxwell.png"><img alt="../_images/cp_maxwell.png" src="../_images/cp_maxwell.png" style="height: 400px;" /></a>
+<p><strong>General Maxwell Options</strong></p>
+<ul class="simple">
+<li><p><strong>Workers To Use Interactive License</strong>: A list of Workers that should use an interactive Maxwell license instead of a render license. Use a , to separate multiple Worker names, for example: worker001,worker002,worker003</p></li>
+</ul>
+<p><strong>Maxwell Version Options</strong></p>
+<ul class="simple">
+<li><p><strong>Render Executable</strong>: The path to the Maxwell executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+<li><p><strong>Merge Executable</strong>: The path to the Maxwell executable file used for merging. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+</div>
+<div class="section" id="cross-platform-rendering-considerations">
+<span id="app-maxwell-faq-ref-label"></span><h2>Cross-Platform Rendering Considerations<a class="headerlink" href="#cross-platform-rendering-considerations" title="Permalink to this headline">¶</a></h2>
+<p>In order to perform cross-platform rendering with Maxwell, you must setup Mapped Paths so that Deadline can swap out file paths where appropriate. You can access the Mapped Paths Setup in the Monitor while in power user mode by selecting Tools -&gt; Configure Repository. You’ll find the Mapped Paths Setup in the list on the left.</p>
+</div>
+<div class="section" id="faq">
+<h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which version of Maxwell is supported by Deadline?</strong></p>
+<blockquote>
+<div><p>Versions 2 and later are supported.</p>
+</div></blockquote>
+<p><strong>Is Co-op Rendering supported?</strong></p>
+<blockquote>
+<div><p>Yes.</p>
+</div></blockquote>
+<p><strong>Can I resume from a previous Maxwell render?</strong></p>
+<blockquote>
+<div><p>If you have the Resume Rendering From MXI File option enabled when submitting the job, Maxwell will use the specified MXI file to resume the render if it exists. If you suspend the job in Deadline, it will pick up from
+where it left off when it resumes.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Maxwell error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Maxwell</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#resuming-a-render">Resuming a Render</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#cross-platform-rendering-considerations">Cross-Platform Rendering Considerations</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-mantra.html"
+                        title="previous chapter">Mantra Standalone</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-maya.html"
+                        title="next chapter">Maya</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-maya.html" title="Maya"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-mantra.html" title="Mantra Standalone"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Maxwell</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

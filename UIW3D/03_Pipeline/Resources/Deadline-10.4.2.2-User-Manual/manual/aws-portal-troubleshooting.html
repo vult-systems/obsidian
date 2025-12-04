@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Troubleshooting AWS Portal &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="AWS Portal Server Installer Failed" href="aws-portal-troubleshooting/installer-failed.html" />
+    <link rel="prev" title="AWS managed policies for Thinkbox Deadline" href="aws-thinkbox-managed-policies.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-troubleshooting/installer-failed.html" title="AWS Portal Server Installer Failed"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="aws-thinkbox-managed-policies.html" title="AWS managed policies for Thinkbox Deadline"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Troubleshooting AWS Portal</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<div class="section" id="troubleshooting-aws-portal">
+<span id="troubleshooting-aws-portal-ref-label"></span><h1>Troubleshooting AWS Portal<a class="headerlink" href="#troubleshooting-aws-portal" title="Permalink to this headline">¶</a></h1>
+<p>In this section you will find some troubleshooting steps if you run into any problems while using AWS Portal. If you run into issues at any point that
+you cannot solve yourself feel free to <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">contact Thinkbox support</a>.</p>
+<div class="section" id="common-problems">
+<h2>Common Problems<a class="headerlink" href="#common-problems" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="aws-portal-troubleshooting/installer-failed.html#troubleshooting-aws-portal-installer-failed-label"><span class="std std-ref">AWS Portal Server Installer Failed</span></a></p>
+<p><a class="reference internal" href="aws-portal-troubleshooting/infrastructure-fails-to-start.html#troubleshooting-aws-portal-infrastructure-fails-to-start-label"><span class="std std-ref">AWS Portal Infrastructure Fails To Start</span></a></p>
+<p><a class="reference internal" href="aws-portal-troubleshooting/spot-fleet-request-fails-to-start.html#troubleshooting-spot-fleet-request-fails-label"><span class="std std-ref">Spot Fleet Request Fails to Start</span></a></p>
+<p><a class="reference internal" href="aws-portal-troubleshooting/workers-not-connecting.html#troubleshooting-aws-portal-workers-not-connecting-label"><span class="std std-ref">Workers Are Not Connecting</span></a></p>
+<p><a class="reference internal" href="aws-portal-troubleshooting/job-report-says-it-failed-to-load-scene.html#troubleshooting-job-report-says-it-failed-to-load-scene-label"><span class="std std-ref">Job Report Says it Failed to Load Scene</span></a></p>
+<p><a class="reference internal" href="aws-portal-troubleshooting/job-report-says-it-failed-to-checkout-third-party-license.html#troubleshooting-job-report-says-it-failed-to-checkout-third-party-license-label"><span class="std std-ref">Job Report Says it Failed to Checkout Third Party License</span></a></p>
+<p><a class="reference internal" href="aws-portal-troubleshooting/render-output-not-coming-back.html#troubleshooting-render-output-not-coming-back-label"><span class="std std-ref">Render Output Not Coming Back</span></a></p>
+<p><a class="reference internal" href="aws-portal-troubleshooting/aws-portal-log-locations.html#aws-portal-log-locations-ref-label"><span class="std std-ref">AWS Portal Log Locations</span></a></p>
+<p><a class="reference internal" href="aws-portal-troubleshooting/aws-connect-to-infrastructure.html#aws-connect-infrastructure-ref-label"><span class="std std-ref">Connecting to an Infrastructure</span></a></p>
+<p><a class="reference internal" href="aws-portal-troubleshooting/aws-connect-to-workers.html#aws-connect-workers-ref-label"><span class="std std-ref">Connecting to the AWS Portal Worker Instances</span></a></p>
+<p><a class="reference internal" href="aws-portal-asset-transfer-system/storage.html#aws-portal-versioning-ref-label"><span class="std std-ref">Versioning</span></a></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Troubleshooting AWS Portal</a><ul>
+<li><a class="reference internal" href="#common-problems">Common Problems</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aws-thinkbox-managed-policies.html"
+                        title="previous chapter">AWS managed policies for Thinkbox Deadline</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="aws-portal-troubleshooting/installer-failed.html"
+                        title="next chapter">AWS Portal Server Installer Failed</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-troubleshooting/installer-failed.html" title="AWS Portal Server Installer Failed"
+             >next</a></li>
+        <li class="right" >
+          <a href="aws-thinkbox-managed-policies.html" title="AWS managed policies for Thinkbox Deadline"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Troubleshooting AWS Portal</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

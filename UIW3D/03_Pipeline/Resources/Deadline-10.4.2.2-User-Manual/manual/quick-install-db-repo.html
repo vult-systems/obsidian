@@ -1,0 +1,603 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Database and Repository Installation (Quick) &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Installing Remote Connection Server" href="install-client-conn-server-installation.html" />
+    <link rel="prev" title="Validation of Linux Installers" href="validation-linux-installers.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="install-client-conn-server-installation.html" title="Installing Remote Connection Server"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="validation-linux-installers.html" title="Validation of Linux Installers"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installing-deadline.html" accesskey="U">Installing Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Database and Repository Installation (Quick)</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="database-and-repository-installation-quick">
+<span id="quick-install-db-repo-ref-label"></span><h1>Database and Repository Installation (Quick)<a class="headerlink" href="#database-and-repository-installation-quick" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Before proceeding with this installation, it is highly recommended to read through the <a class="reference internal" href="considerations.html#considerations-ref-label"><span class="std std-ref">Render Farm Considerations</span></a> documentation, including the <a class="reference internal" href="shared-security-model.html#shared-security-model-ref-label"><span class="std std-ref">AWS Thinkbox Deadline Shared Responsibility Model</span></a>. It outlines what AWS Thinkbox is responsible for and what customers are responsible for, and should be considered before installing and using Deadline.</p>
+<p>The Database is the global database component of the Deadline Render Farm Management System. It stores the jobs, settings, and Worker configurations. The Clients access the Database via a direct socket connection over the network.
+It only needs to be installed on one machine (preferably a server). Deadline uses <a class="reference external" href="https://www.mongodb.org/">MongoDB</a> for the Database.</p>
+<p>The Repository is the global file system component of the Deadline Render Farm Management System. It stores the plugins, scripts, logs, and any auxiliary files (like scene files) that are submitted with the jobs. The Clients
+access the Repository via a shared network path. It only needs to be installed on one machine (preferably a server).</p>
+<p>The Database and Repository together act as a global system where all of Deadline’s data is stored. The Clients then connect to this system to submit, render, and monitor jobs. It is important to note that while the Database
+and Repository work together, they are still separate components, and therefore can be installed on separate machines if desired.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Repository installer requires an internet connection to download and install the MongoDB database. If your operating system isn’t supported, or if an internet connection isn’t available, you must manually install the database by following the <a class="reference internal" href="install-db-repo-manual-db-install.html#install-manual-db-ref-label"><span class="std std-ref">Manual Database Installation</span></a> documentation. When running the Repository installer, you can then choose the option to connect to an existing MongoDB database.</p>
+</div>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>While the Repository can be installed on any operating system, the Repository installer is only available for Windows, Linux, and macOS. However, the machine that you run the Repository installer on doesn’t have to be the
+same machine you’re installing the Repository to. For example, if you have an existing share on a FreeBSD server or a NAS system, you can run the Repository installer on Windows, Linux, or macOS and choose that share as the
+install location.</p>
+<p>If you are installing the Repository on a Linux machine, we highly recommend that you <a class="reference internal" href="validation-linux-installers.html#validation-linux-installers-ref-label"><span class="std std-ref">Validate the Linux Installers</span></a>.</p>
+<p>To install the Repository, simply run the appropriate installer for your operating system and follow the steps. This procedure is identical for all operating systems. The Repository installer also supports silent installations.
+If you are installing on macOS Catalina, you may see a warning that the installer ‘can’t be opened because Apple cannot check it for malicious software’. This is because the installer has not been notarized by Apple.
+In this case you need to right-click the installer icon, and choose “Open” in the pop-up menu that appears.</p>
+<p><a class="reference internal" href="../_images/repo_setup.png"><img alt="setup" src="../_images/repo_setup.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/repo_repo_directory.png"><img alt="directory" src="../_images/repo_repo_directory.png" style="height: 300px;" /></a></p>
+<p>When choosing the Installation Directory, you can choose either a local path on the current machine, or the path to an existing network share. Note that if you choose a local path, you must ensure that path is shared on the
+network so that the Clients can access it.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Do <strong>NOT</strong> install over an existing installation unless it’s the same major version, or there could be unexpected results.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Checking <code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">full</span> <span class="pre">read/write</span> <span class="pre">access</span> <span class="pre">for</span> <span class="pre">files</span> <span class="pre">for</span> <span class="pre">all</span> <span class="pre">users</span></code> will make the file permission of the Repository Directory readable/writable to any users. However, the /bin folder will be restricted to only Administrator/root writable. For setting the file permission for the Repository Directory, it is recommended to follow the best practice in <a class="reference internal" href="install-db-repo.html#db-sharing-the-repository-ref-label"><span class="std std-ref">Sharing The Repository</span></a></p>
+</div>
+<p>If you’re installing over an existing Repository installation, all previous binaries, plugins, and scripts will be backed up prior to being overwritten. After the installation is complete, you can find these backed up files in
+the Backup folder in the Repository installation root. Note that installing over an existing repository is only supported for repairing a damaged repository, or for performing a minor upgrade. Major upgrades require a fresh
+repository installation. See the <a class="reference internal" href="upgrading.html#upgrading-ref-label"><span class="std std-ref">Upgrading or Downgrading Deadline</span></a> Documentation for more information.</p>
+<p>After choosing the Repository Installation directory, you will be asked to choose the type of Database you want to use. You can choose either MongoDB or DocumentDB. For details about using DocumentDB, please refer to <a class="reference internal" href="install-db-repo.html#install-docdb-repo-label"><span class="std std-ref">Using DocumentDB</span></a>.
+If you choose MongoDB, you will be asked to install a new MongoDB Database, or connect to an existing one.</p>
+<p><a class="reference internal" href="../_images/repo_choose_db.png"><img alt="choose_db" src="../_images/repo_choose_db.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/repo_mongodb_setup.png"><img alt="mongodb_setup" src="../_images/repo_mongodb_setup.png" style="height: 300px;" /></a></p>
+<div class="section" id="installing-a-new-mongodb-database">
+<h3>Installing a New MongoDB Database<a class="headerlink" href="#installing-a-new-mongodb-database" title="Permalink to this headline">¶</a></h3>
+<p>If you choose to install a new MongoDB Database, you can then choose to have the installer download MongoDB for you. Note though that this requires an internet connection. For maximum compatibility with Deadline, we recommend you use MongoDB version <strong>5.0.0</strong> through <strong>6.0.16</strong>. However, for security, you may need to use a later patch version for <strong>6.0.16</strong> if <strong>6.0.16</strong> has any security issues that might affect you.</p>
+<p>If you do not have an internet connection on the machine you’re running the installer on, your other choice is to simply <a class="reference external" href="https://www.mongodb.org/downloads">download the MongoDB pre-packaged binaries</a> from another machine with an internet connection. Just make sure to download the <strong>.tgz</strong> or <strong>.zip</strong> file for your operating system (and not the <strong>.msi</strong> file if you’re installing on a Windows machine). After downloading the MongoDB package, copy it to the machine you’re running the installer on, and then specify the path to it in the Repository installer.</p>
+<p>If you choose to download MongoDB, you then need to agree with the SSPL license from MongoDB to continue the installation process.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When specifying the path to the pre-packaged binaries, the Repository Installer is expecting a <strong>.tgz</strong> or <strong>.zip</strong> file that was downloaded from MongoDB’s website. It does not support binaries that were manually bundled.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you do not agree with the <a class="reference external" href="https://www.mongodb.com/licensing/server-side-public-license">SSPL license of MongoDB</a>, you will be unable to download MongoDB through Repository installer.</p>
+</div>
+<p><a class="reference internal" href="../_images/repo_mongodb_install_type.png"><img alt="mongodb_install_type" src="../_images/repo_mongodb_install_type.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/repo_mongodb_sspl.png"><img alt="mongodb_sspl_agreement" src="../_images/repo_mongodb_sspl.png" style="height: 300px;" /></a></p>
+<p>You will then be asked to choose an installation location, a hostname and a port number.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Ensure you choose locally attached storage to install the Database. Do <strong>NOT</strong> install the DB to a NAS/network drive. Do <strong>NOT</strong> share out the DB directory once installed.</p>
+</div>
+<p><a class="reference internal" href="../_images/repo_mongodb_settings.png"><img alt="mongodb_settings" src="../_images/repo_mongodb_settings.png" style="height: 300px;" /></a></p>
+<p>The <strong>MongoDB Hostname</strong> is the host name or the IP address of the machine that the MongoDB database will be running on. If desired, you can specify multiple entries and separate them with semicolons. There are a couple reasons to specify multiple entries:</p>
+<ul class="simple">
+<li><p>You have machines on different subnets that need to access the database differently (ie: machines in the cloud might use a different host name than machines on the local network).</p></li>
+<li><p>Some machines need to resolve the database machine by its host name, and others need to use its IP address.</p></li>
+</ul>
+<p><em>Note that if there are IP addresses listed that cannot be resolved, the Deadline Command application can run slower on Linux and macOS Clients because it won’t exit until the connection attempt for those IP addresses time out.</em></p>
+<p>Next, you need to specify security options for the Database.</p>
+<p><a class="reference internal" href="../_images/repo_mongodb_security.png"><img alt="mongodb_security_settings" src="../_images/repo_mongodb_security.png" style="height: 300px;" /></a></p>
+<p>Although We strongly recommend enabling SSL/TLS authentication, you may choose to disable it by unchecking the <strong>Require client authentication via SSL/TLS</strong> checkbox. If it is enabled, you are presented with the following options:</p>
+<ul class="simple">
+<li><p><strong>Certificate Directory</strong>: The installer will generate the required certificates for authentication and place them in this directory. This is where you will find a client certificate that can be used to connect to the Database.</p></li>
+<li><p><strong>Certificate Password</strong>: You may associate a password with the client certificate. If you do, clients will require this password in order to connect to the Database. If you do not wish to set a password, leave this field blank.</p></li>
+<li><p><strong>Use client certificate for DB user authentication</strong>: If enabled, the client certificate will also be used for Database user authentication. The installer will create a user on the Database corresponding to the client certificate that is generated.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Once the certificates have been generated, the ‘Deadline10Client.pfx’ file will need to be securely moved to client machines that are expected to connect to this Repository directly; it will be needed at connection time.
+In addition, the user(s) running the client processes will need to be granted Read access to the file (the installer creates the file with restrictive permissions).</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>It is important to be aware of who might have access to the file throughout the process of distributing it to the client machines – the operating system might change the access level of the file to be overly broad on a copy, for example.
+We recommend always maintaining each certificate with the minimal subset of permissions for the users that need to connect to the Deadline Repository.</p>
+</div>
+<p>When you press Next, the installer will install the database and try to connect to it and configure it for Deadline. This can take a minute or two. If an error occurs, you will be prompted with the error message.</p>
+<p>If the setup succeeds, proceed to the Enabling Deadline Secrets Management installation step below.</p>
+</div>
+<div class="section" id="connecting-to-an-existing-mongodb-database">
+<h3>Connecting to an Existing MongoDB Database<a class="headerlink" href="#connecting-to-an-existing-mongodb-database" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Do <strong>NOT</strong> install over an existing installation unless it’s the same major version, or there could be unexpected results.</p>
+</div>
+<p>If you choose to connect to an existing MongoDB Database, you will be asked to specify the Database Settings so that the installer can connect to and configure the Database. For maximum compatibility with Deadline, we recommend you use MongoDB version <strong>5.0.0</strong> through <strong>6.0.16</strong>. However, for security, you may need to use a later patch version for <strong>6.0.16</strong> if <strong>6.0.16</strong> has any security issues that might affect you. If you want to upgrade your existing MongoDB installation, please refer to <a class="reference external" href="https://docs.mongodb.com/manual/tutorial/upgrade-revision/#upgrade-a-mongodb-instance">https://docs.mongodb.com/manual/tutorial/upgrade-revision/#upgrade-a-mongodb-instance</a>.</p>
+<p><a class="reference internal" href="../_images/repo_mongodb_conn_settings.png"><img alt="mongodb_connection_settings" src="../_images/repo_mongodb_conn_settings.png" style="height: 300px;" /></a></p>
+<p>These settings will also be used by the Clients to connect to the database. The following are required:</p>
+<ul class="simple">
+<li><p><strong>Database Server</strong>: The host name or the IP address of the machine that the MongoDB database is running on. If desired, you can specify multiple entries and separate them with semicolons.</p></li>
+<li><p><strong>Database Port</strong>: The port that the MongoDB database is listening on.</p></li>
+<li><p><strong>Database Name</strong>: The name of the Database. Make sure to enter the same name you used when you initially set up the Database. If you installed the Database using the Repository installer, it should be sufficient to leave it set to the default value.</p></li>
+<li><p><strong>Replica Set</strong>: If you set up your MongoDB database manually and it is part of a <a class="reference external" href="https://docs.mongodb.org/manual/replication/">Replica Set</a>, specify the Replica Set Name here. If you don’t have Replica Set, just leave this blank.</p></li>
+</ul>
+<p>Next, you will be asked to provide security information for connecting to the Database.</p>
+<p><a class="reference internal" href="../_images/repo_mongodb_conn_ssl_settings.png"><img alt="mongodb_connection_ssl_settings" src="../_images/repo_mongodb_conn_ssl_settings.png" style="height: 300px;" /></a></p>
+<p>If the Database does not have SSL authentication enabled, uncheck the <strong>Use SSL/TLS when communicating with server</strong> option. Otherwise, provide the following options:</p>
+<ul class="simple">
+<li><p><strong>Client Certificate</strong>: This is the path to a client SSL certificate to use when connecting to the Database.</p></li>
+<li><p><strong>Certificate Password</strong>: This is the password for the Database SSL certificate. If the certificate does not require a password, leave this field blank.</p></li>
+<li><p><strong>Use client certificate for DB user authentication</strong>: Enable this if the client certificate is also used for Database user authentication. Note that a user corresponding to the client certificate must already exist on the Database.</p></li>
+</ul>
+<p>When you press Next, the installer will try to connect to the database using these settings to configure it. This can take a minute or two. If an error occurs, you will be prompted with the error message.</p>
+<p>If the setup succeeds, you can then proceed to the Enabling Deadline Secrets Management installation step below.</p>
+</div>
+<div class="section" id="enabling-deadline-secrets-management">
+<h3>Enabling Deadline Secrets Management<a class="headerlink" href="#enabling-deadline-secrets-management" title="Permalink to this headline">¶</a></h3>
+<p>After the database is successfully installed and configured, you will be asked to enable the <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-ref-label"><span class="std std-ref">Deadline Secrets Management</span></a> feature, which is used to securely manage secrets (passwords and API keys) in Deadline. Although we strongly recommend enabling the Deadline Secrets Management feature, you may choose to disable it by unchecking the Enable Deadline Secrets Management checkbox. Note that <strong>SSL/TLS must be enabled to use this feature</strong>. If Deadline Secrets Management is enabled, you are presented with the following fields:</p>
+<ul class="simple">
+<li><p><strong>Administrator Username</strong>: The username for the administrator user that will be used for managing all of the Deadline secrets.</p></li>
+<li><p><strong>Administrator Password</strong>: The password for the administrator user. Please ensure you have a secure means of storing your password as there is currently no way to reset the administrator password without reinstalling, which would result in all existing secrets being lost. Note that this password can be updated after installation by running the appropriate <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-admin-commands-ref-label"><span class="std std-ref">Administrator Command</span></a>. Deadline Secrets Management is only as strong as the weakest administrator password, therefore we suggest making a strong password, with at least 8 characters.</p></li>
+</ul>
+<p>If the setup succeeds, proceed with the installation of the Repository.</p>
+</div>
+<div class="section" id="importing-repository-settings">
+<h3>Importing Repository Settings<a class="headerlink" href="#importing-repository-settings" title="Permalink to this headline">¶</a></h3>
+<p>You can import Repository settings that were exported via the <a class="reference internal" href="repository-settings-importer-exporter.html#repository-settings-importer-exporter-ref-label"><span class="std std-ref">Repository Settings Importer and Exporter</span></a>.</p>
+<p><a class="reference internal" href="../_images/repo_import_settings.png"><img alt="repo_import_settings" src="../_images/repo_import_settings.png" style="height: 300px;" /></a></p>
+<ul class="simple">
+<li><p><strong>Import existing repository settings</strong>: Whether to import existing repository settings. Leave unchecked if you do not want to import repository settings.</p></li>
+<li><p><strong>Repository Settings Import File</strong>: The path to the file containing the repository settings to import. The file contents should contain the output from an export via the <a class="reference internal" href="repository-settings-importer-exporter.html#repository-settings-importer-exporter-ref-label"><span class="std std-ref">Repository Settings Importer and Exporter</span></a>.</p></li>
+<li><p><strong>Import operation type</strong>: You can either <strong>replace</strong> the repository settings with the ones in the file or <strong>append</strong> the settings in the file with your repository settings.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="firewall-ports">
+<h2>Firewall Ports<a class="headerlink" href="#firewall-ports" title="Permalink to this headline">¶</a></h2>
+<p>To ensure that the Deadline applications can communicate with MongoDB, you may need to update the firewall on the machine that MongoDB is running on. You can open the port that you chose for the database to use during install. More information on opening ports can be found below.</p>
+<div class="section" id="windows">
+<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
+<p>Open Windows Firewall with Advanced Security. Click on Inbound Rules in the left panel to view all inbout rules, and then right-click on Inbound Rules and select New Rule to start the Inbound Rule Wizard. Select Port for the
+Rule Type, and then click Next.</p>
+<p><a class="reference internal" href="../_images/windows_firewall_new_rule.png"><img alt="new_rule" src="../_images/windows_firewall_new_rule.png" style="height: 350px;" /></a> <a class="reference internal" href="../_images/windows_firewall_type.png"><img alt="rule_type" src="../_images/windows_firewall_type.png" style="height: 350px;" /></a></p>
+<p>On the Protocol and Ports page, choose TCP, and then specify the port that you chose for the database during the install, and then press next. Then on the Action page, choose Allow The Connection and press Next.</p>
+<p><a class="reference internal" href="../_images/windows_firewall_port.png"><img alt="rule_port" src="../_images/windows_firewall_port.png" style="height: 350px;" /></a> <a class="reference internal" href="../_images/windows_firewall_allow.png"><img alt="rule_allow" src="../_images/windows_firewall_allow.png" style="height: 350px;" /></a></p>
+<p>On the Profile page, choose the networks that this rule applies to, and then press next. Then on the Name page, specify a name for the rule (for example, MongoDB Connection), and then press Finish.</p>
+<p><a class="reference internal" href="../_images/windows_firewall_network.png"><img alt="rule_network" src="../_images/windows_firewall_network.png" style="height: 350px;" /></a> <a class="reference internal" href="../_images/windows_firewall_name.png"><img alt="rule_name" src="../_images/windows_firewall_name.png" style="height: 350px;" /></a></p>
+</div>
+<div class="section" id="linux">
+<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h3>
+<p>On RedHat and CentOS, the following commands should allow incoming connections to the Mongo database if iptables are being used. Just make sure to specify the port that you chose for the database during the install.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">I</span> <span class="n">INPUT</span> <span class="mi">1</span> <span class="o">-</span><span class="n">p</span> <span class="n">tcp</span> <span class="o">--</span><span class="n">dport</span> <span class="p">[</span><span class="n">DB_PORT</span><span class="p">]</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">ip6tables</span> <span class="o">-</span><span class="n">I</span> <span class="n">INPUT</span> <span class="mi">1</span> <span class="o">-</span><span class="n">p</span> <span class="n">tcp</span> <span class="o">--</span><span class="n">dport</span> <span class="p">[</span><span class="n">DB_PORT</span><span class="p">]</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
+</pre></div>
+</div>
+<p>where [DB_PORT] is the MongoDB port such as: <code class="docutils literal notranslate"><span class="pre">27100</span></code></p>
+<p>Ubuntu has no firewall installed by default, and we have not yet tested Fedora Core’s FirewallD.</p>
+</div>
+<div class="section" id="macos">
+<h3>macOS<a class="headerlink" href="#macos" title="Permalink to this headline">¶</a></h3>
+<p>On macOS it is possible to open ports for specific applications. Open up System Preferences, choose the Security &amp; Privacy option, and click on the Firewall tab.</p>
+<a class="reference internal image-reference" href="../_images/mac_firewall.png"><img alt="../_images/mac_firewall.png" src="../_images/mac_firewall.png" style="height: 350px;" /></a>
+<p>Press the Firewall Options button to open the firewall options. Press the [+] button and choose the path to the mongod application, which can be found in the database installation folder in mongo/application/bin
+(for example, /Applications/Thinkbox/DeadlineDatabase&lt;VERSION&gt;/mongo/application/bin/mongod). Then click OK to save your settings.</p>
+<a class="reference internal image-reference" href="../_images/mac_firewall_options.png"><img alt="../_images/mac_firewall_options.png" src="../_images/mac_firewall_options.png" style="height: 350px;" /></a>
+</div>
+</div>
+<div class="section" id="sharing-the-repository">
+<h2>Sharing The Repository<a class="headerlink" href="#sharing-the-repository" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The user settings are recommendations. If you prefer a different user scheme then these steps do not have to be
+followed exactly.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>From 10.1.16, we restrict write access to the <code class="docutils literal notranslate"><span class="pre">bin/</span></code> folder by default to improve the security.</p>
+</div>
+<p>For Deadline to operate properly, the Repository must be visible to all machines that are connecting to it. This section explains how to share your Repository folder and configure its permissions to ensure the Clients have necessary access.</p>
+<p>The clients must have read access to the Repository root and all of its subdirectories. In addition, the Clients should have full read/write access to the following folders in the Repository:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>jobs</strong>: This is where job auxiliary files are copied to during submission.</p></li>
+<li><p><strong>jobsArchived</strong>: This is where archived jobs are exported to.</p></li>
+<li><p><strong>reports</strong>: This is where the physical log files for job and Worker reports are saved to.</p></li>
+</ul>
+</div></blockquote>
+<p>It is possible to achieve this by setting open read/write/execute permissions to the Repository root and all of its subfolders. While this is the easiest to configure, it does introduce some possible security risks. The following folders are especially sensitive because they contain Python scripts that will be executed on the render machines. We recommend that these folders be restricted to read/execute permissions only (no write access):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>plugins</strong>: Contains Python scripts for the various render plugins supported by Deadline.</p></li>
+<li><p><strong>events</strong>: Contains Python scripts for event plugins.</p></li>
+<li><p><strong>scripts</strong>: Contains Python scripts that can be run from the Monitor.</p></li>
+<li><p><strong>custom</strong>: This directory can house additional plugins, events, and scripts.</p></li>
+</ul>
+</div></blockquote>
+<p>It’s also worth noting that jobs often have additional auxiliary files submitted with them, which are normally stored in the <strong>jobs</strong> folder in the Repository, unless an alternate directory for auxiliary files is configured in the Repository Options. These auxiliary files can range from simple configuration files to scene files. Since these files may contain sensitive information, it is recommended to restrict write access to the <strong>jobs</strong> directory only to trusted users.</p>
+<p>The guides below describe how to share the Repository with full read/write permissions.</p>
+<div class="section" id="id1">
+<h3>Windows<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The images shown here are from Windows 10, but the steps are virtually identical for other versions of Windows.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is assumed that you are performing these instructions as a user with elevated permissions. On Windows, this is an administrator-type account that can execute commands as an administrator.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For the purpose of this setup, you will create a local user account named <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code>. This user will
+be granted appropriate access to the Repository. Other non-elevated users shouldn’t be able to access the
+Repository. The best source on how to create a local user account is <a class="reference external" href="https://support.microsoft.com/en-us/help/4026923/windows-10-create-a-local-user-or-administrator-account">on the official Microsoft page</a></p>
+</div>
+<p>First we will configure the appropriate Repository folder permissions.</p>
+<ol class="arabic simple">
+<li><p>On the machine where the Repository is installed, navigate to the installation folder with the <strong>Windows Explorer</strong>.</p></li>
+<li><p>Right-click on the Repository folder, selecting <strong>Properties</strong> from the context menu.</p></li>
+<li><p>Select the <strong>Security</strong> tab and click <strong>Edit…</strong> to modify folder permissions.</p></li>
+</ol>
+<a class="reference internal image-reference" href="../_images/windows_repository_initial_permissions.png"><img alt="../_images/windows_repository_initial_permissions.png" src="../_images/windows_repository_initial_permissions.png" style="height: 300px;" /></a>
+<ol class="arabic" start="4">
+<li><p>Remove the <strong>Authenticated Users</strong> and <strong>Everyone</strong> groups. This can be done by selecting the corresponding entry from the <strong>Group or user names</strong> list and clicking the Remove button.</p></li>
+<li><dl>
+<dt>Add <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code> with restricted access:</dt><dd><ol class="loweralpha simple">
+<li><p>Click the <strong>Add…</strong> button.</p></li>
+<li><p>Enter <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code> into the <strong>Enter the object names to select</strong> text field.</p></li>
+</ol>
+<a class="reference internal image-reference" href="../_images/windows_select_users_or_groups.png"><img alt="../_images/windows_select_users_or_groups.png" src="../_images/windows_select_users_or_groups.png" style="height: 200px;" /></a>
+<ol class="loweralpha simple" start="3">
+<li><p>Click OK.</p></li>
+<li><p>Select <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code> from the <strong>Group or user names</strong> list.</p></li>
+<li><p>Ensure <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code> only has permissions to allow <strong>Read</strong>, <strong>Read &amp; execute</strong>, and <strong>List folder contents</strong>.</p></li>
+</ol>
+<a class="reference internal image-reference" href="../_images/windows_repository_final_permissions.png"><img alt="../_images/windows_repository_final_permissions.png" src="../_images/windows_repository_final_permissions.png" style="height: 300px;" /></a>
+<ol class="loweralpha simple" start="6">
+<li><p>Click OK to save the Repository folder permission settings.</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Add full access for <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code> to the Repository’s <code class="docutils literal notranslate"><span class="pre">jobs/</span></code>, <code class="docutils literal notranslate"><span class="pre">jobsArchived/</span></code>, and <code class="docutils literal notranslate"><span class="pre">reports/</span></code> folders. After navigating into the Repository folder, the following steps should be completed for each of these folders.</dt><dd><ol class="loweralpha simple">
+<li><p>Right-click on the folder and select <strong>Properties</strong> from the context menu.</p></li>
+<li><p>Select the <strong>Security</strong> tab and click <strong>Edit…</strong> to modify folder permissions.</p></li>
+<li><p>Select <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code> from the <strong>Group or user names</strong> list.</p></li>
+<li><p>Ensure <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code> has permissions to allow <strong>Modify</strong> and <strong>Write</strong>.</p></li>
+</ol>
+<a class="reference internal image-reference" href="../_images/windows_repository_full_control_permissions.png"><img alt="../_images/windows_repository_full_control_permissions.png" src="../_images/windows_repository_full_control_permissions.png" style="height: 300px;" /></a>
+<ol class="loweralpha simple" start="5">
+<li><p>Click OK to save the folder permission settings. Complete these steps for the <code class="docutils literal notranslate"><span class="pre">jobs/</span></code>, <code class="docutils literal notranslate"><span class="pre">jobsArchived/</span></code>, and <code class="docutils literal notranslate"><span class="pre">reports/</span></code> folders.</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ol>
+<hr class="docutils" />
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>At this point, your Repository should only be accessible by <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code> (and admin users). The Repository folder (and all subfolders) should be able to be read and executed from by <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code> but not written to. Only the Repository subfolders <code class="docutils literal notranslate"><span class="pre">jobs/</span></code>, <code class="docutils literal notranslate"><span class="pre">jobsArchived/</span></code>, and <code class="docutils literal notranslate"><span class="pre">reports/</span></code> should be able to be written to and modified.</p>
+</div>
+<p>Now we need to make sure the Repository folder is shared. Again, the images shown here are from Windows 10, but the steps are virtually identical for other versions of Windows.</p>
+<ol class="arabic simple">
+<li><p>On the machine where the Repository is installed, navigate to the installation folder with the Windows Explorer.</p></li>
+<li><p>Right-click on the Repository folder, selecting <strong>Properties</strong> from the context menu.</p></li>
+<li><p>Select the <strong>Sharing</strong> tab.</p></li>
+</ol>
+<a class="reference internal image-reference" href="../_images/windows_repository_sharing.png"><img alt="../_images/windows_repository_sharing.png" src="../_images/windows_repository_sharing.png" style="height: 300px;" /></a>
+<ol class="arabic simple" start="4">
+<li><p>Click the <strong>Advanced Sharing…</strong> button.</p></li>
+<li><p>In the dialog, check the <strong>Share this folder</strong> checkbox.</p></li>
+</ol>
+<a class="reference internal image-reference" href="../_images/windows_repository_sharing_advanced.png"><img alt="../_images/windows_repository_sharing_advanced.png" src="../_images/windows_repository_sharing_advanced.png" style="height: 300px;" /></a>
+<ol class="arabic simple" start="6">
+<li><p>Click the <strong>Permissions</strong> button.</p></li>
+<li><p>Ensure <code class="docutils literal notranslate"><span class="pre">Everyone</span></code> has permissions to allow <strong>Full Control</strong>.</p></li>
+</ol>
+<a class="reference internal image-reference" href="../_images/windows_repository_sharing_permissions.png"><img alt="../_images/windows_repository_sharing_permissions.png" src="../_images/windows_repository_sharing_permissions.png" style="height: 300px;" /></a>
+<ol class="arabic simple" start="8">
+<li><p>Press OK to apply the permissions, then press OK again to share the Repository folder.</p></li>
+<li><p>Close the Repository folder <strong>Properties</strong> dialog.</p></li>
+</ol>
+</div>
+<div class="section" id="id2">
+<h3>Linux<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is assumed that you are performing these instructions as a user with elevated permissions. On Linux, this is a user that can execute commands through <code class="docutils literal notranslate"><span class="pre">sudo</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For the purpose of this setup, you will create a local user account named <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code>. This user will
+be granted appropriate access to the Repository. Other non-elevated users shouldn’t be able to access the
+Repository. If you plan to run a client on the computer you’re using right now, the <code class="docutils literal notranslate"><span class="pre">-m</span></code> flag should be included
+(this flag creates a home directory for the user). Otherwise it will be safe to remove this flag.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">adduser</span> <span class="o">-</span><span class="n">m</span> <span class="n">deadlineuser</span>
+</pre></div>
+</div>
+</div>
+<p>First we will configure the appropriate Repository folder permissions.</p>
+<ol class="arabic">
+<li><p>Change the owner of the Repository to be <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">chown</span> <span class="o">-</span><span class="n">R</span> <span class="n">deadlineuser</span><span class="p">:</span><span class="n">nogroup</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">repository</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some distributions of Linux use <code class="docutils literal notranslate"><span class="pre">nobody</span></code> instead of <code class="docutils literal notranslate"><span class="pre">nogroup</span></code>.</p>
+</div>
+<ol class="arabic" start="2">
+<li><p>Add restricted access permissions to the Repository folder for the owner (<code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code> is the owner at this point):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">chmod</span> <span class="o">-</span><span class="n">R</span> <span class="mi">500</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">repository</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This sets permissions for all subfolders and files such that only the owner is able to read/execute. Other users won’t have access to the Repository folder.</p>
+</div>
+<ol class="arabic" start="3">
+<li><p>Add full access permissions for the owner (<code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code>) to the Repository’s <code class="docutils literal notranslate"><span class="pre">jobs/</span></code>, <code class="docutils literal notranslate"><span class="pre">jobsArchived/</span></code>, and <code class="docutils literal notranslate"><span class="pre">reports/</span></code> folders.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">repository</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">chmod</span> <span class="o">-</span><span class="n">R</span> <span class="mi">700</span> <span class="n">jobs</span><span class="o">/</span> <span class="n">jobsArchived</span><span class="o">/</span> <span class="n">reports</span><span class="o">/</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<hr class="docutils" />
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>At this point, your Repository should only be accessible by <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code> (and admin users). The Repository folder (and all subfolders) should be able to be read and executed from by <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code> but not written to. Only the Repository subfolders <code class="docutils literal notranslate"><span class="pre">jobs/</span></code>, <code class="docutils literal notranslate"><span class="pre">jobsArchived/</span></code>, and <code class="docutils literal notranslate"><span class="pre">reports/</span></code> should be able to be written to and modified.</p>
+</div>
+<p>Now you’re ready to set up your network sharing protocol. The recommended sharing protocol for Linux is Samba.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You may not have Samba installed on your Linux machine. On Ubuntu, Samba can be installed with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">samba</span>
+</pre></div>
+</div>
+</div>
+<p>To share the Repository directory, modifications need to be made to <code class="docutils literal notranslate"><span class="pre">/etc/samba/smb.conf</span></code>. Add the following to the end of <code class="docutils literal notranslate"><span class="pre">smb.conf</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">DeadlineRepository</span><span class="p">]</span>
+<span class="n">path</span> <span class="o">=</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">repository</span>
+<span class="n">writeable</span> <span class="o">=</span> <span class="n">Yes</span>
+<span class="n">guest</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">No</span>
+<span class="n">create</span> <span class="n">mask</span> <span class="o">=</span> <span class="mi">0700</span>
+<span class="n">force</span> <span class="n">create</span> <span class="n">mode</span> <span class="o">=</span> <span class="mi">0700</span>
+<span class="n">force</span> <span class="n">directory</span> <span class="n">mode</span> <span class="o">=</span> <span class="mi">0700</span>
+<span class="n">unix</span> <span class="n">extensions</span> <span class="o">=</span> <span class="n">No</span>
+</pre></div>
+</div>
+<p>Once these modifications are saved, we need to setup a password for our Samba user (you will be prompted for the password):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">smbpasswd</span> <span class="o">-</span><span class="n">a</span> <span class="n">deadlineuser</span>
+</pre></div>
+</div>
+<p>Now we can restart the Samba sharing service:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">service</span> <span class="n">smbd</span> <span class="n">restart</span>
+</pre></div>
+</div>
+<p>On Linux clients, the Samba share can be mounted using <code class="docutils literal notranslate"><span class="pre">cifs-utils</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">mkdir</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">repo</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">mount</span> <span class="o">-</span><span class="n">t</span> <span class="n">cifs</span> <span class="o">-</span><span class="n">o</span> <span class="n">username</span><span class="o">=</span><span class="n">deadlineuser</span><span class="p">,</span><span class="n">password</span><span class="o">=&lt;</span><span class="n">password</span><span class="o">&gt;</span> <span class="o">//&lt;</span><span class="n">samba_server_address</span><span class="o">&gt;/</span><span class="n">DeadlineRepository</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">repo</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;samba_server_address&gt;</span></code> must either be the IP address or hostname of the machine hosting the Samba share (likely the machine with the Repository installed).</p>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>macOS<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The images shown here are from macOS El Capitan (10.11.4), but the steps are virtually identical for other versions of macOS.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For the purpose of this setup, you will create a local user account named <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code>. This user will
+be granted appropriate access to the Repository. Other non-elevated users shouldn’t be able to access the
+Repository. The best source on how to create a local user account is <a class="reference external" href="https://support.apple.com/guide/mac-help/set-up-other-users-mtusr001/mac">on the official Apple page</a></p>
+</div>
+<p>First we will configure the appropriate Repository folder permissions.</p>
+<ol class="arabic">
+<li><p>On the machine where the Repository is installed, navigate to the installation folder with the <strong>Finder</strong>.</p></li>
+<li><p>Right-click on the Repository folder and select <strong>Get Info</strong> from the context menu.</p></li>
+<li><p>Expand the <strong>Sharing &amp; Permissions</strong> section and unlock the settings (if necessary).</p></li>
+<li><p>Change permissions for the <strong>everyone</strong> group to <strong>No Access</strong>. This will prevent undesignated users from accessing the Repository.</p></li>
+<li><p>Make sure (this should already be the case) that the <strong>admin</strong> group has full <strong>Read &amp; Write</strong> permissions.</p></li>
+<li><dl>
+<dt>Add <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code> with restricted access:</dt><dd><ol class="loweralpha simple">
+<li><p>Click the “+” button at the bottom left of the dialog.</p></li>
+<li><p>Select <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code> from the <strong>Users &amp; Groups</strong> tab.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Users in this list appear as their “Full Name” rather than their actual username. This must be specified when the user is created.</p>
+</div>
+<ol class="loweralpha simple" start="3">
+<li><p>Make sure <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code> has <strong>Read only</strong> permissions.</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ol>
+<a class="reference internal image-reference" href="../_images/osx_repository_initial_permissions.png"><img alt="../_images/osx_repository_initial_permissions.png" src="../_images/osx_repository_initial_permissions.png" style="height: 300px;" /></a>
+<ol class="arabic simple" start="7">
+<li><dl class="simple">
+<dt>Apply permissions to nested files and folders.</dt><dd><ol class="loweralpha simple">
+<li><p>Click the gear/cog dropdown button at the bottom left of the dialog.</p></li>
+<li><p>Select <strong>Apply to enclosed items…</strong>.</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Add full access permissions for <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code> to the Repository’s <code class="docutils literal notranslate"><span class="pre">jobs/</span></code>, <code class="docutils literal notranslate"><span class="pre">jobsArchived/</span></code>, and <code class="docutils literal notranslate"><span class="pre">reports/</span></code> folders. After navigating into the Repository folder, the following steps should be completed for each of these folders.</dt><dd><ol class="loweralpha simple">
+<li><p>Right-click on the folder and select <strong>Get Info</strong> from the context menu.</p></li>
+<li><p>Expand the <strong>Sharing &amp; Permissions</strong> section and unlock the settings (if necessary).</p></li>
+<li><p>Change permissions for <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code> to <strong>Read &amp; Write</strong> (should already be <strong>Read only</strong>).</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ol>
+<hr class="docutils" />
+<p>If you prefer to set the permissions from the Terminal, run the following commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo chown -R root:admin /path/to/repository
+$ sudo chmod -R 770 /path/to/repository
+$ sudo chmod -R +a &quot;deadlineuser allow list,readattr,readextattr,readsecurity&quot; /path/to/repository
+$ cd /path/to/repository
+$ sudo chmod +a &quot;deadlineuser allow list,add_file,search,add_subdirectory,delete_child,readattr,writeattr,readextattr,writeextattr,readsecurity&quot; jobs/ jobsArchived/ reports/
+</pre></div>
+</div>
+<hr class="docutils" />
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>At this point, your Repository should only be accessible by <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code> (and admin users). The Repository folder (and all subfolders) should be able to be read and executed from by <code class="docutils literal notranslate"><span class="pre">deadlineuser</span></code> but not written to. Only the Repository subfolders <code class="docutils literal notranslate"><span class="pre">jobs/</span></code>, <code class="docutils literal notranslate"><span class="pre">jobsArchived/</span></code>, and <code class="docutils literal notranslate"><span class="pre">reports/</span></code> should be able to be written to and modified.</p>
+</div>
+<p>Now we need to make sure the Repository folder is shared.</p>
+<ol class="arabic simple">
+<li><p>Open <strong>System Preferences</strong> and select the <strong>Sharing</strong> settings.</p></li>
+<li><p>Make sure the <strong>File Sharing</strong> checkbox is checked/enabled.</p></li>
+<li><p>Add the Repository folder to the <strong>Shared Folders</strong> list by clicking the “+” button beneath the list.</p></li>
+<li><p>Make sure that <strong>Everyone</strong> has full <strong>Read &amp; Write</strong> access.</p></li>
+</ol>
+<a class="reference internal image-reference" href="../_images/osx_repository_sharing.png"><img alt="../_images/osx_repository_sharing.png" src="../_images/osx_repository_sharing.png" style="height: 400px;" /></a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is recommended to use the Samba sharing protocol. This can be specified by clicking <strong>Options…</strong> and checking the <strong>Share file and folders using SMB</strong> checkbox.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Database and Repository Installation (Quick)</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#installing-a-new-mongodb-database">Installing a New MongoDB Database</a></li>
+<li><a class="reference internal" href="#connecting-to-an-existing-mongodb-database">Connecting to an Existing MongoDB Database</a></li>
+<li><a class="reference internal" href="#enabling-deadline-secrets-management">Enabling Deadline Secrets Management</a></li>
+<li><a class="reference internal" href="#importing-repository-settings">Importing Repository Settings</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#firewall-ports">Firewall Ports</a><ul>
+<li><a class="reference internal" href="#windows">Windows</a></li>
+<li><a class="reference internal" href="#linux">Linux</a></li>
+<li><a class="reference internal" href="#macos">macOS</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sharing-the-repository">Sharing The Repository</a><ul>
+<li><a class="reference internal" href="#id1">Windows</a></li>
+<li><a class="reference internal" href="#id2">Linux</a></li>
+<li><a class="reference internal" href="#id3">macOS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="validation-linux-installers.html"
+                        title="previous chapter">Validation of Linux Installers</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="install-client-conn-server-installation.html"
+                        title="next chapter">Installing Remote Connection Server</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="install-client-conn-server-installation.html" title="Installing Remote Connection Server"
+             >next</a></li>
+        <li class="right" >
+          <a href="validation-linux-installers.html" title="Validation of Linux Installers"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installing-deadline.html" >Installing Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Database and Repository Installation (Quick)</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

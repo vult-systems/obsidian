@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Puppet &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Rez" href="event-rez.html" />
+    <link rel="prev" title="Pipeline Tools" href="event-pipeline-tools.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-rez.html" title="Rez"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="event-pipeline-tools.html" title="Pipeline Tools"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" accesskey="U">Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Puppet</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="puppet">
+<span id="event-puppet-ref-label"></span><h1>Puppet<a class="headerlink" href="#puppet" title="Permalink to this headline">¶</a></h1>
+<a class="reference external image-reference" href="https://puppetlabs.com"><img alt="../_images/events_scm_puppet_logo.png" src="../_images/events_scm_puppet_logo.png" style="width: 200px; height: 100px;" /></a>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Puppet is a management system that can be used to keep applications and plugins synched across your render nodes. See the <a class="reference external" href="https://puppetlabs.com/">Puppet Labs Website</a> for more information.</p>
+<p>The Puppet event plugin that ships with Deadline can be used to run a Puppet update on a Worker when it starts and when it becomes idle, thus allowing you to keep your render nodes in sync without interrupting jobs that are currently rendering.</p>
+<p>Note that Puppet must already be configured to work outside of Deadline. Once your Puppet system is set up, you can then enable the Puppet event plugin for Deadline to automatically trigger Puppet updates.</p>
+</div>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>Some configuration is needed to use the Puppet event plugin. To access these settings, simply enter Power User mode and select Tools -&gt; Configure Events form the Monitor’s menu. From there, select the Puppet entry from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cep_puppet.png"><img alt="../_images/cep_puppet.png" src="../_images/cep_puppet.png" style="height: 400px;" /></a>
+<p>The Puppet event plugin settings are:</p>
+<p><strong>Options</strong></p>
+<ul class="simple">
+<li><p><strong>State</strong>: There are three different states that an Event Plugin can be in: Global Enabled, Opt-In, and Disabled. In order for this feature to function properly, the State must be set to either Global Enabled or Opt-In. Note that if this plugin is in the Opt-In state, the jobs that want to run this plugin must opt into Puppet.</p></li>
+<li><p><strong>Puppet Path</strong>: The path to the Puppet executable file. Enter alternative paths on separate lines.</p></li>
+<li><p><strong>Verbose</strong>: If enabled, the puppet update will have verbose logging enabled.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Is Puppet supported?</strong></p>
+<blockquote>
+<div><p>Yes.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Puppet error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here, please contact
+<a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this event plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Puppet</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="event-pipeline-tools.html"
+                        title="previous chapter">Pipeline Tools</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="event-rez.html"
+                        title="next chapter">Rez</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-rez.html" title="Rez"
+             >next</a></li>
+        <li class="right" >
+          <a href="event-pipeline-tools.html" title="Pipeline Tools"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" >Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Puppet</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

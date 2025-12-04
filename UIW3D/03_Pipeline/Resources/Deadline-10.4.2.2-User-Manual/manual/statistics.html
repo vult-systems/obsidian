@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Farm Statistics &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Power Management" href="power-management.html" />
+    <link rel="prev" title="Software Deployment" href="software-deployment.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="power-management.html" title="Power Management"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="software-deployment.html" title="Software Deployment"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" accesskey="U">Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Farm Statistics</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="farm-statistics">
+<span id="statistics-ref-label"></span><h1>Farm Statistics<a class="headerlink" href="#farm-statistics" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Deadline can keep track of some basic statistics. It can keep track of all of your completed Jobs so that you refer to them later. It stores the User that submitted the Job, when the Job was submitted, the error count, as well as some useful rendering metrics like render time, CPU usage, and memory usage. This data will be stored at job completion time on a best-effort basis. If the Worker exits before it can report back or changes are made to a job after it has completed, that data will not propagate to its statistics. This data will not match the duration of an AWS instance running the Worker and should not be relied on for estimating costs.</p>
+<p>Statistical information is also gathered for individual Workers, including the Worker’s running time, rendering time, and idle time. It also includes information about the number of tasks the Worker has completed, the number of errors it has reported, and its average Memory and CPU usage. You can use all of this information to figure out if there are any Workers that aren’t being utilized to their full potential.</p>
+<p>Note that some statistics can only be gathered if Pulse is running.</p>
+</div>
+<div class="section" id="enabling-statistics-gathering">
+<h2>Enabling Statistics Gathering<a class="headerlink" href="#enabling-statistics-gathering" title="Permalink to this headline">¶</a></h2>
+<p>You must first make sure Statistics Gathering has been enabled before Deadline will start logging information, which can be done in the Statistics Gathering section of the Repository Options.</p>
+<a class="reference internal image-reference" href="../_images/statistics_enable_stats_gathering.png"><img alt="../_images/statistics_enable_stats_gathering.png" src="../_images/statistics_enable_stats_gathering.png" style="height: 500px;" /></a>
+<p>Note that if Pulse is not running, only statistics for completed Jobs, User usage and Worker Statistics will be recorded. You must run <a class="reference internal" href="pulse.html#pulse-ref-label"><span class="std std-ref">Pulse</span></a> to keep track of Worker Resource Usage and overall Repository statistics. When running, Pulse will periodically gather information about Workers Resource Usage and the general state of the repository, and record them in the Database.</p>
+</div>
+<div class="section" id="viewing-farm-reports">
+<h2>Viewing Farm Reports<a class="headerlink" href="#viewing-farm-reports" title="Permalink to this headline">¶</a></h2>
+<p>To view Statistics, open the Monitor and select ‘Tools’ -&gt; ‘View Farm Reports’. This must be done in Power User mode, unless you have the proper User Privileges to do so.</p>
+<a class="reference internal image-reference" href="../_images/view_farm_reports.png"><img alt="../_images/view_farm_reports.png" src="../_images/view_farm_reports.png" style="height: 450px;" /></a>
+<p>From this window, you can specify which type of report(s) to generate, and a date range to filter the statistics. You can also specify a region to filter the statistics, but only the Active Worker Stats and Workers Overview reports will use it.</p>
+<p>There are five default Reports that will always be available, but custom reports can also be created and saved for later use (see the ‘Custom Reports’ section below for more info).</p>
+<div class="section" id="active-worker-stats">
+<h3>Active Worker Stats<a class="headerlink" href="#active-worker-stats" title="Permalink to this headline">¶</a></h3>
+<p>The Active Worker Stats report displays Worker usage statistics for the farm, which are logged by Workers as they are running. The statistics displayed by this report are generated by each individual Worker at regular intervals and do not require Pulse to be running.</p>
+<a class="reference internal image-reference" href="../_images/workerstats.png"><img alt="../_images/workerstats.png" src="../_images/workerstats.png" style="height: 450px;" /></a>
+</div>
+<div class="section" id="completed-job-stats">
+<h3>Completed Job Stats<a class="headerlink" href="#completed-job-stats" title="Permalink to this headline">¶</a></h3>
+<p>The Completed Job Stats report consists of a list of completed Jobs with detailed statistics. Pulse does not need to be running to gather these statistics.</p>
+<a class="reference internal image-reference" href="../_images/compjob.png"><img alt="../_images/compjob.png" src="../_images/compjob.png" style="height: 450px;" /></a>
+</div>
+<div class="section" id="farm-overview">
+<h3>Farm Overview<a class="headerlink" href="#farm-overview" title="Permalink to this headline">¶</a></h3>
+<p>The Farm Overview report displays statistics about the Farm using graphs. The statistics displayed by this report are assembled by Pulse, and will therefore only be gathered if Pulse is running.</p>
+<p>The State Counts section displays the statistics in terms of counts.</p>
+<a class="reference internal image-reference" href="../_images/farm.png"><img alt="../_images/farm.png" src="../_images/farm.png" style="height: 450px;" /></a>
+<p>The State Totals gives a visual representation of the statistics in terms of percentages.</p>
+<a class="reference internal image-reference" href="../_images/farm_total.png"><img alt="../_images/farm_total.png" src="../_images/farm_total.png" style="height: 450px;" /></a>
+</div>
+<div class="section" id="workers-overview">
+<h3>Workers Overview<a class="headerlink" href="#workers-overview" title="Permalink to this headline">¶</a></h3>
+<p>The Workers Overview report displays the statistics for each Worker on the farm with graphs to help display the statistics. The statistics displayed by this report are assembled by Pulse, and will therefore only be gathered if Pulse is running.</p>
+<p>The Workers Overview chart shows now many Workers were in each state (starting job, rendering, idle, offline, stalled, and disabled).</p>
+<a class="reference internal image-reference" href="../_images/workerresourceusage1.png"><img alt="../_images/workerresourceusage1.png" src="../_images/workerresourceusage1.png" style="height: 450px;" /></a>
+<p>The Available/Active Workers charts show the number of Workers that are available, and the number of available Workers that are active.</p>
+<a class="reference internal image-reference" href="../_images/workerresourceusage2.png"><img alt="../_images/workerresourceusage2.png" src="../_images/workerresourceusage2.png" style="height: 450px;" /></a>
+<p>The Individual Workers list and charts show the average CPU and Memory usage for individual Workers, as well as average time each Worker spends in each state.</p>
+<a class="reference internal image-reference" href="../_images/workerresourceusage3.png"><img alt="../_images/workerresourceusage3.png" src="../_images/workerresourceusage3.png" style="height: 450px;" /></a>
+</div>
+<div class="section" id="user-farm-time-report">
+<h3>User Farm Time Report<a class="headerlink" href="#user-farm-time-report" title="Permalink to this headline">¶</a></h3>
+<p>The User Farm Time Report displays the farm usage statistics for each User. Pulse does not need to be running to gather these statistics.</p>
+<a class="reference internal image-reference" href="../_images/user.png"><img alt="../_images/user.png" src="../_images/user.png" style="height: 450px;" /></a>
+</div>
+<div class="section" id="custom-reports">
+<h3>Custom Reports<a class="headerlink" href="#custom-reports" title="Permalink to this headline">¶</a></h3>
+<p>Users can create their own custom Reports to control how the gathered statistics are aggregated and presented. By doing this, users can create their own arsenal of specialized reports that help to drill down and expose potential problems with the farm.</p>
+<p>In order to create or edit Custom Reports you first need to be in Power User mode. Right-click in the <strong>Reports to Generate</strong> section to create or modify an existing custom report saved in your database. You can also import and export a custom farm report (*.json file) to share with others!</p>
+<p><a class="reference internal" href="../_images/farm_reports_right_click_menu.png"><img alt="right-click1" src="../_images/farm_reports_right_click_menu.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/farm_reports_right_click_menu_archive.png"><img alt="right-click2" src="../_images/farm_reports_right_click_menu_archive.png" style="height: 400px;" /></a></p>
+<ul class="simple">
+<li><p><strong>New</strong>: Create a new custom report, based on one of the existing stats objects.</p></li>
+<li><p><strong>Import Farm Report</strong>: Browse file system to import a custom farm report, stored as a *.json file.</p></li>
+<li><p><strong>Modify Farm Report</strong>: Modify an existing custom farm report saved in your database.</p></li>
+<li><p><strong>Delete Farm Report</strong>: Delete an existing custom farm report from your database.</p></li>
+<li><p><strong>Archive Farm Report</strong>: Export a custom farm report as an externally stored *.json file, so you can share with others.</p></li>
+</ul>
+<p>By clicking the ‘New’ button, you will be prompted to specify a name for your new report and select the type of statistics which this report will display.</p>
+<img alt="../_images/farm_reports_new_custom.png" src="../_images/farm_reports_new_custom.png" />
+<p>Once you’ve done that, you’ll be brought to the Edit view for your new Report. You’ll note that this is very similar to generating a report under normal circumstances, but with the addition of several buttons that allow further customization of your Report.</p>
+<a class="reference internal image-reference" href="../_images/farm_reports_preview_custom.png"><img alt="../_images/farm_reports_preview_custom.png" src="../_images/farm_reports_preview_custom.png" style="height: 500px;" /></a>
+<p>Chief among these new buttons is the ‘Edit Data Columns’ button, which will allow you to select which columns are displayed. You can also specify if you want to aggregate row information by selecting a <em>Group By</em> column, and a <em>Group Op</em> for each other column.</p>
+<a class="reference internal image-reference" href="../_images/farm_reports_edit_custom.png"><img alt="../_images/farm_reports_edit_custom.png" src="../_images/farm_reports_edit_custom.png" style="height: 400px;" /></a>
+<p>The way the aggregation works is similar to a SQL query with a “group by” statement. Data rows will be combined based on identical values of the <em>Group By</em> column, while the values of other columns will be determined by performing the <em>Group Ops</em> on the combined rows.</p>
+<p>As a simple example to demonstrate how this works in practice, let us consider a case where you might want to view the error information on a per-plugin basis.  We don’t have a built-in report to do this, but all this information is contained in Completed Job Stats.  With that in mind, you can create a Custom Report based on Completed Job Stats to group by Plugin, and aggregate Error Counts and Wasted Error Time, as illustrated below.</p>
+<p><a class="reference internal" href="../_images/farm_reports_edit_custom_example.png"><img alt="error_time_config" src="../_images/farm_reports_edit_custom_example.png" style="height: 200px;" /></a> <a class="reference internal" href="../_images/farm_reports_custom_report_generated.png"><img alt="error_time_list" src="../_images/farm_reports_custom_report_generated.png" style="height: 200px;" /></a></p>
+<p>Once you’ve specified which columns are displayed, and whether/how rows are aggregated, you can also add simple Graphs to your report. Simply click the ‘Add Graph’ button, and specify the type of graph you want along with the columns on which the graph should be based. Graphs are always based on all of the data presented the list view, and currently cannot be based on selection or a different data model. You can right-click on the graph once generated to save it as an image for your report to management!</p>
+<a class="reference internal image-reference" href="../_images/farm_reports_graph_custom.png"><img alt="../_images/farm_reports_graph_custom.png" src="../_images/farm_reports_graph_custom.png" style="height: 200px;" /></a>
+<p>Once you’re done customizing your new report, simply click the ‘OK’ button on the Farm Status Reports window, and your changes will be committed to the Database. Now, every time anyone brings up this dialog, they should be able to generate the report you’ve just created!</p>
+</div>
+</div>
+<div class="section" id="custom-statistics">
+<h2>Custom Statistics<a class="headerlink" href="#custom-statistics" title="Permalink to this headline">¶</a></h2>
+<p>If you need to keep track of more information, we suggest writing your own tool that uses Deadline Command. Deadline Command can be used to query the repository for all sorts of
+information, like the current state of all the Jobs and all the Workers. You can have it print these out in an ini file format and use any ini file parser to extract the
+information (Python has a module for this). This is also handy if you want to post stats to a web page, or insert entries into a separate database.</p>
+</div>
+<div class="section" id="farm-report-columns">
+<h2>Farm Report Columns<a class="headerlink" href="#farm-report-columns" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Active Worker Stats<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Worker Name</strong>: The name of the Worker.</p></li>
+<li><p><strong>Region</strong>: The region assigned to the Worker machine.</p></li>
+<li><p><strong>Running Time</strong>: The total time the Worker has been online. This includes time spent House Cleaning, Idle and Rendering.</p></li>
+<li><p><strong>Rendering Time (UBL)</strong> (DEPRECATED): Starting with Deadline 10.1.23, Deadline and its components do not require a license. For older versions, this is the total time the Worker spent in the Rendering state while using Usage-Based Licensing.</p></li>
+<li><p><strong>Rendering Time (Non-UBL)</strong> (DEPRECATED): Starting with Deadline 10.1.23, Deadline and its components do not require a license. For older versions, this is the total time the Worker spent in the Rendering state not using Usage-Based Licensing.</p></li>
+<li><p><strong>Rendering Time (Total)</strong>: The total time the Worker spent in the Rendering state.</p></li>
+<li><p><strong>Idle Time</strong>: The total time the Worker spent running Idle.</p></li>
+<li><p><strong>Completed Tasks</strong>: The total number of Tasks completed by this Worker.</p></li>
+<li><p><strong>Average Memory Usage</strong>: The average Memory Usage per second for the Worker.</p></li>
+<li><p><strong>Average CPU Usage</strong>: The average CPU usage percentage for the Worker.</p></li>
+<li><p><strong>Average Network Sent</strong>: The average rate of data sent by the Worker over the network.</p></li>
+<li><p><strong>Average Network Received</strong>: The average rate of data received by the Worker over the network.</p></li>
+<li><p><strong>Average Swap Usage</strong>: The average usage of the swap space by the Worker.</p></li>
+<li><p><strong>Average Disk Read</strong>: The average rate of data read from the Disk for the Worker.</p></li>
+<li><p><strong>Average Disk Write</strong>: The average rate of data written to Disk for the Worker.</p></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h3>Completed Job Stats<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Job Name</strong>: The name of the Job.</p></li>
+<li><p><strong>Job ID</strong>: The ID of the Job.</p></li>
+<li><p><strong>User Name</strong>: The name of the user who owns the Job.</p></li>
+<li><p><strong>Comment</strong>: The comment for the Job.</p></li>
+<li><p><strong>Department</strong>: The department set for the Job.</p></li>
+<li><p><strong>Submit Machine</strong>: The machine that submitted the Job.</p></li>
+<li><p><strong>Submit Date Time</strong>: The date and time that the Job was submitted.</p></li>
+<li><p><strong>Start Date Time</strong>: The date and time that the Job was started.</p></li>
+<li><p><strong>Finish Date Time</strong>: The date and time that the Job was finished.</p></li>
+<li><p><strong>Pool</strong>: The Pool the Job belongs to.</p></li>
+<li><p><strong>Group</strong>: The Group the Job belongs to.</p></li>
+<li><p><strong>Priority</strong>: The Job’s priority.</p></li>
+<li><p><strong>Frame List</strong>: The frames from the scene that this job will render.</p></li>
+<li><p><strong>Frame Count</strong>: The total number of frames to be rendered for this Job.</p></li>
+<li><p><strong>Task Count</strong>: The total number of Tasks that the frames will be split into for this job.</p></li>
+<li><p><strong>Plugin</strong>: The Plugin used by a Worker to render this Job.</p></li>
+<li><p><strong>Extra Info (0-9)</strong>: These columns are used for providing additional information about the Job. These can be overridden per Job.</p></li>
+<li><p><strong>Auxiliary Files</strong>: The number of Auxiliary files submitted with the Job.</p></li>
+<li><p><strong>Auxiliary File Size</strong>: The total file size of the Auxiliary files.</p></li>
+<li><p><strong>Machine Limit</strong>: The number of machines that can render this Job. If zero, than there is no Limit.</p></li>
+<li><p><strong>Error Count</strong>: The number of error reports generated for this Job.</p></li>
+<li><p><strong>Average Concurrent Tasks</strong>: The estimated average number of Concurrent Tasks used to render this Job. Calculated by dividing the total Task time by the elapsed render time of all the Tasks.</p></li>
+<li><p><strong>Clock Render Time</strong>: The elapsed time taken to complete the Job. Calculated by subtracting the Job’s start time for the Job’s completion time.</p></li>
+<li><p><strong>Total Task Time</strong>: The time taken by all Tasks. Calculated by adding the Task Times of all the Tasks together.</p></li>
+<li><p><strong>Average Task Time</strong>: The average time taken to complete a Task for this Job. Calculated by adding all the Task Times together and dividing that by the number of Tasks.</p></li>
+<li><p><strong>Median Task Time</strong>: The median of the Task times. Calculated by ordering all the Task times from smallest to largest and then taking the Task Time that falls directly in the middle of that list.</p></li>
+<li><p><strong>Total Task Startup Time</strong>: The total time taken for starting up Tasks.</p></li>
+<li><p><strong>Average Task Startup Time</strong>: The average time taken to start a Task. Calculated by adding all the Task Startup Times and dividing that by the number of Tasks.</p></li>
+<li><p><strong>Median Task Startup Time</strong>: The median of the Task Startup times. Calculated by ordering all the Task Startup Times from smallest to largest and then taking the time that falls directly in the middle of that list.</p></li>
+<li><p><strong>Total Task Render Time</strong>: The total amount of time taken to render all the tasks. Only includes the time the Task was actually rendering.</p></li>
+<li><p><strong>Average Task Render Time</strong>: The average time taken to render each Task. Calculated by adding all the Task Render Times together and dividing by the number of Tasks.</p></li>
+<li><p><strong>Median Task Render Time</strong>: The median of the Task Render Times. Calculated by ordering all the Task Render Times from smallest to largest and then taking the time that falls directly in the middle of that list.</p></li>
+<li><p><strong>Total Normalized Render Task Time</strong>: The total amount of time taken to render all Tasks, normalized.</p></li>
+<li><p><strong>Average Normalized Task Render Time</strong>: The average amount of time taken to render a Task, normalized. Calculated by adding all the Normalized Task Render Times and dividing by the number of Tasks.</p></li>
+<li><p><strong>Median Normalized Task Render Time</strong>: The median of the Normalized Task Render Times. Calculated by ordering all the Normalized Task Render Times from smallest to largest and then taking the time that falls directly in the middle of that list.</p></li>
+<li><p><strong>Average Frame Time</strong>: The average amount of time taken per frame. Calculated by finding the sum of time spent for each frame, which can be calculated by taking the Task Time for each Task and dividing it by the number of frames in that Task, and dividing that by the number of frames in the Job.</p></li>
+<li><p><strong>Average Frame Startup Time</strong>: The average amount of startup time taken per frame. Calculated by finding the sum of time spent starting up for each frame, which can be calculated by taking the Task Startup Time for each Task and dividing it by the number of frames in that Task, and dividing that by the number of frames in the Job.</p></li>
+<li><p><strong>Average Frame Render Time</strong>: The average amount of render time taken per frame. Calculated by finding the sum of time spent rendering for each frame, which can be calculated by taking the Task Render Time for each Task and dividing it by the number of frames in that Task, and dividing that by the number of frames in the Job.</p></li>
+<li><p><strong>Average Normalized Frame Render Time</strong>: The average amount of normalized render time taken per frame. Calculated by finding the sum of time spent rendering for each frame (normalized), which can be calculated by taking the Normalized Task Render Time for each Task and dividing it by the number of frames in that Task, and dividing that by the number of frames in the Job.</p></li>
+<li><p><strong>Median Frame Time</strong>: The median of the frame times. Calculated by ordering all the frame times from smallest to largest and taking the time that falls directly in the middle of that list.</p></li>
+<li><p><strong>Median Frame Startup Time</strong>: The median of the frame startup times. Calculated by ordering all the frame startup times from smallest to largest and taking the time that falls directly in the middle of that list.</p></li>
+<li><p><strong>Median Frame Render Time</strong>: The median of the frame render times. Calculated by ordering all the frame render times from smallest to largest and taking the time that falls directly in the middle of that list.</p></li>
+<li><p><strong>Median Normalized Frame Render Time</strong>: The median of the normalized frame render times. Calculated by ordering all the normalized frame render times from smallest to largest and taking the time that falls directly in the middle of that list.</p></li>
+<li><p><strong>Wasted Error Time</strong>: The time spent rendering the Job that resulted in an error being thrown.</p></li>
+<li><p><strong>Wasted Requeue Time</strong>: The time spent rendering the Job that was wasted due to the Task being requeued.</p></li>
+<li><p><strong>Total Output File Size</strong>: The total size of all the output from this Job.</p></li>
+<li><p><strong>Average Output File Size</strong>: The average size of an output file generated by this Job. Calculated by adding the file size of all the output files together and dividing that by the number of output files.</p></li>
+<li><p><strong>Median Output File Size</strong>: The median size of the output files generated by this Job. Calculated by ordering the sizes of all the output files for this Job from smallest to largest and then taking the file size that falls directly in the middle of that list.</p></li>
+<li><p><strong>Peak RAM Usage</strong>: The most RAM used by a Task for this Job.</p></li>
+<li><p><strong>Average RAM Usage</strong>: The average RAM used by Tasks in this Job. Calculated by adding all the RAM usage from each Task and then dividing that by the number of Tasks.</p></li>
+<li><p><strong>Median RAM Usage</strong>: The median of the RAM used by Tasks. Calculated by ordering all the RAM used by the Tasks in this Job from smallest to largest and the taking the RAM usage value that falls directly in the middle of that list.</p></li>
+<li><p><strong>Peak CPU Usage</strong>: The most CPU usage used to render a Task from this Job.</p></li>
+<li><p><strong>Average CPU Usage</strong>: The average CPU usage used to by Tasks from this Job. Calculated by adding all the CPU usage of all the Tasks in this Job and dividing that by the number of Tasks in the Job.</p></li>
+<li><p><strong>Median CPU Usage</strong>: The median of the CPU used by the Tasks in this Job. Calculated by ordering all the CPU usage values of all the Tasks in this Job from smallest to largest and then taking the CPU usage percentage that falls directly in the middle of that list.</p></li>
+<li><p><strong>Used CPU Clocks</strong>: The number of CPU clock cycles used by this Job.</p></li>
+<li><p><strong>Total CPU Clocks</strong>: The total number of CPU clock cycles that were used during the time that the Job rendered.</p></li>
+<li><p><strong>Peak Swap Usage</strong>: The most swap space used by a Task from this Job.</p></li>
+<li><p><strong>Average Swap Usage</strong>: The average swap space used by a Task from this Job. Calculated by adding together all the swap space usage of Tasks from this Job and dividing that by the number of Tasks in this Job.</p></li>
+<li><p><strong>Median Swap Usage</strong>: The median of the swap space usage by Tasks from this Job. Calculated by ordering the swap space usage of the Tasks from this Job from smallest to largest and taking the swap space usage value that falls directly in the middle of that list.</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h3>Workers Overview<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Worker Name</strong>: The name of the Worker.</p></li>
+<li><p><strong>Machine Name</strong>: The name of the machine running the Worker.</p></li>
+<li><p><strong>Region</strong>: The region assigned to the Worker machine.</p></li>
+<li><p><strong>Starting Job State</strong>: Time spent by the Worker in the Starting Job State.</p></li>
+<li><p><strong>Rendering State</strong>: Time spent by the Worker in the Rendering State.</p></li>
+<li><p><strong>Idle State</strong>: Time spent by the Worker in the Idle State.</p></li>
+<li><p><strong>Offline State</strong>: Time spent by the Worker in the Offline State.</p></li>
+<li><p><strong>Stalled State</strong>: Time spent by the Worker in the Stalled State.</p></li>
+<li><p><strong>Disabled State</strong>: Time spent by the Worker in the Disabled State.</p></li>
+<li><p><strong>Average Memory Usage</strong>: The average Memory Usage per second for the Worker.</p></li>
+<li><p><strong>Average CPU Usage</strong>: The average CPU usage percentage for the Worker.</p></li>
+<li><p><strong>Average Network Sent</strong>: The average rate of data sent by the Worker over the network.</p></li>
+<li><p><strong>Average Network Received</strong>: The average rate of data received by the Worker over the network.</p></li>
+<li><p><strong>Average Swap Usage</strong>: The average usage of the swap space by the Worker.</p></li>
+<li><p><strong>Average Disk Read</strong>: The average rate of data read from the Disk for the Worker.</p></li>
+<li><p><strong>Average Disk Write</strong>: The average rate of data written to Disk for the Worker.</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>User Farm Time Report<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><strong>User Name</strong>: The name of the User.</p></li>
+<li><p><strong>Completed Jobs</strong>: The number of the User’s jobs that were completed.</p></li>
+<li><p><strong>Total Render Time</strong>: The total amount of time spent rendering the User’s completed Jobs.</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Farm Statistics</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#enabling-statistics-gathering">Enabling Statistics Gathering</a></li>
+<li><a class="reference internal" href="#viewing-farm-reports">Viewing Farm Reports</a><ul>
+<li><a class="reference internal" href="#active-worker-stats">Active Worker Stats</a></li>
+<li><a class="reference internal" href="#completed-job-stats">Completed Job Stats</a></li>
+<li><a class="reference internal" href="#farm-overview">Farm Overview</a></li>
+<li><a class="reference internal" href="#workers-overview">Workers Overview</a></li>
+<li><a class="reference internal" href="#user-farm-time-report">User Farm Time Report</a></li>
+<li><a class="reference internal" href="#custom-reports">Custom Reports</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#custom-statistics">Custom Statistics</a></li>
+<li><a class="reference internal" href="#farm-report-columns">Farm Report Columns</a><ul>
+<li><a class="reference internal" href="#id1">Active Worker Stats</a></li>
+<li><a class="reference internal" href="#id2">Completed Job Stats</a></li>
+<li><a class="reference internal" href="#id3">Workers Overview</a></li>
+<li><a class="reference internal" href="#id4">User Farm Time Report</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="software-deployment.html"
+                        title="previous chapter">Software Deployment</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="power-management.html"
+                        title="next chapter">Power Management</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="power-management.html" title="Power Management"
+             >next</a></li>
+        <li class="right" >
+          <a href="software-deployment.html" title="Software Deployment"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" >Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Farm Statistics</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

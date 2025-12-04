@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Altus &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Arion Standalone" href="app-arion.html" />
+    <link rel="prev" title="After Effects" href="app-after-effects.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-arion.html" title="Arion Standalone"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-after-effects.html" title="After Effects"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Altus</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="altus">
+<span id="app-altus-ref-label"></span><h1>Altus<a class="headerlink" href="#altus" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit Altus jobs from the Monitor through the Submit menu.</p>
+<p><a class="reference internal" href="../_images/sub_altus_denoiser.png"><img alt="submitter" src="../_images/sub_altus_denoiser.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_altus_options_screen.png"><img alt="options" src="../_images/sub_altus_options_screen.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_altus_settings_screen.png"><img alt="settings" src="../_images/sub_altus_settings_screen.png" style="height: 400px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general submission options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation.</p>
+<div class="section" id="basic-altus-options">
+<h4>Basic Altus Options<a class="headerlink" href="#basic-altus-options" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Output File</strong>: The output path for the rendered image.</p></li>
+<li><p><strong>Frame List</strong>: The list of frames to render.</p></li>
+<li><p><strong>Frames Per Task</strong>: This is the number of frames that will be rendered at a time for each job task.</p></li>
+<li><p><strong>Altus Version</strong>: The version of Altus installed. Certain features are enabled/disabled based on version.</p></li>
+<li><p><strong>Executable Type</strong>: Determines which Altus executable should be used.</p></li>
+</ul>
+</div>
+<div class="section" id="altus-options">
+<h4>Altus Options<a class="headerlink" href="#altus-options" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Config File</strong>: The file path of the exported Config File.  If specified then no other inputs are used.</p></li>
+<li><p><strong>Use Config File</strong>: If enabled, a *.cfg file should be defined in the above Config File field and will override all the following settings, except the GPU settings which act as a separate override.</p></li>
+<li><p><strong>Use Stereo EXR Images</strong>: Enable rendering of stereo images generated from the same seed. When enabled, each file image input in this input file section is expected to be a single stereo exr image.</p></li>
+<li><p><strong>RGB File(s)</strong>: The file path of the beauty pass EXR image(s).</p></li>
+<li><p><strong>Position File(s)</strong>: The file path of the world position pass EXR image(s).</p></li>
+<li><p><strong>Albedo File(s)</strong>: The file path of the alb EXR image(s).</p></li>
+<li><p><strong>Visibility File(s)</strong>: The file path of the vis EXR image(s).</p></li>
+<li><p><strong>Caustic File(s)</strong>: The file path of the cau EXR image(s).</p></li>
+<li><p><strong>Normals File(s)</strong>: The file path of the nrm EXR image(s).</p></li>
+<li><p><strong>Hair File(s)</strong>: Added in Altus 2.3. The file paths of the hair EXR images(s).</p></li>
+<li><p><strong>Extra File(s)</strong>: The file path of extra EXR image(s).</p></li>
+<li><p><strong>Additional File(s)</strong>: The file path of additional EXR image(s)</p></li>
+</ul>
+</div>
+<div class="section" id="altus-settings">
+<h4>Altus Settings<a class="headerlink" href="#altus-settings" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Renderer</strong>: Which renderer the original images were rendered from. Some renderers have additional optimizations.</p></li>
+<li><p><strong>Layer Preservation</strong>: Whether or not to preserve original layers in output image.</p></li>
+<li><p><strong>Output Quality</strong>: What quality should the main output be rendered at.</p></li>
+<li><p><strong>Output AOV Quality</strong>:What quality should AOV’s be rendered at.</p></li>
+<li><p><strong>Frame Radius</strong>: The radius of neighboring frames used for averaging motion blur when filtering animations.</p></li>
+<li><p><strong>Filter Radius</strong>: The filter radius (default 10).</p></li>
+<li><p><strong>First Sensitivity</strong>: Filter parameter that controls the sensitivity of the first candidate filter to color differences. A higher value leads to more aggressive filtering (default 0.45).</p></li>
+<li><p><strong>Second Sensitivity</strong>: Filter parameter that controls the sensitivity of the second candidate filter to color differences. A higher value leads to more aggressive filtering (default 0.45).</p></li>
+<li><p><strong>Final Sensitivity</strong>: Filter parameter that controls the sensitivity of the second pass filter to color differences. A higher value leads to more aggressive filtering (default 0.45).</p></li>
+<li><p><strong>Feature Sensitivity</strong>: Filter parameter that controls the sensitivity of all candidates, and the second pass filter, to feature differences. Lowering the kf value may help fine detail preservation and decrease smoothing in the final image.</p></li>
+<li><p><strong>Force Continue</strong>: In Altus 1.9 ‘Force Continue’ was changed to an integer value from 0-3. 0 means it won’t force-continue, and 3 means it will ignore all errors. Previously (1.8) it was the equivalent of selecting 0 (off) or 3 (on).</p></li>
+<li><p><strong>EXR Compression</strong>: Added in Altus 2.3. Sets the compression for output EXR images.</p></li>
+<li><p><strong>Firefly</strong>: Enables the firefly suppressor. This will detect and reduce the spread of high energy pixels. By default it’s turned off. Minor performance hit to enable. (Altus 1.8.4 or newer required)</p></li>
+<li><p><strong>Tile</strong>: Altus can internally divide, denoise, and combine tiles in order to denoise large images that wouldn’t otherwise fit in memory. Generally this feature is more useful when using GPU’s to denoise since GPU’s typically have a small amount of VRAM. This causes large images to be impossible to denoise on GPU unless using tiling. (Altus 1.8.4 or newer required)</p></li>
+<li><p><strong>Tile Size</strong>: Controls the max size of the internal tile. The tile-size given is an upper bound, the actual tile size will always be less than the tile-size in each dimension. Altus finds the subdivision for each axis independently such that the length of the tile in that axis is smaller than the tile-size maximum. If the tile-size is larger than the full image then it is clamped to the size of the image. By default the tile-size is set to 1024. (Altus 1.8.4 or newer required)</p></li>
+<li><p><strong>Skip Frame Radius</strong>: Added in 1.9. For animations, skips frames within the frame radius of the start and end frames.</p></li>
+<li><p><strong>Ignore Alpha</strong>: Added in 1.9. Disables denoising of the alpha channel.</p></li>
+<li><p><strong>Single Pass</strong>: Added in Altus 2.1. Use single-pass denoising on images exported from Altus integrated products. ie. Redshift</p></li>
+<li><p><strong>Force 16-bit EXR Output</strong>: Added in Altus 2.3. Force the output EXR image to be 16 bit to reduce file-size.</p></li>
+</ul>
+</div>
+<div class="section" id="gpu-affinity">
+<span id="altus-gpu-affinity-ref-label"></span><h4>GPU Affinity<a class="headerlink" href="#gpu-affinity" title="Permalink to this headline">¶</a></h4>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently, Altus does not support more than 1 GPU card being used to denoise images. However, you can use the <strong>GPUs Per Task</strong>, <strong>Select GPU Devices</strong> or Worker centric <a class="reference internal" href="worker-config.html#gpu-affinity-ref-label"><span class="std std-ref">GPU Affinity</span></a> settings to control either concurrent threads in Deadline each controlling 1 GPU card per instance of Altus OR multiple Deadline Workers each processing a Altus denoise job on a single GPU card. Ensure you only use one of these settings at any one time! You can’t combine the Worker centric <a class="reference internal" href="worker-config.html#gpu-affinity-ref-label"><span class="std std-ref">GPU Affinity</span></a> with <strong>GPUs Per Task</strong> setting.</p>
+</div>
+<p>If you are intend to use these GPU affinity override settings, ensure the Altus <strong>Executable Type</strong> selected is either: <strong>OpenCl</strong> or <strong>GPU</strong> and do not declare any GPU settings within the optional Altus config *.cfg file and instead use these settings to specifically control GPU allocation:</p>
+<ul>
+<li><p><strong>GPUs Per Task</strong>: If set to 0 (the default), then the GPU renderer will be responsible for automatically choosing the GPU used during rendering.</p>
+<blockquote>
+<div><p>If this is set to 1, then each task for the job will be assigned a specific GPU. This can be used in combination with concurrent tasks to get a distribution over the GPUs. For example:</p>
+<ul class="simple">
+<li><p>if this is set to 1, then tasks rendered by the Workers thread 0 would use GPU 0, thread 1 would use GPU 1, etc.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Select GPU Devices</strong>: An integer for a specific GPU device ID can be entered instead of using the above ‘GPUs Per Task’ option (which must be set to “0”). Valid examples include: “0” or “1” or “2” without the quotation marks. Note: “Concurrent Tasks” must be set to “1” only.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Altus plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Altus plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_altus_denoiser.png"><img alt="../_images/cp_altus_denoiser.png" src="../_images/cp_altus_denoiser.png" style="height: 400px;" /></a>
+<p><strong>Altus Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Altus Version 1 Executable</strong>: The path to the Altus version 1 executable file used for processing. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+<li><p><strong>Altus Version 2 Executable</strong>: The path to the Altus version 2 executable file used for processing. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+<p><strong>General</strong></p>
+<ul class="simple">
+<li><p><strong>Verbose Output</strong>: For Altus 1. Enable verbose output when denoising.</p></li>
+<li><p><strong>Verbosity Level</strong>: Introduced in Altus 2.0. Specify the verbosity level when denoising. 0 to log only license status and error messages, 1 to log license, errors and info messages, 2 to log license, warnings, errors, info messages, and 3 to log license, warnings, errors, info and debug messages.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-altus-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Is Altus supported by Deadline?</strong></p>
+<blockquote>
+<div><p>Yes.</p>
+</div></blockquote>
+<p><strong>Which Versions of Altus are supported by Deadline?</strong></p>
+<blockquote>
+<div><p>Altus 1.8 to 2.1 and 2.3 are supported.</p>
+</div></blockquote>
+<p><strong>Can I process on CPU instead of GPU?</strong></p>
+<blockquote>
+<div><p>Yes, you can but Altus is considerably faster if executed on a machine with a GPU installed.</p>
+</div></blockquote>
+<p><strong>Can I use multiple GPU cards to process Altus denoising jobs on Deadline?</strong></p>
+<blockquote>
+<div><p>Currently, Altus does not support more than 1 GPU card being used to denoise images. However, you can use the <strong>GPUs Per Task</strong>, <strong>Select GPU Devices</strong> or Worker centric <a class="reference internal" href="worker-config.html#gpu-affinity-ref-label"><span class="std std-ref">GPU Affinity</span></a> settings to control either concurrent threads in Deadline each controlling 1 GPU card per instance of Altus OR multiple Deadline Workers each processing a Altus denoise job on a single GPU card. It is hoped in the future, that Altus will support multiple GPU processing.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Altus error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here, please contact
+<a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Altus</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a><ul>
+<li><a class="reference internal" href="#basic-altus-options">Basic Altus Options</a></li>
+<li><a class="reference internal" href="#altus-options">Altus Options</a></li>
+<li><a class="reference internal" href="#altus-settings">Altus Settings</a></li>
+<li><a class="reference internal" href="#gpu-affinity">GPU Affinity</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-after-effects.html"
+                        title="previous chapter">After Effects</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-arion.html"
+                        title="next chapter">Arion Standalone</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-arion.html" title="Arion Standalone"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-after-effects.html" title="After Effects"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Altus</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

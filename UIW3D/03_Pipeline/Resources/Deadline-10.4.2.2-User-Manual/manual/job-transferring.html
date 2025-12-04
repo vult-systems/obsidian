@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Transferring &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Worker Scheduling" href="worker-schedule.html" />
+    <link rel="prev" title="Manual Job Submission" href="manual-submission.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="worker-schedule.html" title="Worker Scheduling"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="manual-submission.html" title="Manual Job Submission"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" accesskey="U">Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Job Transferring</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="job-transferring">
+<span id="job-transferring-ref-label"></span><h1>Job Transferring<a class="headerlink" href="#job-transferring" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>If you have multiple office locations that each have their own Deadline Repository, it is possible to transfer Jobs between them. This can be handy if one office’s farm is sitting idle while the other is completely swamped.</p>
+<p>Note though that Deadline will only transfer over the files that are submitted with the Job, which in most cases is just the scene file. You must ensure that all assets the scene requires and all output paths that it writes to exist in the remote location before transferring the Job.</p>
+</div>
+<div class="section" id="setting-up-a-transfer">
+<h2>Setting Up a Transfer<a class="headerlink" href="#setting-up-a-transfer" title="Permalink to this headline">¶</a></h2>
+<p>Before you can transfer a Job, it must be in the Suspend, Completed, or Failed state. Just right-click on the Job, and select ‘Scripts’ -&gt; ‘TransferSubmission’. A Transfer Job window will be displayed.</p>
+<a class="reference internal image-reference" href="../_images/transfer_job.png"><img alt="../_images/transfer_job.png" src="../_images/transfer_job.png" style="height: 500px;" /></a>
+<p>You’ll notice that you’re actually submitting another Job that will transfer the original Job. The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. The Job Transfer specific options are:</p>
+<ul class="simple">
+<li><p><strong>Frame List and Frames Per Task</strong>: This is the frame list for the original Job that will be transferred. It will default to the values for the original Job, but you can change them if you only want to transfer a subset of frames.</p></li>
+<li><p><strong>New Repository</strong>: This is the path to the remote Repository that the original Job will be transferred to. Note that the Workers that the transfer Job will be running on must be able to see this path in order to
+transfer the original Job to the new repository.</p></li>
+<li><p><strong>Compress Files During Transfer</strong>: If enabled, the original Job’s files will be compressed during the transfer.</p></li>
+<li><p><strong>Suspend Remote Job After Transfer</strong>: If enabled, the original Job will be submitted in the Suspended state to the new Repository.</p></li>
+<li><p><strong>Email Results After Transfer</strong>: If enabled, you will be emailed when the original Job has been successfully transferred. Note that this requires you to have your email notification options set up properly.</p></li>
+<li><p><strong>Remove Local Job After Transfer</strong>: If enabled, the original Job in the local Repository will be deleted after the Job has been successfully transferred to the remote Repository.</p></li>
+</ul>
+<p>Once you have your options set, click the Submit button to submit the transfer Job.</p>
+</div>
+<div class="section" id="global-transfer-options">
+<h2>Global Transfer Options<a class="headerlink" href="#global-transfer-options" title="Permalink to this headline">¶</a></h2>
+<p>Job Transfers are handled by a JobTransfer plugin, which has a few options that can be configured which will affect all transfers. To change the JobTransfer plugin options, open the Monitor and select ‘Tools’ -&gt; ‘Configure Plugins’ as a Power User, and then select the JobTransfer plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/configure_transfer_job.png"><img alt="../_images/configure_transfer_job.png" src="../_images/configure_transfer_job.png" style="height: 500px;" /></a>
+<p>The following options are available:</p>
+<ul class="simple">
+<li><p><strong>Notification Email(s)</strong>: The email(s) where successful Job Transfer reports will be sent, so that sys admins can keep track of all successfully transferred Jobs. Leave blank to disable this feature. Use commas to specify more than one email address.</p></li>
+</ul>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Job Transferring</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#setting-up-a-transfer">Setting Up a Transfer</a></li>
+<li><a class="reference internal" href="#global-transfer-options">Global Transfer Options</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="manual-submission.html"
+                        title="previous chapter">Manual Job Submission</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="worker-schedule.html"
+                        title="next chapter">Worker Scheduling</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="worker-schedule.html" title="Worker Scheduling"
+             >next</a></li>
+        <li class="right" >
+          <a href="manual-submission.html" title="Manual Job Submission"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" >Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Job Transferring</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

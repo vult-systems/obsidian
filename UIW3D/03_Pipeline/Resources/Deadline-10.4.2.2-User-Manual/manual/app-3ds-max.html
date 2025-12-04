@@ -1,0 +1,966 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3ds Max &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3ds Max - Monitor Submitter" href="app-3ds-max-monitor.html" />
+    <link rel="prev" title="Application Plugins Index" href="app-index.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-3ds-max-monitor.html" title="3ds Max - Monitor Submitter"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-index.html" title="Application Plugins Index"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Max</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ds-max">
+<span id="app-3ds-max-ref-label"></span><h1>3ds Max<a class="headerlink" href="#ds-max" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As of Deadline 10, Autodesk’s Backburner is no longer required to be installed with 3ds Max to allow Deadline to control network rendering of 3ds Max.</p>
+</div>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>There is a large number of ways to submit 3ds Max jobs to Deadline. You can submit a 3ds Max job using:</p>
+<ul class="simple">
+<li><p>The <a class="reference internal" href="app-3ds-max-monitor.html#app-3ds-max-monitor-ref-label"><span class="std std-ref">Submit 3dsmax Job To Deadline</span></a> dialog in the Deadline Monitor.</p></li>
+<li><p>The <a class="reference internal" href="app-3ds-max-smtd.html#app-3ds-max-smtd-ref-label"><span class="std std-ref">Submit Max To Deadline (SMTD)</span></a> integrated submitter within 3ds Max.</p></li>
+<li><p>The <a class="reference external" href="https://rpmanager.com/">Render Pass Manager (RPManager)</a> by Grant Adam.</p></li>
+<li><p>The integrated Deadline submitters of other Thinkbox and 3rd party plugins like Krakatoa MX, Stoke MX, XMesh MX, PhoenixFD, etc.</p></li>
+<li><p>Custom scripts based on the SMTD Functions, or based on Deadlinecommand calls.</p></li>
+<li><p>The 3ds Command integrated submitter which uses the 3dsmaxcmd.exe command line rendering application.</p></li>
+<li><p>The 3ds Command Monitor submitter which uses the 3dsmaxcmd.exe command line rendering application.</p></li>
+</ul>
+<p>Each of these options has its benefits. In general, we encourage our users to prefer the integrated submitters over the Monitor ones, and the 3dsmax job ones over the 3dscommand ones.</p>
+<p><a class="reference internal" href="../_images/integrated_3dsmax.png"><img alt="integrated" src="../_images/integrated_3dsmax.png" style="height: 570px;" /></a> <a class="reference internal" href="../_images/sub_3dsmax.png"><img alt="monitor" src="../_images/sub_3dsmax.png" style="height: 570px;" /></a></p>
+</div>
+<div class="section" id="troubleshooting-render-issues">
+<h2>Troubleshooting Render Issues<a class="headerlink" href="#troubleshooting-render-issues" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="troubleshooting.html#troubleshooting-ref-label"><span class="std std-ref">troubleshooting guide</span></a> does not handle some differences specific to 3ds Max rendering. This guide will focus on the specifics related to how Deadline runs 3ds Max renders.</p>
+<p>To start isolating 3ds Max job from Deadline, we would need to make sure that you are able to render (not just open) the scene that errored on render node while signed in as the user the Worker is running as. It’s important to test on the same render node that had the error so that if the issue is related to the configuration of the individual render node, we`ll be testing for it. You can find the name of the render node at the end of the task report on the line with “Worker Name:”. If you’re able to, try isolating your 3ds Max job from Deadline. The steps are outlined here:</p>
+<p>Step 1. Submit the same job with the <a class="reference internal" href="app-3ds-command.html#app-3ds-command-ref-label"><span class="std std-ref">3ds Command submitter</span></a>, if you don’t have the submitter installed then here is a <a class="reference internal" href="app-3ds-command.html#app-3ds-command-integrated-submission-script-label"><span class="std std-ref">documention</span></a> you can follow. To make sure the file paths to ensure a simpler file path, uncheck the “Submit the Scene File with the Job” on the submitter window. We do this to simplify the way 3dsMax is run. Our 3ds Max application plugin communicates with 3dsMax by starting a socket to send commands to it and get output. 3ds Command runs 3dsMax using only command line flags which allows us to best identify and troubleshoot issues. We choose to not submit the scene file with the job, as it copies the .max file to a temporary location and we may lose the file by the time we go to the next step.</p>
+<p>Step 2. Now click on the “Submit” button and let the job run for a bit. If it generate errors, we would need to pull the <a class="reference internal" href="logs.html#logs-job-reports"><span class="std std-ref">logs from the job</span></a>. In the render log look for a line that  contains the phrase “Full Command”. The following command is what we used  to start 3dsMax. Run the command in the Command  Prompt, Terminal, or Shell as applicable on the render node while signed  in as the user running the Worker to recreate the worker’s render behavior. You may need to adjust the paths used in the command, just double check it to be sure. If the render fails, then the issue would be either in the scene or in the render node itself. Try testing with a simpler scene, or on a different render node to identify which of the two is the issue.</p>
+<p>Step 3. If the render finished successfully through 3ds Command, then is likely to be an issue in how the Worker is starting 3dsMax and the setup environment it is using. We would need to investigate the issue within Deadline, please contact <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">AWS Thinkbox Support</a> with the log you used from Step #2 and the output from your command prompt test so we can compare them to see what the Worker is doing that’s causing this file to fail.</p>
+</div>
+<div class="section" id="installation-instructions">
+<h2>Installation Instructions<a class="headerlink" href="#installation-instructions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>See here for the installation instructions of the <a class="reference internal" href="#app-3dsmax-integrated-submission-script-label"><span class="std std-ref">integrated SMTD script</span></a> .</p></li>
+<li><p>See here for the installation instructions of the integrated submitter for <a class="reference internal" href="#app-rpmanager-ref-label"><span class="std std-ref">RPManager</span></a>.</p></li>
+</ul>
+</div>
+<div class="section" id="plugin-configuration">
+<span id="dsmax-plugin-configuration-ref-label"></span><h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the 3dsmax plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the 3dsmax plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_3ds_max.png"><img alt="../_images/cp_3ds_max.png" src="../_images/cp_3ds_max.png" style="height: 400px;" /></a>
+<p><strong>3ds Max Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>3ds Max Executable</strong>: The path to the 3ds Max executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+<p><strong>3ds Max Design Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>3ds Max Design Executable</strong>: The path to the 3ds Max Design executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+<p id="dsmax-plugin-config-render-options-ref-label"><strong>Render Options</strong></p>
+<ul class="simple">
+<li><p><strong>Alternate Plugin ini File</strong>: Location of alternate <code class="docutils literal notranslate"><span class="pre">plugin.ini</span></code> file. This location must be accessible from the Worker machines.</p></li>
+<li><p><strong>Fail On Existing 3dsmax Process</strong>: Prevent Deadline from rendering when 3ds Max is already open.</p></li>
+<li><p><strong>Run Render Sanity Check</strong>: If enabled, Deadline will do a quick sanity check with 3dsmaxcmd.exe prior to rendering to ensure 3dsmax is properly set up for network rendering.</p></li>
+<li><p><strong>Kill ADSK Comms Center Process</strong>: If enabled, Deadline will kill Autodesk Communications Center process if its running during network rendering. This will fix a known <a class="reference internal" href="#dsmax-kill-adsk-infocenter-ref-label"><span class="std std-ref">Progress Update Timeout</span></a> error that can occur when 3dsMax is loading or executing the <code class="docutils literal notranslate"><span class="pre">customize.ms</span></code> MAXScript file.</p></li>
+<li><p><strong>Disable Saving Output To Alternate File Name</strong>: If enabled, Deadline won’t try to rename the output file(s) if it is unable to save the output to its default file name.</p></li>
+</ul>
+<p><strong>Timeouts</strong></p>
+<ul class="simple">
+<li><p><strong>Timeout For Running Render Sanity Check</strong>: Maximum time to run a quick sanity check with 3dsmaxcmd.exe prior to rendering to ensure 3ds Max is properly set up for network rendering, in seconds. Default: 60 seconds (1 minute).</p></li>
+<li><p><strong>Timeout For Loading 3dsmax</strong>: Maximum time for 3dsmax to load, in seconds. This timeout is waiting for 3ds Max to start up here and initiate communications. Default: 1000 seconds (16 minutes and 40 seconds).</p></li>
+<li><p><strong>Timeout For Starting A Job</strong>: Maximum time for 3dsmax to start a job, in seconds. This is the timeout for 3dsmax to load the scene file. In the majority of cases, it is likely caused by ADSK Comms Center, 3rd party plugin/script or bad configuration of 3ds Max. Alternatively, the scene file could be taking a very long time to load (lots of assets, slow network connection). Please review the 3ds Max network log within a job’s error report for further details to debug. In the first instance, try enabling the setting: <strong>Kill ADSK Comms Center Process</strong> in your 3ds Max plugin configuration. Feel free to contact <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> if unresolvable. Default: 1000 seconds (16 minutes and 40 seconds).</p></li>
+<li><p><strong>Timeout For Customize.ms Script Execution</strong>: Maximum time for customize.ms script to execute, in seconds. Default: 1000 seconds (16 minutes and 40 seconds).</p></li>
+<li><p><strong>Timeout For Progress Updates</strong>: Maximum time before progress update times out, in seconds. This is the timeout between status messages from the renderer. Default: 8000 seconds (133 minutes and 20 seconds).</p></li>
+</ul>
+<p id="dsmax-off-load-plugin-options-ref-label"><strong>V-Ray DBR and Mental Ray Satellite Rendering</strong></p>
+<ul class="simple">
+<li><p><strong>Use IP Addresses</strong>: If offloading a V-Ray DBR, Corona or Mental Ray Satellite render to Deadline, Deadline will update the appropriate config file with the host names of the machines that are running the V-Ray Spawner, Corona or Satellite service. If this is enabled, the IP addresses of the machines will be used instead.</p></li>
+</ul>
+<p><strong>Mental Ray Satellite Off-Load Rendering</strong></p>
+<ul class="simple">
+<li><p><strong>MR Port Number 3ds Max 2010</strong>: The port number that the master machine will use to communicate to the Mental Ray Satellite Service over TCP/IP for 3dsMax 2010. Leave BLANK to use default port.</p></li>
+<li><p><strong>MR Port Number 3ds Max 2011</strong>: The port number that the master machine will use to communicate to the Mental Ray Satellite Service over TCP/IP for 3dsMax 2011. Leave BLANK to use default port.</p></li>
+<li><p><strong>MR Port Number 3ds Max 2012</strong>: The port number that the master machine will use to communicate to the Mental Ray Satellite Service over TCP/IP for 3dsMax 2012. Leave BLANK to use default port.</p></li>
+<li><p><strong>MR Port Number 3ds Max 2013</strong>: The port number that the master machine will use to communicate to the Mental Ray Satellite Service over TCP/IP for 3dsMax 2013. Leave BLANK to use default port.</p></li>
+<li><p><strong>MR Port Number 3ds Max 2014</strong>: The port number that the master machine will use to communicate to the Mental Ray Satellite Service over TCP/IP for 3dsMax 2014. Leave BLANK to use default port.</p></li>
+<li><p><strong>MR Port Number 3ds Max 2015</strong>: The port number that the master machine will use to communicate to the Mental Ray Satellite Service over TCP/IP for 3dsMax 2015. Leave BLANK to use default port.</p></li>
+<li><p><strong>MR Port Number 3ds Max 2016</strong>: The port number that the master machine will use to communicate to the Mental Ray Satellite Service over TCP/IP for 3dsMax 2016. Leave BLANK to use default port.</p></li>
+<li><p><strong>MR Port Number 3ds Max 2017</strong>: The port number that the master machine will use to communicate to the Mental Ray Satellite Service over TCP/IP for 3dsMax 2017. Leave BLANK to use default port.</p></li>
+</ul>
+<p><strong>V-Ray DBR Process Handling</strong></p>
+<ul class="simple">
+<li><p><strong>Handle Existing Spawner Process</strong>: Either FAIL on existing V-Ray Spawner process or KILL the existing V-Ray Spawner process if already running. Default: “Fail On Existing Process”.</p></li>
+</ul>
+<p id="dsmax-off-load-vray-dbr-rendering-ref-label"><strong>V-Ray DBR Off-Load Rendering</strong></p>
+<ul>
+<li><p><strong>Dynamic Start</strong>: If enabled, a V-Ray DBR off-load job will start rendering immediately after TaskId=0 (master machine) has started rendering. With V-Ray v3.2 (min SP2) onwards, Workers dequeuing tasks of this job will start participating in the ongoing render when V-Ray re-scans it’s *.cfg file on the master machine. Default: True.</p></li>
+<li><p><strong>V-Ray Port range</strong>: The port number (20204) or range (20204-20212) that the master machine will use to communicate to the V-Ray Spawner over TCP/IP. Default: 20204.</p></li>
+<li><p><strong>Use local host</strong>: When enabled, the master TaskId=0 machine (the Worker from which initiates the DR off-load render) will also take part in the rendering calculations. If disabled, this Deadline Worker only organizes the DR process, sending rendering tasks to the Deadline Workers. Default: True.</p>
+<p>When you are submitting a V-Ray DBR off-load render job with a large number of Workers (5+), it is recommended to set the <em>Use local host</em> setting to <code class="docutils literal notranslate"><span class="pre">False</span></code> to reduce computational load on the “master” machine. When <em>Use local host</em> is set to <code class="docutils literal notranslate"><span class="pre">False</span></code>, the “master” machine only acts as a coordinator of the DBR Workers. This is particularly important if you intend to use the V-Ray v3+ “Transfer missing assets” feature.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Windows 7 OS has a limitation of a maximum of 20 other machines concurrently ‘connecting’ to the “master” machine.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>V-Ray v3.00.0x has a bug in DBR when the “Use local host” setting is set to <code class="docutils literal notranslate"><span class="pre">False</span></code>, it still demands a render node license. This is resolved in a newer version of V-Ray. Please contact Chaos Group for more information.</p>
+</div>
+</li>
+<li><p><strong>Transfer missing assets</strong>: This option allows Deadline Workers to automatically download missing rendering assets from the master machine. This includes textures, V-Ray proxy files, IES profiles, GI solution caches (irradiance map, light cache), X-Ref scenes etc. Default: False.</p></li>
+<li><p><strong>Use cached assets</strong>: This option tells the Deadline Workers to keep the downloaded rendering assets between different DR sessions. Default: False.</p></li>
+<li><p><strong>Cache limit type</strong>: Allows you to specify under what conditions the assets cache is cleaned up. The possible values are: None, Age (hours), Size (GB). Default: None.</p></li>
+<li><p><strong>Cache limit value</strong>: The specific value of the limit for the asset cache. This is either hours or GB, depending on the value of Cache limit type. Min:0.0, Max:1000000.0. Default: 100.0.</p></li>
+</ul>
+<p id="dsmax-off-load-vray-rt-dbr-rendering-ref-label"><strong>V-Ray RT DBR Off-Load Rendering</strong></p>
+<ul class="simple">
+<li><p><strong>Dynamic RT Start</strong>: If enabled, a V-Ray RT DBR off-load job will start rendering immediately after TaskId=0 (master machine) has started rendering. With V-Ray v3.2 (min SP2) onwards, Workers dequeuing tasks of this job will start participating in the ongoing render when V-Ray RT re-scans it’s *.cfg file on the master machine. Default: True.</p></li>
+<li><p><strong>V-Ray RT Port range</strong>: The port number (20206) or range (20206-20212) that the master machine will use to communicate to the V-Ray RT Spawner over TCP/IP. Default: 20206.</p></li>
+<li><p><strong>Auto-start local Worker</strong>: When enabled, the master TaskId=0 machine (the Worker from which initiates the V-Ray RT DR off-load render) will also take part in the rendering calculations. If disabled, this Deadline Worker only organizes the V-Ray RT DR process, sending rendering tasks to the Deadline Workers. Default: True.</p></li>
+</ul>
+<p>It is recommended to disable <strong>Auto-start local Worker</strong> checkbox to reduce network traffic on the “master” machine, when using a large number of Workers (5+). If disabled, the “master” machine only organises the DBR process, sending rendering tasks to the Deadline Workers. This is particularly important if you intend to use the V-Ray v3+ “Transfer missing assets” feature. Note that Windows 7 OS has a limitation of a maximum of 20 other machines concurrently ‘connecting’ to the “master” machine.</p>
+<p id="dsmax-off-load-corona-dbr-rendering-ref-label"><strong>Corona DR Off-load Rendering</strong></p>
+<ul class="simple">
+<li><p><strong>Handle Existing DR Process</strong>: Either Do Nothing, FAIL on existing DR process or KILL the existing DR process if already running.</p></li>
+<li><p><strong>DR Server No Gui</strong>:In Corona 1.4 onwards, a ‘–-noGui’ option is available to run the DR Server without UI.</p></li>
+</ul>
+<p id="dsmax-arnold-options-ref-label"><strong>Arnold Options</strong></p>
+<ul class="simple">
+<li><p><strong>Abort On Arnold License Fail</strong>: If ‘Always Fail’, the render will fail if Arnold cannot get a license. If ‘Never Fail’, Arnold will render with a watermark if it cannot get a license. If ‘Use Scene’, Arnold will render with the value set by the scene. (Only applies when Arnold is the Renderer).</p></li>
+</ul>
+</div>
+<div class="section" id="firewall-considerations">
+<span id="dsmax-firewall-ref-label"></span><h2>Firewall Considerations<a class="headerlink" href="#firewall-considerations" title="Permalink to this headline">¶</a></h2>
+<p>Here is an non-exhaustive list of specific 3dsMax related application executables which should be granted access to pass through the Windows Firewall for all applicable policy scopes (Windows - domain, private, public) and both inbound &amp; outbound rules (where &lt;maxroot&gt; is the 3dsMax install directory):</p>
+<ul class="simple">
+<li><p>&lt;maxroot&gt;/3dsmax.exe</p></li>
+<li><p>&lt;maxroot&gt;/3dsmaxcmd.exe</p></li>
+<li><p>&lt;maxroot&gt;/maxadapter.adp.exe</p></li>
+<li><p>&lt;maxroot&gt;/vrayspawnerYYYY.exe where YYYY is the yearDate such as “2015” (Only applicable if V-Ray installed)</p></li>
+<li><p>&lt;maxroot&gt;/python/python.exe</p></li>
+<li><p>&lt;maxroot&gt;/python/pythonw.exe</p></li>
+</ul>
+<p>Autodesk Communication Center (InfoCenter) Path (dependent on 3dsMax version being used):</p>
+<ul class="simple">
+<li><p>3dsMax 2009-2010: <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\Common</span> <span class="pre">Files\Autodesk</span> <span class="pre">Shared\WSCommCntr1.exe</span></code></p></li>
+<li><p>3dsMax 2011: <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\Common</span> <span class="pre">Files\Autodesk</span> <span class="pre">Shared\WSCommCntr\lib\WSCommCntr2.exe</span></code></p></li>
+<li><p>3dsMax 2012: <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\Common</span> <span class="pre">Files\Autodesk</span> <span class="pre">Shared\WSCommCntr3\lib\WSCommCntr3.exe</span></code></p></li>
+<li><p>3dsMax 2013-current: <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\Common</span> <span class="pre">Files\Autodesk</span> <span class="pre">Shared\WSCommCntr4\lib\WSCommCntr4.exe</span></code></p></li>
+</ul>
+<p>It is recommended to always start 3dsMax for the very first time with Administrative rights to ensure the application is fully initialized correctly. This can be achieved by right-clicking the 3dsmax.exe application and selecting “Run as administrator”.</p>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-3dsmax-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to install the integrated Autodesk 3ds Max submission script. The integrated submission script allows for submitting 3ds Max render jobs to Deadline directly from within the 3ds Max
+editing GUI. The integrated render job submission script and the following installation procedure has been tested with 3ds Max versions 2014 and later (including Design editions).</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;\submission\3dsmax\Installers</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="mi">3</span><span class="n">dsmax</span>\<span class="n">Client</span>\<span class="n">Deadline3dsMaxClient</span><span class="o">.</span><span class="n">mcr</span> <span class="n">to</span> <span class="p">[</span><span class="mi">3</span><span class="n">ds</span> <span class="n">Max</span> <span class="n">Install</span> <span class="n">Directory</span><span class="p">]</span>\<span class="n">MacroScripts</span>
+</pre></div>
+</div>
+</li>
+<li><p>If you don’t have a MacroScripts folder in your 3ds Max install directory, check to see if you have a <code class="docutils literal notranslate"><span class="pre">UI\Macroscripts</span></code> folder instead, and copy the Deadline3dsMaxClient.mcr file there if you do.</p></li>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="mi">3</span><span class="n">dsmax</span>\<span class="n">Client</span>\<span class="n">SMTDSetup</span><span class="o">.</span><span class="n">ms</span> <span class="n">to</span> <span class="p">[</span><span class="mi">3</span><span class="n">ds</span> <span class="n">Max</span> <span class="n">Install</span> <span class="n">Directory</span><span class="p">]</span>\<span class="n">scripts</span>\<span class="n">Startup</span>\<span class="n">SMTDSetup</span><span class="o">.</span><span class="n">ms</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="verify-installation">
+<h3>Verify Installation<a class="headerlink" href="#verify-installation" title="Permalink to this headline">¶</a></h3>
+<p>Launch 3ds Max, and find the new Deadline menu.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/3dsmax_submission_button_3dsmax.png"><img alt="../_images/3dsmax_submission_button_3dsmax.png" src="../_images/3dsmax_submission_button_3dsmax.png" style="height: 400px;" /></a>
+</div></blockquote>
+</div>
+<div class="section" id="rpmanager-script-setup">
+<span id="app-rpmanager-ref-label"></span><h3>RPManager Script Setup<a class="headerlink" href="#rpmanager-script-setup" title="Permalink to this headline">¶</a></h3>
+<p>To install the 3ds Max integrated submission script in RPManager, just follow these steps:</p>
+<ul>
+<li><p>Create a Deadline[VERSION] folder in <code class="docutils literal notranslate"><span class="pre">[maxdir]\scripts\RPManager</span></code> (where [VERSION] is the major version of Deadline such as <strong>9</strong>).</p></li>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">repo</span><span class="p">]</span>\<span class="n">submission</span>\<span class="mi">3</span><span class="n">dsmaxRPM</span>\<span class="n">Client</span>\<span class="n">Deadline3dsMaxRPMClient</span><span class="o">.</span><span class="n">ms</span> <span class="n">to</span> <span class="p">[</span><span class="n">maxdir</span><span class="p">]</span>\<span class="n">scripts</span>\<span class="n">RPManager</span>\<span class="n">Deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span>\<span class="n">Deadline3dsMaxRPMClient</span><span class="o">.</span><span class="n">ms</span>
+</pre></div>
+</div>
+</li>
+<li><p>In RPManager, select Customize -&gt; Preferences to open the preferences window.</p></li>
+<li><p>In the Network Manager section, choose Custom Submit in the drop down, and then choose the Deadline3dsMaxRPMClient.ms script you copied over.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/3dsmax_rpmanager_deadline.png"><img alt="../_images/3dsmax_rpmanager_deadline.png" src="../_images/3dsmax_rpmanager_deadline.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Click OK to close the preferences, and then click on the Network tab to see the submitter.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="advanced-features-for-developers">
+<h2>Advanced Features For Developers<a class="headerlink" href="#advanced-features-for-developers" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="debugging-deadline-s-3ds-max-connection">
+<span id="dsmax-developers-ref-label"></span><h3>Debugging Deadline’s 3ds max connection<a class="headerlink" href="#debugging-deadline-s-3ds-max-connection" title="Permalink to this headline">¶</a></h3>
+<p>Deadline uses a c++ plugin .dlx in 3ds Max called Lightning to control rendering on render server machines. This .dlx exposes maxscript functions for establishing the socket based control connection with 3dsMax and Deadline, as well as for functions used by MAXScript jobs. As an additional measure, there are functions which allow one to run the renderer just as Deadline does during rendering for debugging purposes.</p>
+<p>First, you need to go to <code class="docutils literal notranslate"><span class="pre">\\your\repository\plugins\3dsmax</span></code> and find the appropriate .dlx file for your version/bitness of 3dsmax you want to debug with. Copy that file to a local location on your machine. For this example, let’s assume you copied it to <code class="docutils literal notranslate"><span class="pre">c:\temp\lightning\</span></code>. After copying the file, rename it to <code class="docutils literal notranslate"><span class="pre">Lightning.dlx</span></code>.</p>
+<p>Second, you need to configure your 3ds Max so that it loads Lightning.dlx on startup. Note that using the plugin manager to load the plugin once 3ds Max is fully started will not work properly, so you must add it to the plugin.ini file. Let’s say 3dsMax 2016 is installed to <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\Autodesk\3ds</span> <span class="pre">Max</span> <span class="pre">2016\en-US\</span></code>. Open plugin.ini in this folder, and in the section entitled [Directories], add this line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Lightning</span><span class="o">=</span><span class="n">c</span><span class="p">:</span>\<span class="n">temp</span>\<span class="n">lightning</span>
+</pre></div>
+</div>
+<p>Please note, carrying out the above setup, will cause a duplicate DLL plugin loading error if this machine then picks up a 3dsMax job via Deadline Worker running. The above setup for debugging 3dsMax-Deadline via Lightning should be considered a temporary setup only (not for production machines!).</p>
+</div>
+<div class="section" id="maxscript-interface">
+<span id="maxscript-ref-label"></span><h3>MAXScript Interface<a class="headerlink" href="#maxscript-interface" title="Permalink to this headline">¶</a></h3>
+<p>Now, if you run 3dsmax.exe, it will load Lightning.dlx, which exposes an interface object called DeadlineUtil. These functions can be used when running a MAXScript job through Deadline to get information about the job being rendered. Here are what the MAXScript interface functions are, based on running <code class="docutils literal notranslate"><span class="pre">ShowInterface</span> <span class="pre">DeadlineUtil</span></code> in the MAXScript listener.</p>
+<p><strong>Functions</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 67%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>string</em> GetAuxFilename( <em>int</em> index)</p></td>
+<td><p>Gets the file with the given index that was submitted with the job.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>string</em> GetJobInfoEntry( <em>string</em> key )</p></td>
+<td><p>Gets a value from the plugin info file that was submitted with the job,
+and returns an empty string if the key doesn’t exist.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>string</em> GetOutputFilename( <em>int</em> index )</p></td>
+<td><p>Gets the output file name for the job at the given index.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>string</em> GetPathMappedFilename( <em>string</em> fileName )</p></td>
+<td><p>Applies Deadline path mapping on a filename.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>string</em> GetSubmitInfoEntry( <em>string</em> key )</p></td>
+<td><p>Gets a value from the job info file that was submitted with the job, and
+returns an empty string if the key doesn’t exist.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>int</em> GetSubmitInfoEntryElementCount( <em>string</em> key )</p></td>
+<td><p>If the job info entry is an array, this gets the number of elements in
+that array.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>string</em> GetSubmitInfoEntryElement <em>int</em> index <em>string</em> key</p></td>
+<td><p>If the job info entry is an array, this gets the element at the given
+index. Key is the array name. Empty string returned if key doesn’t exist.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>void</em> FailRender( <em>string</em> message )</p></td>
+<td><p>Fails the render with the given error message.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>void</em> LogMessage( <em>string</em> message )</p></td>
+<td><p>Logs the message to the Worker log.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>void</em> SetProgress( <em>float</em> percent )</p></td>
+<td><p>Sets the progress of the render in the Worker UI.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>void</em> SetTitle( <em>string</em> title )</p></td>
+<td><p>Sets the render status message in the Worker UI.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>void</em> WarnMessage( <em>string</em> message )</p></td>
+<td><p>Logs a warning message to the Worker log.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>bool</em> Debug_StartJob <em>string</em> fileName <em>string</em> cameraName</p></td>
+<td><p>Local DEBUG only.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>bool</em> Debug_EndJob()</p></td>
+<td><p>Local DEBUG only.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>bool</em> Debug_RenderFrame <em>int</em> frameIndex</p></td>
+<td><p>Local DEBUG only.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>bool</em> RunLightningDaemon <em>int</em> portNumber <em>string</em> token</p></td>
+<td><p>Local DEBUG only.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Properties</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 67%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>int</em> CurrentFrame</p></td>
+<td><p>Gets the current frame.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>int</em> CurrentTask</p></td>
+<td><p>Gets the current task ID.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>string</em> JobsDataFolder</p></td>
+<td><p>Gets the local folder on the Worker where the Deadline job files are
+copied to.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>string</em> PluginsFolder</p></td>
+<td><p>Gets the local folder on the Worker where the Deadline plugin files are
+copied to.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>string</em> SceneFileName</p></td>
+<td><p>Gets the file name of the loaded 3ds Max scene.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>string</em> SceneFilePath</p></td>
+<td><p>Gets the file path of the loaded 3ds Max scene.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal notranslate"><span class="pre">RunLightningDaemon</span></code> function is what Lightning uses to establish the socket connection with Deadline’s 3dsMax-Python plugin. The <code class="docutils literal notranslate"><span class="pre">Debug_*</span></code> functions will allow one to emulate the basic render functionality of the Daemon. All the rest are to provide values and facilities to scripts being run as MAXScript jobs on the network.</p>
+</div>
+<div class="section" id="debugging-the-render">
+<h3>Debugging the Render<a class="headerlink" href="#debugging-the-render" title="Permalink to this headline">¶</a></h3>
+<p>Once 3dsmax has started, and the DeadlineUtil interface is visible to MAXScript, you are ready to debug the render. First, attach the Debugger. You can do this by right clicking on the 3dsmax.exe task in Task Manager and choosing Debug. Alternatively, from Visual Studio you can choose Tools -&gt; Debug Processes, then select the 3dsmax.exe process and attach the debugger to it.</p>
+<p>With the debugger attached, run the maxscript commands to emulate the render. Let’s say the problem scene is <code class="docutils literal notranslate"><span class="pre">c:\test\badscene.max</span></code>, at frame 43. Here are the three <code class="docutils literal notranslate"><span class="pre">Debug_*</span></code> commands to run, and the values they return upon success.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DeadlineUtil</span><span class="o">.</span><span class="n">Debug_StartJob</span> <span class="s2">&quot;c:</span><span class="se">\\</span><span class="s2">test</span><span class="se">\\</span><span class="s2">badscene.max&quot;</span> <span class="s2">&quot;&quot;</span>
+<span class="n">true</span>
+<span class="n">DeadlineUtil</span><span class="o">.</span><span class="n">Debug_RenderFrame</span> <span class="mi">43</span>
+<span class="n">true</span>
+<span class="n">DeadlineUtil</span><span class="o">.</span><span class="n">Debug_EndJob</span><span class="p">()</span>
+<span class="n">true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="querying-job-properties">
+<h3>Querying Job Properties<a class="headerlink" href="#querying-job-properties" title="Permalink to this headline">¶</a></h3>
+<p>Depending on when your *.ms file is executed (preLoad, postLoad, preTask, postTask, mxsJob), some of the MAXScript Interface (DeadlineUtil) properties might return an empty string. For example, if the Max scene file has not yet been loaded (in the case of a preLoad.ms script), then <code class="docutils literal notranslate"><span class="pre">SceneFileName</span></code> and <code class="docutils literal notranslate"><span class="pre">SceneFilePath</span></code> will return empty strings. Here is an example <code class="docutils literal notranslate"><span class="pre">postLoad.ms</span></code> script file which demonstrates how to access some of the common properties of your job:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+        <span class="n">local</span> <span class="n">du</span> <span class="o">=</span> <span class="n">DeadlineUtil</span>  <span class="o">--</span><span class="n">this</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">interface</span> <span class="n">exposed</span> <span class="n">by</span> <span class="n">the</span> <span class="n">Lightning</span> <span class="n">Plugin</span> <span class="n">which</span> <span class="n">provides</span> <span class="n">communication</span> <span class="n">between</span> <span class="n">Deadline</span> <span class="ow">and</span> <span class="mi">3</span><span class="n">ds</span> <span class="n">Max</span>
+        <span class="k">if</span> <span class="n">du</span> <span class="o">==</span> <span class="n">undefined</span> <span class="n">do</span>  <span class="o">--</span><span class="k">if</span> <span class="n">the</span> <span class="n">script</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">being</span> <span class="n">run</span> <span class="n">on</span> <span class="n">Deadline</span> <span class="p">(</span><span class="k">for</span> <span class="n">testing</span> <span class="n">purposes</span><span class="p">),</span>
+        <span class="p">(</span>
+                <span class="n">struct</span> <span class="n">DeadlineUtilStruct</span>   <span class="o">--</span><span class="n">define</span> <span class="n">a</span> <span class="n">stand</span><span class="o">-</span><span class="ow">in</span> <span class="n">struct</span> <span class="k">with</span> <span class="n">the</span> <span class="n">same</span> <span class="n">methods</span> <span class="k">as</span> <span class="n">the</span> <span class="n">Lightning</span> <span class="n">plugin</span>
+                <span class="p">(</span>
+                        <span class="n">fn</span> <span class="n">SetTitle</span> <span class="n">title</span> <span class="o">=</span> <span class="p">(</span> <span class="nb">format</span> <span class="s2">&quot;Title: %</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="n">title</span> <span class="p">),</span>
+                        <span class="n">fn</span> <span class="n">SetProgress</span> <span class="n">percent</span> <span class="o">=</span> <span class="p">(</span><span class="n">true</span><span class="p">),</span>
+                        <span class="n">fn</span> <span class="n">FailRender</span> <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span> <span class="n">throw</span> <span class="n">msg</span> <span class="p">),</span>
+                        <span class="n">fn</span> <span class="n">GetSubmitInfoEntry</span> <span class="n">key</span> <span class="o">=</span> <span class="p">(</span> <span class="n">undefined</span> <span class="p">),</span>
+                        <span class="n">fn</span> <span class="n">GetSubmitInfoEntryElementCount</span> <span class="n">key</span> <span class="o">=</span> <span class="p">(</span> <span class="mi">0</span> <span class="p">),</span>
+                        <span class="n">fn</span> <span class="n">GetSubmitInfoEntryElement</span> <span class="n">index</span> <span class="n">key</span> <span class="o">=</span> <span class="p">(</span> <span class="n">undefined</span> <span class="p">),</span>
+                        <span class="n">fn</span> <span class="n">GetJobInfoEntry</span> <span class="n">key</span> <span class="o">=</span> <span class="p">(</span> <span class="n">undefined</span> <span class="p">),</span>
+                        <span class="n">fn</span> <span class="n">GetAuxFilename</span> <span class="n">index</span> <span class="o">=</span> <span class="p">(</span> <span class="n">undefined</span> <span class="p">),</span>
+                        <span class="n">fn</span> <span class="n">GetOutputFilename</span> <span class="n">index</span> <span class="o">=</span> <span class="p">(</span> <span class="n">undefined</span> <span class="p">),</span>
+                        <span class="n">fn</span> <span class="n">LogMessage</span> <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span> <span class="nb">format</span> <span class="s2">&quot;%</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="n">msg</span> <span class="p">),</span>
+                        <span class="n">fn</span> <span class="n">WarnMessage</span> <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span> <span class="nb">format</span> <span class="s2">&quot;Warning: %</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="n">msg</span> <span class="p">),</span>
+                        <span class="n">CurrentFrame</span> <span class="o">=</span> <span class="p">((</span><span class="n">sliderTime</span> <span class="k">as</span> <span class="n">string</span><span class="p">)</span> <span class="k">as</span> <span class="n">integer</span><span class="p">),</span>
+                        <span class="n">CurrentTask</span> <span class="o">=</span> <span class="p">(</span> <span class="o">-</span><span class="mi">1</span> <span class="p">),</span>
+                        <span class="n">SceneFileName</span> <span class="o">=</span> <span class="p">(</span> <span class="n">maxFilePath</span> <span class="o">+</span> <span class="n">maxFileName</span> <span class="p">),</span>
+                        <span class="n">SceneFilePath</span> <span class="o">=</span> <span class="p">(</span> <span class="n">maxFilePath</span> <span class="p">),</span>
+                        <span class="n">JobsDataFolder</span> <span class="o">=</span> <span class="p">(</span> <span class="s2">&quot;&quot;</span> <span class="p">),</span>
+                        <span class="n">PluginsFolder</span> <span class="o">=</span> <span class="p">(</span> <span class="s2">&quot;&quot;</span> <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">du</span> <span class="o">=</span> <span class="n">DeadlineUtilStruct</span><span class="p">()</span> <span class="o">--</span><span class="n">create</span> <span class="n">an</span> <span class="n">instance</span> <span class="n">of</span> <span class="n">the</span> <span class="n">stand</span><span class="o">-</span><span class="ow">in</span> <span class="n">struct</span>
+        <span class="p">)</span><span class="o">--</span><span class="n">end</span> <span class="k">if</span>
+
+        <span class="n">du</span><span class="o">.</span><span class="n">SetTitle</span> <span class="s2">&quot;Post Load MXS Script&quot;</span> <span class="o">--</span><span class="nb">set</span> <span class="n">the</span> <span class="n">job</span> <span class="n">title</span>
+        <span class="n">du</span><span class="o">.</span><span class="n">LogMessage</span> <span class="s2">&quot;Starting Post Load MXS Script...&quot;</span> <span class="o">--</span><span class="n">output</span> <span class="n">a</span> <span class="n">message</span> <span class="n">to</span> <span class="n">the</span> <span class="n">log</span>
+        <span class="n">local</span> <span class="n">st</span> <span class="o">=</span> <span class="n">timestamp</span><span class="p">()</span> <span class="o">--</span><span class="n">get</span> <span class="n">the</span> <span class="n">current</span> <span class="n">system</span> <span class="n">time</span>
+
+        <span class="o">--</span><span class="n">YOUR</span> <span class="n">SCENE</span> <span class="n">PROCESSING</span> <span class="n">CODE</span> <span class="n">GOES</span> <span class="n">HERE</span>
+        <span class="n">du</span><span class="o">.</span><span class="n">LogMessage</span><span class="p">(</span> <span class="s2">&quot;CurrentFrame=&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="n">du</span><span class="o">.</span><span class="n">CurrentFrame</span> <span class="k">as</span> <span class="n">string</span><span class="p">)</span> <span class="p">)</span>
+        <span class="n">du</span><span class="o">.</span><span class="n">LogMessage</span><span class="p">(</span> <span class="s2">&quot;CurrentTask=&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="n">du</span><span class="o">.</span><span class="n">CurrentTask</span> <span class="k">as</span> <span class="n">string</span><span class="p">)</span> <span class="p">)</span>
+        <span class="n">du</span><span class="o">.</span><span class="n">LogMessage</span><span class="p">(</span> <span class="s2">&quot;JobsDataFolder=&quot;</span> <span class="o">+</span> <span class="n">du</span><span class="o">.</span><span class="n">JobsDataFolder</span> <span class="p">)</span>
+        <span class="n">du</span><span class="o">.</span><span class="n">LogMessage</span><span class="p">(</span> <span class="s2">&quot;PluginsFolder=&quot;</span> <span class="o">+</span> <span class="n">du</span><span class="o">.</span><span class="n">PluginsFolder</span> <span class="p">)</span>
+        <span class="n">du</span><span class="o">.</span><span class="n">LogMessage</span><span class="p">(</span> <span class="s2">&quot;SceneFileName=&quot;</span> <span class="o">+</span> <span class="n">du</span><span class="o">.</span><span class="n">SceneFileName</span> <span class="p">)</span>
+        <span class="n">du</span><span class="o">.</span><span class="n">LogMessage</span><span class="p">(</span> <span class="s2">&quot;SceneFilePath=&quot;</span> <span class="o">+</span> <span class="n">du</span><span class="o">.</span><span class="n">SceneFilePath</span> <span class="p">)</span>
+
+        <span class="o">--</span><span class="n">For</span> <span class="s2">&quot;Plugin Info Parameters&quot;</span> <span class="p">(</span><span class="k">as</span> <span class="n">displayed</span> <span class="ow">in</span> <span class="n">Monitor</span> <span class="o">-&gt;</span> <span class="n">job</span> <span class="o">-&gt;</span> <span class="n">job</span> <span class="n">properties</span> <span class="o">&gt;</span> <span class="n">Submission</span> <span class="n">Params</span><span class="p">)</span>
+        <span class="o">--</span><span class="n">Please</span> <span class="n">consult</span> <span class="n">the</span> <span class="n">displayed</span> <span class="n">Key</span><span class="o">=</span><span class="n">Value</span> <span class="n">pairs</span> <span class="ow">in</span> <span class="n">the</span> <span class="s2">&quot;Plugin Info Parameters&quot;</span> <span class="ow">in</span> <span class="n">Monitor</span> <span class="n">such</span> <span class="k">as</span>
+        <span class="o">--</span><span class="s2">&quot;MaxVersion=2017&quot;</span> <span class="ow">or</span> <span class="s2">&quot;IsMaxDesign=0&quot;</span>
+        <span class="n">du</span><span class="o">.</span><span class="n">LogMessage</span><span class="p">(</span> <span class="s2">&quot;MaxVersion=&quot;</span> <span class="o">+</span> <span class="n">du</span><span class="o">.</span><span class="n">GetJobInfoEntry</span><span class="p">(</span> <span class="s2">&quot;Version&quot;</span> <span class="p">)</span> <span class="p">)</span>
+        <span class="n">du</span><span class="o">.</span><span class="n">LogMessage</span><span class="p">(</span> <span class="s2">&quot;SubmittedFromVersion=&quot;</span> <span class="o">+</span> <span class="n">du</span><span class="o">.</span><span class="n">GetJobInfoEntry</span> <span class="p">(</span> <span class="s2">&quot;SubmittedFromVersion&quot;</span> <span class="p">)</span> <span class="p">)</span>
+
+        <span class="o">--</span><span class="n">For</span> <span class="s2">&quot;Job Info Parameters&quot;</span> <span class="p">(</span><span class="k">as</span> <span class="n">displayed</span> <span class="ow">in</span> <span class="n">Monitor</span> <span class="o">-&gt;</span> <span class="n">job</span> <span class="o">-&gt;</span> <span class="n">job</span> <span class="n">properties</span> <span class="o">&gt;</span> <span class="n">Submission</span> <span class="n">Params</span><span class="p">)</span>
+        <span class="o">--</span><span class="n">Please</span> <span class="n">consult</span> <span class="n">the</span> <span class="n">Scripting</span> <span class="n">API</span> <span class="n">reference</span> <span class="n">online</span> <span class="o">-&gt;</span> <span class="n">Deadline</span><span class="o">.</span><span class="n">Jobs</span><span class="o">.</span><span class="n">Job</span> <span class="n">Class</span> <span class="n">Reference</span>
+        <span class="o">--</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">docs</span><span class="o">.</span><span class="n">thinkboxsoftware</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">products</span><span class="o">/</span><span class="n">deadline</span><span class="o">/</span><span class="mf">10.3</span><span class="o">/</span><span class="mi">2</span><span class="n">_Scripting</span><span class="o">%</span><span class="mi">20</span><span class="n">Reference</span><span class="o">/</span><span class="n">class_deadline_1_1_jobs_1_1_job</span><span class="o">.</span><span class="n">html</span><span class="c1">#properties</span>
+        <span class="o">--</span><span class="n">All</span> <span class="n">of</span> <span class="n">our</span> <span class="n">job</span> <span class="n">properties</span> <span class="n">can</span> <span class="n">be</span> <span class="n">accessed</span> <span class="n">here</span> <span class="ow">and</span> <span class="n">are</span> <span class="n">prefixed</span> <span class="k">with</span> <span class="s2">&quot;Job&quot;</span> <span class="n">such</span> <span class="k">as</span> <span class="s2">&quot;JobSubmitMachine&quot;</span> <span class="k">for</span> <span class="s2">&quot;MachineName=&quot;</span>
+        <span class="n">du</span><span class="o">.</span><span class="n">LogMessage</span><span class="p">(</span> <span class="s2">&quot;MachineName=&quot;</span> <span class="o">+</span> <span class="n">du</span><span class="o">.</span><span class="n">GetSubmitInfoEntry</span><span class="p">(</span> <span class="s2">&quot;JobSubmitMachine&quot;</span> <span class="p">)</span> <span class="p">)</span>
+        <span class="n">du</span><span class="o">.</span><span class="n">LogMessage</span><span class="p">(</span> <span class="s2">&quot;ExtraInfo0=&quot;</span> <span class="o">+</span> <span class="n">du</span><span class="o">.</span><span class="n">GetSubmitInfoEntry</span><span class="p">(</span> <span class="s2">&quot;JobExtraInfo0&quot;</span> <span class="p">)</span> <span class="p">)</span>
+
+        <span class="o">--</span><span class="n">When</span> <span class="n">dealing</span> <span class="k">with</span> <span class="n">lists</span> <span class="ow">or</span> <span class="n">arrays</span><span class="p">,</span> <span class="n">we</span> <span class="n">must</span> <span class="n">first</span> <span class="n">find</span> <span class="n">the</span> <span class="n">element</span> <span class="n">count</span> <span class="n">so</span> <span class="n">that</span> <span class="n">we</span> <span class="n">can</span> <span class="n">loop</span> <span class="ow">and</span> <span class="n">access</span> <span class="n">via</span> <span class="n">an</span> <span class="n">index</span>
+        <span class="n">local</span> <span class="n">numDirs</span> <span class="o">=</span> <span class="n">du</span><span class="o">.</span><span class="n">GetSubmitInfoEntryElementCount</span><span class="p">(</span> <span class="s2">&quot;JobOutputDirectories&quot;</span> <span class="p">)</span> <span class="o">--</span><span class="n">array</span> <span class="n">of</span> <span class="n">OutputDirectory</span>
+        <span class="n">du</span><span class="o">.</span><span class="n">LogMessage</span><span class="p">(</span> <span class="s2">&quot;numDirs: &quot;</span> <span class="o">+</span> <span class="p">(</span><span class="n">numDirs</span> <span class="k">as</span> <span class="n">string</span><span class="p">)</span> <span class="p">)</span>
+
+        <span class="n">local</span> <span class="n">numFiles</span> <span class="o">=</span> <span class="n">du</span><span class="o">.</span><span class="n">GetSubmitInfoEntryElementCount</span><span class="p">(</span> <span class="s2">&quot;JobOutputFileNames&quot;</span> <span class="p">)</span> <span class="o">--</span><span class="n">array</span> <span class="n">of</span> <span class="n">OutputFileName</span>
+        <span class="n">du</span><span class="o">.</span><span class="n">LogMessage</span> <span class="p">(</span> <span class="s2">&quot;numFiles: &quot;</span> <span class="o">+</span> <span class="p">(</span><span class="n">numFiles</span> <span class="k">as</span> <span class="n">string</span><span class="p">)</span> <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">numDirs</span><span class="o">-</span><span class="mi">1</span> <span class="n">do</span>
+        <span class="p">(</span>
+                <span class="o">--</span><span class="n">As</span> <span class="n">we</span> <span class="n">have</span> <span class="mi">2</span> <span class="n">parameters</span> <span class="n">to</span> <span class="k">pass</span> <span class="n">to</span> <span class="n">this</span> <span class="n">function</span><span class="p">,</span> <span class="n">do</span> <span class="ow">not</span> <span class="n">use</span> <span class="n">parentheses</span> <span class="n">to</span> <span class="n">wrap</span> <span class="n">the</span> <span class="n">function</span> <span class="n">call</span>
+                <span class="n">outputDir</span> <span class="o">=</span> <span class="n">du</span><span class="o">.</span><span class="n">GetSubmitInfoEntryElement</span> <span class="n">n</span> <span class="s2">&quot;JobOutputDirectories&quot;</span>
+                <span class="n">du</span><span class="o">.</span><span class="n">LogMessage</span><span class="p">(</span> <span class="s2">&quot;OutputDirectory&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="n">n</span> <span class="k">as</span> <span class="n">string</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">+</span> <span class="n">outputDir</span> <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">numFiles</span><span class="o">-</span><span class="mi">1</span> <span class="n">do</span>
+        <span class="p">(</span>
+                <span class="o">--</span><span class="n">As</span> <span class="n">we</span> <span class="n">have</span> <span class="mi">2</span> <span class="n">parameters</span> <span class="n">to</span> <span class="k">pass</span> <span class="n">to</span> <span class="n">this</span> <span class="n">function</span><span class="p">,</span> <span class="n">do</span> <span class="ow">not</span> <span class="n">use</span> <span class="n">parentheses</span> <span class="n">to</span> <span class="n">wrap</span> <span class="n">the</span> <span class="n">function</span> <span class="n">call</span>
+                <span class="n">outputFile</span> <span class="o">=</span> <span class="n">du</span><span class="o">.</span><span class="n">GetSubmitInfoEntryElement</span> <span class="n">n</span> <span class="s2">&quot;JobOutputFileNames&quot;</span>
+                <span class="n">du</span><span class="o">.</span><span class="n">LogMessage</span><span class="p">(</span> <span class="s2">&quot;OutputFileName&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="n">n</span> <span class="k">as</span> <span class="n">string</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">+</span> <span class="n">outputFile</span> <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="o">--</span><span class="n">To</span> <span class="n">build</span> <span class="n">the</span> <span class="n">full</span> <span class="n">output</span> <span class="n">file</span> <span class="n">path</span><span class="p">,</span> <span class="n">combine</span> <span class="n">outputDir</span> <span class="o">+</span> <span class="n">outputFile</span> <span class="n">per</span> <span class="n">index</span> <span class="ow">and</span> <span class="n">replace</span> <span class="c1">#### with du.CurrentFrame + padding of 4.</span>
+
+        <span class="n">du</span><span class="o">.</span><span class="n">LogMessage</span> <span class="p">(</span><span class="s2">&quot;Finished Post Load MXS Script in &quot;</span><span class="o">+</span> <span class="p">((</span><span class="n">timestamp</span><span class="p">()</span> <span class="o">-</span> <span class="n">st</span><span class="p">)</span><span class="o">/</span><span class="mf">1000.0</span><span class="p">)</span> <span class="k">as</span> <span class="n">string</span> <span class="o">+</span> <span class="s2">&quot; sec.&quot;</span><span class="p">)</span> <span class="o">--</span><span class="n">output</span> <span class="n">the</span> <span class="n">job</span> <span class="n">duration</span>
+        <span class="n">true</span>  <span class="o">--</span><span class="k">return</span> <span class="n">true</span> <span class="k">if</span> <span class="n">the</span> <span class="n">task</span> <span class="n">has</span> <span class="n">finished</span> <span class="n">successfully</span><span class="p">,</span> <span class="k">return</span> <span class="n">false</span> <span class="n">to</span> <span class="n">fail</span> <span class="n">the</span> <span class="n">task</span><span class="o">.</span>
+<span class="p">)</span><span class="o">--</span><span class="n">end</span> <span class="n">script</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-3ds-max-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of 3ds Max are supported?</strong></p>
+<blockquote>
+<div><p>3ds Max versions 2014 and later are all supported (including Design editions).</p>
+</div></blockquote>
+<p><strong>Which 3ds Max renderers are supported?</strong></p>
+<blockquote>
+<div><p>Deadline should already be compatible with <strong>ALL</strong> 3ds Max renderers, but it has been explicitly tested with Scanline, iRay, MentalRay, Brazil, V-Ray, Corona, finalRender, Redshift, Arnold and Maxwell. If you have successfully used a 3ds Max renderer that
+is not on this list, please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a>.</p>
+</div></blockquote>
+<p><strong>How can I read/write an EXR file once rendered via Deadline?</strong></p>
+<blockquote>
+<div><p>Thinkbox’s <a class="reference external" href="https://docs.thinkboxsoftware.com/products/draft/1.8/Documentation/">Draft</a> provides various methods that can be used against EXR files. However, for a more GUI based approach, a number of image editing applications support the EXR image file format such as After Effects and Nuke. Adobe Photoshop has limited support, but you can use either of these 3rd party plugins to read and write EXR files with Photoshop:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://www.fnordware.com/ProEXR/">ProEXR</a> (open-source)</p></li>
+<li><p><a class="reference external" href="https://www.exr-io.com/">Exr-IO</a> (free)</p></li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<p><strong>Does Backburner need to be installed to render with Deadline?</strong></p>
+<blockquote>
+<div><p>Yes and No. As of Deadline 10, Backburner is no longer required to be installed for command line and network rendering. Earlier versions of Deadline still require Backburner to be installed for Deadline network rendering of 3ds Max jobs to operate correctly.</p>
+</div></blockquote>
+<p><strong>Backburner won’t install on a machine. Why?</strong></p>
+<blockquote>
+<div><p>Ensure you only have one version of Backburner installed on your system. Backburner 2016 can fail to install if Backburner 2014 is installed on your system. Backburner provides backwards compatibility support for older versions of 3dsMax. Note: Backburner is no longer required to be installed locally on each machine if you are using Deadline 10 or newer.</p>
+</div></blockquote>
+<p><strong>Does the 3ds Max plugin support Tile Rendering?</strong></p>
+<blockquote>
+<div><p>Yes. See the Tile Rendering section of the submission dialog documentation for more details.</p>
+</div></blockquote>
+<p><strong>Does the 3ds Max plugin support multiple arbitrary sized, multi-resolution Tile Rendering for both stills or animations and automatic re-assembly, including the use of multi-channel image formats and Render Elements (incl. V-Ray VFB specific image files)?</strong></p>
+<blockquote>
+<div><p>Yes. We call it ‘Jigsaw’ and it’s unique to the Deadline system! See the Tile Rendering section of the submission dialog documentation for more details.</p>
+</div></blockquote>
+<p><strong>Does the 3ds Max plugin support Batch Rendering?</strong></p>
+<blockquote>
+<div><p>Yes. See the Batch Rendering section of the submission dialog documentation for more details.</p>
+</div></blockquote>
+<p><strong>How do I setup V-Ray Render Elements in Deadline?</strong></p>
+<blockquote>
+<div><p>Deadline fully respects the V-Ray RE settings in 3ds Max. Ensure you consult the Chaos Group <a class="reference external" href="https://docs.chaosgroup.com/display/VRAY3MAX">V-Ray manual</a> for an understanding of how <a class="reference external" href="https://docs.chaosgroup.com/display/VRAY3MAX/Render+Elements">Render Elements</a> work in 3ds Max. When using the V-Ray frame buffer, V-Ray will write render elements only if you specify either one of the <a class="reference external" href="https://docs.chaosgroup.com/display/VRAY3MAX/Frame+Buffer+Settings">V-Ray raw image file</a> output or the <a class="reference external" href="https://docs.chaosgroup.com/display/VRAY3MAX/Frame+Buffer+Settings">Separate render channels</a> options. If you want to specify the render elements outputs using the 3ds Max Render Output field or using the output options of the various render elements, then you have to disable the V-Ray frame buffer.</p>
+<p><a class="reference external" href="https://docs.chaosgroup.com/display/VRAY3MAX/Render+Elements"><img alt="re" src="../_images/max_vray_re_settings.png" /></a> <a class="reference external" href="https://docs.chaosgroup.com/display/VRAY3MAX/Frame+Buffer+Settings"><img alt="vfb" src="../_images/max_vray_vfb_settings.png" /></a></p>
+</div></blockquote>
+<p><strong>How can I submit all 3ds max cameras to render in Deadline?</strong></p>
+<blockquote>
+<div><p>There are a number of options here:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Use <a class="reference external" href="https://knowledge.autodesk.com/support/3ds-max/learn-explore/caas/CloudHelp/cloudhelp/2015/ENU/3DSMax/files/GUID-07D3D0DD-3C22-4305-B7FA-01508AB73393-htm.html">Batch Render</a> dialog in 3dsMax to setup the different cameras, where to save the rendered image files to, frame range, etc and then use Deadline’s <a class="reference internal" href="app-3ds-max-smtd.html#dsmax-batch-submission-ref-label"><span class="std std-ref">Batch Submission</span></a> in SMTD to submit the cameras as separate jobs.</p></li>
+<li><p>Use <a class="reference external" href="https://help.autodesk.com/view/3DSMAX/2023/ENU/?guid=GUID-3F6C0FFE-63A8-421F-9D7E-C823C7D4FA21">State Sets</a> in 3dsMax to setup your <em>render passes</em> using different cameras and Deadline supports <a class="reference internal" href="app-3ds-max-smtd.html#dsmax-state-sets-ref-label"><span class="std std-ref">State Sets</span></a> being submitted via SMTD.</p></li>
+<li><p>An alternative to the built-in 3dsMax features highlighted above, you could invest in a commercial render pass management system such as <a class="reference external" href="https://rpmanager.com/">RPManager</a> which is an advanced <em>State Sets</em> system. Deadline provides comprehensive integration with <a class="reference internal" href="#app-rpmanager-ref-label"><span class="std std-ref">RPManager</span></a>.</p></li>
+<li><p>Finally, our job submission in 3dsMax is via SMTD which is fully implemented using MAXScript, so any studio with a scripter or developer, could easily hook into the SMTD _struct MAXScript functions we provide and build your own custom submission system handling multiple cameras in a 3dsMax scene file as you so wish. We provide a <a class="reference external" href="https://www.awsthinkbox.com/tutorial/custom-maxscript-submission">Custom MAXScript Submission Tutorial</a> on how this can be achieved.</p></li>
+</ol>
+</div></blockquote>
+</div></blockquote>
+<p><strong>Is PSoft’s Pencil+ render effects plugin supported?</strong></p>
+<blockquote>
+<div><p>Yes. Please note at least Pencil+ v3.10 is required to resolve an issue with the “line” render element failing to be rendered. Unfortunately, due to the way Pencil+ plugin and 3ds Max work together, it is not possible for this combination to support “crop” renders in 3dsMax via the “Pencil+ Line” render effect. This means that Tile/Jigsaw rendering is NOT supported in Deadline. Pencil+ Line refers to the camera’s screen geometry information for rendering. However, when using “crop”, 3ds Max outputs the geometry information with an offset. Since Pencil+ Line renders are based on the information before the offset, there is a mismatch with the data output by 3ds Max. You can see a similar problem when using Backburner’s “Split Scan Lines”. Standard 3ds Max render effects such as “Lens Effects” do not have this problem because they refer to the actual rendered pixels to apply its effects. The PSoft developers have confirmed that since this problem is related to the way 3ds Max works, there is nothing they can do on their side to fix it. Please note that “Local Rendering” is NOT supported with this plugin. Ensure any saved files are pointing back to your central file server.</p>
+</div></blockquote>
+<p><strong>When I submit a render with a locked viewport, Deadline sometimes renders a different viewport.</strong></p>
+<blockquote>
+<div><p>Prior to the release of 3ds Max 2009, the locked viewport feature wasn’t exposed to the 3ds Max SDK, so it was impossible for Deadline to know whether a viewport is locked or not. Now that the feature has been exposed,
+we are working to improve Deadline’s locked viewport support. However, in the 3ds Max 2010 SDK, there is a bug that prevents us from supporting it completely (Autodesk is aware of this bug).</p>
+<p>As of 3ds Max 2015, this bug is now resolved. For earlier versions, we can only continue to recommend that users avoid relying on the locked viewport feature, and instead ensure that the viewport they want to render is
+selected before submitting the job. The SMTD sanity check continues to provide a warning for those versions of 3ds Max, where the locked viewport SDK bug still exists.</p>
+<p>To assist users further, automatic handling of the locked camera viewport was added to SMTD in Deadline 10, so please ensure you are running the latest service pack to receive this functionality.</p>
+</div></blockquote>
+<p><strong>When Deadline is running as a service, 3ds Max 2015 render jobs crash during startup.</strong></p>
+<blockquote>
+<div><p>This can happen if the new Scene (Content) Explorer is docked.</p>
+<p>This is a known issue with 3ds Max network rendering when it is launched by a program running as a service. See this <a class="reference external" href="https://area.autodesk.com/blogs/maxstation/n244-workaround-for-running-3ds-max-2015-jobs-as-a-service">AREA blog post about running 3ds Max 2015 as a service</a> for a workaround and more information.</p>
+</div></blockquote>
+<p><strong>Can I mix 3ds Max and 3ds Max Design jobs in Deadline?</strong></p>
+<blockquote>
+<div><p>Yes. ADSK have introduced (April 2014) a new system environment variable you can set which will make all jobs from 3ds Max and 3ds Max Design appear as 3ds Max jobs:
+“MIX_MAX_DESIGN_BB” set to “1” to enable this feature. Note, Windows typically requires a machine restart or log-off/log-on for the new environment setting value to become available once set. ADSK have confirmed this works for 3ds Max 2015, 3ds Max Design 2015 with Backburner 2015.0.1. It may also work with 2014 SP5 version of 3ds Max and 3ds Max Design, with Backburner 2015.0.1. Note, Backburner Manager or Server are NOT required to be running to make this system work in Deadline, although Backburner software still needs to be installed on your rendernodes. Note: Backburner is no longer required to be installed locally on each machine if you are using Deadline 10 or newer.</p>
+</div></blockquote>
+<p><strong>When I submit a render job that uses more than one default light, only one default light gets rendered.</strong></p>
+<blockquote>
+<div><p>The workaround for this problem is to add the default lights to the scene before submitting the job. This can be done from within 3ds Max by selecting Create Menu -&gt; Lights -&gt; Standard Lights -&gt; Add Default Lights to Scene.</p>
+</div></blockquote>
+<p><strong>Is it possible to submit MAXscripts to Deadline instead of just a *.max scene?</strong></p>
+<blockquote>
+<div><p>Yes. Deadline supports MAXscript jobs from the Scripts tab in the submission dialog.</p>
+</div></blockquote>
+<p><strong>Does Deadline’s custom interface for rendering with 3ds Max use workstation licenses?</strong></p>
+<blockquote>
+<div><p>No. Deadline’s custom interface for rendering with 3ds Max does not use any workstation licenses when running on Workers unless you have the Force Workstation Mode option checked in the submission dialog, a workstation license will be used.</p>
+</div></blockquote>
+<p><strong>Workers are rendering their first frame/tile correctly, but subsequent frames and render elements have problems or are rendered black.</strong></p>
+<blockquote>
+<div><p>Try enabling the option to “Restart Renderer Between Frames” in the submission dialog before submission, or in the job properties dialog after submission. We have found that this works 99% of the time in these cases.
+When enabled, the c++ Lightning plugin (unique to Deadline), will unload the renderer plugins and then reload them instantly. This has the effect of forcing a memory purge and helps to improve renderer stability, as well as
+ensure the lowest possible memory footprint. This can be helpful, when rendering close to the physical memory limit of a machine. See note below for when this feature should be disabled.</p>
+</div></blockquote>
+<p><strong>V-Ray Light-Cache / Irradiance Maps are not the correct file size or seem to be getting reset between incremental frames on Deadline but calculate correctly when executed locally.</strong></p>
+<blockquote>
+<div><p>Ensure the option “Restart Renderer Between Frames” is DISABLED if you are sending FG/LC/IM caching map type jobs to the farm, as the renderer will get reset for each frame and the FG/LC/IM file(s) won’t get incrementally
+increased with the additional data per frame and will only contain the data from the last frame it calculated. (The resulting file size will be too small as well).</p>
+</div></blockquote>
+<p><strong>3dsMax Point Cache Files dropping geometry in renders randomly</strong></p>
+<blockquote>
+<div><p>Sometimes 3dsMax can drop point cache geometry in renders, in an almost random only certain rigs fashion. Typically but not exclusively, this happens on the 2nd assigned frame processed by a particular Worker. Ensure the option “Restart Renderer Between Frames” is DISABLED in the submission dialog before submission, or in the job properties dialog after submission. We have found that this works 99% of the time in these cases.</p>
+</div></blockquote>
+<p><strong>When rendering with V-Ray/Brazil, it appears as if some maps are not being displayed properly.</strong></p>
+<blockquote>
+<div><p>Try enabling the option to “Restart Renderer Between Frames” in the submission dialog before submission, or in the job properties dialog after submission. We have found that this works 99% of the time in these cases.</p>
+</div></blockquote>
+<p><strong>Are post-render effects such as Corona’s Bloom/Glare supported when tile rendering?</strong></p>
+<blockquote>
+<div><p>No. This affects all renderers in 3ds Max specifically when tile/Jigsaw rendering. Any declared 2D post render effect in 3ds Max should only be applied to the entire rendered image after it has been stitched and not to the individual region rendered images. To workaround this 3ds Max limitation, ensure you use a post-render process to apply any render effects after Draft has stitched the tile rendered images together. In the case of Corona, you could use their Corona Image Editor (CIE) application.</p>
+</div></blockquote>
+<p><strong>Tile rendering with a Mental Ray camera shader known as “wraparound” results in an incorrect final image. How can I fix this?</strong></p>
+<blockquote>
+<div><p>This is another situation where enabling the option to “Restart Renderer Between Frames” in the submission dialog seems to fix the problem.</p>
+</div></blockquote>
+<p><strong>When tile rendering with a renderer that supports global/secondary illumination, I get bucket stamps (different lighting conditions in each tile) or ‘seams’ on the final image.</strong></p>
+<blockquote>
+<div><p>Try calculating the irradiance/final-gather/UHD light caching map first in one job at full resolution. Then perform your tile render on a scene that reads the irradiance/final-gather/UHD cache file created at full resolution. If creating the cache at full resolution is impossible then you can make it in the tile, but you need to make sure the tiles are overlapping each other (use Deadline’s tile/jigsaw padding to help here) and make sure to use the irradiance/final-gather/UHD cache method that appends to the cache file. Alternatively, you could consider using the <a class="reference internal" href="app-3ds-max-smtd.html#dsmax-vray-ref-label"><span class="std std-ref">V-Ray/Mental Ray DBR</span></a> off-load system to accelerate the calculation of the light caching map.</p>
+<p>In summary: you create (pre-calculate) the secondary/global illumination map first then run the final render in tiles as a second job. Deadline job dependencies can be used here to release the second job as the first job successfully completes the lighting pre-calculation job.</p>
+</div></blockquote>
+<p><strong>Can I perform Distributed Bucket Rendering (DBR) with V-Ray or V-Ray RT?</strong></p>
+<blockquote>
+<div><p>Yes. A special ‘reserve’ job is submitted that will run the V-Ray Spawner/V-Ray standalone process on the render nodes. Once the V-Ray Spawner/V-Ray standalone process is running, these nodes will be able to participate in distributed rendering. Please see the <a class="reference internal" href="app-vray-dbr.html#app-vray-dbr-ref-label"><span class="std std-ref">V-Ray Distributed Rendering (DBR) Plugin Guide</span></a> for more information.</p>
+</div></blockquote>
+<p><strong>Can I fully off-load 3dsMax V-Ray or Mental Ray DBR rendering from my machine?</strong></p>
+<blockquote>
+<div><p>Yes, see the <a class="reference internal" href="app-3ds-max-smtd.html#dsmax-vray-ref-label"><span class="std std-ref">V-Ray/Mental Ray DBR</span></a> section for more information. The advantages to off-loading a V-Ray DBR job fully from your workstation include; releasing your local workstation to carry out other processing tasks and helping to accelerate the irradiance map/photon cache calculation process as the V-Ray DBR system supports distributing this across multiple machines. A risk/disadvantage to this way of working is if a single machine currently being used to calculate a DBR bucket crashes/fails for an unknown reason, then the whole process will fail at it’s current stage and start from the beginning again.</p>
+</div></blockquote>
+<p><strong>Can I Perform Fume FX Simulations With Deadline?</strong></p>
+<blockquote>
+<div><dl class="simple">
+<dt>Yes. To do so, follow these steps:</dt><dd><ol class="arabic simple">
+<li><p>Your render nodes need to have Fume FX licensed properly, either with a “full” or “simulation” licenses. This requirement is the same if you were rendering with Backburner.</p></li>
+<li><p>Before you launch the 3dsmax submission script, make sure that the Fume FX NetRender toggle button is “ON” in the Fume FX options in 3dsmax.</p></li>
+<li><p>Before you submit the job, make sure the “Disable Progress Update Timeout” option is enabled under the Render tab in the 3dsmax submission window.</p></li>
+<li><p>Note that Fume FX uses its own frame range (in the Fume FX settings/prefs), so submit the Max scene file to Deadline as a <strong>SINGLE FRAME ONLY</strong>.</p></li>
+<li><p>Before you submit the job, make sure the “Restart Renderer Between Frames” option is disabled under the Render tab in the 3dsmax submission window.</p></li>
+</ol>
+</dd>
+</dl>
+</div></blockquote>
+<p id="dsmax-faq-language-ref-label"><strong>Can I force a render to use a specific language?</strong></p>
+<blockquote>
+<div><p>Yes.  Using the option located in “User Options” tab of SMTD or in the Monitor submission, “Advanced Options” tab (2013+ only).  This will change the default on the machine it is rendered on to the chosen language. Note that the change is permanent on the machine until such time 3dsMax is restarted and the language is forced to a different language. You can manually force the language to be changed back via the language specific shortcuts in the start menu, which effectively start 3dsMax with the language flag. In this example, EN-US (default) is forced: “C:/Program Files/Autodesk/3ds Max 2015/3dsmax.exe” /Language=ENU</p>
+</div></blockquote>
+<p><strong>When submitting to Deadline, non-ASCII characters in output paths, camera names, etc, are not being sent to Deadline properly.</strong></p>
+<blockquote>
+<div><p>You need to enable the “Save strings in legacy non-scene files using UTF8” property in the Preference Settings in 3ds Max. After enabling this, the Deadline submission files will be saved as UTF8 and therefore non-ASCII characters will be saved properly. See the <a class="reference external" href="https://help.autodesk.com/view/MAXDEV/2024/ENU/?guid=GUID-30A3165F-752E-423B-A662-46B4A78E89F5">Character Encoding Defaults in 3ds Max</a> section in the 3ds Max Character Encoding documentation for more information.</p>
+</div></blockquote>
+<p id="dsmax-faq-delimiter-ref-label"><strong>Why do 3ds Max jobs add a period delimiter to the output filename?</strong></p>
+<blockquote>
+<div><p>Deadline 7 introduced a new Delimiter option in the integrated 3ds Max submitter (SMTD) to avoid some problems with the way render elements and other auto-generated names were formatted in previous version. The Delimiter option is set to a factory default of “.” as this is the typical convention in VFX pipelines, but it can be overridden via the Defaults INI file in the Repository. Since this setting is considered a company-wide pipeline value and should not be overridden by individual users, it is currently not exposed in the SMTD UI.</p>
+<p>To change the Delimiter to an empty string, you can do the following:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p>Navigate to your Repository folder</p></li>
+<li><p>Go to …\submission\3dsmax\Main\</p></li>
+<li><p>Locate the SubmitMaxToDeadline_Defaults.ini file and open it in a text editor</p></li>
+<li><p>Add the following to the [RenderingOptions] category:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">RenderingOptions</span><span class="p">]</span>
+<span class="n">Delimiter</span><span class="o">=</span>
+</pre></div>
+</div>
+</li>
+<li><p>Make sure there is nothing after the = sign!</p></li>
+<li><p>Save the file</p></li>
+<li><p>Restart SMTD on your workstation</p></li>
+<li><p>RESULT: At this point, SMTD should behave like it did in Deadline 6.x and earlier.</p></li>
+</ol>
+</div></blockquote>
+<p>Note that in some cases some render element passes might be misformatted due to the lack of delimiter - this was a known issue in Deadline 6.x and earlier. For example, if a V-Ray pass was named automatically based on a TextureMap name ending with digits, the resulting file name could end up having too many trailing digits, e.g. SomeMap_420000.exr instead of SomeMap_42.0000.exr. So in the Deadline Monitor, the filename could become SomeMap_######.exr instead of SomeMap_42.####.exr. If you want to replace the “.” period character with a different character to fit your pipeline requirements, (e.g. _ underscore), you can add the character to the INI file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">RenderingOptions</span><span class="p">]</span>
+<span class="n">Delimiter</span><span class="o">=</span><span class="n">_</span>
+</pre></div>
+</div>
+<p>In summary, you can use the new Delimiter option to provide a consistent file naming convention across your studio pipeline. Few caveats; the file naming convention for Thinkbox’s tile, region and Jigsaw remains unchanged and V-Ray v3 has introduced a maxscript property <code class="docutils literal notranslate"><span class="pre">#fileName_addDot</span></code> which can be accessed via</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">renderers</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">fileName_addDot</span>
+</pre></div>
+</div>
+<p>which by default is True, so it will also try to add a DOT character to its filenames if one is not present.</p>
+</div></blockquote>
+<p><strong>Can I use AXYZ Design’s Anima with Deadline?</strong></p>
+<blockquote>
+<div><p>Yes, but scenes with raw Anima characters should be treated in the same way as a simulation job. At this time, Deadline is only able to render from the initial task forward and only on a single machine (Use task chunking to group the frames together). If possible, export (bake) the Anima characters to a geometry caching file format such as Point Cache pc2, Thinkbox’s XMESH or V-Ray/Corona Proxies, so that individual frames can be rendered by Workers.</p>
+</div></blockquote>
+<p><strong>Why do some of my rendered images contain ‘_alt_’ in their filename after rendering via Deadline?</strong></p>
+<blockquote>
+<div><p>Deadline’s c++ plugin for 3dsMax, called ‘Lightning’ provides a special feature to resolve situations where the rendered image being saved back to your network file server is unable to save the image file to disk. The reason could be due to the pre-existing image file being ‘locked’ by another process (such as another crashed instance of 3dsmax.exe elsewhere in your pipeline) or perhaps, file permissions have changed on this particular file. Whatever the reason, ‘Lightning’ will attempt 5 times to save the rendered image (which might have taken hours to render!) to your file server, adding the additional ‘_alt_N_’ suffix, where <strong>N</strong> is the attempt to save number (1 to 5). These files might look something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MyRender_v001_</span><span class="o">.</span><span class="mi">3608</span><span class="n">_alt_2</span><span class="o">.</span><span class="n">exr</span>
+<span class="n">MyRender_v001_</span><span class="o">.</span><span class="mf">3609.</span><span class="n">exr</span>
+<span class="n">MyRender_v001_</span><span class="o">.</span><span class="mi">3610</span><span class="n">_alt_4</span><span class="o">.</span><span class="n">exr</span>
+<span class="n">MyRender_v001_</span><span class="o">.</span><span class="mf">3611.</span><span class="n">exr</span>
+<span class="n">MyRender_v001_</span><span class="o">.</span><span class="mf">3612.</span><span class="n">exr</span>
+</pre></div>
+</div>
+<p>You can disable this feature in the 3dsMax <a class="reference internal" href="#dsmax-plugin-config-render-options-ref-label"><span class="std std-ref">Plugin Configuration</span></a> if you so wish with the setting: <strong>Disable Saving Output To Alternate File Name</strong>. Additionally, Deadline Monitor provides a right-click job script to allow manual intervention and help you ‘cleanup’ these ‘_alt_N_’ file names by automatically renaming them for you (typically executed once you have resolved the file lock/permission error on your file server). This job script can be found by selecting your 3dsMax job, right-click, “Scripts”, “Cleanup”, “Cleanup Alt Frames From 3ds Max”.</p>
+</div></blockquote>
+<p><strong>Gamma Settings are NOT respected in 3ds Max 2014</strong></p>
+<blockquote>
+<div><p>The original shipping version of 3ds Max 2014 (16.0.420.0) had an Autodesk undocumented issue where gamma was not correct when network rendering. This is resolved by installing the latest service pack (SP5). If you have any (gamma) issues in any version of 3ds Max, it is recommended to ensure you have installed the latest service pack / product update before contacting Deadline support.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known 3ds Max error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p>Note that when an error occurs in a Max render, we parse the Max render log (Max.log) for any messages that might explain the problem and include them in the error message. Some examples are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ERR: An unexpected exception has occurred in the network renderer and it is terminating.</p></li>
+<li><p>ERR: Missing dll: BrMaxPluginMgr.dlu</p></li>
+<li><p>ERR: [V-Ray] UNHANDLED EXCEPTION: Preparing ray server Last marker is at .srcvrayrenderer.cpp</p></li>
+</ul>
+</div></blockquote>
+<p id="dsmax-kill-adsk-infocenter-ref-label"><strong>Error: Timed out waiting for the next progress update. 3dsMax is hanging at the point of executing the ‘customize.ms’ maxscript file</strong></p>
+<blockquote>
+<div><p>Typically, you might see something like this in your 3dsMax log report, in both the exception error and also if you review the tail of the log report:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span><span class="p">:</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Scene</span> <span class="n">loaded</span> <span class="n">successfully</span>
+<span class="mi">0</span><span class="p">:</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Executing</span> <span class="n">script</span><span class="p">:</span> <span class="n">C</span><span class="p">:</span>\<span class="o">..</span>\<span class="o">..</span>\<span class="o">..</span>\<span class="o">..</span>\<span class="o">..</span>\<span class="o">..</span>\<span class="n">slave</span>\<span class="o">..</span>\<span class="n">plugins</span>\<span class="o">..</span>\<span class="n">customize</span><span class="o">.</span><span class="n">ms</span>
+<span class="mi">0</span><span class="p">:</span> <span class="n">An</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span> <span class="n">Error</span><span class="p">:</span> <span class="n">Timed</span> <span class="n">out</span> <span class="n">waiting</span> <span class="k">for</span> <span class="n">the</span> <span class="nb">next</span> <span class="n">progress</span> <span class="n">update</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>The root cause here is an Autodesk spawned background process known as “InfoCenter” or “CommunicationCenter”. It can be fixed by enabling the <strong>Kill ADSK Comms Center Process</strong> setting in your 3dsMax <a class="reference internal" href="#dsmax-plugin-config-render-options-ref-label"><span class="std std-ref">plugin configuration</span></a>.</p>
+</div></blockquote>
+<p><strong>3dsmax startup: Error getting connection from 3dsmax: 3dsmax startup: Deadline/3dsmax startup error: lightningMax*.dlx does not appear to have loaded on 3dsmax startup, check that it is the right version and installed to the right place.</strong></p>
+<blockquote>
+<div><p>You likely need to install the appropriate Visual C++ Redistributable package, which is carried out automatically by the Deadline Client installer. Try re-installing the Client software if you see this error.</p>
+</div></blockquote>
+<p><strong>3dsmax startup: Error getting connection from 3dsmax: Monitored managed process “3dsmaxProcess” has exited or been terminated.</strong></p>
+<blockquote>
+<div><p>Full error message:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span><span class="n">dsmax</span> <span class="n">startup</span><span class="p">:</span> <span class="n">Error</span> <span class="n">getting</span> <span class="n">connection</span> <span class="kn">from</span> <span class="mi">3</span><span class="n">dsmax</span><span class="p">:</span> <span class="n">Monitored</span> <span class="n">managed</span><span class="o">...</span>
+<span class="n">DBG</span><span class="p">:</span> <span class="n">Starting</span> <span class="n">network</span>
+<span class="n">DBG</span><span class="p">:</span> <span class="n">Calling</span> <span class="n">NetRenderPreLoad</span>
+<span class="n">DBG</span><span class="p">:</span> <span class="ow">in</span> <span class="n">NetWorkerPreLoad</span><span class="o">.</span> <span class="n">jobFile</span><span class="p">:</span> <span class="p">;</span> <span class="n">jobname</span><span class="p">:</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">...</span>
+<span class="n">DBG</span><span class="p">:</span> <span class="ow">in</span> <span class="n">NetWorkerPreLoad</span><span class="o">.</span> <span class="n">LoadLib</span><span class="p">()</span> <span class="n">failed</span>
+<span class="n">DBG</span><span class="p">:</span> <span class="n">NetRenderPreLoad</span> <span class="n">failed</span>
+<span class="n">ERR</span><span class="p">:</span> <span class="n">Error</span> <span class="n">loading</span> <span class="o">*.</span><span class="n">max</span> <span class="n">file</span>
+<span class="n">INF</span><span class="p">:</span> <span class="n">SYSTEM</span><span class="p">:</span> <span class="n">Production</span> <span class="n">renderer</span> <span class="ow">is</span> <span class="n">changed</span> <span class="n">to</span> <span class="n">Default</span><span class="o">...</span>
+<span class="n">DBG</span><span class="p">:</span> <span class="n">Stop</span> <span class="n">network</span>
+</pre></div>
+</div>
+<p>This is a known issue with 3ds Max, and can occur when IPv6 is enabled on the render node. The issue can be fixed by disabing IPv6 on the machines, or by disabing the IPv6 to IPv4 tunnel.  See this <a class="reference external" href="https://area.autodesk.com/blogs/maxstation/n138-resolving-quotunable-to-bindquot-errors-in-backburner">Area blog post about IPv6 errors</a> for more information.</p>
+</div></blockquote>
+<p><strong>Could not delete old lightning.dlx… This file may be locked by a copy of 3ds max</strong></p>
+<blockquote>
+<div><p>Usually this is because a 3dsmax.exe process didn’t quit or get killed properly. Looking in task manager on the Workers reporting the message for a 3dsmax.exe process and killing it is the solution.</p>
+</div></blockquote>
+<p><strong>3dsmax crashed in GetCoreInterFace()-&gt;LoadFromFile()</strong></p>
+<blockquote>
+<div><dl class="simple">
+<dt>There are a number of things that can be tried to diagnose the issue:</dt><dd><ul class="simple">
+<li><p>Try opening the file on a machine where it crashed. You may already have done this.</p></li>
+<li><p>Try rendering a frame of it on a machine where it crashed, using the 3dsmaxcmd.exe renderer. This will make it open the file in Worker mode and possibly give an idea of what’s failing.</p></li>
+<li><p>Submit the job to run in workstation mode. In workstation mode there’s often more diagnostic output. There’s a checkbox in the submission script for this.</p></li>
+<li><p>If you’re comfortable sending us the .max file which is crashing, we’d be happy to diagnose the issue here.</p></li>
+<li><p>Try stripping down the max file by deleting objects and seeing if it still crashes then.</p></li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+<p><strong>Missing dll: mrmaterialattribs.gup</strong></p>
+<blockquote>
+<div><p>If you receive any of these missing dll warning messages in 3ds Max 2017:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Missing</span> <span class="n">dll</span><span class="p">:</span> <span class="n">mrmaterialattribs</span><span class="o">.</span><span class="n">gup</span> <span class="o">-</span> <span class="n">mental</span> <span class="n">ray</span><span class="p">:</span> <span class="n">material</span> <span class="n">custom</span> <span class="n">attribute</span>
+<span class="n">Missing</span> <span class="n">dll</span><span class="p">:</span> <span class="n">mrarchmaterial</span><span class="o">.</span><span class="n">dlm</span> <span class="o">-</span> <span class="n">Arch</span> <span class="o">&amp;</span> <span class="n">Design</span>
+<span class="n">Missing</span> <span class="n">dll</span><span class="p">:</span> <span class="n">mentalray</span><span class="o">.</span><span class="n">dlz</span> <span class="o">-</span> <span class="n">Ambient</span><span class="o">/</span><span class="n">Reflective</span> <span class="n">Occlusion</span>
+<span class="n">Missing</span> <span class="n">dll</span><span class="p">:</span> <span class="n">mentalray</span><span class="o">.</span><span class="n">dlz</span> <span class="o">-</span> <span class="n">Bump</span>
+<span class="n">Missing</span> <span class="n">dll</span><span class="p">:</span> <span class="n">mentalray</span><span class="o">.</span><span class="n">dlz</span> <span class="o">-</span> <span class="n">Subsurface</span> <span class="n">Scattering</span> <span class="n">Fast</span> <span class="n">Skin</span>
+<span class="n">Missing</span> <span class="n">dll</span><span class="p">:</span> <span class="n">mrmaterialattribs</span><span class="o">.</span><span class="n">gup</span> <span class="o">-</span> <span class="n">mental</span> <span class="n">ray</span><span class="p">:</span> <span class="n">Displacement</span> <span class="n">Custom</span> <span class="n">Attributes</span>
+<span class="n">Missing</span> <span class="n">dll</span><span class="p">:</span> <span class="n">mentalray</span><span class="o">.</span><span class="n">dlz</span> <span class="o">-</span> <span class="n">Multi</span><span class="o">/</span><span class="n">Sub</span><span class="o">-</span><span class="n">Map</span>
+<span class="n">Missing</span> <span class="n">dll</span><span class="p">:</span> <span class="n">mrmaterial</span><span class="o">.</span><span class="n">dlt</span> <span class="o">-</span> <span class="n">mental</span> <span class="n">ray</span>
+<span class="n">Missing</span> <span class="n">dll</span><span class="p">:</span> <span class="n">mentalray</span><span class="o">.</span><span class="n">dlz</span> <span class="o">-</span> <span class="n">Matte</span><span class="o">/</span><span class="n">Shadow</span><span class="o">/</span><span class="n">Reflection</span>
+<span class="n">Missing</span> <span class="n">dll</span><span class="p">:</span> <span class="n">mrmaterialattribs</span><span class="o">.</span><span class="n">gup</span> <span class="o">-</span> <span class="n">mental</span> <span class="n">ray</span><span class="p">:</span> <span class="n">Indirect</span> <span class="n">Illumination</span> <span class="n">custom</span> <span class="n">attribute</span>
+<span class="n">Missing</span> <span class="n">dll</span><span class="p">:</span> <span class="n">mrmaterialattribs</span><span class="o">.</span><span class="n">gup</span> <span class="o">-</span> <span class="n">mental</span> <span class="n">ray</span><span class="p">:</span> <span class="n">light</span> <span class="n">shader</span> <span class="n">custom</span> <span class="n">attribute</span>
+<span class="n">Missing</span> <span class="n">dll</span><span class="p">:</span> <span class="n">Scripted</span> <span class="n">Plugin</span> <span class="o">-</span> <span class="n">mr</span> <span class="n">Area</span> <span class="n">Omni</span>
+<span class="n">Missing</span> <span class="n">dll</span><span class="p">:</span> <span class="n">Scripted</span> <span class="n">Plugin</span> <span class="o">-</span> <span class="n">mr</span> <span class="n">Area</span> <span class="n">Spot</span>
+<span class="n">Missing</span> <span class="n">dll</span><span class="p">:</span> <span class="n">mentalray</span><span class="o">.</span><span class="n">dlz</span> <span class="o">-</span> <span class="n">Contour</span> <span class="n">Contrast</span> <span class="n">Function</span> <span class="n">Levels</span>
+<span class="n">Missing</span> <span class="n">dll</span><span class="p">:</span> <span class="n">mentalray</span><span class="o">.</span><span class="n">dlz</span> <span class="o">-</span> <span class="n">Contour</span> <span class="n">Store</span> <span class="n">Function</span>
+<span class="n">Missing</span> <span class="n">dll</span><span class="p">:</span> <span class="n">mentalray</span><span class="o">.</span><span class="n">dlz</span> <span class="o">-</span> <span class="n">Contour</span> <span class="n">Composite</span>
+<span class="n">Missing</span> <span class="n">dll</span><span class="p">:</span> <span class="n">mentalray</span><span class="o">.</span><span class="n">dlz</span> <span class="o">-</span> <span class="n">Glare</span>
+<span class="n">Missing</span> <span class="n">dll</span><span class="p">:</span> <span class="n">mentalray</span><span class="o">.</span><span class="n">dlz</span> <span class="o">-</span> <span class="n">mrOptions</span>
+<span class="n">Missing</span> <span class="n">dll</span><span class="p">:</span> <span class="n">mentalray</span><span class="o">.</span><span class="n">dlz</span> <span class="o">-</span> <span class="n">NVIDIA</span> <span class="n">mental</span> <span class="n">ray</span>
+</pre></div>
+</div>
+<p>then it is likely you are trying to render a Mental Ray scene file or have a remaining Mental Ray reference in your scene file somewhere and have chosen to either not <a class="reference external" href="https://knowledge.autodesk.com/support/3ds-max/troubleshooting/caas/sfdcarticles/sfdcarticles/Mental-Ray-and-Iray-renderers-missing-in-3ds-Max-2017.html">install Mental Ray when you installed 3ds Max 2017</a> OR are missing the entry declaring Mental Ray in your plugin ini file. Note, as of 2017, both Mental Ray and iRay renderers are now an optional install. Although in 2017 it is still enabled by default to install. If Mental Ray is indeed installed on your rendernodes, then you should check that your <code class="docutils literal notranslate"><span class="pre">Plugin.UserSettings.ini</span></code> file contains an entry to load Mental Ray. This file is located under the user profile of the user account that is being to used to render with Deadline Worker, such as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># where %USERNAME% is replaced for the current user</span>
+<span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">%</span><span class="n">USERNAME</span><span class="o">%</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Autodesk</span>\<span class="mi">3</span><span class="n">dsMax</span>\<span class="mi">2017</span> <span class="o">-</span> <span class="mi">64</span><span class="n">bit</span>\<span class="n">ENU</span>\<span class="n">Plugin</span><span class="o">.</span><span class="n">UserSettings</span><span class="o">.</span><span class="n">ini</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Plugin.UserSettings.ini</span></code> should contain at least the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Directories</span><span class="p">]</span>
+<span class="n">Additional</span> <span class="n">MAX</span> <span class="n">plugins</span><span class="o">=</span><span class="n">C</span><span class="p">:</span>\<span class="n">Program</span> <span class="n">Files</span>\<span class="n">Autodesk</span>\<span class="mi">3</span><span class="n">ds</span> <span class="n">Max</span> <span class="mi">2017</span>\<span class="n">PlugIns</span>
+<span class="n">Additional</span> <span class="n">MAX</span> <span class="n">plugins</span> <span class="n">NVIDIA</span><span class="o">=</span><span class="n">C</span><span class="p">:</span>\<span class="n">Program</span> <span class="n">Files</span>\<span class="n">Autodesk</span>\<span class="mi">3</span><span class="n">ds</span> <span class="n">Max</span> <span class="mi">2017</span>\<span class="n">PlugIns</span>\<span class="n">NVIDIA</span>\<span class="n">Plugins</span>\
+</pre></div>
+</div>
+<p>If your studio does not use the <code class="docutils literal notranslate"><span class="pre">Plugin.UserSettings.ini</span></code>, then ensure your global <code class="docutils literal notranslate"><span class="pre">plugin.ini</span></code> file typically located at: <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\Autodesk\3ds</span> <span class="pre">Max</span> <span class="pre">2017\en-US\plugin.ini</span></code> contains the above NVIDIA Mental Ray entry. Autodesk have also written a knowledge base article: <a class="reference external" href="https://knowledge.autodesk.com/support/3ds-max/troubleshooting/caas/sfdcarticles/sfdcarticles/Missing-dll-mrmaterialattribs-gup-error-when-sending-a-job-via-network-render-from-3ds-Max-2017.html">Missing dll: mrmaterialattribs.gup error when sending a job via network render from 3ds Max 2017</a> on this issue and how to resolve it using the same guidelines that we have provided above.</p>
+</div></blockquote>
+<p><strong>Trapped SEH Exception in CurRendererRenderFrame(): Access Violation</strong></p>
+<blockquote>
+<div><p>An Access Violation means that when rendering the frame, Max either ran out of memory, or memory became corrupted. The stack trace in the error message usually shows which plugin the error occurred in. If that doesn’t help
+track down the issue, try stripping down the max file by deleting objects and seeing if the error still occurs.</p>
+<p>If the last line of your job log report showed <strong>INFO: Lightning: Overriding save file option to 0</strong> as the message, it may be related to one or more of your render output paths, including Render Element file paths being &gt; 255 characters in length (Windows OS limitation). To resolve, simply reduce the overall length of the file path you are saving your renders to. Bear in mind, if using V-Ray’s VFB “Separate render channels” option, the overall file path may be longer than you can currently visualize inside of 3ds Max prior to network render submission. If enabled, there are SMTD Sanity Check’s to test for this situation during submission.</p>
+</div></blockquote>
+<p><strong>3dsmax: Trapped SEH Exception in LoadFromFile(): Access Violation</strong></p>
+<blockquote>
+<div><p>An Access Violation means that when loading the scene, Max either ran out of memory, or memory became corrupted. The stack trace in the error message usually shows which plugin the error occurred in. If that doesn’t
+help track down the issue, try stripping down the max file by deleting objects and seeing if the error still occurs.</p>
+</div></blockquote>
+<p><strong>UNHANDLED EXCEPTION: Rendering region (248,0)-(256,8) Last marker is at ./src/globillummap.cpp, line 1692: GlobalIllumMap::buildLightMap() {1}</strong></p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/max_vray_vfb_render_region.png"><img alt="../_images/max_vray_vfb_render_region.png" src="../_images/max_vray_vfb_render_region.png" style="height: 50px;" /></a>
+<p>V-Ray is crashing as the VFB “Render Region” button is enabled and is not supported via network rendering. Please disable this button and re-submit the job to Deadline. If you require <strong>region</strong> rendering, please see the <a class="reference internal" href="app-3ds-max-smtd.html#app-3ds-max-jigsaw-ref-label"><span class="std std-ref">Tile &amp; Region Rendering Options</span></a>. Note, SMTD has a sanity check to warn you if this button is enabled during submission. The “Run Sanity Check Automatically Before Submission” checkbox in SMTD needs to be enabled for this to work!</p>
+</div></blockquote>
+<p><strong>UNHANDLED EXCEPTION: Broadcasting NOTIFY_POST_RENDERFRAME Last marker is at ./src/globillummap.cpp, line 1932: GlobalIllumMap::buildLightMap() {5}</strong></p>
+<blockquote>
+<div><p>V-Ray is crashing at the point of calculating the GI - Light Cache map on this particular frame or referencing a pre-calculated light cache map file on the file system. In the case of pre-existing light cache files, it is recommended to verify none of the per frame LC files are corrupt? Check the file size is consistent. If not, then V-Ray render settings in the GI/Light Cache area will need to be better optimized as the current scene file setup is crashing V-Ray at render time. We understand that creating a <a class="reference external" href="https://msdn.microsoft.com/en-us/library/windows/desktop/ee416349(v=vs.85).aspx">Minidump</a> file can be useful if then sent to support at Chaos Group to help identify the issue in your scene file. If you have the opportunity before 3dsMax crashes whilst running locally, there are several ways to create a minidump file such as using <a class="reference external" href="https://en.wikipedia.org/wiki/Task_Manager_(Windows)">Task Manager</a> or <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/bb896653.aspx">Process Explorer</a>. In <strong>Task Manager</strong>, in the Applications or the Processes tabs, right click on the process and select Create Dump File. After the minidump is finished, you’ll see a dialog showing you where the dump was created. A handy feature is that the path shown is a read only edit control you can select and copy so you don’t have to try to remember a long path. Alternatively, in <strong>Process Explorer</strong>, right-click on the Create Dump option and choose Create Minidump.</p>
+<p><a class="reference internal" href="../_images/max_taskmanager.png"><img alt="taskmanager" src="../_images/max_taskmanager.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/max_dmplocation.png"><img alt="dmplocation" src="../_images/max_dmplocation.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/max_processexplorer.png"><img alt="processexplorer" src="../_images/max_processexplorer.png" style="height: 400px;" /></a></p>
+</div></blockquote>
+<p><strong>3dsmax: PNG Plugin: PNG Library Internal Error</strong></p>
+<blockquote>
+<div><p>3dsMax Render Elements can become corrupt or be placed in a bad state with regard the image file format plugin trying to being used to save each Render Element to your file server. This issue is not limited to the PNG file format (TGA, TIF) but is common. A known option, which has been known to fix the issue in most circumstances, is to rebuild the render elements by deleting and re-creating them in the 3dsmax scene file. This feature is automated in SMTD if you enable the checkbox “Rebuild Render Elements” under the “Render” tab -&gt; “3ds Max Pathing Options”.</p>
+</div></blockquote>
+<p><strong>Photoshop: Could not complete your request because it is not the right kind of document</strong></p>
+<blockquote>
+<div><p>Same error as above. 3dsMax Render Elements (bitmap image plugin) being used to save the image file extension in one or more of your Render Elements in your scene file has decided to save as a different fundamental image file format. It might say in the filename it’s a *.tif, *.png or *.tga file, but it’s actually a different image file format! When you try to open the image in AE or Photoshop, you get the cited above error message. The fix is the same as above by enabling the “Rebuild Render Elements” checkbox under the “Render” tab -&gt; “3ds Max Pathing Options”. To save re-rendering any images, you can use an open-source application such as <a class="reference external" href="https://www.xnview.com/en">XnView</a> or <a class="reference external" href="https://www.irfanview.com">IrfanView</a> to open these <em>corrupt</em> images, view the ‘image properties’ to identify the image file format actually being used and then rename the file extension on your file system accordingly.</p>
+</div></blockquote>
+<p><strong>RenderTask: 3dsmax exited unexpectedly (it may have crashed, or someone may have terminated)</strong></p>
+<blockquote>
+<div><p>This generic error message means that max crashed and exited before the actual error could be propagated up to Deadline. Often when you see this error, it helps to look through the rest of the error reports for that job to
+see if they contain any information that’s more specific.</p>
+</div></blockquote>
+<p><strong>RenderTask: 3dsmax may have crashed (recv: socket error trying to receive data: WSAError code 10054)</strong></p>
+<blockquote>
+<div><p>This generic error message means that max crashed and exited before the actual error could be propagated up to Deadline. Often when you see this error, it helps to look through the rest of the error reports for that job to
+see if they contain any information that’s more specific.</p>
+</div></blockquote>
+<p><strong>3dsmax startup: Error getting connection from 3dsmax: 3dsmax startup: Deadline/3dsmax startup error: lightningMax*.dlx does not appear to have loaded on 3dsmax startup, check that it is the right version and installed to the
+right place.</strong></p>
+<blockquote>
+<div><p>This error is likely the side effect of another error, but the original error wasn’t propagated to Deadline properly. Often when you see this error, it helps to look through the rest of the error reports for that job to
+see if they contain any information that’s more specific.</p>
+</div></blockquote>
+<p><strong>3dsmax startup: Max exited unexpectedly. Check that 1) max starts up with no dialog messages and in the case of 3dsmax 6, 2) 3dsmaxcmd.exe produces the message ‘Error opening scene file: “”’ when run with no command line
+arguments</strong></p>
+<blockquote>
+<div><p>This message is often the result of an issue with the way Max starts up. Try starting 3ds Max on the Worker machine that produced the error to see if it starts up properly. Also try running 3dsmaxcmd.exe from the command
+line prompt to see if it produces the message ‘Error opening scene file: “”’ when run with no command line arguments. If it doesn’t produce this message, there may be a problem with the Max install or how its configured.
+Sometimes reinstalling Max is the best solution.</p>
+</div></blockquote>
+<p><strong>The 3dsmax command line renderer, …\3dsmaxcmd.exe, hung during the verification of the 3ds max install</strong></p>
+<blockquote>
+<div><p>Try running 3dsmaxcmd.exe from the command line prompt to see if it pops up an error dialog or crashes, which is often the cause of this error message. If this is the case, there may be a problem with the Max install or
+with how it is configured. Sometimes reinstalling Max is the best solution.</p>
+</div></blockquote>
+<p><strong>3dsmax: Failed to load max file: “…”</strong></p>
+<blockquote>
+<div><p>There could be many reasons my Max would fail to load the scene file. Check for ERR or WRN messages included in the error message for information that might explain the problem. Often, this error is the result of a
+missing plugin or dll. Additionally, there is a known issue where a corrupt install of Backburner in 3ds Max 2015 or earlier can cause 3ds Max 2016 to fail to load its Max scene file. Autodesk provides a knowledge post <a class="reference external" href="https://knowledge.autodesk.com/search-result/caas/sfdcarticles/sfdcarticles/Error-1721-During-Install.html">Backburner Error 1721 During Install</a> on how to resolve if this is the case.</p>
+</div></blockquote>
+<p><strong>Error: “3ds Max The Assembly Autodesk.Max.Wrappers.dll encountered an error while loading”</strong></p>
+<blockquote>
+<div><p>This is a specific 3ds Max 2015 crash when you try to launch the program. Ensure you perform a Windows update and get latest updates for Windows 7 or 8. Additionally, install the update for <a class="reference external" href="https://knowledge.autodesk.com/support/3ds-max/downloads/caas/downloads/content/autodesk-3ds-max-2015-service-pack-1-and-security-fix.html">Autodesk 3ds Max 2015 Service Pack 1 and Security Fix</a>. See this <a class="reference external" href="https://knowledge.autodesk.com/support/3ds-max/troubleshooting/caas/sfdcarticles/sfdcarticles/3ds-Max-The-Assembly-Autodesk-Max-Wrappers-dll-encountered-an-error-while-loading.html">ADSK Knowledge post</a> for more information.</p>
+</div></blockquote>
+<p><strong>Error message: 3dsmax adapter error : Autodesk 3dsMax 17.2 reported error: Could not find the specified file in DefaultSettingsParser::parse() ; Could not find the specified file in DefaultSettingsParser::parse() ;</strong></p>
+<blockquote>
+<div><p>The error “Could not find the specified file in DefaultSettingsParser::parse() ;” occurs if you don’t have the Populate Data installed on each of your Deadline Worker machines. To resolve the issue you need to ensure that the Populate Data is installed on all the render machines. You can run the 3dsMax_2015_PopulateData.msi installer from the “\x64\PDATA\” folder of the 3ds Max 2015 installer. In case there was a previous install of the Populate Data on the machine please delete the following folder before installing “C:\Program Files\Common Files\Autodesk Shared\PeoplePower\2.0\”. See this <a class="reference external" href="https://area.autodesk.com/blogs/maxstation/n258-backburner-error-could-not-find-the-specified-file-in-defaultsettingsparserparse-">Area blog post</a> for more information.</p>
+</div></blockquote>
+<p><strong>Error message: ERR: “To use this feature, you need the Evolver data. Please check the Autodesk web site for more information.”</strong></p>
+<blockquote>
+<div><p>You may get the above error message when you try to run a Populate simulation in your 3dsMax scene file. This is a known Autodesk bug and the fix is to install the Autodesk 3ds Max 2014 64-bit Populate Data component. The actual file is 3dsMax_2014_PopulateData.msi which you can find in the “\x64\PDATA\” folder of the install media. Note that if you’re running 3ds Max Design the filename will be 3dsMaxDesign_2014_PopulateData.msi. Simarily, the same bug in 3ds Max 2015 doesn’t mention Evolver anymore. Instead, it tells you to install the Populate data. See this <a class="reference external" href="https://area.autodesk.com/blogs/maxstation/n257-fixing-missing-evolver-data-errors">Fixing missing Evolver data errors</a> Area blog post for more information.</p>
+</div></blockquote>
+<p><strong>Error message: “ERROR: Please, make sure the Populate data is installed.”</strong></p>
+<blockquote>
+<div><p>This is the same error message as the previous Populate FAQ entry and is fixed by installing the Autodesk Populate Data component. See this <a class="reference external" href="https://area.autodesk.com/blogs/maxstation/n257-fixing-missing-evolver-data-errors">Fixing missing Evolver data errors</a> Area blog post for more information.</p>
+</div></blockquote>
+<p><strong>ERR: [13724] [10020] CoCreateInstance() failed. Please check your registry entries CLSID {F088EA74-2E87-11D3-B1F3-00C0F03C37D3} and make sure you are logged in as an administrator</strong></p>
+<blockquote>
+<div><p>This is a known Autodesk bug with the “skin” modifier, when a newer version of 3dsMax has unregistered a plugin dll for skin which was used by a previous version of 3dsMax. Autodesk provide the following knowledge post <a class="reference external" href="https://knowledge.autodesk.com/support/3ds-max/troubleshooting/caas/sfdcarticles/sfdcarticles/COM-Error-CoCreateInstance-failed-please-check-you-registry-entries.html">COM Error: CoCreateInstance failed please check your registry entries</a> on how to resolve this issue. Alternatively, you can enable “Ignore Missing DLL Errors” in SMTD which should successfully skip this error, but your render will more than likely be incorrect due to the missing skin modifier on your object(s).</p>
+</div></blockquote>
+<p><strong>Unexpected exception (Error in bm-&gt;OpenOutput(): error code 12)</strong></p>
+<blockquote>
+<div><p>Ensure all instances of 3dsMax are running a consistent LANGUAGE. By default 3dsMax ships with the LANGUAGE code set to “ENU” - “US English” and this is recommended for the majority of customers. If you are using a 3rd party plugin in 3dsMax, please contact the plugin developer to verify that their plugin is capable of running as a different language inside of 3dsMax. Note, that the majority of 3rd party plugins are still only developed to work in “ENU”. Please see this FAQ for more information regarding options to control the LANGUAGE: <a class="reference internal" href="#dsmax-faq-language-ref-label"><span class="std std-ref">3dsMax Language Code FAQ</span></a>.</p>
+</div></blockquote>
+<p><strong>Exception: Failed to render the frame.</strong></p>
+<blockquote>
+<div><p>There could be many reasons my Max would fail to render the frame. Check for ERR or WRN messages included in the error message for information that might explain the problem.</p>
+</div></blockquote>
+<p><strong>DBG: in Init. nrGetIface() failed</strong></p>
+<blockquote>
+<div><p>This error message is often an indication that 3dsmax or backburner is out of date on the machine. Updating both to the latest service packs should fix the problem.</p>
+</div></blockquote>
+<p><strong>Error when using Mental Ray DBR in 3ds Max 2016: Could not locate MDL shared core library.</strong></p>
+<blockquote>
+<div><p>When you try to use DBR (Distributed Bucket Rendering) you will get the following error message:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Could</span> <span class="ow">not</span> <span class="n">locate</span> <span class="n">MDL</span> <span class="n">shared</span> <span class="n">core</span> <span class="n">library</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>To help Mental Ray satellite find this .dll copy libmdl.dll from the main 3ds Max 2016 folder to the NVIDIA/Satellite folder. Note that you have to do this on all the machines that will be used for DBR. See this <a class="reference external" href="https://area.autodesk.com/blogs/maxstation/n276-error-when-using-mental-ray-dbr-in-3ds-max-2016-could-not-locate-mdl-shared-core-library">Error when using Mental Ray DBR in 3ds Max 2016</a> Area blog post for more information.</p>
+</div></blockquote>
+<p><strong>Error: Dialog popup detected: Title “DLL Initialization Fail”, Message “Fail to initialize the defer loaded gmi.dll”</strong></p>
+<blockquote>
+<div><p>This .dll contains the NURBS functionality in 3ds Max. There may be some NURBS or body objects in use in your scene and this .dll may either have been corrupted or is being blocked by Windows Defender. Try shutting down all instances of 3ds Max on the machine displaying this issue and replace the <code class="docutils literal notranslate"><span class="pre">gmi.dll</span></code> with a known, good version of the dll file from another machine, using exactly the same version of 3ds Max. Additionally, try disabling <em>Windows Defender</em> and double-check any current exclusions in Defender are still in place after any Windows OS update has been applied.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3ds Max</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a></li>
+<li><a class="reference internal" href="#troubleshooting-render-issues">Troubleshooting Render Issues</a></li>
+<li><a class="reference internal" href="#installation-instructions">Installation Instructions</a></li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#firewall-considerations">Firewall Considerations</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+<li><a class="reference internal" href="#verify-installation">Verify Installation</a></li>
+<li><a class="reference internal" href="#rpmanager-script-setup">RPManager Script Setup</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#advanced-features-for-developers">Advanced Features For Developers</a><ul>
+<li><a class="reference internal" href="#debugging-deadline-s-3ds-max-connection">Debugging Deadline’s 3ds max connection</a></li>
+<li><a class="reference internal" href="#maxscript-interface">MAXScript Interface</a></li>
+<li><a class="reference internal" href="#debugging-the-render">Debugging the Render</a></li>
+<li><a class="reference internal" href="#querying-job-properties">Querying Job Properties</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-index.html"
+                        title="previous chapter">Application Plugins Index</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-3ds-max-monitor.html"
+                        title="next chapter">3ds Max - Monitor Submitter</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-3ds-max-monitor.html" title="3ds Max - Monitor Submitter"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-index.html" title="Application Plugins Index"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Max</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

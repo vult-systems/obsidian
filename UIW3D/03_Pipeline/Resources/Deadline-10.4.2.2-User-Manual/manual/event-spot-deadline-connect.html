@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spot Event Plugins - Deadline Connectivity Configuration &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Spot Event Plugins - VPC Endpoints" href="event-spot-vpc-endpoints.html" />
+    <link rel="prev" title="Spot Event Configuration Utility" href="event-spot-config-utility.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-spot-vpc-endpoints.html" title="Spot Event Plugins - VPC Endpoints"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="event-spot-config-utility.html" title="Spot Event Configuration Utility"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" accesskey="U">Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Spot Event Plugins - Deadline Connectivity Configuration</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="spot-event-plugins-deadline-connectivity-configuration">
+<span id="event-spot-deadline-connect-ref-label"></span><h1>Spot Event Plugins - Deadline Connectivity Configuration<a class="headerlink" href="#spot-event-plugins-deadline-connectivity-configuration" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 22%" />
+<col style="width: 18%" />
+<col style="width: 19%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="event-spot.html#event-spot-ref-label"><span class="std std-ref">Spot Event Plugin</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-permissions.html#event-spot-iam-policies-ref-label"><span class="std std-ref">AWS Permissions Setup</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-ami.html#event-spot-ami-ref-label"><span class="std std-ref">Amazon Machine Images</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-fleet-request.html#event-spot-fleet-requests-ref-label"><span class="std std-ref">Spot Fleet Requests</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-config-credentials.html#event-spot-config-credentials-ref-label"><span class="std std-ref">Security Credentials Configuration</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="event-spot-fleet-configurations.html#event-spot-fleet-configurations-ref-label"><span class="std std-ref">Spot Fleet Configuration</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-configuration-options.html#event-spot-configure-event-plugin-dialog-ref-label"><span class="std std-ref">Spot Event Configuration Options</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-config-utility.html#event-spot-config-utility-ref-label"><span class="std std-ref">Spot Event Configuration Utility</span></a></p></td>
+<td><p><a class="reference internal" href="#event-spot-deadline-connect-ref-label"><span class="std std-ref">Deadline Connectivity Configuration</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-vpc-endpoints.html#event-spot-vpc-endpoints-ref-label"><span class="std std-ref">VPC Endpoints Configuration</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="event-spot-multi-region.html#event-spot-fleet-multi-region-ref-label"><span class="std std-ref">Multiple Region Support</span></a></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>When configuring the Spot Event Plugin, it is essential to determine how you are going to configure the Spot Workers to connect to the Deadline Repository.</p>
+</div>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>You can configure Deadline in one of two major ways:</p>
+<p><strong>Configure Deadline at AMI Creation</strong></p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">You can manually configure the connection to the Deadline Repository when initially creating the AMI.</div>
+<div class="line">This can be done either when you run the Deadline installer, or by modifying the <code class="docutils literal notranslate"><span class="pre">deadline.ini</span></code> configuration file.</div>
+</div>
+</div></blockquote>
+<p><strong>Configure Deadline at Instance Launch</strong></p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">You can run shell scripts when the instance starts by using the Spot Fleet Request’s <strong>User data</strong>.</div>
+<div class="line">Using this script, you can modify the <code class="docutils literal notranslate"><span class="pre">deadline.ini</span></code> configuration file of the instance so it can connect.</div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="user-data-example">
+<h2>User Data Example<a class="headerlink" href="#user-data-example" title="Permalink to this headline">¶</a></h2>
+<p>An example of User data for connecting to a Remote Connection Server:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="s2">&quot;/etc/profile.d/deadlineclient.sh&quot;</span>
+<span class="n">DEADLINE_COMMAND</span><span class="o">=</span><span class="s2">&quot;$DEADLINE_PATH/deadlinecommand&quot;</span>
+<span class="s2">&quot;$DEADLINE_COMMAND&quot;</span> <span class="o">-</span><span class="n">SetIniFileSetting</span> <span class="n">KeepWorkerRunning</span> <span class="kc">True</span>
+<span class="s2">&quot;$DEADLINE_COMMAND&quot;</span> <span class="o">-</span><span class="n">SetIniFileSetting</span> <span class="n">LaunchSlaveAtStartup</span> <span class="kc">True</span>
+<span class="s2">&quot;$DEADLINE_COMMAND&quot;</span> <span class="o">-</span><span class="n">SetIniFileSetting</span> <span class="n">ProxyUseSSL</span> <span class="n">false</span>
+<span class="s2">&quot;$DEADLINE_COMMAND&quot;</span> <span class="o">-</span><span class="n">ChangeRepository</span> <span class="n">Proxy</span> <span class="n">my</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">farm</span><span class="p">:</span><span class="mi">8080</span>
+<span class="n">systemctl</span> <span class="n">restart</span> <span class="n">deadline10launcher</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Spot Event Plugins - Deadline Connectivity Configuration</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+<li><a class="reference internal" href="#user-data-example">User Data Example</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="event-spot-config-utility.html"
+                        title="previous chapter">Spot Event Configuration Utility</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="event-spot-vpc-endpoints.html"
+                        title="next chapter">Spot Event Plugins - VPC Endpoints</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-spot-vpc-endpoints.html" title="Spot Event Plugins - VPC Endpoints"
+             >next</a></li>
+        <li class="right" >
+          <a href="event-spot-config-utility.html" title="Spot Event Configuration Utility"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" >Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Spot Event Plugins - Deadline Connectivity Configuration</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

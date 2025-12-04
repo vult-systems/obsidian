@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pipeline Tools &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Puppet" href="event-puppet.html" />
+    <link rel="prev" title="NIM" href="event-nim.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-puppet.html" title="Puppet"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="event-nim.html" title="NIM"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" accesskey="U">Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Pipeline Tools</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pipeline-tools">
+<span id="event-pipeline-tools-ref-label"></span><h1>Pipeline Tools<a class="headerlink" href="#pipeline-tools" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The Pipeline Tools window is included in each integrated submitter to allow access to Deadline’s supported event plugins (Draft, Shotgun, FTrack, and NIM). This window can be opened by clicking the Pipeline Tools button at the bottom of any installed integrated submitter - see the <a class="reference internal" href="quick-install-submitters.html#quick-install-submitters-ref-label"><span class="std std-ref">Integrated Submitter Installation (Quick)</span></a> documentation for more information. Beside the Pipeline Tools button is a status message indicating which pipeline tool settings the user has set for the current scene.</p>
+<a class="reference internal image-reference" href="../_images/pipeline_tools_button.png"><img alt="../_images/pipeline_tools_button.png" src="../_images/pipeline_tools_button.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="enable-disable-event-plugins">
+<h2>Enable/Disable Event Plugins<a class="headerlink" href="#enable-disable-event-plugins" title="Permalink to this headline">¶</a></h2>
+<p>The different event plugins that can be displayed changes depending on your repository settings. These event plugins can be enabled/disabled globally or on an opt-in basis. To do this, enter Power User Mode from the Tools menu in the Monitor and then select Tools -&gt; Configure Events.</p>
+<a class="reference internal image-reference" href="../_images/pipeline_tools_configure_events.png"><img alt="../_images/pipeline_tools_configure_events.png" src="../_images/pipeline_tools_configure_events.png" style="height: 400px;" /></a>
+<p>Once this window has opened select one of the supported Pipeline Tools event plugins from the list on the left (either Draft, Shotgun, FTrack, or NIM). The plugin state can be changed via the State dropdown box. There are three different states that an Event Plugin can be in: Global Enabled, Opt-In, and Disabled. In order for the selected plugin to function properly, the State must be set to either Global Enabled or Opt-In. Note that if this plugin is in the Opt-In state, the jobs that want to run this plugin must opt into it.</p>
+<p>After setting the state, the Pipeline Tools window will change which plugins are displayed the next time the window is opened.</p>
+</div>
+<div class="section" id="draft-quick-custom">
+<h2>Draft (Quick/Custom)<a class="headerlink" href="#draft-quick-custom" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="event-draft.html#event-draft-ref-label"><span class="std std-ref">Draft / Quick Draft</span></a> is a tool that provides simple and lightweight compositing and video processing functionality, designed to automate typical post-render tasks. It is implemented as a Python library (works across all platforms), which exposes functionality for use in Python scripts (which are referred to as Draft Templates). Draft is designed to be tightly integrated with Deadline, but it can also be used as a standalone tool.</p>
+<a class="reference internal image-reference" href="../_images/pipeline_tools_draft.png"><img alt="../_images/pipeline_tools_draft.png" src="../_images/pipeline_tools_draft.png" style="height: 500px;" /></a>
+<p>The Pipeline Tools window allows the creation of both Quick Draft and Custom Draft jobs. For more information about the options listed under each section please refer to the <a class="reference internal" href="event-draft.html#quick-draft-options-ref-label"><span class="std std-ref">Quick Draft Options</span></a> and <a class="reference internal" href="event-draft.html#custom-draft-options-ref-label"><span class="std std-ref">Custom Draft Options</span></a> documentation.</p>
+</div>
+<div class="section" id="project-management-options">
+<span id="pipeline-tools-project-management-ref-label"></span><h2>Project Management Options<a class="headerlink" href="#project-management-options" title="Permalink to this headline">¶</a></h2>
+<p>The other three event plugins can be found under the Project Management tab.</p>
+<a class="reference internal image-reference" href="../_images/pipeline_tools_project_management.png"><img alt="../_images/pipeline_tools_project_management.png" src="../_images/pipeline_tools_project_management.png" style="height: 500px;" /></a>
+<p>Here there are a few options that can be specified:</p>
+<ul class="simple">
+<li><p><strong>Project Management</strong>: Selects the type of project management to be used (Shotgun, FTrack, or NIM).</p></li>
+<li><p><strong>Create New Version</strong>: If enabled, Deadline will connect to Shotgun/FTrack/NIM, to create a new version and upload a thumbnail for this job.</p></li>
+<li><dl class="simple">
+<dt><strong>Upload Movie</strong>: Selects what type of movie gets uploaded to project management (None, Simple, Draft).</dt><dd><ul>
+<li><p><strong>None</strong>: No movie is uploaded.</p></li>
+<li><p><strong>Simple</strong>: If selected, a Draft job will be created to upload a simple movie using DraftCreateSimpleMovie.py located in the DraftEventPlugin folder.</p></li>
+<li><p><strong>Draft</strong>: If selected, the dependent Draft job will upload the resulting Quick Draft or Custom Draft movie.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>Include Film Strip</strong>: Shotgun Only. If enabled, a Draft job will be created to upload a film strip using DraftCreateFilmstrip.py located in the DraftEventPlugin folder.</p></li>
+</ul>
+</div>
+<div class="section" id="shotgun">
+<h2>Shotgun<a class="headerlink" href="#shotgun" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="event-shotgun.html#event-shotgun-ref-label"><span class="std std-ref">Shotgun</span></a> is a customizable web-based Production Tracking system for digital studios, and is developed by <a class="reference external" href="https://www.shotgridsoftware.com/">Shotgun Software</a>.</p>
+<a class="reference internal image-reference" href="../_images/pipeline_tools_shotgun.png"><img alt="../_images/pipeline_tools_shotgun.png" src="../_images/pipeline_tools_shotgun.png" style="height: 500px;" /></a>
+<p>More information about how to set up a Shotgun connection (and the options listed with it) can be found in the <a class="reference internal" href="event-shotgun.html#event-shotgun-ref-label"><span class="std std-ref">Shotgun</span></a> documentation.</p>
+</div>
+<div class="section" id="ftrack">
+<h2>FTrack<a class="headerlink" href="#ftrack" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="event-ftrack.html#event-ftrack-ref-label"><span class="std std-ref">FTrack</span></a> is a cloud-based Project Management tool that provides Production Tracking, Asset Management, and Team Collaboration tools to digital studios; see the <a class="reference external" href="https://www.ftrack.com/">FTrack website</a> for more information.</p>
+<a class="reference internal image-reference" href="../_images/pipeline_tools_ftrack.png"><img alt="../_images/pipeline_tools_ftrack.png" src="../_images/pipeline_tools_ftrack.png" style="height: 500px;" /></a>
+<p>More information about how to set up an FTrack connection (and the options listed with it) can be found in the <a class="reference internal" href="event-ftrack.html#event-ftrack-ref-label"><span class="std std-ref">FTrack</span></a> documentation.</p>
+</div>
+<div class="section" id="nim">
+<h2>NIM<a class="headerlink" href="#nim" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="event-nim.html#event-nim-ref-label"><span class="std std-ref">NIM</span></a> is a browser based management tool created by artists for artists to track the post-production pipeline from start to finish. See the <a class="reference external" href="https://nim-labs.com/">NIM website</a> for more information.</p>
+<a class="reference internal image-reference" href="../_images/pipeline_tools_nim.png"><img alt="../_images/pipeline_tools_nim.png" src="../_images/pipeline_tools_nim.png" style="height: 500px;" /></a>
+<p>More information about how to set up a NIM connection (and the options listed with it) can be found in the <a class="reference internal" href="event-nim.html#event-nim-ref-label"><span class="std std-ref">NIM</span></a> documentation.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Pipeline Tools</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#enable-disable-event-plugins">Enable/Disable Event Plugins</a></li>
+<li><a class="reference internal" href="#draft-quick-custom">Draft (Quick/Custom)</a></li>
+<li><a class="reference internal" href="#project-management-options">Project Management Options</a></li>
+<li><a class="reference internal" href="#shotgun">Shotgun</a></li>
+<li><a class="reference internal" href="#ftrack">FTrack</a></li>
+<li><a class="reference internal" href="#nim">NIM</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="event-nim.html"
+                        title="previous chapter">NIM</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="event-puppet.html"
+                        title="next chapter">Puppet</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-puppet.html" title="Puppet"
+             >next</a></li>
+        <li class="right" >
+          <a href="event-nim.html" title="NIM"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" >Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Pipeline Tools</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

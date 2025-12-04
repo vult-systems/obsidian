@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>V-Ray Standalone &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="V-Ray Benchmark" href="app-vray-benchmark.html" />
+    <link rel="prev" title="Unreal Swarm" href="app-unrealswarm.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-vray-benchmark.html" title="V-Ray Benchmark"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-unrealswarm.html" title="Unreal Swarm"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">V-Ray Standalone</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="v-ray-standalone">
+<span id="app-vray-ref-label"></span><h1>V-Ray Standalone<a class="headerlink" href="#v-ray-standalone" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit V-Ray Standalone jobs from the Monitor or via an in-app submitter such as <a class="reference internal" href="app-maya.html#app-maya-ref-label"><span class="std std-ref">MayaBatch</span></a> as an export job.</p>
+<p><a class="reference internal" href="../_images/sub_vray.png"><img alt="submit" src="../_images/sub_vray.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_vray_options.png"><img alt="options" src="../_images/sub_vray_options.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_vray_tile_rendering.png"><img alt="tile" src="../_images/sub_vray_tile_rendering.png" style="height: 400px;" /></a></p>
+<div class="section" id="setup-your-vrscene-files">
+<h3>Setup your vrscene Files<a class="headerlink" href="#setup-your-vrscene-files" title="Permalink to this headline">¶</a></h3>
+<p>Before you can submit a V-Ray Standalone job, you must export your scene into .vrscene files. You can export into either one .vrscene file with all your frames in it, or one .vrscene file per frame.</p>
+</div>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.</p>
+<p>The V-Ray specific options are:</p>
+<ul class="simple">
+<li><p><strong>V-Ray File</strong>: The V-Ray file (*.vrscene) to be rendered. If you are submitting a sequence of vrscene files (one file per frame), you only need to select one vrscene file from the sequence.</p></li>
+<li><p><strong>Output File</strong>: Optionally override the output file name.</p></li>
+<li><p><strong>Separate Input vrscene Files Per Frame</strong>: Select this option of you are submitting a sequence of vrscene files (one file per frame).</p></li>
+<li><p><strong>Threads</strong>: The number of threads to use for rendering. Specify 0 to use the optimal number of threads.</p></li>
+<li><p><strong>Command Line Args</strong>: Specify additional command line arguments you would like to pass to the mental ray renderer.</p></li>
+<li><p><strong>Vrimg2Exr Options</strong>: If you are saving out vrimg files, you can submit a dependent Vrimg2Exr job that will convert the vrimg files to exr files.</p></li>
+<li><p><strong>Render Engine</strong>: Specifies which render engine V-Ray will use.</p></li>
+<li><p><strong>Frame Timeout</strong>: The maximum render time (in minutes) when rendering using V-Ray RT. Set to 0.0 for no timeout.</p></li>
+<li><p><strong>Noise Threshold</strong>: The noise threshold when rendering using V-Ray RT.</p></li>
+<li><p><strong>Sample Level</strong>: The maximum number of samples that will be used when rendering usng V-Ray RT. Set to 0 for no limit.</p></li>
+<li><p><strong>Display Frame Buffer</strong>: If enabled, the V-Ray Frame Buffer will be displayed on the rendering machine while the job renders.</p></li>
+<li><p><strong>Renderable on AWS</strong>: If enabled, the *.vrscene file will be parsed to retrieve the output file path, so the AWS portal will be able to return the rendered output.</p></li>
+</ul>
+</div>
+<div class="section" id="resolution-override">
+<h3>Resolution Override<a class="headerlink" href="#resolution-override" title="Permalink to this headline">¶</a></h3>
+<p>Enable Resolution Override to change the dimensions of your frame or ensure “Enable File Parsing” is enabled to retrieve this information from parsing the *.vrscene file directly. This is required for Tile Rendering.</p>
+<ul class="simple">
+<li><p><strong>Enable Override Resolution</strong>: If enabled, V-Ray will override the resolution of your scene.</p></li>
+<li><p><strong>Width</strong>: The new width of your frame.</p></li>
+<li><p><strong>Height</strong>: The new height of your frame.</p></li>
+</ul>
+</div>
+<div class="section" id="tile-rendering-options">
+<span id="vray-tile-rendering-ref-label"></span><h3>Tile Rendering Options<a class="headerlink" href="#tile-rendering-options" title="Permalink to this headline">¶</a></h3>
+<p>Enable Tile Rendering to split up a single frame into multiple tiles. Overriding the resolution is required to enable Tile Rendering. Vrimg2exr is not supported by the Tile Rendering option.</p>
+<ul class="simple">
+<li><p><strong>Enable Tile Rendering</strong>: If enabled, the frame will be split into multiple tiles that are rendered individually and can be assembled after.</p></li>
+<li><p><strong>Enable File Parsing</strong>: If enabled, the *.vrscene file will be parsed to retrieve the output file path and render resolution.</p></li>
+<li><p><strong>Tiles in X</strong>: The number of tiles in the X direction.</p></li>
+<li><p><strong>Tiles in Y</strong>: The number of tiles in the Y direction.</p></li>
+<li><p><strong>Single Frame Tile Job Enabled</strong>: Enable to submit all tiles in a single job.</p></li>
+<li><p><strong>Single Job Frame</strong>: The frame that will be split up.</p></li>
+<li><p><strong>Submit Dependent Assembly Job</strong>: Submit a job dependent on the tile job that will assemble the tiles.</p></li>
+<li><p><strong>Cleanup Tiles after Assembly</strong>: If selected the tiles will be deleted after assembly.</p></li>
+<li><p><strong>Error on Missing Tiles</strong>: If enabled, then if any of the tiles are missing the assembly job will fail.</p></li>
+<li><p><strong>Assemble Over</strong>: Determine what the Draft Tile Assembler should assemble over be it a blank image, previous output or a specified file.</p></li>
+<li><p><strong>Error on Missing Background</strong>: If enabled, then if the background file is missing the job will fail.</p></li>
+<li><p><strong>Assemble Over</strong>: What the tiles should be assembled over.</p></li>
+<li><p><strong>Background Image File</strong>: The Background image to assemble over.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the V-Ray plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the V-Ray plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_vray.png"><img alt="../_images/cp_vray.png" src="../_images/cp_vray.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>V-Ray Executable</strong>: The path to the V-Ray executable file used for rendering. Enter alternative paths on separate lines.</p></li>
+</ul>
+<p><strong>Path Mapping For vrscene Files (For Mixed Farms)</strong></p>
+<ul class="simple">
+<li><p><strong>Enable Path Mapping For vrscene Files</strong>: If enabled, a temporary vrscene file will be created locally on the Worker for rendering and Deadline will do path mapping directly in the vrscene file.</p></li>
+</ul>
+<p><strong>V-Ray Progress Color</strong></p>
+<ul class="simple">
+<li><p><strong>Disable Progress Color</strong>: V-Ray progress color is enabled by default. Disabling V-Ray progress color can help prevent crashes in some newer versions of windows. Note that older versions of V-Ray do not support this option.</p></li>
+</ul>
+<p><strong>CPU Affinity</strong></p>
+<ul class="simple">
+<li><p><strong>Limit Threads To CPU Affinity</strong>: If enabled, the number of render threads will be limited to the CPU affinity of the rendering Worker.</p></li>
+</ul>
+<p id="app-vray-faq-ref-label"><strong>Task Failure Behaviour</strong></p>
+<ul class="simple">
+<li><p><strong>Fail task when frame number is expected but missing from VRSCENE file name</strong>: If enabled, renders will fail when two or more plugin parameters are inconsistent with each other</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Is V-Ray Standalone supported?</strong></p>
+<blockquote>
+<div><p>Yes.</p>
+</div></blockquote>
+<p><em>When rendering my Workers are ignoring the CPU Affinity.*</em></p>
+<blockquote>
+<div><p>Some renderers modify the CPU affinity when a render starts.  In these cases you can enable the Plugin Configuration option “Limit Threads To CPU Affinity” which will limit the number of threads the renderer can use.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known V-Ray error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here, please contact
+<a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> and let us know.</p>
+<p><strong>V-Ray has failed to read an argument from the input file.  Please make sure V-Ray standalone is up to date.</strong></p>
+<p>Older versions of V-Ray Standalone do not support parameters in angle brackets (eg “&lt;frame04&gt;”) in .vrscene files.  To fix this update the version of V-Ray Standalone you are using.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">V-Ray Standalone</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#setup-your-vrscene-files">Setup your vrscene Files</a></li>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#resolution-override">Resolution Override</a></li>
+<li><a class="reference internal" href="#tile-rendering-options">Tile Rendering Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-unrealswarm.html"
+                        title="previous chapter">Unreal Swarm</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-vray-benchmark.html"
+                        title="next chapter">V-Ray Benchmark</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-vray-benchmark.html" title="V-Ray Benchmark"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-unrealswarm.html" title="Unreal Swarm"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">V-Ray Standalone</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

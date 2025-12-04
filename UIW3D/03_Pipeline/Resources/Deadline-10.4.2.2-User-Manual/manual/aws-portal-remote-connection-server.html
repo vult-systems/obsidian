@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Starting a Remote Connection Server &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Configuring AWS Portal" href="aws-portal-configuring.html" />
+    <link rel="prev" title="Installing AWS Portal Server" href="aws-portal-installing.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-configuring.html" title="Configuring AWS Portal"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="aws-portal-installing.html" title="Installing AWS Portal Server"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Starting a Remote Connection Server</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<div class="section" id="starting-a-remote-connection-server">
+<span id="aws-portal-starting-rcs-ref-label"></span><h1>Starting a Remote Connection Server<a class="headerlink" href="#starting-a-remote-connection-server" title="Permalink to this headline">¶</a></h1>
+<p>In this section, we will start the <a class="reference internal" href="remote-connection-server.html#remote-connection-server-ref-label"><span class="std std-ref">Deadline Remote Connection Server (RCS)</span></a>.
+The AWS Portal requires an RCS to communicate with your Deadline Repository.</p>
+<div class="section" id="installing-the-remote-connection-server">
+<h2>Installing the Remote Connection Server<a class="headerlink" href="#installing-the-remote-connection-server" title="Permalink to this headline">¶</a></h2>
+<p>The RCS is installed using the <a class="reference internal" href="quick-install-client.html#quick-install-client-ref-label"><span class="std std-ref">Deadline Client installer</span></a>.
+We recommend that you <a class="reference internal" href="aws-portal-installing.html#aws-portal-install-rcs-detail-label"><span class="std std-ref">enable the ‘Remote Connection Server’ option</span></a> when you install the Deadline Client on the machine that you will use to run the RCS.</p>
+</div>
+<div class="section" id="starting-the-remote-connection-server">
+<span id="aws-portal-how-to-start-rcs-ref-label"></span><h2>Starting the Remote Connection Server<a class="headerlink" href="#starting-the-remote-connection-server" title="Permalink to this headline">¶</a></h2>
+<p>If you enabled the ‘Remote Connection Server’ option when you installed
+the Deadline Client, then you can start the RCS by choosing the
+‘Launch Remote Connection Server’ option in the
+<a class="reference internal" href="launcher.html#launcher-ref-label"><span class="std std-ref">Deadline Launcher</span></a>.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/RCSLauncher.png"><img alt="../_images/RCSLauncher.png" src="../_images/RCSLauncher.png" style="width: 198.75px; height: 293.25px;" /></a>
+</div></blockquote>
+<p>Otherwise, <a class="reference internal" href="remote-connection-server.html#remote-connection-server-running-ref-label"><span class="std std-ref">start the RCS by running the deadlinercs application</span></a>.</p>
+</div>
+<div class="section" id="next-step">
+<h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
+<p>Now that you have an RCS running, you can <a class="reference internal" href="aws-portal-configuring.html#aws-portal-configuration-ref-label"><span class="std std-ref">configure the AWS Portal</span></a>.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Starting a Remote Connection Server</a><ul>
+<li><a class="reference internal" href="#installing-the-remote-connection-server">Installing the Remote Connection Server</a></li>
+<li><a class="reference internal" href="#starting-the-remote-connection-server">Starting the Remote Connection Server</a></li>
+<li><a class="reference internal" href="#next-step">Next Step</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aws-portal-installing.html"
+                        title="previous chapter">Installing AWS Portal Server</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="aws-portal-configuring.html"
+                        title="next chapter">Configuring AWS Portal</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-configuring.html" title="Configuring AWS Portal"
+             >next</a></li>
+        <li class="right" >
+          <a href="aws-portal-installing.html" title="Installing AWS Portal Server"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Starting a Remote Connection Server</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

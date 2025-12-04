@@ -1,0 +1,298 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advanced AWS Portal Installation Topics &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="AWS Portal Configuration Reference" href="aws-portal-configuration-reference.html" />
+    <link rel="prev" title="Configuring AWS Portal" href="aws-portal-configuring.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-configuration-reference.html" title="AWS Portal Configuration Reference"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="aws-portal-configuring.html" title="Configuring AWS Portal"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Advanced AWS Portal Installation Topics</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<div class="section" id="advanced-aws-portal-installation-topics">
+<h1>Advanced AWS Portal Installation Topics<a class="headerlink" href="#advanced-aws-portal-installation-topics" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="service-account-for-aws-portal-asset-server-windows">
+<span id="aws-portal-asset-server-service-account-ref-label"></span><h2>Service Account for AWS Portal Asset Server (Windows)<a class="headerlink" href="#service-account-for-aws-portal-asset-server-windows" title="Permalink to this headline">¶</a></h2>
+<p>It is recommended that you install Asset Server into a custom named account, created just for Asset Server. If you do this,
+provided that account has permissions to access your networked shares, it will be able to mount your networked shares, even
+if you are running in a workgroup rather than a domain. Setting up a unique account for Asset Server is also recommended to
+keep your AWS credentials encrypted within a security context that other services do not have access to.</p>
+<p>AWS Portal Link and Asset Server require the use of a service account to run properly.
+You can specify this account on the “AWS Portal Link Service Account” and “AWS Portal Asset Server Service Account” pages
+of the AWS Portal installer.</p>
+<p>If you wish to change the account that Asset Server runs as, re-run the AWS Portal Link installer and specify the new account.</p>
+<img alt="../_images/aws-portal-change-account.png" src="../_images/aws-portal-change-account.png" />
+</div>
+<div class="section" id="drive-mappings-with-service-accounts-windows">
+<span id="aws-portal-service-account-drive-mappings-ref-label"></span><h2>Drive Mappings with Service Accounts (Windows)<a class="headerlink" href="#drive-mappings-with-service-accounts-windows" title="Permalink to this headline">¶</a></h2>
+<p>In Windows, drive mappings are tied to the account they were created in, so when running software in a different account,
+they must be re-mapped. Because drive mappings can often be referenced in scene files, it’s necessary to re-map the drives
+so that Asset Server can access files that are referenced in this way.</p>
+<p>Asset Server will automatically map the drives in your Deadline Mapped Drives list
+(Tools &gt; Configure Repository Options &gt; Mapped Drives) when it starts up.</p>
+<img alt="../_images/asset_server_repo_options.png" src="../_images/asset_server_repo_options.png" />
+<p>Some problems can occur however if the account that the service is running in does not have sufficient privileges to access the
+network shares which are being mapped. Please ensure that the account used for both AWS Portal Link and Asset Server has sufficient
+privileges to access all necessary network resources.</p>
+</div>
+<div class="section" id="aws-portal-server-installer-details">
+<span id="aws-portal-installer-details"></span><h2>AWS Portal Server Installer Details<a class="headerlink" href="#aws-portal-server-installer-details" title="Permalink to this headline">¶</a></h2>
+<p>During installation of the AWS Portal Asset Server the following will occur:</p>
+<ul class="simple">
+<li><p>AWS Portal Asset Server program files will be installed</p></li>
+<li><p>AWS Portal Asset Server will be configured to run as a service</p></li>
+<li><p>If you choose to “Create IAM Resources Automatically”, it will perform the actions listed <a class="reference internal" href="#aws-portal-iam-resources-ref-label"><span class="std std-ref">here</span></a>.</p></li>
+</ul>
+</div>
+<div class="section" id="aws-portal-identity-and-access-management-iam-resources">
+<span id="aws-portal-iam-resources-ref-label"></span><span id="aws-portal-iam-resources"></span><h2>AWS Portal Identity and Access Management (IAM) Resources<a class="headerlink" href="#aws-portal-identity-and-access-management-iam-resources" title="Permalink to this headline">¶</a></h2>
+<p>AWS Portal requires IAM resources in your AWS account to operate.  You have a few different options to create these resources.  If you choose to “Create IAM Resources Automatically” in the <a class="reference internal" href="aws-portal-installing.html#aws-portal-installing-asset-server-label"><span class="std std-ref">AWS Portal Server installer</span></a>, or if you <a class="reference internal" href="#manually-run-iam-setup-ref-label"><span class="std std-ref">run the IAM resource creation script manually</span></a>, it will do the following:</p>
+<div class="section" id="aws-portal-gateway-iam-role">
+<h3>AWS Portal Gateway IAM Role<a class="headerlink" href="#aws-portal-gateway-iam-role" title="Permalink to this headline">¶</a></h3>
+<p>Create an IAM Role with:</p>
+<ul class="simple">
+<li><p>Name: <code class="docutils literal notranslate"><span class="pre">AWSPortalGatewayRole</span></code></p></li>
+<li><p>Trusted Entity: EC2</p></li>
+<li><p>Attached IAM Policy: <a class="reference external" href="https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AWSThinkboxAWSPortalGatewayPolicy">arn:aws:iam::aws:policy/AWSThinkboxAWSPortalGatewayPolicy</a></p></li>
+</ul>
+</div>
+<div class="section" id="aws-portal-worker-iam-role">
+<h3>AWS Portal Worker IAM Role<a class="headerlink" href="#aws-portal-worker-iam-role" title="Permalink to this headline">¶</a></h3>
+<p>Create an IAM Role with:</p>
+<ul class="simple">
+<li><p>Name: <code class="docutils literal notranslate"><span class="pre">AWSPortalWorkerRole</span></code></p></li>
+<li><p>Trusted Entity: EC2</p></li>
+<li><p>Attached IAM Policy: <a class="reference external" href="https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AWSThinkboxAWSPortalWorkerPolicy">arn:aws:iam::aws:policy/AWSThinkboxAWSPortalWorkerPolicy</a></p></li>
+</ul>
+</div>
+<div class="section" id="aws-portal-asset-server-iam-user">
+<h3>AWS Portal Asset Server IAM User<a class="headerlink" href="#aws-portal-asset-server-iam-user" title="Permalink to this headline">¶</a></h3>
+<p>Create an IAM User with:</p>
+<ul class="simple">
+<li><p>Name: <code class="docutils literal notranslate"><span class="pre">AWSPortalAssetServerUser</span></code></p></li>
+<li><p>Attached IAM Policy: <a class="reference external" href="https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AWSThinkboxAssetServerPolicy">arn:aws:iam::aws:policy/AWSThinkboxAssetServerPolicy</a></p></li>
+</ul>
+<p>Create credentials for this user, and pass them to the AWS Portal Asset Server using the <code class="docutils literal notranslate"><span class="pre">update_credentials.py</span></code> script in the Asset Server’s install directory.</p>
+<blockquote>
+<div><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>On Linux, these credentials are stored unencrypted, however, they will have their permissions set to 0600.</p>
+<p>Per our <a class="reference internal" href="shared-security-model.html#shared-security-model-ref-label"><span class="std std-ref">shared responsibility model</span></a>, we recommend you take additional steps to protect these credentials such as encrypting the hard drive of the machine which AWS Portal Asset Server is installed on.</p>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="deadline-resource-tracker-access-iam-role">
+<h3>Deadline Resource Tracker Access IAM Role<a class="headerlink" href="#deadline-resource-tracker-access-iam-role" title="Permalink to this headline">¶</a></h3>
+<p>Create an IAM Role with:</p>
+<ul class="simple">
+<li><p>Name: <code class="docutils literal notranslate"><span class="pre">DeadlineResourceTrackerAccessRole</span></code></p></li>
+<li><p>Trusted Entity: Lambda</p></li>
+<li><p>Attached IAM Policy: <a class="reference external" href="https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AWSThinkboxDeadlineResourceTrackerAccessPolicy">arn:aws:iam::aws:policy/AWSThinkboxDeadlineResourceTrackerAccessPolicy</a></p></li>
+</ul>
+</div>
+<div class="section" id="dynamodb-auto-scaling-service-linked-role">
+<h3>DynamoDB Auto Scaling Service-Linked Role<a class="headerlink" href="#dynamodb-auto-scaling-service-linked-role" title="Permalink to this headline">¶</a></h3>
+<p>Create a service-linked IAM Role with:</p>
+<ul class="simple">
+<li><p>Name: <code class="docutils literal notranslate"><span class="pre">AWSServiceRoleForApplicationAutoScaling_DynamoDBTable</span></code></p></li>
+<li><p>Service principal: <code class="docutils literal notranslate"><span class="pre">dynamodb.application-autoscaling.amazonaws.com</span></code></p></li>
+</ul>
+<p><a class="reference external" href="https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-service-linked-roles.html">Learn more about Service-Linked Roles for Application Autoscaling</a></p>
+</div>
+<div class="section" id="deadline-spot-fleet-iam-role">
+<h3>Deadline Spot Fleet IAM Role<a class="headerlink" href="#deadline-spot-fleet-iam-role" title="Permalink to this headline">¶</a></h3>
+<p>Create an IAM Role with:</p>
+<ul class="simple">
+<li><p>Name: <code class="docutils literal notranslate"><span class="pre">DeadlineSpotFleetRole</span></code></p></li>
+<li><p>Trusted Entity: SpotFleet</p></li>
+<li><p>Attached IAM Policy: <a class="reference external" href="https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/service-role/AmazonEC2SpotFleetTaggingRole">arn:aws:iam::aws:policy/service-role/AmazonEC2SpotFleetTaggingRole</a></p></li>
+</ul>
+</div>
+<div class="section" id="instance-profiles">
+<h3>Instance Profiles<a class="headerlink" href="#instance-profiles" title="Permalink to this headline">¶</a></h3>
+<p>For each of the IAM Roles we create, we also create an Instance Profile with the same name, and attach the corresponding IAM Role.</p>
+</div>
+</div>
+<div class="section" id="manually-run-iam-setup-ref-label">
+<span id="manually-running-the-iam-resource-setup-script"></span><span id="id1"></span><h2>Manually Running the IAM Resource Setup Script<a class="headerlink" href="#manually-run-iam-setup-ref-label" title="Permalink to this headline">¶</a></h2>
+<p>You can choose to run the IAM resource setup script to create the resources required to operate AWS Portal.
+These resources are described in <a class="reference internal" href="#aws-portal-iam-resources-ref-label"><span class="std std-ref">AWS Portal Identity and Access Management (IAM) Resources</span></a>.</p>
+<div class="section" id="getting-the-script">
+<h3>Getting the Script<a class="headerlink" href="#getting-the-script" title="Permalink to this headline">¶</a></h3>
+<p>You can find the <code class="docutils literal notranslate"><span class="pre">iam_resource_setup.py</span></code> in the AWS Portal Asset Server’s install directory.
+The default install directory depends on your operating system:</p>
+<blockquote>
+<div><ol class="loweralpha">
+<li><p>On Windows:</p>
+<p><code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\Thinkbox\AWSPortalAssetServer\</span></code></p>
+</li>
+<li><p>On Linux:</p>
+<p><code class="docutils literal notranslate"><span class="pre">/opt/Thinkbox/AWSPortalAssetServer/</span></code></p>
+</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="running-the-script">
+<h3>Running the Script<a class="headerlink" href="#running-the-script" title="Permalink to this headline">¶</a></h3>
+<p>You must run the IAM resource setup script on the same machine where you installed AWS Portal Asset Server.  To run the script:</p>
+<ol class="arabic">
+<li><p>Open a command prompt as an Administrator or root.</p></li>
+<li><p>Navigate to the directory containing the script.</p></li>
+<li><p>Run the following command depending on your operating system (Note: <code class="docutils literal notranslate"><span class="pre">&quot;python3/python&quot;</span></code> is located in the AWS Portal Asset Server’s install directory):</p>
+<ol class="loweralpha">
+<li><p>Windows:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&quot;python3\python.exe&quot;</span> <span class="pre">iam_resource_setup.py</span> <span class="pre">--setup-aws-portal</span></code></p>
+</li>
+<li><p>Linux or macOS:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&quot;python3/python&quot;</span> <span class="pre">iam_resource_setup.py</span> <span class="pre">--setup-aws-portal</span></code></p>
+</li>
+</ol>
+</li>
+<li><p>You will be prompted for your AWS Access Key and AWS Secret Key.  Enter your <a class="reference internal" href="aws-portal-setup-creating-admin-user.html#aws-portal-setup-account-admin-user-setup-ref-label"><span class="std std-ref">AWS user credentials with Administrator access</span></a>.</p></li>
+</ol>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Advanced AWS Portal Installation Topics</a><ul>
+<li><a class="reference internal" href="#service-account-for-aws-portal-asset-server-windows">Service Account for AWS Portal Asset Server (Windows)</a></li>
+<li><a class="reference internal" href="#drive-mappings-with-service-accounts-windows">Drive Mappings with Service Accounts (Windows)</a></li>
+<li><a class="reference internal" href="#aws-portal-server-installer-details">AWS Portal Server Installer Details</a></li>
+<li><a class="reference internal" href="#aws-portal-identity-and-access-management-iam-resources">AWS Portal Identity and Access Management (IAM) Resources</a><ul>
+<li><a class="reference internal" href="#aws-portal-gateway-iam-role">AWS Portal Gateway IAM Role</a></li>
+<li><a class="reference internal" href="#aws-portal-worker-iam-role">AWS Portal Worker IAM Role</a></li>
+<li><a class="reference internal" href="#aws-portal-asset-server-iam-user">AWS Portal Asset Server IAM User</a></li>
+<li><a class="reference internal" href="#deadline-resource-tracker-access-iam-role">Deadline Resource Tracker Access IAM Role</a></li>
+<li><a class="reference internal" href="#dynamodb-auto-scaling-service-linked-role">DynamoDB Auto Scaling Service-Linked Role</a></li>
+<li><a class="reference internal" href="#deadline-spot-fleet-iam-role">Deadline Spot Fleet IAM Role</a></li>
+<li><a class="reference internal" href="#instance-profiles">Instance Profiles</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#manually-run-iam-setup-ref-label">Manually Running the IAM Resource Setup Script</a><ul>
+<li><a class="reference internal" href="#getting-the-script">Getting the Script</a></li>
+<li><a class="reference internal" href="#running-the-script">Running the Script</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aws-portal-configuring.html"
+                        title="previous chapter">Configuring AWS Portal</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="aws-portal-configuration-reference.html"
+                        title="next chapter">AWS Portal Configuration Reference</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-configuration-reference.html" title="AWS Portal Configuration Reference"
+             >next</a></li>
+        <li class="right" >
+          <a href="aws-portal-configuring.html" title="Configuring AWS Portal"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Advanced AWS Portal Installation Topics</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

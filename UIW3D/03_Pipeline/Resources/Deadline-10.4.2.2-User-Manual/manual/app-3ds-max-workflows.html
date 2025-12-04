@@ -1,0 +1,441 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3ds Max - Integrated Submitter - Workflows &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3ds Max - Integrated Submitter Workflow - Bake Textures" href="app-3ds-max-workflow-baketextures.html" />
+    <link rel="prev" title="3ds Max - Integrated Submitter - Advanced Features" href="app-3ds-max-smtd-advanced.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-3ds-max-workflow-baketextures.html" title="3ds Max - Integrated Submitter Workflow - Bake Textures"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-3ds-max-smtd-advanced.html" title="3ds Max - Integrated Submitter - Advanced Features"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Max - Integrated Submitter - Workflows</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ds-max-integrated-submitter-workflows">
+<span id="app-3ds-max-workflows-ref-label"></span><h1>3ds Max - Integrated Submitter - Workflows<a class="headerlink" href="#ds-max-integrated-submitter-workflows" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="workflow-system-overview">
+<h2>Workflow System Overview<a class="headerlink" href="#workflow-system-overview" title="Permalink to this headline">¶</a></h2>
+<p>Starting with Deadline 10, the 3ds Max integrated submitter (a.k.a. SMTD) added support for dynamic customizable submission modes called “SMTD Workflows”.</p>
+<p>Workflows can ship as part of the Deadline installation, or can be added by the user or 3rd party developers.</p>
+<p>Workflows are implemented as a kind of “plugin extension” to SMTD, with the installation consisting merely in copying one or more files into a dedicated folder.</p>
+<p>A Workflow can provide:</p>
+<ul class="simple">
+<li><p>A function to determine whether the Workflow should be enabled based on custom logic (e.g. if a plugin is installed),</p></li>
+<li><p>A custom User Interface Layout with existing or new tabs and rollouts,</p></li>
+<li><p>Custom controls visibility / enabled states in existing SMTD rollouts,</p></li>
+<li><p>Custom workflow-specific rollout definitions,</p></li>
+<li><p>Custom sanity check logic to enable/disable the SMTD SUBMIT button,</p></li>
+<li><p>Custom SUBMIT button tooltip text,</p></li>
+<li><p>Custom submission logic executed when the SUBMIT button is pressed.</p></li>
+</ul>
+</div>
+<div class="section" id="custom-workflow-installation">
+<h2>Custom Workflow Installation<a class="headerlink" href="#custom-workflow-installation" title="Permalink to this headline">¶</a></h2>
+<p>A workflow consists of at least one MAXScript file defining a Workflow Struct with a set of mandatory, optional and user-defined properties and functions.
+More script files could be part of the Workflow, for example a file to be sent with the job to run a MAXScript Job on the Deadline Worker.</p>
+<ul class="simple">
+<li><p>The main workflow script <strong>must</strong> be named according to the pattern <strong>SMTDWorkflow_&lt;workflowname&gt;.ms</strong>.</p></li>
+<li><p>It <strong>must</strong> be copied into the <strong>\\DeadlineRepository\submission\3dsmax\Main\Workflows\</strong> folder.</p></li>
+</ul>
+<p>Several Workflows ship with Deadline and can be used as examples, or as starting points for new Workflows. They include</p>
+<ul class="simple">
+<li><p>A Bake Textures Job submitter</p></li>
+<li><p>A FumeFX Simulation Job submitter</p></li>
+<li><p>A Phoenix FD Simulation Job submitter</p></li>
+<li><p>A V-Ray Standalone Render Job submitter</p></li>
+</ul>
+<p>When the SMTD UI is launched in 3ds Max, it will scan the Repository’s Workflows folder for .MS script files matching the mandatory name pattern <strong>SMTDWorkflow_*.ms</strong>, and will evaluate each of them.</p>
+<ul class="simple">
+<li><p>The script evaluation must return a struct with the expected mandatory properties and functions, otherwise the definition will be ignored.</p></li>
+<li><p>Optional properties and functions will be assumed to have default values if they are not defined.</p></li>
+<li><p>If the evaluation fails due to an error in the script’s code, the Workflow will be ignored.</p></li>
+<li><p>If the isWorkflowActive() function of the Workflow Struct returns false or is not defined, the Workflow will not be added to the UI.</p></li>
+</ul>
+</div>
+<div class="section" id="custom-workflow-struct-definition">
+<h2>Custom Workflow Struct Definition<a class="headerlink" href="#custom-workflow-struct-definition" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="mandatory-or-required-functions">
+<h3>Mandatory or Required Functions<a class="headerlink" href="#mandatory-or-required-functions" title="Permalink to this headline">¶</a></h3>
+<p>The main Workflow definition script must return an instance of a MAXScript <strong>Struct</strong> with at least the following <strong>mandatory</strong> properties and functions:</p>
+<p><strong>fn isWorkflowActive = ( &lt;boolean&gt; ),</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>This function must return true for the Workflow to be displayed in the SMTD UI.</p></li>
+<li><p>You can hard-code the function to return false when you want to disable the workflow within the company.</p></li>
+<li><p>You can define custom logic by evaluating the conditions on the specific workstation running SMTD, for example a workflow depending on V-Ray could be disabled if V-Ray is not installed:</p></li>
+</ul>
+<p><strong>For Example:</strong></p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">fn</span> <span class="n">isWorkflowActive</span> <span class="o">=</span> <span class="p">(</span><span class="n">isKindOf</span> <span class="n">VRay</span> <span class="n">RendererClass</span><span class="p">),</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>fn submitJob = ( &lt;custom submission code&gt; )</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>This function defines the custom submission logic executed when the SUBMIT button is pressed.</p></li>
+<li><p>If the function is not defined but isWorkflowActive() returns true, the Workflow UI will still be loaded, but pressing the SUBMIT button will do nothing.</p>
+<ul>
+<li><p>In other words, the function is necessary to perform meaningful submission work, but it is technically not required for a Workflow to exist in the UI.</p></li>
+<li><p>This means that you can work on a Workflow’s UI and have it appear in the SMTD UI without having any submission logic implemented yet.</p></li>
+</ul>
+</li>
+<li><p>This function can make calls to any functions in the SMTDFunctions struct to create Job files and perform the actual submission.</p></li>
+<li><p>It can also implement its own Job control files creation and submission logic.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="optional-standard-properties-and-functions">
+<h3>Optional Standard Properties And Functions<a class="headerlink" href="#optional-standard-properties-and-functions" title="Permalink to this headline">¶</a></h3>
+<p>The main Workflow definition script can implement the following <strong>optional</strong>, but <strong>strictly named</strong> properties and functions:</p>
+<p><strong>WorkflowName = “&lt;namestring&gt;”,</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>This property defines a unique name used by SMTD to identify the workflow when saving/loading SMTD settings.</p></li>
+<li><p>The name must be unique to avoid collision with other Workflows.</p></li>
+<li><p>If this property is not defined, the file name of the Workflow script itself will be used instead.</p></li>
+<li><p>Note that the name will also be used to generate a hash used for storing the Workflow’s own settings with the .MAX Scene file.</p>
+<ul>
+<li><p>Changing the name after the fact would cause the Workflow to store its settings and attempt to load them at a different “address”.</p></li>
+<li><p>Thus, it is a good idea to define this name early on in the development of the Workflow and to avoid changing it.</p></li>
+</ul>
+</li>
+<li><p>The name string is case-sensitive!</p></li>
+</ul>
+</div></blockquote>
+<p><strong>WorkflowTitle = “Submit &lt;Something&gt; To Deadline”,</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>This property provides the description of the Workflow.</p></li>
+<li><p>It is displayed in the Workflow: drop-down list on top of the SMTD UI.</p></li>
+<li><p>If not defined, the Workflow script’s file name will be used instead.</p></li>
+<li><p>The string is not used for any identification and is case-insensitive.</p>
+<ul>
+<li><p>Thus it can be modified at any time as needed.</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p><strong>Description = “&lt;text describing in more detail what the Workflow does&gt;”,</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>This optional property provides a more detailed description of the Workflow’s functionality.</p></li>
+<li><p>It will be used for the tooltip of the Workflow: control in the SMTD UI.</p></li>
+<li><p>It will be assumed “” if the property is not defined, thus showing no tooltip.</p></li>
+<li><p>It can also be used as the tooltip of the SUBMIT button if the Workflow does not define a CanSubmit() sanity check function to provide the button’s tooltip text.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>fn defineUILayout = ( #( #( #(“Tab Name”, “Tab Description”), #(#(RolloutName, bool_rolleddown),…), … ) )</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Defines the custom layout definition which lists the tabs and their rollouts and the rollout rolled down states.</p></li>
+<li><p>If not defined, the default SMTD layout showing all available tabs and rollouts will be used.</p></li>
+</ul>
+<p><strong>For Example:</strong></p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">fn</span> <span class="n">defineUILayout</span> <span class="o">=</span> <span class="o">--</span><span class="n">Optional</span><span class="p">.</span> <span class="n">If</span> <span class="n">not</span> <span class="n">defined</span><span class="p">,</span> <span class="n">the</span> <span class="k">default</span> <span class="n">legacy</span> <span class="n">layout</span> <span class="n">with</span> <span class="n">all</span> <span class="n">rollouts</span> <span class="n">will</span> <span class="n">be</span> <span class="n">used</span>
+<span class="p">(</span>
+  <span class="cp">#(</span>
+    <span class="cp">#(#(&quot;Job&quot;,&quot;Job Settings&quot;),#(#(SMTD_CustomJobRollout,true), #(SMTD_JobOptions,true), #(SMTD_JobFailureDetection,false))),</span>
+    <span class="cp">#(#(&quot;Assets&quot;,&quot;Assets - Asset Collection And Synchronization&quot;), #(#(SMTD_AssetList,true))),</span>
+    <span class="cp">#(#(&quot;Render&quot;,&quot;Rendering Options&quot;),#(#(SMTD_ScenePreProcessing,true), #(SMTD_MaxStartup,false))),</span>
+    <span class="cp">#(#(&quot;Options&quot;,&quot;Submission Options&quot;),#(#(SMTD_UserOptions,true), #(SMTD_SubmissionTimeouts,false))),</span>
+    <span class="cp">#(#(&quot;Limits&quot;,&quot;Deny List Management and License Limits&quot;),#(#(SMTD_BlackListSlaves,true), #(SMTD_LimitGroups,false)))</span>
+  <span class="p">)</span>
+<span class="p">),</span>
+</pre></div>
+</div>
+<p>In the above example,</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the SMTD_CustomJobRollout is a custom rollout defined in the Workflow script, and it is open by default.</p></li>
+<li><p>the SMTD_JobOptions rollout is the default Job Options rollout of SMTD, and is also open by default.</p></li>
+<li><p>the SMTD_JobFailureDetection is the default Job Failure Detection rollout of SMTD and it is closed by default,</p></li>
+<li><p>and so on…</p></li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<p><strong>fn updateUILayout = ( &lt;custom UI-related code&gt; ),</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>This optional function is called after the UI Layout has been built.</p></li>
+<li><p>It can be used to modify the visibility or enabled state of existing rollout’s controls, for example dynamically hide any controls not relevant to the current Workflow.</p></li>
+</ul>
+<p><strong>For Example:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fn</span> <span class="n">updateUILayout</span> <span class="o">=</span>
+<span class="p">(</span>
+  <span class="n">local</span> <span class="n">disableArray</span> <span class="o">=</span> <span class="c1">#(&quot;btn_chunk&quot;, &quot;spn_chunkSize&quot;,&quot;chk_restartMax&quot;, &quot;chk_forceWorkstationMode&quot;, &quot;chk_useSilentMode&quot;, &quot;ddl_MaxVersionToForce&quot;, &quot;chk_oneCpuPerTask&quot;, &quot;chk_EnforceSequentialRendering&quot;, &quot;btn_MaxVersionToForce&quot;)</span>
+  <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">SMTD_JobOptions</span><span class="o">.</span><span class="n">controls</span> <span class="n">where</span> <span class="n">findItem</span>  <span class="n">disableArray</span> <span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="k">as</span> <span class="n">name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="n">do</span>
+  <span class="p">(</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">false</span>
+    <span class="k">try</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">tooltip</span> <span class="o">=</span> <span class="s2">&quot;Not available in this Workflow&quot;</span><span class="p">)</span><span class="n">catch</span><span class="p">()</span>
+  <span class="p">)</span>
+<span class="p">),</span>
+</pre></div>
+</div>
+<p>In the above example, assuming the standard SMTD_JobOptions rollout was added to the layout, the updateUILayout() function will</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Disable the controls listed in the disableArray array</p></li>
+<li><p>Set their tooltips to “Not available in this Workflow”, if supported (various controls added tooltip support in different versions of 3ds Max).</p></li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<p><strong>fn storeSettings = ( &lt;custom store workflow settings code&gt; ),</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>This function will be called when switching Workflows, and by a FilePreSave callback to ensure the Workflow’s own settings are stored in the MAX file or on disk.</p></li>
+<li><p>Any storage implementation including INI file, or storing with the .MAX scene file can be used.</p></li>
+<li><p>The default approach for the shipping SMTD Workflows is to call SMTDFunctions.storeWorkflowSettingsWithScene() with the Workflow Struct as by-reference argument.</p></li>
+</ul>
+<p><strong>For Example:</strong></p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">fn</span> <span class="n">storeSettings</span> <span class="o">=</span>
+<span class="p">(</span>
+  <span class="n">SMTD_MainRollout</span><span class="p">.</span><span class="n">Ui_report</span> <span class="p">(</span><span class="s">&quot;&gt;Custom Workflow: Storing Settings With Scene...&quot;</span><span class="p">)</span>
+  <span class="n">SMTDFunctions</span><span class="p">.</span><span class="n">storeWorkflowSettingsWithScene</span> <span class="o">&amp;</span><span class="n">SMTDWorkflow_WorkflowName</span>
+<span class="p">),</span>
+</pre></div>
+</div>
+<p>In the above example, the function will call another function implemented by the SMTD backend library, which will</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Handle the saving of all custom properties with the 3ds Max scene;</p></li>
+<li><p>Automatically skip the standard Struct properties .WorkflowName, .WorkflowTitle and .Description;</p></li>
+<li><p>Automatically skip any functions defined in the Struct.</p></li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<p><strong>fn restoreSettings = ( &lt;custom restore workflow settings code&gt; ),</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>This function will be called after switching to a new Workflow, and by a FilePostOpen callback to ensure the Workflow’s own settings are restored from the MAX file or from disk.</p></li>
+<li><p>Any storage implementation including INI file, or storing with the .MAX scene file can be used, as long as it matches the method used in storeSettings().</p></li>
+<li><p>The default approach for the shipping SMTD Workflows is to call SMTDFunctions.restoreWorkflowSettingsWithScene() with the Workflow Struct as by-reference argument, and an optional list of properties to skip.</p></li>
+</ul>
+<p><strong>For Example:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fn</span> <span class="n">restoreSettings</span> <span class="o">=</span>
+<span class="p">(</span>
+  <span class="n">SMTD_MainRollout</span><span class="o">.</span><span class="n">Ui_report</span> <span class="p">(</span><span class="s2">&quot;&gt;FumeFX Workflow: Restoring Settings From Scene...&quot;</span><span class="p">)</span>
+  <span class="n">SMTDFunctions</span><span class="o">.</span><span class="n">restoreWorkflowSettingsFromScene</span> <span class="o">&amp;</span><span class="n">SMTDWorkflow_FumeFX</span> <span class="n">propsToSkip</span><span class="p">:</span><span class="c1">#()</span>
+<span class="p">),</span>
+</pre></div>
+</div>
+<p>In the above example, the function will call another function implemented by the SMTD backend library, which will</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Handle the loading of custom properties from the 3ds Max scene;</p></li>
+<li><p>Skip the loading of any properties whose names are supplied via the propsToSkip: keyword argument.</p></li>
+<li><p>The latter can be useful when properties of the Struct are used for temporary data storage and should not be restored on scene loading.</p></li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<p><strong>fn CanSubmit = ( #(&lt;boolean&gt;, &lt;string&gt;) ),</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>This optional function implements a Workflow-specific Sanity Check</p></li>
+<li><p>It is called to enable/disable the SUBMIT button, and to define its tooltip according to the results of the Sanity Check.</p></li>
+<li><p>It <strong>must return an array</strong> containing a Boolean and a string with a description in the form #(true, “Description”) or #(false, “Reason”), where</p>
+<ul>
+<li><p>true means enable the button and the string defines the tooltip describing what the submission will do</p></li>
+<li><p>false means disable the button and the string explains why it was disabled.</p></li>
+</ul>
+</li>
+<li><p>Assumed to be #(true, &lt;struct&gt;.Description) if the function is not defined, where the Description may be “” if the property is not defined either.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="optional-custom-properties-and-functions">
+<h3>Optional Custom Properties And Functions<a class="headerlink" href="#optional-custom-properties-and-functions" title="Permalink to this headline">¶</a></h3>
+<p>The Workflow Struct can define custom properties and functions that are not directly expected by the SMTD Workflows subsystem, but might be necessary for the operation of the Workflow itself.</p>
+<ul>
+<li><p>The main benefit of defining custom properties in the Workflow Struct is that if the storeSettings() and restoreSettings() functions are implemented and using the standard scene storage mechanism, these custom properties will be automatically stored and restored.</p>
+<p><strong>For Example:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FumeFXObjectsToSim</span> <span class="o">=</span> <span class="c1">#(),</span>
+<span class="n">SimCacheOutput</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="n">UseSimCacheOutput</span> <span class="o">=</span> <span class="n">false</span><span class="p">,</span>
+<span class="n">PermanentSceneChange</span> <span class="o">=</span> <span class="n">false</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>In the above example taken from the FumeFX Simulation Workflow shipping with Deadline,</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The custom properties define the list of objects to simulate,</p></li>
+<li><p>The output path override filename,</p></li>
+<li><p>Two boolean properties controlling whether to apply the override, and whether to make the changes permanent.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submission-function-and-custom-smtd-settings">
+<h2>Submission Function And Custom SMTD Settings<a class="headerlink" href="#submission-function-and-custom-smtd-settings" title="Permalink to this headline">¶</a></h2>
+<p>When performing a custom submission, especially when relying on the SMTDFunctions to generate Job control files and submit the job,
+a large number of the existing SMTDSettings could get in the way. For example, if the default settings of SMTD call for Restarting the renderer after each frame,
+but the Workflow is performing a FumeFX Simulation submission, this particular option must be overwritten and set to false.</p>
+<p>There are several hundred SMTDSetting properties to worry about, and setting them all to new values would be unreasonable.
+A possible way to deal with them en masse is to</p>
+<ul class="simple">
+<li><p>Grab a copy of the current SMTDSettings struct in a variable,</p></li>
+<li><p>Reset SMTDSettings to Factory Defaults, or to the User Defaults / Sticky Settings defined in the Repository and the local machine,</p></li>
+<li><p>Set only the relevant options exposed by the Workflow’s UI by reading from the copy created in the first step and setting in SMTDSettings.</p></li>
+</ul>
+<p>In addition, SMTD’s own submission code will grab a copy of all SMTDSettings before calling the SubmitJob() function in the Workflow’s Struct,
+and will copy these values back into SMTDSettings once the submission has finished. This lets you apply any changes to SMTDSettings within the SubmitJob() function
+without a worry that they might stick around.</p>
+<p>Note that when the scene is saved to a .MAX file for submission, the custom Workflow-specific SMTDSettings will be automatically baked into that .MAX file.
+Should you ever open the .MAX file submitted with the Job, the SMTD UI will load and show you the actual settings enforced by the Workflow.
+Once the submission is finished, the settings in the current scene will be restored back to what they were before the SubmitJob() function was called.
+This means that saving the scene to a .MAX file manually after a Workflow submission will not store any temporary settings the SubmitJob() function might have enforced during submission.</p>
+</div>
+<div class="section" id="workflow-user-interface-considerations">
+<h2>Workflow User Interface Considerations<a class="headerlink" href="#workflow-user-interface-considerations" title="Permalink to this headline">¶</a></h2>
+<p>The Workflow Layout definition can contain</p>
+<ul class="simple">
+<li><p>Any of the existing Tabs</p></li>
+<li><p>New Tabs, if required by the Workflow</p></li>
+<li><p>Any of the existing Rollouts in the same Tabs as in the default layout</p></li>
+<li><p>Any of the existing Rollouts in new Tabs, if that makes more sense</p></li>
+<li><p>Completely new rollout definitions in existing or new Tabs - usually at least the main controls of the Workflow will be hosted in a new custom rollout.</p></li>
+</ul>
+<p>Due to the large amount of rollouts exposed in the Default layout, it is highly recommended to use the Workflows to significantly reduce
+the UI complexity and only expose rollouts and controls that actually make sense for the Workflow in question.</p>
+<p>An existing rollout might contain too many controls that are irrelevant to the current Workflow. Several approaches are available in such cases:</p>
+<ul class="simple">
+<li><p>The rollout could be displayed As Is, and its irrelevant controls could be simply ignored when performing the submission.</p></li>
+<li><p>The irrelevant controls could be disabled in the updateUILayout() function of the Workflow Struct. See the Phoenix FD Workflow as an example.</p></li>
+<li><p>The irrelevant controls could be hidden by setting the .visible property to false in the updateUILayout() function of the Workflow Struct.</p>
+<ul>
+<li><p>In this case, the remaining controls could be reordered by setting their .pos property to regroup and make the rollout look cleaner</p></li>
+</ul>
+</li>
+<li><p>If hiding too many controls would make the rollout look too empty, you might consider reimplementing only the relevant controls is a custom rollout definition, while affecting the same SMTDSettings.</p>
+<ul>
+<li><p>You could copy&amp;paste portions of the original SubmitMaxToDeadline.ms source found in the submission3dsMaxMain folder.</p></li>
+<li><p>See the FumeFX Simulation Workflow for an example of this approach - it redefines the “Job Properties” rollout with just the relevant controls.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3ds Max - Integrated Submitter - Workflows</a><ul>
+<li><a class="reference internal" href="#workflow-system-overview">Workflow System Overview</a></li>
+<li><a class="reference internal" href="#custom-workflow-installation">Custom Workflow Installation</a></li>
+<li><a class="reference internal" href="#custom-workflow-struct-definition">Custom Workflow Struct Definition</a><ul>
+<li><a class="reference internal" href="#mandatory-or-required-functions">Mandatory or Required Functions</a></li>
+<li><a class="reference internal" href="#optional-standard-properties-and-functions">Optional Standard Properties And Functions</a></li>
+<li><a class="reference internal" href="#optional-custom-properties-and-functions">Optional Custom Properties And Functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#submission-function-and-custom-smtd-settings">Submission Function And Custom SMTD Settings</a></li>
+<li><a class="reference internal" href="#workflow-user-interface-considerations">Workflow User Interface Considerations</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-3ds-max-smtd-advanced.html"
+                        title="previous chapter">3ds Max - Integrated Submitter - Advanced Features</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-3ds-max-workflow-baketextures.html"
+                        title="next chapter">3ds Max - Integrated Submitter Workflow - Bake Textures</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-3ds-max-workflow-baketextures.html" title="3ds Max - Integrated Submitter Workflow - Bake Textures"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-3ds-max-smtd-advanced.html" title="3ds Max - Integrated Submitter - Advanced Features"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Max - Integrated Submitter - Workflows</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

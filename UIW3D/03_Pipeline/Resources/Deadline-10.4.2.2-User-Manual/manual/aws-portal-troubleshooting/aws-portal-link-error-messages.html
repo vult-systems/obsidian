@@ -1,0 +1,319 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AWS Portal Link Log Error Messages &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thinkbox.css" />
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="AWS Portal Workers Don’t Connect to Repository" href="workers-not-connecting.html" />
+    <link rel="prev" title="Log Locations" href="aws-portal-log-locations.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="workers-not-connecting.html" title="AWS Portal Workers Don’t Connect to Repository"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="aws-portal-log-locations.html" title="Log Locations"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWS Portal Link Log Error Messages</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="../aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<span class="target" id="aws-portal-link-error-messages"></span><div class="section" id="aws-portal-link-log-error-messages">
+<h1>AWS Portal Link Log Error Messages<a class="headerlink" href="#aws-portal-link-log-error-messages" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="connection-refused">
+<h2>Connection refused<a class="headerlink" href="#connection-refused" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cause">
+<h3>Cause<a class="headerlink" href="#cause" title="Permalink to this headline">¶</a></h3>
+<p>This typically happens when trying to connect to a machine that is not
+running SSHD. We were able to reach the remote host, but it is not
+listening on port 22. It is possible that SSHD on the Gateway is either
+overloaded and is not accepting connections, or SSHD has crashed.</p>
+</div>
+<div class="section" id="solution">
+<h3>Solution<a class="headerlink" href="#solution" title="Permalink to this headline">¶</a></h3>
+<p>Reboot the Gateway instance via your EC2 Console.</p>
+<img alt="../../_images/reboot-gateway.png" src="../../_images/reboot-gateway.png" />
+</div>
+</div>
+<div class="section" id="connection-timed-out">
+<h2>Connection timed out<a class="headerlink" href="#connection-timed-out" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Cause<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>You will generally see this when SSH cannot contact the remote machine.</p>
+</div>
+<div class="section" id="id2">
+<h3>Solution<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Go to the EC2 console. Ensure the Gateway is running. Ensure that the
+security group for the Gateway is allowing SSH access (port 22) to
+your machine.</p>
+<p>Access the security group’s page and allow access to your machine</p>
+<a class="reference internal image-reference" href="../../_images/set-security-group-1.png"><img alt="../../_images/set-security-group-1.png" src="../../_images/set-security-group-1.png" style="width: 48%;" /></a>
+<a class="reference internal image-reference" href="../../_images/set-security-group-2.png"><img alt="../../_images/set-security-group-2.png" src="../../_images/set-security-group-2.png" style="width: 48%;" /></a>
+</div>
+</div>
+<div class="section" id="host-key-verification">
+<h2>Host key verification<a class="headerlink" href="#host-key-verification" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cause-and-possible-solution">
+<h3>Cause and possible solution<a class="headerlink" href="#cause-and-possible-solution" title="Permalink to this headline">¶</a></h3>
+<p>Either your Gateway has changed physical instances or your network traffic is
+being redirected.</p>
+<p>The most likely cause is that you previously deployed an AWS Portal infrastructure
+and your current one is reusing the same public IP address for the Gateway instance
+as the previous. Or you rebooted your Gateway instance and it acquired the IP address
+of a previous Gateway. If either of these are the case, then the error is benign;
+please delete your host identification keyfiles (see below).</p>
+<p>Another possibility is that your network traffic is being redirected; you may be
+the victim of a <a class="reference external" href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">Man-in-the-middle attack</a>.
+If you suspect something malicious is going on, <strong>contact your network provider</strong>.</p>
+<p>The host identification keyfiles AWSPortalLink uses are
+stored in the following location depending on your Operating System.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Windows: %LOCALAPPDATA%\Thinkbox\AWSPortalLink\&lt;ipaddress&gt;.keys
+Linux: $HOME/.Thinkbox/AWSPortalLink\&lt;ipaddress&gt;.keys
+</pre></div>
+</div>
+<p>Deleting the keys in this location will remove the error. However, if your
+network was being redirected, the malicious attacker will now be able to eavesdrop
+on the network traffic to/from your AWSPortal infrastructure.</p>
+</div>
+<div class="section" id="id3">
+<h3>Solution<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>To fix this, you need to delete all of the host identification keyfiles that
+AWSPortalLink has accumulated.</p>
+</div>
+</div>
+<div class="section" id="permission-denied">
+<h2>Permission denied<a class="headerlink" href="#permission-denied" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h3>Cause<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>This is usually because your SSH private key does not authenticate with the
+host, you have a new public/private key-pair, or the permissions for your key
+are incorrect.</p>
+</div>
+<div class="section" id="id5">
+<h3>Solution<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>You will either need to fix the permissions to your key, or recreate your
+infrastructure.</p>
+<p>To fix the permissions of your key, you will need to run these commands as an
+elevated user. For linux, you can simply start the command with <cite>sudo</cite>. For
+windows, open the <cite>Command Prompt</cite> as an administrator.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Linux</span><span class="p">:</span>
+    <span class="n">sudo</span> <span class="n">chmod</span> <span class="mi">600</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Thinkbox</span><span class="o">/</span><span class="n">AWSPortalLink</span><span class="o">/</span><span class="n">DashKey</span>
+
+<span class="n">Windows</span><span class="p">:</span>
+    <span class="n">icacls</span> <span class="s2">&quot;%PROGRAMFILES(X86)%&quot;</span>\<span class="n">Thinkbox</span>\<span class="n">AWSPortalLink</span>\<span class="n">DashKey</span> <span class="o">/</span><span class="n">inheritance</span><span class="p">:</span><span class="n">r</span>
+    <span class="n">icacls</span> <span class="s2">&quot;%PROGRAMFILES(X86)%&quot;</span>\<span class="n">Thinkbox</span>\<span class="n">AWSPortalLink</span>\<span class="n">DashKey</span> <span class="o">/</span><span class="n">grant</span><span class="p">:</span><span class="n">r</span> <span class="s2">&quot;</span><span class="si">%u</span><span class="s2">sername%&quot;</span><span class="p">:</span><span class="s2">&quot;(R)&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="remote-port-forwarding-failed">
+<h2>Remote port forwarding failed<a class="headerlink" href="#remote-port-forwarding-failed" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h3>Cause<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>The remote port for a remote tunnel (on the remote machine) is already in use.
+A zombie SSH tunnel or an application on the Gateway could be using that port.
+This can happen when the AWSPortalLinkService terminates ungracefully.</p>
+</div>
+<div class="section" id="id7">
+<h3>Solution<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>Terminate all SSH processes to the Gateway instance. The easiest way to do this
+is by restarting the computer running AWS Portal Link.</p>
+<p>If you are technically savvy, you can also find the processes yourself and
+terminate them.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Linux:
+    ps aux | grep ssh
+    # The commands you need to terminate look like
+    &gt; /usr/bin/ssh -R 8889:172.31.28.31:8080 -N -v -i /opt/Thinkbox/AWSPortalLink/DashKey ...
+    &gt; /usr/bin/ssh -L 4001:127.0.0.1:4001 -N -v -i /opt/Thinkbox/AWSPortalLink/DashKey ...
+    kill -i ${PID}
+
+Windows:
+    tasklist | findstr ssh
+    # Make sure you do not terminate the SSH processes spawned
+    # by other applications
+    kill -i ${PID}
+</pre></div>
+</div>
+<p>It might also be necessary to reboot the Gateway instance via your EC2 Console.</p>
+<img alt="../../_images/reboot-gateway.png" src="../../_images/reboot-gateway.png" />
+</div>
+</div>
+<div class="section" id="unknown-error">
+<h2>Unknown error<a class="headerlink" href="#unknown-error" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id8">
+<h3>Cause<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>This has been seen when your PortalLink machine is not actually connected to
+the internet.</p>
+</div>
+<div class="section" id="id9">
+<h3>Solution<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>Check that your computer has internet connectivity. Verify PortalLink is able
+to connect to the internet. Your firewall maybe blocking PortalLink.</p>
+<p>You can see how to <a class="reference internal" href="../aws-portal-setup-configuring-firewall-exceptions.html#aws-portal-setup-firewall-exceptions-ref-label"><span class="std std-ref">configure your firewall exceptions here.</span></a></p>
+</div>
+</div>
+<div class="section" id="the-service-on-the-remote-host-rejected-a-connection-attempt">
+<h2>The service on the remote host rejected a connection attempt<a class="headerlink" href="#the-service-on-the-remote-host-rejected-a-connection-attempt" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id10">
+<h3>Cause<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>There was an error on your Gateway. The process on the Gateway listening to the
+remote tunnel is not responding.</p>
+</div>
+<div class="section" id="id11">
+<h3>Solution<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>Reboot the Gateway instance via your EC2 Console.</p>
+<img alt="../../_images/reboot-gateway.png" src="../../_images/reboot-gateway.png" />
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">AWS Portal Link Log Error Messages</a><ul>
+<li><a class="reference internal" href="#connection-refused">Connection refused</a><ul>
+<li><a class="reference internal" href="#cause">Cause</a></li>
+<li><a class="reference internal" href="#solution">Solution</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#connection-timed-out">Connection timed out</a><ul>
+<li><a class="reference internal" href="#id1">Cause</a></li>
+<li><a class="reference internal" href="#id2">Solution</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#host-key-verification">Host key verification</a><ul>
+<li><a class="reference internal" href="#cause-and-possible-solution">Cause and possible solution</a></li>
+<li><a class="reference internal" href="#id3">Solution</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#permission-denied">Permission denied</a><ul>
+<li><a class="reference internal" href="#id4">Cause</a></li>
+<li><a class="reference internal" href="#id5">Solution</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#remote-port-forwarding-failed">Remote port forwarding failed</a><ul>
+<li><a class="reference internal" href="#id6">Cause</a></li>
+<li><a class="reference internal" href="#id7">Solution</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#unknown-error">Unknown error</a><ul>
+<li><a class="reference internal" href="#id8">Cause</a></li>
+<li><a class="reference internal" href="#id9">Solution</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-service-on-the-remote-host-rejected-a-connection-attempt">The service on the remote host rejected a connection attempt</a><ul>
+<li><a class="reference internal" href="#id10">Cause</a></li>
+<li><a class="reference internal" href="#id11">Solution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aws-portal-log-locations.html"
+                        title="previous chapter">Log Locations</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="workers-not-connecting.html"
+                        title="next chapter">AWS Portal Workers Don’t Connect to Repository</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="workers-not-connecting.html" title="AWS Portal Workers Don’t Connect to Repository"
+             >next</a></li>
+        <li class="right" >
+          <a href="aws-portal-log-locations.html" title="Log Locations"
+             >previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWS Portal Link Log Error Messages</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

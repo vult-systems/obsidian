@@ -7,9 +7,9 @@ Map of content for my Pipeline notes.
 [[../../03_Pipeline/Perforce/What Is Perforce|What Is Perforce]]
 
 **Render Farm**
-[[../../03_Pipeline/Render Farm/__UPDATE__Deploying Deadline as a Service|__UPDATE__Deploying Deadline as a Service]]
-[[../../03_Pipeline/Render Farm/Automated Installation|Automated Installation]]
-[[../../03_Pipeline/Render Farm/What Is Deadline|What Is Deadline]]
+[[../../03_Pipeline/Render Farm/Deadline/__UPDATE__Deploying Deadline as a Service|__UPDATE__Deploying Deadline as a Service]]
+[[../../03_Pipeline/Render Farm/Deadline/Automated Installation|Automated Installation]]
+[[../../03_Pipeline/Render Farm/Deadline/What Is Deadline|What Is Deadline]]
 
 **Resources**
 [[../../03_Pipeline/Resources/Install-DeadlineClient.ps1|Install-DeadlineClient.ps1]]

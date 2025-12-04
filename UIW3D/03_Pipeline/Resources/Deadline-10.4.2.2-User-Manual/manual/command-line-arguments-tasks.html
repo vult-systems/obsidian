@@ -1,0 +1,1338 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tasks - Command Arguments &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Pools, Groups, and Limits - Command Arguments" href="command-line-arguments-pools-groups.html" />
+    <link rel="prev" title="Jobs - Command Arguments" href="command-line-arguments-jobs.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command-line-arguments-pools-groups.html" title="Pools, Groups, and Limits - Command Arguments"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="command-line-arguments-jobs.html" title="Jobs - Command Arguments"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" accesskey="U">Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Tasks - Command Arguments</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tasks-command-arguments">
+<span id="command-arguments-tasks"></span><h1>Tasks - Command Arguments<a class="headerlink" href="#tasks-command-arguments" title="Permalink to this headline">¶</a></h1>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td colspan="2"><p><a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">Command Overview</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-repo.html#command-arguments-repo"><span class="std std-ref">Database and Repository</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-clients.html#command-arguments-clients"><span class="std std-ref">Clients and Logs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-workers.html#command-arguments-workers"><span class="std std-ref">Workers</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="command-line-arguments-jobs.html#command-arguments-jobs"><span class="std std-ref">Jobs</span></a></p></td>
+<td><p><a class="reference internal" href="#command-arguments-tasks"><span class="std std-ref">Tasks</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-pools-groups.html#command-arguments-pools"><span class="std std-ref">Pools, Groups, and Limits</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-users.html#command-arguments-users"><span class="std std-ref">Users and User Groups</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-pathmapping.html#command-arguments-pathmapping"><span class="std std-ref">Path and Drive Mapping</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="command-line-arguments-cloud.html#command-arguments-cloud"><span class="std std-ref">AWS Portal and Cloud</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-scripting.html#command-arguments-scripting"><span class="std std-ref">Scripting</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-system.html#command-arguments-system"><span class="std std-ref">System Functions and Dialogs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-housekeeping.html#command-arguments-housekeeping"><span class="std std-ref">Scans, History, and Reports</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-version.html#command-arguments-version"><span class="std std-ref">Version and Help</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#complete-tasks" id="id1">Complete Tasks</a></p>
+<ul>
+<li><p><a class="reference internal" href="#completejobtask" id="id2">CompleteJobTask</a></p></li>
+<li><p><a class="reference internal" href="#completejobtasks" id="id3">CompleteJobTasks</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#fail-tasks" id="id4">Fail Tasks</a></p>
+<ul>
+<li><p><a class="reference internal" href="#failjobtask" id="id5">FailJobTask</a></p></li>
+<li><p><a class="reference internal" href="#failjobtasks" id="id6">FailJobTasks</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#get-task-data" id="id7">Get Task Data</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getjobtask" id="id8">GetJobTask</a></p></li>
+<li><p><a class="reference internal" href="#getjobtaskaveragetime" id="id9">GetJobTaskAverageTime</a></p></li>
+<li><p><a class="reference internal" href="#getjobtaskaveragetimenorm" id="id10">GetJobTaskAverageTimeNorm</a></p></li>
+<li><p><a class="reference internal" href="#getjobtaskids" id="id11">GetJobTaskIds</a></p></li>
+<li><p><a class="reference internal" href="#getjobtasklimit" id="id12">GetJobTaskLimit</a></p></li>
+<li><p><a class="reference internal" href="#getjobtasks" id="id13">GetJobTasks</a></p></li>
+<li><p><a class="reference internal" href="#getjobtasktotaltime" id="id14">GetJobTaskTotalTime</a></p></li>
+<li><p><a class="reference internal" href="#getjobtasktotaltimenorm" id="id15">GetJobTaskTotalTimeNorm</a></p></li>
+<li><p><a class="reference internal" href="#gettaskprogress" id="id16">GetTaskProgress</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#requeue-task" id="id17">Requeue Task</a></p>
+<ul>
+<li><p><a class="reference internal" href="#requeuejobtask" id="id18">RequeueJobTask</a></p></li>
+<li><p><a class="reference internal" href="#requeuejobtasks" id="id19">RequeueJobTasks</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#suspend-task" id="id20">Suspend Task</a></p>
+<ul>
+<li><p><a class="reference internal" href="#suspendjobtask" id="id21">SuspendJobTask</a></p></li>
+<li><p><a class="reference internal" href="#suspendjobtasks" id="id22">SuspendJobTasks</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#resume-task" id="id23">Resume Task</a></p>
+<ul>
+<li><p><a class="reference internal" href="#resumejobtask" id="id24">ResumeJobTask</a></p></li>
+<li><p><a class="reference internal" href="#resumejobtasks" id="id25">ResumeJobTasks</a></p></li>
+<li><p><a class="reference internal" href="#resumefailedjobtask" id="id26">ResumeFailedJobTask</a></p></li>
+<li><p><a class="reference internal" href="#resumefailedjobtasks" id="id27">ResumeFailedJobTasks</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="complete-tasks">
+<h2><a class="toc-backref" href="#contents">Complete Tasks</a><a class="headerlink" href="#complete-tasks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="completejobtask">
+<span id="completejobtask-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">CompleteJobTask</a><a class="headerlink" href="#completejobtask" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Marks the specified Task for the Job as complete.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -CompleteJobTask</strong> &lt;Job ID&gt; &lt;Task ID&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Task ID&gt;</p></td>
+<td><p>The Task ID</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Complete Task 0 of the Job:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -CompleteJobTask 5b747b30c3ca512de42d01d2 0
+    Completed task 0 for job 5b747b30c3ca512de42d01d2
+</pre></div>
+</div>
+<p>The Task may not be already in the <strong>Completed</strong> state for the command to succeed:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -CompleteJobTask 5b747b30c3ca512de42d01d2 0
+    Error: Cannot mark a task with status Completed complete (System.Exception)
+</pre></div>
+</div>
+</div>
+<div class="section" id="completejobtasks">
+<span id="completejobtasks-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">CompleteJobTasks</a><a class="headerlink" href="#completejobtasks" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Completes the specified Tasks for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -CompleteJobTasks</strong> &lt;Job ID&gt; &lt;Task IDs&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Task IDs&gt;</p></td>
+<td><p>The comma separated list of Task IDs</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Complete Tasks 1,2 and 3 of the Job:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -CompleteJobTasks 5b747b30c3ca512de42d01d2 1,2,3
+    Completed task 1 for job 5b747b30c3ca512de42d01d2
+    Completed task 2 for job 5b747b30c3ca512de42d01d2
+    Completed task 3 for job 5b747b30c3ca512de42d01d2
+</pre></div>
+</div>
+<p>If any of the Tasks in the list is in the <strong>Completed</strong> state, the whole command will fail. In the example below, Task 4 is not Completed, but 2 and 3 are:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -CompleteJobTasks 5b747b30c3ca512de42d01d2 2,3,4
+    Error: Cannot mark a task with status Completed complete (System.Exception)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="fail-tasks">
+<h2><a class="toc-backref" href="#contents">Fail Tasks</a><a class="headerlink" href="#fail-tasks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="failjobtask">
+<span id="failjobtask-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">FailJobTask</a><a class="headerlink" href="#failjobtask" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Fails the specified Task for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -FailJobTask</strong> &lt;Job ID&gt; &lt;Task ID&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Task ID&gt;</p></td>
+<td><p>The Task ID</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Fail Task 0 of the Job:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -FailJobTask 5b747b30c3ca512de42d01d2 0
+    Failed task 0 for job 5b747b30c3ca512de42d01d2
+</pre></div>
+</div>
+<p>The Task can be in any state except for the <strong>Failed</strong> state:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -FailJobTask 5b747b30c3ca512de42d01d2 0
+    Error: Cannot fail a task with status Failed (System.Exception)
+</pre></div>
+</div>
+</div>
+<div class="section" id="failjobtasks">
+<span id="failjobtasks-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">FailJobTasks</a><a class="headerlink" href="#failjobtasks" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Fails the specified Tasks for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -FailJobTasks</strong> &lt;Job ID&gt; &lt;Task IDs&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Task IDs&gt;</p></td>
+<td><p>The comma separated list of Task IDs</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Fail Tasks 1,2 and 3 of the Job - this works even if Tasks have already been marked as <strong>Failed</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -FailJobTasks 5b747b30c3ca512de42d01d2 1,2,3
+    Failed task 1 for job 5b747b30c3ca512de42d01d2
+    Failed task 2 for job 5b747b30c3ca512de42d01d2
+    Failed task 3 for job 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -FailJobTasks 5b747b30c3ca512de42d01d2 1,2,3
+    Failed task 1 for job 5b747b30c3ca512de42d01d2
+    Failed task 2 for job 5b747b30c3ca512de42d01d2
+    Failed task 3 for job 5b747b30c3ca512de42d01d2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="get-task-data">
+<h2><a class="toc-backref" href="#contents">Get Task Data</a><a class="headerlink" href="#get-task-data" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getjobtask">
+<span id="getjobtask-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobTask</a><a class="headerlink" href="#getjobtask" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display the specified Task for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobTask</strong> &lt;Job ID&gt; &lt;Task ID&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Task ID&gt;</p></td>
+<td><p>The Task ID</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobTask 5b747b30c3ca512de42d01d2 1
+    AverageRam=0
+    AverageRamPercentage=0
+    AverageSwap=1272754
+    CompletedDateTime=Jan 01/01  00:00:00
+    CpuUtilisation=0
+    ErrorCount=0
+    ExtraElements=
+    FrameString=1-1
+    ID=5b747b30c3ca512de42d01d2_1
+    ImageFileSize=-1
+    IsStarting=False
+    JobID=5b747b30c3ca512de42d01d2
+    Name=1_1-1
+    NormalizedRenderTime=10675199.02:48:05.4775807
+    PeakCpuUsage=0
+    PeakRamPercentage=0
+    PeakRamUsage=0
+    PeakSwap=1471688
+    Progress=100 %
+    RenderStartTime=Jan 01/01  00:00:00
+    RenderStatus=
+    RenderTime=10675199.02:48:05.4775807
+    RenderTimeMultiplier=1
+    SlaveName=YWG-9902945169
+    Status=Failed
+    TaskAverageRam=0
+    TaskAverageRamPercentage=0
+    TaskAverageSwap=1272754
+    TaskCompletedDateTime=Jan 01/01  00:00:00
+    TaskCpuUtilisation=0
+    TaskErrorCount=0
+    TaskFrameList=1
+    TaskFrameString=1-1
+    TaskId=1
+    TaskID=1
+    TaskIsStarted=False
+    TaskJobId=5b747b30c3ca512de42d01d2
+    TaskName=1_1-1
+    TaskNormalizedRenderTime=10675199.02:48:05.4775807
+    TaskOutputFileSize=-1
+    TaskPeakCpuUsage=0
+    TaskPeakRamPercentage=0
+    TaskPeakRamUsage=0
+    TaskPeakSwap=1471688
+    TaskProgress=100 %
+    TaskProperties=Deadline.Jobs.TaskProperties
+    TaskRenderStartTime=Jan 01/01  00:00:00
+    TaskRenderStatus=
+    TaskRenderTime=10675199.02:48:05.4775807
+    TaskRenderTimeMultiplier=1
+    TaskSlaveName=YWG-9902945169
+    TaskStartTime=Jan 01/01  00:00:00
+    TaskStatus=Failed
+    TaskTime=10675199.02:48:05.4775807
+    TaskTotalCpuClocks=0
+    TaskUsedCpuClocks=0
+    TaskWaitingToStart=False
+    TotalCpuClocks=0
+    UsedCpuClocks=0
+    WaitingToStart=False
+
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="getjobtaskaveragetime">
+<span id="getjobtaskaveragetime-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobTaskAverageTime</a><a class="headerlink" href="#getjobtaskaveragetime" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display average Task render time for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobTaskAverageTime</strong> &lt;Job ID&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobTaskAverageTime 5b747b30c3ca512de42d01d2
+    TaskAverageRenderTime=00d 00h 12m 34s
+</pre></div>
+</div>
+</div>
+<div class="section" id="getjobtaskaveragetimenorm">
+<span id="getjobtaskaveragetimenorm-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobTaskAverageTimeNorm</a><a class="headerlink" href="#getjobtaskaveragetimenorm" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display average Task normalized render time for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobTaskAverageTimeNorm</strong> &lt;Job ID&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobTaskAverageTimeNorm 5b747b30c3ca512de42d01d2
+    TaskAverageNormalizedRenderTime==00d 00h 12m 34s
+</pre></div>
+</div>
+</div>
+<div class="section" id="getjobtaskids">
+<span id="getjobtaskids-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobTaskIds</a><a class="headerlink" href="#getjobtaskids" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display the Task IDs for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobTaskIds</strong> &lt;Job ID&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobTaskIds 5b747b30c3ca512de42d01d2
+    0
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    10
+</pre></div>
+</div>
+</div>
+<div class="section" id="getjobtasklimit">
+<span id="getjobtasklimit-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobTaskLimit</a><a class="headerlink" href="#getjobtasklimit" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays the Job Task Limit value set in the <a class="reference internal" href="repository-config.html#job-settings-ref-label"><span class="std std-ref">Configure Repository Options</span></a> dialog.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobTaskLimit</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No Arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobTaskLimit
+    5000
+</pre></div>
+</div>
+</div>
+<div class="section" id="getjobtasks">
+<span id="getjobtasks-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobTasks</a><a class="headerlink" href="#getjobtasks" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display the information of the Tasks in the specified Job.</p>
+<p>The individual Tasks will be separated by an empty line in the output.</p>
+<p>If the optional second argument is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, each Task will also have a [Section] header in the form of</p>
+<blockquote>
+<div><p>[&lt;TaskID&gt;_&lt;RangeStart&gt;-&lt;RangeEnd&gt;]</p>
+</div></blockquote>
+<p>For instance, [0_0-9] would denote Task ID 0, rendering 10 frames from 0 to 9.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobTasks</strong> &lt;Job ID&gt; [&lt;Use Ini Display&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Use Ini Display&gt;</p></td>
+<td><p>true/false (optional, default is false)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobTasks 5b747b30c3ca512de42d01d2 True
+    [0_0-0]
+    AverageRam=0
+    AverageRamPercentage=0
+    AverageSwap=1272912
+    CompletedDateTime=Jan 01/01  00:00:00
+    CpuUtilisation=0
+    ErrorCount=1
+    ExtraElements=
+    FrameString=0-0
+    ID=5b747b30c3ca512de42d01d2_0
+    ImageFileSize=-1
+    IsStarting=False
+    JobID=5b747b30c3ca512de42d01d2
+    Name=0_0-0
+    NormalizedRenderTime=10675199.02:48:05.4775807
+    PeakCpuUsage=0
+    PeakRamPercentage=0
+    PeakRamUsage=0
+    PeakSwap=1477584
+    Progress=0 %
+    RenderStartTime=Jan 01/01  00:00:00
+    RenderStatus=
+    RenderTime=10675199.02:48:05.4775807
+    RenderTimeMultiplier=1
+    SlaveName=
+    Status=Queued
+    TaskAverageRam=0
+    TaskAverageRamPercentage=0
+    TaskAverageSwap=1272912
+    TaskCompletedDateTime=Jan 01/01  00:00:00
+    TaskCpuUtilisation=0
+    TaskErrorCount=1
+    TaskFrameList=0
+    TaskFrameString=0-0
+    TaskId=0
+    TaskID=0
+    TaskIsStarted=False
+    TaskJobId=5b747b30c3ca512de42d01d2
+    TaskName=0_0-0
+    TaskNormalizedRenderTime=10675199.02:48:05.4775807
+    TaskOutputFileSize=-1
+    TaskPeakCpuUsage=0
+    TaskPeakRamPercentage=0
+    TaskPeakRamUsage=0
+    TaskPeakSwap=1477584
+    TaskProgress=0 %
+    TaskProperties=Deadline.Jobs.TaskProperties
+    TaskRenderStartTime=Jan 01/01  00:00:00
+    TaskRenderStatus=
+    TaskRenderTime=10675199.02:48:05.4775807
+    TaskRenderTimeMultiplier=1
+    TaskSlaveName=
+    TaskStartTime=Jan 01/01  00:00:00
+    TaskStatus=Queued
+    TaskTime=10675199.02:48:05.4775807
+    TaskTotalCpuClocks=0
+    TaskUsedCpuClocks=0
+    TaskWaitingToStart=False
+    TotalCpuClocks=0
+    UsedCpuClocks=0
+    WaitingToStart=False
+
+    [1_1-1]
+    AverageRam=0
+    ...
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The full output of this command is too long to include here - each Task’s info block looks similar to the Task 0 above.</p>
+</div>
+</div>
+<div class="section" id="getjobtasktotaltime">
+<span id="getjobtasktotaltime-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobTaskTotalTime</a><a class="headerlink" href="#getjobtasktotaltime" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays the total render time for the Tasks in the specified Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobTaskTotalTime</strong>  &lt;Job ID&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobTaskTotalTime 5b747b30c3ca512de42d01d2
+    TaskTotalRenderTime=00d 01h 23m 45s
+</pre></div>
+</div>
+</div>
+<div class="section" id="getjobtasktotaltimenorm">
+<span id="getjobtasktotaltimenorm-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobTaskTotalTimeNorm</a><a class="headerlink" href="#getjobtasktotaltimenorm" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display total Task normalized render time for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobTaskTotalTimeNorm</strong>  &lt;Job ID&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobTaskTotalTimeNorm 5b747b30c3ca512de42d01d2
+    TaskTotalNormalizedRenderTime=00d 01h 23m 45s
+</pre></div>
+</div>
+</div>
+<div class="section" id="gettaskprogress">
+<span id="gettaskprogress-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetTaskProgress</a><a class="headerlink" href="#gettaskprogress" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display progress information about the Job’s Tasks.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetTaskProgress</strong>  &lt;Job ID&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetTaskProgress 5b747b30c3ca512de42d01d2
+    JobProgress=0%
+    ElapsedJobRenderTime=676d 21h 14m 12s
+    TotalTaskRenderTime=00d 00h 00m 00s
+    AverageTaskRenderTime=00d 00h 00m 00s
+    AverageFrameRenderTime=00d 00h 00m 00s
+    TotalNormalizedTaskRenderTime=00d 00h 00m 00s
+    AverageNormalizedTaskRenderTime=00d 00h 00m 00s
+    AverageNormalizedFrameRenderTime=00d 00h 00m 00s
+    EstimatedJobTimeRemaining=??d ??h ??m ??s
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="requeue-task">
+<h2><a class="toc-backref" href="#contents">Requeue Task</a><a class="headerlink" href="#requeue-task" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="requeuejobtask">
+<span id="requeuejobtask-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">RequeueJobTask</a><a class="headerlink" href="#requeuejobtask" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Requeues the specified Task for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -RequeueJobTask</strong>  &lt;Job ID&gt; &lt;Task ID&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Task ID&gt;</p></td>
+<td><p>The Task ID</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>The Task may not be in the <strong>Queued</strong> or <strong>Failed</strong> state.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -CompleteJobTask 5b747b30c3ca512de42d01d2 10
+    Completed task 10 for job 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -RequeueJobTask 5b747b30c3ca512de42d01d2 10
+    Requeued task 10 for job 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -RequeueJobTask 5b747b30c3ca512de42d01d2 10
+    Error: Cannot requeue a task with status Queued (System.Exception)
+</pre></div>
+</div>
+<p>If the Task is in the <strong>Failed</strong> state, you must use the <a class="reference internal" href="#resumefailedjobtask-dlc-ref-label"><span class="std std-ref">ResumeFailedJobTask</span></a> command to bring it into the <strong>Queued</strong> state:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -RequeueJobTask 5b747b30c3ca512de42d01d2 0
+    Error: Cannot requeue a task with status Failed (System.Exception)
+
+C:\&gt;deadlinecommand -ResumeFailedJobTask 5b747b30c3ca512de42d01d2 0
+    Resumed failed task 0 for job 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -RequeueJobTask 5b747b30c3ca512de42d01d2 0
+    Error: Cannot requeue a task with status Queued (System.Exception)
+</pre></div>
+</div>
+</div>
+<div class="section" id="requeuejobtasks">
+<span id="requeuejobtasks-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">RequeueJobTasks</a><a class="headerlink" href="#requeuejobtasks" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Requeues the specified Tasks for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -RequeueJobTasks</strong>  &lt;Job ID&gt; &lt;Task IDs&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Task IDs&gt;</p></td>
+<td><p>The comma separated list of Task IDs</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>First we will complete the Tasks before requeueing them. If they are already queued, the command will do nothing.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -CompleteJobTasks 5b747b30c3ca512de42d01d2 2,3,4
+Completed task 2 for job 5b747b30c3ca512de42d01d2
+Completed task 3 for job 5b747b30c3ca512de42d01d2
+Completed task 4 for job 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -RequeueJobTasks 5b747b30c3ca512de42d01d2 2,3,4
+Requeued task 2 for job 5b747b30c3ca512de42d01d2
+Requeued task 3 for job 5b747b30c3ca512de42d01d2
+Requeued task 4 for job 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -RequeueJobTasks 5b747b30c3ca512de42d01d2 2,3,4
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="suspend-task">
+<h2><a class="toc-backref" href="#contents">Suspend Task</a><a class="headerlink" href="#suspend-task" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="suspendjobtask">
+<span id="suspendjobtask-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SuspendJobTask</a><a class="headerlink" href="#suspendjobtask" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Suspends the specified Task for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SuspendJobTask</strong>  &lt;Job ID&gt; &lt;Task ID&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Task ID&gt;</p></td>
+<td><p>The Task ID</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>The Task must be in an active state (<strong>Queued</strong> or <strong>Rendering</strong>):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SuspendJobTask 5b747b30c3ca512de42d01d2 0
+    Suspended task 0 for job 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -SuspendJobTask 5b747b30c3ca512de42d01d2 0
+    Error: Cannot suspend a task with status Suspended (System.InvalidOperationException)
+
+C:\&gt;deadlinecommand -FailJobTask 5b747b30c3ca512de42d01d2 0
+    Failed task 0 for job 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -SuspendJobTask 5b747b30c3ca512de42d01d2 0
+    Error: Cannot suspend a task with status Failed (System.InvalidOperationException)
+</pre></div>
+</div>
+</div>
+<div class="section" id="suspendjobtasks">
+<span id="suspendjobtasks-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SuspendJobTasks</a><a class="headerlink" href="#suspendjobtasks" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Suspends the specified Tasks for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SuspendJobTasks</strong>  &lt;Job ID&gt; &lt;Task IDs&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<p>Suspends the specified Tasks for the Job.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Task IDs&gt;</p></td>
+<td><p>The comma separated list of Task IDs</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>The Tasks can be in any state, including <strong>Failed</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SuspendJobTasks 5b747b30c3ca512de42d01d2 1,2,3
+    Suspended tasks [1,2,3] for job 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -FailJobTasks 5b747b30c3ca512de42d01d2 1,2,3
+    Failed task 1 for job 5b747b30c3ca512de42d01d2
+    Failed task 2 for job 5b747b30c3ca512de42d01d2
+    Failed task 3 for job 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -SuspendJobTasks 5b747b30c3ca512de42d01d2 1,2,3
+    Suspended tasks [1,2,3] for job 5b747b30c3ca512de42d01d2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="resume-task">
+<h2><a class="toc-backref" href="#contents">Resume Task</a><a class="headerlink" href="#resume-task" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="resumejobtask">
+<span id="resumejobtask-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">ResumeJobTask</a><a class="headerlink" href="#resumejobtask" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Resumes the specified suspended Task for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -ResumeJobTask</strong>  &lt;Job ID&gt; &lt;Task ID&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Task ID&gt;</p></td>
+<td><p>The Task ID</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>The Task must be in <strong>Suspended</strong> state for the command to succeed:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SuspendJobTask 5b747b30c3ca512de42d01d2 0
+    Suspended task 0 for job 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -ResumeJobTask 5b747b30c3ca512de42d01d2 0
+    Resumed suspended task 0 for job 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -ResumeJobTask 5b747b30c3ca512de42d01d2 0
+    Error: Cannot resume a task with status Queued (System.InvalidOperationException)
+</pre></div>
+</div>
+</div>
+<div class="section" id="resumejobtasks">
+<span id="resumejobtasks-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">ResumeJobTasks</a><a class="headerlink" href="#resumejobtasks" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Resumes the specified suspended Tasks for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -ResumeJobTasks</strong>  &lt;Job ID&gt; &lt;Task IDs&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Task IDs&gt;</p></td>
+<td><p>The comma separated list of Task IDs</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>The Tasks can be in any state, including <strong>Failed</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SuspendJobTasks 5b747b30c3ca512de42d01d2 1,2,3
+    Suspended tasks [1,2,3] for job 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -ResumeJobTasks 5b747b30c3ca512de42d01d2 1,2,3
+    Resumed suspended tasks [1,2,3] for job 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -ResumeJobTasks 5b747b30c3ca512de42d01d2 1,2,3
+    Resumed suspended tasks [1,2,3] for job 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -FailJobTasks 5b747b30c3ca512de42d01d2 1,2,3
+    Failed task 1 for job 5b747b30c3ca512de42d01d2
+    Failed task 2 for job 5b747b30c3ca512de42d01d2
+    Failed task 3 for job 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -ResumeJobTasks 5b747b30c3ca512de42d01d2 1,2,3
+    Resumed suspended tasks [1,2,3] for job 5b747b30c3ca512de42d01d2
+</pre></div>
+</div>
+</div>
+<div class="section" id="resumefailedjobtask">
+<span id="resumefailedjobtask-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">ResumeFailedJobTask</a><a class="headerlink" href="#resumefailedjobtask" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Resumes the specified failed Task for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -ResumeFailedJobTask</strong>  &lt;Job ID&gt; &lt;Task ID&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Task ID&gt;</p></td>
+<td><p>The Task ID</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>See the example for <a class="reference internal" href="#requeuejobtask-dlc-ref-label"><span class="std std-ref">RequeueJobTask</span></a></p>
+</div>
+<div class="section" id="resumefailedjobtasks">
+<span id="resumefailedjobtasks-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">ResumeFailedJobTasks</a><a class="headerlink" href="#resumefailedjobtasks" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Resumes the specified failed Tasks for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -ResumeFailedJobTasks</strong>  &lt;Job ID&gt; &lt;Task IDs&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Task IDs&gt;</p></td>
+<td><p>The comma-separated list of Task IDs</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>We will fail some Tasks first, then resume them:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -FailJobTasks 5b747b30c3ca512de42d01d2 1,2,3
+    Failed task 1 for job 5b747b30c3ca512de42d01d2
+    Failed task 2 for job 5b747b30c3ca512de42d01d2
+    Failed task 3 for job 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -ResumeFailedJobTasks 5b747b30c3ca512de42d01d2 1,2,3
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Tasks - Command Arguments</a><ul>
+<li><a class="reference internal" href="#complete-tasks">Complete Tasks</a><ul>
+<li><a class="reference internal" href="#completejobtask">CompleteJobTask</a></li>
+<li><a class="reference internal" href="#completejobtasks">CompleteJobTasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#fail-tasks">Fail Tasks</a><ul>
+<li><a class="reference internal" href="#failjobtask">FailJobTask</a></li>
+<li><a class="reference internal" href="#failjobtasks">FailJobTasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#get-task-data">Get Task Data</a><ul>
+<li><a class="reference internal" href="#getjobtask">GetJobTask</a></li>
+<li><a class="reference internal" href="#getjobtaskaveragetime">GetJobTaskAverageTime</a></li>
+<li><a class="reference internal" href="#getjobtaskaveragetimenorm">GetJobTaskAverageTimeNorm</a></li>
+<li><a class="reference internal" href="#getjobtaskids">GetJobTaskIds</a></li>
+<li><a class="reference internal" href="#getjobtasklimit">GetJobTaskLimit</a></li>
+<li><a class="reference internal" href="#getjobtasks">GetJobTasks</a></li>
+<li><a class="reference internal" href="#getjobtasktotaltime">GetJobTaskTotalTime</a></li>
+<li><a class="reference internal" href="#getjobtasktotaltimenorm">GetJobTaskTotalTimeNorm</a></li>
+<li><a class="reference internal" href="#gettaskprogress">GetTaskProgress</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#requeue-task">Requeue Task</a><ul>
+<li><a class="reference internal" href="#requeuejobtask">RequeueJobTask</a></li>
+<li><a class="reference internal" href="#requeuejobtasks">RequeueJobTasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#suspend-task">Suspend Task</a><ul>
+<li><a class="reference internal" href="#suspendjobtask">SuspendJobTask</a></li>
+<li><a class="reference internal" href="#suspendjobtasks">SuspendJobTasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#resume-task">Resume Task</a><ul>
+<li><a class="reference internal" href="#resumejobtask">ResumeJobTask</a></li>
+<li><a class="reference internal" href="#resumejobtasks">ResumeJobTasks</a></li>
+<li><a class="reference internal" href="#resumefailedjobtask">ResumeFailedJobTask</a></li>
+<li><a class="reference internal" href="#resumefailedjobtasks">ResumeFailedJobTasks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="command-line-arguments-jobs.html"
+                        title="previous chapter">Jobs - Command Arguments</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="command-line-arguments-pools-groups.html"
+                        title="next chapter">Pools, Groups, and Limits - Command Arguments</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command-line-arguments-pools-groups.html" title="Pools, Groups, and Limits - Command Arguments"
+             >next</a></li>
+        <li class="right" >
+          <a href="command-line-arguments-jobs.html" title="Jobs - Command Arguments"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" >Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Tasks - Command Arguments</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Draft Tile Assembler &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="EnergyPlus" href="app-energyplus.html" />
+    <link rel="prev" title="Draft" href="app-draft.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-energyplus.html" title="EnergyPlus"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-draft.html" title="Draft"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Draft Tile Assembler</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="draft-tile-assembler">
+<span id="app-draft-tile-assembler-ref-label"></span><h1>Draft Tile Assembler<a class="headerlink" href="#draft-tile-assembler" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit Draft tile assembler jobs from the Monitor. Normally, these jobs are submitted as dependent jobs for your original tile jobs, but you can submit them manually if you wish.</p>
+<a class="reference internal image-reference" href="../_images/sub_draft_tile_assembler.png"><img alt="../_images/sub_draft_tile_assembler.png" src="../_images/sub_draft_tile_assembler.png" style="height: 500px;" /></a>
+<p>Draft Tile Assembler uses Thinkbox’s Draft to assemble the images.</p>
+</div>
+<div class="section" id="submission-options">
+<h2>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h2>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation.
+The Draft Tile Assembler specific options are:</p>
+<ul class="simple">
+<li><p><strong>Input Config File</strong>: The file that will control a majority of the assembly.</p></li>
+<li><p><strong>Error on Missing File</strong>: If enabled, the job will error if any of the tiles in the config file are missing.</p></li>
+<li><p><strong>Cleanup Tiles</strong>: If enabled, the job Delete all of the tile files after the assembly is complete.</p></li>
+<li><p><strong>Build To Force</strong>: You can force 32 bit or 64 bit rendering.</p></li>
+</ul>
+<div class="section" id="config-file-setup">
+<h3>Config File Setup<a class="headerlink" href="#config-file-setup" title="Permalink to this headline">¶</a></h3>
+<p>The config file is a plain text file that uses Key/Value pairs (key=value) to control the draft tile assembly.</p>
+<ul class="simple">
+<li><p><strong>TileCount=&lt;#&gt;</strong>: The number of tiles that are going to be assembled</p></li>
+<li><p><strong>DistanceAsPixels=&lt;true/false&gt;</strong>: Distances provided in pixels or in a 0.0-1.0 percentage range (Defaults to True)</p></li>
+<li><p><strong>BackgroundSource=&lt;BackgroundFile&gt;</strong>: If provided, the assembler will attempt to assemble the new tiles over the specified image.</p></li>
+<li><p><strong>TilesCropped=&lt;true/false&gt;</strong>: If disabled, the assembler will crop the tiles before assembling them.</p></li>
+<li><p><strong>ImageHeight=&lt;#&gt;</strong>: The height of the final image.  This will be ignored if a background is provided.  If this is not provided and the tiles are not cropped then the first tile will be used to determine the final image size.</p></li>
+<li><p><strong>ImageWidth=&lt;#&gt;</strong>: The height of the final image.  This will be ignored if a background is provided.  If this is not provided and the tiles are not cropped then the first tile will be used to determine the final image size.</p></li>
+<li><p><strong>Tile&lt;#&gt;FileName=&lt;FileName&gt;</strong>: The file name of the tile to be assembled. (Only used if ImageFolder is not included, 0 indexed)</p></li>
+<li><p><strong>Tile&lt;#&gt;X=&lt;#&gt;</strong>: The X coordinates for the tile that is to be assembled. 0 at the left side.</p></li>
+<li><p><strong>Tile&lt;#&gt;Y=&lt;#&gt;</strong>: The Y coordinates for the tile that is to be assembled. 0 at the bottom.</p></li>
+<li><p><strong>Tile&lt;#&gt;Width=&lt;#&gt;</strong>: The width of the tile that is to be cropped. (Only used if TilesCropped is false)</p></li>
+<li><p><strong>Tile&lt;#&gt;Height=&lt;#&gt;</strong>: The height of the tile that is to be cropped. (Only used if TilesCropped is false)</p></li>
+<li><p><strong>ImageFileName=&lt;FileName&gt;</strong>: The file name of the final output file.</p></li>
+<li><p><strong>ImageFolder=&lt;Folder&gt;</strong>: The folder that you would like to assemble images from.  (If included the assembler will render all tiles within the specified Folder )</p></li>
+<li><p><strong>ImageExtension=&lt;ext&gt;</strong>: The extension that the files to be assembled. (Only used if ImageFolder is included)</p></li>
+<li><p><strong>Tile&lt;#&gt;Prefix=&lt;Prefix&gt;</strong>: The Prefix that the file must contain (Only used if ImageFolder is included)</p></li>
+</ul>
+</div>
+<div class="section" id="example-config-files">
+<h3>Example Config Files<a class="headerlink" href="#example-config-files" title="Permalink to this headline">¶</a></h3>
+<p>The first example config file will control a simple tile assembly.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#We are assembling 4 tiles into an image</span>
+<span class="n">TileCount</span><span class="o">=</span><span class="mi">4</span>
+<span class="c1">#The final image will have the following filename</span>
+<span class="n">ImageFileName</span><span class="o">=</span><span class="n">C</span><span class="p">:</span><span class="o">/</span><span class="n">ExampleConfig</span><span class="o">/</span><span class="n">outputFileName</span><span class="o">.</span><span class="n">png</span>
+<span class="c1">#The final Image will have a resolution of 960x540</span>
+<span class="n">ImageWidth</span><span class="o">=</span><span class="mi">960</span>
+<span class="n">ImageHeight</span><span class="o">=</span><span class="mi">540</span>
+<span class="c1">#The Images are already Cropped</span>
+<span class="n">TilesCropped</span><span class="o">=</span><span class="kc">True</span>
+<span class="c1">#What is the file that will be the first tile assembled</span>
+<span class="n">Tile0FileName</span><span class="o">=</span><span class="n">C</span><span class="p">:</span><span class="o">/</span><span class="n">ExampleConfig</span><span class="o">/</span><span class="n">_tile_1x1_2x2_sceneName</span><span class="o">.</span><span class="n">png</span>
+<span class="c1">#Where should the first tile go</span>
+<span class="n">Tile0X</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">Tile0Y</span><span class="o">=</span><span class="mi">0</span>
+<span class="c1">#What is the file that will be the second tile assembled</span>
+<span class="n">Tile1FileName</span><span class="o">=</span><span class="n">C</span><span class="p">:</span><span class="o">/</span><span class="n">ExampleConfig</span><span class="o">/</span><span class="n">_tile_2x1_2x2_sceneName</span><span class="o">.</span><span class="n">png</span>
+<span class="c1">#Where should the second tile go</span>
+<span class="n">Tile1X</span><span class="o">=</span><span class="mi">480</span>
+<span class="n">Tile1Y</span><span class="o">=</span><span class="mi">0</span>
+<span class="c1">#What is the file that will be the third tile assembled</span>
+<span class="n">Tile2FileName</span><span class="o">=</span><span class="n">C</span><span class="p">:</span><span class="o">/</span><span class="n">ExampleConfig</span><span class="o">/</span><span class="n">_tile_1x2_2x2_sceneName</span><span class="o">.</span><span class="n">png</span>
+<span class="c1">#Where should the third tile go</span>
+<span class="n">Tile2X</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">Tile2Y</span><span class="o">=</span><span class="mi">270</span>
+<span class="c1">#What is the file that will be the fourth tile assembled</span>
+<span class="n">Tile3FileName</span><span class="o">=</span><span class="n">C</span><span class="p">:</span><span class="o">/</span><span class="n">ExampleConfig</span><span class="o">/</span><span class="n">_tile_2x2_2x2_sceneName</span><span class="o">.</span><span class="n">png</span>
+<span class="c1">#Where should the fourth tile go</span>
+<span class="n">Tile3X</span><span class="o">=</span><span class="mi">480</span>
+<span class="n">Tile3Y</span><span class="o">=</span><span class="mi">270</span>
+</pre></div>
+</div>
+<p>The second example config file controls a folder render. It will assemble all files within the folder C:/ExampleConfig/ that have the extension exr and have the given prefixes.
+So if the files region_0_test.exr, region_1_test.exr, region_2_test.exr, region_3_test.exr then this file will create the images test.exr:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#We are assembling 4 tiles into an image</span>
+<span class="n">TileCount</span><span class="o">=</span><span class="mi">4</span>
+<span class="c1">#In the config files we are using relative coordinates instead of pixel coordinates</span>
+<span class="n">DistanceAsPixels</span><span class="o">=</span><span class="mi">0</span>
+<span class="c1">#The tiles have not yet been cropped so the tile assembler has to crop each tile.</span>
+<span class="n">TilesCropped</span><span class="o">=</span><span class="n">false</span>
+<span class="c1">#We are going to assemble all files within the specified folder.</span>
+<span class="n">ImageFolder</span><span class="o">=</span><span class="n">C</span><span class="p">:</span><span class="o">/</span><span class="n">ExampleConfig</span>
+<span class="c1">#We are going to only assemble files with the following extension</span>
+<span class="n">ImageExtension</span><span class="o">=</span><span class="n">exr</span>
+<span class="c1">#The first tile in each of the images will start with the following prefix</span>
+<span class="n">Tile0Prefix</span><span class="o">=</span><span class="n">region_0_</span>
+<span class="c1">#Where should the tile go</span>
+<span class="n">Tile0X</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">Tile0Y</span><span class="o">=</span><span class="mi">0</span>
+<span class="c1">#Because we are cropping the tiles we need to give it a width and height to crop to</span>
+<span class="n">Tile0Width</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="n">Tile0Height</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="c1">#The second tile in each of the images will start with the following prefix</span>
+<span class="n">Tile1Prefix</span><span class="o">=</span><span class="n">region_1_</span>
+<span class="c1">#Where should the tile go</span>
+<span class="n">Tile1X</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="n">Tile1Y</span><span class="o">=</span><span class="mi">0</span>
+<span class="c1">#Because we are cropping the tiles we need to give it a width and height to crop to</span>
+<span class="n">Tile1Width</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="n">Tile1Height</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="n">Tile2Prefix</span><span class="o">=</span><span class="n">region_2_</span>
+<span class="n">Tile2X</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">Tile2Y</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="n">Tile2Width</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="n">Tile2Height</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="n">Tile3Prefix</span><span class="o">=</span><span class="n">region_3_</span>
+<span class="n">Tile3X</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="n">Tile3Y</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="n">Tile3Width</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="n">Tile3Height</span><span class="o">=</span><span class="mf">0.5</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The Draft Tile Assembler plugin requires configuration only if choosing not to preserve the render environment while running as a specific user on Unix systems. For details, see <a class="reference internal" href="environment.html#environment-preservation"><span class="std std-ref">Preserving Specific Environment Variables with Sudo</span></a>.</p>
+</div>
+<div class="section" id="faq">
+<span id="app-draft-tile-assembler-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Can I use Draft Tile Assembler for a custom tile/region assembly workflow in my studio?</strong></p>
+<blockquote>
+<div><p>Sure. Just use the configuration file options as described earlier.</p>
+</div></blockquote>
+<p><strong>Does Draft Tile Assembly require much memory to assemble high-resolution still images?</strong></p>
+<blockquote>
+<div><p>No! Benchmark tests show a final 8K multi-layer (1 beauty and 6 arbitrary render passes), all 32bit float, resolution image required approximately 256Mb of system memory in total to assemble. Draft Tile Assembler is very memory efficient!</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages And Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Draft Tile Assembler error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Draft Tile Assembler</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a></li>
+<li><a class="reference internal" href="#submission-options">Submission Options</a><ul>
+<li><a class="reference internal" href="#config-file-setup">Config File Setup</a></li>
+<li><a class="reference internal" href="#example-config-files">Example Config Files</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages And Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-draft.html"
+                        title="previous chapter">Draft</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-energyplus.html"
+                        title="next chapter">EnergyPlus</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-energyplus.html" title="EnergyPlus"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-draft.html" title="Draft"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Draft Tile Assembler</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

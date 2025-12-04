@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connecting to the Infrastructure &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thinkbox.css" />
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Connecting to an Infrastructure From a Linux or macOS Machine" href="aws-connect-to-infrastructure-from-linux-or-osx.html" />
+    <link rel="prev" title="Spot Fleet Request Fails to Start" href="spot-fleet-request-fails-to-start.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-connect-to-infrastructure-from-linux-or-osx.html" title="Connecting to an Infrastructure From a Linux or macOS Machine"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="spot-fleet-request-fails-to-start.html" title="Spot Fleet Request Fails to Start"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Connecting to the Infrastructure</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="../aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<span class="target" id="aws-connect-infrastructure-ref-label"></span><div class="section" id="connecting-to-the-infrastructure">
+<h1>Connecting to the Infrastructure<a class="headerlink" href="#connecting-to-the-infrastructure" title="Permalink to this headline">¶</a></h1>
+<p>If you would like to connect to the Gateway instance in the Infrastructure for troubleshooting purposes use the following steps depending on what operating system you are connecting from.</p>
+<div class="section" id="every-operating-system">
+<h2>Every Operating System<a class="headerlink" href="#every-operating-system" title="Permalink to this headline">¶</a></h2>
+<p>The following instructions must be followed regardless of the operating system you are connecting from.</p>
+<ul class="simple" id="public-dns-name-or-ipv4-address">
+<li><p><strong>Get Public IP of Gateway Instance</strong> <br /> In the AWS Web Console Navigate to Services &gt; EC2 &gt; INSTANCES &gt; Instances. Click the filter bar, Click Tag Keys &gt; Name, type in Gateway (type in ReverseForwarder instead if you are using Deadline 10.0.13.6 or earlier). This will filter down to only show you the Gateway instance. Next copy down either the IPv4 Public IP or the Public DNS (IPv4).</p></li>
+</ul>
+<a class="reference internal image-reference" href="../../_images/FindingGateway.png"><img alt="../../_images/FindingGateway.png" src="../../_images/FindingGateway.png" style="width: 1290.0px; height: 993.75px;" /></a>
+<ul class="simple" id="dashkey">
+<li><p><strong>Locate the private key</strong> <br /> You’ll need to use the DashKey to SSH into the Infrastructure instance. You can find the DashKey in the root folder of wherever you installed AWS Portal Link. If you installed AWS Portal Link on Windows the DashKey can be found in <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\Thinkbox\AWSPortalLink\</span></code> by default. If you installed AWS Portal Link on Linux the DashKey can be found in <code class="docutils literal notranslate"><span class="pre">/opt/Thinkbox/AWSPortalLink/</span></code> by default.</p></li>
+<li><p><strong>Get the default user name</strong> <br /> On the Gateway instance the default user is <code class="docutils literal notranslate"><span class="pre">ec2-user</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="windows">
+<h2>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="aws-connect-to-infrastructure-from-windows.html#aws-connect-infrastructure-from-windows-ref-label"><span class="std std-ref">Follow these instructions if connecting from a Windows machine</span></a></p>
+</div>
+<div class="section" id="linux-macos">
+<h2>Linux/macOS<a class="headerlink" href="#linux-macos" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="aws-connect-to-infrastructure-from-linux-or-osx.html#aws-connect-infrastructure-from-linux-or-osx-ref-label"><span class="std std-ref">Follow these instructions if connecting from a Linux or macOS machine</span></a></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Connecting to the Infrastructure</a><ul>
+<li><a class="reference internal" href="#every-operating-system">Every Operating System</a></li>
+<li><a class="reference internal" href="#windows">Windows</a></li>
+<li><a class="reference internal" href="#linux-macos">Linux/macOS</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="spot-fleet-request-fails-to-start.html"
+                        title="previous chapter">Spot Fleet Request Fails to Start</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="aws-connect-to-infrastructure-from-linux-or-osx.html"
+                        title="next chapter">Connecting to an Infrastructure From a Linux or macOS Machine</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-connect-to-infrastructure-from-linux-or-osx.html" title="Connecting to an Infrastructure From a Linux or macOS Machine"
+             >next</a></li>
+        <li class="right" >
+          <a href="spot-fleet-request-fails-to-start.html" title="Spot Fleet Request Fails to Start"
+             >previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Connecting to the Infrastructure</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

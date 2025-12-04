@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monitor and User Settings &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Local Worker Controls" href="local-worker.html" />
+    <link rel="prev" title="Archiving Jobs" href="job-archiving.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="local-worker.html" title="Local Worker Controls"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="job-archiving.html" title="Archiving Jobs"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-getting-started.html" accesskey="U">Getting Started With Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Monitor and User Settings</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="monitor-and-user-settings">
+<span id="user-settings-ref-label"></span><h1>Monitor and User Settings<a class="headerlink" href="#monitor-and-user-settings" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>You can customize your Monitor options, User settings, and Styles in the Monitor Options. On Windows and Linux, select Tools -&gt; Options, and on macOS, select Deadline Monitor -&gt; Preferences. You can also open these settings from the main toolbar in the Monitor.</p>
+</div>
+<div class="section" id="monitor-options">
+<h2>Monitor Options<a class="headerlink" href="#monitor-options" title="Permalink to this headline">¶</a></h2>
+<p>The Monitor options allow you to customize a few aspects of the Monitor.</p>
+<a class="reference internal image-reference" href="../_images/monitor_options.png"><img alt="../_images/monitor_options.png" src="../_images/monitor_options.png" style="height: 500px;" /></a>
+<p><strong>Job List</strong></p>
+<ul class="simple">
+<li><p><strong>Enable Drag &amp; Drop Dependencies</strong>: If enabled, you can drag jobs and drop them on other jobs to set dependencies. Note that you must restart the Monitor for this setting to take effect. See the <a class="reference internal" href="job-controlling.html#job-controlling-ref-label"><span class="std std-ref">Controlling Jobs</span></a> documentation for more information on setting dependencies this way.</p></li>
+<li><p><strong>Show Task States In Job Progress Bar</strong>: If enabled, the job progress bars will show the states of all the tasks for the job.</p></li>
+<li><p><strong>Change Color Of Jobs That Accumulate Errors</strong>: If enabled, jobs will change color from the Rendering color to the Failed color as they accumulate errors. See the <a class="reference internal" href="#styles-ref-label"><span class="std std-ref">Styles</span></a> section further down for more on the colors.</p></li>
+<li><p><strong>Group Single Job Batches</strong>: If enabled, batches that contain only one job will still be grouped in the job list.</p></li>
+<li><p><strong>Suspend Filters for Hidden Job Panels</strong>: If enabled, filtering calculations will be suspended for Job Panels when they are hidden. This improves overall performance of the Monitor when multiple panels are open, but requires recalculation of the entire filter when restoring hidden panels.</p></li>
+<li><p><strong>Suspend Filter Delay</strong> This setting introduces a delay before the filters of a hidden Job panel are suspended, as described above. This value is in seconds.</p></li>
+</ul>
+<p><strong>Task List</strong></p>
+<ul>
+<li><p><strong>Task Double-click Behavior</strong>: Customize the double-click behavior of rendering, completed, and failed tasks in the task list. Double-clicking on tasks in other states will bring up the task reports panel. These are the available options:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>View Reports</strong>: This will bring up the task reports panel for the selected task.</p></li>
+<li><p><strong>Connect To Worker Log</strong>: This will connect to the Worker that is rendering or has rendered the selected task.</p></li>
+<li><p><strong>View Image</strong>: This will open the output image for the selected task in the default viewer.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Change Color Of Tasks That Accumulate Errors</strong>: If enabled, tasks will change color from the Rendering color to the Failed color as they accumulate errors. See the <a class="reference internal" href="#styles-ref-label"><span class="std std-ref">Styles</span></a> section further down for more on the colors.</p></li>
+</ul>
+<p><strong>Worker List</strong></p>
+<ul class="simple">
+<li><p><strong>Suspend Filters for Hidden Worker Panels</strong>: If enabled, filtering calculations will be suspended for Worker panels when they are hidden. This improves overall performance of the Monitor when multiple panels are open, but requires recalculation of the entire filter when restoring hidden panels.</p></li>
+<li><p><strong>Suspend Filter Delay</strong> This setting introduces a delay before the filters of a hidden Worker panel are suspended, as described above. This value is in seconds.</p></li>
+</ul>
+<p><strong>Miscellaneous</strong></p>
+<ul class="simple">
+<li><p><strong>Start In Power User Mode</strong>: If enabled, the Monitor will start with Power User mode enabled. If Power User mode is password protected, you will be prompted for the password when you start the Monitor.</p></li>
+<li><p><strong>Stream Job Logs from Pulse</strong>: If enabled, the Monitor will stream the job logs from Pulse instead of reading them directly from the Repository. While streaming the logs this way is typically slower, it can be useful if the connection to the Repository server is slow.</p></li>
+<li><p><strong>Show House Cleaning Updates In Status Bar</strong>: If enabled, the Monitor status bar will show when the last House Cleaning was performed.</p></li>
+<li><p><strong>Show Repository Repair Updates In Status Bar</strong>: If enabled, the Monitor status bar will show when the last Repository Repair was performed.</p></li>
+<li><p><strong>Show Pending Job Scan Updates In Status Bar</strong>: If enabled, the Monitor status bar will show when the last Pending Job Scan was performed.</p></li>
+<li><p><strong>Enable Worker Pinging</strong>: If enabled, the Worker List will show if Worker machines can be pinged or not.</p></li>
+<li><p><strong>Search History Length</strong>: The number of previous search entries that are stored in the Search Boxes in the Monitor. Setting this to 0 will disable the search history.</p></li>
+</ul>
+</div>
+<div class="section" id="image-viewers">
+<h2>Image Viewers<a class="headerlink" href="#image-viewers" title="Permalink to this headline">¶</a></h2>
+<p>Configure the image viewer applications that the Job and Task panels uses to view output images. See the <a class="reference internal" href="job-controlling.html#job-controlling-ref-label"><span class="std std-ref">Controlling Jobs</span></a> documentation for more information on viewing job output.</p>
+<a class="reference internal image-reference" href="../_images/image_viewers.png"><img alt="../_images/image_viewers.png" src="../_images/image_viewers.png" style="height: 500px;" /></a>
+<p>You can specify up to three image view applications with the following options:</p>
+<ul class="simple">
+<li><p><strong>Executable</strong>: The path to the image viewer executable you want to use.</p></li>
+<li><p><strong>Arguments</strong>: The arguments to pass to the image viewer executable. The default is “{FRAME}”, which represents a path to a single image file for a task. More information about the support argument tags can be found below.</p></li>
+<li><p><strong>Name</strong>: The viewer name, which is used in the menu item created for this image viewer (defaults to the executable name if left blank).</p></li>
+<li><p><strong>Viewer Supports Chunked Tasks</strong>: If enabled, the tasks image viewer dialog will not be shown when viewing the output for jobs with Frames Per Task greater than 1.</p></li>
+</ul>
+<p>The following tags are supported in the custom viewer arguments, and can be combined with other arguments that the image viewer accepts:</p>
+<ul class="simple">
+<li><p>{FRAME}: This represents the task’s frame file. For example: /path/to/image0002.png</p></li>
+<li><p>{SEQ#}: This represents the task’s frame sequence files, using ‘#’ as the padding. For example: /path/to/image####.png</p></li>
+<li><p>{SEQ?}: This represents the task’s frame sequence files, using ‘?’ as the padding. For example: /path/to/image????.png</p></li>
+<li><p>{SEQ&#64;}: This represents the task’s frame sequence files, using ‘&#64;’ as the padding. For example: /path/to/image&#64;&#64;&#64;&#64;.png</p></li>
+<li><p>{SEQ%}: This represents the task’s frame sequence files, using ‘%d’ as the padding. For example: /path/to/image%04d.png</p></li>
+<li><p>{SEQ$}: This represents the task’s frame sequence files, replacing the frame number with ‘$F#’, where # is the length of the padding. For example: /path/to/image0002.png becomes /path/to/image$F4.png.</p></li>
+</ul>
+<p>You can also specify the Preferred Image Viewer, which is the default image viewer to use when viewing output files. If set to DefaultViewer, the system’s default application for the output file type will be used.</p>
+</div>
+<div class="section" id="user-settings">
+<span id="user-settings-us-ref-label"></span><h2>User Settings<a class="headerlink" href="#user-settings" title="Permalink to this headline">¶</a></h2>
+<p>You can configure you user settings here.</p>
+<a class="reference internal image-reference" href="../_images/user_settings.png"><img alt="../_images/user_settings.png" src="../_images/user_settings.png" style="height: 500px;" /></a>
+<p><strong>Notification Settings</strong></p>
+<p>If you would like to receive email notifications for your job, you can specify your email address in the Notification Settings and enable the option to receive them. Note that this requires your administrator to configure the email settings in the Repository Options.</p>
+<p>If you would like to receive popup message notifications for your job, you can specify your machine name in the Notification Settings and enable the option to receive them. Note that this requires the <a class="reference internal" href="launcher.html#launcher-ref-label"><span class="std std-ref">Launcher</span></a> to be running on the machine that you specify here.</p>
+<p>You can also choose the types of notifications that you would like to receive. The available notifications are:</p>
+<ul class="simple">
+<li><p><strong>Job Completed</strong>: If enabled, you will receive notifications for your jobs when they complete.</p></li>
+<li><p><strong>Job Failed</strong>: If enabled, you will receive notifications for your jobs when they fail.</p></li>
+<li><p><strong>Job Warning</strong>: If enabled, you will receive notifications for your jobs when they generate a certain number of errors. The error count is configured by your administrator.</p></li>
+<li><p><strong>Job Timeout</strong>: If enabled, you will receive notifications for your jobs when they timeout.</p></li>
+</ul>
+<p><strong>Render Job As User Settings</strong></p>
+<p>If the Render Job As User option is enabled in the job settings in the Repository Options, these options will be used to launch the rendering process as the specified user. For Linux and MacOS, only the User Name is required. For Windows, the Domain and Password must be provided. See the <a class="reference internal" href="environment.html#environment-render-as-user-ref-label"><span class="std std-ref">Render Jobs As Job’s User</span></a> documentation for more information.</p>
+<p><strong>Web Service Authentication Settings</strong></p>
+<p>You can also specify a Web Service password. This may be required to use with the Deadline Web Service if authentication has been enabled and empty passwords are not allowed. It is not recommended to allow empty passwords with the Web Service.</p>
+<p><strong>Enable Ability To Change Default Repository Option</strong></p>
+<p>This option controls how Deadline will change the default Repository when you connect to a different Repository in the Monitor. When you change to a new Repository, the action taken by Deadline will depend on the chosen option:</p>
+<ul class="simple">
+<li><p><strong>Ask</strong>: A message will ask you whether or not you want to set the new Repository as the default Repository.</p></li>
+<li><p><strong>Always</strong>: The new Repository will always be set as the default Repository.</p></li>
+<li><p><strong>Never</strong>: The default Repository will never be changed to the new Repository.</p></li>
+</ul>
+</div>
+<div class="section" id="styles">
+<span id="styles-ref-label"></span><h2>Styles<a class="headerlink" href="#styles" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Only import style files from trusted sources.</p>
+</div>
+<p>The Styles panel can be used to customize the color palette and the fonts that the Deadline Applications use. Custom styles can be saved and imported as well. Syntax highlighting can also be configured here.</p>
+<a class="reference internal image-reference" href="../_images/styles.png"><img alt="../_images/styles.png" src="../_images/styles.png" style="height: 500px;" /></a>
+<p>By default, the current style will be Default Style, which is the style shipped with Deadline and cannot be modified in any way. Previously saved styles will be available in the Saved Styles list. Custom styles can be created and deleted by clicking the Create New Style and Delete Style buttons, respectively.</p>
+<p>Once a custom style has been selected, the style’s color palette can be modified:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The General Palette color is used to generate the colors for the various controls and text in the Deadline applications. Note that dark palettes will result in light text, and light palettes will result in dark text.</p></li>
+<li><p>The Selection color is used to highlight selected items or text.</p></li>
+<li><p>The remaining colors are used to color the text for jobs, tasks, Workers, etc, based on their current state. It is recommended to choose colors that contrast well with the General Palette and Selection colors to ensure the text is readable.</p></li>
+</ul>
+</div></blockquote>
+<p>The style’s font can be modified as well:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Primary Font</strong>: This is the font used for almost all the text in the Deadline applications.</p></li>
+<li><p><strong>Console Font</strong>: This is the font used in console and log windows. By default, a monospace font is used for these windows.</p></li>
+</ul>
+</div></blockquote>
+<p>Any style changes made are not saved until the Monitor Options dialog is accepted by clicking OK. Once the dialog has been accepted, the Monitor must be restarted in order to apply the style changes. In order to facilitate testing out new styles, there is a Preview Style button which opens a dialog that displays an approximation of the current style settings.</p>
+<a class="reference internal image-reference" href="../_images/styles_preview.png"><img alt="../_images/styles_preview.png" src="../_images/styles_preview.png" style="height: 300px;" /></a>
+<p>Note that the Deadline applications will always load with the style that was last selected in the Styles panel in the Monitor Options.</p>
+<a class="reference internal image-reference" href="../_images/styles_cyan.png"><img alt="../_images/styles_cyan.png" src="../_images/styles_cyan.png" style="height: 600px;" /></a>
+<p>Note that when saving styles, all of the custom styles are saved, and when loading saved styles from disk the loaded styles will be appended to the list of styles currently
+present, overwriting any styles with a shared name.</p>
+<p id="syntax-highlighting-option-ref-label"><strong>Syntax Highlighting</strong></p>
+<p>Additional information on syntax highlighting can be found in <a class="reference internal" href="logs.html#syntax-highlighting-ref-label"><span class="std std-ref">Syntax Highlighting</span></a>.</p>
+<ul class="simple">
+<li><p><strong>Enable Syntax Highlighting in Logs, Reports, and Console</strong>: If enabled, coloring will be added to text in logs, reports, and the console panel. The colors used are based on the current style’s color palette.</p></li>
+</ul>
+<blockquote>
+<div><p>This option takes effect the next time a log, report, or the console panel is launched. However, color changes take effect the next time the Monitor is launched.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Monitor and User Settings</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#monitor-options">Monitor Options</a></li>
+<li><a class="reference internal" href="#image-viewers">Image Viewers</a></li>
+<li><a class="reference internal" href="#user-settings">User Settings</a></li>
+<li><a class="reference internal" href="#styles">Styles</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="job-archiving.html"
+                        title="previous chapter">Archiving Jobs</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="local-worker.html"
+                        title="next chapter">Local Worker Controls</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="local-worker.html" title="Local Worker Controls"
+             >next</a></li>
+        <li class="right" >
+          <a href="job-archiving.html" title="Archiving Jobs"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-getting-started.html" >Getting Started With Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Monitor and User Settings</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Switching AWS Accounts &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="AWS Portal NGINX Cache" href="aws-portal-nginx-cache.html" />
+    <link rel="prev" title="Asset Server Options" href="aws-asset-server.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-nginx-cache.html" title="AWS Portal NGINX Cache"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="aws-asset-server.html" title="Asset Server Options"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Switching AWS Accounts</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<div class="section" id="switching-aws-accounts">
+<span id="switching-aws-accounts-ref-label"></span><h1>Switching AWS Accounts<a class="headerlink" href="#switching-aws-accounts" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="before-switching-accounts">
+<span id="before-switching-accounts-ref-label"></span><h2>Before Switching Accounts<a class="headerlink" href="#before-switching-accounts" title="Permalink to this headline">¶</a></h2>
+<p>Before you switch to a different AWS account, it is strongly recommended that you
+<strong>stop all spot fleets and infrastructures</strong>. If you do not do this, the spot fleets
+and infrastructures will continue to run in your old account and <strong>charges will apply</strong>.</p>
+</div>
+<div class="section" id="creating-a-new-s3-bucket">
+<span id="create-a-new-s3-bucket-ref-label"></span><h2>Creating A New S3 Bucket<a class="headerlink" href="#creating-a-new-s3-bucket" title="Permalink to this headline">¶</a></h2>
+<p>After signing into the new account you will need to create a new S3 bucket in the new account.
+It is recommended that if the old account is no longer going to be used for AWS Portal that you
+delete the S3 bucket that was used for the AWS Portal asset transfer system. If you do not
+do this, <strong>charges may apply</strong> for the storage used by this bucket. To do this:</p>
+<ol class="arabic">
+<li><p>Log into the AWS Console under the old account.</p></li>
+<li><p>Expand the “All services” section and under “Storage” click the “S3” link.</p></li>
+<li><p>Select the bucket that was used by the asset transfer system from the list.</p></li>
+<li><p>Click “Delete Bucket”.</p></li>
+<li><p>If the bucket is not empty, you will be prompted to type the name of the bucket before you can delete it.</p>
+<blockquote>
+<div><img alt="../_images/delete-bucket.png" src="../_images/delete-bucket.png" />
+</div></blockquote>
+</li>
+<li><p>Press confirm.</p></li>
+</ol>
+<p>To create a new bucket in the new AWS account you will need to click the “New Bucket” button in the AWS Portal Settings
+dialog.</p>
+<blockquote>
+<div><img alt="../_images/create-bucket.png" src="../_images/create-bucket.png" />
+</div></blockquote>
+<p>Once the bucket has been created, if the Asset Server is currently running,
+you will need to restart the Asset Server. On Windows, you can do this by opening
+Task Manager (press Ctrl + Shift + Esc), going to the “Services” tab, right clicking on “AWSPortalAssetServer” and selecting “Restart”.</p>
+<blockquote>
+<div><img alt="../_images/windows-services.png" src="../_images/windows-services.png" />
+</div></blockquote>
+<p>On linux this can be done by running the command <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">awsportalassetservershellscript</span> <span class="pre">restart</span></code>.
+Note that restarting the service must be done on the machine the Asset Server is running on.
+If the Asset Server is not currently installed or you intend to reinstall it, you will need to create the new
+bucket before you run install the Asset Server, or run the “Remove Orphaned AWS Entities” procedure as explained
+in the next section.</p>
+</div>
+<div class="section" id="manually-stopping-infrastructure-and-spot-fleets">
+<span id="manually-stopping-infrastructure-and-spot-fleets-ref-label"></span><h2>Manually Stopping Infrastructure and Spot Fleets<a class="headerlink" href="#manually-stopping-infrastructure-and-spot-fleets" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cleaning-up-the-database">
+<span id="cleaning-up-the-database-ref-label"></span><h3>Cleaning Up The Database<a class="headerlink" href="#cleaning-up-the-database" title="Permalink to this headline">¶</a></h3>
+<p>If for whatever reason you no longer have access to the old AWS Account and need to remove Spot Fleets or infrastructures
+associated with this account from the Deadline Database, you can do this by opening the AWS Portal Settings dialog and
+clicking on the “Advanced” tab and pressing the “Remove Orphaned AWS Entities” button.</p>
+<blockquote>
+<div><img alt="../_images/cleanup-aws-orphans.png" src="../_images/cleanup-aws-orphans.png" />
+</div></blockquote>
+<p>You will be prompted to type in
+<a class="reference external" href="https://docs.aws.amazon.com/IAM/latest/UserGuide/console_account-alias.html">your AWS Account Id</a> to confirm that
+you wish to do this before proceeding. This will remove any spot fleets, infrastructures, and S3 buckets not owned
+by the account you are currently signed in from the Deadline database. It <strong>will not stop or delete these entities in AWS itself</strong>.
+If any spot fleets, infrastructures, or S3 buckets are not deleted from the old AWS account
+<strong>charges will apply</strong>.</p>
+</div>
+<div class="section" id="stopping-spot-fleets">
+<span id="stopping-spot-fleets-ref-label"></span><h3>Stopping Spot Fleets<a class="headerlink" href="#stopping-spot-fleets" title="Permalink to this headline">¶</a></h3>
+<p>From the AWS console:</p>
+<ol class="arabic">
+<li><p>Switch your region to the region that your spot fleet was created in by clicking the region drop down in the upper right-hand corner and selecting the correct region.</p>
+<blockquote>
+<div><img alt="../_images/switch-region.png" src="../_images/switch-region.png" />
+</div></blockquote>
+</li>
+<li><p>Expand the “All services” section and under “Compute” click on “EC2”.</p></li>
+<li><p>In the left side-bar, click on “Spot Requests”.</p></li>
+<li><p>Select the spot fleet you wish to stop.</p></li>
+<li><p>Click the “Actions” button and then “Cancel Spot Request”.</p>
+<blockquote>
+<div><img alt="../_images/cancel-spot-request.png" src="../_images/cancel-spot-request.png" />
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="stopping-infrastructures">
+<span id="stopping-infrastructures-ref-label"></span><h3>Stopping Infrastructures<a class="headerlink" href="#stopping-infrastructures" title="Permalink to this headline">¶</a></h3>
+<p>From the AWS console:</p>
+<ol class="arabic">
+<li><p>Switch your region to the region that your infrastructure was created in by clicking the region drop down in the upper right-hand corner and selecting the correct region.</p>
+<blockquote>
+<div><img alt="../_images/switch-region.png" src="../_images/switch-region.png" />
+</div></blockquote>
+</li>
+<li><p>Ensure that you have <strong>stopped all spot fleet requests</strong> associated with the infrastructure (see previous section).</p></li>
+<li><p>Expand the “All services” section and under “Management Tools” click on “CloudFormation”</p></li>
+<li><p>Select the “Stack” associated with the infrastructure you wish to remove.</p></li>
+<li><p>Click on the “Resources” tab and click the link in the “Physical ID” column in the row where “ClientBucket” is the “Logical ID”.</p>
+<blockquote>
+<div><img alt="../_images/cloudformation-bucket.png" src="../_images/cloudformation-bucket.png" />
+</div></blockquote>
+</li>
+<li><p>Select the “certs” directory (and any other directories that may be in the bucket)</p></li>
+<li><p>Under the “More” drop-down select “Delete”</p>
+<blockquote>
+<div><img alt="../_images/delete-certs.png" src="../_images/delete-certs.png" />
+</div></blockquote>
+</li>
+<li><p>Close the “S3 Management Console” tab to get back to the CloudFormation console.</p></li>
+<li><p>Ensure the stack for the infrastructure you wish to delete is still selected then click the “Actions” button and “Delete Stack”</p>
+<blockquote>
+<div><img alt="../_images/delete-stack.png" src="../_images/delete-stack.png" />
+</div></blockquote>
+</li>
+<li><p>Press the “Yes, Delete” button and wait for the stack to finish deleting.</p></li>
+</ol>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Switching AWS Accounts</a><ul>
+<li><a class="reference internal" href="#before-switching-accounts">Before Switching Accounts</a></li>
+<li><a class="reference internal" href="#creating-a-new-s3-bucket">Creating A New S3 Bucket</a></li>
+<li><a class="reference internal" href="#manually-stopping-infrastructure-and-spot-fleets">Manually Stopping Infrastructure and Spot Fleets</a><ul>
+<li><a class="reference internal" href="#cleaning-up-the-database">Cleaning Up The Database</a></li>
+<li><a class="reference internal" href="#stopping-spot-fleets">Stopping Spot Fleets</a></li>
+<li><a class="reference internal" href="#stopping-infrastructures">Stopping Infrastructures</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aws-asset-server.html"
+                        title="previous chapter">Asset Server Options</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="aws-portal-nginx-cache.html"
+                        title="next chapter">AWS Portal NGINX Cache</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-nginx-cache.html" title="AWS Portal NGINX Cache"
+             >next</a></li>
+        <li class="right" >
+          <a href="aws-asset-server.html" title="Asset Server Options"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Switching AWS Accounts</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

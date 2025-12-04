@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>(Unsupported) Web Forwarding &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Floating License Portal" href="floating-license-portal.html" />
+    <link rel="prev" title="(Unsupported) Cloud License Server Proxy" href="licensing-usage-based-proxy.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="floating-license-portal.html" title="Floating License Portal"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="licensing-usage-based-proxy.html" title="(Unsupported) Cloud License Server Proxy"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installing-deadline.html" accesskey="U">Installing Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">(Unsupported) Web Forwarding</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="unsupported-web-forwarding">
+<span id="licensing-web-forwarding-ref-label"></span><h1>(Unsupported) Web Forwarding<a class="headerlink" href="#unsupported-web-forwarding" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Topics covered in this page refer to legacy Thinkbox usage-based licensing (UBL), which is no longer available as of September 30, 2025. The UBL feature in Deadline 10 is now available through <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> UBL. For detailed setup instructions, please see the <a class="reference internal" href="licensing-usage-based.html#licensing-usage-based-ref-label"><span class="std std-ref">Deadline Cloud UBL Documentation</span></a>.</p>
+<p>For more details, please refer to <a class="reference external" href="https://marketplace.thinkboxsoftware.com/">the marketplace website</a>.</p>
+</div>
+<p>When using <a class="reference internal" href="licensing-usage-based-legacy.html#licensing-usage-based-legacy-ref-label"><span class="std std-ref">Legacy Usage-Based Licensing</span></a>, the <a class="reference internal" href="worker.html#worker-ref-label"><span class="std std-ref">Worker</span></a> is responsible for checking out the credits it needs. It is
+not always desirable for the <a class="reference internal" href="worker.html#worker-ref-label"><span class="std std-ref">Worker</span></a> to have internet access, which is why we have introduced the Web Forwarding functionality to the
+<a class="reference internal" href="license-forwarder.html#license-forwarder-ref-label"><span class="std std-ref">License Forwarder</span></a> in Deadline 9.0.</p>
+<p>When Web Forwarding is enabled, <a class="reference internal" href="worker.html#worker-ref-label"><span class="std std-ref">Workers</span></a> using UBL or 3PL will send their credit requests to the <a class="reference internal" href="license-forwarder.html#license-forwarder-ref-label"><span class="std std-ref">License Forwarder</span></a>.</p>
+<div class="section" id="setup-license-forwarder">
+<h2>Setup - License Forwarder<a class="headerlink" href="#setup-license-forwarder" title="Permalink to this headline">¶</a></h2>
+<p>In order for Web Forwarding to work, you must first generate the Web Forwarding certificates using the Certificate Utility.</p>
+<p>The Certificate Utility is included in the <a class="reference internal" href="quick-install-client.html#quick-install-client-ref-label"><span class="std std-ref">Client Installation</span></a>.
+On Windows and Linux, the Certificate Utility is in the <code class="docutils literal notranslate"><span class="pre">bin/</span></code> directory of the Deadline Client installation.
+On macOS it is located in the <code class="docutils literal notranslate"><span class="pre">Resources/</span></code> directory of the Deadline Client installation. An example,
+using Deadline’s default client installation locations for each operating system:</p>
+<ul class="simple">
+<li><p><strong>Windows</strong>: <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\Thinkbox\bin\CertificateInstaller-X.X.X.X-windows-installer.exe</span></code></p></li>
+<li><p><strong>Linux</strong>: <code class="docutils literal notranslate"><span class="pre">/opt/Thinkbox/Deadline10/bin/CertificateInstaller-X.X.X.X-linux-installer.run</span></code></p></li>
+<li><p><strong>macOS</strong>: <code class="docutils literal notranslate"><span class="pre">/Applications/Thinkbox/Deadline10/Resources/CertificateInstaller-X.X.X.X-osx-installer.app</span></code></p></li>
+</ul>
+<p>First you must run the utility on the machine that hosts the License Forwarder.
+You want to generate certificates, so run the utility in “Forwarder” mode.</p>
+<a class="reference internal image-reference" href="../_images/cert_utility_forwarder.png"><img alt="../_images/cert_utility_forwarder.png" src="../_images/cert_utility_forwarder.png" style="height: 400px;" /></a>
+<p>You will be asked to provide an installation directory to store the 3 certificates that will be output by this mode. Make sure you pick a location that is writable.
+The next step will prompt you for an IP address or hostname. The utility will try to determine what that address should be, but you must make sure that the address found matches
+the address the Worker machines will actually use to reach the License Forwarder. Note that you do not need to actually run this utility on the License Forwarder machine itself, provided
+that you know what the License Forwarder machine’s reachable address is and enter it at this point.</p>
+<a class="reference internal image-reference" href="../_images/cert_utility_ip.png"><img alt="../_images/cert_utility_ip.png" src="../_images/cert_utility_ip.png" style="height: 400px;" /></a>
+<p>Now the utility will continue with the generation of the certificates. Once it has completed, you should have two .crt files and one .pfx file stored in the location you specified
+during the installation. The two .crt files are need by the utility when running in Worker mode, so make sure these two files are located somewhere on your network where they can be
+reached by the Worker machines. One of the .crt files should be named after the IP address/hostname of the License Forwarder machine, and so should the .pfx file, so make sure you are
+manipulating the correct file. You must also move the .pfx file to the <a class="reference internal" href="client-config.html#client-config-forwarder-ssl-path-ref-label"><span class="std std-ref">License Forwarder’s certificate folder</span></a>. This must be done
+so that the License Forwarder will actually use the certificate you generated. If the License Forwarder is configured to use the same IP address/hostname that was specified when generating
+the file, it should look like this when run:</p>
+<a class="reference internal image-reference" href="../_images/web_forwarding_forwarder_suc.png"><img alt="../_images/web_forwarding_forwarder_suc.png" src="../_images/web_forwarding_forwarder_suc.png" style="height: 400px;" /></a>
+<p>If there is a mismatch, the License Forwarder will look something like this when run:</p>
+<a class="reference internal image-reference" href="../_images/web_forwarding_forwarder_fail.png"><img alt="../_images/web_forwarding_forwarder_fail.png" src="../_images/web_forwarding_forwarder_fail.png" style="height: 400px;" /></a>
+<p>The License Forwarder will attempt to find a .pfx file that matches what it thinks its IP address/hostname is. You can override the IP address/hostname of the License Forwarder
+from the <a class="reference internal" href="monitor.html#monitor-ref-label"><span class="std std-ref">Monitor</span></a> if the address of the certificate is correct but the License Forwarder’s address is not. This setting is configurable by right clicking on the
+License Forwarder instance in the License Forwarder panel and selecting “Modify License Forwarder Properties…”:</p>
+<a class="reference internal image-reference" href="../_images/forwarder_properties.png"><img alt="../_images/forwarder_properties.png" src="../_images/forwarder_properties.png" style="height: 400px;" /></a>
+<p>Once the address matches for the License Forwarder and the .pfx, you’re ready to configure the Worker machines.</p>
+</div>
+<div class="section" id="setup-workers">
+<h2>Setup - Workers<a class="headerlink" href="#setup-workers" title="Permalink to this headline">¶</a></h2>
+<p>If you know how to install certificates manually then you can just install the two .crt certificates on all Worker machines as system root certificates and they’ll be ready for
+Web Forwarding. If you are not familiar with certificates, or simply would rather not do that yourself, fear not! The Certificate Utility also has a “Worker” mode which will perform
+the necessary steps for you (unless you’re using an operating system that is not recognized by the utility, at which point you will be required to install the certificates manually).</p>
+<p>Run the Certificate Utility in “Worker” mode:</p>
+<a class="reference internal image-reference" href="../_images/cert_utility_worker.png"><img alt="../_images/cert_utility_worker.png" src="../_images/cert_utility_worker.png" style="height: 400px;" /></a>
+<p>You will need to provide the path to the .crt file named after the License Forwarder (not the ca.crt):</p>
+<a class="reference internal image-reference" href="../_images/cert_utility_crt_path.png"><img alt="../_images/cert_utility_crt_path.png" src="../_images/cert_utility_crt_path.png" style="height: 400px;" /></a>
+<p>Now the utility will install the required certificates on your machine. At this point, if the operating system is not recognized, you will see a pop-up explaining that you need to
+install the certificates manually. The supported operating systems for the utility are:</p>
+<ul class="simple">
+<li><p>Windows</p></li>
+<li><p>macOS</p></li>
+<li><p>Debian</p></li>
+<li><p>Red Hat</p></li>
+<li><p>Ubuntu</p></li>
+<li><p>CentOS</p></li>
+<li><p>Fedora</p></li>
+</ul>
+<p>Now you’re ready to start using the License Forwarder Web Forwarding! Simply enable the option in the Monitor from “Configure Repository Options -&gt; Usage-Based Licensing”:</p>
+<a class="reference internal image-reference" href="../_images/use_web_forwarding.png"><img alt="../_images/use_web_forwarding.png" src="../_images/use_web_forwarding.png" style="height: 400px;" /></a>
+</div>
+<div class="section" id="linux-note-forwardercacertpath">
+<h2>Linux Note: ForwarderCACertPath<a class="headerlink" href="#linux-note-forwardercacertpath" title="Permalink to this headline">¶</a></h2>
+<p>If you have overloaded the “ForwarderCACertPath” entry in deadline.ini to use a different root certificate, you will need to manually update that certificate to contain the generated .crt certificate and the ca.crt. If an override is not specified for “ForwarderCACertPath”,
+Deadline will use the system ca-certificate root.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">(Unsupported) Web Forwarding</a><ul>
+<li><a class="reference internal" href="#setup-license-forwarder">Setup - License Forwarder</a></li>
+<li><a class="reference internal" href="#setup-workers">Setup - Workers</a></li>
+<li><a class="reference internal" href="#linux-note-forwardercacertpath">Linux Note: ForwarderCACertPath</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="licensing-usage-based-proxy.html"
+                        title="previous chapter">(Unsupported) Cloud License Server Proxy</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="floating-license-portal.html"
+                        title="next chapter">Floating License Portal</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="floating-license-portal.html" title="Floating License Portal"
+             >next</a></li>
+        <li class="right" >
+          <a href="licensing-usage-based-proxy.html" title="(Unsupported) Cloud License Server Proxy"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installing-deadline.html" >Installing Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">(Unsupported) Web Forwarding</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deadline Command &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="DJV" href="app-djv.html" />
+    <link rel="prev" title="CSiSAP2000" href="app-csisap2000.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-djv.html" title="DJV"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-csisap2000.html" title="CSiSAP2000"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Deadline Command</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="deadline-command">
+<span id="app-deadline-command-ref-label"></span><h1>Deadline Command<a class="headerlink" href="#deadline-command" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This plugin is deemed a potential security risk because it allows users to submit Deadline command arguments or arbitrary Python scripts to Deadline, which are then executed on the render nodes. Customers are encouraged to read the AWS Thinkbox Deadline <a class="reference internal" href="shared-security-model.html#shared-security-model-ref-label"><span class="std std-ref">Shared Responsibility Model</span></a> before using this plugin in their environment.</p>
+</div>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit Deadline command arguments or Python script jobs from the Monitor.</p>
+<a class="reference internal image-reference" href="../_images/sub_deadline_command.png"><img alt="../_images/sub_deadline_command.png" src="../_images/sub_deadline_command.png" style="height: 600px;" /></a>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. The Deadline Command specific options are:</p>
+<ul class="simple">
+<li><p><strong>Job Type</strong>: Choose a normal job or <a class="reference internal" href="manual-submission.html#maintenance-jobs-ref-label"><span class="std std-ref">maintenance job</span></a>. A normal job will let you specify an arbitrary frame list, but a maintenance job requires a start frame and an end frame.</p></li>
+<li><p><strong>Single Frames Only</strong>: If enabled, the plugin will only render one frame at a time even if a single task contains a chunk of frames.</p></li>
+<li><p><strong>Python Script File (Optional)</strong>: The Python script you want to submit.</p></li>
+<li><p><strong>Arguments (Optional)</strong>: The arguments to pass to the Deadline Command executable or Python script (if one is declared). Use the Start Frame Tag, End Frame Tag and Quote Tag buttons to add their corresponding tags to the end of the current arguments.</p></li>
+<li><p><strong>Argument Tags</strong>: See the <a class="reference internal" href="manual-submission.html#arbitrary-command-line-jobs-ref-label"><span class="std std-ref">Manual Job Submission</span></a> documentation for more information on these tags.</p></li>
+<li><p><strong>Frame Tag Padding</strong>: Determines the amount of frame padding to be added to the Start and End Frame tags.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Deadline Command plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Deadline Command plugin from the list on the left. To get a description of each setting,
+simply hover the mouse cursor over a setting and a tool tip will be displayed.</p>
+<a class="reference internal image-reference" href="../_images/cp_deadline_command.png"><img alt="../_images/cp_deadline_command.png" src="../_images/cp_deadline_command.png" style="height: 400px;" /></a>
+<p><strong>Configuration</strong></p>
+<p>None. The Deadline Command plugin purposefully avoids the need for any plugin configuration to ensure it works on any Deadline render farm.</p>
+</div>
+<div class="section" id="faq">
+<span id="app-deadline-command-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Can I use Deadline Command plugin to validate my new Deadline render farm install?</strong></p>
+<blockquote>
+<div><p>Yes! A Deadline Command job can be submitted from the Deadline Monitor with no Python script and a simple Deadline Command argument such as <cite>GetVersion</cite> or <cite>GetFarmStatistics</cite> which will print StdOut to the task log, which you can view in the Job Report once the task has completed in Deadline Monitor. This technique provides customers with the ability to show “Proof of Life” and validate their Deadline farm installation.</p>
+</div></blockquote>
+<p><strong>Why use this Deadline Command plugin instead of the Python plugin in Deadline?</strong></p>
+<ul class="simple">
+<li><p>Python does not need to be installed on the Worker. Deadline Command plugin targets the packaged version of Python already part of the client installer in Deadline.</p></li>
+<li><p>No executable needs to be defined in the Deadline Command plugin configuration as it is resolved at execution time and relative to the location of the already running Deadline Worker executable.</p></li>
+<li><p>Executing an arbitrary Python Script via Deadline Command allows you to import Deadline’s Scripting API for advanced use cases.</p></li>
+</ul>
+<p><strong>Which versions of Python are supported?</strong></p>
+<blockquote>
+<div><p>The only version of Python supported via Deadline Command is the currently shipping version of Python in Deadline. To confirm Python version, open Deadline Monitor and inspect the “Console” panel (or Monitor log file), which prints the Python version on startup.</p>
+</div></blockquote>
+<p><strong>How do I handle paths in the arguments with spaces in them?</strong></p>
+<blockquote>
+<div><p>Use double-quotes around the path. For example, “T:\projects\path with spaces\project.ext”.</p>
+</div></blockquote>
+<p><strong>Can I execute (Load-Once) a Python script file once on each of my Deadline Workers?</strong></p>
+<blockquote>
+<div><p>Yes. Select <a class="reference internal" href="manual-submission.html#maintenance-jobs-ref-label"><span class="std std-ref">Maintenance</span></a> as the Job Type.</p>
+</div></blockquote>
+<p><strong>How can I report % progress of the task?</strong></p>
+<blockquote>
+<div><p>The Deadline Command plugin ships with a basic StdOut handler to report progress based on StdOut/print statements from the Python script you are executing. You can customize this StdOut handler in the <cite>DeadlineCommand.py</cite> plugin file to your needs or create additional ones. The default regular expression based handler expects to see StdOut with the syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Progress</span><span class="p">:</span> <span class="mi">10</span><span class="o">%</span>
+<span class="n">Progress</span><span class="p">:</span> <span class="mi">22</span><span class="o">%</span>
+<span class="n">Progress</span><span class="p">:</span> <span class="mi">33</span><span class="o">%</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>Basic usage from your Python script would be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">progress</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Progress: </span><span class="si">{}</span><span class="s2">%&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">progress</span><span class="p">))</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Deadline Command</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-csisap2000.html"
+                        title="previous chapter">CSiSAP2000</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-djv.html"
+                        title="next chapter">DJV</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-djv.html" title="DJV"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-csisap2000.html" title="CSiSAP2000"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Deadline Command</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

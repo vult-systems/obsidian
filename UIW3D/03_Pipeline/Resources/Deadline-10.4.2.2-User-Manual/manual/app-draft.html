@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Draft &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Draft Tile Assembler" href="app-draft-tile-assembler.html" />
+    <link rel="prev" title="DJV" href="app-djv.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-draft-tile-assembler.html" title="Draft Tile Assembler"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-djv.html" title="DJV"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Draft</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="draft">
+<span id="app-draft-ref-label"></span><h1>Draft<a class="headerlink" href="#draft" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Draft is a tool that provides simple and lightweight compositing and video processing functionality, designed to automate typical post-render tasks. It is implemented as a Python library (works across all platforms), which exposes functionality for use in Python scripts (which are referred to as Draft Templates). Draft is designed to be tightly integrated with Deadline, but it can also be used as a <a class="reference internal" href="#draft-standalone-ref-label"><span class="std std-ref">Standalone</span></a> tool.</p>
+<p>Please note, new <a class="reference internal" href="event-draft.html#quick-draft-options-ref-label"><span class="std std-ref">Quick Draft</span></a> options have been added to most of the job submitters that allow you to easily create movies from your rendered images or perform file conversions, without having to create a Draft template (Python) script. Instead, a generic Draft template that ships with Deadline is now used, and it lets you specify settings like Output Type, Codec, Resolution, and Frame Rate. See the <a class="reference internal" href="event-draft.html#event-draft-ref-label"><span class="std std-ref">Draft Event plugin</span></a> for more information.</p>
+<p>Many Draft code snippets from our <strong>Draft Cookbook</strong> can be found in our <a class="reference external" href="https://docs.thinkboxsoftware.com/">Draft Documentation</a>.</p>
+<p>Draft Repository Paths:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Sample Draft Scripts</strong>: <code class="docutils literal notranslate"><span class="pre">/&lt;DeadlineRepository&gt;/draft/Samples</span></code></p></li>
+<li><p><strong>Draft OCIO/ACES LUTs</strong>: <code class="docutils literal notranslate"><span class="pre">/&lt;DeadlineRepository&gt;/draft/ocio-configs</span></code></p></li>
+<li><p><strong>Draft for Linux</strong>: <code class="docutils literal notranslate"><span class="pre">/&lt;DeadlineRepository&gt;/draft/Linux</span></code></p></li>
+<li><p><strong>Draft for Mac</strong>: <code class="docutils literal notranslate"><span class="pre">/&lt;DeadlineRepository&gt;/draft/Mac</span></code></p></li>
+<li><p><strong>Draft for Windows</strong>: <code class="docutils literal notranslate"><span class="pre">/&lt;DeadlineRepository&gt;/draft/Windows</span></code></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="licensing">
+<span id="draft-licensing-ref-label"></span><h2>Licensing<a class="headerlink" href="#licensing" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Starting with Deadline 10.1.23, Draft and Quick Draft do not require a license. The ONLY exception is that a Draft Pro license (FEATURE <strong>draft-pro-codec</strong>) is required if you are encoding to the 3rd party <strong>Avid DNxHD</strong> codec.</p>
+</div>
+<div class="section" id="licensing-on-aws">
+<h3>Licensing on AWS<a class="headerlink" href="#licensing-on-aws" title="Permalink to this headline">¶</a></h3>
+<p>When using a Draft license in AWS, there are additional steps. All of the following require that AWS Workers have access to a
+Deadline License Server.</p>
+<p>Option 1: If using AWS Portal, setup <a class="reference internal" href="aws-portal/byol-setup.html#aws-portal-configure-byol-ref-label"><span class="std std-ref">Bring Your Own Licensing</span></a> with your
+Deadline license server.</p>
+<p>Option 2: Add the <code class="docutils literal notranslate"><span class="pre">THINKBOX_LICENSE_FILE=port&#64;hostname</span></code> environment variable to all jobs requiring a Draft license that will run on AWS, where <code class="docutils literal notranslate"><span class="pre">hostname</span></code>
+is the hostname of your Deadline license server and <code class="docutils literal notranslate"><span class="pre">port</span></code> is the port your Deadline license server is listening on.
+The default port is 27008. For more details about setting Job environments, see <a class="reference internal" href="job-controlling.html#job-controlling-enviro-ref-label"><span class="std std-ref">Controlling Jobs Environments</span></a>.
+For more details on setting Job environments, when doing manual Job submission see, <a class="reference internal" href="environment.html#environment-ref-label"><span class="std std-ref">Render Environment</span></a>.</p>
+<p>Option 3: Add the <code class="docutils literal notranslate"><span class="pre">THINKBOX_LICENSE_FILE=port&#64;hostname</span></code> environment variable to the Amazon Machine Image (AMI) or EC2
+Instances that you are using for jobs requiring a Draft license. On Windows, add the <code class="docutils literal notranslate"><span class="pre">THINKBOX_LICENSE_FILE</span></code> environment variable to the system or user environment variables. On Linux, add the <code class="docutils literal notranslate"><span class="pre">THINKBOX_LICENSE_FILE</span></code> environment variable to system or user-specific startup
+files.</p>
+</div>
+</div>
+<div class="section" id="upgrading">
+<h2>Upgrading<a class="headerlink" href="#upgrading" title="Permalink to this headline">¶</a></h2>
+<p>While the Deadline repository installer ships with a build of Draft, via our beta program or otherwise, it is possible a newer version of Draft might be available via our beta forums. Draft can be upgraded independently of Deadline. Once you have downloaded the latest Draft build, simply extract the .zip file into your repository only under the <strong>Draft</strong> folder. The Workers will automatically sync up new versions of Draft to their local working folders when needed, similar to Deadline’s regular auto-update system. You can verify your version of Draft in a Python script like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">Draft</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Draft</span><span class="o">.</span><span class="n">LibraryInfo</span><span class="o">.</span><span class="n">Version</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>There are many ways to submit Draft jobs to Deadline. As always, you can simply submit a Draft job from within the Monitor from the Submit menu. In addition, we’ve also added a right-click job script to the Monitor, which will
+allow you to submit a Draft job based on an existing job. This will pull over output information from the original job, and fill in Draft parameters automatically where possible.</p>
+<a class="reference internal image-reference" href="../_images/sub_draft.png"><img alt="../_images/sub_draft.png" src="../_images/sub_draft.png" style="height: 500px;" /></a>
+<p>We’ve also added a Draft tab to all of our other submitters. Submitting a Draft job from any of these uses our <a class="reference internal" href="event-draft.html#event-draft-ref-label"><span class="std std-ref">Draft Event Plugin</span></a> to submit a Draft job based on the job currently being
+submitted (this is similar in concept to the right-click job script described above). The Draft job will get automatically created upon completion of the original job via the <code class="docutils literal notranslate"><span class="pre">OnJobFinishedCallback</span></code> in the Draft <a class="reference internal" href="event-draft.html#event-draft-ref-label"><span class="std std-ref">event</span></a> plugin.</p>
+</div>
+<div class="section" id="submission-options">
+<h2>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h2>
+<p>The general Deadline options are available in the Draft submitters, and are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. Draft-specific options are explained below. It should be noted, however,
+that given the nature of Draft scripts, not all of these parameters will be used by all scripts. They can even feasibly be used for different purposes than listed here.</p>
+<div class="section" id="job-options">
+<h3>Job Options<a class="headerlink" href="#job-options" title="Permalink to this headline">¶</a></h3>
+<p><strong>Draft Options</strong></p>
+<ul class="simple">
+<li><p><strong>Input File</strong>: The input file(s) on which to apply the Draft script. Passed to the Draft script as ‘inFile’.</p></li>
+<li><p><strong>Output Folder Name</strong>: The output folder in which the Draft script should put output files. Can be absolute, or relative to input folder. This is passed to the Draft script as ‘outFolder’.</p></li>
+<li><p><strong>Output File Name</strong>: The name that the script should use for the output file(s). Passed to the Draft script as ‘outFile’.</p></li>
+<li><p><strong>Frame List</strong>: The list of Frames that should be processed by the script. Passed to the Draft Script as ‘frameList’, ‘firstFrame’, and ‘lastFrame’.</p></li>
+<li><p><strong>Distributed Job</strong>: Specify if the job will be distributed. If enabled, custom scripts must work with taskStartFrame and taskEndFrame.</p></li>
+<li><p><strong>Frames Per Task</strong>: The number of frames, or chunk size, to be assigned to each task.</p></li>
+<li><p><strong>Machine Limit</strong>: The maximum number of machines that can process a distributed job at one time. Specify 0 for no limit.</p></li>
+</ul>
+</div>
+<div class="section" id="draft-options">
+<h3>Draft Options<a class="headerlink" href="#draft-options" title="Permalink to this headline">¶</a></h3>
+<p>These options can be found on the second tab labeled Draft.</p>
+<a class="reference internal image-reference" href="../_images/draft_quick_draft.png"><img alt="../_images/draft_quick_draft.png" src="../_images/draft_quick_draft.png" style="height: 500px;" /></a>
+<p><strong>Quick Draft Options</strong></p>
+<p>If selected, Draft will generate an image or a movie based on the options specified below.</p>
+<ul class="simple">
+<li><p><strong>Format</strong>: The output format used by the Quick Draft submission.</p></li>
+<li><p><strong>Compression</strong>: The compression used by the Quick Draft submission.</p></li>
+<li><p><strong>Resolution</strong>: The resolution used by the Quick Draft submission.</p></li>
+<li><p><strong>Quality</strong>: The quality used by the Quick Draft submission.</p></li>
+<li><p><strong>Frame Rate</strong>: The frame rate used by the Quick Draft submission.</p></li>
+<li><p><strong>Color Space In</strong>: The color space in to use.</p></li>
+<li><p><strong>Color Space Out</strong>: The color space out to use.</p></li>
+<li><p><strong>Add Annotations</strong>: If enabled, the annotations from the Draft Annotations window will be added.</p></li>
+<li><p><strong>Edit Annotations</strong>: Opens the Draft Annotations window.</p></li>
+</ul>
+<p><strong>Custom Draft Options</strong></p>
+<p>If selected, Draft will generate a job using the Draft template specified below.</p>
+<ul class="simple">
+<li><p><strong>Draft Template</strong>: This is the Draft script (or Template) that you want to use.</p></li>
+<li><p><strong>User Name</strong>: The user name used by the Draft template. Typically used by the Draft script for frame annotations. Passed to the Draft script as ‘username’.</p></li>
+<li><p><strong>Entity Name</strong>: The entity name used by the Draft template. Typically used by the Draft script for frame annotations. Passed to the Draft script as ‘entity’.</p></li>
+<li><p><strong>Version Name</strong>: The version name used by the Draft template. Typically used by the Draft script for frame annotations. Passed to the Draft script as ‘version’.</p></li>
+<li><p><strong>Additional Args</strong>: Any additional command line arguments that you wish to pass to the Draft script should be listed here. Appended to arguments listed above.</p></li>
+</ul>
+</div>
+<div class="section" id="project-management-options">
+<h3>Project Management Options<a class="headerlink" href="#project-management-options" title="Permalink to this headline">¶</a></h3>
+<p>The third tab labeled Project Management is for setting up connections to event plugins. More information can be found in the <a class="reference internal" href="event-pipeline-tools.html#pipeline-tools-project-management-ref-label"><span class="std std-ref">Pipeline Tools Project Management</span></a> documentation.</p>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The Draft plugin requires configuration only if choosing not to preserve the render environment while running as a specific user on Unix systems. For details, see <a class="reference internal" href="environment.html#environment-preservation"><span class="std std-ref">Preserving Specific Environment Variables with Sudo</span></a>.</p>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="draft-integrated-setup-ref-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>All of our integrated submission scripts have been updated to have a Draft section, in order to submit dependent Draft jobs.</p>
+</div>
+<div class="section" id="draft-standalone">
+<span id="draft-standalone-ref-label"></span><h2>Draft Standalone<a class="headerlink" href="#draft-standalone" title="Permalink to this headline">¶</a></h2>
+<p>Draft can be used outside of Deadline. In order to <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">Draft</span></code> successfully, you will need to ensure Python knows where to look for the Draft module, either by including its install directory in the PYTHONPATH environment variable, or by appending it to <code class="docutils literal notranslate"><span class="pre">os.sys.path</span></code> before you do the import. You will also need to set the MAGICK_CONFIGURE_PATH and LD_LIBRARY_PATH (or DYLD_LIBRARY_PATH) environment variables to point to your install directory; this is so that ImageMagick knows where to find its ‘type.xml’ file. If you are simply planning on using Draft through Deadline, however, you do not need to worry about this at all.</p>
+<p>If using Deadline’s Python, ensure you use these paths to instantiate dpython as they ensure the Deadline environment is setup correctly:</p>
+<ul class="simple">
+<li><p><strong>Windows</strong>: <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\Thinkbox\DeadlineX\bin\dpython.exe</span></code></p></li>
+<li><p><strong>macOS</strong>: <code class="docutils literal notranslate"><span class="pre">/Applications/Thinkbox/DeadlineX/Resources/dpython</span></code></p></li>
+<li><p><strong>Linux</strong>: <code class="docutils literal notranslate"><span class="pre">/opt/Thinkbox/DeadlineX/bin/dpython</span></code></p></li>
+</ul>
+<p>where X is the MAJOR version of Deadline.</p>
+<p>All platforms need specific environment variables to be set for Draft Standalone (Python) to successfully <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">Draft</span></code>:</p>
+<ul>
+<li><p><strong>Windows</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PYTHONPATH</span><span class="o">=/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">Draft</span> <span class="n">install</span> <span class="n">directory</span><span class="o">/</span><span class="n">Windows</span><span class="o">/</span><span class="n">XXbit</span>
+<span class="n">MAGICK_CONFIGURE_PATH</span><span class="o">=/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">Draft</span> <span class="n">install</span> <span class="n">directory</span><span class="o">/</span><span class="n">Windows</span><span class="o">/</span><span class="n">XXbit</span>
+
+<span class="n">where</span> <span class="n">XX</span> <span class="ow">is</span> <span class="n">either</span> <span class="mi">32</span> <span class="ow">or</span> <span class="mf">64.</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>macOS</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PYTHONPATH</span><span class="o">=/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">Draft</span> <span class="n">install</span> <span class="n">directory</span><span class="o">/</span><span class="n">Mac</span>
+<span class="n">MAGICK_CONFIGURE_PATH</span><span class="o">=/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">Draft</span> <span class="n">install</span> <span class="n">directory</span><span class="o">/</span><span class="n">Mac</span>
+<span class="n">DYLD_LIBRARY_PATH</span><span class="o">=/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">Draft</span> <span class="n">install</span> <span class="n">directory</span><span class="o">/</span><span class="n">Mac</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Linux</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PYTHONPATH</span><span class="o">=/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">Draft</span> <span class="n">install</span> <span class="n">directory</span><span class="o">/</span><span class="n">Linux</span><span class="o">/</span><span class="mi">64</span><span class="n">bit</span>
+<span class="n">MAGICK_CONFIGURE_PATH</span><span class="o">=/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">Draft</span> <span class="n">install</span> <span class="n">directory</span><span class="o">/</span><span class="n">Linux</span><span class="o">/</span><span class="mi">64</span><span class="n">bit</span>
+<span class="n">LD_LIBRARY_PATH</span><span class="o">=/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">Draft</span> <span class="n">install</span> <span class="n">directory</span><span class="o">/</span><span class="n">Linux</span><span class="o">/</span><span class="mi">64</span><span class="n">bit</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-draft-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Does Draft/Quick Draft need a license to run?</strong></p>
+<blockquote>
+<div><p>Starting with Deadline 10.1.23, Draft and Quick Draft do not require a license. See the <a class="reference internal" href="#draft-licensing-ref-label"><span class="std std-ref">Licensing</span></a> section for an explanation.</p>
+</div></blockquote>
+<p><strong>Can I upgrade Deadline without upgrading the version of Draft I’m using?</strong></p>
+<blockquote>
+<div><p>Yes. See the <a class="reference internal" href="upgrading.html#upgrading-draft-ref-label"><span class="std std-ref">Upgrading or Downgrading Draft</span></a> section of the <em>Upgrading or Downgrading Deadline</em> documentation for more information.</p>
+</div></blockquote>
+<p><strong>Why does my custom Deadline 7 Draft submitter code no longer work in Deadline 8.0 or later?</strong></p>
+<blockquote>
+<div><p>Please note that as of Deadline 8.0, when submitting Draft jobs to Deadline, the KEY=VALUE entry for the Draft Plugin is named as follows in the job info file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Plugin</span><span class="o">=</span><span class="n">DraftPlugin</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Draft error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here, please contact
+<a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Draft</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#licensing">Licensing</a><ul>
+<li><a class="reference internal" href="#licensing-on-aws">Licensing on AWS</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#upgrading">Upgrading</a></li>
+<li><a class="reference internal" href="#job-submission">Job Submission</a></li>
+<li><a class="reference internal" href="#submission-options">Submission Options</a><ul>
+<li><a class="reference internal" href="#job-options">Job Options</a></li>
+<li><a class="reference internal" href="#draft-options">Draft Options</a></li>
+<li><a class="reference internal" href="#project-management-options">Project Management Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a></li>
+<li><a class="reference internal" href="#draft-standalone">Draft Standalone</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-djv.html"
+                        title="previous chapter">DJV</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-draft-tile-assembler.html"
+                        title="next chapter">Draft Tile Assembler</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-draft-tile-assembler.html" title="Draft Tile Assembler"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-djv.html" title="DJV"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Draft</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

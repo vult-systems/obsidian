@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AWS Portal Workers Don’t Connect to Repository &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thinkbox.css" />
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Spot Fleet Instances Missing Groups and/or Pools" href="spot_fleet_instances_missing_groups_and_or_pools.html" />
+    <link rel="prev" title="AWS Portal Link Log Error Messages" href="aws-portal-link-error-messages.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="spot_fleet_instances_missing_groups_and_or_pools.html" title="Spot Fleet Instances Missing Groups and/or Pools"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="aws-portal-link-error-messages.html" title="AWS Portal Link Log Error Messages"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWS Portal Workers Don’t Connect to Repository</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="../aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<span class="target" id="troubleshooting-aws-portal-workers-not-connecting-label"></span><div class="section" id="aws-portal-workers-don-t-connect-to-repository">
+<h1>AWS Portal Workers Don’t Connect to Repository<a class="headerlink" href="#aws-portal-workers-don-t-connect-to-repository" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-went-wrong">
+<h2>What Went Wrong<a class="headerlink" href="#what-went-wrong" title="Permalink to this headline">¶</a></h2>
+<p>Spot Instances have appeared in the Spot Fleets portion of the AWS Portal panel but no Deadline Workers are appearing in the Workers panel.</p>
+</div>
+<div class="section" id="figuring-out-what-went-wrong">
+<h2>Figuring Out What Went Wrong<a class="headerlink" href="#figuring-out-what-went-wrong" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="verify-connection-to-rcs.html#aws-portal-verify-connection-to-rcs-ref-label"><span class="std std-ref">Verify</span></a> that your infrastructure can connect to your Remote Connection Server.</p>
+<p>See <a class="reference internal" href="aws-portal-log-locations.html#aws-portal-link-log-location"><span class="std std-ref">AWS Portal Link Log Locations</span></a> for information on how to find the AWS Portal Link logs.</p>
+</div>
+<div class="section" id="solutions">
+<h2>Solutions<a class="headerlink" href="#solutions" title="Permalink to this headline">¶</a></h2>
+<p>Here are some common fixes to the problem.</p>
+<div class="section" id="wrong-public-ip-address-on-gateway-security-group">
+<span id="id1"></span><h3>Wrong Public IP Address on Gateway Security Group<a class="headerlink" href="#wrong-public-ip-address-on-gateway-security-group" title="Permalink to this headline">¶</a></h3>
+<p>It’s possible that the Security Group that’s attached to the Gateway machine in your infrastructure has the wrong Public IP address that allows you to SSH in. You can change the Public IP
+address by:</p>
+<ol class="arabic simple">
+<li><p>Opening the AWS Management Console.</p></li>
+<li><p>Going to Services &gt; EC2 &gt; Instances.</p></li>
+<li><p>In the filter bar you can type in <code class="docutils literal notranslate"><span class="pre">Gateway</span></code> to filter down to only the Gateway instance.</p></li>
+<li><p>Click the Gateway instance.</p></li>
+<li><p>In the Description tab at the bottom of the screen find the <code class="docutils literal notranslate"><span class="pre">Security</span> <span class="pre">groups</span></code> label and click the link to the right of it.</p></li>
+<li><p>Right click the Security Group that appears and click <code class="docutils literal notranslate"><span class="pre">Edit</span> <span class="pre">inbound</span> <span class="pre">rules</span></code>.</p></li>
+<li><p>Edit the SSH (port 22) rule’s source column with the correct IP Address.</p></li>
+<li><p>If you are unsure of what your Public IP address is you can select <code class="docutils literal notranslate"><span class="pre">My</span> <span class="pre">IP</span></code> from the drop down menu in the source column.</p></li>
+<li><p>Click Save.</p></li>
+</ol>
+</div>
+<div class="section" id="wrong-public-aws-portal-link-ip-address-override-set">
+<h3>Wrong Public AWS Portal Link IP Address Override Set<a class="headerlink" href="#wrong-public-aws-portal-link-ip-address-override-set" title="Permalink to this headline">¶</a></h3>
+<p>If you have set an Override for AWS Portal Link’s Public IP address it’s possible that it has been set incorrectly. You can change this setting by:</p>
+<ol class="arabic simple">
+<li><p>Open the Deadline Monitor</p></li>
+<li><p>Open the AWS Portal Panel and login if necessary.</p></li>
+<li><p>Click the gear icon in the Deadline Infrastructure portion of the AWS Portal panel.</p></li>
+<li><p>Input the correct IP Address into the <code class="docutils literal notranslate"><span class="pre">Override</span> <span class="pre">Public</span> <span class="pre">AWS</span> <span class="pre">Portal</span> <span class="pre">Link</span> <span class="pre">IP</span> <span class="pre">Address</span></code> field.</p></li>
+<li><p>If you already have an infrastructure running you will then also need to <a class="reference internal" href="#wrong-public-ip-address-on-gateway-security-group"><span class="std std-ref">change the Security Group of it to allow the new Public IP address</span></a>.</p></li>
+</ol>
+</div>
+<div class="section" id="aws-portal-infrastructure-is-incorrectly-configured-for-your-remote-connection-server">
+<h3>AWS Portal Infrastructure is Incorrectly Configured for Your Remote Connection Server<a class="headerlink" href="#aws-portal-infrastructure-is-incorrectly-configured-for-your-remote-connection-server" title="Permalink to this headline">¶</a></h3>
+<p>It is possible that you supplied the incorrect client certificate, client certificate passphrase, or Remote Connection Server’s hostname to your infrastructure. Or maybe you changed your Remote Connection Server’s certificates, or set the SSL/TLS setting incorrectly for your infrastructure. If you suspect any of these causes, then you can reconfigure the connection settings on your infrastructure.</p>
+<ol class="arabic">
+<li><dl class="simple">
+<dt>Open your AWS Portal Panel</dt><dd><ol class="lowerroman simple">
+<li><p>Enter Power User mode (Tools menu -&gt; Power User Mode).</p></li>
+<li><p>Create an AWS Panel (View menu -&gt; New Panel -&gt; AWS Portal).</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Right-click your infrastructure, and select <strong>Reconfigure Connection Settings</strong> from the drop-down menu:</dt><dd><img alt="../../_images/dropdown_reconfigure_rcs.png" src="../../_images/dropdown_reconfigure_rcs.png" />
+</dd>
+</dl>
+</li>
+<li><p>Re-supply your Connection Server settings in the window that appears as you did during <a class="reference internal" href="../aws-portal/usage-infrastructure-creation.html#aws-portal-usage-infrastructure-creation-connection-settings-ref-label"><span class="std std-ref">initial setup of your infrastructure</span></a></p></li>
+</ol>
+</div>
+<div class="section" id="auto-configuration-settings">
+<h3>Auto Configuration Settings<a class="headerlink" href="#auto-configuration-settings" title="Permalink to this headline">¶</a></h3>
+<p>It’s possible that Auto Configuration settings could be interfering with an AWS Portal Workers ability to connect to the Repository. The two settings known to cause issues are <code class="docutils literal notranslate"><span class="pre">Region</span></code> and
+<code class="docutils literal notranslate"><span class="pre">Launch</span> <span class="pre">Worker</span> <span class="pre">At</span> <span class="pre">Startup</span></code>. AWS Portal Workers have their own automatically generated region, as such for AWS Portal Workers <code class="docutils literal notranslate"><span class="pre">Region</span></code> should be disabled. Having <code class="docutils literal notranslate"><span class="pre">Launch</span> <span class="pre">Workers</span> <span class="pre">At</span> <span class="pre">Startup</span></code>
+set to False will prevent the Deadline Worker application from starting up and connecting to the Repository. AWS Portal Workers take care of this automatically, so this option should be disabled
+for AWS Portal Workers.</p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">AWS Portal Workers Don’t Connect to Repository</a><ul>
+<li><a class="reference internal" href="#what-went-wrong">What Went Wrong</a></li>
+<li><a class="reference internal" href="#figuring-out-what-went-wrong">Figuring Out What Went Wrong</a></li>
+<li><a class="reference internal" href="#solutions">Solutions</a><ul>
+<li><a class="reference internal" href="#wrong-public-ip-address-on-gateway-security-group">Wrong Public IP Address on Gateway Security Group</a></li>
+<li><a class="reference internal" href="#wrong-public-aws-portal-link-ip-address-override-set">Wrong Public AWS Portal Link IP Address Override Set</a></li>
+<li><a class="reference internal" href="#aws-portal-infrastructure-is-incorrectly-configured-for-your-remote-connection-server">AWS Portal Infrastructure is Incorrectly Configured for Your Remote Connection Server</a></li>
+<li><a class="reference internal" href="#auto-configuration-settings">Auto Configuration Settings</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aws-portal-link-error-messages.html"
+                        title="previous chapter">AWS Portal Link Log Error Messages</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="spot_fleet_instances_missing_groups_and_or_pools.html"
+                        title="next chapter">Spot Fleet Instances Missing Groups and/or Pools</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="spot_fleet_instances_missing_groups_and_or_pools.html" title="Spot Fleet Instances Missing Groups and/or Pools"
+             >next</a></li>
+        <li class="right" >
+          <a href="aws-portal-link-error-messages.html" title="AWS Portal Link Log Error Messages"
+             >previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWS Portal Workers Don’t Connect to Repository</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

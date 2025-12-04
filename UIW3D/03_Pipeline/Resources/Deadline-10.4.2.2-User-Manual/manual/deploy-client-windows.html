@@ -1,0 +1,363 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Client Deployment - Windows &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Client Deployment - Centrally Managed" href="deploy-client-centrally-managed.html" />
+    <link rel="prev" title="Integrated Submitter Installation (Advanced)" href="install-submitters.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="deploy-client-centrally-managed.html" title="Client Deployment - Centrally Managed"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="install-submitters.html" title="Integrated Submitter Installation (Advanced)"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" accesskey="U">Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Client Deployment - Windows</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="client-deployment-windows">
+<span id="deploy-client-windows-ref-label"></span><h1>Client Deployment - Windows<a class="headerlink" href="#client-deployment-windows" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="microsoft-sccm-installation-for-windows">
+<span id="deploy-sccm-client-ref-label"></span><h2>Microsoft SCCM Installation for Windows<a class="headerlink" href="#microsoft-sccm-installation-for-windows" title="Permalink to this headline">¶</a></h2>
+<p>This document outlines the process to add and deploy Deadline as an application in Microsoft SCCM 2012 R2. Any options that aren’t specifically mentioned can be left at their default values unless otherwise needed.</p>
+<div class="section" id="create-an-uninstall-wrapper">
+<h3>Create an Uninstall Wrapper<a class="headerlink" href="#create-an-uninstall-wrapper" title="Permalink to this headline">¶</a></h3>
+<p>Initially, you will create an uninstall application by developing code which is then wrapped as a standalone executable which will allow us to uninstall the Deadline Client software via SCCM in the future if you so wish. In our example, we will use Python 2.7 and <a class="reference external" href="https://cx-freeze.sourceforge.net/">cx_freeze</a> to ‘wrap’ the finished Python script as an executable which SCCM will be able to use. Feel free to use the scripting language and exe compiling solution of your choice to achieve the same functionality as shown in the example Python <strong>uninstall.py</strong> script.</p>
+<ul>
+<li><p>On any Windows machine, install Python 2.7.</p></li>
+<li><p>To install cx_freeze, open a command prompt and run the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Python27</span>\<span class="n">Scripts</span>\<span class="n">pip</span><span class="o">.</span><span class="n">exe</span> <span class="n">install</span> <span class="n">cx_freeze</span>
+</pre></div>
+</div>
+</li>
+<li><p>Create a temporary directory for use with compiling the uninstall wrapper. These instructions will refer to this as <code class="docutils literal notranslate"><span class="pre">C:\temp\uninstall_wrapper</span></code> and place the uninstall.py script in that directory.</p></li>
+<li><p>Here is the Python script file, which you should copy and paste and save as <strong>uninstall.py</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">sleep</span>
+
+<span class="k">def</span> <span class="nf">uninstall_running</span><span class="p">():</span>
+        <span class="n">process_list_raw</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s2">&quot;C:/Windows/System32/tasklist.exe&quot;</span><span class="p">,</span> <span class="s2">&quot;/FO:csv&quot;</span><span class="p">,</span> <span class="s2">&quot;/NH&quot;</span><span class="p">])</span>
+
+        <span class="n">re_uninstall</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;^_uninstall[0-9]*$&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">process_line</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">process_list_raw</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">):</span>
+                <span class="n">process_name</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">process_line</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="s2">&quot;,&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">re_uninstall</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">process_name</span><span class="p">):</span>
+                        <span class="k">return</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="mi">0</span>
+
+<span class="n">num_args</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">num_args</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: No command was entered&quot;</span><span class="p">)</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="k">if</span> <span class="n">num_args</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">num_args</span><span class="p">):</span>
+                <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+
+<span class="k">try</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">WindowsError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: Executable does not exist&quot;</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="n">uninstall_running</span><span class="p">():</span>
+        <span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>From a command prompt, run the following command to compile the uninstall wrapper:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>C:\Python27\python.exe C:\Python27\Scripts\cxfreeze C:\temp\uninstall_wrapper\uninstall.py –-target-dir C:\temp\uninstall_wrapper\exe
+</pre></div>
+</div>
+</li>
+<li><p>Copy the contents of <code class="docutils literal notranslate"><span class="pre">C:\temp\uninstall_wrapper\exe</span></code> to a network location that will be accessible to the SCCM clients.</p></li>
+</ul>
+</div>
+<div class="section" id="add-the-application-to-sccm">
+<h3>Add the Application to SCCM<a class="headerlink" href="#add-the-application-to-sccm" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>From within the Configuration Manager Console, go to “Software Library” –&gt; “Application Management” –&gt; <strong>“Applications”</strong>.</p></li>
+<li><p>Click <strong>“Create Application”</strong> from the top menu bar.</p></li>
+<li><p>In the “General” section, choose <strong>“Manually specify the application information”</strong>.</p></li>
+<li><p>In the “General Information” section, enter the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Name: <strong>Deadline Client</strong></p></li>
+<li><p>Publisher: <strong>Thinkbox Software</strong></p></li>
+<li><p>Software Version: <strong>x.x.x.x</strong> (where x.x.x.x is the version of Deadline)</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>In the “Application Catalog” section, enter the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Localized application name: <strong>Deadline Client</strong></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>In the “Deployment Types” section, click <strong>“Add…”</strong></p>
+<blockquote>
+<div><ul>
+<li><p>In the “General” section of the “Create Deployment Type Wizard”, choose <strong>“Manually specify the deployment type information”</strong>.</p></li>
+<li><p>In the <strong>“General Information”</strong> section, enter the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Name: <strong>Deadline Client</strong></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>In the <strong>“Content”</strong> section, enter the following:</p>
+<blockquote>
+<div><ul>
+<li><p>Content Location:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\\<span class="n">path</span>\<span class="n">to</span>\<span class="n">deadline</span>\<span class="n">installers</span>
+</pre></div>
+</div>
+</li>
+<li><p>Installation Program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DeadlineClient</span><span class="o">-</span><span class="n">x</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">x</span><span class="o">-</span><span class="n">windows</span><span class="o">-</span><span class="n">installer</span><span class="o">.</span><span class="n">exe</span> <span class="o">--</span><span class="n">mode</span> <span class="n">unattended</span> <span class="o">--</span><span class="n">repositorydir</span>
+\\<span class="n">servername</span>\<span class="n">DeadlineRepository</span><span class="o">&lt;</span><span class="n">VERSION</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Uninstallation Program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Windows</span>\<span class="n">System32</span>\<span class="n">cmd</span><span class="o">.</span><span class="n">exe</span> <span class="o">/</span><span class="n">c</span> <span class="n">taskkill</span> <span class="o">/</span><span class="n">F</span> <span class="o">/</span><span class="n">IM</span> <span class="n">deadlinelauncher</span><span class="o">.</span><span class="n">exe</span> <span class="o">&amp;</span> <span class="n">taskkill</span> <span class="o">/</span><span class="n">F</span> <span class="o">/</span><span class="n">IM</span>
+<span class="n">deadlineworker</span><span class="o">.</span><span class="n">exe</span> <span class="o">&amp;</span> <span class="n">taskkill</span> <span class="o">/</span><span class="n">F</span> <span class="o">/</span><span class="n">IM</span> <span class="n">deadlinemonitor</span><span class="o">.</span><span class="n">exe</span> <span class="o">&amp;</span> <span class="n">taskkill</span> <span class="o">/</span><span class="n">F</span> <span class="o">/</span><span class="n">IM</span> <span class="n">deadlinepulse</span><span class="o">.</span><span class="n">exe</span> <span class="o">&amp;</span>
+<span class="n">taskkill</span> <span class="o">/</span><span class="n">F</span> <span class="o">/</span><span class="n">IM</span> <span class="n">deadlinebalancer</span><span class="o">.</span><span class="n">exe</span> <span class="o">&amp;</span> <span class="n">start</span> <span class="o">/</span><span class="n">wait</span> <span class="s2">&quot;&quot;</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">path</span><span class="se">\t</span><span class="s2">o\uninstall_wrapper\uninstall.exe&quot;</span>
+<span class="s2">&quot;C:\Program Files\Thinkbox\Deadline&lt;VERSION&gt;\uninstall.exe&quot;</span> <span class="o">--</span><span class="n">mode</span> <span class="n">unattended</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;VERSION&gt;</span></code> is the Deadline major version, such as: <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p>
+</div>
+<ul>
+<li><p>In the <strong>“Detection”</strong> section, create a new detection rule with the following settings:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Setting Type: <strong>Registry</strong></p></li>
+<li><p>Hive: <strong>HKEY_LOCAL_MACHINE</strong></p></li>
+<li><p>Key: <strong>SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Deadline Client x</strong> (where x is the MAJOR version of Deadline)</p></li>
+<li><p>Value: <strong>DisplayVersion</strong></p></li>
+<li><p>Data Type: <strong>String</strong></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>This registry setting must satisfy the following rule to indicate the presence of this application:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Operator: <strong>Equals</strong></p></li>
+<li><p>Value: <strong>x.x.x.x</strong> (where x.x.x.x is the version of Deadline)</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>In the <strong>“User Experience”</strong> section, enter the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Installation Behaviour: <strong>Install for system</strong></p></li>
+<li><p>Logon requirement: <strong>Whether or not a user is logged in</strong></p></li>
+<li><p>Installation program visibility: <strong>Hidden</strong></p></li>
+<li><p>Maximum allowed run time (minutes): <strong>60</strong></p></li>
+<li><p>Estimated installation time (minutes): <strong>5</strong></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>No changes are needed in the <strong>“Requirements”</strong> section.</p></li>
+<li><p>No changes are needed in the <strong>“Dependencies”</strong> section.</p></li>
+<li><p>Click through the summary to return to the <strong>“Deployment types”</strong> dialog.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Click through the summary to finish the Application creation process.</p></li>
+</ul>
+</div>
+<div class="section" id="deploy-the-application-for-installation">
+<h3>Deploy the Application for Installation<a class="headerlink" href="#deploy-the-application-for-installation" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Right-click on the Deadline Client application and click <strong>“Deploy”</strong>.</p></li>
+<li><p>In the <strong>“General”</strong> section, select the collection(s) that you’d like to deploy to.</p></li>
+<li><p>In the <strong>“Content”</strong> section, add any distribution points as needed.</p></li>
+<li><p>In the <strong>“Deployment Settings”</strong> section, set the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Action: <strong>Install</strong></p></li>
+<li><p>Purpose: <strong>Required</strong></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>In the “Scheduling” section, set the installation deadline to <strong>“As soon as possible after the available time”</strong>.</p></li>
+<li><p>In the <strong>“User Experience”</strong> section, configure user notifications and software availability as needed.</p></li>
+<li><p>In the <strong>“Alerts”</strong> section, configure the alerting options as needed.</p></li>
+<li><p>Click through the summary to complete the deployment.</p></li>
+</ul>
+</div>
+<div class="section" id="deploy-the-application-for-uninstallation">
+<h3>Deploy the Application for Uninstallation<a class="headerlink" href="#deploy-the-application-for-uninstallation" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Right-click on the Deadline Client application and click <strong>“Deploy”</strong>.</p></li>
+<li><p>In the <strong>“General”</strong> section, select the collection(s) for which you’d like to uninstall Deadline Client.</p></li>
+<li><p>In the <strong>“Content”</strong> section, add any distribution points as needed.</p></li>
+<li><p>In the <strong>“Deployment Settings”</strong> section, set the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Action: <strong>Uninstall</strong></p></li>
+<li><p>Purpose: <strong>Required</strong></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>In the “Scheduling” section, set the installation deadline to <strong>“As soon as possible after the available time”</strong>.</p></li>
+<li><p>In the <strong>“User Experience”</strong> section, configure user notifications and availability as needed.</p></li>
+<li><p>In the <strong>“Alerts”</strong> section, configure the alerting options as needed.</p></li>
+<li><p>Click through the summary to complete the deployment.</p></li>
+</ul>
+</div>
+<div class="section" id="visual-guidelines">
+<h3>Visual Guidelines<a class="headerlink" href="#visual-guidelines" title="Permalink to this headline">¶</a></h3>
+<p>Here is a series of screengrabs which step through the application creation and deployment process in SCCM:</p>
+<p><a class="reference internal" href="../_images/client_deploy_sccm_01.png"><img alt="01" src="../_images/client_deploy_sccm_01.png" style="width: 500px; height: 300px;" /></a> <a class="reference internal" href="../_images/client_deploy_sccm_02.png"><img alt="02" src="../_images/client_deploy_sccm_02.png" style="width: 500px; height: 300px;" /></a></p>
+<p><a class="reference internal" href="../_images/client_deploy_sccm_03.png"><img alt="03" src="../_images/client_deploy_sccm_03.png" style="width: 500px; height: 300px;" /></a> <a class="reference internal" href="../_images/client_deploy_sccm_04.png"><img alt="04" src="../_images/client_deploy_sccm_04.png" style="width: 500px; height: 300px;" /></a></p>
+<p><a class="reference internal" href="../_images/client_deploy_sccm_05.png"><img alt="05" src="../_images/client_deploy_sccm_05.png" style="width: 500px; height: 300px;" /></a> <a class="reference internal" href="../_images/client_deploy_sccm_06.png"><img alt="06" src="../_images/client_deploy_sccm_06.png" style="width: 500px; height: 300px;" /></a></p>
+<p><a class="reference internal" href="../_images/client_deploy_sccm_07.png"><img alt="07" src="../_images/client_deploy_sccm_07.png" style="width: 500px; height: 300px;" /></a> <a class="reference internal" href="../_images/client_deploy_sccm_08.png"><img alt="08" src="../_images/client_deploy_sccm_08.png" style="width: 500px; height: 300px;" /></a></p>
+<p><a class="reference internal" href="../_images/client_deploy_sccm_09.png"><img alt="09" src="../_images/client_deploy_sccm_09.png" style="width: 500px; height: 300px;" /></a> <a class="reference internal" href="../_images/client_deploy_sccm_10.png"><img alt="10" src="../_images/client_deploy_sccm_10.png" style="width: 500px; height: 300px;" /></a></p>
+<p><a class="reference internal" href="../_images/client_deploy_sccm_11.png"><img alt="11" src="../_images/client_deploy_sccm_11.png" style="width: 500px; height: 300px;" /></a> <a class="reference internal" href="../_images/client_deploy_sccm_12.png"><img alt="12" src="../_images/client_deploy_sccm_12.png" style="width: 500px; height: 300px;" /></a></p>
+<p><a class="reference internal" href="../_images/client_deploy_sccm_13.png"><img alt="13" src="../_images/client_deploy_sccm_13.png" style="width: 500px; height: 300px;" /></a> <a class="reference internal" href="../_images/client_deploy_sccm_14.png"><img alt="14" src="../_images/client_deploy_sccm_14.png" style="width: 500px; height: 300px;" /></a></p>
+<p><a class="reference internal" href="../_images/client_deploy_sccm_15.png"><img alt="15" src="../_images/client_deploy_sccm_15.png" style="width: 500px; height: 300px;" /></a> <a class="reference internal" href="../_images/client_deploy_sccm_16.png"><img alt="16" src="../_images/client_deploy_sccm_16.png" style="width: 500px; height: 300px;" /></a></p>
+<p><a class="reference internal" href="../_images/client_deploy_sccm_17.png"><img alt="17" src="../_images/client_deploy_sccm_17.png" style="width: 500px; height: 300px;" /></a> <a class="reference internal" href="../_images/client_deploy_sccm_18.png"><img alt="18" src="../_images/client_deploy_sccm_18.png" style="width: 500px; height: 300px;" /></a></p>
+<p><a class="reference internal" href="../_images/client_deploy_sccm_19.png"><img alt="19" src="../_images/client_deploy_sccm_19.png" style="width: 500px; height: 300px;" /></a> <a class="reference internal" href="../_images/client_deploy_sccm_20.png"><img alt="20" src="../_images/client_deploy_sccm_20.png" style="width: 500px; height: 300px;" /></a></p>
+<p><a class="reference internal" href="../_images/client_deploy_sccm_21.png"><img alt="21" src="../_images/client_deploy_sccm_21.png" style="width: 500px; height: 300px;" /></a> <a class="reference internal" href="../_images/client_deploy_sccm_22.png"><img alt="22" src="../_images/client_deploy_sccm_22.png" style="width: 500px; height: 300px;" /></a></p>
+<p><a class="reference internal" href="../_images/client_deploy_sccm_23.png"><img alt="23" src="../_images/client_deploy_sccm_23.png" style="width: 500px; height: 300px;" /></a> <a class="reference internal" href="../_images/client_deploy_sccm_24.png"><img alt="24" src="../_images/client_deploy_sccm_24.png" style="width: 500px; height: 300px;" /></a></p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Client Deployment - Windows</a><ul>
+<li><a class="reference internal" href="#microsoft-sccm-installation-for-windows">Microsoft SCCM Installation for Windows</a><ul>
+<li><a class="reference internal" href="#create-an-uninstall-wrapper">Create an Uninstall Wrapper</a></li>
+<li><a class="reference internal" href="#add-the-application-to-sccm">Add the Application to SCCM</a></li>
+<li><a class="reference internal" href="#deploy-the-application-for-installation">Deploy the Application for Installation</a></li>
+<li><a class="reference internal" href="#deploy-the-application-for-uninstallation">Deploy the Application for Uninstallation</a></li>
+<li><a class="reference internal" href="#visual-guidelines">Visual Guidelines</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="install-submitters.html"
+                        title="previous chapter">Integrated Submitter Installation (Advanced)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="deploy-client-centrally-managed.html"
+                        title="next chapter">Client Deployment - Centrally Managed</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="deploy-client-centrally-managed.html" title="Client Deployment - Centrally Managed"
+             >next</a></li>
+        <li class="right" >
+          <a href="install-submitters.html" title="Integrated Submitter Installation (Advanced)"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" >Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Client Deployment - Windows</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

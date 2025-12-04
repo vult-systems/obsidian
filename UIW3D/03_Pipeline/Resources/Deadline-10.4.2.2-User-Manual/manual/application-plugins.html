@@ -1,0 +1,1223 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Application Plugins &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Event Plugins" href="event-plugins.html" />
+    <link rel="prev" title="Scripting Overview" href="scripting-overview.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-plugins.html" title="Event Plugins"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="scripting-overview.html" title="Scripting Overview"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-scripting.html" accesskey="U">Scripting</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Application Plugins</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="application-plugins">
+<span id="application-plugins-ref-label"></span><h1>Application Plugins<a class="headerlink" href="#application-plugins" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>All of Deadline’s plugins are written in Python, which means that it’s easy to create your own plugins or customize the existing ones. See the <a class="reference internal" href="scripting-overview.html#scripting-overview-ref-label"><span class="std std-ref">Scripting Overview</span></a> documentation for more information,
+and links to the Deadline Scripting reference.</p>
+<p>Note that because the Python scripts for application plugins will be executed in a non-interactive way, it is important that your scripts do not contain any blocking operations like infinite loops, or interfaces that
+require user input.</p>
+<p>When a plugin is loaded the log will show where the plugin is being loaded from.</p>
+</div>
+<div class="section" id="general-plugin-information">
+<h2>General Plugin Information<a class="headerlink" href="#general-plugin-information" title="Permalink to this headline">¶</a></h2>
+<p>There are two types of plugins that can be created:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Simple</p></li>
+<li><p>Advanced</p></li>
+</ul>
+</div></blockquote>
+<p>Simple plugins provide the basics to wrap a command line application, and is typically used to build up command line arguments to pass to the application. Advanced plugins provide more control, and are typically used when
+running a simple command line application isn’t enough. Other than the plugin Python script itself though, Simple and Advanced plugins are very similar.</p>
+</div>
+<div class="section" id="creating-a-new-plugin">
+<h2>Creating a New Plugin<a class="headerlink" href="#creating-a-new-plugin" title="Permalink to this headline">¶</a></h2>
+<p>This section covers the the areas that Simple and Advanced plugins have in common. Specifics for Simple and Advanced plugins are covered later on.</p>
+<p>To create a new plugin, start by creating a folder in the Repository’s custom\plugins folder and give it the name of your plugin. See the <a class="reference internal" href="scripting-overview.html#scripting-overview-ref-label"><span class="std std-ref">Scripting Overview</span></a> documentation for more information on the ‘custom’
+folder in the Repository and how it’s used.</p>
+<p>For the sake of this document, we will call our new plugin MyPlugin. All relative script and configuration files for this plugin are to be placed in this plugin’s folder (some are required and some are optional).</p>
+<div class="section" id="py-file">
+<span id="application-plugins-py-file-ref-label"></span><h3>.py File<a class="headerlink" href="#py-file" title="Permalink to this headline">¶</a></h3>
+<p><strong>Required</strong></p>
+<p>The MyPlugin.py is the main plugin script file. It defines the main DeadlinePlugin class that contains the necessary code that Deadline uses to render a job.
+This is where Simple and Advanced plugins will differ, and the specifics for each can be found later on, but the template for this script file might look like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">from</span> <span class="nn">Deadline.Plugins</span> <span class="kn">import</span> <span class="n">DeadlinePlugin</span>
+
+<span class="k">def</span> <span class="nf">GetDeadlinePlugin</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;This is the function that Deadline calls to get an instance of the</span>
+<span class="sd">    main DeadlinePlugin class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MyPlugin</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">CleanupDeadlinePlugin</span><span class="p">(</span><span class="n">deadlinePlugin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the function that Deadline calls when the plugin is no</span>
+<span class="sd">    longer in use so that it can get cleaned up.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+  <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">Cleanup</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">MyPlugin</span><span class="p">(</span><span class="n">DeadlinePlugin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the main DeadlinePlugin class for MyPlugin.&quot;&quot;&quot;</span>
+    <span class="c1"># TODO: Place code here instead of &quot;pass&quot;</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>The first thing to note is that we’re importing the Deadline.Plugins namespace so that we can access the DeadlinePlugin class.</p>
+<p>The GetDeadlinePlugin() function is important, as it allows the Worker to get an instance of our MyPlugin class (which is extending the abstract DeadlinePlugin class). In Deadline 6.2 and later, the
+GetDeadlinePluginWithJob(job) function can be defined as an alternative. It works the same as GetDeadlinePlugin(), except that it accepts an instance of the Job object that the plugin is being loaded for.
+If either of these functions are not defined, the Worker will report an error when it tries to render the job.</p>
+<p>The <cite>__init__()</cite> function in each plugin must call <cite>super().__init__()</cite> (ie. the super class constructor) before doing anything else as of Deadline 10.3.</p>
+<p>The MyPlugin class will need to implement certain callbacks based on the type of plugin it is, and these callbacks must be hooked up in the MyPlugin constructor. One callback that all plugins should implement
+is the InitializeProcess function. There are many other callbacks that can be implemented, which are covered in the Events section for the DeadlinePlugin class in the Deadline Scripting reference.</p>
+<p>The CleanupDeadlinePlugin() function is also important, as it is necessary to clean up the plugin when it is no longer in use.
+Typically, this is used to clean up any callbacks that were created when the plugin was initialized.</p>
+<p>To start off, the InitializeProcess callback is typically used to set some general plugin settings:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">from</span> <span class="nn">Deadline.Plugins</span> <span class="kn">import</span> <span class="n">DeadlinePlugin</span>
+
+<span class="k">def</span> <span class="nf">GetDeadlinePlugin</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;This is the function that Deadline calls to get an instance of the</span>
+<span class="sd">    main DeadlinePlugin class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MyPlugin</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">CleanupDeadlinePlugin</span><span class="p">(</span><span class="n">deadlinePlugin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the function that Deadline calls when the plugin is no</span>
+<span class="sd">    longer in use so that it can get cleaned up.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">Cleanup</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">MyPlugin</span><span class="p">(</span><span class="n">DeadlinePlugin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the main DeadlinePlugin class for MyPlugin.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Hook up the callbacks in the constructor.&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span> <span class="c1"># Required in Deadline 10.3 and later.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">InitializeProcessCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">InitializeProcess</span>
+
+    <span class="k">def</span> <span class="nf">Cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Clean up the plugin.&quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">InitializeProcessCallback</span>
+
+    <span class="k">def</span> <span class="nf">InitializeProcess</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Called by Deadline to initialize the plugin.&quot;&quot;&quot;</span>
+        <span class="c1"># Set the plugin specific settings.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SingleFramesOnly</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PluginType</span> <span class="o">=</span> <span class="n">PluginType</span><span class="o">.</span><span class="n">Simple</span>
+</pre></div>
+</div>
+<p>These are the common plugin properties that can be set in InitializeProcess callback. See the DeadlinePlugin class in the Deadline Scripting reference for additional properties.</p>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>PluginType</p></td>
+<td><p>The type of plugin this is (PluginType.Simple/PluginType.Advanced).</p></td>
+</tr>
+<tr class="row-odd"><td><p>SingleFramesOnly</p></td>
+<td><p>Set to True or False. Set to True if your plugin can only work on one frame at a time, rather than a frame sequence.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="param-file">
+<span id="application-plugins-param-ref-label"></span><h3>.param File<a class="headerlink" href="#param-file" title="Permalink to this headline">¶</a></h3>
+<p><strong>Required</strong></p>
+<p>The MyPlugin.param file is a required file that is used to declare the custom settings for the plugin and by the Plugin Configuration dialog in the Monitor to set these custom settings. It declares properties that the Monitor uses to generate a user interface for modifying custom settings in the database.</p>
+<p>Each control is identified in the MyPlugin.param file by a unique name between square brackets, and a set of key=value pairs that determine its default value and how it appears in Deadline’s user interface. For example, a typical plugin defines a read-only “About Plugin” section, which contains a description of the plugin and indicates whether or not the plugin supports rendering concurrent tasks.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">About</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">label</span>
+<span class="n">Label</span><span class="o">=</span><span class="n">About</span>
+<span class="n">Category</span><span class="o">=</span><span class="n">About</span> <span class="n">Plugin</span>
+<span class="n">CategoryOrder</span><span class="o">=-</span><span class="mi">1</span>
+<span class="n">Default</span><span class="o">=</span><span class="n">An</span> <span class="n">example</span> <span class="n">of</span> <span class="n">a</span> <span class="n">custom</span> <span class="n">Plugin</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">Not</span> <span class="n">configurable</span>
+
+<span class="p">[</span><span class="n">ConcurrentTasks</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">label</span>
+<span class="n">Label</span><span class="o">=</span><span class="n">ConcurrentTasks</span>
+<span class="n">Category</span><span class="o">=</span><span class="n">About</span> <span class="n">Plugin</span>
+<span class="n">CategoryOrder</span><span class="o">=-</span><span class="mi">1</span>
+<span class="n">Default</span><span class="o">=</span><span class="kc">True</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">Not</span> <span class="n">configurable</span>
+</pre></div>
+</div>
+<p>We can add a new custom option to identify a render executable for MyPlugin. The property name between the square brackets will correspond to the custom setting to be defined in the database. This means that the control defined below will change the MyPluginRenderExecutable setting. Here, we specify <code class="docutils literal notranslate"><span class="pre">Type=filename</span></code> to indicate that this setting should be treated by Deadline as a path to a file.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">MyPluginRenderExecutable</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">filename</span>
+<span class="n">Label</span><span class="o">=</span><span class="n">My</span> <span class="n">Plugin</span> <span class="n">Render</span> <span class="n">Executable</span>
+<span class="n">Default</span><span class="o">=</span><span class="n">c</span><span class="p">:</span>\<span class="n">path</span>\<span class="n">to</span>\<span class="n">my</span>\<span class="n">executable</span><span class="o">.</span><span class="n">exe</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">The</span> <span class="n">path</span> <span class="n">to</span> <span class="n">the</span> <span class="n">executable</span> <span class="n">file</span> <span class="n">used</span> <span class="k">for</span> <span class="n">rendering</span><span class="o">.</span>
+</pre></div>
+</div>
+<p><strong>Note that in previous versions of Deadline, Plugin settings were stored in dlinit files, which have been removed as of Deadline 8.0. All data that was previously stored in the dlinit file is now stored in the database. In order to declare custom settings for a plugin you must do so in the param file.</strong></p>
+<p>After you’ve created the MyPlugin.param file, open the Monitor and enter Power User mode. Then select Tools -&gt; Configure Plugins and look for your plugin in the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/configure_plugin_myplugin.png"><img alt="../_images/configure_plugin_myplugin.png" src="../_images/configure_plugin_myplugin.png" style="height: 500px;" /></a>
+<p>You can use this area to modify the values of the plugin’s parameters. Any changes you make to values here will be stored in the database when you press the <strong>OK</strong> button. You may also change the plugin’s icon and globally <a class="reference internal" href="limits.html#limits-plugin-ref-label"><span class="std std-ref">Set Limits</span></a> for the application plugin using the
+options at the bottom. Clicking the <strong>Restore Default Icon</strong> button will change the icon back to the plugin’s <a class="reference internal" href="#application-plugins-ico-file-ref-label"><span class="std std-ref">ico file</span></a>. You can also Enable or Disable a Plugin using the <strong>Enabled</strong> checkbox. Note that Plugins that are not Enabled will not be able to render.</p>
+<p>Comment lines are supported in the param file, and must start with either ‘;’ or ‘#’. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is the file name picker control to set the executable for this plugin.</span>
+<span class="p">[</span><span class="n">MyPluginRenderExecutable</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">filename</span>
+<span class="n">Label</span><span class="o">=</span><span class="n">My</span> <span class="n">Plugin</span> <span class="n">Render</span> <span class="n">Executable</span>
+<span class="n">Default</span><span class="o">=</span><span class="n">c</span><span class="p">:</span>\<span class="n">path</span>\<span class="n">to</span>\<span class="n">my</span>\<span class="n">executable</span><span class="o">.</span><span class="n">exe</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">The</span> <span class="n">path</span> <span class="n">to</span> <span class="n">the</span> <span class="n">executable</span> <span class="n">file</span> <span class="n">used</span> <span class="k">for</span> <span class="n">rendering</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>The available key=value pairs for the properties defined here are:</p>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Key Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Category</p></td>
+<td><p>The category the control should go under.</p></td>
+</tr>
+<tr class="row-odd"><td><p>CategoryIndex</p></td>
+<td><p>This determines the control’s order under its category. This does the same thing as Index.</p></td>
+</tr>
+<tr class="row-even"><td><p>CategoryOrder</p></td>
+<td><p>This determines the category’s order among other categories. If more than one CategoryOrder is defined for the same category, the lowest value is used.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Default</p></td>
+<td><p>The default value to be used if this property is not defined in the database. This does the same thing as DefaultValue.</p></td>
+</tr>
+<tr class="row-even"><td><p>DefaultValue</p></td>
+<td><p>The default value to be used if this property is not defined in the database file. This does the same thing as Default.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Description</p></td>
+<td><p>A short description of the property the control is for (displayed as a tooltip in the UI).</p></td>
+</tr>
+<tr class="row-even"><td><p>DisableIfBlank</p></td>
+<td><p>If True, a control will not be shown if this property is not defined in the param/options file (True/False). This does the same thing as IgnoreIfBlank.</p></td>
+</tr>
+<tr class="row-odd"><td><p>IgnoreIfBlank</p></td>
+<td><p>If True, a control will not be shown if this property is not defined in the param/options file (True/False). This does the same thing as DisableIfBlank.</p></td>
+</tr>
+<tr class="row-even"><td><p>Index</p></td>
+<td><p>This determines the control’s order under its category. This does the same thing as CategoryIndex.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Label</p></td>
+<td><p>The control label.</p></td>
+</tr>
+<tr class="row-even"><td><p>Required</p></td>
+<td><p>If True, a control will be shown for this property even if it’s not defined in the database (True/False).</p></td>
+</tr>
+<tr class="row-odd"><td><p>Type</p></td>
+<td><p>The type of control (see table below).</p></td>
+</tr>
+<tr class="row-even"><td><p>IsServerData</p></td>
+<td><p>Whether or not the value of this section should be stored as server data.</p></td>
+</tr>
+</tbody>
+</table>
+<p>These are the available controls.</p>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Control Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Boolean</p></td>
+<td><p>A drop-down control that allows the selection of True or False.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Color</p></td>
+<td><p>Allows the selection of a color.</p></td>
+</tr>
+<tr class="row-even"><td><p>Enum</p></td>
+<td><p>A drop-down control that allows the selection of an item from a list.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Enumeration</p></td>
+<td><p>Same as Enum above.</p></td>
+</tr>
+<tr class="row-even"><td><p>Filename</p></td>
+<td><p>Allows the selection of an existing file.</p></td>
+</tr>
+<tr class="row-odd"><td><p>FilenameSave</p></td>
+<td><p>Allows the selection of a new or existing file.</p></td>
+</tr>
+<tr class="row-even"><td><p>Float</p></td>
+<td><p>An floating point spinner control.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Folder</p></td>
+<td><p>Allows the selection of an existing folder.</p></td>
+</tr>
+<tr class="row-even"><td><p>Integer</p></td>
+<td><p>An integer spinner control.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Label</p></td>
+<td><p>A read-only text field.</p></td>
+</tr>
+<tr class="row-even"><td><p>MultiFilename</p></td>
+<td><p>Allows the selection of multiple existing files, which are then separated by semicolons in the text field.</p></td>
+</tr>
+<tr class="row-odd"><td><p>MultiLineMultiFilename</p></td>
+<td><p>Allows the selection of multiple existing files, which are then placed on multiple lines in the text field.</p></td>
+</tr>
+<tr class="row-even"><td><p>MultiLineMultiFolder</p></td>
+<td><p>Allows the selection of multiple existing folders, which are then placed on multiple lines in the text field.</p></td>
+</tr>
+<tr class="row-odd"><td><p>MultiLineString</p></td>
+<td><p>A text field with multiple lines.</p></td>
+</tr>
+<tr class="row-even"><td><p>Password</p></td>
+<td><p>A text field that masks the text (Note: this is not usable in .options files). If using the <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-ref-label"><span class="std std-ref">Deadline Secrets Management</span></a> feature, any parameter with the Control Type of Password will be saved and retrieved based on the <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-secret-namespace-ref-label"><span class="std std-ref">Application Plugin Secrets Access Level</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SlaveList</p></td>
+<td><p>Allows the selection of existing Workers, which are then separated by commas in the text field.</p></td>
+</tr>
+<tr class="row-even"><td><p>String</p></td>
+<td><p>A text field.</p></td>
+</tr>
+</tbody>
+</table>
+<p>There are also key/value pairs for specific controls:</p>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Key Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>DecimalPlaces</p></td>
+<td><p>The number of decimal places for the Float controls.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Filter</p></td>
+<td><p>The filter string for the Color, Filename, FilenameSave, or MultiFilename controls. Examples: <code class="docutils literal notranslate"><span class="pre">Filter=Windows</span> <span class="pre">Bitmap</span> <span class="pre">(*.bmp);;Targa</span> <span class="pre">(*.tga);;JPEG</span> <span class="pre">(*.jpg</span> <span class="pre">*.jpeg);;PCX</span> <span class="pre">(*.pcx);;PNG</span> <span class="pre">(*.png);;TIFF</span> <span class="pre">(*.tif</span> <span class="pre">*.tiff);;All</span> <span class="pre">files</span> <span class="pre">(*)</span></code> or <code class="docutils literal notranslate"><span class="pre">Filter=(color</span> <span class="pre">%R</span> <span class="pre">%G</span> <span class="pre">%B)</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>Increment</p></td>
+<td><p>The value to increment the Integer or Float controls by.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Items</p></td>
+<td><p>The semicolon separated list of items for the Enum control. This does the same thing as Values.</p></td>
+</tr>
+<tr class="row-even"><td><p>Maximum</p></td>
+<td><p>The maximum value for the Integer or Float controls.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Minimum</p></td>
+<td><p>The minimum value for the Integer or Float controls.</p></td>
+</tr>
+<tr class="row-even"><td><p>Validator</p></td>
+<td><p>A regular expression for the String control that is used to ensure the value is valid. Examples: <code class="docutils literal notranslate"><span class="pre">Validator=\w*</span></code> matches any word character; equal to <code class="docutils literal notranslate"><span class="pre">[a-zA-Z0-9_]</span></code> or <code class="docutils literal notranslate"><span class="pre">Validator=\d*</span></code> matches any digit; equal to <code class="docutils literal notranslate"><span class="pre">[0-9]</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Values</p></td>
+<td><p>The semicolon separated list of items for the Enum control. This does the same thing as Items.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="server-data">
+<span id="application-plugins-options-file-ref-label"></span><h2>Server Data<a class="headerlink" href="#server-data" title="Permalink to this headline">¶</a></h2>
+<p>When an item is marked as server data, it is stored differently than other data. The purpose of this is to reduce data transfer in cases where a lot of data needs to be stored as configuration data, but needs to be accessed less frequently than the rest of the config.
+In this case the data can be retrieved as follows:
+1) Call <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">myServerData</span> <span class="pre">=</span> <span class="pre">RepositoryUtils.GetServerData(&quot;plugin.mypluginname&quot;)</span></code>
+2) Call <code class="docutils literal notranslate"><span class="pre">myServerData[&quot;sectionname&quot;]</span></code></p>
+<div class="section" id="options-file">
+<h3>.options File<a class="headerlink" href="#options-file" title="Permalink to this headline">¶</a></h3>
+<p><strong>Optional</strong></p>
+<p>The MyPlugin.options file is an optional file that is used by the Job Properties dialog in the Monitor. It declares properties that the Monitor uses to generate a user interface for modifying plugin specific
+options as they appear in the plugin info file that was submitted with the job. After you’ve created this file, you can right-click on a job in the Monitor that uses this plugin and select Modify Properties.
+You should then see a MyPlugin page at the bottom of the list on the left which you can select to view these properties.</p>
+<a class="reference internal image-reference" href="../_images/options_file_myplugin.png"><img alt="../_images/options_file_myplugin.png" src="../_images/options_file_myplugin.png" style="height: 500px;" /></a>
+<p>Often, these plugin specific options are used to build up the arguments to be passed to the rendering application. Let’s assume that our render executable takes a “-verbose” argument that accepts a boolean parameter,
+and that the plugin info file submitted with the job contains the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Verbose</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>Now we would like to be able to change this value from the Job Properties dialog in the Monitor, so our MyPlugin.options file might look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Verbose</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">boolean</span>
+<span class="n">Label</span><span class="o">=</span><span class="n">Verbose</span> <span class="n">Logging</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">If</span> <span class="n">verbose</span> <span class="n">logging</span> <span class="ow">is</span> <span class="n">enabled</span><span class="o">.</span>
+<span class="n">Required</span><span class="o">=</span><span class="n">true</span>
+<span class="n">DisableIfBlank</span><span class="o">=</span><span class="n">false</span>
+<span class="n">DefaultValue</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>You’ll notice that the property name between the square brackets matches the Verbose setting in our plugin info file. This means that this control will change the Verbose setting. The available key=value pairs for the properties defined here are the same as those defined for the param file above (with the exception of the Password control which is param file only). Comment lines are also supported in the options file in the same way they are supported in the param file.</p>
+</div>
+<div class="section" id="ico-file">
+<span id="application-plugins-ico-file-ref-label"></span><h3>.ico File<a class="headerlink" href="#ico-file" title="Permalink to this headline">¶</a></h3>
+<p><strong>Optional</strong></p>
+<p>The MyPlugin.ico file is an optional 16x16 icon file that can be used to easily identify jobs that use this plugin in the Monitor. Typically, it is the plugin application’s logo, or something else that represents the plugin. If a plugin does not have an icon file, a generic icon will be shown in the jobs list in the Monitor.</p>
+</div>
+<div class="section" id="jobpreload-py">
+<span id="application-plugins-jobpreload-script-ref-label"></span><h3>JobPreLoad.py<a class="headerlink" href="#jobpreload-py" title="Permalink to this headline">¶</a></h3>
+<p><strong>Optional</strong></p>
+<p>The <strong>JobPreLoad.py</strong> file is an optional script that will be executed by the Worker prior to loading a job that uses this plugin. It is placed in the <code class="docutils literal notranslate"><span class="pre">&lt;your_repo&gt;/plugins/MyPlugin/</span></code> directory of your Repository, where “MyPlugin” is the name of the specific app plugin you wish the script to execute against. Note that in this case, the file does not share its name with the plugin folder. This script can be used to do things like synchronize plugins prior to starting the render job or load a set of environment variables which should be inherited by the render process when it is executed by the DeadlinePlugin -&gt; ManagedProcess class.</p>
+<p>The only requirement for the <strong>JobPreLoad.py</strong> script is that you define a __main__ function, which is called by the Worker when it executes the script. It must accept a single parameter, which is the current instance of the DeadlinePlugin class. Here is an example script that returns the JobId and JobName, copies a couple of files from a server to the local machine, and sets some environment variables:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">from</span> <span class="nn">System</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">System.IO</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">def</span> <span class="nf">__main__</span><span class="p">(</span><span class="n">deadlinePlugin</span><span class="p">):</span>
+    <span class="n">job</span> <span class="o">=</span> <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">GetJob</span><span class="p">()</span>
+    <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">LogInfo</span><span class="p">(</span><span class="s2">&quot;JobName: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">job</span><span class="o">.</span><span class="n">JobName</span><span class="p">)</span>
+    <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">LogInfo</span><span class="p">(</span><span class="s2">&quot;JobId: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">job</span><span class="o">.</span><span class="n">JobId</span><span class="p">)</span>
+
+    <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">LogInfo</span><span class="p">(</span><span class="s2">&quot;Copying some files&quot;</span><span class="p">)</span>
+    <span class="n">File</span><span class="o">.</span><span class="n">Copy</span><span class="p">(</span><span class="s2">r&quot;</span><span class="se">\\</span><span class="s2">server\files\file1.ext&quot;</span><span class="p">,</span> <span class="s2">r&quot;C:\local\files\file1.ext&quot;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+    <span class="n">File</span><span class="o">.</span><span class="n">Copy</span><span class="p">(</span><span class="s2">r&quot;</span><span class="se">\\</span><span class="s2">server\files\file2.ext&quot;</span><span class="p">,</span> <span class="s2">r&quot;C:\local\files\file2.ext&quot;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+
+    <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">LogInfo</span><span class="p">(</span><span class="s2">&quot;Setting EnvVar1 to True&quot;</span><span class="p">)</span>
+    <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">SetProcessEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;EnvVar1&quot;</span><span class="p">,</span> <span class="s2">&quot;True&quot;</span><span class="p">)</span>
+
+    <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">LogInfo</span><span class="p">(</span><span class="s2">&quot;Setting EnvVar2 to False&quot;</span><span class="p">)</span>
+    <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">SetProcessEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;EnvVar2&quot;</span><span class="p">,</span> <span class="s2">&quot;False&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pluginpreload-py">
+<h3>PluginPreLoad.py<a class="headerlink" href="#pluginpreload-py" title="Permalink to this headline">¶</a></h3>
+<p><strong>Optional</strong></p>
+<p>The <strong>PluginPreLoad.py</strong> file is an optional script that will be executed by the Worker prior to executing any Python script for the plugin (MyPlugin.py or JobPreLoad.py), and any pre or post job or task script for the current job. It is placed in the <code class="docutils literal notranslate"><span class="pre">&lt;your_repo&gt;/plugins/MyPlugin/</span></code> directory of your Repository, where “MyPlugin” is the name of the specific app plugin you wish the script to execute against. Note that in this case, the file does not share its name with the plugin folder. This script can be used to set up the Python environment prior to running any other Python script, including setting sys.path to control where additional modules will be loaded from.</p>
+<p>The only requirement for the <strong>PluginPreLoad.py</strong> script is that you define a __main__ function, which is called by the Worker when it executes the script. It does not accept any parameters. Here is an example script that updates sys.path with custom paths:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">__main__</span><span class="p">():</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s2">r&quot;</span><span class="se">\\</span><span class="s2">server\python&quot;</span>
+    <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="globaljobpreload-py">
+<span id="application-plugins-globaljobpreload-script-ref-label"></span><h3>GlobalJobPreLoad.py<a class="headerlink" href="#globaljobpreload-py" title="Permalink to this headline">¶</a></h3>
+<p><strong>Optional</strong></p>
+<p>The <strong>GlobalJobPreLoad.py</strong> file is a functionally identical script to a <strong>JobPreLoad.py</strong> script except that it is placed in the <code class="docutils literal notranslate"><span class="pre">&lt;your_repo&gt;/plugins</span></code> directory of your Repository and will execute for ALL Deadline app plugin types. Additionally, a <strong>GlobalJobPreLoad.py</strong> script file placed in <code class="docutils literal notranslate"><span class="pre">&lt;your_repo&gt;/custom/plugins</span></code> will override the same named script file if one is present in <code class="docutils literal notranslate"><span class="pre">&lt;your_repo&gt;/plugins</span></code>. Note, if present this <strong>GlobalJobPreLoad.py</strong> script will execute prior to any application plugin specific <strong>JobPreLoad.py</strong> script that might be present. Additionally, using this script entry point allows you to <a class="reference internal" href="#pipeline-bootstrap-ref-label"><span class="std std-ref">bootstrap your pipeline</span></a> if required.</p>
+</div>
+<div class="section" id="globalpluginpreload-py">
+<h3>GlobalPluginPreLoad.py<a class="headerlink" href="#globalpluginpreload-py" title="Permalink to this headline">¶</a></h3>
+<p><strong>Optional</strong></p>
+<p>The <strong>GlobalPluginPreLoad.py</strong> file is a functionally identical script to a <strong>PluginPreLoad.py</strong> script except that it is placed in the <code class="docutils literal notranslate"><span class="pre">&lt;your_repo&gt;/plugins</span></code> directory of your Repository and will execute for ALL Deadline app plugin types. Additionally, a <strong>GlobalPluginPreLoad.py</strong> script file placed in <code class="docutils literal notranslate"><span class="pre">&lt;your_repo&gt;/custom/plugins</span></code> will override the same named script file if one is present in <code class="docutils literal notranslate"><span class="pre">&lt;your_repo&gt;/plugins</span></code>. Note, if present this <strong>GlobalPluginPreLoad.py</strong> script will execute prior to any application plugin specific <strong>PluginPreLoad.py</strong> script that might be present.</p>
+</div>
+</div>
+<div class="section" id="pipeline-bootstrapping">
+<span id="pipeline-bootstrap-ref-label"></span><h2>Pipeline Bootstrapping<a class="headerlink" href="#pipeline-bootstrapping" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This topic covers an advanced use of the Scripting API to bootstrap an existing studio pipeline.</p>
+</div>
+<p>In Deadline 9.0 an additional Deadline plugin callback: <code class="docutils literal notranslate"><span class="pre">ModifyCommandLineCallback</span></code> is available to allow studios with an existing pipeline system to <strong>prefix</strong> and modify inline all existing dispatcher commands to Deadline at either a per plugin level via a <code class="docutils literal notranslate"><span class="pre">JobPreLoad.py</span></code> file or for all jobs via a <code class="docutils literal notranslate"><span class="pre">GlobalJobPreLoad.py</span></code> file. To illustrate how this can work, in the next section below, we will create a <code class="docutils literal notranslate"><span class="pre">GlobalJobPreLoad.py</span></code> script which in-turn can call the studio’s theoretical <code class="docutils literal notranslate"><span class="pre">pipeline_launch.csh</span></code> or <code class="docutils literal notranslate"><span class="pre">pipeline_launch.sh</span></code> shell script (depending on OS) which will set up the current, working environment for a user or job in the context of the renderfarm. We will assume this is purely a Linux renderfarm setup. The ‘pipeline_launch’ shell script should be considered the ‘bootstrap’ entry point for a machine to resolve into a valid context before rendering via a Deadline plugin should commence. For example, this ‘pipeline_launch’ script could query a production tracking system or pipeline toolkit, returning the requested ‘project/shot’ context, which might set environment variables, control application executable paths, etc.</p>
+<p>So, we will use the Deadline Scripting API and SHELL scripting to modify a standard Deadline render command when it picks up a task from a job from this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;exe + args&quot;</span> <span class="c1">#Simple Deadline Plugin (std basic render command involving an executable file)</span>
+<span class="s2">&quot;batch-process-exe + args&quot;</span> <span class="c1">#Advanced Deadline Plugin (where application is held open between tasks)</span>
+</pre></div>
+</div>
+<p>to always be executed such as this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load my pipeline, in context for the given project number and optional, shot number</span>
+<span class="nb">source</span> <span class="s2">&quot;/mnt/nfs/pipeline.csh&quot;</span> <span class="nv">$proj_args</span>:q <span class="c1">#where $proj_args are env vars: $PROJECT=abcdef and optionally, $SHOT=123456</span>
+
+<span class="c1"># Now execute the original render command given the now loaded project/shot context on the Deadline Worker</span>
+<span class="s2">&quot;exe + args&quot;</span> or <span class="s2">&quot;batch-process-exe + args&quot;</span>
+</pre></div>
+</div>
+<div class="section" id="modify-cmd-line">
+<h3>Modify Cmd Line<a class="headerlink" href="#modify-cmd-line" title="Permalink to this headline">¶</a></h3>
+<p>Create a <code class="docutils literal notranslate"><span class="pre">GlobalJobPreLoad.py</span></code> file in <code class="docutils literal notranslate"><span class="pre">&lt;your_repo&gt;/custom/plugins</span></code> with the following contents:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">GlobalJobPreLoad.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">Deadline.Scripting</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">FranticX.Diagnostics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">def</span> <span class="nf">AlterCommandLine</span><span class="p">(</span><span class="n">executable</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">workingDirectory</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Entering Command Line Hook&quot;</span><span class="p">)</span>
+
+    <span class="n">scriptPrefix</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="c1"># depending on OS, we return global valid file path to the pipeline launch bootstrap script</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;linux&#39;</span><span class="p">):</span>
+        <span class="n">scriptPrefix</span> <span class="o">=</span> <span class="s1">&#39;/mnt/nfs/pipeline_launch.csh&#39;</span>
+    <span class="k">elif</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;darwin&#39;</span><span class="p">:</span>
+        <span class="n">scriptPrefix</span> <span class="o">=</span> <span class="s1">&#39;/Volumes/nfs/pipeline_launch.sh&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">Trace2</span><span class="o">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s2">&quot;Unrecognized platform &#39;{}&#39;. No prefix will be added.&quot;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">scriptPrefix</span><span class="p">:</span>
+        <span class="c1"># Quotes the executable if it wasn&#39;t already quoted, to ensure it gets passed as a single arg</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">executable</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">executable</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">):</span>
+            <span class="n">executable</span> <span class="o">=</span> <span class="s1">&#39;&quot;{}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">executable</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">arguments</span><span class="p">:</span>
+            <span class="n">arguments</span> <span class="o">=</span> <span class="n">executable</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">arguments</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">arguments</span> <span class="o">=</span> <span class="n">executable</span>
+
+        <span class="n">executable</span> <span class="o">=</span> <span class="n">scriptPrefix</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;-----Modified Command Line-----&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot; Executable: &#39;{}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">executable</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;  Arguments: &#39;{}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">arguments</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Working Dir: &#39;{}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">workingDirectory</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;-------------------------------&quot;</span><span class="p">)</span>
+
+    <span class="c1"># return the original or modified exe, args, workingDir even if pipeline not available</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">executable</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">workingDirectory</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">__main__</span><span class="p">(</span><span class="n">deadlinePlugin</span><span class="p">):</span>
+    <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">DebugLogging</span> <span class="o">=</span> <span class="bp">True</span> <span class="c1"># optional, can be commented out</span>
+    <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">ModifyCommandLineCallback</span> <span class="o">+=</span> <span class="n">AlterCommandLine</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="pipeline-launch">
+<h3>Pipeline Launch<a class="headerlink" href="#pipeline-launch" title="Permalink to this headline">¶</a></h3>
+<p>We will assume that ALL jobs submitted to your Deadline farm already contain the environment variable: <code class="docutils literal notranslate"><span class="pre">PROJECT</span></code> and optionally, <code class="docutils literal notranslate"><span class="pre">SHOT</span></code>.</p>
+<p>Here we create a <code class="docutils literal notranslate"><span class="pre">pipeline_launch.csh</span></code> shell script at <code class="docutils literal notranslate"><span class="pre">/mnt/nfs/pipeline_launch.csh</span></code> to be executed when a Worker renders a task of any job it dequeues. This scipt will in turn, call your main Studio <code class="docutils literal notranslate"><span class="pre">pipeline.csh</span></code> shell script on Linux which controls the context for all your users for any project/job/shot they might be working on:</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">pipeline_launch.csh</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/tcsh</span>
+
+<span class="c1"># Do any pre-job processing here (e.g. sourcing VFX studio environment)</span>
+
+<span class="c1"># Debug Code</span>
+<span class="c1">#echo &quot;Environment prior to sourcing Pipeline-----------------&quot;</span>
+<span class="c1">#env</span>
+<span class="c1">#echo &quot;-------------------------------------------------------&quot;</span>
+
+<span class="c1"># Sanity checks to make sure expected environment is present.</span>
+<span class="k">if</span> <span class="o">(</span> <span class="nv">$?</span>PROJECT <span class="o">)</span> <span class="k">then</span>
+
+    <span class="c1"># Check if SHOT is present, and if so, append to project in args</span>
+    <span class="k">if</span> <span class="o">(</span> <span class="nv">$?</span>SHOT <span class="o">)</span> <span class="k">then</span>
+        <span class="nb">set</span> <span class="nv">proj_args</span> <span class="o">=</span> <span class="o">(</span> <span class="nv">$proj_args</span>:q <span class="s2">&quot;</span><span class="nv">$SHOT</span><span class="s2">&quot;</span> <span class="o">)</span>
+    <span class="k">else</span>
+        <span class="nb">echo</span> <span class="s2">&quot;WARNING: SHOT was not found in the environment.&quot;</span>
+    endif
+
+    <span class="c1"># Source the Project&#39;s environment.</span>
+    <span class="nb">source</span> <span class="s2">&quot;/mnt/nfs/pipeline.csh&quot;</span> <span class="nv">$proj_args</span>:q
+    <span class="nb">echo</span> <span class="s2">&quot;Done sourcing environment!&quot;</span>
+<span class="k">else</span>
+    <span class="nb">echo</span> <span class="s2">&quot;WARNING: PROJECT was not found in the environment.&quot;</span>
+endif
+
+<span class="c1"># Debug Code</span>
+<span class="c1">#echo &quot;Environment after sourcing Pipeline--------------------&quot;</span>
+<span class="c1">#env</span>
+<span class="c1">#echo &quot;-------------------------------------------------------&quot;</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;-----Running Command-----------------------------------&quot;</span>
+<span class="c1"># Run the original command -- note that $argv:q will quote the</span>
+<span class="c1"># executable as well, which would be problematic for aliases</span>
+<span class="c1"># and shell built-ins (but required for EXEs with spaces).</span>
+<span class="nv">$argv</span>:q
+<span class="nb">set</span> <span class="nv">EXIT_CODE</span><span class="o">=</span><span class="nv">$?</span>
+<span class="nb">echo</span> <span class="s2">&quot;-------------------------------------------------------&quot;</span>
+
+<span class="c1"># Do any post-job processing here.</span>
+<span class="c1"># Note that this might be after several Tasks have run,</span>
+<span class="c1"># depending on the plugin.</span>
+
+<span class="c1"># Exit with the code provided by the original command</span>
+<span class="nb">exit</span> <span class="nv">$EXIT_CODE</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="simple-plugins">
+<h2>Simple Plugins<a class="headerlink" href="#simple-plugins" title="Permalink to this headline">¶</a></h2>
+<p>A render job goes through three stages:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>StartJob</strong>: A job enters this stage when it is first picked up by a Worker.</p></li>
+<li><p><strong>RenderTasks</strong>: A job can enter this stage many times (once for each task a Worker dequeues while it has the current job loaded).</p></li>
+<li><p><strong>EndJob</strong>: A job enters this stage when a Worker is unloading the job.</p></li>
+</ul>
+</div></blockquote>
+<p>Simple plugins only covers the RenderTasks stage, and are pretty straight forward. They are commonly used to render with applications that support simple command line rendering (running a command line executable
+and waiting for it to complete). For example, After Effects has a command line renderer called aerender.exe, which can be executed by the Worker to render specific frames of an After Effects project file.</p>
+<div class="section" id="initialization">
+<h3>Initialization<a class="headerlink" href="#initialization" title="Permalink to this headline">¶</a></h3>
+<p>By default, a plugin is considered to be a Simple plugin, but you can explicitly set this in the InitializeProcess() callback (as explained above). You can also define settings specific to the simple
+plugin, as well as any popup or stdout handlers that you need. These additional settings are covered in the ManagedProcess class in the Deadline Scripting reference (note that the DeadlinePlugin class
+inherits from the ManagedProcess class). For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">from</span> <span class="nn">Deadline.Plugins</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">from</span> <span class="nn">System.Diagnostics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">def</span> <span class="nf">GetDeadlinePlugin</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;This is the function that Deadline calls to get an instance of the</span>
+<span class="sd">    main DeadlinePlugin class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MyPlugin</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">CleanupDeadlinePlugin</span><span class="p">(</span><span class="n">deadlinePlugin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the function that Deadline calls when the plugin is no</span>
+<span class="sd">    longer in use so that it can get cleaned up.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">Cleanup</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">MyPlugin</span><span class="p">(</span><span class="n">DeadlinePlugin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the main DeadlinePlugin class for MyPlugin.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Hook up the callbacks in the constructor.&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span> <span class="c1"># Required in Deadline 10.3 and later.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">InitializeProcessCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">InitializeProcess</span>
+
+    <span class="k">def</span> <span class="nf">Cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Clean up the plugin.&quot;&quot;&quot;</span>
+        <span class="c1"># Clean up stdout handler callbacks.</span>
+        <span class="k">for</span> <span class="n">stdoutHandler</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">StdoutHandlers</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">stdoutHandler</span><span class="o">.</span><span class="n">HandleCallback</span>
+
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">InitializeProcessCallback</span>
+
+    <span class="k">def</span> <span class="nf">InitializeProcess</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Called by Deadline to initialize the process.&quot;&quot;&quot;</span>
+        <span class="c1"># Set the plugin specific settings.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SingleFramesOnly</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PluginType</span> <span class="o">=</span> <span class="n">PluginType</span><span class="o">.</span><span class="n">Simple</span>
+
+        <span class="c1"># Set the ManagedProcess specific settings.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ProcessPriority</span> <span class="o">=</span> <span class="n">ProcessPriorityClass</span><span class="o">.</span><span class="n">BelowNormal</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">UseProcessTree</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="c1">#StdoutHandling should be enabled if required in your plugin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">StdoutHandling</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="c1">#PopupHandling should be enabled if required in your plugin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PopupHandling</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="c1"># Set the stdout handlers.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddStdoutHandlerCallback</span><span class="p">(</span>
+            <span class="s2">&quot;WARNING:.*&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">HandleCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">HandleStdoutWarning</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddStdoutHandlerCallback</span><span class="p">(</span>
+            <span class="s2">&quot;ERROR:(.*)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">HandleCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">HandleStdoutError</span>
+
+        <span class="c1"># Set the popup ignorers.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddPopupIgnorer</span><span class="p">(</span><span class="s2">&quot;Popup 1&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddPopupIgnorer</span><span class="p">(</span><span class="s2">&quot;Popup 2&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Set the popup handlers.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddPopupHandler</span><span class="p">(</span><span class="s2">&quot;Popup 3&quot;</span><span class="p">,</span> <span class="s2">&quot;OK&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddPopupHandler</span><span class="p">(</span><span class="s2">&quot;Popup 4&quot;</span><span class="p">,</span> <span class="s2">&quot;Do not ask me this again;Continue&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">HandleStdoutWarning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Callback for when a line of stdout contains a WARNING message.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">LogWarning</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GetRegexMatch</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">HandleStdoutError</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Callback for when a line of stdout contains an ERROR message.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">FailRender</span><span class="p">(</span><span class="s2">&quot;Detected an error: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetRegexMatch</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="stdout-handlers">
+<span id="app-plugins-std-handlers-ref-label"></span><h3>Stdout Handlers<a class="headerlink" href="#stdout-handlers" title="Permalink to this headline">¶</a></h3>
+<p>The AddStdoutHandlerCallback() function accepts a string parameter, which is a POSIX compliant regular expression used to match against lines of stdout from the command line process.
+This function also returns a RegexHandlerCallback instance, which you can hook up a callback to that is called when a line of stdout is matched. This can all be done on one line, which is shown in the example above.</p>
+<p>Examples of handler callback functions are also shown in the example above. Within these handler functions, the GetRegexMatch() function can be used to get a specific match from the regular expression.
+The parameter passed to GetRegexMatch() is the index for the matches that were found. 0 returns the entire matched string, and 1, 2, etc returns the matched substrings (matches that are surrounded by round brackets).
+If there isn’t a corresponding substring, you’ll get an error (note that 0 is always a valid index).</p>
+<p>In HandleStdoutWarning(), 0 is the only valid index because there is no substring in round brackets in the regular expression. In HandleStdoutError(), 0 and 1 are valid. 0 will return the entire matched string,
+whereas 1 will return the substring in the round brackets.</p>
+<p>For further examples, please open up any of our application plugin Python script files and inspect them. An example of comprehensive Stdout handlers can be found in the MayaBatch plugin.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>../plugins/MayaBatch/MayaBatch.py</p></li>
+</ul>
+</div></blockquote>
+<p>Note, that Deadline’s default shipping StdoutHandlers require the Worker’s Operating System to be using ENGLISH as it’s language.</p>
+</div>
+<div class="section" id="popup-ignorers-and-handlers">
+<span id="app-plugins-popup-handlers-ref-label"></span><h3>Popup Ignorers and Handlers<a class="headerlink" href="#popup-ignorers-and-handlers" title="Permalink to this headline">¶</a></h3>
+<p>The AddPopupIgnorer() function accepts a string parameter, which is a POSIX compliant regular expression. If a popup is displayed with a title that matches the given regular expression, the popup is simply ignored.
+Popup ignorers should only be used if the popup doesn’t halt the rendering because it is waiting for a button to be pressed. In the case where a button needs to be pressed to continue, popup handlers should be used
+instead. The AddPopupHandler() function takes two parameters: a regular expression string, and the button(s) to press (multiple buttons can be separated with semicolons).</p>
+<p>Note, that Deadline’s default shipping PopupIgnorers and PopupHandlers require the Worker’s Operating System to be using ENGLISH as it’s language.</p>
+<p>Here is an example using “.*” at the beginning and end of the title search string which acts as a wildcard. The dialog also has a “Adopt the File’s Unit Scale” checkbox that needs to be checked ON and then the “OK” button should be pressed in that order.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">PopupHandling</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">AddPopupHandler</span><span class="p">(</span><span class="s2">&quot;.*File Load: Units Mismatch.*&quot;</span><span class="p">,</span> <span class="s2">&quot;Adopt the File&#39;s Unit Scale?;OK&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this example, the Optical Flares license popup uses a “wxWindowClassNR” control for its “OK” button, so we need to add this special class type to our built-in list of possible button classes, just for the After Effects plugin. Once this class is added, we can search for it and react by pressing the “OK” button in it’s dialog. Although, in this case, visually the button displays the word “OK”, but actually the name of the button is “panel”.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">PopupHandling</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">PopupButtonClasses</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Button&quot;</span><span class="p">,</span> <span class="s2">&quot;wxWindowClassNR&quot;</span><span class="p">)</span>
+<span class="c1"># Handle Optical Flares License popup (the &quot;OK&quot; button is actually called &quot;panel&quot;)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">AddPopupHandler</span><span class="p">(</span><span class="s2">&quot;.*Optical Flares License.*&quot;</span><span class="p">,</span> <span class="s2">&quot;panel&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For users without access to a recent (2012+) version of Visual Studio which includes the Spy++ utility, then the free application <a class="reference external" href="https://www.catch22.net/projects/winspy">WinSpy++</a> is very useful to help identify the correct syntax for a dialog’s title or button.</p>
+<p>In this example, we force all Qt based widgets to be native instead of alien based widgets, set our HandleQtPopups variable to True and then we are able to handle V-Ray Qt based alien widget based dialogs whilst rendering in Rhino by pressing the [X] symbol in the top right corner of the Rhino Qt dialog:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">PopupHandling</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">HandleQtPopups</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;QT_USE_NATIVE_WINDOWS&quot;</span><span class="p">,</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">AddPopupHandler</span><span class="p">(</span><span class="s2">r&quot;Rhino&quot;</span><span class="p">,</span> <span class="s2">&quot;[X]&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this final example, we need to handle Windows 8 Mobile / Windows 10 based popup dialogs and ensure we react correctly depending on the name of the dialog title. A sometimes tricky task if you have multiple, very similar named popup title dialogs in the application. We use the “.*” characters as a wildcard, the “^” character to ensure the text appears at the start of the string and the “$” character to ensure the text appears at the end of the string we are searching for.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">PopupHandling</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">HandleWindows10Popups</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">AddPopupIgnorer</span><span class="p">(</span><span class="s2">&quot;SAFE 12.*&quot;</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">AddPopupIgnorer</span><span class="p">(</span><span class="s2">&quot;^SAFE$&quot;</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">AddPopupHandler</span><span class="p">(</span><span class="s2">&quot;^$&quot;</span><span class="p">,</span> <span class="s2">&quot;[X]&quot;</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">AddPopupHandler</span><span class="p">(</span><span class="s2">&quot;Tip of the Day&quot;</span><span class="p">,</span> <span class="s2">&quot;[X]&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For further examples, please open up any of our application plugin Python script files and inspect them. Good examples are to be found in:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>../plugins/3dsmax/3dsmax.py</p></li>
+<li><p>../plugins/AfterEffects/AfterEffects.py</p></li>
+<li><p>../plugins/CSiSAFE/CSiSAFE.py</p></li>
+<li><p>../plugins/Rhino/Rhino.py</p></li>
+</ul>
+</div></blockquote>
+<p>Further information on Regular Expressions can be found on <a class="reference external" href="https://en.wikipedia.org/wiki/Regular_expression">Wikipedia</a> and many online POSIX compliant RegEx testers are available to help you develop and test your RegEx before testing your code in Deadline:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://regex101.com/">regex101</a></p></li>
+<li><p><a class="reference external" href="https://www.regexr.com/">regexr</a></p></li>
+<li><p><a class="reference external" href="https://regexpal.com/">regexpal</a></p></li>
+<li><p><a class="reference external" href="https://www.regextester.com/">regextester</a></p></li>
+</ul>
+</div></blockquote>
+<p>Finally, the Deadline “FranticX.Processes.ManagedProcess” class has a number of functions to further assist with Popup Handling and it is recommended to review our Scripting API docs for further information on these functions:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>PopupButtonClasses</p></li>
+<li><p>PopupMaxChildWindows</p></li>
+<li><p>PopupTextClasses</p></li>
+<li><p>PressEnterDuringRender</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="render-executable-and-arguments">
+<h3>Render Executable and Arguments<a class="headerlink" href="#render-executable-and-arguments" title="Permalink to this headline">¶</a></h3>
+<p>The RenderExecutable() callback is used to get the path to the executable that will be used for rendering. This callback must be implemented in a Simple plugin, or an error will occur.
+Continuing our example from above, we’ll use the path specified in the database, and we can access it using the global GetConfigEntry() function.</p>
+<p>Another important (but optional) callback is the RenderArgument() callback. This callback should return the arguments you want to pass to the render executable. Typically, these arguments are built
+from values that are pulled from the DeadlinePlugin class (like the scene file name, or the start and end frame for the task), or from the plugin info file that was submitted with the job using the
+GetPluginInfoEntry() function. If this callback is not implemented, then no arguments will be passed to the executable.</p>
+<p>After adding these callbacks, our example plugin script now looks like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">from</span> <span class="nn">Deadline.Plugins</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">from</span> <span class="nn">System.Diagnostics</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">def</span> <span class="nf">GetDeadlinePlugin</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;This is the function that Deadline calls to get an instance of the</span>
+<span class="sd">    main DeadlinePlugin class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MyPlugin</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">CleanupDeadlinePlugin</span><span class="p">(</span><span class="n">deadlinePlugin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the function that Deadline calls when the plugin is no</span>
+<span class="sd">    longer in use so that it can get cleaned up.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">Cleanup</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">MyPlugin</span><span class="p">(</span><span class="n">DeadlinePlugin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the main DeadlinePlugin class for MyPlugin.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Hook up the callbacks in the constructor.&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span> <span class="c1"># Required in Deadline 10.3 and later.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">InitializeProcessCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">InitializeProcess</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">RenderExecutableCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RenderExecutable</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">RenderArgumentCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RenderArgument</span>
+
+    <span class="k">def</span> <span class="nf">Cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Clean up the plugin.&quot;&quot;&quot;</span>
+        <span class="c1"># Clean up stdout handler callbacks.</span>
+        <span class="k">for</span> <span class="n">stdoutHandler</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">StdoutHandlers</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">stdoutHandler</span><span class="o">.</span><span class="n">HandleCallback</span>
+
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">InitializeProcessCallback</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">RenderExecutableCallback</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">RenderArgumentCallback</span>
+
+    <span class="c1">## Called by Deadline to initialize the process.</span>
+    <span class="k">def</span> <span class="nf">InitializeProcess</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Set the plugin specific settings.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SingleFramesOnly</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PluginType</span> <span class="o">=</span> <span class="n">PluginType</span><span class="o">.</span><span class="n">Simple</span>
+
+        <span class="c1"># Set the ManagedProcess specific settings.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ProcessPriority</span> <span class="o">=</span> <span class="n">ProcessPriorityClass</span><span class="o">.</span><span class="n">BelowNormal</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">UseProcessTree</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">StdoutHandling</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PopupHandling</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="c1"># Set the stdout handlers.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddStdoutHandlerCallback</span><span class="p">(</span>
+            <span class="s2">&quot;WARNING:.*&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">HandleCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">HandleStdoutWarning</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddStdoutHandlerCallback</span><span class="p">(</span>
+            <span class="s2">&quot;ERROR:(.*)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">HandleCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">HandleStdoutError</span>
+
+        <span class="c1"># Set the popup ignorers.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddPopupIgnorer</span><span class="p">(</span><span class="s2">&quot;Popup 1&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddPopupIgnorer</span><span class="p">(</span><span class="s2">&quot;Popup 2&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Set the popup handlers.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddPopupHandler</span><span class="p">(</span><span class="s2">&quot;Popup 3&quot;</span><span class="p">,</span> <span class="s2">&quot;OK&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddPopupHandler</span><span class="p">(</span><span class="s2">&quot;Popup 4&quot;</span><span class="p">,</span> <span class="s2">&quot;Do not ask me this again;Continue&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">HandleStdoutWarning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Callback for when a line of stdout contains a WARNING message.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">LogWarning</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GetRegexMatch</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">HandleStdoutError</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Callback for when a line of stdout contains an ERROR message.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">FailRender</span><span class="p">(</span><span class="s2">&quot;Detected an error: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetRegexMatch</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">RenderExecutable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Callback to get the executable used for rendering.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetConfigEntry</span><span class="p">(</span><span class="s2">&quot;MyPluginRenderExecutable&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">RenderArgument</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Callback to get the arguments that will be passed to the executable.&quot;&quot;&quot;</span>
+        <span class="n">arguments</span> <span class="o">=</span> <span class="s2">&quot; -continueOnError&quot;</span>
+        <span class="n">arguments</span> <span class="o">+=</span> <span class="s2">&quot; -verbose &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetPluginInfoEntry</span><span class="p">(</span><span class="s2">&quot;Verbose&quot;</span><span class="p">)</span>
+        <span class="n">arguments</span> <span class="o">+=</span> <span class="s2">&quot; -start &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GetStartFrame</span><span class="p">())</span>
+        <span class="n">arguments</span> <span class="o">+=</span> <span class="s2">&quot; -end &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GetEndFrame</span><span class="p">())</span>
+        <span class="n">arguments</span> <span class="o">+=</span> <span class="s1">&#39; -scene &quot;{}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GetDataFilename</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">arguments</span>
+</pre></div>
+</div>
+<p>There are many other callbacks that can be implemented for Simple plugins, which are covered in the Events section for the ManagedProcess class in the Deadline Scripting reference. The best place to find
+examples of Simple plugins is to look at some of the plugins that are shipped with Deadline. These range from the very basic (Blender), to the more complex (MayaCmd).</p>
+</div>
+</div>
+<div class="section" id="advanced-plugins">
+<h2>Advanced Plugins<a class="headerlink" href="#advanced-plugins" title="Permalink to this headline">¶</a></h2>
+<p>To reiterate, a render job goes through three stages:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>StartJob</strong>: A job enters this stage when it is first picked up by a Worker.</p></li>
+<li><p><strong>RenderTasks</strong>: A job can enter this stage many times (once for each task a Worker dequeues while it has the current job loaded).</p></li>
+<li><p><strong>EndJob</strong>: A job enters this stage when a Worker is unloading the job.</p></li>
+</ul>
+</div></blockquote>
+<p>Advanced plugins are more complex, as they control all three of these job stages. They are commonly used to render with applications that support some sort of worker/server mode that Deadline
+can interact with. Usually, this requires the application to be started during the StartJob phase, fed commands during the RenderTasks stage(s), and finally shut down during the EndJob stage. For example,
+the 3ds Max plugin starts up 3dsmax in Worker mode and forces it to load our Lightning plugin. The Lightning plugin listens for commands from Deadline and executes them as necessary. After rendering is complete,
+3ds Max is shut down.</p>
+<div class="section" id="id1">
+<h3>Initialization<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>To indicate that your plugin is an Advanced plugin, you need to set the PluginType property in the InitializeProcess() callback.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">from</span> <span class="nn">Deadline.Plugins</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">def</span> <span class="nf">GetDeadlinePlugin</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;This is the function that Deadline calls to get an instance of the</span>
+<span class="sd">    main DeadlinePlugin class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MyPlugin</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">CleanupDeadlinePlugin</span><span class="p">(</span><span class="n">deadlinePlugin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the function that Deadline calls when the plugin is no</span>
+<span class="sd">    longer in use so that it can get cleaned up.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">Cleanup</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">MyPlugin</span> <span class="p">(</span><span class="n">DeadlinePlugin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the main DeadlinePlugin class for MyPlugin.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Hook up the callbacks in the constructor.&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span> <span class="c1"># Required in Deadline 10.3 and later.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">InitializeProcessCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">InitializeProcess</span>
+
+    <span class="k">def</span> <span class="nf">Cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Clean up the plugin.&quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">InitializeProcessCallback</span>
+
+    <span class="k">def</span> <span class="nf">InitializeProcess</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Called by Deadline to initialize the process.&quot;&quot;&quot;</span>
+        <span class="c1"># Set the plugin specific settings.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SingleFramesOnly</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PluginType</span> <span class="o">=</span> <span class="n">PluginType</span><span class="o">.</span><span class="n">Advanced</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="render-tasks">
+<h3>Render Tasks<a class="headerlink" href="#render-tasks" title="Permalink to this headline">¶</a></h3>
+<p>The RenderTasks() callback is the only required callback for Advanced plugins. If it is not implemented, an error will occur. It contains the code to be executed for each task that a Worker renders.
+This could involve launching applications, communicating with already running applications, or simply running a script to automate a particular task (like backing up a group of files).</p>
+<p>Other common callbacks for Advanced plugins are the StartJob() and EndJob() callbacks. The StartJob() callback can be used to start up an application, or to set some local variables that will be used in
+other callbacks. If the StartJob() callback is not implemented, then nothing is done during the StartJob phase. The EndJob() callback can be used to shut down a running application, or to clean up temporary files.
+If the EndJob() callback is not implemented, then nothing is done during the EndJob phase.</p>
+<p>In the example below, we will be launching our application during the StartJob phase. The benefit to this is that the application can be left running during the duration of the job, which eliminates the overhead of
+having to launch the application for each task. To launch and monitor the application, we will be implementing a ManagedProcess class, and calling it MyPluginProcess .This ManagedProcess class will define the render
+executable and command line arguments for launching the process we will be monitoring. Note that we aren’t passing it any frame information, as this needs to be handled in the RenderTasks() callback when it interacts
+with the process.</p>
+<p>After adding these three callbacks, and the MyPluginProcess class, our example code looks like this. Note that the RenderTasks() callback still needs code to allow it to interact with the running process launched in
+the StartJob() callback.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">from</span> <span class="nn">Deadline.Plugins</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">def</span> <span class="nf">GetDeadlinePlugin</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;This is the function that Deadline calls to get an instance of the</span>
+<span class="sd">    main DeadlinePlugin class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MyPlugin</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">CleanupDeadlinePlugin</span><span class="p">(</span><span class="n">deadlinePlugin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the function that Deadline calls when the plugin is no</span>
+<span class="sd">    longer in use so that it can get cleaned up.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">Cleanup</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">MyPlugin</span><span class="p">(</span><span class="n">DeadlinePlugin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the main DeadlinePlugin class for MyPlugin.&quot;&quot;&quot;</span>
+    <span class="n">Process</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># Variable to hold the Managed Process object.</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Hook up the callbacks in the constructor.&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span> <span class="c1"># Required in Deadline 10.3 and later.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">InitializeProcessCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">InitializeProcess</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">StartJobCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">StartJob</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">RenderTasksCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RenderTasks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">EndJobCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">EndJob</span>
+
+    <span class="k">def</span> <span class="nf">Cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Clean up the plugin.&quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">InitializeProcessCallback</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">StartJobCallback</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">RenderTasksCallback</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">EndJobCallback</span>
+
+        <span class="c1"># Clean up the managed process object.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Process</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Process</span><span class="o">.</span><span class="n">Cleanup</span><span class="p">()</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">Process</span>
+
+    <span class="k">def</span> <span class="nf">InitializeProcess</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Called by Deadline to initialize the process.&quot;&quot;&quot;</span>
+        <span class="c1"># Set the plugin specific settings.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SingleFramesOnly</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PluginType</span> <span class="o">=</span> <span class="n">PluginType</span><span class="o">.</span><span class="n">Advanced</span>
+
+    <span class="k">def</span> <span class="nf">StartJob</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Called by Deadline when the job starts.&quot;&quot;&quot;</span>
+        <span class="n">myProcess</span> <span class="o">=</span> <span class="n">MyPluginProcess</span><span class="p">()</span>
+        <span class="n">StartMonitoredManagedProcess</span><span class="p">(</span><span class="s2">&quot;My Process&quot;</span><span class="p">,</span> <span class="n">myProcess</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">RenderTasks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Called by Deadline for each task the Worker renders.&quot;&quot;&quot;</span>
+        <span class="c1"># Do something to interact with the running process.</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">EndJob</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Called by Deadline when the job ends.&quot;&quot;&quot;</span>
+        <span class="n">ShutdownMonitoredManagedProcess</span><span class="p">(</span><span class="s2">&quot;My Process&quot;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">MyPluginProcess</span><span class="p">(</span><span class="n">ManagedProcess</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the ManagedProcess class that is launched above.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deadlinePlugin</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Hook up the callbacks in the constructor.&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span> <span class="c1"># Required in Deadline 10.3 and later.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deadlinePlugin</span> <span class="o">=</span> <span class="n">deadlinePlugin</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">InitializeProcessCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">InitializeProcess</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">RenderExecutableCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RenderExecutable</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">RenderArgumentCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RenderArgument</span>
+
+    <span class="k">def</span> <span class="nf">Cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Clean up the managed process.&quot;&quot;&quot;</span>
+        <span class="c1"># Clean up stdout handler callbacks.</span>
+        <span class="k">for</span> <span class="n">stdoutHandler</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">StdoutHandlers</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">stdoutHandler</span><span class="o">.</span><span class="n">HandleCallback</span>
+
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">InitializeProcessCallback</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">RenderExecutableCallback</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">RenderArgumentCallback</span>
+
+    <span class="k">def</span> <span class="nf">InitializeProcess</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Called by Deadline to initialize the process.&quot;&quot;&quot;</span>
+        <span class="c1"># Set the ManagedProcess specific settings.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ProcessPriority</span> <span class="o">=</span> <span class="n">ProcessPriorityClass</span><span class="o">.</span><span class="n">BelowNormal</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">UseProcessTree</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">StdoutHandling</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PopupHandling</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="c1"># Set the stdout handlers.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddStdoutHandlerCallback</span><span class="p">(</span>
+            <span class="s2">&quot;WARNING:.*&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">HandleCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">HandleStdoutWarning</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddStdoutHandlerCallback</span><span class="p">(</span>
+            <span class="s2">&quot;ERROR:(.*)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">HandleCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">HandleStdoutError</span>
+
+        <span class="c1"># Set the popup ignorers.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddPopupIgnorer</span><span class="p">(</span><span class="s2">&quot;Popup 1&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddPopupIgnorer</span><span class="p">(</span><span class="s2">&quot;Popup 2&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Set the popup handlers.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddPopupHandler</span><span class="p">(</span><span class="s2">&quot;Popup 3&quot;</span><span class="p">,</span> <span class="s2">&quot;OK&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddPopupHandler</span><span class="p">(</span><span class="s2">&quot;Popup 4&quot;</span><span class="p">,</span> <span class="s2">&quot;Do not ask me this again;Continue&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">HandleStdoutWarning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Callback for when a line of stdout contains a WARNING message.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">LogWarning</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GetRegexMatch</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">HandleStdoutError</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Callback for when a line of stdout contains an ERROR message.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">FailRender</span><span class="p">(</span><span class="s2">&quot;Detected an error: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetRegexMatch</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">RenderExecutable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Callback to get the executable used for rendering.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">GetConfigEntry</span><span class="p">(</span><span class="s2">&quot;MyPluginRenderExecutable&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">RenderArgument</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Callback to get the arguments that will be passed to the executable.&quot;&quot;&quot;</span>
+        <span class="n">arguments</span> <span class="o">=</span> <span class="s1">&#39; -verbose &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">GetPluginInfoEntry</span><span class="p">(</span><span class="s1">&#39;Verbose&#39;</span><span class="p">)</span>
+        <span class="n">arguments</span> <span class="o">+=</span> <span class="s1">&#39; -scene &quot;{}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">GetDataFilename</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">arguments</span>
+</pre></div>
+</div>
+<p>Because the Advanced plugins are much more complex than the Simple plugins, we recommend taking a look at the following plugins that are shipped with Deadline for examples:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>3dsmax</p></li>
+<li><p>Fusion</p></li>
+<li><p>Lightwave</p></li>
+<li><p>MayaBatch</p></li>
+<li><p>Modo</p></li>
+<li><p>Nuke</p></li>
+<li><p>SoftimageBatch</p></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="migrating-plugins-from-deadline-5">
+<span id="application-plugin-migration-ref-label"></span><h2>Migrating Plugins from Deadline 5<a class="headerlink" href="#migrating-plugins-from-deadline-5" title="Permalink to this headline">¶</a></h2>
+<p>Some changes were made to the Scripting API in Deadline 6, which means that Deadline 6 and later are NOT backward compatible with plugin scripts written for Deadline 5. However, migrating your scripts over is relatively
+straightforward, and this guide will walk you through the API changes so that you can update your scripts as necessary.</p>
+<div class="section" id="global-functions">
+<h3>Global Functions<a class="headerlink" href="#global-functions" title="Permalink to this headline">¶</a></h3>
+<p>In Deadline 6, all global API functions were removed, and replaced with DeadlinePlugin member functions, or with static utility functions. See the <a class="reference internal" href="scripting-overview.html#scripting-overview-migration-ref-label"><span class="std std-ref">Code Completion for the Deadline Scripting API</span></a> section in the Scripting Overview documentation for more information, including replacement functions.</p>
+<p>Almost all plugin-specific global functions are now DeadlinePlugin member functions. For example, the global ‘LogInfo(message)’ function has been replaced with a member function for the DeadlinePlugin class, which you created in your event Python file. So instead of:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LogInfo</span><span class="p">(</span><span class="s2">&quot;this is a test message&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You would use this code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">LogInfo</span><span class="p">(</span><span class="s2">&quot;this is a test message&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The only functions that aren’t DeadlinePlugin member functions are listed below, along with their replacement utility functions.</p>
+<table class="docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 47%" />
+<col style="width: 53%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Original Global Function</p></th>
+<th class="head"><p>Replacement Function</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CheckPathMapping(path)</p></td>
+<td><p>RepositoryUtils.CheckPathMapping(path)</p></td>
+</tr>
+<tr class="row-odd"><td><p>CheckPathMappingInFile(inFileName, outFileName)</p></td>
+<td><p>RepositoryUtils.CheckPathMappingInFile(inFileName, outFileName)</p></td>
+</tr>
+<tr class="row-even"><td><p>CheckPathMappingInFileAndReplaceSeparator(inFileName, outFileName , separatorToReplace, newSeparator)</p></td>
+<td><p>RepositoryUtils.CheckPathMappingInFileAndReplaceSeparator(inFileName, outFileName, separatorToReplace, newSeparator)</p></td>
+</tr>
+<tr class="row-odd"><td><p>PathMappingRequired(path)</p></td>
+<td><p>RepositoryUtils.PathMappingRequired(path)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="callbacks">
+<h3>Callbacks<a class="headerlink" href="#callbacks" title="Permalink to this headline">¶</a></h3>
+<p>You need to set up callbacks in the constructor of your DeadlinePlugin class that you created in your plugin Python file. Examples are shown in the documentation above, and you can look at the plugins that
+ship with Deadline for references as well. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span> <span class="c1"># Required in Deadline 10.3 and later.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">InitializeProcessCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">InitializeProcess</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">RenderExecutableCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RenderExecutable</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">RenderArgumentCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RenderArgument</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">PreRenderTasksCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">PreRenderTasks</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">PostRenderTasksCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">PostRenderTasks</span>
+</pre></div>
+</div>
+<p>Note that these callbacks need to be manually cleaned up when the plugin is no longer in use. See the documentation regarding the CleanupDeadlinePlugin function above for more information.</p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Application Plugins</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#general-plugin-information">General Plugin Information</a></li>
+<li><a class="reference internal" href="#creating-a-new-plugin">Creating a New Plugin</a><ul>
+<li><a class="reference internal" href="#py-file">.py File</a></li>
+<li><a class="reference internal" href="#param-file">.param File</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#server-data">Server Data</a><ul>
+<li><a class="reference internal" href="#options-file">.options File</a></li>
+<li><a class="reference internal" href="#ico-file">.ico File</a></li>
+<li><a class="reference internal" href="#jobpreload-py">JobPreLoad.py</a></li>
+<li><a class="reference internal" href="#pluginpreload-py">PluginPreLoad.py</a></li>
+<li><a class="reference internal" href="#globaljobpreload-py">GlobalJobPreLoad.py</a></li>
+<li><a class="reference internal" href="#globalpluginpreload-py">GlobalPluginPreLoad.py</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pipeline-bootstrapping">Pipeline Bootstrapping</a><ul>
+<li><a class="reference internal" href="#modify-cmd-line">Modify Cmd Line</a></li>
+<li><a class="reference internal" href="#pipeline-launch">Pipeline Launch</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#simple-plugins">Simple Plugins</a><ul>
+<li><a class="reference internal" href="#initialization">Initialization</a></li>
+<li><a class="reference internal" href="#stdout-handlers">Stdout Handlers</a></li>
+<li><a class="reference internal" href="#popup-ignorers-and-handlers">Popup Ignorers and Handlers</a></li>
+<li><a class="reference internal" href="#render-executable-and-arguments">Render Executable and Arguments</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#advanced-plugins">Advanced Plugins</a><ul>
+<li><a class="reference internal" href="#id1">Initialization</a></li>
+<li><a class="reference internal" href="#render-tasks">Render Tasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#migrating-plugins-from-deadline-5">Migrating Plugins from Deadline 5</a><ul>
+<li><a class="reference internal" href="#global-functions">Global Functions</a></li>
+<li><a class="reference internal" href="#callbacks">Callbacks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="scripting-overview.html"
+                        title="previous chapter">Scripting Overview</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="event-plugins.html"
+                        title="next chapter">Event Plugins</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-plugins.html" title="Event Plugins"
+             >next</a></li>
+        <li class="right" >
+          <a href="scripting-overview.html" title="Scripting Overview"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-scripting.html" >Scripting</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Application Plugins</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

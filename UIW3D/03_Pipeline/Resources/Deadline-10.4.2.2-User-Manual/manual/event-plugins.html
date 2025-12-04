@@ -1,0 +1,861 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Plugins &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Monitor Scripts" href="monitor-scripts.html" />
+    <link rel="prev" title="Application Plugins" href="application-plugins.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="monitor-scripts.html" title="Monitor Scripts"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="application-plugins.html" title="Application Plugins"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-scripting.html" accesskey="U">Scripting</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Event Plugins</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="event-plugins">
+<span id="event-plugins-ref-label"></span><h1>Event Plugins<a class="headerlink" href="#event-plugins" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Event plugins can be created to execute specific tasks in response to specific events in Deadline (like when a job is submitted or when it finishes). For example, event plugins can be used to
+communicate with in-house pipeline tools to update the state of shots or tasks, or they can be used to submit a post-processing job when another job finishes. All of Deadline’s event plugins are
+written in Python, which means that it’s easy to create your own plugins or customize the existing ones. See the <a class="reference internal" href="scripting-overview.html#scripting-overview-ref-label"><span class="std std-ref">Scripting Overview</span></a> documentation for more information, and links to the Deadline Scripting reference.</p>
+<p>Note that because the Python scripts for event plugins will be executed in a non-interactive way, it is important that your scripts do not contain any blocking operations like infinite loops,
+or interfaces that require user input.</p>
+<p>When an event is executed the log will show where the script is being loaded from.</p>
+</div>
+<div class="section" id="triggering-events">
+<h2>Triggering Events<a class="headerlink" href="#triggering-events" title="Permalink to this headline">¶</a></h2>
+<p>An event plugin can respond to one or more of the following <code class="docutils literal notranslate"><span class="pre">DeadlineEventListener</span></code> events:</p>
+<ul class="simple">
+<li><p>When a Job is submitted <code class="docutils literal notranslate"><span class="pre">OnJobSubmittedCallback</span></code></p></li>
+<li><p>When a Job is imported <code class="docutils literal notranslate"><span class="pre">OnJobImportedCallback</span></code></p></li>
+<li><p>When a Job starts rendering <code class="docutils literal notranslate"><span class="pre">OnJobStartedCallback</span></code></p></li>
+<li><p>When a Job finishes rendering <code class="docutils literal notranslate"><span class="pre">OnJobFinishedCallback</span></code></p></li>
+<li><p>When a Job is requeued <code class="docutils literal notranslate"><span class="pre">OnJobRequeuedCallback</span></code></p></li>
+<li><p>When a Job fails <code class="docutils literal notranslate"><span class="pre">OnJobFailedCallback</span></code></p></li>
+<li><p>When a Job is suspended <code class="docutils literal notranslate"><span class="pre">OnJobSuspendedCallback</span></code></p></li>
+<li><p>When a suspended or failed Job is resumed <code class="docutils literal notranslate"><span class="pre">OnJobResumedCallback</span></code></p></li>
+<li><p>When a Job is placed in the pending state <code class="docutils literal notranslate"><span class="pre">OnJobPendedCallback</span></code></p></li>
+<li><p>When a Job is released from a pending state <code class="docutils literal notranslate"><span class="pre">OnJobReleasedCallback</span></code></p></li>
+<li><p>When a Job is deleted <code class="docutils literal notranslate"><span class="pre">OnJobDeletedCallback</span></code></p></li>
+<li><p>When a Job error occurs during rendering <code class="docutils literal notranslate"><span class="pre">OnJobErrorCallback</span></code></p></li>
+<li><p>When a Job is about to be purged from the database <code class="docutils literal notranslate"><span class="pre">OnJobPurgedCallback</span></code></p></li>
+</ul>
+<ul class="simple">
+<li><p>When a house cleaning operation finishes <code class="docutils literal notranslate"><span class="pre">OnHouseCleaningCallback</span></code></p></li>
+<li><p>When a repository repair operation finishes <code class="docutils literal notranslate"><span class="pre">OnRepositoryRepairCallback</span></code></p></li>
+</ul>
+<ul class="simple">
+<li><p>When a Worker starts <code class="docutils literal notranslate"><span class="pre">OnSlaveStartedCallback</span></code></p></li>
+<li><p>When a Worker stops <code class="docutils literal notranslate"><span class="pre">OnSlaveStoppedCallback</span></code></p></li>
+<li><p>When a Worker becomes idle <code class="docutils literal notranslate"><span class="pre">OnSlaveIdleCallback</span></code></p></li>
+<li><p>When a Worker starts rendering <code class="docutils literal notranslate"><span class="pre">OnSlaveRenderingCallback</span></code></p></li>
+<li><p>When a Worker starts a Job <code class="docutils literal notranslate"><span class="pre">OnSlaveStartingJobCallback</span></code></p></li>
+<li><p>When a Worker is marked as stalled <code class="docutils literal notranslate"><span class="pre">OnSlaveStalledCallback</span></code></p></li>
+<li><p>When a Worker updates its information in the database <code class="docutils literal notranslate"><span class="pre">OnSlaveInfoUpdatedCallback</span></code></p></li>
+</ul>
+<ul class="simple">
+<li><p>When power management’s Idle Shutdown feature shuts down Workers <code class="docutils literal notranslate"><span class="pre">OnIdleShutdownCallback</span></code></p></li>
+<li><p>When power management’s Machine Startup feature starts up Workers <code class="docutils literal notranslate"><span class="pre">OnMachineStartupCallback</span></code></p></li>
+<li><p>When power management’s Thermal Shutdown feature shuts down Workers <code class="docutils literal notranslate"><span class="pre">OnThermalShutdownCallback</span></code></p></li>
+<li><p>When power management’s Machine Restart feature restarts Workers <code class="docutils literal notranslate"><span class="pre">OnMachineRestartCallback</span></code></p></li>
+</ul>
+<p>The corresponding Event Callbacks for these events can be found in the ‘Deadline.Events.DeadlineEventListener Class Reference’ section of the Deadline Scripting Reference documentation. The full Deadline Scripting Reference can be found on the <a class="reference external" href="https://docs.thinkboxsoftware.com">Thinkbox Software Documentation Website</a>. Offline PDF and HTML versions can be downloaded from here as well.</p>
+<p>More detailed information about event callbacks can be found in the <a class="reference internal" href="#event-plugins-detailed-ref-label"><span class="std std-ref">Event Callback Details</span></a> section further down.</p>
+<p>By default, all jobs will trigger event plugins when they are submitted or change state. However, there is a job property that can be enabled to suppress events. In the Monitor, you can set the Suppress Events
+property under the Advanced tab in the Job Properties dialog. If you have a custom submission tool or script, you can specify the following in the job info file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SuppressEvents</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>Note that events will be executed by different Deadline applications, depending on the context of the event. For example, the job submission event is processed by the Command application after the job has been
+submitted, while the job finished event is normally processed by the Worker that finishes the last task for the job. However, the job finished event could also be processed by the Monitor if manually marking a job as complete.</p>
+<p>The order in which Event plugins trigger is also configurable: the plugins will be executed in the order they appear in the Configure Event Plugins window. The order can be modified by selecting a plugin name and moving it up or down in the list.</p>
+<a class="reference internal image-reference" href="../_images/event_moved.png"><img alt="../_images/event_moved.png" src="../_images/event_moved.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="creating-an-event-plugin">
+<h2>Creating an Event Plugin<a class="headerlink" href="#creating-an-event-plugin" title="Permalink to this headline">¶</a></h2>
+<p>To create a custom event plugin, you start by creating a folder in the Repository’s custom\events folder and give it the name of your event plugin. See the <a class="reference internal" href="scripting-overview.html#scripting-overview-ref-label"><span class="std std-ref">Scripting Overview</span></a> documentation for more information on
+the ‘custom’ folder in the Repository and how it’s used.</p>
+<p>For the sake of this document, we will call our new event plugin MyEvent. All relative script and configuration files for this event plugin are to be placed in this folder (some are required and some are optional).</p>
+<div class="section" id="py-file">
+<h3>.py File<a class="headerlink" href="#py-file" title="Permalink to this headline">¶</a></h3>
+<p><strong>Required</strong></p>
+<p>The MyEvent.py is the main event plugin script file. It defines the main DeadlineEventListener class that contains the necessary callbacks that will respond to specific events.
+The template for this script file might look like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">Deadline.Events</span> <span class="kn">import</span> <span class="n">DeadlineEventListener</span>
+
+<span class="k">def</span> <span class="nf">GetDeadlineEventListener</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;This is the function that Deadline calls to get an instance of the</span>
+<span class="sd">    main DeadlineEventListener class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MyEvent</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">CleanupDeadlineEventListener</span><span class="p">(</span><span class="n">deadlinePlugin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the function that Deadline calls when the event plugin is</span>
+<span class="sd">    no longer in use so that it can get cleaned up.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">Cleanup</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">MyEvent</span><span class="p">(</span><span class="n">DeadlineEventListener</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the main DeadlineEventListener class for MyEvent&quot;&quot;&quot;</span>
+    <span class="c1"># TODO: Place code here to replace &quot;pass&quot;</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>The first thing to note is that we’re importing the Deadline.Events namespace so that we can access the DeadlineEventListener class.</p>
+<p>The GetDeadlineEventListener() function is important, as it allows Deadline to get an instance of our MyEvent class (which is extending the abstract DeadlineEventListener class). If this function is not defined, Deadline will report an error when it tries to load the event plugin.</p>
+<p>The <cite>__init__()</cite> function in each event plugin must call <cite>super().__init__()</cite> (ie. the super class constructor) before doing anything else as of Deadline 10.3.</p>
+<p>The MyEvent class will need to implement certain callbacks based on the events you want to respond to, and these callbacks must be hooked up in the MyEvent constructor. All callbacks are optional, but make sure to include at
+least one so that your event plugin actually does something. For a list of all available callbacks, refer to the DeadlineEventListener class in the Deadline Scripting reference.</p>
+<p>The CleanupDeadlineEventListener() function is also important, as it is necessary to clean up the event plugin when it is no longer in use. Typically, this is used to clean up any callbacks that were created when the
+event plugin was initialized.</p>
+<p>After implementing a few functions, your MyEvent.py script file might look something like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">Deadline.Events</span> <span class="kn">import</span> <span class="n">DeadlineEventListener</span>
+
+<span class="k">def</span> <span class="nf">GetDeadlineEventListener</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;This is the function that Deadline calls to get an instance of the</span>
+<span class="sd">    main DeadlineEventListener class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MyEvent</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">CleanupDeadlineEventListener</span><span class="p">(</span><span class="n">deadlinePlugin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the function that Deadline calls when the event plugin is</span>
+<span class="sd">    no longer in use so that it can get cleaned up.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">Cleanup</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">MyEvent</span><span class="p">(</span><span class="n">DeadlineEventListener</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the main DeadlineEventListener class for MyEvent&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Set up the event callbacks here</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span> <span class="c1"># Required in Deadline 10.3 and later.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">OnJobSubmittedCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OnJobSubmitted</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">OnJobFinishedCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OnJobFinished</span>
+
+    <span class="k">def</span> <span class="nf">Cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">OnJobSubmittedCallback</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">OnJobFinishedCallback</span>
+
+    <span class="k">def</span> <span class="nf">OnJobSubmitted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
+        <span class="c1"># TODO: Connect to pipeline site to notify it that a job has been submitted</span>
+        <span class="c1"># for a particular shot or task.</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">OnJobFinished</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
+        <span class="c1"># TODO: Connect to pipeline site to notify it that the job for a particular</span>
+        <span class="c1"># shot or task is complete.</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="param-file">
+<h3>.param File<a class="headerlink" href="#param-file" title="Permalink to this headline">¶</a></h3>
+<p><strong>Required</strong></p>
+<p>As of Deadline 8.0 the param file is required and effectively replaces the *.dlinit file (which is no longer used). The data that was previously stored in the *.dlinit file is now stored in the database. The *.param file is used by the Event Configuration dialog in the Monitor. It declares properties that the Monitor uses to generate a user
+interface for modifying custom settings in the database. After you’ve created this file, open the Monitor and enter Power User mode. Then select Tools -&gt; Configure Events and look for your event plugin in the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/configure_event_myevent.png"><img alt="../_images/configure_event_myevent.png" src="../_images/configure_event_myevent.png" style="height: 500px;" /></a>
+<p>The file might look something like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">State</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">Enum</span>
+<span class="n">Items</span><span class="o">=</span><span class="n">Global</span> <span class="n">Enabled</span><span class="p">;</span><span class="n">Opt</span><span class="o">-</span><span class="n">In</span><span class="p">;</span><span class="n">Disabled</span>
+<span class="n">Label</span><span class="o">=</span><span class="n">State</span>
+<span class="n">Default</span><span class="o">=</span><span class="n">Disabled</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">How</span> <span class="n">this</span> <span class="n">event</span> <span class="n">plugin</span> <span class="n">should</span> <span class="n">respond</span> <span class="n">to</span> <span class="n">events</span><span class="o">.</span> <span class="n">If</span> <span class="n">Global</span><span class="p">,</span> <span class="nb">all</span> <span class="n">jobs</span> <span class="ow">and</span> <span class="n">Workers</span> <span class="n">will</span> <span class="n">trigger</span> <span class="n">the</span> <span class="n">events</span> <span class="k">for</span> <span class="n">this</span> <span class="n">plugin</span><span class="o">.</span> <span class="n">If</span> <span class="n">Opt</span><span class="o">-</span><span class="n">In</span><span class="p">,</span> <span class="n">jobs</span> <span class="ow">and</span> <span class="n">Workers</span> <span class="n">can</span> <span class="n">choose</span> <span class="n">to</span> <span class="n">trigger</span> <span class="n">the</span> <span class="n">events</span> <span class="k">for</span> <span class="n">this</span> <span class="n">plugin</span><span class="o">.</span> <span class="n">If</span> <span class="n">Disabled</span><span class="p">,</span> <span class="n">no</span> <span class="n">events</span> <span class="n">are</span> <span class="n">triggered</span> <span class="k">for</span> <span class="n">this</span> <span class="n">plugin</span><span class="o">.</span>
+
+<span class="p">[</span><span class="n">PipelineURL</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">string</span>
+<span class="n">Label</span><span class="o">=</span><span class="n">Pipeline</span> <span class="n">URL</span>
+<span class="n">Default</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="p">[</span><span class="n">myserver</span><span class="p">]</span><span class="o">/</span><span class="n">pipeline</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">The</span> <span class="n">URL</span> <span class="k">for</span> <span class="n">our</span> <span class="n">pipeline</span> <span class="n">website</span><span class="o">.</span>
+
+<span class="p">[</span><span class="n">PipelineUserName</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">string</span>
+<span class="n">Label</span><span class="o">=</span><span class="n">Pipeline</span> <span class="n">User</span> <span class="n">Name</span>
+<span class="n">Default</span><span class="o">=</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">The</span> <span class="n">user</span> <span class="n">name</span> <span class="k">for</span> <span class="n">our</span> <span class="n">pipeline</span> <span class="n">website</span><span class="o">.</span>
+
+<span class="p">[</span><span class="n">PipelinePassword</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">password</span>
+<span class="n">Label</span><span class="o">=</span><span class="n">Pipeline</span> <span class="n">Password</span>
+<span class="n">Default</span><span class="o">=</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">The</span> <span class="n">password</span> <span class="k">for</span> <span class="n">our</span> <span class="n">pipeline</span> <span class="n">website</span><span class="o">.</span>
+</pre></div>
+</div>
+<p><strong>Event Plugins require the [State] property to be declared as of Deadline 8.0, and this property replaces the [Enabled] property from earlier versions. Attempting to use an event plugin from an earlier version of Deadline without editing it to declare this new property will prevent the event from functioning correctly.</strong></p>
+<p>Comment lines are supported in the param file, and must start with either ‘;’ or ‘#’. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is a comment about this PipelineURL property.</span>
+<span class="p">[</span><span class="n">PipelineURL</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">string</span>
+<span class="n">Label</span><span class="o">=</span><span class="n">Pipeline</span> <span class="n">URL</span>
+<span class="n">Default</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="p">[</span><span class="n">myserver</span><span class="p">]</span><span class="o">/</span><span class="n">pipeline</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">The</span> <span class="n">URL</span> <span class="k">for</span> <span class="n">our</span> <span class="n">pipeline</span> <span class="n">website</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>The available key=value pairs for the properties defined here are:</p>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Key Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Category</p></td>
+<td><p>The category the control should go under.</p></td>
+</tr>
+<tr class="row-odd"><td><p>CategoryIndex</p></td>
+<td><p>This determines the control’s order under its category. This does the same thing as Index.</p></td>
+</tr>
+<tr class="row-even"><td><p>CategoryOrder</p></td>
+<td><p>This determines the category’s order among other categories. If more than one CategoryOrder is defined for the same category, the lowest value is used.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Default</p></td>
+<td><p>The default value to be used if this property is not defined in the database. This does the same thing as DefaultValue.</p></td>
+</tr>
+<tr class="row-even"><td><p>DefaultValue</p></td>
+<td><p>The default value to be used if this property is not defined in the database. This does the same thing as Default.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Description</p></td>
+<td><p>A short description of the property the control is for (displayed as a tooltip in the UI).</p></td>
+</tr>
+<tr class="row-even"><td><p>DisableIfBlank</p></td>
+<td><p>If True, a control will not be shown if this property is not defined in the param/options file (True/False). This does the same thing as IgnoreIfBlank.</p></td>
+</tr>
+<tr class="row-odd"><td><p>IgnoreIfBlank</p></td>
+<td><p>If True, a control will not be shown if this property is not defined in the param/options file (True/False). This does the same thing as DisableIfBlank.</p></td>
+</tr>
+<tr class="row-even"><td><p>Index</p></td>
+<td><p>This determines the control’s order under its category. This does the same thing as CategoryIndex.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Label</p></td>
+<td><p>The control label.</p></td>
+</tr>
+<tr class="row-even"><td><p>Required</p></td>
+<td><p>If True, a control will be shown for this property even if it’s not defined in the database (True/False).</p></td>
+</tr>
+<tr class="row-odd"><td><p>Type</p></td>
+<td><p>The type of control (see table below).</p></td>
+</tr>
+<tr class="row-even"><td><p>IsServerData</p></td>
+<td><p>Whether or not the value of this section should be stored as server data.</p></td>
+</tr>
+</tbody>
+</table>
+<p>These are the available controls.</p>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Control Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Boolean</p></td>
+<td><p>A drop-down control that allows the selection of True or False.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Color</p></td>
+<td><p>Allows the selection of a color.</p></td>
+</tr>
+<tr class="row-even"><td><p>Enum</p></td>
+<td><p>A drop-down control that allows the selection of an item from a list.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Enumeration</p></td>
+<td><p>Same as Enum above.</p></td>
+</tr>
+<tr class="row-even"><td><p>Filename</p></td>
+<td><p>Allows the selection of an existing file.</p></td>
+</tr>
+<tr class="row-odd"><td><p>FilenameSave</p></td>
+<td><p>Allows the selection of a new or existing file.</p></td>
+</tr>
+<tr class="row-even"><td><p>Float</p></td>
+<td><p>An floating point spinner control.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Folder</p></td>
+<td><p>Allows the selection of an existing folder.</p></td>
+</tr>
+<tr class="row-even"><td><p>Integer</p></td>
+<td><p>An integer spinner control.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Label</p></td>
+<td><p>A read-only text field.</p></td>
+</tr>
+<tr class="row-even"><td><p>MultiFilename</p></td>
+<td><p>Allows the selection of multiple existing files, which are then separated by semicolons in the text field.</p></td>
+</tr>
+<tr class="row-odd"><td><p>MultiLineMultiFilename</p></td>
+<td><p>Allows the selection of multiple existing files, which are then placed on multiple lines in the text field.</p></td>
+</tr>
+<tr class="row-even"><td><p>MultiLineMultiFolder</p></td>
+<td><p>Allows the selection of multiple existing folders, which are then placed on multiple lines in the text field.</p></td>
+</tr>
+<tr class="row-odd"><td><p>MultiLineString</p></td>
+<td><p>A text field with multiple lines.</p></td>
+</tr>
+<tr class="row-even"><td><p>Password</p></td>
+<td><p>A text field that masks the text. If using the <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-ref-label"><span class="std std-ref">Deadline Secrets Management</span></a> feature, any parameter with the Control Type of Password will be saved and retrieved based on the <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-secret-namespace-ref-label"><span class="std std-ref">Event Plugins Secrets Access Level</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SlaveList</p></td>
+<td><p>Allows the selection of existing Workers, when are then separated by commas in the text field.</p></td>
+</tr>
+<tr class="row-even"><td><p>String</p></td>
+<td><p>A text field.</p></td>
+</tr>
+</tbody>
+</table>
+<p>There are also key/value pairs for specific controls:</p>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Key Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>DecimalPlaces</p></td>
+<td><p>The number of decimal places for the Float controls.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Filter</p></td>
+<td><p>The filter string for the Color, Filename, FilenameSave, or MultiFilename controls. Examples: <code class="docutils literal notranslate"><span class="pre">Filter=Windows</span> <span class="pre">Bitmap</span> <span class="pre">(*.bmp);;Targa</span> <span class="pre">(*.tga);;JPEG</span> <span class="pre">(*.jpg</span> <span class="pre">*.jpeg);;PCX</span> <span class="pre">(*.pcx);;PNG</span> <span class="pre">(*.png);;TIFF</span> <span class="pre">(*.tif</span> <span class="pre">*.tiff);;All</span> <span class="pre">files</span> <span class="pre">(*)</span></code> or <code class="docutils literal notranslate"><span class="pre">Filter=(color</span> <span class="pre">%R</span> <span class="pre">%G</span> <span class="pre">%B)</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>Increment</p></td>
+<td><p>The value to increment the Integer or Float controls by.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Items</p></td>
+<td><p>The semicolon separated list of items for the Enum control. This does the same thing as Values.</p></td>
+</tr>
+<tr class="row-even"><td><p>Maximum</p></td>
+<td><p>The maximum value for the Integer or Float controls.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Minimum</p></td>
+<td><p>The minimum value for the Integer or Float controls.</p></td>
+</tr>
+<tr class="row-even"><td><p>Validator</p></td>
+<td><p>A regular expression for the String control that is used to ensure the value is valid. Examples: <code class="docutils literal notranslate"><span class="pre">Validator=\w*</span></code> matches any word character; equal to <code class="docutils literal notranslate"><span class="pre">[a-zA-Z0-9_]</span></code> or <code class="docutils literal notranslate"><span class="pre">Validator=\d*</span></code> matches any digit; equal to <code class="docutils literal notranslate"><span class="pre">[0-9]</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Values</p></td>
+<td><p>The semicolon separated list of items for the Enum control. This does the same thing as Items.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="server-data">
+<h2>Server Data<a class="headerlink" href="#server-data" title="Permalink to this headline">¶</a></h2>
+<p>When an item is marked as server data, it is stored differently than other data. The purpose of this is to reduce data transfer in cases where a lot of data needs to be stored as configuration data, but needs to be accessed less frequently than the rest of the config.
+In this case the data can be retrieved as follows:
+1) Call <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">myServerData</span> <span class="pre">=</span> <span class="pre">RepositoryUtils.GetServerData(&quot;event.plugin.mypluginname&quot;)</span></code> (ex. event.plugin.spot)
+2) Call <code class="docutils literal notranslate"><span class="pre">myServerData[&quot;sectionname&quot;]</span></code> (ex. Config)</p>
+</div>
+<div class="section" id="event-plugin-and-error-reports">
+<h2>Event Plugin and Error Reports<a class="headerlink" href="#event-plugin-and-error-reports" title="Permalink to this headline">¶</a></h2>
+<p>Logs and reports can be stored with the job or the Worker, depending on the event type.</p>
+<div class="section" id="job-event-reports">
+<h3>Job Event Reports<a class="headerlink" href="#job-event-reports" title="Permalink to this headline">¶</a></h3>
+<p>Event types that start with “OnJob…” will save reports with the corresponding job.</p>
+<p>When an event plugin that uses the LogInfo or LogWarning functions finishes executing, its log will be stored with the job’s other render logs, which you can view in the Monitor by right-clicking on the job and selecting View Job Reports.</p>
+<p>When an error occurs in an event-plugin, an error report will also be stored with the job’s other render errors, which you can view in the Monitor by right-clicking on the job and selecting View Job Reports.</p>
+</div>
+<div class="section" id="slave-event-reports">
+<h3>Slave Event Reports<a class="headerlink" href="#slave-event-reports" title="Permalink to this headline">¶</a></h3>
+<p>Event types that start with “OnSlave…” will save reports with the corresponding Worker.</p>
+<p>When an event plugin that uses the LogInfo or LogWarning functions finishes executing, its log will be stored with the Worker’s other render logs, which you can view in the Monitor by right-clicking on the Worker and selecting View Worker Reports.</p>
+<p>When an error occurs in an event-plugin, an error report will also be stored with the Worker’s other render errors, which you can view in the Monitor by right-clicking on the Worker and selecting View Worker Reports.</p>
+</div>
+</div>
+<div class="section" id="quicktime-generation-example">
+<h2>Quicktime Generation Example<a class="headerlink" href="#quicktime-generation-example" title="Permalink to this headline">¶</a></h2>
+<p>An event plugin can be used to automatically submit a Quicktime job to create a movie from the rendered images of a job that just finished. An example of an event plugin like this can be downloaded from
+the <a class="reference external" href="https://www.thinkboxsoftware.com/deadline-downloads/deadline-miscellaneous-downloads/">Miscellaneous Deadline Downloads Page</a>. To install the event plugin, just unzip the downloaded file to your
+Repository’s custom/events folder.</p>
+<p>Configuration Files</p>
+<p>The QuicktimeGen.param file defines a couple of settings that can be configured from the Monitor. Here you can specify a path to the Quicktime settings XML file you want to use.
+This settings file can be generated from the Submit Quicktime Job To Deadline submitter in the Monitor.</p>
+<p>The QuicktimeGen.param file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">State</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">Enum</span>
+<span class="n">Items</span><span class="o">=</span><span class="n">Global</span> <span class="n">Enabled</span><span class="p">;</span><span class="n">Opt</span><span class="o">-</span><span class="n">In</span><span class="p">;</span><span class="n">Disabled</span>
+<span class="n">Label</span><span class="o">=</span><span class="n">State</span>
+<span class="n">Default</span><span class="o">=</span><span class="n">Global</span> <span class="n">Enabled</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">How</span> <span class="n">this</span> <span class="n">event</span> <span class="n">plugin</span> <span class="n">should</span> <span class="n">respond</span> <span class="n">to</span> <span class="n">events</span><span class="o">.</span> <span class="n">If</span> <span class="n">Global</span><span class="p">,</span> <span class="nb">all</span> <span class="n">jobs</span> <span class="ow">and</span> <span class="n">Workers</span> <span class="n">will</span> <span class="n">trigger</span> <span class="n">the</span> <span class="n">events</span> <span class="k">for</span> <span class="n">this</span> <span class="n">plugin</span><span class="o">.</span> <span class="n">If</span> <span class="n">Opt</span><span class="o">-</span><span class="n">In</span><span class="p">,</span> <span class="n">jobs</span> <span class="ow">and</span> <span class="n">Workers</span> <span class="n">can</span> <span class="n">choose</span> <span class="n">to</span> <span class="n">trigger</span> <span class="n">the</span> <span class="n">events</span> <span class="k">for</span> <span class="n">this</span> <span class="n">plugin</span><span class="o">.</span> <span class="n">If</span> <span class="n">Disabled</span><span class="p">,</span> <span class="n">no</span> <span class="n">events</span> <span class="n">are</span> <span class="n">triggered</span> <span class="k">for</span> <span class="n">this</span> <span class="n">plugin</span><span class="o">.</span>
+
+<span class="p">[</span><span class="n">EventCallbacks</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">Label</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">The</span> <span class="n">Event</span> <span class="n">Callbacks</span> <span class="n">that</span> <span class="n">this</span> <span class="n">Event</span> <span class="n">Plugin</span> <span class="n">subscribes</span> <span class="n">to</span><span class="o">.</span>
+<span class="n">Default</span><span class="o">=</span><span class="n">OnJobFinished</span>
+
+<span class="p">[</span><span class="n">QTSettings</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">filename</span>
+<span class="n">Label</span><span class="o">=</span><span class="n">QT</span> <span class="n">Settings</span> <span class="n">XML</span> <span class="n">File</span>
+<span class="n">Default</span><span class="o">=</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">The</span> <span class="n">QT</span> <span class="n">settings</span> <span class="n">xml</span> <span class="n">file</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cron-scheduled-event">
+<h2>Cron / Scheduled Event<a class="headerlink" href="#cron-scheduled-event" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.zabbix.com"><img alt="Zabbix" src="../_images/events_hc_zabbix_logo.png" style="width: 200px; height: 50px;" /></a> <a class="reference external" href="https://www.zenoss.com"><img alt="Zenoss" src="../_images/events_hc_zenoss_logo.png" style="width: 200px; height: 50px;" /></a> <a class="reference external" href="https://www.nagios.org"><img alt="Nagios" src="../_images/events_hc_nagios_logo.png" style="width: 200px; height: 50px;" /></a> <a class="reference external" href="https://www.opennms.org"><img alt="Opennms" src="../_images/events_hc_opennms_logo.png" style="width: 200px; height: 50px;" /></a> <a class="reference external" href="https://www.solarwinds.com"><img alt="Solarwinds" src="../_images/events_hc_solarwinds_logo.png" style="width: 200px; height: 50px;" /></a></p>
+<p>A ‘regular time interval’ based event plugin can be called via listening for the <strong>House Cleaning</strong> event in Deadline to be completed. This is ideal for the execution of a Deadline event plugin, at a regular time interval when the Deadline database is as up to date as possible. The time interval of the <a class="reference internal" href="repository-config.html#house-cleaning-settings-label"><span class="std std-ref">House Cleaning</span></a> operation is controlled in the repository options.</p>
+<p>Deadline provides the possibility of integration with IT monitoring systems such as <a class="reference external" href="https://www.zabbix.com/">Zabbix</a>, <a class="reference external" href="https://www.zenoss.com/">Zenoss</a>, <a class="reference external" href="https://www.nagios.org/">Nagios</a>, <a class="reference external" href="https://www.opennms.org/">Opennms</a>, <a class="reference external" href="https://www.solarwinds.com/">SolarWinds</a> or indeed any other monitoring software via the house cleaning event callback. As an example, this event could be used to regularly inject Deadline data based on it’s job, Worker, Pulse statistics or info/settings into another database thereby providing integration and consistency between separate information systems in different departments in a company.</p>
+<p>Building your own scheduled event script file might look something like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">Deadline.Events</span> <span class="kn">import</span> <span class="n">DeadlineEventListener</span>
+
+<span class="k">def</span> <span class="nf">GetDeadlineEventListener</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;This is the function that Deadline calls to get an instance of the</span>
+<span class="sd">    main DeadlineEventListener class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">ScheduledEvent</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">CleanupDeadlineEventListener</span><span class="p">(</span><span class="n">deadlinePlugin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the function that Deadline calls when the event plugin is</span>
+<span class="sd">    no longer in use so that it can get cleaned up.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">Cleanup</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">ScheduledEvent</span> <span class="p">(</span><span class="n">DeadlineEventListener</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the main DeadlineEventListener class for ScheduledEvent.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Set up the event callbacks here</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span> <span class="c1"># Required in Deadline 10.3 and later.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">OnHouseCleaningCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OnHouseCleaning</span>
+
+    <span class="k">def</span> <span class="nf">Cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">OnHouseCleaningCallback</span>
+
+    <span class="k">def</span> <span class="nf">OnHouseCleaning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># TODO: Execute generic pipeline duties here such as</span>
+        <span class="c1"># reporting to an external studio database or injecting</span>
+        <span class="c1"># Deadline Farm Stats into Zabbix, Zenoss, Nagios for IT</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="software-configuration-management-integration">
+<span id="scm-integration-ref-label"></span><h2>Software Configuration Management Integration<a class="headerlink" href="#software-configuration-management-integration" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://cfengine.com"><img alt="CFEngine" src="../_images/events_scm_cfengine_logo.png" style="width: 200px; height: 100px;" /></a> <a class="reference external" href="https://puppetlabs.com"><img alt="Puppet" src="../_images/events_scm_puppet_logo.png" style="width: 200px; height: 100px;" /></a> <a class="reference external" href="https://saltstack.com"><img alt="Saltstack" src="../_images/events_scm_saltstack_logo.png" style="width: 200px; height: 100px;" /></a> <a class="reference external" href="https://www.chef.io"><img alt="Chef" src="../_images/events_scm_chef_logo.png" style="width: 200px; height: 100px;" /></a> <a class="reference external" href="https://www.ansible.com"><img alt="Ansible" src="../_images/events_scm_ansible_logo.png" style="width: 200px; height: 100px;" /></a></p>
+<p><a class="reference external" href="https://www.microsoft.com/en-gb/server-cloud/products/system-center-2012-r2-configuration-manager"><img alt="SCCM" src="../_images/events_scm_sccm_logo.png" style="width: 200px; height: 100px;" /></a> <a class="reference external" href="https://www.apple.com/remotedesktop"><img alt="ARD" src="../_images/events_scm_apple_remote_desktop_logo.png" style="width: 200px; height: 100px;" /></a> <a class="reference external" href="https://www.jamfsoftware.com/products/casper-suite"><img alt="Casper" src="../_images/events_scm_casper_logo.png" style="width: 200px; height: 100px;" /></a> <a class="reference external" href="https://www.munki.org/munki/"><img alt="Munki" src="../_images/events_scm_munki_logo.png" style="width: 200px; height: 100px;" /></a></p>
+<p>Deadline provides the possibility of integration with Software Configuration Management (SCM) systems such as <a class="reference external" href="https://cfengine.com/">CFEngine</a>, <a class="reference external" href="https://puppetlabs.com/">Puppet</a>, <a class="reference external" href="https://saltstack.com/">Saltstack</a>, <a class="reference external" href="https://www.chef.io/">Chef</a>, <a class="reference external" href="https://www.ansible.com">Ansible</a>, <a class="reference external" href="https://www.microsoft.com/en-gb/server-cloud/products/system-center-2012-r2-configuration-manager/">SCCM</a>, <a class="reference external" href="https://www.apple.com/remotedesktop">ARD</a>, <a class="reference external" href="https://www.jamfsoftware.com/products/casper-suite">Casper Suite</a>, <a class="reference external" href="https://www.munki.org/munki/">Munki</a> or indeed any SCM software via the Worker event callbacks. Deadline ships with <a class="reference internal" href="app-puppet.html#app-puppet-ref-label"><span class="std std-ref">Puppet</span></a> and <a class="reference internal" href="app-salt.html#app-salt-ref-label"><span class="std std-ref">Salt</span></a> <a class="reference internal" href="manual-submission.html#maintenance-jobs-ref-label"><span class="std std-ref">Maintenance Jobs</span></a> which can be submitted to Deadline via their Monitor submission scripts and also via <a class="reference internal" href="event-puppet.html#event-puppet-ref-label"><span class="std std-ref">Puppet</span></a> and <a class="reference internal" href="event-salt.html#event-salt-ref-label"><span class="std std-ref">Salt</span></a> <strong>Worker centric</strong> <a class="reference internal" href="#event-plugins-ref-label"><span class="std std-ref">event</span></a> plugins.</p>
+<p>Building your own SCM event plugin might look something like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">Deadline.Events</span> <span class="kn">import</span> <span class="n">DeadlineEventListener</span>
+<span class="kn">from</span> <span class="nn">Deadline.Scripting</span> <span class="kn">import</span> <span class="n">ClientUtils</span>
+
+<span class="k">def</span> <span class="nf">GetDeadlineEventListener</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;This is the function that Deadline calls to get an instance of the</span>
+<span class="sd">    main DeadlineEventListener class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">SoftwareEvent</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">CleanupDeadlineEventListener</span><span class="p">(</span><span class="n">deadlinePlugin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the function that Deadline calls when the event plugin is</span>
+<span class="sd">    no longer in use so that it can get cleaned up.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">Cleanup</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">SoftwareEvent</span><span class="p">(</span><span class="n">DeadlineEventListener</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is the main DeadlineEventListener class for SoftwareEvent.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Set up the event callbacks here</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span> <span class="c1"># Required in Deadline 10.3 and later.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">OnSlaveStartedCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OnSlaveStarted</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">OnSlaveStartingJobCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OnSlaveStartingJob</span>
+
+    <span class="k">def</span> <span class="nf">Cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">OnSlaveStartedCallback</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">OnSlaveStartingJobCallback</span>
+
+    <span class="c1"># This is called when a Worker is started.</span>
+    <span class="k">def</span> <span class="nf">OnSlaveStarted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
+        <span class="c1"># If a Worker has just started on a rendernode,</span>
+        <span class="c1"># this can typically be a reliable and safe time</span>
+        <span class="c1"># to carry out config/software deployment.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SoftwareUpdate</span><span class="p">()</span>
+
+    <span class="c1"># This is called when a Worker starts a job.</span>
+    <span class="k">def</span> <span class="nf">OnSlaveStartingJob</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
+        <span class="c1"># You could query the returned job object when a</span>
+        <span class="c1"># Worker first starts a job. Correct version of</span>
+        <span class="c1"># renderer installed?</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SoftwareUpdate</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">SoftwareUpdate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ClientUtils</span><span class="o">.</span><span class="n">LogText</span><span class="p">(</span><span class="s2">&quot;Preparing for Software Update&quot;</span><span class="p">)</span>
+        <span class="c1"># TODO: Execute command here to query your in-house</span>
+        <span class="c1"># software deployment tool (SCM) to see if any new</span>
+        <span class="c1"># software/sys env variables are required to be updated.</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="event-callback-details">
+<span id="event-plugins-detailed-ref-label"></span><h2>Event Callback Details<a class="headerlink" href="#event-callback-details" title="Permalink to this headline">¶</a></h2>
+<p>The following section contains information about when each event callback is triggered, and which Deadline application(s) are responsible for invoking the event callback.</p>
+<div class="section" id="job-event-callbacks">
+<h3>Job Event Callbacks<a class="headerlink" href="#job-event-callbacks" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 91%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">OnJobSubmitted</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked just before a Job is flagged as submitted in the database.</p>
+<p><strong>By:</strong> The application that submitted the Job (<em>Deadline Monitor</em> or <em>Deadline Command</em>) is responsible for invoking the event callback.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">OnJobImported</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked just before a Job is flagged as submitted in the database when it has been imported from an archive.</p>
+<p><strong>By:</strong> The application that submitted the Job (<em>Deadline Monitor</em> or <em>Deadline Command</em>) is responsible for invoking the event callback.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">OnJobStarted</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked after a Job has been dequeued by the Worker for rendering but before the Job’s application plugin has been invoked. Requeued Jobs do not trigger the invocation of this event callback.</p>
+<p><strong>By:</strong> The <em>Deadline Worker</em> application is responsible for invoking the event callback.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">OnJobFinished</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked after the last Task in a Job is completed, or after the Job is manually changed to complete.</p>
+<p><strong>By:</strong> The application that marks the Job completed (<em>Worker</em>, <em>Monitor</em>, or <em>Command</em>) is responsible for invoking the event callback.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">OnJobDeleted</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked immediately after a Job is deleted.</p>
+<p><strong>By:</strong> The application that issues the deletion of the Job is responsible for invoking the event callback.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">OnJobRequeued</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked immediately after a Job is requeued.</p>
+<p><strong>By:</strong> The application that requeued the Job is responsible for invoking the event.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">OnJobSuspended</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked immediately after a Job is suspended.</p>
+<p><strong>By:</strong> The application that issues the Job to be suspended is responsible for invoking the event callback.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">OnJobResumed</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked immediately after a Job is resumed.</p>
+<p><strong>By:</strong> The application that issues the Job to be resumed is responsible for invoking the event callback.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">OnJobFailed</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked immediately after a Job has failed.</p>
+<p><strong>By:</strong> The application that issues the Job to fail is responsible for invoking the event callback.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">OnJobError</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked immediately after an error is reported. This occurs before the Job would be marked as failed, and before the Worker reports an error in the rendering step.</p>
+<p><strong>By:</strong> The <em>Deadline Worker</em> application is responsible for invoking the event callback.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">OnJobPurged</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked immediately before a Job is purged. This occurs during the house cleaning step.</p>
+<p><strong>By:</strong> The application running house cleaning (<em>Worker</em>, <em>Pulse</em>, <em>Monitor</em>, <em>Command</em>) is responsible for invoking the event callback.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">OnJobPended</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked immediately after a Job has been pended.</p>
+<p><strong>By:</strong> When a Job is pended manually, the <em>Deadline Monitor</em> application is responsible for invoking the event callback. When a Job is pended automatically, the application running the “Pending Job Scan” is responsible for invoking the event callback.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">OnJobReleased</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked immediately after a Job has been released from pending state.</p>
+<p><strong>By:</strong> When a Job is released manually, the <em>Deadline Monitor</em> application is responsible for invoking the event callback. When a Job is released automatically, the application running the “Pending Job Scan” is responsible for invoking the event callback.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="worker-event-callbacks">
+<h3>Worker Event Callbacks<a class="headerlink" href="#worker-event-callbacks" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 91%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">OnSlaveStarted</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked immediately after a Worker connects to the repository.</p>
+<p><strong>By:</strong> The <em>Deadline Worker</em> application is responsible for invoking the event callback.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">OnSlaveIdle</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked periodically when a Worker is in the idle state.</p>
+<p><strong>By:</strong> The <em>Deadline Worker</em> application is responsible for invoking the event callback.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">OnSlaveRendering</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked after <code class="docutils literal notranslate"><span class="pre">OnSlaveStartingJob</span></code> but before the Job’s application plugin has been invoked.</p>
+<p><strong>By:</strong> The <em>Deadline Worker</em> application is responsible for invoking the event callback.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">OnSlaveStartingJob</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked before <code class="docutils literal notranslate"><span class="pre">OnSlaveRendering</span></code> after a Job has been dequeued for rendering.</p>
+<p><strong>By:</strong> The <em>Deadline Worker</em> application is responsible for invoking the event callback.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">OnSlaveStalled</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked during repository repair if a Worker is detected as stalled.</p>
+<p><strong>By:</strong> The <em>Deadline</em> application performing the repository repair is responsible for invoking the event callback.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">OnSlaveStopped</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked immediately after a Worker begins the process of shutting down.</p>
+<p><strong>By:</strong> The <em>Deadline Worker</em> application is responsible for invoking the event callback.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">OnSlaveInfoUpdated</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked when a Worker updates its information in the database.</p>
+<p><strong>By:</strong> The <em>Deadline Worker</em> application is responsible for invoking the event callback.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="misc-event-callbacks">
+<h3>Misc Event Callbacks<a class="headerlink" href="#misc-event-callbacks" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 91%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">OnIdleShutdown</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked immediately after Pulse sends the command to the Launcher to shutdown a Worker.</p>
+<p><strong>By:</strong> The <em>Deadline Pulse</em> application is responsible for invoking the event callback.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">OnMachineStartup</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked immediately after Pulse sends the command to the Launcher to startup a Worker.</p>
+<p><strong>By:</strong> The <em>Deadline Pulse</em> application is responsible for invoking the event callback.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">OnThermalShutdown</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked immediately after Pulse sends the command to the Launcher to shutdown a Worker.</p>
+<p><strong>By:</strong> The <em>Deadline Pulse</em> application is responsible for invoking the event callback.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">OnMachineRestart</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked immediately after Pulse sends the command to the Launcher to restart a Worker.</p>
+<p><strong>By:</strong> The <em>Deadline Pulse</em> application is responsible for invoking the event callback.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">OnHouseCleaning</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked immediately after house cleaning operations have been completed, before house cleaning “finishes”.</p>
+<p><strong>By:</strong> The <em>Deadline</em> application performing house cleaning is responsible for invoking the event callback (<em>Monitor</em>, <em>Command</em>, <em>Pulse</em>, <em>Worker</em>).</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">OnRepositoryRepair</span></code></p></td>
+<td><p><strong>When:</strong> This callback is invoked immediately after repository repair operations have been completed, before repository repair “finishes”.</p>
+<p><strong>By:</strong> The <em>Deadline</em> application performing house cleaning is responsible for invoking the event callback (<em>Monitor</em>, <em>Command</em>, <em>Pulse</em>, <em>Worker</em>).</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="migrating-event-plugins-from-deadline-5">
+<span id="event-plugin-migration-ref-label"></span><h2>Migrating Event Plugins from Deadline 5<a class="headerlink" href="#migrating-event-plugins-from-deadline-5" title="Permalink to this headline">¶</a></h2>
+<p>Some changes were made to the Scripting API in Deadline 6, which means that Deadline 6 and later are NOT backward compatible with event plugin scripts written for Deadline 5. However, migrating your scripts over is relatively
+straightforward, and this guide will walk you through the API changes so that you can update your scripts as necessary.</p>
+<div class="section" id="global-functions">
+<h3>Global Functions<a class="headerlink" href="#global-functions" title="Permalink to this headline">¶</a></h3>
+<p>In Deadline 6, all global API functions were removed, and replaced with DeadlineEventListener member functions, or with static utility functions. See the <a class="reference internal" href="scripting-overview.html#scripting-overview-migration-ref-label"><span class="std std-ref">Code Completion for the Deadline Scripting API</span></a> section in the Scripting Overview documentation for more information, including replacement functions.</p>
+<p>Almost all event plugin-specific global functions are now DeadlineEventListener member functions. For example, the global ‘LogInfo(message)’ function has been replaced with a member function for the DeadlineEventListener class, which you created in your event python file. So instead of:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LogInfo</span><span class="p">(</span><span class="s2">&quot;this is a test message&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You would use this code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">LogInfo</span><span class="p">(</span><span class="s2">&quot;this is a test message&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The only functions that aren’t DeadlineEventListener member functions are listed below, along with their replacement utility functions.</p>
+<table class="docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 47%" />
+<col style="width: 53%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Original Global Function</p></th>
+<th class="head"><p>Replacement Function</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CheckPathMapping(path)</p></td>
+<td><p>RepositoryUtils.CheckPathMapping(path)</p></td>
+</tr>
+<tr class="row-odd"><td><p>CheckPathMappingInFile(inFileName, outFileName)</p></td>
+<td><p>RepositoryUtils.CheckPathMappingInFile(inFileName, outFileName)</p></td>
+</tr>
+<tr class="row-even"><td><p>CheckPathMappingInFileAndReplaceSeparator(inFileName, outFileName , separatorToReplace, newSeparator)</p></td>
+<td><p>RepositoryUtils.CheckPathMappingInFileAndReplaceSeparator(inFileName, outFileName, separatorToReplace, newSeparator)</p></td>
+</tr>
+<tr class="row-odd"><td><p>PathMappingRequired(path)</p></td>
+<td><p>RepositoryUtils.PathMappingRequired(path)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="callbacks">
+<h3>Callbacks<a class="headerlink" href="#callbacks" title="Permalink to this headline">¶</a></h3>
+<p>You need to set up callbacks in the constructor of your DeadlineEventListener class that you created in your event python file. Examples are shown in the documentation above, and you can look at the event plugins that ship with Deadline for references as well. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span> <span class="c1"># Required in Deadline 10.3 and later.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">OnJobSubmittedCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OnJobSubmitted</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">OnJobStartedCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OnJobStarted</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">OnJobFinishedCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OnJobFinished</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">OnJobRequeuedCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OnJobRequeued</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">OnJobFailedCallback</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OnJobFailed</span>
+</pre></div>
+</div>
+<p>Note that these callbacks need to be manually cleaned up when the event plugin is no longer in use. See the documentation regarding the CleanupDeadlineEventListener function above for more information.</p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Event Plugins</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#triggering-events">Triggering Events</a></li>
+<li><a class="reference internal" href="#creating-an-event-plugin">Creating an Event Plugin</a><ul>
+<li><a class="reference internal" href="#py-file">.py File</a></li>
+<li><a class="reference internal" href="#param-file">.param File</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#server-data">Server Data</a></li>
+<li><a class="reference internal" href="#event-plugin-and-error-reports">Event Plugin and Error Reports</a><ul>
+<li><a class="reference internal" href="#job-event-reports">Job Event Reports</a></li>
+<li><a class="reference internal" href="#slave-event-reports">Slave Event Reports</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#quicktime-generation-example">Quicktime Generation Example</a></li>
+<li><a class="reference internal" href="#cron-scheduled-event">Cron / Scheduled Event</a></li>
+<li><a class="reference internal" href="#software-configuration-management-integration">Software Configuration Management Integration</a></li>
+<li><a class="reference internal" href="#event-callback-details">Event Callback Details</a><ul>
+<li><a class="reference internal" href="#job-event-callbacks">Job Event Callbacks</a></li>
+<li><a class="reference internal" href="#worker-event-callbacks">Worker Event Callbacks</a></li>
+<li><a class="reference internal" href="#misc-event-callbacks">Misc Event Callbacks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#migrating-event-plugins-from-deadline-5">Migrating Event Plugins from Deadline 5</a><ul>
+<li><a class="reference internal" href="#global-functions">Global Functions</a></li>
+<li><a class="reference internal" href="#callbacks">Callbacks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="application-plugins.html"
+                        title="previous chapter">Application Plugins</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="monitor-scripts.html"
+                        title="next chapter">Monitor Scripts</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="monitor-scripts.html" title="Monitor Scripts"
+             >next</a></li>
+        <li class="right" >
+          <a href="application-plugins.html" title="Application Plugins"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-scripting.html" >Scripting</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Event Plugins</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

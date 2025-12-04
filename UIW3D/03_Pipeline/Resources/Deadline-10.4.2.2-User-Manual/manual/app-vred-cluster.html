@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VRED Cluster &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Vue" href="app-vue.html" />
+    <link rel="prev" title="VRED" href="app-vred.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-vue.html" title="Vue"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-vred.html" title="VRED"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">VRED Cluster</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="vred-cluster">
+<span id="app-vred-cluster-ref-label"></span><h1>VRED Cluster<a class="headerlink" href="#vred-cluster" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The current version of Deadline <strong>only</strong> supports VRED Cluster <strong>2020.0-2024.0</strong> (inclusive). Due to the recency of the VRED Cluster 2024.0 release (at the time of writing), there may be minor bugfixes required in Deadline to ensure reliable support of VRED Cluster 2024.</p>
+<p>To run the Linux version of VRED (VREDClusterService executable), please ensure that you run Linux with the appropriate dependencies – including a stable release of the GNU C Library with X-Server installed, per Autodesk’s System Requirement guidelines (referenced below by VRED version):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/System-requirements-for-Autodesk-VRED-2020-products.html">VRED 2020</a></p></li>
+<li><p><a class="reference external" href="https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/System-requirements-for-Autodesk-VRED-2021-products.html">VRED 2021</a></p></li>
+<li><p><a class="reference external" href="https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/System-requirements-for-Autodesk-VRED-2022-products.html">VRED 2022</a></p></li>
+<li><p><a class="reference external" href="https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/System-requirements-for-Autodesk-VRED-2023-products.html">VRED 2023</a></p></li>
+<li><p><a class="reference external" href="https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/System-requirements-for-Autodesk-VRED-2024-products.html">VRED 2024</a></p></li>
+</ul>
+<p>Please note the hardware requirements and ensure replacement OpenGL libraries such as <a class="reference internal" href="#app-vred-cluster-error-message-mesa-ref-label"><span class="std std-ref">MESA</span></a> are available for headless machines.</p>
+</div></blockquote>
+</div>
+<div class="section" id="vred-cluster-distributed-rendering">
+<h2>VRED Cluster Distributed Rendering<a class="headerlink" href="#vred-cluster-distributed-rendering" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs for VRED Cluster from the Monitor.</p>
+<p>Do NOT execute or install the VRED Cluster service executable as a background service (NT service/daemon). Deadline is more flexible here and will spawn the cluster service executable as a child process of the Deadline Worker. This makes our system more flexible and resilient to crashes as when we terminate the VRED Cluster job in the Deadline queue, the Deadline Worker application will ‘cleanly’ tidy up Cluster Service and more importantly, any child processes.</p>
+<p><a class="reference internal" href="../_images/sub_vred_cluster.png"><img alt="monitor" src="../_images/sub_vred_cluster.png" style="height: 400px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation.</p>
+<p>The VRED Cluster specific options are:</p>
+<ul class="simple">
+<li><p><strong>Cluster Count</strong>: The number of tasks/maximum number of Workers to create in the cluster. Default: 1</p></li>
+<li><p><strong>Port Number</strong>: The port number to be used for the cluster service. The port number needs to be identical on all machines including the workstation machine for VRED to communicate correctly, and must be open in your firewall. Default: 8889.</p></li>
+<li><p><strong>VRED Version</strong>: The VRED application version to use (12.X=2020.X, 13.X=2021.X, 14.X=2022.X, 15.X=2023.X, 16.X=2024.X). Substitute ‘X’ with VRED’s minor version number.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the VRED Cluster plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the VRED plugin from the list on the left.</p>
+<p>Note, if the executable supports a MAJOR.MINOR.REVISION (9.0.123) numbering system in its path, then you will need to configure the explicit exe path to the particular revision that you have installed on your machines. Deadline does not track every possible revision available or indeed where it might be custom installed to, so a studio should verify their exe paths are correct for each application version they choose to use with Deadline. Multiple exe paths can still be declared and the first one that is found on a particular Worker on a particular platform will be used from the exe list.</p>
+<a class="reference internal image-reference" href="../_images/cp_vred_cluster.png"><img alt="../_images/cp_vred_cluster.png" src="../_images/cp_vred_cluster.png" style="height: 400px;" /></a>
+<p><strong>Cluster Executables</strong></p>
+<p>Here you can specify the executable used for rendering for the different versions of VRED.</p>
+<p>Ensure you use the following VRED executable only:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>VRED Cluster Service</strong></dt><dd><ul>
+<li><p>Windows: VREDClusterService.exe</p></li>
+<li><p>macOS: VREDClusterService</p></li>
+<li><p>Linux: clusterService</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="section" id="rendering">
+<h3>Rendering<a class="headerlink" href="#rendering" title="Permalink to this headline">¶</a></h3>
+<p>After you’ve configured and submitted your VRED cluster job it is time to start rendering using your clusters.  In VRED, start by enabling raytracing (Only Raytracing renders can be distributed over a cluster), then open up the Cluster Rendering window (Rendering -&gt; Cluster).
+Set the servers to be the machine names/ip addresses of the machines that picked up the Cluster job, separated by spaces. Set the Port number to be the same as port number specified in the VRED Cluster Job.  Modify any other settings you want for your cluster jobs in this UI.</p>
+<a class="reference internal image-reference" href="../_images/vred_cluster_cluster_window.png"><img alt="../_images/vred_cluster_cluster_window.png" src="../_images/vred_cluster_cluster_window.png" style="height: 400px;" /></a>
+<p>After you have set everything up in the Clusters window, open up the render settings window (Rendering -&gt; Render Settings) and set up your job as if you were rendering normally.  Once this is set up enable cluster rendering in the render settings window (Cluster group in the file output tab) and enter the cluster machine names/ip address as you did in the cluster window.
+Begin your render by pressing the render button in the render settings window.</p>
+<a class="reference internal image-reference" href="../_images/vred_cluster_render_settings.png"><img alt="../_images/vred_cluster_render_settings.png" src="../_images/vred_cluster_render_settings.png" style="height: 400px;" /></a>
+<p>After you are done all of your renders, complete the VRED cluster job through the Deadline Monitor.</p>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-vred-cluster-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Can VRED be run as a service?</strong></p>
+<blockquote>
+<div><p>VRED can sometimes crash when running as a service. If VRED appears crashed, try running the Worker as a normal application instead of as a service to see if that fixes the problem.</p>
+</div></blockquote>
+<p><strong>Is VRED supported on Linux?</strong></p>
+<blockquote>
+<div><p>Yes, only the non-gui application ‘clusterService’ is supported on Linux.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known VRED Cluster error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><strong>Error: FailRenderException : VRED cluster service executable was not found in the semicolon separated list.</strong></p>
+<blockquote>
+<div><p>If you encounter this error message in Job Report, Deadline is unable to find executable path for VRED Cluster application.</p>
+<p>Note that this may mean the specific version is not supported by Deadline officially.</p>
+<p>However, you can do the following self-troubleshooting method to render using the current VRED cluster version.</p>
+<blockquote>
+<div><p>You can add current VREDCluster version in the following files:
+[Repository]submissionVREDpluginsVREDClusterVREDCluster.param
+[Repository]submissionVREDpluginsVREDClusterVREDCluster.options</p>
+</div></blockquote>
+</div></blockquote>
+<p id="app-vred-cluster-error-message-mesa-ref-label"><strong>STDOUT: vrEGL: couldn’t find ‘libEGL.so’!</strong></p>
+<blockquote>
+<div><p>If you are using a headless Linux-based Render Node (i.e. no physical graphics card installed), you will need to install a replacement for OpenGL such as MESA to avoid the missing OpenGL libraries message as well as ensure X-server is running as per Autodesk VRED System Requirements guidelines (listed at the top):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="o">-</span><span class="n">s</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yum</span> <span class="n">install</span> <span class="n">redhat</span><span class="o">-</span><span class="n">lsb</span> <span class="n">libX11</span> <span class="n">libText</span> <span class="n">mesa</span><span class="o">-</span><span class="n">libGL</span> <span class="n">mesa</span><span class="o">-</span><span class="n">libGLU</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yum</span> <span class="n">groupinstall</span> <span class="s2">&quot;X Window System&quot;</span>
+</pre></div>
+</div>
+<p>Reboot machine, and ensure run-level is set correctly</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">VRED Cluster</a><ul>
+<li><a class="reference internal" href="#vred-cluster-distributed-rendering">VRED Cluster Distributed Rendering</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a><ul>
+<li><a class="reference internal" href="#rendering">Rendering</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-vred.html"
+                        title="previous chapter">VRED</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-vue.html"
+                        title="next chapter">Vue</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-vue.html" title="Vue"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-vred.html" title="VRED"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">VRED Cluster</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

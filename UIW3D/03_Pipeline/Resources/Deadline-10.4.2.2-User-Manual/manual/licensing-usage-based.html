@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Usage-Based Licensing &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="(Unsupported) Legacy Usage-Based Licensing" href="licensing-usage-based-legacy.html" />
+    <link rel="prev" title="Deadline Licensing" href="licensing.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="licensing-usage-based-legacy.html" title="(Unsupported) Legacy Usage-Based Licensing"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="licensing.html" title="Deadline Licensing"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installing-deadline.html" accesskey="U">Installing Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Usage-Based Licensing</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="usage-based-licensing">
+<span id="licensing-usage-based-ref-label"></span><h1>Usage-Based Licensing<a class="headerlink" href="#usage-based-licensing" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Usage-based licensing is vended through the <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> service. For information on the previous UBL implementation, see the <a class="reference internal" href="licensing-usage-based-legacy.html#licensing-usage-based-legacy-ref-label"><span class="std std-ref">legacy Thinkbox UBL Documentation</span></a>.</p>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Usage-Based Licensing (UBL) is an on-demand licensing model for select 3rd party products. It can be used as an alternative to floating licenses, or as supplemental licensing to cover temporary increases in render nodes (cloud burst compute, rentals, artist machines overnight, etc). With usage-based licenses, you can pay as you go. You are only charged for the time you use.</p>
+<p>Usage-based licensing is vended through the <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> service. AWS Deadline Cloud UBL offers a Pay-as-you-go model, billed monthly on your AWS bill. For UBL pricing see the <a class="reference external" href="https://aws.amazon.com/deadline-cloud/pricing/">AWS Deadline Cloud Usage-Based Licensing pricing guide</a>.</p>
+<p>To use AWS Deadline Cloud Usage-Based Licensing in Deadline 10, you will need to do the following (outlined in greater detail below):</p>
+<ol class="arabic simple">
+<li><p>Create an AWS Deadline Cloud License Endpoint in your AWS account, in the AWS VPC your Deadline Workers are in</p></li>
+<li><p>Configure the license endpoint in your Deadline 10 repository settings</p></li>
+<li><p>Create a 3rd party license limit using your license endpoint</p></li>
+<li><p>Assign the limit to the Jobs you want to use with 3rd party licenses</p></li>
+</ol>
+</div>
+<div class="section" id="configuring-usage-based-licensing">
+<span id="licensing-3rd-party-ubl-config-ref-label"></span><h2>Configuring Usage-Based Licensing<a class="headerlink" href="#configuring-usage-based-licensing" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For AWS Portal users using Deadline Cloud UBL, it is recommended to follow <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/en-us/articles/22883209044759-AWS-Deadline-Cloud-UBL-for-Deadline-10-on-AWS">this article</a>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When configuring the License Limits, please be aware that there is also a default service quota of 500 concurrent license sessions per AWS Deadline Cloud License Endpoint. To avoid hitting this limit, you will need to request a service quota increase through AWS Service Quotas. See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/deadline-cloud-quotas.html">Quotas for Deadline Cloud</a> for more information. This service quota limit is different from your <a class="reference internal" href="limits.html#global-limits-ref-label"><span class="std std-ref">Deadline 10 Limits</span></a> configuration. If you wish to restrict the number of licenses you can check out at once, even with an increased service quota, please use the Deadline 10 Limits configuration to control your actual license usage.</p>
+</div>
+<ol class="arabic">
+<li><p>Before you can start using 3rd Party Usage-Based Licensing, follow the <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/developerguide/cmf-ubl.html">AWS Deadline Cloud documentation</a> to create a license endpoint.</p></li>
+<li><p>Retrieve the AWS Deadline Cloud License Endpoint DNS name by following the <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/developerguide/cmf-ubl.html#cmf-ubl-connect">documentation here</a>.</p></li>
+<li><dl>
+<dt>Enter your AWS Deadline Cloud License Endpoint DNS name in the <a class="reference internal" href="repository-config.html#repo-usage-based-licensing-ref-label"><span class="std std-ref">Repository Options</span></a>.</dt><dd><ol class="arabic">
+<li><p>This can be done from the Deadline Monitor while in Power User Mode (use the Tools Menu to enter Power User Mode).</p></li>
+<li><dl>
+<dt>Then select Configure Repository Options from the Tools menu, and select Usage-Based Licensing from the list on the left.</dt><dd><a class="reference internal image-reference" href="../_images/3pl_add_license_endpoint.png"><img alt="../_images/3pl_add_license_endpoint.png" src="../_images/3pl_add_license_endpoint.png" style="height: 300px;" /></a>
+<a class="reference internal image-reference" href="../_images/3pl_license_endpoints.png"><img alt="../_images/3pl_license_endpoints.png" src="../_images/3pl_license_endpoints.png" style="height: 300px;" /></a>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>With Power User Mode activated, go to the Limits panel. Click the plus (+) button to open the New License Limit window to create a new ‘DeadlineCloud’ license limit. Associate your AWS Deadline Cloud License Endpoint DNS name with the limit so Deadline Workers will be able to request licenses from that endpoint. (Note that “Legacy” license limits refer to the deprecated <a class="reference internal" href="licensing-usage-based-legacy.html#licensing-usage-based-legacy-ref-label"><span class="std std-ref">legacy Thinkbox UBL</span></a>).</dt><dd><a class="reference internal image-reference" href="../_images/3pl_limit_dcubl.png"><img alt="../_images/3pl_limit_dcubl.png" src="../_images/3pl_limit_dcubl.png" style="height: 250px;" /></a>
+</dd>
+</dl>
+</li>
+<li><p>Submit a job using the limit(s) you created using the “DeadlineCloud” license endpoint configuration.</p></li>
+</ol>
+<div class="section" id="third-party-usage-based-licensing-explained">
+<span id="licensing-3rd-party-ubl-ref-label"></span><h3>Third Party Usage-Based Licensing Explained<a class="headerlink" href="#third-party-usage-based-licensing-explained" title="Permalink to this headline">¶</a></h3>
+<p><strong>3rd Party Limits</strong></p>
+<p>Limits in Deadline can be used to support applications and plugins that use floating licenses. They enforce the maximum number of concurrent render jobs that use those applications and plugins, which prevents licensing errors from affecting productivity.</p>
+<p>Limits can be configured to allow additional Deadline Workers to render these jobs, but these additional Workers will enter an Overage mode. While in Overage mode, the Deadline Workers will redirect license requests for the necessary applications and plugins to the configured AWS Deadline Cloud License Endpoint instead of your local license server. Because Deadline only uses the AWS Deadline Cloud License Endpoint when in Overage mode, your floating licenses will always be preferred, and you will only be billed for the 3rd party license usage time required to render.</p>
+<p>Note that if you want all Workers to use 3rd Party render time, you can set the Limit field to zero. This will force all Workers to check out this limit in Overage mode.</p>
+<p>Once you have your 3rd Party Limit set up, you need to assign that Limit to any Deadline Jobs that use that 3rd Party product. 3rd Party render time usage will then happen automatically, provided that the Deadline Workers can communicate with your configured AWS Deadline Cloud License Endpoint.</p>
+<p>Note that you must be in Power User Mode in the Deadline Monitor to create and modify Limits. For more information about configuring Limits, see the <a class="reference internal" href="limits.html#global-limits-ref-label"><span class="std std-ref">Limits Documentation</span></a>.</p>
+<p><strong>Important</strong>: When configuring 3rd Party Limits, please note that there is also a separate service quota for concurrent license sessions per AWS Deadline Cloud license endpoint. By default, this limit is set to 500 sessions. This is a separate limitation from your <a class="reference internal" href="limits.html#global-limits-ref-label"><span class="std std-ref">Deadline 10 Limits</span></a> configuration. If your concurrent license sessions hit this service quota, you may experience issues like some frames failing or having watermarks on them (due to the fact that some workers may not be able to check out a license beyond the quota limit), even if you have configured your 3rd Party Limits appropriately. To prevent such issues, you will need to request a service quota increase through AWS Service Quotas if needed. See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/deadline-cloud-quotas.html">Quotas for Deadline Cloud</a> for more information.</p>
+<p><strong>3rd Party Limits Example Using Nuke</strong></p>
+<p>Let’s say you have 2 floating licenses of Nuke, and 4 render nodes that are capable of rendering Nuke jobs. To ensure that you don’t run into Nuke licensing errors, you would create a <cite>nuke-deadlinecloud</cite> Limit and set it to 2. Then any job that requires the Nuke renderer would specify the <cite>nuke-deadlinecloud</cite> Limit at submission time. This ensures that you won’t run out of licenses because no more than 2 instances of Nuke would be used on the farm at any given time.</p>
+<p>If you would like all 4 render nodes to join the render, you can configure the <cite>nuke-deadlinecloud</cite> Limit to allow your other 2 render nodes to use 3rd Party Usage-Based Licensing. First, you will leave the existing Limit maximum at 2, since that is still your floating license count. Instead, you will set the Limit Overage to 2 so that your additional render nodes can pick up Nuke jobs. Finally, you need to enable the Use Usage-Based Third Party Licensing option and select <cite>nuke-deadlinecloud</cite> as the License Application. After you press OK, you are now ready to use AWS Deadline Cloud UBL for Nuke renders!</p>
+<a class="reference internal image-reference" href="../_images/3pl_nuke_dcubl.png"><img alt="../_images/3pl_nuke_dcubl.png" src="../_images/3pl_nuke_dcubl.png" style="height: 250px;" /></a>
+<p>When the additional 2 render nodes pick up your Nuke jobs, they will recognize that they are in Overage mode, and Nuke will connect to the license endpoint instead of your local Nuke license server. Because Nuke render time will only connect to your license endpoint in Overage mode, it ensures that Deadline always prefers your existing floating licenses before using 3rd Party render time!</p>
+</div>
+</div>
+<div class="section" id="monitoring-render-time-usage">
+<span id="monitoring-render-time-ref-label"></span><h2>Monitoring Render Time Usage<a class="headerlink" href="#monitoring-render-time-usage" title="Permalink to this headline">¶</a></h2>
+<p>You can view your AWS Deadline Cloud UBL costs through <a class="reference external" href="https://aws.amazon.com/aws-cost-management/aws-cost-explorer/">AWS Cost Explorer</a>. For UBL pricing see the <a class="reference external" href="https://aws.amazon.com/deadline-cloud/pricing/">AWS Deadline Cloud Usage-Based Licensing pricing guide</a>.</p>
+</div>
+<div class="section" id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="license-not-found-errors-with-ubl-limits">
+<h3>License Not Found Errors With UBL Limits<a class="headerlink" href="#license-not-found-errors-with-ubl-limits" title="Permalink to this headline">¶</a></h3>
+<p>If you get “license not found” errors and have configured AWS Deadline Cloud UBL limits, ensure you have <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/developerguide/cmf-ubl.html">added the correct metered product to your license endpoint</a>.</p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Usage-Based Licensing</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#configuring-usage-based-licensing">Configuring Usage-Based Licensing</a><ul>
+<li><a class="reference internal" href="#third-party-usage-based-licensing-explained">Third Party Usage-Based Licensing Explained</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#monitoring-render-time-usage">Monitoring Render Time Usage</a></li>
+<li><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li><a class="reference internal" href="#license-not-found-errors-with-ubl-limits">License Not Found Errors With UBL Limits</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="licensing.html"
+                        title="previous chapter">Deadline Licensing</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="licensing-usage-based-legacy.html"
+                        title="next chapter">(Unsupported) Legacy Usage-Based Licensing</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="licensing-usage-based-legacy.html" title="(Unsupported) Legacy Usage-Based Licensing"
+             >next</a></li>
+        <li class="right" >
+          <a href="licensing.html" title="Deadline Licensing"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installing-deadline.html" >Installing Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Usage-Based Licensing</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

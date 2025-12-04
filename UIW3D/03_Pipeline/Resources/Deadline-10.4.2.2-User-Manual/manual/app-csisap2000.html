@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSiSAP2000 &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Deadline Command" href="app-deadline-command.html" />
+    <link rel="prev" title="CSiSAFE" href="app-csisafe.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-deadline-command.html" title="Deadline Command"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-csisafe.html" title="CSiSAFE"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">CSiSAP2000</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="csisap2000">
+<span id="app-csisap2000-ref-label"></span><h1>CSiSAP2000<a class="headerlink" href="#csisap2000" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit CSiSAP2000 jobs from the Monitor.</p>
+<p><a class="reference internal" href="../_images/sub_csisap2000.png"><img alt="submitter" src="../_images/sub_csisap2000.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_csisap2000_adv_options.png"><img alt="advOptions" src="../_images/sub_csisap2000_adv_options.png" style="height: 400px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. The CSiSAP2000 specific options are:</p>
+<ul class="simple">
+<li><p><strong>CSi SAP2000 Data File(s)</strong>: The CSi SAP2000 Data File to be processed. CSi SAP2000 Files (*.SDB), Microsoft Access Files (*.MDB), Microsoft Excel Files (*.XLS), CSi SAP2000 Text Files (*.$2K *.S2K) are supported.</p></li>
+<li><p><strong>Override Output Directory</strong>: If this option is enabled, an output directory can be used to re-direct all processed files to.</p></li>
+<li><p><strong>Build To Force</strong>: You can force 32 or 64 bit processing with this option.</p></li>
+<li><p><strong>Submit Data File With Job</strong>: If this option is enabled, the SAP2000 file will be submitted with the job, and then copied locally to the Worker machine during processing.</p></li>
+<li><p><strong>Version</strong>: The version of CSi SAP2000 to render with.</p></li>
+</ul>
+<p>CSiSAP2000 Process/Solver Options are:</p>
+<ul class="simple">
+<li><p><strong>Process Selection</strong>: Choose to execute inside of the existing SAP2000 application process or as a separate process.</p></li>
+<li><p><strong>Solver Selection</strong>: Select the Solver to perform the analysis on the data file.</p></li>
+</ul>
+<p>CSiSAP2000 Design Options are:</p>
+<p>4 options are available to automatically perform design after the data file has been opened &amp; analysis results are available.</p>
+<ul class="simple">
+<li><p><strong>Steel Frame Design</strong>: Perform steel frame design after the analysis has completed.</p></li>
+<li><p><strong>Concrete Frame Design</strong>: Perform concrete frame design after the analysis has completed.</p></li>
+<li><p><strong>Aluminium Frame Design</strong>: Perform aluminium frame design after the analysis has completed.</p></li>
+<li><p><strong>Cold Formed Frame Design</strong>: Perform cold formed frame design after analysis has completed.</p></li>
+</ul>
+<p>CSiSAP2000 Deletion Options are:</p>
+<ul class="simple">
+<li><p><strong>Temp File Deletion</strong>: Choose a deletion option to cleanup the analysis/log/out files if required.</p></li>
+</ul>
+<p>CSiSAP2000 Additional Options are:</p>
+<ul class="simple">
+<li><p><strong>Include Data File</strong>: If enabled, the output zip file will contain the data file OR if outputting to a directory path, the data file will be included.</p></li>
+<li><p><strong>Compress (ZIP) Output</strong>: Automatically compress the output to a single zip file.</p></li>
+<li><p><strong>Command Line Args</strong>: Additional command line flags/options can be added here if required.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the CSiSAP2000 plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the CSiSAP2000 plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_csisap2000.png"><img alt="../_images/cp_csisap2000.png" src="../_images/cp_csisap2000.png" style="height: 400px;" /></a>
+<p><strong>Executables</strong></p>
+<ul class="simple">
+<li><p><strong>SAP2000 14 Executable</strong>: The path to the SAP2000 14 executable file used for simulating. Enter alternative paths on separate lines.</p></li>
+<li><p><strong>SAP2000 15 Executable</strong>: The path to the SAP2000 15 executable file used for simulating. Enter alternative paths on separate lines.</p></li>
+<li><p><strong>SAP2000 16 Executable</strong>: The path to the SAP2000 16 executable file used for simulating. Enter alternative paths on separate lines.</p></li>
+<li><p><strong>SAP2000 17 Executable</strong>: The path to the SAP2000 17 executable file used for simulating. Enter alternative paths on separate lines.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-csisap2000-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><em>Currently, there are no FAQs for this plugin.</em></p>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known CSiSAP2000 error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">CSiSAP2000</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-csisafe.html"
+                        title="previous chapter">CSiSAFE</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-deadline-command.html"
+                        title="next chapter">Deadline Command</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-deadline-command.html" title="Deadline Command"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-csisafe.html" title="CSiSAFE"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">CSiSAP2000</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

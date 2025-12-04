@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>V-Ray VDenoise &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="V-Ray Vrimg2Exr" href="app-vray-vrimg2exr.html" />
+    <link rel="prev" title="V-Ray Swarm" href="app-vray-swarm.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-vray-vrimg2exr.html" title="V-Ray Vrimg2Exr"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-vray-swarm.html" title="V-Ray Swarm"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">V-Ray VDenoise</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="v-ray-vdenoise">
+<span id="app-vray-vdenoise-ref-label"></span><h1>V-Ray VDenoise<a class="headerlink" href="#v-ray-vdenoise" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit VDenoise jobs from the Submit menu in the Monitor.</p>
+<p><a class="reference internal" href="../_images/sub_vdenoise.png"><img alt="one" src="../_images/sub_vdenoise.png" style="height: 500px;" /></a> <a class="reference internal" href="../_images/sub_vdenoise_options.png"><img alt="two" src="../_images/sub_vdenoise_options.png" style="height: 500px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation.</p>
+<p>The VDenoise specific options are:</p>
+<ul class="simple">
+<li><p><strong>Input Image(s)</strong>: Specify the input .vrimg or .exr file; can contain wildcards, f.e. <code class="docutils literal notranslate"><span class="pre">c:\path\to\files\sequence_????.exr</span></code> to denoise a sequence of frames.</p></li>
+<li><p><strong>Render Mode</strong>: Select one of three defined presets for radius/threshold/noise level multiplier, or select user defined settings.</p></li>
+<li><p><strong>Boost Preset</strong>: Boost the effect of the selected preset.</p></li>
+<li><p><strong>Skip Existing Images</strong>: Skip an input image if the corresponding output image already exists.</p></li>
+<li><p><strong>Denoise Render Elements</strong>: If False, the colors in the final image are denoised in one pass; when True, the render elements are denoised separately and then composited together. (default is False - single pass RGB denoising only)</p></li>
+<li><p><strong>Use GPU</strong>: If checked then, attempt to use the best OpenCL, fall back to CPU if unsuccessful.</p></li>
+<li><p><strong>Override Threshold</strong>: Override the threshold for denoising.  This is required if your input image does not contain a noise level render element.</p></li>
+<li><p><strong>Threshold</strong>: Specifies threshold for denoising when noise levels render element is missing. Typically equal to the noise threshold for AA in V-Ray. (default is 0.001 and the denoiser relies on the noise level render element)</p></li>
+<li><p><strong>Override Strength</strong>: Override the Denoiser Strength.</p></li>
+<li><p><strong>Denoiser Strength</strong>: The main denoiser control. Larger values remove noise more aggressively but may blur the image too much.</p></li>
+<li><p><strong>Override Radius</strong>: Override the Pixel Radius.</p></li>
+<li><p><strong>Pixel Radius</strong>: Specifies pixel radius for denoising. Larger values slow down the denoiser, but may produce smoother results.</p></li>
+<li><p><strong>Automatically adjust Radius</strong>: Automatically adjust the denoising radius based on the noise level render element. Setting this to 1 may slow down the denoiser quite a bit for more noisy images.</p></li>
+<li><p><strong>Frame Blend</strong>: Use N adjacent frames when denoising animations. This reduces flickering between adjacent animation frames.</p></li>
+<li><p><strong>Number of Strips</strong>: Force image split in N strips. (default is -1 - use split count heuristic)</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the VDenoise plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the VDenoise plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_vdenoise.png"><img alt="../_images/cp_vdenoise.png" src="../_images/cp_vdenoise.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>VDenoise Executable</strong>: The path to the vdenoise.exe executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-vray-vdenoise-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of VDenoise are supported?</strong></p>
+<blockquote>
+<div><p>VDenoise for V-Ray 3.4 and later is currently supported.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known VDenoise error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">V-Ray VDenoise</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-vray-swarm.html"
+                        title="previous chapter">V-Ray Swarm</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-vray-vrimg2exr.html"
+                        title="next chapter">V-Ray Vrimg2Exr</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-vray-vrimg2exr.html" title="V-Ray Vrimg2Exr"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-vray-swarm.html" title="V-Ray Swarm"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">V-Ray VDenoise</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

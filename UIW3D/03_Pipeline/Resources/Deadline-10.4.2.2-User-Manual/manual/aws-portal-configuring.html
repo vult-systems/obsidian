@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Configuring AWS Portal &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Advanced AWS Portal Installation Topics" href="aws-portal-advanced-installation-topics.html" />
+    <link rel="prev" title="Starting a Remote Connection Server" href="aws-portal-remote-connection-server.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-advanced-installation-topics.html" title="Advanced AWS Portal Installation Topics"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="aws-portal-remote-connection-server.html" title="Starting a Remote Connection Server"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Configuring AWS Portal</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<div class="section" id="configuring-aws-portal">
+<span id="aws-portal-configuration-ref-label"></span><h1>Configuring AWS Portal<a class="headerlink" href="#configuring-aws-portal" title="Permalink to this headline">¶</a></h1>
+<p>In this section, you will configure several settings that are required to use the AWS Portal.</p>
+<p>We will only look at the most basic configuration options here.
+For information on other options, please see the <a class="reference internal" href="aws-portal-configuration-reference.html#aws-portal-configuration-reference-ref-label"><span class="std std-ref">AWS Portal Configuration Reference</span></a>.</p>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>Before starting this section, you should have:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="quick-install-client.html#quick-install-client-ref-label"><span class="std std-ref">Installed the Deadline Client</span></a> on the machine that you will use to configure AWS Portal</p></li>
+<li><p><a class="reference internal" href="aws-portal-installing.html#aws-portal-installing-ref-label"><span class="std std-ref">Installed the AWS Portal</span></a></p></li>
+<li><p><a class="reference internal" href="aws-portal-remote-connection-server.html#aws-portal-starting-rcs-ref-label"><span class="std std-ref">Started a Remote Connection Server</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="login-to-aws-portal">
+<span id="aws-portal-configuration-rcs-ref-label"></span><h2>Login to AWS Portal<a class="headerlink" href="#login-to-aws-portal" title="Permalink to this headline">¶</a></h2>
+<p>Upon first installing AWS Portal, you must login.</p>
+<ol class="arabic simple">
+<li><p>Open the <a class="reference internal" href="monitor.html#monitor-ref-label"><span class="std std-ref">Deadline Monitor</span></a>.</p></li>
+<li><p>Select Tools → Power User Mode.</p></li>
+<li><p>Open the AWS Portal Panel. (Select the ‘Panels’ Icon, then click AWS Portal)</p></li>
+<li><p>You should be prompted with the AWS Portal Login Dialog. Enter the keys that you saved during the <a class="reference internal" href="aws-portal-setup-creating-awsportal-user.html#aws-portal-setup-account-awsportal-user-setup-ref-label"><span class="std std-ref">AWSPortal IAM User Setup</span></a> steps that you followed earlier (In the background, this will also also trigger Asset Transfer S3 bucket creation, if one doesn’t already exist in your account).</p></li>
+</ol>
+<blockquote>
+<div><img alt="../_images/aws_portal_login.png" src="../_images/aws_portal_login.png" />
+</div></blockquote>
+</div>
+<div class="section" id="specify-your-remote-connection-server">
+<h2>Specify your Remote Connection Server<a class="headerlink" href="#specify-your-remote-connection-server" title="Permalink to this headline">¶</a></h2>
+<p>First, you must specify your Remote Connection Server (RCS).
+This setting is used by AWS Portal Link.
+It’s required so that the Deadline Workers running on AWS can connect to your local Deadline Repository, via AWS Portal Link and your RCS.</p>
+<ol class="arabic simple">
+<li><p>Open the <a class="reference internal" href="monitor.html#monitor-ref-label"><span class="std std-ref">Deadline Monitor</span></a>.</p></li>
+<li><p><a class="reference internal" href="aws-portal-configuration-reference.html#configure-aws-portal-dialog-label"><span class="std std-ref">Open the “Configure AWS Portal Settings” dialog</span></a>.</p></li>
+<li><p>Change to the “Basic” tab.</p></li>
+<li><p>Change the “Connection Server” to the Remote Connection Server that you <a class="reference internal" href="aws-portal-remote-connection-server.html#aws-portal-starting-rcs-ref-label"><span class="std std-ref">started earlier</span></a>.</p></li>
+</ol>
+<blockquote>
+<div><img alt="../_images/awsportal-connection-server-control.png" src="../_images/awsportal-connection-server-control.png" />
+</div></blockquote>
+</div>
+<div class="section" id="set-your-asset-server-ip">
+<span id="aws-portal-configuration-asset-server-ip-ref-label"></span><h2>Set your Asset Server IP<a class="headerlink" href="#set-your-asset-server-ip" title="Permalink to this headline">¶</a></h2>
+<p>Next, you must specify the local IP address of the machine that is running the AWS Portal Asset Server.
+This setting is used by AWS Portal Link.
+It’s required so that the Deadline Workers running on AWS can access your access files, via AWS Portal Link and AWS Portal Asset Server.</p>
+<ol class="arabic simple">
+<li><p>Open the <a class="reference internal" href="monitor.html#monitor-ref-label"><span class="std std-ref">Deadline Monitor</span></a>.</p></li>
+<li><p>Enter Power User Mode (Tools menu → Power User Mode).</p></li>
+<li><p>Open the Asset Server Settings dialog (Tools Menu → Configure Asset Server).</p></li>
+<li><p>Set the “Asset Server Local IP Address” to the local IP Address of the machine running the Asset Server.</p></li>
+</ol>
+<blockquote>
+<div><p>To determine the IP address, follow the instructions in
+<a class="reference internal" href="aws-portal-configuration-reference.html#aws-portal-how-to-find-your-local-ip-address-ref-label"><span class="std std-ref">“How to Find Your Local IP Address”</span></a>
+on the machine that is running the AWS Portal Asset Server.</p>
+<p>If you will only submit Deadline jobs from the same machine that is running
+the AWS Portal Asset Server, then you can use the IP address 127.0.0.1.</p>
+<img alt="../_images/asset-server-settings.png" src="../_images/asset-server-settings.png" />
+</div></blockquote>
+</div>
+<div class="section" id="next-step">
+<h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this headline">¶</a></h2>
+<p>Now you’re done the basic configuration that’s necessary to run AWS Portal.</p>
+<p>Next, you’ll need to <a class="reference internal" href="aws-portal/licensing-overview.html#aws-portal-licensing-overview-ref-label"><span class="std std-ref">configure software licenses</span></a> for your AWS Portal Workers to use.</p>
+<p>Or, if you’re using software that doesn’t require a license, you can jump ahead to <a class="reference internal" href="aws-portal/usage-overview.html#aws-portal-usage-overview-ref-label"><span class="std std-ref">using the AWS Portal</span></a>.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Configuring AWS Portal</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#login-to-aws-portal">Login to AWS Portal</a></li>
+<li><a class="reference internal" href="#specify-your-remote-connection-server">Specify your Remote Connection Server</a></li>
+<li><a class="reference internal" href="#set-your-asset-server-ip">Set your Asset Server IP</a></li>
+<li><a class="reference internal" href="#next-step">Next Step</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aws-portal-remote-connection-server.html"
+                        title="previous chapter">Starting a Remote Connection Server</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="aws-portal-advanced-installation-topics.html"
+                        title="next chapter">Advanced AWS Portal Installation Topics</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-advanced-installation-topics.html" title="Advanced AWS Portal Installation Topics"
+             >next</a></li>
+        <li class="right" >
+          <a href="aws-portal-remote-connection-server.html" title="Starting a Remote Connection Server"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Configuring AWS Portal</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

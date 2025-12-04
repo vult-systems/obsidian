@@ -1,0 +1,344 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spot Event Plugin - AWS Permissions &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Spot Event Plugins - Amazon Machine Images" href="event-spot-ami.html" />
+    <link rel="prev" title="Spot Event Plugin" href="event-spot.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-spot-ami.html" title="Spot Event Plugins - Amazon Machine Images"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="event-spot.html" title="Spot Event Plugin"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" accesskey="U">Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Spot Event Plugin - AWS Permissions</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="spot-event-plugin-aws-permissions">
+<span id="event-spot-iam-policies-ref-label"></span><h1>Spot Event Plugin - AWS Permissions<a class="headerlink" href="#spot-event-plugin-aws-permissions" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 22%" />
+<col style="width: 18%" />
+<col style="width: 19%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="event-spot.html#event-spot-ref-label"><span class="std std-ref">Spot Event Plugin</span></a></p></td>
+<td><p><a class="reference internal" href="#event-spot-iam-policies-ref-label"><span class="std std-ref">AWS Permissions Setup</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-ami.html#event-spot-ami-ref-label"><span class="std std-ref">Amazon Machine Images</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-fleet-request.html#event-spot-fleet-requests-ref-label"><span class="std std-ref">Spot Fleet Requests</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-config-credentials.html#event-spot-config-credentials-ref-label"><span class="std std-ref">Security Credentials Configuration</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="event-spot-fleet-configurations.html#event-spot-fleet-configurations-ref-label"><span class="std std-ref">Spot Fleet Configuration</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-configuration-options.html#event-spot-configure-event-plugin-dialog-ref-label"><span class="std std-ref">Spot Event Configuration Options</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-config-utility.html#event-spot-config-utility-ref-label"><span class="std std-ref">Spot Event Configuration Utility</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-deadline-connect.html#event-spot-deadline-connect-ref-label"><span class="std std-ref">Deadline Connectivity Configuration</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-vpc-endpoints.html#event-spot-vpc-endpoints-ref-label"><span class="std std-ref">VPC Endpoints Configuration</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="event-spot-multi-region.html#event-spot-fleet-multi-region-ref-label"><span class="std std-ref">Multiple Region Support</span></a></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>When working with AWS you can manage access by creating policies and attaching them to IAM identities or AWS resources.</p>
+<p>Within the Spot Event Plugin we require the following roles:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#event-spot-credentials-ref-label"><span class="std std-ref">Spot Event Plugin Credentials</span></a></p></li>
+<li><p><a class="reference internal" href="#event-spot-iam-instance-profile-ref-label"><span class="std std-ref">Spot Fleet IAM Instance Profile</span></a></p></li>
+<li><p><a class="reference internal" href="#event-spot-fleet-role-ref-label"><span class="std std-ref">IAM Fleet Role</span></a></p></li>
+<li><p><a class="reference internal" href="#event-spot-rt-role-ref-label"><span class="std std-ref">Resource Tracker Role</span></a></p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>You can learn more about IAM Permissions on the <a class="reference external" href="https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html">AWS IAM Website</a>.</p>
+</div>
+</div>
+<div class="section" id="spot-credentials">
+<span id="event-spot-credentials-ref-label"></span><h2>Spot Credentials<a class="headerlink" href="#spot-credentials" title="Permalink to this headline">¶</a></h2>
+<p>This IAM User or IAM Role is used by the RCS or Pulse when they execute the Spot Event Plugin.
+These Spot credentials are used by the Spot Event Plugin and contain the permissions necessary to create, maintain and modify the Spot Fleets and optionally those necessary to deploy the Resource Tracker.</p>
+<p>You can grant the required permissions by attaching the following AWS managed IAM policies to your IAM user:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AWSThinkboxDeadlineSpotEventPluginAdminPolicy">AWSThinkboxDeadlineSpotEventPluginAdminPolicy</a></p></li>
+<li><p><a class="reference external" href="https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AWSThinkboxDeadlineResourceTrackerAdminPolicy">AWSThinkboxDeadlineResourceTrackerAdminPolicy</a></p></li>
+</ul>
+<p>These credentials will be used when <a class="reference internal" href="event-spot-fleet-configurations.html#event-spot-fleet-configurations-ref-label"><span class="std std-ref">configuring Deadline</span></a>.</p>
+<div class="section" id="creating-the-spot-credentials-iam-user">
+<h3>Creating the Spot Credentials IAM User<a class="headerlink" href="#creating-the-spot-credentials-iam-user" title="Permalink to this headline">¶</a></h3>
+<p>To create the Spot Credentials IAM user:</p>
+<ol class="arabic">
+<li><p>Sign in to the <a class="reference external" href="https://console.aws.amazon.com">AWS Console</a>.</p></li>
+<li><p>Click on <strong>Services</strong> at the top of the AWS Console, and then click on <strong>IAM</strong> under “Security, Identity and Compliance”.</p></li>
+<li><p>On the “IAM” panel that appears, select <strong>Users</strong>, and then click the <strong>Add user</strong> button.</p>
+<a class="reference internal image-reference" href="../_images/events_spot_iam_user_creation_1.png"><img alt="../_images/events_spot_iam_user_creation_1.png" src="../_images/events_spot_iam_user_creation_1.png" style="width: 813.0px; height: 515.25px;" /></a>
+</li>
+<li><p>In the “Add user” panel that appears:</p>
+<ul class="simple">
+<li><p>For the <strong>User name</strong>, enter <strong>DeadlineSpotEventPluginAdmin</strong> (or any name of your choosing).</p></li>
+<li><p>For <strong>Access type</strong>, choose <strong>Programmatic access</strong>.</p></li>
+</ul>
+</li>
+<li><p>Click the <strong>Next: Permissions</strong> button to continue.</p>
+<a class="reference internal image-reference" href="../_images/events_spot_iam_user_creation_2.png"><img alt="../_images/events_spot_iam_user_creation_2.png" src="../_images/events_spot_iam_user_creation_2.png" style="width: 813.0px; height: 515.25px;" /></a>
+</li>
+<li><p>Search for the <strong>AWSThinkboxDeadlineSpotEventPluginAdminPolicy</strong> and <strong>AWSThinkboxDeadlineResourceTrackerAdminPolicy</strong> policies in the search box, and check both of them in the list below.</p></li>
+<li><p>Click the <strong>Next: Tags</strong> button to continue.</p>
+<a class="reference internal image-reference" href="../_images/events_spot_iam_user_creation_3.png"><img alt="../_images/events_spot_iam_user_creation_3.png" src="../_images/events_spot_iam_user_creation_3.png" style="width: 813.0px; height: 515.25px;" /></a>
+</li>
+<li><p>You can add tags with additional data to the user, but they are not required.</p></li>
+<li><p>Click the <strong>Next: Review</strong> button to continue.</p>
+<a class="reference internal image-reference" href="../_images/events_spot_iam_user_creation_4.png"><img alt="../_images/events_spot_iam_user_creation_4.png" src="../_images/events_spot_iam_user_creation_4.png" style="width: 813.0px; height: 515.25px;" /></a>
+</li>
+<li><p>Verify that the information is correct, and click <strong>Create user</strong>.</p>
+<a class="reference internal image-reference" href="../_images/events_spot_iam_user_creation_5.png"><img alt="../_images/events_spot_iam_user_creation_5.png" src="../_images/events_spot_iam_user_creation_5.png" style="width: 813.0px; height: 515.25px;" /></a>
+</li>
+<li><p>Once the user is created you’ll see a confirmation screen. Here you can get your <strong>Access key</strong> and <strong>Secret access key</strong>,
+which you’ll need to enter in the “Security Credentials” field of the <a class="reference internal" href="event-spot-configuration-options.html#event-spot-configure-event-plugin-dialog-ref-label"><span class="std std-ref">Configure Event Plugin</span></a> dialog.</p></li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Once you navigate away from the confirmation screen, you will be unable to access the Secret Key.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This secret access key can be used to access your AWS account. It is important that <a class="reference internal" href="shared-security-model.html#shared-security-model-ref-label"><span class="std std-ref">you keep it stored securely</span></a>.
+Please refer <a class="reference external" href="https://docs.aws.amazon.com/general/latest/gr/aws-access-keys-best-practices.html">AWS Guidelines</a> for standard best practices for management of AWS access keys.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For further security, consider modifying these IAM policies with an IP address condition on each policy statement.
+The IP addresses for this connection should be for any machines that will run the Spot Event Plugin, either the RCS or Pulse instances.
+Place this text after the “Resource” entry in each of the statements in the policies.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;Condition&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;IpAddress&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;aws:SourceIp&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="s2">&quot;&lt;public_ip_address&gt;&quot;</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This way, only API calls from the specified IP address will be accepted by AWS.</p>
+</div>
+</div>
+</div>
+<div class="section" id="spot-fleet-iam-instance-profile">
+<span id="event-spot-iam-instance-profile-ref-label"></span><h2>Spot Fleet IAM Instance Profile<a class="headerlink" href="#spot-fleet-iam-instance-profile" title="Permalink to this headline">¶</a></h2>
+<p>This IAM role is used by the Workers that are started by the Spot Fleet Requests.
+This role is used to give the Workers permissions to terminate themselves, determine what Group they are part of, and report their status to the Resource Tracker (if in use).</p>
+<p>You can assign the required permissions by attaching the following AWS-managed IAM policy to an IAM role. We require that the name of this role begins with “DeadlineSpot”:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AWSThinkboxDeadlineSpotEventPluginWorkerPolicy">AWSThinkboxDeadlineSpotEventPluginWorkerPolicy</a></p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>As of Deadline 10.1.8, our default <a class="reference internal" href="#event-spot-credentials-ref-label"><span class="std std-ref">Spot Credentials IAM policy</span></a> only allows IAM instance profiles with IAM role names that begin with <strong>DeadlineSpot</strong>.</p>
+</div>
+<div class="section" id="creating-the-iam-instance-profile">
+<h3>Creating the IAM Instance Profile<a class="headerlink" href="#creating-the-iam-instance-profile" title="Permalink to this headline">¶</a></h3>
+<p>To create the IAM role for your IAM instance profile:</p>
+<ol class="arabic">
+<li><p>Sign in to the <a class="reference external" href="https://console.aws.amazon.com">AWS Console</a></p></li>
+<li><p>Click on <strong>Services</strong> at the top of the AWS Console, and then click on <strong>IAM</strong> under “Security, Identity and Compliance”.</p></li>
+<li><p>On the “IAM” panel that appears, click <strong>Roles</strong>, and then click the <strong>Create role</strong> button.</p>
+<a class="reference internal image-reference" href="../_images/events_spot_instance_role_creation_1.png"><img alt="../_images/events_spot_instance_role_creation_1.png" src="../_images/events_spot_instance_role_creation_1.png" style="width: 813.0px; height: 515.25px;" /></a>
+</li>
+<li><p>In the “Create role” panel that appears, choose the following:</p>
+<ul class="simple">
+<li><p>Under <strong>Select type of trusted entity</strong>, choose <strong>AWS service</strong>.</p></li>
+<li><p>Under <strong>Choose a use case</strong>, choose <strong>EC2</strong>.</p></li>
+</ul>
+</li>
+<li><p>Click the <strong>Next: Permissions</strong> button to continue.</p>
+<a class="reference internal image-reference" href="../_images/events_spot_instance_role_creation_2.png"><img alt="../_images/events_spot_instance_role_creation_2.png" src="../_images/events_spot_instance_role_creation_2.png" style="width: 813.0px; height: 515.25px;" /></a>
+</li>
+<li><p>Search for <strong>AWSThinkboxDeadlineSpotEventPluginWorkerPolicy</strong> in the search box, and check it in the list below.</p></li>
+<li><p>Click the <strong>Next: Tags</strong> button to continue.</p>
+<a class="reference internal image-reference" href="../_images/events_spot_instance_role_creation_3.png"><img alt="../_images/events_spot_instance_role_creation_3.png" src="../_images/events_spot_instance_role_creation_3.png" style="width: 813.0px; height: 515.25px;" /></a>
+</li>
+<li><p>You can add tags with additional data to the role, but they are not required.</p></li>
+<li><p>Click the <strong>Next: Review</strong> button to continue.</p>
+<a class="reference internal image-reference" href="../_images/events_spot_instance_role_creation_4.png"><img alt="../_images/events_spot_instance_role_creation_4.png" src="../_images/events_spot_instance_role_creation_4.png" style="width: 813.0px; height: 515.25px;" /></a>
+</li>
+<li><p>In the <strong>Role name</strong> field, enter <strong>DeadlineSpotWorker</strong>.  You can choose a different name for this role, however, the name <strong>must</strong> begin with “DeadlineSpot” in order to work with our default <a class="reference internal" href="#event-spot-credentials-ref-label"><span class="std std-ref">Spot Credentials IAM policies</span></a>.</p></li>
+<li><p>Verify that the information is correct, and click <strong>Create role</strong>.</p></li>
+<li><p>Choose this role as the “IAM instance profile” in your <a class="reference internal" href="event-spot-fleet-request.html#event-spot-fleet-requests-ref-label"><span class="std std-ref">Spot Fleet Request</span></a>.</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="iam-fleet-role">
+<span id="event-spot-fleet-role-ref-label"></span><h2>IAM Fleet Role<a class="headerlink" href="#iam-fleet-role" title="Permalink to this headline">¶</a></h2>
+<p>This IAM role is used directly by the Spot Fleet.
+It gives the Spot Fleet the permissions needed to start, stop, and tag instances.</p>
+<p>By default, a role will automatically be created for your account called <code class="docutils literal notranslate"><span class="pre">aws-ec2-spot-fleet-tagging-role</span></code> which contains all of the permissions that are needed.</p>
+</div>
+<div class="section" id="resource-tracker-role">
+<span id="event-spot-rt-role-ref-label"></span><h2>Resource Tracker Role<a class="headerlink" href="#resource-tracker-role" title="Permalink to this headline">¶</a></h2>
+<p>This IAM role is used by Deadline Resource Tracker so that it is able to access the AWS resources that it creates in your account.</p>
+<p>This IAM role must have the following settings:</p>
+<ul class="simple">
+<li><p><strong>Trusted Entity:</strong> AWS Service: Lambda</p></li>
+<li><p><strong>Permissions policies:</strong> <a class="reference external" href="https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AWSThinkboxDeadlineResourceTrackerAccessPolicy">AWSThinkboxDeadlineResourceTrackerAccessPolicy</a> (AWS managed IAM policy)</p></li>
+<li><p><strong>Role name:</strong> DeadlineResourceTrackerAccessRole</p></li>
+</ul>
+<div class="section" id="creating-the-resource-tracker-iam-role">
+<h3>Creating the Resource Tracker IAM Role<a class="headerlink" href="#creating-the-resource-tracker-iam-role" title="Permalink to this headline">¶</a></h3>
+<p>To create the Resource Tracker IAM role:</p>
+<ol class="arabic">
+<li><p>Sign in to the <a class="reference external" href="https://console.aws.amazon.com">AWS Console</a>.</p></li>
+<li><p>Click on <strong>Services</strong> at the top of the AWS Console, and then click on <strong>IAM</strong> under “Security, Identity and Compliance”.</p></li>
+<li><p>On the “IAM” panel that appears, click <strong>Roles</strong>, and then click the <strong>Create Role</strong> button.</p>
+<a class="reference internal image-reference" href="../_images/resource_tracker_iam_role_creation_1.png"><img alt="../_images/resource_tracker_iam_role_creation_1.png" src="../_images/resource_tracker_iam_role_creation_1.png" style="width: 813.0px; height: 515.25px;" /></a>
+</li>
+<li><p>In the “Create role” panel that appears, choose the following:</p>
+<ul class="simple">
+<li><p>Under <strong>Select type of trusted entity</strong>, choose <strong>AWS service</strong>.</p></li>
+<li><p>Under <strong>Choose a use case</strong>, choose <strong>Lambda</strong>.</p></li>
+</ul>
+</li>
+<li><p>Click the <strong>Next: Permissions</strong> button to continue.</p>
+<a class="reference internal image-reference" href="../_images/resource_tracker_iam_role_creation_2.png"><img alt="../_images/resource_tracker_iam_role_creation_2.png" src="../_images/resource_tracker_iam_role_creation_2.png" style="width: 813.0px; height: 515.25px;" /></a>
+</li>
+<li><p>Search for <strong>AWSThinkboxDeadlineResourceTrackerAccessPolicy</strong> in the search box, and check it in the list below.</p></li>
+<li><p>Click the <strong>Next: Tags</strong> button to continue.</p>
+<a class="reference internal image-reference" href="../_images/resource_tracker_iam_role_creation_3.png"><img alt="../_images/resource_tracker_iam_role_creation_3.png" src="../_images/resource_tracker_iam_role_creation_3.png" style="width: 813.0px; height: 515.25px;" /></a>
+</li>
+<li><p>You can add tags with additional data to the role, but they are not required.</p></li>
+<li><p>Click the <strong>Next: Review</strong> button to continue.</p>
+<a class="reference internal image-reference" href="../_images/resource_tracker_iam_role_creation_4.png"><img alt="../_images/resource_tracker_iam_role_creation_4.png" src="../_images/resource_tracker_iam_role_creation_4.png" style="width: 813.0px; height: 515.25px;" /></a>
+</li>
+<li><p>In the <strong>Role name</strong> field, enter <strong>DeadlineResourceTrackerAccessRole</strong>.</p></li>
+<li><p>Verify that the information is correct, and click the <strong>Create role</strong> button.</p></li>
+</ol>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Spot Event Plugin - AWS Permissions</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#spot-credentials">Spot Credentials</a><ul>
+<li><a class="reference internal" href="#creating-the-spot-credentials-iam-user">Creating the Spot Credentials IAM User</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spot-fleet-iam-instance-profile">Spot Fleet IAM Instance Profile</a><ul>
+<li><a class="reference internal" href="#creating-the-iam-instance-profile">Creating the IAM Instance Profile</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#iam-fleet-role">IAM Fleet Role</a></li>
+<li><a class="reference internal" href="#resource-tracker-role">Resource Tracker Role</a><ul>
+<li><a class="reference internal" href="#creating-the-resource-tracker-iam-role">Creating the Resource Tracker IAM Role</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="event-spot.html"
+                        title="previous chapter">Spot Event Plugin</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="event-spot-ami.html"
+                        title="next chapter">Spot Event Plugins - Amazon Machine Images</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-spot-ami.html" title="Spot Event Plugins - Amazon Machine Images"
+             >next</a></li>
+        <li class="right" >
+          <a href="event-spot.html" title="Spot Event Plugin"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" >Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Spot Event Plugin - AWS Permissions</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

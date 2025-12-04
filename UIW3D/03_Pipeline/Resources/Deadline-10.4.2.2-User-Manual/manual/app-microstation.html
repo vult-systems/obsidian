@@ -1,0 +1,285 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MicroStation &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Mistika VR" href="app-mistikavr.html" />
+    <link rel="prev" title="MetaRender" href="app-metarender.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-mistikavr.html" title="Mistika VR"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-metarender.html" title="MetaRender"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">MicroStation</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="microstation">
+<span id="app-microstation-ref-label"></span><h1>MicroStation<a class="headerlink" href="#microstation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs from within MicroStation by installing the <a class="reference internal" href="#app-microstation-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a>, or you can submit them from the Deadline Monitor. The instructions for installing the <a class="reference internal" href="#app-microstation-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<p><a class="reference internal" href="../_images/integrated_microstation.png"><img alt="integrated" src="../_images/integrated_microstation.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/monitor_microstation_tab1.png"><img alt="monitor1" src="../_images/monitor_microstation_tab1.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/monitor_microstation_tab2.png"><img alt="monitor2" src="../_images/monitor_microstation_tab2.png" style="height: 400px;" /></a></p>
+<p>To submit from within MicroStation (once the submitter has been installed), navigate to the Utilities-&gt;Render menu and select ‘Submit To Deadline’. Alternatively, you can use the Key-In ‘mdl load DLSubmit’ to bring up the submission UI (or ‘dlsubmit open’, once it’s already been loaded).</p>
+<p><a class="reference internal" href="../_images/microstation_menu.png"><img alt="ms_menu" src="../_images/microstation_menu.png" style="height: 200px;" /></a> <a class="reference internal" href="../_images/microstation_keyin.png"><img alt="ms_keyin" src="../_images/microstation_keyin.png" style="height: 200px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation.
+The MicroStation-specific options are:</p>
+<ul>
+<li><p><strong>Operation</strong>: This is the type of MicroStation operation that will be performed by the Deadline Job. The different options are described below:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Animation Render</strong>: This will render the currently active Animation Script through Deadline.</p></li>
+<li><p><strong>Single View Render</strong>: This will render a single view as an image through Deadline.</p></li>
+<li><p><strong>Save Multiple Images</strong>: This will submit the currently active “Save Multiple Images” script as a Deadline Job, or use the specified SM file.</p></li>
+<li><p><strong>File Export</strong>: This will perform a File-&gt;Export operation as a Deadline Job (only a specific subset of these operations are currently available).</p></li>
+<li><p><strong>Print</strong>: This will perform a Print operation as a Deadline Job using the current settings, or the specified PSET file.</p></li>
+<li><p><strong>Script</strong>: This will perform a Script operation as a Deadline Job using a specified Key-in or Microstation VBA script.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Mode</strong>: This option is dependent on the type of Operation selected. Will either specify the Render Mode, or type of File Export to perform.</p></li>
+<li><p><strong>Color Model</strong>: This drop-down allows you to select the Color output of the Render (e.g. full RGB, GrayScale, MonoChrome, etc.)</p></li>
+<li><p><strong>Design File(s)</strong>: This option is only relevant to the Monitor Submitter, and specifies which Design File(s) to use for the selected operation. Multiple design files may be specified in order to submit a batch of jobs. For the integrated Submitter, this will always be the DGN file that is currently open.</p></li>
+<li><p><strong>Submit Files with Job</strong>: This option, if checked, will submit files with the job, as opposed to leaving them in their current location.</p></li>
+<li><p><strong>View Number</strong>: The number of the Viewport that will be used for rendering (1-8).</p></li>
+<li><p><strong>View Name</strong>: (Optional) The name of the Saved View that will be applied before rendering.</p></li>
+<li><p><strong>Output Size X</strong>: The X (horizontal) component of the output size. Set to 0 to use current value, or maintain Aspect Ratio (depending on whether or not the Aspect is currently locked).</p></li>
+<li><p><strong>Output Size Y</strong>: The Y (vertical) component of the output size. Set to 0 to use current value, or maintain Aspect Ratio (depending on whether or not the Aspect is currently locked).</p></li>
+<li><p><strong>Environment</strong>: The name of the Environment to use for Luxology Renders. If the specified Environment is not found, the Untitled setup will be used.</p></li>
+<li><p><strong>Render Setup</strong>: The name of the Render Setup to use for Luxology Renders. If the specified Render Setup is not found, the Untitled setup will be used.</p></li>
+<li><p><strong>Light Setup</strong>: The name of the Light Setup to use for Luxology Renders.  If the specified Light Setup is not found, the current light setup will be used.</p></li>
+<li><p><strong>Frame List</strong>: The list of Frames to render during Animation Renders.</p></li>
+<li><p><strong>Task Size</strong>: The number of Frames (Animation) or Script Entries (Save Multiple Images) to process per Deadline Task.</p></li>
+<li><p><strong>Settings File</strong>: The path to an operation-specific file that will specify additional settings for the operation (e.g. Print Settings file, DWG Export settings, Script file, etc.).</p></li>
+<li><p><strong>Use Current Settings</strong>: This checkbox is only available from the integrated submitter. If checked, a new settings file will be created and submitted with the Job, based on the settings in the current MicroStation session.</p></li>
+<li><p><strong>Output Path</strong>: The Path to the output that will be created. Frame padding should be represented by either ‘#’s or ‘0’s. Unrecognized file formats for the current operation will be changed to a default known format at render time.</p></li>
+<li><p><strong>Module (.mvba)</strong>: The MVBA Module to be run from a specified Microstation VBA Project file.</p></li>
+<li><p><strong>Submodule (.mvba)</strong>: The MVBA Sub to be run from a specified Microstation VBA Project file.</p></li>
+<li><p><strong>Key-in Arguments (.mvba)</strong>: Any additional Key-in arguments to send to the specified Microstation VBA Script.</p></li>
+<li><p><strong>Design File Read Only</strong>: If this option is selected, Deadline will run the specified scene as read-only.</p></li>
+<li><p><strong>Convert Network Paths to UNC</strong>: If this option is selected, Deadline will attempt to convert paths from using Mapped Network Drives to using the full UNC network path.</p></li>
+</ul>
+<p>Note that some of these parameters might not apply to all Operations/Modes. The Submitters will automatically disable or hide controls that are not relevant to the currently chosen Operation/Mode.</p>
+</div>
+<div class="section" id="pipeline-tools">
+<h3>Pipeline Tools<a class="headerlink" href="#pipeline-tools" title="Permalink to this headline">¶</a></h3>
+<p>When using the integrated submitter to submit through Microstation you have the ability to use any of the event plugins that you have enabled through the Deadline Monitor. This is done by opening the Pipeline Tools window via the Pipeline Tools button. This window is explained further in the <a class="reference internal" href="event-pipeline-tools.html#event-pipeline-tools-ref-label"><span class="std std-ref">Pipeline Tools</span></a> documentation.</p>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the MicroStation plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the MicroStation plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/microstation_plugin.png"><img alt="../_images/microstation_plugin.png" src="../_images/microstation_plugin.png" style="height: 400px;" /></a>
+<p><strong>MicroStation Executables</strong></p>
+<p>This section defines the possible locations for ustation.exe for different versions of MicroStation.  The Deadline Workers will look for the executable in each of these locations (in order) when it tries to render a MicroStation job.</p>
+<p><strong>Write Script To Log</strong></p>
+<p>This switch determines whether the contents of a script will be written to the Deadline Worker log. This only applies for script job operations. Writing the contents of an MVBA script is currently not supported.</p>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-microstation-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to install the integrated MicroStation submission script. This script enables MicroStation jobs to be submitted to Deadline directly from the MicroStation GUI. The following procedure has been tested in MicroStation v8i SS3 (08.11.09).</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/MicroStation/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<p>First, copy the following files to: <code class="docutils literal notranslate"><span class="pre">%localappdata%\Thinkbox\Deadline[VERSION]\submitters\MicrostationSubmitter</span></code> (where [VERSION] is the major version of Deadline such as <strong>9</strong>):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;\submission\MicroStation\Client\DLSubmit.dll</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;\submission\MicroStation\Client\TBUtils.dll</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;\submission\MicroStation\Client\TBUtils.ma</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;\submission\MicroStation\Client\Thinkbox.Common.dll</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;\submission\MicroStation\Client\DeadlineMenu.dgnlib</span></code></p></li>
+</ul>
+</div></blockquote>
+<p>Next, copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Repository</span><span class="o">&gt;</span>\<span class="n">submission</span>\<span class="n">MicroStation</span>\<span class="n">Client</span>\<span class="n">DLSubmit_Config</span><span class="o">.</span><span class="n">cfg</span> <span class="n">to</span> <span class="o">&lt;</span><span class="n">MicroStation</span> <span class="n">install</span><span class="o">&gt;</span>\<span class="n">config</span>\<span class="n">appl</span>
+</pre></div>
+</div>
+<p>where &lt;MicroStation install&gt; directory would be typically something like: <code class="docutils literal notranslate"><span class="pre">&quot;C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\Bentley\MicroStation</span> <span class="pre">V8i</span> <span class="pre">(SELECTseries)\MicroStation&quot;</span></code>.</p>
+</div>
+<div class="section" id="sticky-and-default-settings">
+<h3>Sticky and Default Settings<a class="headerlink" href="#sticky-and-default-settings" title="Permalink to this headline">¶</a></h3>
+<p>The integrated and Monitor MicroStation submitters have a feature that saves previously selected values for specific controls as Custom Properties in the design file that was used for submission, so that they can be restored automatically for future submissions.</p>
+<p>The list of controls that are flagged to have “sticky” values is determined by the <strong>MicroStation_StickySettings.ini</strong> file in the submission/MicroStation/Main folder of your repository. In addition to this, there is also a <strong>MicroStation_DefaultSettings.ini</strong> file alongside it, which will control the Default values for all controls, when there are no sticky settings present/enabled. These files can be freely modified to fit your needs, but keep in mind that any changes made will affect all users.</p>
+<dl class="simple">
+<dt>The priority of setting values is as follows:</dt><dd><ol class="arabic simple">
+<li><p><strong>Sticky Settings</strong>: For a given control, if there is a sticky value present in the scene file, it will be used first if the control is flagged as sticky in MicroStation_StickySettings.ini.</p></li>
+<li><p><strong>Default Settings</strong>: For a given control, if a (valid) default value is provided in MicroStation_DefaultSettings.ini, it will then be used.</p></li>
+<li><p><strong>Factory Defaults</strong>: If neither of the above are present, hardcoded defaults are provided. These cannot be changed.</p></li>
+</ol>
+</dd>
+</dl>
+<p>Note that if any Sticky or Default value is invalid for any reason (e.g. a sticky Saved View was deleted), the control will fall back to the next level of default.</p>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-microstation-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of MicroStation are supported?</strong></p>
+<blockquote>
+<div><p>Currently, only MicroStation v8i SS3 (08.11.09) is officially supported. We will look to support different versions of MicroStation as they come out in the future, or as demand dictates.</p>
+</div></blockquote>
+<p><strong>Does the MicroStation plugin support Tile Rendering?</strong></p>
+<blockquote>
+<div><p>Not currently. The plan is to investigate the possibility of including this feature in MicroStation going forward.</p>
+</div></blockquote>
+<p><strong>I have an old version of the integrated submitter installed. How do I update to the latest version?</strong></p>
+<blockquote>
+<div><p>As of Deadline 7.2.1 we have changed the way we are installing the integrated submission script.  In order to update from an older version you will need to remove the old submitter and then install the new one using the new method (submitter installer or manually).  The files that need to be removed are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">C:\ProgramData\Bentley\MicroStation</span> <span class="pre">V8i</span> <span class="pre">(SELECTseries)\WorkSpace\Interfaces\MicroStation\default\DeadlineMenu.dgnlib</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;MicroStation</span> <span class="pre">install&gt;\mdlapps\DLSubmit.dll</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;MicroStation</span> <span class="pre">install&gt;\mdlapps\TBUtils.dll</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;MicroStation</span> <span class="pre">install&gt;\mdlapps\TBUtils.ma</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;MicroStation</span> <span class="pre">install&gt;\mdlapps\Thinkbox.Common.dll</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;MicroStation</span> <span class="pre">install&gt;\mdlapps\DeadlineMenu.dgnlib</span></code></p></li>
+</ul>
+</div></blockquote>
+<p><strong>After I install the MicroStation submitter the menu entry is not visible</strong></p>
+<blockquote>
+<div><p>If the menu entry does not appear it generally means that the configuration entry <strong>MS_GUIDGNLIBLIST</strong> is being modified by another cfg file.  In this case you will want to append <code class="docutils literal notranslate"><span class="pre">%localappdata%\Thinkbox\Deadline&lt;VERSION&gt;\submitters\MicrostationSubmitter\*.dgnlib</span></code> to the <strong>MS_GUIDGNLIBLIST</strong> variable, which can be done through the Workspace-&gt;Configuration Menu.</p>
+<p>where <code class="docutils literal notranslate"><span class="pre">&lt;VERSION&gt;</span></code> is the Deadline major version, such as: <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p>
+</div></blockquote>
+<p><strong>File exporting to DWG file format</strong></p>
+<blockquote>
+<div><p>You can use a *.dws DWG settings file when submitting a DWG export job to ensure a correctly compliant DWG file is created which is compatible with the 3rd party application you intend to import it into. Check with the developer of the 3rd party application developer to confirm the correct version/specification of DWG file format which it supports, if you have difficulty importing certain DWG files exported from MicroStation.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known MicroStation error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">MicroStation</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#pipeline-tools">Pipeline Tools</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+<li><a class="reference internal" href="#sticky-and-default-settings">Sticky and Default Settings</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-metarender.html"
+                        title="previous chapter">MetaRender</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-mistikavr.html"
+                        title="next chapter">Mistika VR</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-mistikavr.html" title="Mistika VR"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-metarender.html" title="MetaRender"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">MicroStation</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

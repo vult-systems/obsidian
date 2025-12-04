@@ -1,0 +1,634 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manual Database Installation &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Database Maintenance" href="db-maintenance.html" />
+    <link rel="prev" title="Using the Direct Connection type (Not Recommended)" href="direct-connection-install.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="db-maintenance.html" title="Database Maintenance"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="direct-connection-install.html" title="Using the Direct Connection type (Not Recommended)"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" accesskey="U">Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Manual Database Installation</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="manual-database-installation">
+<span id="install-manual-db-ref-label"></span><h1>Manual Database Installation<a class="headerlink" href="#manual-database-installation" title="Permalink to this headline">¶</a></h1>
+<p>This guide will cover the basic steps required for you to manually download and install the MongoDB Database. Note that it is possible for the <a class="reference internal" href="quick-install-db-repo.html#quick-install-db-repo-ref-label"><span class="std std-ref">Deadline Repository Installer</span></a> to automatically download and install the database, but an internet connection is required. In addition, only <a class="reference internal" href="system-requirements.html#system-requirements-ref-label"><span class="std std-ref">specific operating systems</span></a> are supported. If an internet connection isn’t available, or the current operating system you are using isn’t supported, you can follow this guide to install the Database manually.</p>
+<p>Manually installing the MongoDB database might also be preferable for some because it gives you greater control over things like authentication, and allows you to create sharded clusters or replica sets for backup. More information on these advanced topics can be found at the bottom of this guide.</p>
+<p>If you’re installing the MongoDB database on a machine running Linux or macOS, you also have the option to download and install MongoDB through their associated package manager such as <a class="reference external" href="https://docs.mongodb.com/v3.0/tutorial/install-mongodb-on-red-hat/#install-mongodb">yum</a>, <a class="reference external" href="https://docs.mongodb.com/v3.0/tutorial/install-mongodb-on-debian/#install-mongodb">apt</a>, or <a class="reference external" href="https://docs.mongodb.com/v3.0/tutorial/install-mongodb-on-os-x/#install-mongodb-with-homebrew">homebrew</a>. For maximum compatibility with Deadline, we recommend you use MongoDB version <strong>5.0.0</strong> through <strong>6.0.16</strong>. However, for security, you may need to use a later patch version for <strong>6.0.16</strong> if <strong>6.0.16</strong> has any security issues that might affect you. For the purposes of this guide though, we will assume you’ve downloaded MongoDB manually.</p>
+<div class="section" id="download-and-install-mongodb">
+<h2>Download and Install MongoDB<a class="headerlink" href="#download-and-install-mongodb" title="Permalink to this headline">¶</a></h2>
+<p>You can download the version of MongoDB that corresponds to your operating system from the <a class="reference external" href="https://www.mongodb.org/downloads">MongoDB Downloads Page</a>. For maximum compatibility with Deadline, we recommend you use MongoDB version <strong>5.0.0</strong> through <strong>6.0.16</strong>. However, for security, you may need to use a later patch version for <strong>6.0.16</strong> if <strong>6.0.16</strong> has any security issues that might affect you.</p>
+<p>Please note that if you choose to use MongoDB 6.0 or later, you will need to separately install the MongoDB Shell as described in the below section.</p>
+<p>Once the download is finished, you’ll want to extract the compressed file (.tgz or .zip), rename the resulting folder to something readable (this guide will assume you chose <code class="docutils literal notranslate"><span class="pre">application</span></code>), and delete the compressed file. For example, <code class="docutils literal notranslate"><span class="pre">mongodb-linux-x86_64-debian92.tgz</span></code> decompresses to <code class="docutils literal notranslate"><span class="pre">mongodb-linux-x86_64-debian92</span></code>, and then can be renamed to <code class="docutils literal notranslate"><span class="pre">application</span></code>.</p>
+<p>Next you’ll need to create a location to store the installation of the database. For the purpose of these instructions, we’re assuming these are the paths you’ll create:</p>
+<ul>
+<li><p>Windows</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">DeadlineDatabase</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span>\<span class="n">mongo</span>
+</pre></div>
+</div>
+</li>
+<li><p>macOS</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">Applications</span><span class="o">/</span><span class="n">Thinkbox</span><span class="o">/</span><span class="n">DeadlineDatabase</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="o">/</span><span class="n">mongo</span>
+</pre></div>
+</div>
+</li>
+<li><p>Linux</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Thinkbox</span><span class="o">/</span><span class="n">DeadlineDatabase</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="o">/</span><span class="n">mongo</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Where <code class="docutils literal notranslate"><span class="pre">[VERSION]</span></code> is replaced with the major version of Deadline, such as: <code class="docutils literal notranslate"><span class="pre">10</span></code>. Follow this up by moving your <code class="docutils literal notranslate"><span class="pre">application</span></code> folder into this directory. Finally, create a <code class="docutils literal notranslate"><span class="pre">data</span></code> folder alongside the <code class="docutils literal notranslate"><span class="pre">application</span></code> folder.</p>
+</div>
+<div class="section" id="mongodb-shell-installation-mongodb-6-0">
+<span id="database-config-ref-label"></span><h2>MongoDB Shell Installation (MongoDB 6.0+)<a class="headerlink" href="#mongodb-shell-installation-mongodb-6-0" title="Permalink to this headline">¶</a></h2>
+<p>Starting from MongoDB version 6.0, the MongoDB Shell (mongosh) is no longer included in the MongoDB Server package and needs to be installed separately. If you are using MongoDB 6.0 or later and need to use the MongoDB Shell, follow these steps:</p>
+<ol class="arabic">
+<li><p>Download the MongoDB Shell package for your platform from the <a class="reference external" href="https://www.mongodb.com/try/download/shell">MongoDB Shell Download page</a>.</p></li>
+<li><p>Extract the downloaded package.</p></li>
+<li><p>Locate the <code class="docutils literal notranslate"><span class="pre">mongosh</span></code> binary in the extracted folder (in a <code class="docutils literal notranslate"><span class="pre">bin</span></code> subfolder).</p></li>
+<li><p>Copy the <code class="docutils literal notranslate"><span class="pre">mongosh</span></code> binary to the following location in your Deadline Database installation:</p>
+<ul>
+<li><p>Windows</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">DeadlineDatabase</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span>\<span class="n">mongo</span>\<span class="n">application</span>\<span class="nb">bin</span>
+</pre></div>
+</div>
+</li>
+<li><p>macOS</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">Applications</span><span class="o">/</span><span class="n">Thinkbox</span><span class="o">/</span><span class="n">DeadlineDatabase</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="o">/</span><span class="n">mongo</span><span class="o">/</span><span class="n">application</span><span class="o">/</span><span class="nb">bin</span>
+</pre></div>
+</div>
+</li>
+<li><p>Linux</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Thinkbox</span><span class="o">/</span><span class="n">DeadlineDatabase</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="o">/</span><span class="n">mongo</span><span class="o">/</span><span class="n">application</span><span class="o">/</span><span class="nb">bin</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">[VERSION]</span></code> with your Deadline major version number, such as: <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p>
+</li>
+</ol>
+<p>If you are using MongoDB 5.x or earlier, this step is not necessary as the MongoDB Shell is included in the main MongoDB package.</p>
+</div>
+<div class="section" id="database-configuration">
+<h2>Database Configuration<a class="headerlink" href="#database-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Before you run MongoDB, some configuration is required. First, a configuration file needs to be created, and then MongoDB should be configured to run as a service or daemon.</p>
+<div class="section" id="configuration-file-all-platforms">
+<span id="database-config-file-ref-label"></span><h3>Configuration File (All Platforms)<a class="headerlink" href="#configuration-file-all-platforms" title="Permalink to this headline">¶</a></h3>
+<p>A database configuration file has to be created in the <code class="docutils literal notranslate"><span class="pre">data</span></code> folder that you created above. For the purposes of this guide, this configuration file will be called <code class="docutils literal notranslate"><span class="pre">config.conf</span></code>. After creating the file, copy and paste the contents below into it. Before saving the file, be sure to make the following changes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[PathToMongoDB]</span></code> should be replaced with the path to the folder that contains the <code class="docutils literal notranslate"><span class="pre">application</span></code> and <code class="docutils literal notranslate"><span class="pre">data</span></code> folders you created earlier. If you’ve been following the instructions, that value will be <code class="docutils literal notranslate"><span class="pre">C:\DeadlineDatabase[VERSION]\mongo</span></code>, where <code class="docutils literal notranslate"><span class="pre">[VERSION]</span></code> is the major version of Deadline, such as: <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#MongoDB config file</span>
+
+<span class="n">systemLog</span><span class="p">:</span>
+  <span class="n">destination</span><span class="p">:</span> <span class="n">file</span>
+  <span class="c1"># Mongo DB&#39;s output will be logged here.</span>
+  <span class="n">path</span><span class="p">:</span> <span class="p">[</span><span class="n">PathToMongoDB</span><span class="p">]</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">log</span><span class="o">.</span><span class="n">txt</span>
+  <span class="c1"># Default to quiet mode to limit log output size. Set to &#39;false&#39; when debugging.</span>
+  <span class="n">quiet</span><span class="p">:</span> <span class="n">true</span>
+  <span class="c1"># Increase verbosity level for more debug messages (0-5)</span>
+  <span class="n">verbosity</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">integer</span><span class="o">&gt;</span>
+
+<span class="n">net</span><span class="p">:</span>
+  <span class="c1"># Port MongoDB will listen on for incoming connections</span>
+  <span class="n">port</span><span class="p">:</span> <span class="p">[</span><span class="n">DB_PORT</span><span class="p">]</span>
+  <span class="n">ipv6</span><span class="p">:</span> <span class="n">true</span>
+  <span class="n">ssl</span><span class="p">:</span>
+    <span class="c1"># SSL/TLS options</span>
+    <span class="n">mode</span><span class="p">:</span> <span class="n">disabled</span>
+    <span class="c1"># If enabling TLS, the below options need to be set:</span>
+    <span class="c1">#PEMKeyFile:</span>
+    <span class="c1">#CAFile:</span>
+
+<span class="n">storage</span><span class="p">:</span>
+  <span class="c1"># Database files will be stored here</span>
+  <span class="n">dbPath</span><span class="p">:</span> <span class="p">[</span><span class="n">PathToMongoDB</span><span class="p">]</span><span class="o">/</span><span class="n">data</span>
+  <span class="n">engine</span><span class="p">:</span> <span class="n">wiredTiger</span>
+
+<span class="c1"># Enable sharding</span>
+<span class="c1">#sharding:</span>
+  <span class="c1">#clusterRole:</span>
+  <span class="c1">#configDB:</span>
+
+<span class="c1"># Setup replica set with given replica set name</span>
+<span class="c1">#replication:</span>
+  <span class="c1">#replSetName:</span>
+
+<span class="n">security</span><span class="p">:</span>
+  <span class="n">authorization</span><span class="p">:</span> <span class="n">disabled</span>
+</pre></div>
+</div>
+<p>These are the key settings defined in this file.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">systemLog:</span></code> <code class="docutils literal notranslate"><span class="pre">path:</span></code> This is where MongoDB will write its log to.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">net:</span></code> <code class="docutils literal notranslate"><span class="pre">port:</span></code> This is the port [DB_PORT] that MongoDB will listen on, such as: <code class="docutils literal notranslate"><span class="pre">27100</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">net:</span></code> <code class="docutils literal notranslate"><span class="pre">ssl:</span></code> <code class="docutils literal notranslate"><span class="pre">mode:</span></code> This setting can be used to enable TLS/SSL authentication. The sample configuration above has this option disabled, but we recommend <a class="reference external" href="https://docs.mongodb.com/manual/tutorial/configure-ssl/">Configuring MongoDB for TLS/SSL Authentication</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">storage:</span></code> <code class="docutils literal notranslate"><span class="pre">dbPath:</span></code> This is where MongoDB will save its data.</p></li>
+</ul>
+<p>See the <a class="reference external" href="https://docs.mongodb.org/manual/reference/configuration-options/">MongoDB Configuration File Options</a> for more information on the available options. Note that if you change this file later, and MongoDB is already running, then you’ll need to restart the database service for the changes to go into effect.</p>
+</div>
+<div class="section" id="create-windows-service-windows">
+<span id="database-windows-service-ref-label"></span><h3>Create Windows Service (Windows)<a class="headerlink" href="#create-windows-service-windows" title="Permalink to this headline">¶</a></h3>
+<p>To have MongoDB run as a service on Windows, you’ll have to manually create the service. This can be done by launching a command prompt as an Administrator and running the following command. Before running the command, please make the following changes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[VERSION]</span></code> should be replaced with Deadline’s major version, such as: <code class="docutils literal notranslate"><span class="pre">10</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[PathToMongoInstall]</span></code> should be replaced with the location of Deadline’s MongoDB folder. If you’ve been following the instructions, that value will be <code class="docutils literal notranslate"><span class="pre">C:\DeadlineDatabase[VERSION]\mongo</span></code>.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sc</span> <span class="n">create</span> <span class="n">Deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="n">DatabaseService</span> <span class="n">binPath</span><span class="o">=</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">[PathToMongoInstall]</span><span class="se">\a</span><span class="s2">pplication</span><span class="se">\b</span><span class="s2">in\mongod.exe</span><span class="se">\&quot;</span><span class="s2"> --config </span><span class="se">\&quot;</span><span class="s2">[PathToMongoInstall]\data\config.conf</span><span class="se">\&quot;</span><span class="s2"> --service&quot;</span> <span class="n">start</span><span class="o">=</span> <span class="n">auto</span> <span class="n">depend</span><span class="o">=</span> <span class="n">TCPIP</span> <span class="n">DisplayName</span><span class="o">=</span> <span class="s2">&quot;Deadline [VERSION] Database Service&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="database-property-list-file-macos">
+<span id="database-plist-ref-label"></span><h3>Database Property List File (macOS)<a class="headerlink" href="#database-property-list-file-macos" title="Permalink to this headline">¶</a></h3>
+<p>For macOS, a plist file needs to be created to allow MongoDB to run as a daemon. For the purposes of this guide, this plist file will be called <code class="docutils literal notranslate"><span class="pre">org.mongodb.mongod_Deadline[VERSION]DatabaseService.plist</span></code>, where <code class="docutils literal notranslate"><span class="pre">[VERSION]</span></code> is the major version of Deadline. Create this file in a temporary location, and then copy and paste the contents below into it. Before saving the file, be sure to make the following changes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[VERSION]</span></code> should be replaced with Deadline’s major version, such as: <code class="docutils literal notranslate"><span class="pre">10</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[ReplaceWithServiceName]</span></code> should be replaced with the name of the service. For example,  <code class="docutils literal notranslate"><span class="pre">Deadline[VERSION]DatabaseService</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[ReplaceWithMongoInstallPath]</span></code> should be replaced with the path to Deadline’s MongoDB database. For example, <code class="docutils literal notranslate"><span class="pre">/Applications/Thinkbox/DeadlineDatabase[VERSION]</span></code>.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot;
+  &quot;https://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;
+&lt;plist version=&quot;1.0&quot;&gt;
+&lt;dict&gt;
+  &lt;key&gt;Label&lt;/key&gt;
+  &lt;string&gt;org.mongodb.mongod_[ReplaceWithServiceName]&lt;/string&gt;
+  &lt;key&gt;ProgramArguments&lt;/key&gt;
+  &lt;array&gt;
+        &lt;string&gt;[ReplaceWithMongoInstallPath]/mongo/application/bin/mongod&lt;/string&gt;
+        &lt;string&gt;run&lt;/string&gt;
+        &lt;string&gt;--config&lt;/string&gt;
+        &lt;string&gt;[ReplaceWithMongoInstallPath]/mongo/data/config.conf&lt;/string&gt;
+  &lt;/array&gt;
+  &lt;key&gt;RunAtLoad&lt;/key&gt;
+  &lt;true/&gt;
+  &lt;key&gt;KeepAlive&lt;/key&gt;
+  &lt;true/&gt;
+  &lt;key&gt;WorkingDirectory&lt;/key&gt;
+  &lt;string&gt;[ReplaceWithMongoInstallPath]/mongo/application/bin&lt;/string&gt;
+  &lt;key&gt;StandardErrorPath&lt;/key&gt;
+  &lt;string&gt;/var/log/mongo/output.txt&lt;/string&gt;
+  &lt;key&gt;StandardOutPath&lt;/key&gt;
+  &lt;string&gt;/var/log/mongo/output.txt&lt;/string&gt;
+  &lt;key&gt;HardResourceLimits&lt;/key&gt;
+  &lt;dict&gt;
+        &lt;key&gt;NumberOfFiles&lt;/key&gt;
+        &lt;integer&gt;10000&lt;/integer&gt;
+  &lt;/dict&gt;
+  &lt;key&gt;SoftResourceLimits&lt;/key&gt;
+  &lt;dict&gt;
+        &lt;key&gt;NumberOfFiles&lt;/key&gt;
+        &lt;integer&gt;10000&lt;/integer&gt;
+  &lt;/dict&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;
+</pre></div>
+</div>
+<p>After saving the file, copy it to <code class="docutils literal notranslate"><span class="pre">/Library/LaunchDaemons/</span></code>.</p>
+<p>Finally, the permissions will have to be set on the file to allow reading and writing, which can be done with the following command from a terminal. Before running the command, please make the following changes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[VERSION]</span></code> should be replaced with Deadline’s major version, such as: <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">chmod</span> <span class="mi">644</span> <span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">LaunchDaemons</span><span class="o">/</span><span class="n">org</span><span class="o">.</span><span class="n">mongodb</span><span class="o">.</span><span class="n">mongod_Deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="n">DatabaseService</span><span class="o">.</span><span class="n">plist</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="database-script-file-linux">
+<span id="database-script-ref-label"></span><h3>Database Script File (Linux)<a class="headerlink" href="#database-script-file-linux" title="Permalink to this headline">¶</a></h3>
+<p>For Linux, an executable script file needs to be created to allow MongoDB to run as a service. For the purposes of this guide, this file will be called <code class="docutils literal notranslate"><span class="pre">Deadline[VERSION]db</span></code>, where <code class="docutils literal notranslate"><span class="pre">[VERSION]</span></code> is the major version of Deadline. Create this file in a temporary location, and then copy and paste the contents below into it. Before saving the file, be sure to make the following changes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[VERSION]</span></code> should be replaced with Deadline’s major version.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[PathToMongoDBBin]</span></code> should be replaced with the path to MongoDB’s bin folder. Installer’s default path is <code class="docutils literal notranslate"><span class="pre">/opt/Thinkbox/DeadlineDatabase[VERSION]/mongo/application/bin</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[PathToMongoDBData]</span></code> should be replaced with the path to MongoDB’s data folder. Installer’s default path is <code class="docutils literal notranslate"><span class="pre">/opt/Thinkbox/DeadlineDatabase[VERSION]/mongo/data</span></code>.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+#
+# mongodb Startup script for Mongo DB
+#
+# chkconfig: - 20 80
+# description: MongoDB (from &quot;humongous&quot;) is a scalable, high-performance, open$
+
+### BEGIN INIT INFO
+# Provides: Deadline[VERSION]db
+# Default-Start: 2 3 5
+# Default-Stop:  0 1 4 6
+# Required-Start: $network $local_fs $remote_fs
+# Required-Stop: $network $local_fs $remote_fs
+# Short-Description: Mongo DB NoSQL Database.
+# Description: MongoDB (from &quot;humongous&quot;) is a scalable, high-performance, open$
+### END INIT INFO
+
+# Source function library. (Supported only on Red Hat distributions.
+( . /etc/rc.d/init.d/functions &gt; /dev/null 2&gt;&amp;1 )
+
+DEADLINEVERSION=[VERSION]
+MONGODBBIN=[PathToMongoDBBin]
+MONGODBDATA=[PathToMongoDBData]
+MONGOSERVICEFILENAME=&quot;mongodb&quot;
+MONGOLOCK=&quot;/var/lock/subsys/deadline$DEADLINEVERSION$MONGOSERVICEFILENAME&quot;
+LOGFILE=&quot;/var/log/deadline$DEADLINEVERSION$MONGOSERVICEFILENAME.log&quot;
+PIDFILE=&quot;/var/run/deadline$DEADLINEVERSION$MONGOSERVICEFILENAME.pid&quot;
+RUNNING=0 # Is the process in our PID file running?
+PID=-1    # What is the process ID?
+ULIMITSETTING=200000 # Open file descriptor limit (200000 is the recommended amount)
+
+LONGNAME=&quot;MongoDB Service For Deadline ${DEADLINEVERSION}&quot;
+
+service_is_running() {
+        # Note that this only checks to see if there&#39;s a process running
+        # that was started from this init script.
+        if [ -e &quot;${PIDFILE}&quot; ]; then
+                PID=`cat ${PIDFILE}`
+                ps -p $PID &gt;/dev/null 2&gt;&amp;1
+                if [ $? -eq 0 ]; then
+                        return 0
+                else
+                        rm -f &quot;${PIDFILE}&quot; &gt;/dev/null 2&gt;&amp;1
+                        rm -f &quot;${MONGOLOCK}&quot; &gt;/dev/null 2&gt;&amp;1
+                fi
+        fi
+
+        PID=-1
+        return 1
+}
+
+log_event() {
+        if [ $# -gt 0 ]; then
+                date &quot;+%F %T: $1&quot; &gt;&gt; &quot;${LOGFILE}&quot;
+
+                if [ $# -gt 1 ] &amp;&amp; [ $2 = true ]; then
+                        echo $1
+                fi
+        fi
+}
+
+start () {
+        if service_is_running; then
+                log_event &quot;The ${LONGNAME} is already running (PID ${PID}).&quot; true
+
+                return 0
+        else
+                # Start the service
+                if [ -e &quot;${MONGODBBIN}/mongod&quot; ]; then
+                        if [ -x &quot;${MONGODBBIN}/mongod&quot; ]; then
+                                # Increase file descriptors limit
+                                if [ &quot;$(ulimit -n)&quot; -lt &quot;$ULIMITSETTING&quot; ]; then
+                                        ulimit -n &quot;$ULIMITSETTING&quot;
+                                fi
+
+                                # Start the service
+                                (&quot;$MONGODBBIN/mongod&quot; --config &quot;$MONGODBDATA/config.conf&quot;) &amp;
+
+                                # Log the PID and create the LOCK file
+                                echo $! &gt; &quot;${PIDFILE}&quot;
+                                touch &quot;${MONGOLOCK}&quot; 2&gt; /dev/null
+
+                                if service_is_running; then
+                                        log_event &quot;The ${LONGNAME} has been started.&quot; true
+                                        log_event &quot;Full log can be found in ${MONGODBDATA}/logs/log.txt&quot;
+
+                                        return 0
+                                else
+                                        log_event &quot;The ${LONGNAME} failed to start.&quot; true
+                                        return 7
+                                fi
+                        else
+                                log_event &quot;&#39;${MONGODBBIN}/mongod&#39; is lacking execute permissions for the current user.&quot; true
+                                return 4
+                        fi
+                else
+                        log_event &quot;&#39;mongod&#39; was not found at the expected location (${MONGODBBIN})&quot; true
+                        return 5
+                fi
+        fi
+}
+
+stop () {
+        if ! service_is_running; then
+                log_event &quot;The ${LONGNAME} is not currently running.&quot; true
+                return 0
+        else
+                log_event &quot;Shutting down the ${LONGNAME}...&quot; true
+                kill -QUIT $PID
+
+                COUNTER=0
+                while kill -0 $PID &gt;/dev/null 2&gt;&amp;1; do
+                        COUNTER=$((COUNTER+1))
+
+                        if [ &quot;$COUNTER&quot; -gt 10 ]; then
+                                break
+                        fi
+
+                        sleep 0.5
+                done
+
+                if service_is_running; then
+                        # Time to bring out the big guns
+                        kill -KILL $PID
+
+                        sleep 0.5
+
+                        if service_is_running; then
+                                log_event &quot;Failed to stop the ${LONGNAME}.&quot; true
+                                return 1
+                        fi
+                fi
+        fi
+
+        log_event &quot;The ${LONGNAME} has been stopped gracefully.&quot; true
+
+        return 0
+}
+
+restart() {
+        stop
+        start
+
+        return $?
+}
+
+rh_status(){
+        if [ -e &quot;${PIDFILE}&quot; ]; then
+                PID=`cat ${PIDFILE}`
+
+                if ps -p $PID &gt;/dev/null 2&gt;&amp;1; then
+                        log_event &quot;The ${LONGNAME} is running with PID $PID.&quot; true
+                        return 0
+                else
+                        log_event &quot;The ${LONGNAME} exited prematurely.&quot; true
+                        return 1
+                fi
+        elif [ -e &quot;${MONGOLOCK}&quot; ]; then
+                log_event &quot;The ${LONGNAME} exited prematurely.&quot; true
+                return 2
+        else
+                log_event &quot;The ${LONGNAME} is not currently running.&quot; true
+                return 3
+        fi
+}
+
+rh_status_q(){
+        rh_status &gt;/dev/null 2&gt;&amp;1
+
+        return $?
+}
+log_event &quot;&#39;$1&#39; invoked...&quot;
+
+EXIT_CODE=1
+# See how we were called.
+case &quot;$1&quot; in
+        start)
+                start
+
+                EXIT_CODE=$?
+                ;;
+        stop)
+                stop
+
+                EXIT_CODE=$?
+                ;;
+        restart|force-reload)
+                restart
+
+                EXIT_CODE=$?
+                ;;
+        status)
+                rh_status
+
+                EXIT_CODE=$?
+                ;;
+        condrestart|try-restart)
+                if ! rh_status_q; then
+                        log_event &quot;The ${LONGNAME} is not currently running; restart will not be performed.&quot; true
+
+                        EXIT_CODE=0
+                else
+                        restart
+
+                        EXIT_CODE=$?
+                fi
+                ;;
+        *)
+                log_event &quot;Usage: $0 {start|stop|status|restart|condrestart|try-restart|force-reload}&quot; true
+                EXIT_CODE=3
+esac
+
+log_event &quot;&#39;$1&#39; operation finished with exit code &#39;$EXIT_CODE&#39;.&quot;
+exit $EXIT_CODE
+</pre></div>
+</div>
+<p>After saving the file, copy it to <code class="docutils literal notranslate"><span class="pre">/etc/init.d/</span></code>.</p>
+<p>Finally, the permissions will have to be set on the file to allow reading, writing, and execution, which can be done with the following command from a terminal. Before running the command, please make the following changes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[VERSION]</span></code> should be replaced with Deadline’s major version, such as: <code class="docutils literal notranslate"><span class="pre">10</span></code></p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">chmod</span> <span class="mi">755</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">Deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="n">db</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="start-database-service">
+<h2>Start Database Service<a class="headerlink" href="#start-database-service" title="Permalink to this headline">¶</a></h2>
+<p>Now that MongoDB is installed and configured, it’s time is to start your MongoDB service or daemon. This can be done by executing the following command from a command prompt or terminal. Just replace <code class="docutils literal notranslate"><span class="pre">[VERSION]</span></code> with Deadline’s major version:</p>
+<ul>
+<li><p>Windows (as Administrator):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sc</span> <span class="n">start</span> <span class="n">Deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="n">DatabaseService</span>
+</pre></div>
+</div>
+</li>
+<li><p>macOS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">launchctl</span> <span class="n">load</span> <span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">LaunchDaemons</span><span class="o">/</span><span class="n">org</span><span class="o">.</span><span class="n">mongodb_Deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="n">DatabaseService</span><span class="o">.</span><span class="n">plist</span>
+</pre></div>
+</div>
+</li>
+<li><p>Linux:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">service</span> <span class="n">deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="n">db</span> <span class="n">start</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="confirm-that-mongodb-is-running">
+<h2>Confirm that MongoDB is Running<a class="headerlink" href="#confirm-that-mongodb-is-running" title="Permalink to this headline">¶</a></h2>
+<p>For the final step, you’ll want to confirm that the MongoDB service or daemon is running. The command for each output can be found below, followed by an example of what the output looks like. Just replace <code class="docutils literal notranslate"><span class="pre">[VERSION]</span></code> with Deadline’s major version, such as: <code class="docutils literal notranslate"><span class="pre">10</span></code>:</p>
+<ul>
+<li><p>Windows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sc</span> <span class="n">query</span> <span class="n">Deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="n">DatabaseService</span>
+
+    <span class="n">SERVICE_NAME</span><span class="p">:</span> <span class="n">Deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="n">DatabaseService</span>
+    <span class="n">TYPE</span>        <span class="p">:</span> <span class="mi">10</span>  <span class="n">WIN32_OWN_PROCESS</span>
+    <span class="n">STATE</span>       <span class="p">:</span> <span class="mi">4</span>   <span class="n">RUNNING</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+</li>
+<li><p>macOS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ps</span> <span class="n">aux</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">mongo</span>
+
+    <span class="n">root</span> <span class="o">...</span> <span class="o">/</span><span class="n">Applications</span><span class="o">/</span><span class="n">Thinkbox</span><span class="o">/</span><span class="n">DeadlineDatabase</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="o">/</span><span class="n">mongo</span><span class="o">/</span><span class="n">application</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mongod</span> <span class="o">--</span><span class="n">config</span> <span class="o">/</span><span class="n">Applications</span><span class="o">/</span><span class="n">Thinkbox</span><span class="o">/</span><span class="n">DeadlineDatabase</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="o">/</span><span class="n">mongo</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">config</span><span class="o">.</span><span class="n">conf</span>
+</pre></div>
+</div>
+</li>
+<li><p>Linux:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ps</span> <span class="n">aux</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">mongo</span>
+
+    <span class="n">root</span> <span class="o">...</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Thinkbox</span><span class="o">/</span><span class="n">DeadlineDatabase</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="o">/</span><span class="n">mongo</span><span class="o">/</span><span class="n">application</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mongod</span> <span class="o">--</span><span class="n">config</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Thinkbox</span><span class="o">/</span><span class="n">DeadlineDatabase</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="o">/</span><span class="n">mongo</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">config</span><span class="o">.</span><span class="n">conf</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="additional-information">
+<h2>Additional Information<a class="headerlink" href="#additional-information" title="Permalink to this headline">¶</a></h2>
+<p>If you’re looking for more information, here are some helpful links for manually installing the MongoDB database:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.mongodb.com/manual/installation/">Installing MongoDB</a></p></li>
+<li><p><a class="reference external" href="https://docs.mongodb.com/manual/tutorial/configure-ssl/">Configuring MongoDB for TLS/SSL Authentication</a></p></li>
+<li><p><a class="reference external" href="https://docs.mongodb.com/manual/core/authentication/">Enabling Authentication</a></p></li>
+<li><p><a class="reference external" href="https://docs.mongodb.com/manual/replication/">Replication</a></p></li>
+<li><p><a class="reference external" href="https://docs.mongodb.com/manual/sharding/">Sharding</a></p></li>
+<li><p><a class="reference external" href="https://docs.mongodb.com/mongodb-shell/">Installing MongoDB Shell (mongosh)</a></p></li>
+</ul>
+<p>MongoDB also has a management system called <a class="reference external" href="https://www.mongodb.com/cloud/cloud-manager">Cloud Manager</a>. It’s a cloud service that makes it easy to provision, monitor, backup, and scale your MongoDB database. Here are some helpful links for setting up and using Cloud Manager:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.cloudmanager.mongodb.com/tutorial/getting-started/">Getting Started</a></p></li>
+<li><p><a class="reference external" href="https://docs.cloudmanager.mongodb.com/tutorial/nav/add-servers/">Add MongoDB Servers to Cloud Manager</a></p></li>
+<li><p><a class="reference external" href="https://docs.cloudmanager.mongodb.com/tutorial/nav/install-automation-agent/">Install the Automation Agent</a></p></li>
+</ul>
+<p>The Automation Agent mentioned above makes it possible to setup your MongoDB database from a web interface, and easily configure which MongoDB servers are replica sets or shards. It also allows you to easily upgrade the version of your MongoDB database. Here are some additional links for how you can use the Automation Agent:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.cloudmanager.mongodb.com/tutorial/deploy-replica-set/">Deploy a Replica Set</a></p></li>
+<li><p><a class="reference external" href="https://docs.cloudmanager.mongodb.com/tutorial/deploy-sharded-cluster/">Deploy a Sharded Cluster</a></p></li>
+<li><p><a class="reference external" href="https://docs.cloudmanager.mongodb.com/tutorial/deploy-standalone/">Deploy a Standalone MongoDB Instance</a></p></li>
+<li><p><a class="reference external" href="https://docs.cloudmanager.mongodb.com/tutorial/change-mongodb-version/">Change the MongoDB Version</a></p></li>
+</ul>
+<p>Mongo and MongoDB are registered trademarks of MongoDB, Inc.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Manual Database Installation</a><ul>
+<li><a class="reference internal" href="#download-and-install-mongodb">Download and Install MongoDB</a></li>
+<li><a class="reference internal" href="#mongodb-shell-installation-mongodb-6-0">MongoDB Shell Installation (MongoDB 6.0+)</a></li>
+<li><a class="reference internal" href="#database-configuration">Database Configuration</a><ul>
+<li><a class="reference internal" href="#configuration-file-all-platforms">Configuration File (All Platforms)</a></li>
+<li><a class="reference internal" href="#create-windows-service-windows">Create Windows Service (Windows)</a></li>
+<li><a class="reference internal" href="#database-property-list-file-macos">Database Property List File (macOS)</a></li>
+<li><a class="reference internal" href="#database-script-file-linux">Database Script File (Linux)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#start-database-service">Start Database Service</a></li>
+<li><a class="reference internal" href="#confirm-that-mongodb-is-running">Confirm that MongoDB is Running</a></li>
+<li><a class="reference internal" href="#additional-information">Additional Information</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="direct-connection-install.html"
+                        title="previous chapter">Using the Direct Connection type (Not Recommended)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="db-maintenance.html"
+                        title="next chapter">Database Maintenance</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="db-maintenance.html" title="Database Maintenance"
+             >next</a></li>
+        <li class="right" >
+          <a href="direct-connection-install.html" title="Using the Direct Connection type (Not Recommended)"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" >Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Manual Database Installation</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

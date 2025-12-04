@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Corona Distributed Rendering &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="CSiBridge" href="app-csibridge.html" />
+    <link rel="prev" title="Corona Standalone" href="app-corona.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-csibridge.html" title="CSiBridge"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-corona.html" title="Corona Standalone"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Corona Distributed Rendering</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="corona-distributed-rendering">
+<span id="app-corona-dr-ref-label"></span><h1>Corona Distributed Rendering<a class="headerlink" href="#corona-distributed-rendering" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="interactive-distributed-rendering">
+<h2>Interactive Distributed Rendering<a class="headerlink" href="#interactive-distributed-rendering" title="Permalink to this headline">¶</a></h2>
+<p>You can submit interactive Corona DR jobs from 3ds Max. The instructions for installing the <a class="reference internal" href="#app-coronadr-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<p>The interactive submitter will submit a Corona DR job to reserve render nodes, and the submitter will automatically update the Corona DR server list in the 3ds Max UI.</p>
+<p>Do <strong>NOT</strong> execute Render Legion’s Corona DR Server executable manually on each intended machine. Deadline is more flexible here and will spawn the Corona DR Server standalone executable as a child process of the Deadline Worker. This makes our system flexible and resilient to crashes as when we terminate/complete the Corona DR job in the Deadline queue, the Deadline Worker application will ‘cleanly’ tidy up the DR Server and more importantly, any instances of 3dsMax which it in turn has spawned as a child process. This can be helpful if Corona DR or that instance of 3dsMax becomes unstable and a user wishes to reset the system remotely. You can simply re-queue or delete/complete the current Corona DR job or re-submit.</p>
+<p><a class="reference internal" href="../_images/corona_dr_max.png"><img alt="one" src="../_images/corona_dr_max.png" style="height: 400px;" /></a></p>
+<div class="section" id="port-configuration">
+<h3>Port Configuration<a class="headerlink" href="#port-configuration" title="Permalink to this headline">¶</a></h3>
+<p>Here is a consolidated list of port requirements for Corona DR. Ensure any applicable firewalls are opened to allow pass-through communication. Typically if in doubt, opening TCP/UDP ports in the range: 19660-19670 will cover all Corona implementations for DR. During initial testing, it is recommended to open all ports in this range, verify and then consider tightening up security.</p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 14%" />
+<col style="width: 23%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Protocol</p></th>
+<th class="head"><p>Port Number</p></th>
+<th class="head"><p>Application</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>UDP</p></td>
+<td><p>19666</p></td>
+<td><p>3dsMax</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>TCP</p></td>
+<td><p>19667</p></td>
+<td><p>3dsMax</p></td>
+<td><p>loopback</p></td>
+</tr>
+<tr class="row-even"><td><p>TCP</p></td>
+<td><p>19668</p></td>
+<td><p>3dsMax</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. The Corona DR specific options are:</p>
+<ul class="simple">
+<li><p><strong>Maximum Servers</strong>: The maximum number of Corona DR Servers to reserve for distributed rendering.</p></li>
+<li><p><strong>Use Server IP Address Instead of Host Name</strong>: If checked, the Active Servers list will show the server IP addresses instead of host names.</p></li>
+<li><p><strong>Automatically Update Server List</strong>: This option when un-checked stops the automatic refresh of the active servers list based on the current Deadline queue.</p></li>
+<li><p><strong>Complete Job after Render</strong>: When checked, as soon as the DR session has completed (max quick render finished), then the Deadline job will be marked as complete in the queue.</p></li>
+</ul>
+</div>
+<div class="section" id="rendering">
+<h3>Rendering<a class="headerlink" href="#rendering" title="Permalink to this headline">¶</a></h3>
+<p>After you’ve configured your submission options, press the <code class="docutils literal notranslate"><span class="pre">Reserve</span> <span class="pre">Servers</span></code> button to submit the Corona DR job. The job’s ID and Status will be tracked in the submitter, and as nodes pick up the job, they will show up in the
+<code class="docutils literal notranslate"><span class="pre">Active</span> <span class="pre">Servers</span></code> list. Once you are happy with the server list, press <code class="docutils literal notranslate"><span class="pre">Start</span> <span class="pre">Render</span></code> to start distributed rendering.</p>
+<p>Note that the Corona DR Server process can sometimes take a little while to initialize. This means that a server in the <code class="docutils literal notranslate"><span class="pre">Active</span> <span class="pre">Servers</span></code> list could have started the Corona DR server, but it’s not fully initialized yet. If this
+is the case, it’s probably best to wait a minute or so after the last server has shown up before pressing <code class="docutils literal notranslate"><span class="pre">Start</span> <span class="pre">Render</span></code>.</p>
+<p>Update Servers (3dsMax only) button will manually update the <code class="docutils literal notranslate"><span class="pre">Active</span> <span class="pre">Servers</span></code> List. Note, if you modify the <code class="docutils literal notranslate"><span class="pre">Maximum</span> <span class="pre">Servers</span></code> value, the job’s frame range will be updated when this button is pressed or if <code class="docutils literal notranslate"><span class="pre">Automatically</span> <span class="pre">Update</span> <span class="pre">Server</span> <span class="pre">List</span></code> is enabled.</p>
+<p>While using the “interactive” Corona DR Server submission system in 3dsMax, it is recommended to NOT use the <code class="docutils literal notranslate"><span class="pre">Search</span> <span class="pre">LAN</span></code> button or enable the <code class="docutils literal notranslate"><span class="pre">Search</span> <span class="pre">LAN</span> <span class="pre">during</span> <span class="pre">render</span></code> checkbox, as you risk accidentally selecting the wrong Corona DR servers running on your network, if another user in your studio is also running 1 or more Corona DR servers for their rendering needs.</p>
+<p>After the render is finished, you can press the <code class="docutils literal notranslate"><span class="pre">Release</span> <span class="pre">Servers</span></code> button or close the submitter UI (<code class="docutils literal notranslate"><span class="pre">Setup</span> <span class="pre">Corona</span> <span class="pre">DR</span> <span class="pre">With</span> <span class="pre">Deadline</span></code> window) to mark the Corona DR job as complete so that the render nodes can move on to another job in your queue.</p>
+</div>
+</div>
+<div class="section" id="corona-dr-submission">
+<h2>Corona DR Submission<a class="headerlink" href="#corona-dr-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can also submit Corona DR jobs from the Monitor, which can be used to reserve render nodes for distributed rendering.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you submit the job via the Monitor submission script, that you will need to manually configure/update your local workstation settings to point to the correct,
+corresponding Deadline Workers either via IP address or hostname, depending on your local network setup. Contact your local system administrator to determine
+whether you should use hostnames or IP addresses on your network.</p>
+</div>
+<a class="reference internal image-reference" href="../_images/sub_corona_dr.png"><img alt="../_images/sub_corona_dr.png" src="../_images/sub_corona_dr.png" style="height: 500px;" /></a>
+<div class="section" id="id1">
+<h3>Submission Options<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. The Corona DR specific options are:</p>
+<ul class="simple">
+<li><p><strong>Corona DrServer Version</strong>: The version of Corona DrServer to use.</p></li>
+<li><p><strong>Maximum DrServers</strong>: The maximum number of Corona DR Servers to reserve for distributed rendering.</p></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h3>Rendering<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>After you’ve configured your submission options, press the <code class="docutils literal notranslate"><span class="pre">Submit</span></code> button to submit the Corona DR job. Note that this doesn’t start any rendering, it just allows the Corona DR Server application to
+start up on nodes in the farm. Once you’re happy with the nodes that have picked up the job, you can initiate the distributed render manually from within the application. This will likely require manually configuring your Corona Server list or conveniently, you could use the <code class="docutils literal notranslate"><span class="pre">Search</span> <span class="pre">LAN</span></code> button to automatically find ANY Corona DR servers running on your network. Additionally, Corona provides a <code class="docutils literal notranslate"><span class="pre">Search</span> <span class="pre">LAN</span> <span class="pre">during</span> <span class="pre">render</span></code> checkbox, which can be used to locate additional Corona DR Servers whilst the render is progressing on your workstation and it also allows any errored or user interrupted servers to re-join this rendering session again.</p>
+<p>After the distributed render has finished, remember to mark the job as complete or delete it so that the nodes can move on to other jobs. Alternatively, use the DR Session timeout functionality described below or the auto task timeout to control whether these type of jobs are automatically completed after a certain period of time.</p>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Corona DR Server plugin settings from the Monitor. While in power user mode, select <code class="docutils literal notranslate"><span class="pre">Tools</span></code> → <code class="docutils literal notranslate"><span class="pre">Configure</span> <span class="pre">Plugins</span></code> and select the <code class="docutils literal notranslate"><span class="pre">CoronaDR</span></code> plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_corona_dr_1.png"><img alt="../_images/cp_corona_dr_1.png" src="../_images/cp_corona_dr_1.png" style="height: 600px;" /></a>
+<a class="reference internal image-reference" href="../_images/cp_corona_dr_2.png"><img alt="../_images/cp_corona_dr_2.png" src="../_images/cp_corona_dr_2.png" style="height: 600px;" /></a>
+<p><strong>Corona DrServer Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Corona DrServer Executable</strong>: The path to the Corona DrServer executable file. Enter alternative paths on separate lines.</p></li>
+</ul>
+<p><strong>DR Process Handling</strong></p>
+<ul class="simple">
+<li><p><strong>Handle Existing DR Process</strong>: Only one instance of the same DR process running over the same port is possible. This option allows for Deadline to fail the task if this is the case or attempt to kill the currently running process, to allow the Deadline managed DR process to run successfully.</p></li>
+</ul>
+<p><strong>DR Job Handling</strong></p>
+<ul class="simple">
+<li><p><strong>DR On Job Complete</strong>: If desired, you can automatically archive or delete the DR job when it completes.</p></li>
+</ul>
+<p><strong>DR Session Handling</strong></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This feature is NOT supported in <strong>Corona 6 DR</strong>.</p>
+</div>
+<p>If enabled, these settings control what happens when a Worker that is running Corona DR Server has entered an <code class="docutils literal notranslate"><span class="pre">IDLE</span></code> state where it is not currently partaking in a Corona DR render. We define a <strong>session</strong> as the time between a Corona DR render completing and the next DR based render starting. There are additional settings to control the behaviour once at least one DR render has taken place on a Worker.</p>
+<ul class="simple">
+<li><p><strong>DR Session Auto Timeout Enable</strong>: If enabled, when a DR session has successfully completed on a Worker, the task on the Worker will be marked as complete after the DR session auto timeout period in seconds has been reached (Default: False).</p></li>
+<li><p><strong>DR Session Auto Timeout (Minutes)</strong>: This is the timeout period (Default: 15 Minutes) when a DR session will timeout and be marked as complete by a Worker. This timeout is only active prior to the first render on the Worker.</p></li>
+<li><p><strong>DR Session Auto Timeout: Wait for first render</strong>: If enabled, it will force at least one render to complete before Auto Timeout becomes active (Default: True).</p></li>
+<li><p><strong>DR Session Auto Timeout: After First Minute</strong>: This is the timeout period (Default: 15 Minutes) when a DR session will timeout and be marked as complete by a Worker. This timeout becomes active once the first render on the Worker is complete.</p></li>
+</ul>
+<p><strong>DR Server Options</strong></p>
+<ul class="simple">
+<li><p><strong>DR Server No Gui</strong>: If enabled, the DR Server will be run without a GUI.</p></li>
+</ul>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-coronadr-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>There is an integrated Corona DR submission script for 3ds Max. The installation process for this script can be found below.</p>
+<div class="section" id="ds-max">
+<h3>3ds Max<a class="headerlink" href="#ds-max" title="Permalink to this headline">¶</a></h3>
+<p>The following procedures describe how to install the integrated Corona DR submission script for 3ds Max. The integrated submission script and the following installation procedure has been tested with Max versions 2014 and later (including Design editions).</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+</div>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/3dsmaxCoronaDR/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="mi">3</span><span class="n">dsmaxCoronaDR</span>\<span class="n">Client</span>\<span class="n">Deadline3dsmaxCoronaDRClient</span><span class="o">.</span><span class="n">mcr</span> <span class="n">to</span> <span class="p">[</span><span class="mi">3</span><span class="n">ds</span> <span class="n">Install</span> <span class="n">Directory</span><span class="p">]</span>\<span class="n">MacroScripts</span>
+</pre></div>
+</div>
+</li>
+<li><p>If you don’t have a MacroScripts folder in your 3ds Max install directory, check to see if you have a <code class="docutils literal notranslate"><span class="pre">UI\Macroscripts</span></code> folder instead, and copy the <code class="docutils literal notranslate"><span class="pre">Deadline3dsmaxCoronaDRClient.mcr</span></code> file there if you do.</p></li>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="mi">3</span><span class="n">dsmax</span>\<span class="n">Client</span>\<span class="n">SMTDSetup</span><span class="o">.</span><span class="n">ms</span> <span class="n">to</span> <span class="p">[</span><span class="mi">3</span><span class="n">ds</span> <span class="n">Max</span> <span class="n">Install</span> <span class="n">Directory</span><span class="p">]</span>\<span class="n">scripts</span>\<span class="n">Startup</span>\<span class="n">SMTDSetup</span><span class="o">.</span><span class="n">ms</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="verify-installation">
+<h3>Verify Installation<a class="headerlink" href="#verify-installation" title="Permalink to this headline">¶</a></h3>
+<p>Launch 3ds Max, and find the new Deadline menu.</p>
+<blockquote>
+<div><img alt="../_images/3dsmax_submission_button_corona_dr.png" src="../_images/3dsmax_submission_button_corona_dr.png" />
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-corona-dr-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Is Corona Distributed Rendering (DR) supported?</strong></p>
+<blockquote>
+<div><p>Yes. A special ‘reserve’ job is submitted that will run the Corona DR Server application on the render nodes. Once the Corona DR Server process is running, these nodes will be able to participate in distributed rendering.</p>
+</div></blockquote>
+<p><strong>Which versions of Corona DR are supported?</strong></p>
+<blockquote>
+<div><p>Corona interactive rendering is supported for 3ds Max 2014-2022.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>DR Session Handling</strong> is NOT supported in <strong>Corona 6 DR</strong>.</p>
+</div>
+</div></blockquote>
+<p><strong>Corona DR Server application fails to start manually?</strong></p>
+<blockquote>
+<div><p>During initial configuration of Corona DR Server &amp; any future debugging, it is recommended to disable any firewall &amp; anti-virus software at both the DR master host machine as well as all render Worker machines which are intended to participate in the DR process. We suggest you manually get Corona DR up and running in your studio pipeline to verify all is well before then introducing Deadline as a framework to handle the DR Server application.</p>
+</div></blockquote>
+<p><strong>Is Backburner required for 3dsMax based Corona DR via Deadline?</strong></p>
+<blockquote>
+<div><p>Yes. Backburner is a prerequisite for Corona DR to work correctly. Ensure you have the a version of Backburner that matches your 3ds Max version, for example, Backburner 2019 must be installed if you are using 3ds Max 2019.</p>
+</div></blockquote>
+<p><strong>Do I need to run the Corona DR Server application executable on each machine?</strong></p>
+<blockquote>
+<div><p>Do <strong>NOT</strong> execute Render Legion’s Corona DR Server executable manually on each intended machine. Deadline is more flexible here and will spawn the Corona DR Server standalone executable as a child process of the Deadline Worker. This makes our system flexible and resilient to crashes as when we terminate/complete the Corona DR job in the Deadline queue, the Deadline Worker application will ‘cleanly’ tidy up the DR Server and more importantly, any instances of 3dsMax which it in turn has spawned as a child process. This can be helpful if Corona DR or that instance of 3dsMax becomes unstable and a user wishes to reset the system remotely. You can simply re-queue or delete/complete the current Corona DR job or re-submit.</p>
+</div></blockquote>
+<p><strong>Can I force Corona DR to run over a certain port?</strong></p>
+<blockquote>
+<div><p>No. Currently this is not possible and the ports used are fixed. Please see the Port Configuration table at the top of this page for more information.</p>
+</div></blockquote>
+<p><strong>Corona DR rendering seems a little unstable sometimes or my machine slows down dramatically!</strong></p>
+<blockquote>
+<div><p>Depending on the number of Worker machines being used (Win7 OS &lt; 20), scene file sizes being moved around together with asset files, and your network/file storage configuration, it may help to increase the “Synchronization interval [s]: 60” and decrease the “Max pixels transfer at once: 500000” settings, which can help to reduce the load on your local machine and network.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Corona error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here, please
+contact <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Corona Distributed Rendering</a><ul>
+<li><a class="reference internal" href="#interactive-distributed-rendering">Interactive Distributed Rendering</a><ul>
+<li><a class="reference internal" href="#port-configuration">Port Configuration</a></li>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#rendering">Rendering</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#corona-dr-submission">Corona DR Submission</a><ul>
+<li><a class="reference internal" href="#id1">Submission Options</a></li>
+<li><a class="reference internal" href="#id2">Rendering</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#ds-max">3ds Max</a></li>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+<li><a class="reference internal" href="#verify-installation">Verify Installation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-corona.html"
+                        title="previous chapter">Corona Standalone</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-csibridge.html"
+                        title="next chapter">CSiBridge</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-csibridge.html" title="CSiBridge"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-corona.html" title="Corona Standalone"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Corona Distributed Rendering</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arion Standalone &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Arnold Standalone" href="app-arnold.html" />
+    <link rel="prev" title="Altus" href="app-altus.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-arnold.html" title="Arnold Standalone"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-altus.html" title="Altus"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Arion Standalone</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="arion-standalone">
+<span id="app-arion-ref-label"></span><h1>Arion Standalone<a class="headerlink" href="#arion-standalone" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit Arion jobs from the Monitor. Note that Arion’s RenderWarrior application does not support animations and therefore only single Arion files may be submitted. Arion animations can be rendered through the Arion
+live plugins.</p>
+<a class="reference internal image-reference" href="../_images/sub_arion.png"><img alt="../_images/sub_arion.png" src="../_images/sub_arion.png" style="height: 500px;" /></a>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Integration</span></a> documentation. The Arion specific options are:</p>
+<ul class="simple">
+<li><p><strong>Arion File</strong>: The Arion scene that will be rendered. Can be a .rcs or .obj file.</p></li>
+<li><p><strong>LDR Output File</strong>: The name of the rendered LDR output file. If no output file is specified a default image file will be saved beside the Arion file.</p></li>
+<li><p><strong>HDR Output File</strong>: The name of the rendered HDR output file. If no output file is specified a default image file will be saved beside the Arion file.</p></li>
+<li><p><strong>Passes</strong>: If enabled, Arion will render until the specified number of passes have completed.</p></li>
+<li><p><strong>Minutes</strong>: If enabled, Arion will render until the specified number of minutes have passed.</p></li>
+<li><p><strong>Threads</strong>: The number of threads that Arion will use to render the input file. If no threads are specified, a default of one will be used.</p></li>
+<li><p><strong>Command Line Args</strong>: Here you can specify additional command line arguments. Arion accepts command line arguments in the format “-arg:value”.</p></li>
+<li><p><strong>Channels</strong>: Each channel enabled will generate a different image appended with the channel name.</p></li>
+</ul>
+<p>If both Passes and Minutes are specified, Arion will finish rendering when the first limit is reached. If neither are enabled, Arion will render indefinitely and the job will have to be stopped manually.</p>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Arion plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Arion plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_arion.png"><img alt="../_images/cp_arion.png" src="../_images/cp_arion.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Arion Engine Executable</strong>: The path to the Arion engine executable file used for rendering. Enter alternative paths on separate lines.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-arion-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Arion are supported?</strong></p>
+<blockquote>
+<div><p>Only the Arion 2 Standalone is supported.</p>
+</div></blockquote>
+<p><strong>Are there any issues with referencing a file in the global input folder when one or more other files exist with the same name?</strong></p>
+<blockquote>
+<div><p>Yes. When there is a file in the scene that has the same name as a file in another subdirectory, the network renderer will reference the first file with that name that it finds. It ignores the direct path to the correct
+subdirectory.</p>
+</div></blockquote>
+<p><strong>Can I render multiple channels?</strong></p>
+<blockquote>
+<div><p>Yes! The Arion submitter supports the selection of individual channels.</p>
+</div></blockquote>
+<p><strong>How can I pass additional information to Arion?</strong></p>
+<blockquote>
+<div><p>The Command Line Args field allows you to specify additional arguments to Arion. For example, typing “-h:100 -w:100” in the Command Line Args field will tell Arion to change the image size to 100px by 100px. To find
+out more information about additional command line arguments, please visit <a class="reference external" href="https://arionfx.com/">Arion’s website</a>.</p>
+</div></blockquote>
+<p><strong>Can I submit a Arion animations?</strong></p>
+<blockquote>
+<div><p>The Arion 2 Standalone does not support animations and can only render single images. Arion does still support animations through there Live plugins.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Combustion error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Arion Standalone</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-altus.html"
+                        title="previous chapter">Altus</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-arnold.html"
+                        title="next chapter">Arnold Standalone</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-arnold.html" title="Arnold Standalone"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-altus.html" title="Altus"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Arion Standalone</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

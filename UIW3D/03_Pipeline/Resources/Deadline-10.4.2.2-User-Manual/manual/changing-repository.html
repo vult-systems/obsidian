@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Change Repository &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Migrating from Direct Connection to Remote Connection type" href="migrating-to-RCS-from-direct-connection.html" />
+    <link rel="prev" title="Client Deployment - Centrally Managed" href="deploy-client-centrally-managed.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="migrating-to-RCS-from-direct-connection.html" title="Migrating from Direct Connection to Remote Connection type"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="deploy-client-centrally-managed.html" title="Client Deployment - Centrally Managed"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" accesskey="U">Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Change Repository</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="change-repository">
+<span id="change-repository-ref-label"></span><h1>Change Repository<a class="headerlink" href="#change-repository" title="Permalink to this headline">¶</a></h1>
+<p>There are two ways for a Deadline Client application to connect to the Deadline Repository -
+* Connecting to the database and repository via Remote Connection Server (RCS) using the Remote Connection type (Recommended)
+* Connecting directly to the database and repository file system using the Direct Connection type (Not Recommended)</p>
+<p>The repository can be changed from Monitor File Menu, Launcher Menu.</p>
+<div class="section" id="remote-connection-type">
+<span id="change-repository-rcs-ref-label"></span><h2>Remote Connection type<a class="headerlink" href="#remote-connection-type" title="Permalink to this headline">¶</a></h2>
+<p>Remote Connection type requires a RCS to have been installed on at least 1 of your machines. To install RCS, see  <a class="reference internal" href="install-client.html#connection-server-setup-ref-label"><span class="std std-ref">Installing Remote Connection Server</span></a>.</p>
+<p>The “Change Repository” dialog includes a <em>Connection Type</em> option. To connect to a RCS, choose <strong>Remote Connection</strong> (Recommended).</p>
+<img alt="../_images/connection_servers_connect.png" src="../_images/connection_servers_connect.png" />
+<p>Selecting this option allows you to enter the <strong>Remote Server</strong> address and port. The address should be a hostname or IP address of the machine running the Remote Connection Server.
+The port should be the port that the Remote Connection Server is configured to listen on. If connecting with HTTPS, you can place the path to the PFX certificate in the “Client Certificate” text box, and supply the passphrase if required. See our <a class="reference internal" href="proxy-sslgen.html#ssl-cert-gen-ref-label"><span class="std std-ref">SSL Certificate Generation</span></a> documentation on how to create the certificates for your chosen web server.</p>
+<p>See also <a class="reference internal" href="considerations.html#considerations-firewall-ref-label"><span class="std std-ref">Firewall and Security Considerations</span></a> to ensure you allow the Remote Connection Server to be accessible through your firewall.</p>
+</div>
+<div class="section" id="direct-connection-type-not-recommended">
+<span id="change-repository-direct-ref-label"></span><h2>Direct Connection type (Not Recommended)<a class="headerlink" href="#direct-connection-type-not-recommended" title="Permalink to this headline">¶</a></h2>
+<p>This dialog also includes the option to choose <strong>Direct Connection</strong> in the <em>Connection Type</em> if you want to use Direct Connection. Direct Connection is not recommended for security reasons. <a class="reference internal" href="security.html#security-direct-connection-caution-ref-label"><span class="std std-ref">(See here for more information)</span></a>.</p>
+<img alt="../_images/repo_direct_connection.png" src="../_images/repo_direct_connection.png" />
+<p>Selecting this option allows you to enter the <strong>Repository Path</strong>. This should be the shared path to the Repository where you installed in your Deadline Repository Installation.
+If the Database requires a certificate, you can place the path to the PFX certificate in the “Client Certificate” text box, and supply the passphrase if required. Again, you can see our <a class="reference internal" href="proxy-sslgen.html#ssl-cert-gen-ref-label"><span class="std std-ref">SSL Certificate Generation</span></a> documentation on how to create the certificates.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Change Repository</a><ul>
+<li><a class="reference internal" href="#remote-connection-type">Remote Connection type</a></li>
+<li><a class="reference internal" href="#direct-connection-type-not-recommended">Direct Connection type (Not Recommended)</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="deploy-client-centrally-managed.html"
+                        title="previous chapter">Client Deployment - Centrally Managed</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="migrating-to-RCS-from-direct-connection.html"
+                        title="next chapter">Migrating from Direct Connection to Remote Connection type</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="migrating-to-RCS-from-direct-connection.html" title="Migrating from Direct Connection to Remote Connection type"
+             >next</a></li>
+        <li class="right" >
+          <a href="deploy-client-centrally-managed.html" title="Client Deployment - Centrally Managed"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" >Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Change Repository</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

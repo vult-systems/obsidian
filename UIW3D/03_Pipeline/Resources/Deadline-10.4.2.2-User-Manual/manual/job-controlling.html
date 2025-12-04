@@ -1,0 +1,602 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controlling Jobs &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Archiving Jobs" href="job-archiving.html" />
+    <link rel="prev" title="Monitoring Jobs" href="job-monitoring.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="job-archiving.html" title="Archiving Jobs"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="job-monitoring.html" title="Monitoring Jobs"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-getting-started.html" accesskey="U">Getting Started With Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Controlling Jobs</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="controlling-jobs">
+<span id="job-controlling-ref-label"></span><h1>Controlling Jobs<a class="headerlink" href="#controlling-jobs" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The Jobs panel allows jobs to be controlled and modified using the right-click menu. In addition, the Task panel allows specific tasks to be controlled using the right-click menu.</p>
+<p>Note that the visibility of these options can vary depending on the context in which they are used and the filters applied for the current User.</p>
+<p>If the Job or Task panels are not visible, see the <a class="reference internal" href="monitor.html#monitor-panel-features-ref-label"><span class="std std-ref">Panel Features</span></a> documentation for instructions on how to create new panels in the Monitor.</p>
+<p><a class="reference internal" href="../_images/job_task_context_menus.png"><img alt="job_task_context_menus" src="../_images/job_task_context_menus.png" style="height: 400px;" /></a></p>
+</div>
+<div class="section" id="job-states">
+<span id="job-states-ref-label"></span><h2>Job States<a class="headerlink" href="#job-states" title="Permalink to this headline">¶</a></h2>
+<p>The state of jobs can be changed using the Job panel’s right-click menu. In addition, the states of specific tasks can be changed using the Task panel’s right-click menu.</p>
+<p>Note that it is possible to modify the states of multiple jobs or tasks at the same time, although certain options will only effect the selected jobs that are in the appropriate state. (Example: resume failed jobs will only appear as an option if at least one failed job is selected and will only be applied to the selected jobs that are in the failed state.)</p>
+<p><a class="reference internal" href="../_images/suspend_job.png"><img alt="suspend_job" src="../_images/suspend_job.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/resume_job.png"><img alt="resume_job" src="../_images/resume_job.png" style="height: 300px;" /></a></p>
+<p>When suspending a job, a confirmation message will appear that gives you the option to suspend the tasks for the job that are currently rendering. If you disable this option, any tasks that are currently rendering will be allowed to complete.</p>
+<img alt="../_images/suspend_job_confirm.png" src="../_images/suspend_job_confirm.png" />
+<p>These are the states that a job can be in. They are colour coded to make it clear which state the job is in.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Queued (white)</strong>: No tasks for the job are currently being rendered.</p></li>
+<li><p><strong>Rendering (green)</strong>: At least one task for the job is being rendered.</p></li>
+<li><p><strong>Completed (blue)</strong>: All tasks for the job have finished rendering.</p></li>
+<li><p><strong>Suspended (gray)</strong>: The job will not be rendered until it is resumed.</p></li>
+<li><p><strong>Pending (orange)</strong>: The job is waiting on dependencies to finish, or is scheduled to start at a later time.</p></li>
+<li><p><strong>Failed (red)</strong>: The job has failed due to errors. It must be resumed before it can be rendered again.</p></li>
+</ul>
+</div></blockquote>
+<p>You may notice Queued or Rendering jobs turn slightly red or brown as they sit in the farm. This is an indication that the job is reporting errors. See the <a class="reference internal" href="#job-reports-history-ref-label"><span class="std std-ref">Job Reports</span></a> section further down for more information.</p>
+<p>The Job panel’s right-click menu also gives the option to delete or archive jobs. Both options will remove the jobs from the farm, but archived jobs can be imported again for later use.</p>
+<p>You can import archived jobs from the File menu in the Monitor. See the <a class="reference internal" href="job-archiving.html#job-archiving-ref-label"><span class="std std-ref">Archiving Jobs</span></a> documentation for more information.</p>
+</div>
+<div class="section" id="resubmitting-jobs">
+<h2>Resubmitting Jobs<a class="headerlink" href="#resubmitting-jobs" title="Permalink to this headline">¶</a></h2>
+<p>If you want to render a specific job again, but you don’t want to lose the statistics for original job, you can resubmit it from the Job panel’s right-click menu. This will bring up a window allowing you to adjust the job name, frame list, and frames per task if you want to. All other job properties will remain identical.</p>
+<a class="reference internal image-reference" href="../_images/resubmit_job.png"><img alt="../_images/resubmit_job.png" src="../_images/resubmit_job.png" style="height: 300px;" /></a>
+<p>Note that you can resubmit the job as a normal or maintenance job.</p>
+<p>Maintenance jobs are special jobs where each task for the job will render the same frame(s) on a different machine in your farm. This is useful for performing benchmark tests on your machines. When a maintenance job is submitted, a task will automatically be created for each Worker, and once a Worker has finished a task, it will no longer pick up the job.</p>
+<p>It’s even possible to resubmit specific tasks as a new job, which can be done from the Task panel’s right-click menu.</p>
+<p>Note a Maintenance job can only be resubmitted from the Job panel.</p>
+<p>Note that Tile jobs will have their own resubmission dialogue, and only the Tile frame can be changed.</p>
+<a class="reference internal image-reference" href="../_images/resubmit_tile_job.png"><img alt="../_images/resubmit_tile_job.png" src="../_images/resubmit_tile_job.png" style="height: 100px;" /></a>
+</div>
+<div class="section" id="job-properties">
+<span id="job-properties-ref-label"></span><h2>Job Properties<a class="headerlink" href="#job-properties" title="Permalink to this headline">¶</a></h2>
+<p>To modify job properties, select the Modify Job Properties option from the Job panel’s right-click menu. Double-clicking on a job will also bring up the Job Properties window.</p>
+<p>Note it is possible to modify the properties of multiple jobs at the same time.</p>
+<div class="section" id="general">
+<h3>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h3>
+<p>These are the most common job properties, and most of these were specified when the job was originally submitted.</p>
+<a class="reference internal image-reference" href="../_images/jp_general.png"><img alt="../_images/jp_general.png" src="../_images/jp_general.png" style="height: 500px;" /></a>
+<p>The properties are as follows:</p>
+<ul class="simple">
+<li><p><strong>Job ID</strong>: The internal ID of the job.</p></li>
+<li><p><strong>Job Name</strong>: The name of the job.</p></li>
+<li><p><strong>Comment</strong>: The comment for the job.</p></li>
+<li><p><strong>Department</strong>: The department the job was submitted from.</p></li>
+<li><p><strong>Batch Name</strong>: The batch the job belongs to. Jobs with the same Batch Name are grouped together in the Monitor.</p></li>
+<li><p><strong>User</strong>: The user who submitted the job.</p></li>
+<li><p><strong>Pool</strong>: The pool that the job belongs to.</p></li>
+<li><p><strong>Secondary Pool</strong>: If enabled, the job can fall back to the secondary pool, if there are machines available in that pool.</p></li>
+<li><p><strong>Group</strong>: The group that the job belongs to.</p></li>
+<li><p><strong>Priority</strong>: The priority of the job (0 = lowest, 100 = highest).</p></li>
+<li><p><strong>Concurrent Tasks</strong>: The number of tasks a Worker can dequeue at a time (1-16). Note that not all plugins support this feature, such as Digital Fusion.</p></li>
+<li><p><strong>Limit Tasks To Worker’s Task Limit</strong>: If checked, a Worker will not dequeue more tasks than it is allowed to based on its settings.</p></li>
+<li><p><strong>On Job Complete</strong>: When a job completes, you can auto-archive or auto-delete it. You can also choose to do nothing when the job completes.</p></li>
+<li><p><strong>Re-synchronize Auxiliary Files Between Tasks</strong>: If checked, all job files will be synchronized by the Worker between tasks for this job. This can add significant network overhead, and should only be used if you are manually editing any of the files that were submitted with the job.</p></li>
+<li><p><strong>Reload Plugin Between Tasks</strong>: If checked, the Worker reloads all the plugin files between tasks for the same job.</p></li>
+<li><p><strong>Enforce Sequential Rendering</strong>: Sequential rendering forces a Worker to render the tasks of a job in order. If an earlier task is ever requeued, the Worker won’t go back to that task until it has finished the remaining tasks in order. Sequential rendering also forces the Worker to finish rendering tasks in order before switching to another job, even if that job has higher priority or this job is interruptible.</p></li>
+<li><p><strong>Suppress Event Plugins</strong>: If enabled, this job will not trigger any event plugins while in the queue.</p></li>
+<li><p><strong>Job Is Uneditable</strong>: If enabled, delete and archive actions in the Monitor are only shown to the Deadline User associated with or configured to manage the respective job.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to Deadline 10.3.1, “Uneditable” jobs were referred to as “Protected”.</p>
+</div>
+</div>
+<div class="section" id="timeouts">
+<h3>Timeouts<a class="headerlink" href="#timeouts" title="Permalink to this headline">¶</a></h3>
+<p>These properties affect how a job will timeout. It is important to note that the Auto Task Timeout feature is based on the Auto Job Timeout Settings in the Repository Options. The timeout is based on the render times of
+the tasks that have already finished for this job, so this option should only be used if the frames for the job have consistent render times.</p>
+<a class="reference internal image-reference" href="../_images/jp_timeout.png"><img alt="../_images/jp_timeout.png" src="../_images/jp_timeout.png" style="height: 500px;" /></a>
+<p>The properties are as follows:</p>
+<ul class="simple">
+<li><p><strong>Minimum Task Render Time</strong>: The minimum amount of time a Worker has to render a task. If a task finishes faster, an error will be reported.</p></li>
+<li><p><strong>Maximum Task Render Time</strong>: The maximum amount of time a Worker has to render a task. If a Maximum Start Job Time is set, the Maximum Task Render Time will not be applied to the Starting phase of a job.</p></li>
+<li><p><strong>On Task Timeout</strong>: When the task rendering times out, you have the option to have the job report an error, fail the task, requeue, complete or notify you when a timeout is reached. For error, fail and requeue you can also choose to be notified as an additional action.</p></li>
+<li><p><strong>Maximum Start Job Time</strong>: The maximum amount of time a Worker has to start a job.</p></li>
+<li><p><strong>Maximum Load Plugin Time</strong>: The maximum amount of time a Worker will spend trying to load the plugin for a job.</p></li>
+<li><p><strong>Enable Timeouts For Pre/Post Job Scripts</strong>: If checked, then the timeouts for this job will also affect its pre/post job scripts, if any are defined.</p></li>
+<li><p><strong>Use Frame Timeouts</strong>: If enabled, timeouts will be calculated based on frames instead of by tasks. The timeouts entered for tasks will be used for each frame in that task.</p></li>
+<li><p><strong>Enable Auto Task Timeout</strong>: If the job should automatically timeout based on parameters specified in the Repository Options.</p></li>
+</ul>
+</div>
+<div class="section" id="interruptible">
+<h3>Interruptible<a class="headerlink" href="#interruptible" title="Permalink to this headline">¶</a></h3>
+<p>These properties determine whether or not tasks for this job can be interrupted while they are in progress, and under what conditions they be interrupted.</p>
+<a class="reference internal image-reference" href="../_images/jp_interruptible.png"><img alt="../_images/jp_interruptible.png" src="../_images/jp_interruptible.png" style="height: 500px;" /></a>
+<p>The properties are as follows:</p>
+<ul class="simple">
+<li><p><strong>Job Is Interruptible</strong>: If enabled, tasks for this job can be interrupted during rendering by a job with a higher priority.</p></li>
+<li><p><strong>Interruptible %</strong>: A task for this job will only be interrupted if the task progress is less than or equal to this value.</p></li>
+<li><p><strong>Remaining Time Threshold %</strong>: A task for this job will only be interrupted if the task has more than this amount of time remaining.</p></li>
+</ul>
+</div>
+<div class="section" id="notifications">
+<h3>Notifications<a class="headerlink" href="#notifications" title="Permalink to this headline">¶</a></h3>
+<p>These properties allow you to notify user(s) are jobs complete. There are two list controls beside each other on this panel. The left list contains all the current users on your farm. The right list contains the
+names of the users of whom will receive notifications. You can move users from one list to another using the arrow controls between the two lists.</p>
+<a class="reference internal image-reference" href="../_images/jp_notifications.png"><img alt="../_images/jp_notifications.png" src="../_images/jp_notifications.png" style="height: 500px;" /></a>
+<p>The properties are as follows:</p>
+<ul class="simple">
+<li><p><strong>Notification Email Addresses</strong>: A comma delimited list of the Notification Users email addresses.</p></li>
+<li><p><strong>Job Completion Notes</strong>: Notes to attach in the email sent when the job has completed.</p></li>
+<li><p><strong>Override Notification Method</strong>: If checked, you can select whether to send an email or to not send an email.</p></li>
+</ul>
+</div>
+<div class="section" id="machine-limit">
+<span id="job-controlling-mlo-ref-label"></span><h3>Machine Limit<a class="headerlink" href="#machine-limit" title="Permalink to this headline">¶</a></h3>
+<p>A Machine Limit can be used to limit the number of Workers that can render one particular job. This is useful if you want to render a bunch of jobs simultaneously. The list you create can be an allow list or a deny list.
+An allow list is the list of Workers that are approved to render this job (only these approved machines will render this job) while a deny list contains Workers which will not render this job. To move a machine from one
+list to another you can use the arrow buttons between the two lists, drag and drop the machine names you want, or simply double click the machine name. You are also able to load and save your machine list from a file so you
+can use the same list across multiple jobs. The file used will save each machine name to a single line.</p>
+<a class="reference internal image-reference" href="../_images/jp_machine_limit.png"><img alt="../_images/jp_machine_limit.png" src="../_images/jp_machine_limit.png" style="height: 500px;" /></a>
+<p>You can modify the following options for the machine limit:</p>
+<ul class="simple">
+<li><p><strong>Workers that can render this job simultaneously</strong>: The number of Workers that can render this job at the same time.</p></li>
+<li><p><strong>Return Limit Stub When Task Progress % Reaches</strong>: If enabled, you can have a Worker release its limit stub when the current task it is rendering reaches the specified progress. Note that not all plugins report task progress, in which case the machine limit stub will not be released until the task finishes rendering.</p></li>
+<li><p><strong>Workers on Allow List/Deny List</strong>: If Workers are on a deny list, they will never try to render this job. If Workers are on an allow list, only those Workers will try to render this job. Note that an empty deny list and an empty allow list are functionally equivalent, and have no impact on which machines the job renders on.</p></li>
+<li><p><strong>Load Machine List</strong>: Open a file dialog to load a list of Workers to be used in the allow list or deny list. One machine name per line in the file (.txt).</p></li>
+<li><p><strong>Save Machine List</strong>: Open a file dialog to save the current allow list or deny list. Each machine name will be written to a single line.</p></li>
+</ul>
+</div>
+<div class="section" id="limits">
+<h3>Limits<a class="headerlink" href="#limits" title="Permalink to this headline">¶</a></h3>
+<p>Here you can add or remove the limits that will effect your job. Limits are used to ensure floating licences are used correctly on your farm. To add a limit to your job, you can select the limit(s) you require from from the
+limit list and press the right arrow between the Limit List and the Required Limits. You are also able to drag and drop your selected limits into or from the required limits or just double click a limit to move it from one
+list to another. Alternatively, once a limit is created, it can be applied globally to one or more application plugins via the <a class="reference internal" href="plugin-config.html#generic-plugin-options-ref-label"><span class="std std-ref">generic options</span></a> under <em>Configure Plugins</em>.</p>
+<a class="reference internal image-reference" href="../_images/jp_limits.png"><img alt="../_images/jp_limits.png" src="../_images/jp_limits.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
+<p>Dependencies can be used to control when a job should start rendering. See the <a class="reference internal" href="#job-dependency-options-ref-label"><span class="std std-ref">Job Dependency Options</span></a> below for more information.</p>
+<a class="reference internal image-reference" href="../_images/jp_dependencies_job.png"><img alt="../_images/jp_dependencies_job.png" src="../_images/jp_dependencies_job.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="failure-detection">
+<span id="job-controlling-fd-ref-label"></span><h3>Failure Detection<a class="headerlink" href="#failure-detection" title="Permalink to this headline">¶</a></h3>
+<p>Here you can set how your job handles errors and determine when to fail a job.</p>
+<a class="reference internal image-reference" href="../_images/jp_failure.png"><img alt="../_images/jp_failure.png" src="../_images/jp_failure.png" style="height: 500px;" /></a>
+<p>The properties are a follows:</p>
+<ul class="simple">
+<li><p><strong>Override Job Error Limit</strong>: Once checked, the job override limit will be set to the user specified value.</p></li>
+<li><p><strong>Override Task Error Limit</strong>: Once checked, the task error limit will be changed to the user specified value.</p></li>
+<li><p><strong>Send Warning Notification For Job Errors</strong>: Whether or not to send a notification to the users specified in the Notification Panel when a job error occurs.</p></li>
+<li><p><strong>Ignore Bad Worker Error Limit</strong>: If checked, a bad Worker error will not count towards job errors.</p></li>
+<li><p><strong>Clear Bad Worker List</strong>: Determines whether or not the bad Worker list should currently be cleared.</p></li>
+</ul>
+</div>
+<div class="section" id="cleanup">
+<h3>Cleanup<a class="headerlink" href="#cleanup" title="Permalink to this headline">¶</a></h3>
+<p>Here you can override if and how your job is automatically cleaned up when it completes.</p>
+<a class="reference internal image-reference" href="../_images/jp_cleanup.png"><img alt="../_images/jp_cleanup.png" src="../_images/jp_cleanup.png" style="height: 500px;" /></a>
+<p>The properties are a follows:</p>
+<ul class="simple">
+<li><p><strong>Override Automatic Job Cleanup</strong>: If enabled, these cleanup settings will be used instead of the ones in the Repository Options.</p></li>
+<li><p><strong>Cleanup Job After This Many Days</strong>: If enabled, this is the number of days to wait after this job has completed before cleaning it up.</p></li>
+<li><p><strong>Cleanup Mode</strong>: Whether the cleanup should archive the job or delete it.</p></li>
+</ul>
+</div>
+<div class="section" id="scheduling">
+<h3>Scheduling<a class="headerlink" href="#scheduling" title="Permalink to this headline">¶</a></h3>
+<p>You can schedule the job to start and/or stop at a specific date and time, and even repeat on regular intervals. This can be useful for maintenance jobs that need to run every few days or weeks. In addition, you can define a custom schedule so that the jobs can start and/or stop at different times on different days of the week.</p>
+<a class="reference internal image-reference" href="../_images/jp_scheduling.png"><img alt="../_images/jp_scheduling.png" src="../_images/jp_scheduling.png" style="height: 500px;" /></a>
+<p>Scheduling properties are as follows:</p>
+<ul class="simple">
+<li><p><strong>Scheduling Mode</strong>: Determines how the job will be scheduled. Possible values are Disabled, One Time, Repeating, or Custom.</p></li>
+<li><dl class="simple">
+<dt><strong>Once or Repeating Scheduling Settings</strong>:</dt><dd><ul>
+<li><p><strong>Start Date and Time</strong>: The date and time this job should start.</p></li>
+<li><p><strong>Stop Date and Time</strong>: If enabled, the date and time this job should be marked as complete if it is still active.</p></li>
+<li><p><strong>Day Interval</strong>: The number of days to wait before repeating this job if the Scheduling Mode is set to Repeating.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>Custom Scheduling Settings</strong>: Configure the days and times that the job should start and/or stop.</p></li>
+</ul>
+<p>It should be noted that if the job is not put into the Pending state, the job will not wait for the scheduled time to begin rendering. When the scheduling settings change, you will be prompted to put the job in the pending state. This can also be done by right clicking the job and choosing ‘Mark as Pending’.</p>
+</div>
+<div class="section" id="scripts">
+<span id="job-controlling-scripts-ref-label"></span><h3>Scripts<a class="headerlink" href="#scripts" title="Permalink to this headline">¶</a></h3>
+<p>You can attach custom <strong>Python</strong> scripts to your job which can be run before and after your job has rendered. You may also attach <strong>Python</strong> scripts to your job’s tasks which can be run before and after your job’s tasks render.
+For more information on creating custom job scripts, see the <a class="reference internal" href="job-scripts.html#job-scripts-ref-label"><span class="std std-ref">Job Scripting</span></a> section of the documentation.</p>
+<a class="reference internal image-reference" href="../_images/jp_scripts.png"><img alt="../_images/jp_scripts.png" src="../_images/jp_scripts.png" style="height: 500px;" /></a>
+<p>You may attach the following <strong>Python</strong> scripts which will be executed at different times:</p>
+<ul class="simple">
+<li><p><strong>Pre Job Script</strong>: Executed before a job is run.</p></li>
+<li><p><strong>Post Job Script</strong>: Executed after a job has completed.</p></li>
+<li><p><strong>Pre Task Script</strong>: Executed before a task is started.</p></li>
+<li><p><strong>Post Task Script</strong>: Executed after a task has completed.</p></li>
+</ul>
+<p>For more details on these script properties, see the <a class="reference internal" href="job-scripts.html#job-scripts-ref-label"><span class="std std-ref">Job Scripting</span></a> section of the documentation.</p>
+</div>
+<div class="section" id="event-opt-ins">
+<span id="event-opt-in-plugins-ref-label"></span><h3>Event Opt-Ins<a class="headerlink" href="#event-opt-ins" title="Permalink to this headline">¶</a></h3>
+<p>Event Plugins that are in the Opt-In state will only trigger for Jobs and Workers that have Opted into them. You can manage which Event Plugins you want to Opt-In to for a job in this panel. Only Event Plugins in the
+Opt-In state will be visible to select.</p>
+<a class="reference internal image-reference" href="../_images/jp_event_optins.png"><img alt="../_images/jp_event_optins.png" src="../_images/jp_event_optins.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="environment">
+<span id="job-controlling-enviro-ref-label"></span><h3>Environment<a class="headerlink" href="#environment" title="Permalink to this headline">¶</a></h3>
+<p>When running a job, you are able to attach environment variables through the Environment tab. The environment variables are specified as key-value pairs and are set on the Worker machine running the job. You are able to
+specify whether your job specific environment variables will only be set while your job is rendering. All job specific environment variables will be removed when the job has finished running.</p>
+<p>You are also able to set a custom plugin directory on this panel. This acts as an alternative directory to load your jobs plugin from. It is useful while creating and testing custom job plugins or when you need 1 or
+more jobs to specifically use a custom job plugin which is not stored in the Deadline Repository.</p>
+<a class="reference internal image-reference" href="../_images/jp_enviro.png"><img alt="../_images/jp_enviro.png" src="../_images/jp_enviro.png" style="height: 500px;" /></a>
+<p>The Environment properties are as follows:</p>
+<ul class="simple">
+<li><p><strong>Custom Plugin Directory</strong>: An alternative directory to load your jobs plugin from.</p></li>
+<li><p><strong>Environment Variables</strong>: A list of environment variables to set while running a job. Stored as a list of key value pairs.</p></li>
+<li><p><strong>Only Use Job Environment Variables When Rendering</strong>: Environment variables for your job will only be set when the job is in the rendering state. Will be removed when the job is finished rendering.</p></li>
+</ul>
+</div>
+<div class="section" id="job-extra-info">
+<span id="job-control-extra-info-ref-label"></span><h3>Job Extra Info<a class="headerlink" href="#job-extra-info" title="Permalink to this headline">¶</a></h3>
+<p>When a job is submitted, it can have extra information embedded in it. For example, if a studio has an in-house pipeline tool, they may want to embed information in the job that will be used to update the pipeline tool
+when the job finishes rendering. Alternatively, you may have some custom metadata which you would like to inject, track and possibly display in the Monitor to users. Deadline’s <a class="reference internal" href="scripting-overview.html#scripting-overview-ref-label"><span class="std std-ref">Scripting API</span></a> can also be used to modify these values.</p>
+<p>The <a class="reference internal" href="repository-config.html#job-extra-properties-ref-label"><span class="std std-ref">Extra Info</span></a> 0-9 properties can be renamed from the Jobs section of the Repository Options, and have corresponding columns (limited to 10) in the Job list that can be sorted on. The additional key/value pairs in the list at the bottom (unlimited number) do
+not have corresponding columns, and can be used to contain internal data that doesn’t need to be displayed in the job list.</p>
+<a class="reference internal image-reference" href="../_images/jp_extra.png"><img alt="../_images/jp_extra.png" src="../_images/jp_extra.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="task-extra-info-names">
+<span id="job-control-task-extra-info-ref-label"></span><h3>Task Extra Info Names<a class="headerlink" href="#task-extra-info-names" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="repository-config.html#job-task-extra-properties-ref-label"><span class="std std-ref">Task Extra Info</span></a> 0-9 properties can be renamed from the Jobs section of the Repository Options, and have corresponding columns (limited to 10) in the Job list that can be sorted on. Here you can override the names of the Task Extra Info properties for this particular job. This is very useful if you want to inject and track metadata per task, which is specific to a certain job type in your farm. Deadline’s <a class="reference internal" href="scripting-overview.html#scripting-overview-ref-label"><span class="std std-ref">Scripting API</span></a> can also be used to modify these values.</p>
+<a class="reference internal image-reference" href="../_images/jp_task_extra_info.png"><img alt="../_images/jp_task_extra_info.png" src="../_images/jp_task_extra_info.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="submission-params">
+<span id="job-submission-params-ref-label"></span><h3>Submission Params<a class="headerlink" href="#submission-params" title="Permalink to this headline">¶</a></h3>
+<p>Here you can view and export the job info and plugin info parameters that were specified when the job was submitted. The exported files can be passed to the the Command application to manually re-submit the job.
+See the <a class="reference internal" href="manual-submission.html#manual-submission-ref-label"><span class="std std-ref">Manual Job Submission</span></a> documentation for more information.</p>
+<a class="reference internal image-reference" href="../_images/jp_submission.png"><img alt="../_images/jp_submission.png" src="../_images/jp_submission.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="plugin-specific-properties">
+<h3>Plugin Specific Properties<a class="headerlink" href="#plugin-specific-properties" title="Permalink to this headline">¶</a></h3>
+<p>The Plugin specific properties vary between the different plugins, and some plugins may not have a Plugin specific properties tab at all. Note that when modifying properties for multiple jobs at the same time,
+the Plugin specific tab will only be available if all selected jobs use the same plugin.</p>
+<a class="reference internal image-reference" href="../_images/jp_plugin.png"><img alt="../_images/jp_plugin.png" src="../_images/jp_plugin.png" style="height: 500px;" /></a>
+<p>To get a description of specific plugin properties, just hover your mouse cursor over them in the properties dialog and a tooltip will pop up with a description.</p>
+</div>
+<div class="section" id="aws-portal-properties">
+<span id="job-properties-aws-portal-ref-label"></span><h3>AWS Portal Properties<a class="headerlink" href="#aws-portal-properties" title="Permalink to this headline">¶</a></h3>
+<p>The AWS Portal settings panel contains job specific settings for when the job is being rendered on an AWS Portal Instance.</p>
+<p>The only setting currently available is setting job specific AWS Asset Server file output allow list extensions. The extensions added to the list will be used to determine which files are returned from the AWS Portal Instance when a Task is completed. They follow the same rules as the options in the <a class="reference internal" href="aws-asset-server.html#asset-server-ref-label"><span class="std std-ref">Configure Asset Server</span></a> settings</p>
+<a class="reference internal image-reference" href="../_images/jp_aws_portal_settings.png"><img alt="../_images/jp_aws_portal_settings.png" src="../_images/jp_aws_portal_settings.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="path-mapping-rules">
+<h3>Path Mapping Rules<a class="headerlink" href="#path-mapping-rules" title="Permalink to this headline">¶</a></h3>
+<p>The Path Mapping section contains job-specific rules to apply when performing Path Mapping operations in Deadline.
+For more information on this feature, please refer to the <a class="reference internal" href="cross-platform.html#cross-platform-ref-label"><span class="std std-ref">Path Mapping</span></a> section of the documentation.</p>
+<a class="reference internal image-reference" href="../_images/job_pm_rules.png"><img alt="../_images/job_pm_rules.png" src="../_images/job_pm_rules.png" style="height: 500px;" /></a>
+</div>
+</div>
+<div class="section" id="job-dependency-options">
+<span id="job-dependency-options-ref-label"></span><h2>Job Dependency Options<a class="headerlink" href="#job-dependency-options" title="Permalink to this headline">¶</a></h2>
+<p>Dependencies can be used to control when a job should start rendering. There are three types of dependencies available, and one or more can be specified for a job:</p>
+<ul class="simple">
+<li><p><strong>Jobs</strong>: Job dependencies can be used to start a job when other jobs that it depends on are finished.</p></li>
+<li><p><strong>Assets</strong>: Asset dependencies can be used to start a job when specific files exist on disk.</p></li>
+<li><p><strong>Scripts</strong>: Script dependencies can be used to start a job based on if a Python script returns True or False.</p></li>
+</ul>
+<p>There are a few ways to set up dependencies in the Monitor, which are described below.</p>
+<div class="section" id="id1">
+<h3>Job Properties<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>In the Job tab on the Dependencies page, you have the ability to set which jobs your job is dependent on. By default, the job will only resume when each of its dependencies have completed, but you can also have your job resume when the dependencies have failed, or have been deleted from the queue. Note that you can only set which jobs this job is dependent on, not which jobs are dependent on this job.</p>
+<div class="section" id="jobs">
+<span id="job-dependency-jobs"></span><h4>Jobs<a class="headerlink" href="#jobs" title="Permalink to this headline">¶</a></h4>
+<p>You can also make the job frame dependent, which means that a frame from the job won’t begin rendering until the same frame from the other job(s) is complete. This is useful if you have a job that is dependent on the frames of another job, and you want the two jobs to render concurrently.</p>
+<a class="reference internal image-reference" href="../_images/jp_dependencies_job.png"><img alt="../_images/jp_dependencies_job.png" src="../_images/jp_dependencies_job.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="assets">
+<span id="job-dependency-assets"></span><h4>Assets<a class="headerlink" href="#assets" title="Permalink to this headline">¶</a></h4>
+<p>In the Asset tab, you can make this job dependent on asset files (textures, particle caches, etc). This job won’t be able to render on a Worker unless it can access all the files listed here. You can also make the job frame dependent with assets. The job’s tasks will not begin to render until the asset with the corresponding frame padding exists.</p>
+<a class="reference internal image-reference" href="../_images/jp_dependencies_asset.png"><img alt="../_images/jp_dependencies_asset.png" src="../_images/jp_dependencies_asset.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="job-dependency-scripts">
+<span id="id2"></span><h4>Scripts<a class="headerlink" href="#job-dependency-scripts" title="Permalink to this headline">¶</a></h4>
+<p>In the Script tab, you can make this job dependent on the results of the specified scripts.</p>
+<a class="reference internal image-reference" href="../_images/jp_dependencies_script.png"><img alt="../_images/jp_dependencies_script.png" src="../_images/jp_dependencies_script.png" style="height: 500px;" /></a>
+<p>The following properties apply to all dependency types:</p>
+<ul class="simple">
+<li><p><strong>Resume On Completed Dependencies</strong>: This job will resume when its dependencies complete.</p></li>
+<li><p><strong>Resume On Failed Dependencies</strong>: This job will resume when its dependencies fail.</p></li>
+<li><p><strong>Resume On Deleted dependencies</strong>: This job will resume when its dependencies are deleted from the queue.</p></li>
+<li><p><strong>Resume When Each Dependency is % Complete</strong>: This job will resume when each of the jobs this job is dependent on reaches a certain percentage of completion.</p></li>
+<li><p><strong>Use Frame Dependencies</strong>: Specifies that this job is dependent on specific frames from its dependencies. The job will release tasks as the corresponding frames are completed.</p></li>
+<li><p><strong>Frame Offset Start/End</strong>: Use these to offset the frames that this job is dependent on. It can also be used to make frames for this job dependent on multiple frames from other jobs.</p></li>
+</ul>
+<p>You can also specify notes and set overrides for individual dependencies by clicking on them in the dependency list. Click the Overrides button to view the overrides panel.</p>
+<a class="reference internal image-reference" href="../_images/jp_dependencies_job_overrides.png"><img alt="../_images/jp_dependencies_job_overrides.png" src="../_images/jp_dependencies_job_overrides.png" style="height: 500px;" /></a>
+</div>
+</div>
+<div class="section" id="drag-and-drop">
+<h3>Drag and Drop<a class="headerlink" href="#drag-and-drop" title="Permalink to this headline">¶</a></h3>
+<p>In the Jobs panel, you can drag one or more jobs and drop them on another job. You will then be presented with some choices on how to set the dependencies.</p>
+<a class="reference internal image-reference" href="../_images/drag_dependency.png"><img alt="../_images/drag_dependency.png" src="../_images/drag_dependency.png" style="height: 300px;" /></a>
+<p>Note that drag &amp; drop dependencies will not work if you are holding down a modifier key (SHIFT, CTRL, etc). This is to help avoid accidental drag &amp; drops when selecting multiple jobs in the list.</p>
+<p>If you would like to disable drag &amp; drop dependencies, you can do so from the <a class="reference internal" href="user-settings.html#user-settings-ref-label"><span class="std std-ref">Monitor Options</span></a>, which can be accessed from the main toolbar. Note that if you change this setting,
+you will have to restart the Monitor for the changes to take effect.</p>
+</div>
+<div class="section" id="dependency-view">
+<span id="dependency-view-ref-label"></span><h3>Dependency View<a class="headerlink" href="#dependency-view" title="Permalink to this headline">¶</a></h3>
+<p>The Job Dependency View is used to be able to visualize and modify your jobs and their dependencies. You can open the Job Dependency View panel from the View menu in the Monitor.</p>
+<a class="reference internal image-reference" href="../_images/monitor_job_dependency_panel.png"><img alt="../_images/monitor_job_dependency_panel.png" src="../_images/monitor_job_dependency_panel.png" style="height: 300px;" /></a>
+<p>The view will show your currently selected job and all nodes that are linked to it by dependencies. The job node colors indicate the <a class="reference internal" href="#job-states-ref-label"><span class="std std-ref">state of the job</span></a>, while the asset nodes are yellow, the
+script nodes are purple and the event nodes are green.</p>
+<p>Jobs are dependent on everything that has a connection to the Square Socket on their left side. Connections can be made by dragging from the sockets on the nodes (square/circle) to the socket/main body of the other node. Connections can be broken by either dragging the connection off of the node or by selecting the connection and pressing the delete key. Note that changes made in the dependency view do not take effect until saved. If you have made changes and go to close the dependency view, you will be notified that you have unsaved changes.</p>
+<p>Additional job nodes can be added to the view by dragging them in from the job list (after locking the dependency first), or through the right click menu. Asset and script nodes can also be added by dragging the file in from
+your explorer/finder window, or through the right click menu as well. Event nodes can be added through the right click menu. Note that event nodes do not represent a dependency on an event, but rather simply serve to display
+which events the jobs have opted-into.</p>
+<p>Dependencies can be tested by pressing the Test Dependency button in the toolbar. The results are represented by the following colors:</p>
+<ul class="simple">
+<li><p><strong>Green</strong>: The dependency test has passed.</p></li>
+<li><p><strong>Red</strong>: The dependency test has failed.</p></li>
+<li><p><strong>Yellow</strong>: The job is frame dependent, and the dependency test for some of the frames has passed.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/monitor_job_dependency_panel_test.png"><img alt="../_images/monitor_job_dependency_panel_test.png" src="../_images/monitor_job_dependency_panel_test.png" style="height: 300px;" /></a>
+<p>All the available dependency view options can be found across the toolbar at the top of the view, and/or from the view’s right click menu.</p>
+<div class="section" id="toolbar-options">
+<h4>Toolbar Options<a class="headerlink" href="#toolbar-options" title="Permalink to this headline">¶</a></h4>
+<a class="reference internal image-reference" href="../_images/dependency_menu_toolbar.png"><img alt="../_images/dependency_menu_toolbar.png" src="../_images/dependency_menu_toolbar.png" style="height: 40px;" /></a>
+<ul class="simple">
+<li><p><strong>Lock View</strong>: When enabled, the view will no longer show the currently selected job and will display the last job selected before locking. This is necessary before an additional job can be dragged from the job list into the dependency view.</p></li>
+<li><p><strong>Reload View</strong>: This redraws the dependency view for the selected job. If changes have been made, you will be prompted to save your changes.</p></li>
+<li><p><strong>Save View</strong>: Saves the changes made to the dependency view for the selected job.</p></li>
+<li><p><strong>Test Dependencies</strong>: This allows you to test your dependencies.</p></li>
+<li><p><strong>Zoom Level</strong>: The current zoom level.</p></li>
+<li><p><strong>Zoom Extents</strong>: Zoom the view to the point where all nodes currently in the view are visible.</p></li>
+</ul>
+</div>
+<div class="section" id="toolbar-right-click-menu">
+<h4>Toolbar Right-Click Menu<a class="headerlink" href="#toolbar-right-click-menu" title="Permalink to this headline">¶</a></h4>
+<a class="reference internal image-reference" href="../_images/dependency_menu_dropdown.png"><img alt="../_images/dependency_menu_dropdown.png" src="../_images/dependency_menu_dropdown.png" style="height: 150px;" /></a>
+<ul class="simple">
+<li><p><strong>Selection Style</strong>: If off, all nodes and connections touched by the selection area will be selected. If on, only nodes and connections that are fully contained by the selection area will be selected.</p></li>
+<li><p><strong>Minimap</strong>: Controls if the minimap is visible and if so, in which corner.</p></li>
+<li><p><strong>Elided Text</strong>: Control whether or not the text of nodes should be elided and if so, in which direction.</p></li>
+</ul>
+</div>
+<div class="section" id="view-right-click-menu">
+<h4>View Right-Click Menu<a class="headerlink" href="#view-right-click-menu" title="Permalink to this headline">¶</a></h4>
+<a class="reference internal image-reference" href="../_images/dependency_menu_rightclick.png"><img alt="../_images/dependency_menu_rightclick.png" src="../_images/dependency_menu_rightclick.png" style="height: 300px;" /></a>
+<ul class="simple">
+<li><p><strong>Job Menu</strong>: If one or more jobs are selected, you can use the same job menu that is available in the job list.</p></li>
+<li><p><strong>Add Job</strong>: Choose a job to add to the dependency view.</p></li>
+<li><p><strong>Add Asset</strong>: Choose an asset file to add to the dependency view.</p></li>
+<li><p><strong>Add Script</strong>: Choose a script file to add to the dependency view.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="job-frame-range">
+<h2>Job Frame Range<a class="headerlink" href="#job-frame-range" title="Permalink to this headline">¶</a></h2>
+<p>To modify the frame range, select the Modify Frame Range option from the Job panel’s right-click menu. Note that modifying these settings will stop and requeue all tasks that are currently rendering.</p>
+<img alt="../_images/frame_range.png" src="../_images/frame_range.png" />
+<p>See the <a class="reference internal" href="job-submitting.html#frame-list-ref-label"><span class="std std-ref">Frame List Formatting Options</span></a> documentation for more information on options for formatting frame lists.</p>
+</div>
+<div class="section" id="job-render-candidates">
+<span id="job-render-candidates-ref-label"></span><h2>Job Render Candidates<a class="headerlink" href="#job-render-candidates" title="Permalink to this headline">¶</a></h2>
+<p>The Job Render Candidates feature can be used to view which Workers can render a particular job and more importantly, which Workers can’t render a particular job and why. To use this feature, select a single job in the Job panel and right-click and select the ‘Find Render Candidates…’ option. This will bring up the Job Render Candidates window. Note that this feature doesn’t update automatically when a new job is selected. You must use the Refresh button at the bottom of the dialog or open a new Job Render Candidates window.</p>
+<img alt="../_images/job_render_candidates_example.png" src="../_images/job_render_candidates_example.png" />
+<p>The fields at the top of the dialog give you some quick information about the selected job.</p>
+<ul class="simple">
+<li><p><strong>Job Name:</strong> The name of the selected job.</p></li>
+<li><p><strong>Job ID:</strong> The internal ID of the selected job.</p></li>
+<li><p><strong>Pool:</strong> The Pool that the selected job belongs to.</p></li>
+<li><p><strong>Secondary Pool:</strong> The secondary Pool that the selected job belongs to.</p></li>
+<li><p><strong>Job Type</strong>: If the job is a Normal job or a Maintenance Job. Note that a specific Worker will only render a single task from a Maintenance job, and will not attempt to render any others.</p></li>
+<li><p><strong>Group:</strong> The Group that the selected job belongs to.</p></li>
+<li><p><strong>Limits</strong>: Any Limits that the job requires to render.</p></li>
+<li><p><strong>Machine Limit</strong>: The job’s Machine Limit setting, and this field will show the number of Workers that are on an allow list or a deny list (if there are any).</p></li>
+</ul>
+<p>The list at the bottom of the window has two general groups, ‘Able to render’ and ‘Unable to render’. The Workers in the farm are sorted into these groups depending on their candidacy for the selected job. Note that the coloring of the Worker rows will match their <a class="reference internal" href="worker-config.html#worker-config-states-ref-label"><span class="std std-ref">Worker States</span></a>.</p>
+<p>For the Workers that cannot render the job, the message column specifies the first failure point that was encountered. This means you can incrementally improve the capabilities of your Workers using this feature by hitting Refresh
+after changes have been applied. The order in which the requirements are checked are:</p>
+<ul class="simple">
+<li><p><strong>Plugin:</strong> Is the plugin required by the selected job enabled in the Repository? If it’s disabled, talk to your administrator about enabling it.</p></li>
+<li><p><strong>Region:</strong> Is the region the Worker is part of enabled? If it’s disabled, talk to your administrator about enabling it.</p></li>
+<li><p><strong>Pool:</strong> Is the Worker in the same Pool or Secondary Pool as the job? If it’s not, you could change the Pool in the <a class="reference internal" href="#job-properties-ref-label"><span class="std std-ref">job’s properties</span></a>, or you can talk to your administrator about adding additional Workers to the Pool.</p></li>
+<li><p><strong>Group:</strong> Is the Worker in the same Group as the job? If it’s not, you could change the Group in the <a class="reference internal" href="#job-properties-ref-label"><span class="std std-ref">job’s properties</span></a>, or you can talk to your administrator about adding additional Workers to the Group.</p></li>
+<li><p><strong>Bad Worker:</strong> Has the job marked this Worker as bad? If it has, you can remove it from the bad list in the <a class="reference internal" href="#job-properties-ref-label"><span class="std std-ref">job’s properties</span></a>.</p></li>
+<li><p><strong>Worker on an Allow List or a Deny List:</strong> Is this Worker on an allow list or deny list in the job’s Machine Limit? This can be changed in the <a class="reference internal" href="#job-properties-ref-label"><span class="std std-ref">job’s properties</span></a> if necessary.</p></li>
+<li><p><strong>Job Dequeuing Settings:</strong> Is this Worker configured to dequeue jobs submitted by this job’s user or from their machine? If this is the Worker on your machine, this is set in the <a class="reference internal" href="local-worker.html#local-worker-ref-label"><span class="std std-ref">Local Worker Controls</span></a>. Otherwise, talk to your administrator.</p></li>
+<li><p><strong>Limit:</strong> Is the Worker able to obtain the Limits required by this job? Limits are set in the <a class="reference internal" href="#job-properties-ref-label"><span class="std std-ref">job’s properties</span></a>.</p></li>
+<li><p><strong>License:</strong> (DEPRECATED) Starting with Deadline 10.1.23, Deadline and its components do not require a license. For older versions, does this Worker have a valid license? If not, talk to your administrator.</p></li>
+</ul>
+</div>
+<div class="section" id="job-reports-and-history">
+<span id="job-reports-history-ref-label"></span><h2>Job Reports and History<a class="headerlink" href="#job-reports-and-history" title="Permalink to this headline">¶</a></h2>
+<p>All reports for a job can be viewed in the Job Reports panel. This panel can be opened from the View menu or from the main toolbar in the Monitor. It can also be opened from the Job and Task panel’s right-click menu.</p>
+<a class="reference internal image-reference" href="../_images/monitor_job_report_panel.png"><img alt="../_images/monitor_job_report_panel.png" src="../_images/monitor_job_report_panel.png" style="height: 500px;" /></a>
+<p>The following reports can be viewed from the Job Report panel:</p>
+<ul class="simple">
+<li><p><strong>Render Logs</strong>: These are the reports from tasks that rendered successfully.</p></li>
+<li><p><strong>Render Errors</strong>: This are the reports from tasks that failed to render.</p></li>
+<li><p><strong>Event Logs</strong>: These are the reports from Events that were handled successfully.</p></li>
+<li><p><strong>Event Errors</strong>: These are the reports from Events that raised errors.</p></li>
+<li><p><strong>Requeues</strong>: These are reports explaining why tasks were requeued.</p></li>
+</ul>
+<p>You can use the Job Report panel’s right-click menu to save reports as files to send to <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a>. You can also delete reports from this menu as well. Finally, if a
+particular Worker is reporting lots of errors, you can put it on the deny list from this menu (or remove it from the job’s allow list).</p>
+<p>In addition to viewing job reports, you can also view the job’s history. The History window can be brought up from the Job panel’s right-click menu by selecting the Job History option.</p>
+<a class="reference internal image-reference" href="../_images/job_history.png"><img alt="../_images/job_history.png" src="../_images/job_history.png" style="height: 350px;" /></a>
+</div>
+<div class="section" id="job-output">
+<span id="job-output-ref-label"></span><h2>Job Output<a class="headerlink" href="#job-output" title="Permalink to this headline">¶</a></h2>
+<p>Many jobs have the options to explore and view the job’s output directly from the Job or Task panel’s right-click menu. If the options to explore and view the output are available for the job, there will also be the option to copy the output path to the clipboard. This is helpful if you need to paste the path into another application.</p>
+<p>Note that the availability of these options is based on how much information about the job’s output could be determined at the time the job was submitted. In some cases, the submitter can’t determine where all or some of the job’s output will be saved to, so these options won’t be available.</p>
+<a class="reference internal image-reference" href="../_images/job_explore_output.png"><img alt="../_images/job_explore_output.png" src="../_images/job_explore_output.png" style="height: 350px;" /></a>
+<p>When viewing the output for a job, the Monitor will typically open the image file in the default application on the machine. You can configure the Monitor to use specific image viewer applications in the <a class="reference internal" href="user-settings.html#user-settings-ref-label"><span class="std std-ref">Monitor Options</span></a>, which can be accessed from the main toolbar.</p>
+<a class="reference internal image-reference" href="../_images/monitor_options.png"><img alt="../_images/monitor_options.png" src="../_images/monitor_options.png" style="height: 500px;" /></a>
+<p>Finally, some jobs will support the ability to scan completed tasks for a job to see if any output is missing or below an expected file size. The Scan For Missing Output window can be opened by right-clicking on a job and selecting Job Output -&gt; Scan For Missing Output. If any missing output is detected, or the output file is smaller than the Minimum File Size specified, you are given the option to requeue those tasks (simply place a check mark beside the tasks to requeue).</p>
+<a class="reference internal image-reference" href="../_images/scan_for_missing.png"><img alt="../_images/scan_for_missing.png" src="../_images/scan_for_missing.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="job-auxiliary-files">
+<h2>Job Auxiliary Files<a class="headerlink" href="#job-auxiliary-files" title="Permalink to this headline">¶</a></h2>
+<p>Many jobs have additional files submitted with them, such as the scene file being rendered. These files are copied to the server and are then copied to the Workers when they render the jobs. If a job has auxiliary files
+submitted with it, you can explore these files from the Job panel’s right-click menu. There will also be the option to copy the auxiliary path to the clipboard, which is helpful if you need to paste the path into another
+application.</p>
+<a class="reference internal image-reference" href="../_images/job_auxiliary_files.png"><img alt="../_images/job_auxiliary_files.png" src="../_images/job_auxiliary_files.png" style="height: 350px;" /></a>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Controlling Jobs</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#job-states">Job States</a></li>
+<li><a class="reference internal" href="#resubmitting-jobs">Resubmitting Jobs</a></li>
+<li><a class="reference internal" href="#job-properties">Job Properties</a><ul>
+<li><a class="reference internal" href="#general">General</a></li>
+<li><a class="reference internal" href="#timeouts">Timeouts</a></li>
+<li><a class="reference internal" href="#interruptible">Interruptible</a></li>
+<li><a class="reference internal" href="#notifications">Notifications</a></li>
+<li><a class="reference internal" href="#machine-limit">Machine Limit</a></li>
+<li><a class="reference internal" href="#limits">Limits</a></li>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#failure-detection">Failure Detection</a></li>
+<li><a class="reference internal" href="#cleanup">Cleanup</a></li>
+<li><a class="reference internal" href="#scheduling">Scheduling</a></li>
+<li><a class="reference internal" href="#scripts">Scripts</a></li>
+<li><a class="reference internal" href="#event-opt-ins">Event Opt-Ins</a></li>
+<li><a class="reference internal" href="#environment">Environment</a></li>
+<li><a class="reference internal" href="#job-extra-info">Job Extra Info</a></li>
+<li><a class="reference internal" href="#task-extra-info-names">Task Extra Info Names</a></li>
+<li><a class="reference internal" href="#submission-params">Submission Params</a></li>
+<li><a class="reference internal" href="#plugin-specific-properties">Plugin Specific Properties</a></li>
+<li><a class="reference internal" href="#aws-portal-properties">AWS Portal Properties</a></li>
+<li><a class="reference internal" href="#path-mapping-rules">Path Mapping Rules</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#job-dependency-options">Job Dependency Options</a><ul>
+<li><a class="reference internal" href="#id1">Job Properties</a><ul>
+<li><a class="reference internal" href="#jobs">Jobs</a></li>
+<li><a class="reference internal" href="#assets">Assets</a></li>
+<li><a class="reference internal" href="#job-dependency-scripts">Scripts</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#drag-and-drop">Drag and Drop</a></li>
+<li><a class="reference internal" href="#dependency-view">Dependency View</a><ul>
+<li><a class="reference internal" href="#toolbar-options">Toolbar Options</a></li>
+<li><a class="reference internal" href="#toolbar-right-click-menu">Toolbar Right-Click Menu</a></li>
+<li><a class="reference internal" href="#view-right-click-menu">View Right-Click Menu</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#job-frame-range">Job Frame Range</a></li>
+<li><a class="reference internal" href="#job-render-candidates">Job Render Candidates</a></li>
+<li><a class="reference internal" href="#job-reports-and-history">Job Reports and History</a></li>
+<li><a class="reference internal" href="#job-output">Job Output</a></li>
+<li><a class="reference internal" href="#job-auxiliary-files">Job Auxiliary Files</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="job-monitoring.html"
+                        title="previous chapter">Monitoring Jobs</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="job-archiving.html"
+                        title="next chapter">Archiving Jobs</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="job-archiving.html" title="Archiving Jobs"
+             >next</a></li>
+        <li class="right" >
+          <a href="job-monitoring.html" title="Monitoring Jobs"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-getting-started.html" >Getting Started With Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Controlling Jobs</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

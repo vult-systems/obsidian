@@ -1,0 +1,456 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cinema 4D &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Clarisse iFX" href="app-clarisse.html" />
+    <link rel="prev" title="Cinebench" href="app-cinebench.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-clarisse.html" title="Clarisse iFX"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-cinebench.html" title="Cinebench"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Cinema 4D</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="cinema-4d">
+<span id="app-cinema-4d-ref-label"></span><h1>Cinema 4D<a class="headerlink" href="#cinema-4d" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs from within Cinema 4D by installing the <a class="reference internal" href="#app-cinema-4d-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a>, or you can submit them from the Monitor. The instructions for installing the <a class="reference internal" href="#app-cinema-4d-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<p id="c4d-job-submission-ref-label">To submit from within Cinema 4D:</p>
+<ul class="simple">
+<li><p>For R15 and earlier: “Plugins -&gt; Submit To Deadline”</p></li>
+<li><p>For R16 to R20: “Python -&gt; Plugins -&gt; Submit To Deadline”</p></li>
+<li><p>For R21 and later: “Extensions -&gt; Submit To Deadline”</p></li>
+</ul>
+<p><a class="reference internal" href="../_images/integrated_c4d.png"><img alt="integrated" src="../_images/integrated_c4d.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_c4d.png"><img alt="monitor" src="../_images/sub_c4d.png" style="height: 400px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.</p>
+<p><strong>Cinema 4D Options</strong></p>
+<ul class="simple">
+<li><p><strong>Cinema 4D File</strong>: The scene file to be rendered.</p></li>
+<li><p><strong>Take Name/List</strong>: The name of the take to render. This is optional, and if left blank, it will default to the current take (supported in C4D R17 and onwards).</p></li>
+<li><p><strong>Include Main take in All takes</strong>: If enabled, the “Main” take will be included in all takes.</p></li>
+<li><p><strong>Frame List</strong>: The list of frames to render.</p></li>
+<li><p><strong>Submit All Frames as a Single Task</strong>: If a contiguous frame range with a frame step submitted (eg. 1-10x2) then all of the selected frames will be submitted as a single task.</p></li>
+<li><p><strong>Use Task Frame Range</strong>: If enabled, the frame range in each individual task will be used instead of the global frame range.</p></li>
+<li><p><strong>Frames Per Task</strong>: This is the number of frames that will be rendered at a time for each job task.</p></li>
+<li><p><strong>Submit Cinema 4D Scene</strong>: If this option is enabled, the scene file will be submitted with the job, and then copied locally to the Worker machine during rendering.</p></li>
+<li><p><strong>Threads/Threads To Use</strong>: The maximum number of threads to use for rendering. Entering a value of 0 indicates no maximum number of threads. When a Worker is determining the number of threads to use, it uses the minimum of this number and the number of CPU(s) that the Worker’s affinity is set to</p></li>
+<li><p><strong>Export Project Before Submission</strong>: If your project is local, or you are rendering in a cross-platform environment, you may find it useful to export your project to a network directory before the job is submitted.</p></li>
+<li><p><strong>Build To Force</strong>: You can force 32 or 64 bit rendering with this option.</p></li>
+<li><p><strong>Enable Local Rendering</strong>: If enabled, the frames will be rendered locally, and then copied to their final network location.</p></li>
+<li><p><strong>Don’t Load OpenGL</strong>: If checked, OpenGL will be disabled for Cinema 4D. It is useful to avoid loading OpenGL libraries when running as a service. Do NOT use this option if you are using the Hardware OpenGL renderers inside of Cinema 4D. Default: False.</p></li>
+<li><p><strong>Use Batch Plugin</strong>: If checked, the Cinema 4D batch plugin will be used to render Cinema 4D jobs, which keeps the scene file loaded in memory between tasks.</p></li>
+<li><p><strong>Version</strong>: The version of Cinema 4D to render with.</p></li>
+</ul>
+<p><strong>Cinema 4D Output Options</strong></p>
+<ul class="simple">
+<li><p><strong>Use Default Output From Scene</strong>: Enable this option to use the output path defined in the scene file.</p></li>
+<li><p><strong>Filename Prefix</strong>: If overriding the output, this is the file name prefix.</p></li>
+<li><p><strong>Output Folder</strong>: If overriding the output, this is the folder that the frames will be saved to.</p></li>
+<li><p><strong>Use Default Multipass Output From Scene</strong>: Enable this option to use the multipass output path defined in the scene file.</p></li>
+<li><p><strong>MP Filename Prefix</strong>: If overriding the multipass output, this is the file name prefix.</p></li>
+<li><p><strong>MP Output Folder</strong>: If overriding the multipass output, this is the folder that the frames will be saved to.</p></li>
+</ul>
+<p><strong>Script Job Options</strong></p>
+<p>Script Jobs use the Cinema 4D Batch plugin and do not force a particular render.</p>
+<ul class="simple">
+<li><p><strong>Submit A Cinema4D Script Job (Python)</strong>: Enable this option to submit a custom Python script job. This script will be applied to the scene file that is specified.</p></li>
+<li><p><strong>Python Script File</strong>: The Python script file to use *.py.</p></li>
+</ul>
+</div>
+<div class="section" id="export-jobs">
+<span id="c4d-export-ref-label"></span><h3>Export Jobs<a class="headerlink" href="#export-jobs" title="Permalink to this headline">¶</a></h3>
+<p>If you are submitting an Arnold, Octane, or Redshift job you may choose to submit an export job in the Export Jobs Tab</p>
+<a class="reference internal image-reference" href="../_images/c4d_export_jobs.png"><img alt="../_images/c4d_export_jobs.png" src="../_images/c4d_export_jobs.png" style="height: 400px;" /></a>
+<p>Export jobs will export the scene file then render the scene in the appropriate standalone Renderer.  The export specific job options are:</p>
+<ul class="simple">
+<li><p><strong>Export File Location</strong>: The location that the scene file will be exported to.</p></li>
+<li><p><strong>Submit Dependent Job</strong>: If this option is set to true, a dependent Render job will be submitted.</p></li>
+<li><p><strong>Export Locally</strong>: If this option is set to true, the scene file will be exported on the submitting machine. (This option is not currently supported with Octane)</p></li>
+</ul>
+</div>
+<div class="section" id="gpu-affinity">
+<span id="c4d-gpu-affinity-ref-label"></span><h3>GPU Affinity<a class="headerlink" href="#gpu-affinity" title="Permalink to this headline">¶</a></h3>
+<p>If rendering with Redshift, you may choose which GPUs to use in the Advanced Options tab.</p>
+<img alt="../_images/c4d_gpu_affinity.png" src="../_images/c4d_gpu_affinity.png" />
+<ul>
+<li><p><strong>GPUs Per Task</strong>: If set to 0 (the default), then RedShift will be responsible to automatically choose the GPUs to use for rendering.</p>
+<blockquote>
+<div><p>If this is set to 1 or greater, then each task for the job will be assigned specific GPUs. This can be used in combination with concurrent tasks to get a distribution over the GPUs. For example:</p>
+<ul class="simple">
+<li><p>if this is set to 1, then tasks rendered by the Workers thread 0 would use GPU 0, thread 1 would use GPU 1, etc.</p></li>
+<li><p>if this is set to 2, then tasks rendered by the Workers thread 0 would use GPUs {0,1}, thread 1 would use GPUs {2,3}, etc.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Select GPU Devices</strong>: A comma separated list of specific GPU device Id(s) can be entered instead of using the above ‘GPUs Per Task’ option (which must be set to “0”). Valid examples include: “0” or “1” or “0,1” or “2,4” without the quotation marks. Note, “Concurrent Tasks” must be set to “1” only.</p></li>
+</ul>
+</div>
+<div class="section" id="region-rendering">
+<span id="c4d-region-rendering-ref-label"></span><h3>Region Rendering<a class="headerlink" href="#region-rendering" title="Permalink to this headline">¶</a></h3>
+<p>Region rendering is supported in Cinema 4D. You can also submit a dependent assembly job to assemble the image when the main region job completes.</p>
+<a class="reference internal image-reference" href="../_images/c4d_region_rendering.png"><img alt="../_images/c4d_region_rendering.png" src="../_images/c4d_region_rendering.png" style="height: 300px;" /></a>
+<p>The following options are available:</p>
+<ul class="simple">
+<li><p><strong>Enable Region Rendering</strong>: If enabled, the frame will be split into multiple tiles that are rendered individually and can be assembled after.</p></li>
+<li><p><strong>Tiles In X</strong>: The number of tiles to divide the regions horizontally.</p></li>
+<li><p><strong>Tiles In Y</strong>: The number of tiles to divide the regions vertically.</p></li>
+<li><p><strong>Frame to Render</strong>: The frame to be region rendered.</p></li>
+<li><p><strong>Submit All Tiles as a single Job</strong>:  If enabled, a single frame will be submitted with all tiles in a single job, otherwise each tile will be submitted as a separate job with each frame being a separate frame.</p></li>
+<li><p><strong>Submit Dependent Assembly Job</strong>: Submit a job dependent on the region job that will assemble the tiles.</p></li>
+<li><p><strong>Cleanup Tiles after Assembly</strong>: If enabled, the tiles will be deleted after assembly.</p></li>
+<li><p><strong>Error on Missing Tiles</strong>: If enabled, the assembly job will fail if any of the tiles are missing.</p></li>
+<li><p><strong>Assemble over</strong>: Determine what the Draft Tile Assembler should assemble over be it a blank image, previous output or a specified file.</p></li>
+<li><p><strong>Background Image File</strong>: If “specified file” option above is selected, then browse for a background image file to assemble the tile renders with.</p></li>
+<li><p><strong>Error on Missing Background</strong>: If enabled, the Draft Tile Assembler job will fail if the background file is missing.</p></li>
+</ul>
+</div>
+<div class="section" id="awsportal-options">
+<span id="c4d-awsportal-options-ref-label"></span><h3>AWSPortal Options<a class="headerlink" href="#awsportal-options" title="Permalink to this headline">¶</a></h3>
+<p>AWS asset server pre-caching is supported when running AWS Portal. This allows you to pre-cache assets for jobs. For more information on asset pre-caching see the <a class="reference internal" href="aws-portal-asset-transfer-system/overview.html#aws-portal-asset-transfer-system-overview-ref-label"><span class="std std-ref">overview</span></a>.</p>
+<a class="reference internal image-reference" href="../_images/c4d_asset_server_precaching.png"><img alt="../_images/c4d_asset_server_precaching.png" src="../_images/c4d_asset_server_precaching.png" style="height: 400px;" /></a>
+<p>The following options are available:</p>
+<ul class="simple">
+<li><p><strong>Precache assets for AWS</strong>: If enabled, all assets will be pre-cached in the AWS S3 bucket.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="cross-platform-rendering-considerations">
+<h2>Cross-Platform Rendering Considerations<a class="headerlink" href="#cross-platform-rendering-considerations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cinema4d-plugin">
+<h3>Cinema4D Plugin<a class="headerlink" href="#cinema4d-plugin" title="Permalink to this headline">¶</a></h3>
+<p>In order to perform cross-platform rendering with Cinema 4D, you must setup Mapped Paths so that Deadline can swap out the Scene and Output file paths where appropriate. You can access the Mapped Paths Setup in the Monitor while
+in power user mode by selecting Tools -&gt; Configure Repository. You’ll find the Mapped Paths Setup in the list on the left.</p>
+<p>When submitting the Cinema 4D job for rendering, you should enable the Export Project Before Submission option, and choose a network location when prompted for the export path. This will strip any absolute asset paths and make
+them relative to the scene file, and will also ensure the option to submit the Cinema 4D scene file with the job is disabled.</p>
+<p>If you don’t enable the Export Project Before Submission option, you need to manually export the project to a network location. Then, you must submit the exported scene file from the Submit menu in the Monitor and you need to
+specify the output and/or multipass output paths in the submitter. Make sure the option to submit the Cinema 4D scene file with the job is disabled. If you leave it enabled, the scene file will be copied to and loaded from the
+Worker’s local machine, which will break the relative asset paths.</p>
+</div>
+<div class="section" id="cinema4d-batch-plugin">
+<h3>Cinema4D Batch Plugin<a class="headerlink" href="#cinema4d-batch-plugin" title="Permalink to this headline">¶</a></h3>
+<p>In order to perform cross-platform rendering with Cinema 4D, you must setup Mapped Paths so that Deadline can swap out the Project and Output paths where appropriate. You can access the Mapped Paths Setup in the Monitor while in
+power user mode by selecting Tools -&gt; Configure Repository. You’ll find the Mapped Paths Setup in the list on the left.</p>
+<p>When performing cross-platform rendering all absolute paths will be mapped, if your scene contains any relative paths then ensure that the option to submit the Cinema 4D scene is disabled.</p>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Cinema 4D plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Cinema 4D plugin from the list on the left.</p>
+<div class="section" id="cinema4d">
+<span id="app-cinema4d-cp-ref-label"></span><h3>Cinema4D<a class="headerlink" href="#cinema4d" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="../_images/cp_c4d.png"><img alt="../_images/cp_c4d.png" src="../_images/cp_c4d.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>C4D Executable</strong>: The path to the C4D executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes. Note, in Cinema 4D R16 and onwards, using <code class="docutils literal notranslate"><span class="pre">Commandline.exe</span></code> instead of <code class="docutils literal notranslate"><span class="pre">CINEMA</span> <span class="pre">4D.exe</span></code> on Windows is recommended as it will stop a command prompt window from appearing during rendering.</p></li>
+<li><p><strong>Set Linux Environment</strong>: If enabled, Deadline will set both the LD_LIBRARY_PATH, PYTHONPATH and PATH environment variables so C4D will be able to load all of it’s required modules.</p></li>
+</ul>
+<p><strong>Logging</strong></p>
+<ul>
+<li><dl>
+<dt><strong>Redshift Log Verbosity</strong>: Set the level of verbosity for the Redshift logs written to the Render Log. Verbosity levels include Error, Warning, Info, Detailed, Debug, DebugVerbose, and Max. The default is set to Debug.</dt><dd><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When submitting a job using the Cinema4D plugin with Redshift as the renderer, render progress will be shown for all levels of Redshift Log Verbosity, except Error and Warning.</p>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+<p><strong>Arnold Options</strong></p>
+<ul class="simple">
+<li><p><strong>Abort On Arnold License Fail</strong>: If enabled, the render will fail if Arnold cannot get a license. If disabled, Arnold will render with a watermark if it cannot get a license (Only applies when Arnold is the Renderer).</p></li>
+</ul>
+</div>
+<div class="section" id="cinema4dbatch">
+<h3>Cinema4DBatch<a class="headerlink" href="#cinema4dbatch" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="../_images/cp_c4d_batch.png"><img alt="../_images/cp_c4d_batch.png" src="../_images/cp_c4d_batch.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>C4D Executable</strong>: The path to the C4D executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes. Note, in Cinema 4D R16 and onwards, using <code class="docutils literal notranslate"><span class="pre">Commandline.exe</span></code> instead of <code class="docutils literal notranslate"><span class="pre">CINEMA</span> <span class="pre">4D.exe</span></code> on Windows is recommended as it will stop a command prompt window from appearing during rendering.</p></li>
+</ul>
+<p><strong>Logging</strong></p>
+<ul>
+<li><p><strong>Log Script Contents to Render Log</strong>: If enabled, the full script that Deadline is passing to Cinema 4D will be written to the render log. This is mainly useful for debugging purposes.</p></li>
+<li><dl>
+<dt><strong>Redshift Log Verbosity</strong>: Set the level of verbosity for the Redshift logs written to the Render Log. Verbosity levels include Error, Warning, Info, Detailed, Debug, DebugVerbose, and Max. The default is set to Debug.</dt><dd><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When submitting a job using the Cinema4DBatch plugin with Redshift as the renderer, Redshift Log Verbosity must be set to Debug, DebugVerbose, or Max, in order to view render progress.</p>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+<p><strong>Arnold Options</strong></p>
+<ul class="simple">
+<li><p><strong>Abort On Arnold License Fail</strong>: If enabled, the render will fail if Arnold cannot get a license. If disabled, Arnold will render with a watermark if it cannot get a license (Only applies when Arnold is the Renderer).</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-cinema-4d-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to install the integrated Cinema 4D submission script. This script allows for submitting Cinema 4D render jobs to Deadline directly from within the Cinema 4D editing GUI.</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/Cinema4D/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span><span class="o">/</span><span class="n">submission</span><span class="o">/</span><span class="n">Cinema4D</span><span class="o">/</span><span class="n">Client</span><span class="o">/</span><span class="n">DeadlineC4DClient</span><span class="o">.</span><span class="n">pyp</span> <span class="n">to</span> <span class="p">[</span><span class="n">Cinema</span> <span class="mi">4</span><span class="n">D</span> <span class="n">Install</span> <span class="n">Directory</span><span class="p">]</span><span class="o">/</span><span class="n">plugins</span>
+</pre></div>
+</div>
+</li>
+<li><p>Restart Cinema 4D, you can now <a class="reference internal" href="#c4d-job-submission-ref-label"><span class="std std-ref">submit jobs from within Cinema 4D</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="custom-sanity-check">
+<h3>Custom Sanity Check<a class="headerlink" href="#custom-sanity-check" title="Permalink to this headline">¶</a></h3>
+<p>A CustomSanityChecks.py file can be created alongside the main SubmitC4DToDeadline.py submission script (in [Repository]\submission\Cinema4D\Main), and will be evaluated if it exists. This script will let you set any of the
+initial properties in the submission script prior to displaying the submission window. You can also use it to run your own checks and display errors or warnings to the user. Here is a very simple example of what this script
+could look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">c4d</span>
+<span class="kn">from</span> <span class="nn">c4d</span> <span class="k">import</span> <span class="n">gui</span>
+
+<span class="k">def</span> <span class="nf">RunSanityCheck</span><span class="p">(</span><span class="n">dialog</span><span class="p">):</span>
+
+    <span class="n">dialog</span><span class="o">.</span><span class="n">SetString</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">dialogIDs</span><span class="p">[</span><span class="s2">&quot;DepartmentBoxID&quot;</span><span class="p">],</span> <span class="s2">&quot;The Best Department!&quot;</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">SetLong</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">dialogIDs</span><span class="p">[</span><span class="s2">&quot;PriorityBoxID&quot;</span><span class="p">],</span> <span class="mi">33</span><span class="p">)</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">SetLong</span><span class="p">(</span><span class="n">dialog</span><span class="o">.</span><span class="n">dialogIDs</span><span class="p">[</span><span class="s2">&quot;ConcurrentTasksBoxID&quot;</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">gui</span><span class="o">.</span><span class="n">MessageDialog</span><span class="p">(</span><span class="s2">&quot;This is a custom sanity check!&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>The available dialog IDs can be found in the SubmitC4DToDeadline.py script mentioned above. They are defined near the top of the SubmitC4DToDeadlineDialog class. These can be used to set the initial values in the submission dialog.</p>
+<p>Finally, if the RunSanityCheck method returns False, the submission will be cancelled.</p>
+</div>
+</div>
+<div class="section" id="troubleshooting">
+<span id="app-cinema-4d-troubleshooting"></span><h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="diagnosing-integrated-submitter-problems">
+<h3>Diagnosing Integrated Submitter Problems<a class="headerlink" href="#diagnosing-integrated-submitter-problems" title="Permalink to this headline">¶</a></h3>
+<p>Occasionally you may be faced with an issue during job submission. It may be that the dialog won’t display or that pressing the “submit” button may not create a job. If you believe you’ve properly installed the integrated submitter as outlined above, it may be time to investigate Cinema 4D’s console log.</p>
+<p>The submitter within Cinema 4D is written in Python and so we can sometimes find the error within Cinema’s Python console. You can open the console under the “Script” menu:</p>
+<img alt="../_images/c4d_console_log.png" src="../_images/c4d_console_log.png" />
+<p>If the problem is not immediately obvious from the console log, please reach out to the Thinkbox support team. When you do, provide the contents of the log and the steps to reproduce along with a test scene if applicable.</p>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-cinema-4d-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Cinema 4D are supported?</strong></p>
+<blockquote>
+<div><p>Cinema 4D 12 and later are supported.</p>
+</div></blockquote>
+<p><strong>When I use Adobe Illustrator files as textures, the render fails with “Asset missing”</strong></p>
+<blockquote>
+<div><p>While Cinema 4D is able to use AI files in workstation mode, there is often problems when rendering in command line mode. Convert the AI files to another known type such as TIFF or JPEG before using them.</p>
+</div></blockquote>
+<p><strong>Sometimes when I open the submission dialog in Cinema 4D, the pool list or group list are empty.</strong></p>
+<blockquote>
+<div><p>Simply close the submission dialog and reopen it to repopulate the lists.</p>
+</div></blockquote>
+<p><strong>Does rendering with Cinema 4D with Deadline use up a full Cinema 4D license?</strong></p>
+<blockquote>
+<div><p>There are separate Cinema 4D command line licenses that are required to render with Deadline. Please contact Maxon for more information regarding licensing requirements.</p>
+</div></blockquote>
+<p><strong>Can Deadline render with Cinema 4D’s Net Render Client software?</strong></p>
+<blockquote>
+<div><p>No. It isn’t possible for 3rd party software such as Deadline to control Cinema 4D’s Net Render Client, which is why it uses the command line renderer.</p>
+</div></blockquote>
+<p><strong>I have copied over SubmitToDeadline.pyp file but the integrated submission script does not show up under the python menu.</strong></p>
+<blockquote>
+<div><p>This is likely caused by some failure in the script. Check your repository path to ensure the client is able to read and write to that folder. Using the python console within C4D may provide more specific hints.</p>
+</div></blockquote>
+<p><strong>My frames never seem to finish rendering. When I check the Worker machine, it doesn’t appear to be doing anything.</strong></p>
+<blockquote>
+<div><p>This can occur if Cinema 4D hasn’t been licensed yet. Try starting Cinema 4D normally on the machine and see if you are prompted for a license. If you are, configure everything and then try rendering on that machine again.</p>
+</div></blockquote>
+<p><strong>Why does a command prompt (black DOS window) appear whilst rendering on Windows?</strong></p>
+<blockquote>
+<div><p>In Cinema 4D R16 and onwards, using <code class="docutils literal notranslate"><span class="pre">Commandline.exe</span></code> instead of <code class="docutils literal notranslate"><span class="pre">CINEMA</span> <span class="pre">4D.exe</span></code> on Windows is recommended as it will stop a command prompt window from appearing during rendering.</p>
+</div></blockquote>
+<p><strong>Why do I get a “Failed to import the following modules:” error when rendering on Linux?</strong></p>
+<blockquote>
+<div><p>You may encounter this error when the Linux environment (LD_LIBRARY_PATH, PYTHON_PATH) is not set up properly on a machine. When rendering with Cinema 4D on Linux outside of Deadline, the environment is set up with MAXON’s bash script, setup_c4d_env. Since this cannot be used within Deadline, we’ve provided an alternative way to ensure the environment is set correctly with the “Set Linux Environment” plugin option. If this option is disabled, the environment will have to be adjusted on the Workers to correctly import the python modules that failed to load.</p>
+</div></blockquote>
+<p><strong>Why do I get “code for hash HASH was not found.” messages in my render logs on Linux?</strong></p>
+<blockquote>
+<div><p>This message means that C4D is looking for a different version of OpenSSL than what is installed on your machine. This error does not affect rendering but can be fixed by including the version of OpenSSL that C4D is looking for in to your LD_LIBRARY_PATH environment variable.</p>
+</div></blockquote>
+<p><strong>Why is it that when rendering with Cinema 4D R23 my plugins are not being used?</strong></p>
+<blockquote>
+<div><p>In Cinema 4D R23 there is a known bug which causes the commandline executable to not load plugins from the default location.  In order to fix this please either upgrade to Deadline 10.1.14 or follow the fix in <a class="reference external" href="https://support.maxon.net/kb/faq.php?id=115">https://support.maxon.net/kb/faq.php?id=115</a> on your render machines.</p>
+</div></blockquote>
+<p><strong>Can I use Redshift CPU with Cinema 4D S26?</strong></p>
+<blockquote>
+<div><p>Yes Redshift comes with a CPU version of Redshift which will work out of the box with Cinema 4D.  If you are using UBL licensing for this mode you do not need to include a Redshift 3PL limit.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages And Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Cinema 4D error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><strong>INFO: Process exit code: -1073741515</strong></p>
+<blockquote>
+<div><p>Cinema 4D can sometimes exit with the above exact exit code. In the few occurrences, we have seen of this exit code, it is when C4D has very recently just been installed/configured on a machine and you simply need to restart the computer to resolve this issue. At a guess, this is probably due to a Microsoft visual C++ redistributable package recently being installed and the system just needs a reboot.</p>
+</div></blockquote>
+<p><strong>Warning: Unknown arguments: -DeadlineConnect</strong> and/or <strong>C4D was unable to locate DeadlineConnect.pyp</strong></p>
+<blockquote>
+<div><p>A Cinema 4D job can error out saying that it can’t find our <code class="docutils literal notranslate"><span class="pre">DeadlineConnect.pyp</span></code> plugin script. The most common cause of this issue is the Deadline Worker having a predefined <code class="docutils literal notranslate"><span class="pre">C4D_PLUGINS_DIR</span></code> environment variable, which due to a Cinema 4D bug in R18/R19, Cinema 4D does not support multiple paths with that environment variable. To fix this issue; one option is to copy <code class="docutils literal notranslate"><span class="pre">DeadlineRepository/plugins/Cinema4DBatch/DeadlineConnect.pyp</span></code> to the path defined by <code class="docutils literal notranslate"><span class="pre">C4D_PLUGINS_DIR</span></code> on that Deadline Worker, or if you’re not actually using that path you can also delete the environment variable. Another option is to not use the Cinema 4D “Batch” plugin in Deadline by unchecking the “Use Batch Plugin” option at job submission. Finally, we have been informed by Maxon Software, that C4D R19 SP2 will resolve this issue by supporting multiple paths in the <code class="docutils literal notranslate"><span class="pre">C4D_PLUGINS_DIR</span></code> environment variable, so upgrading is the best option here if possible.</p>
+</div></blockquote>
+<p><strong>Missing plugins when network location defined by C4D_PLUGINS_DIR</strong></p>
+<blockquote>
+<div><p>This is the same issue as above. We have been informed by Maxon Software, that C4D R19 SP2 will resolve this issue by supporting multiple paths in the <code class="docutils literal notranslate"><span class="pre">C4D_PLUGINS_DIR</span></code> environment variable. If you are unable to upgrade, a temporary workaround is to not use the Cinema 4D “Batch” plugin in Deadline by unchecking the “Use Batch Plugin” option at job submission.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Cinema 4D</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#export-jobs">Export Jobs</a></li>
+<li><a class="reference internal" href="#gpu-affinity">GPU Affinity</a></li>
+<li><a class="reference internal" href="#region-rendering">Region Rendering</a></li>
+<li><a class="reference internal" href="#awsportal-options">AWSPortal Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cross-platform-rendering-considerations">Cross-Platform Rendering Considerations</a><ul>
+<li><a class="reference internal" href="#cinema4d-plugin">Cinema4D Plugin</a></li>
+<li><a class="reference internal" href="#cinema4d-batch-plugin">Cinema4D Batch Plugin</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a><ul>
+<li><a class="reference internal" href="#cinema4d">Cinema4D</a></li>
+<li><a class="reference internal" href="#cinema4dbatch">Cinema4DBatch</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+<li><a class="reference internal" href="#custom-sanity-check">Custom Sanity Check</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li><a class="reference internal" href="#diagnosing-integrated-submitter-problems">Diagnosing Integrated Submitter Problems</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages And Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-cinebench.html"
+                        title="previous chapter">Cinebench</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-clarisse.html"
+                        title="next chapter">Clarisse iFX</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-clarisse.html" title="Clarisse iFX"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-cinebench.html" title="Cinebench"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Cinema 4D</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

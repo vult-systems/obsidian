@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mental Ray Standalone &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Messiah" href="app-messiah.html" />
+    <link rel="prev" title="Media Encoder" href="app-mediaencoder.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-messiah.html" title="Messiah"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-mediaencoder.html" title="Media Encoder"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Mental Ray Standalone</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mental-ray-standalone">
+<span id="app-mental-ray-ref-label"></span><h1>Mental Ray Standalone<a class="headerlink" href="#mental-ray-standalone" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit Mental Ray Standalone jobs from the Monitor or via an in-app submitter such as <a class="reference internal" href="app-maya.html#app-maya-ref-label"><span class="std std-ref">MayaBatch</span></a> as an export job.</p>
+<a class="reference internal image-reference" href="../_images/sub_mray.png"><img alt="../_images/sub_mray.png" src="../_images/sub_mray.png" style="height: 500px;" /></a>
+<div class="section" id="setup-your-mental-ray-files">
+<h3>Setup your Mental Ray Files<a class="headerlink" href="#setup-your-mental-ray-files" title="Permalink to this headline">¶</a></h3>
+<p>Before you can submit a Mental Ray Standalone job, you must export your scene into .mi files. You can export into either one .mi file with all your frames in it, or one .mi file per frame.</p>
+</div>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.
+The Mental Ray specific options are:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>Mental Ray File</strong>: The Mental Ray file(s) to be rendered.</dt><dd><ul>
+<li><p>If you are submitting with one frame per .mi file, select one of the numbered frames in the sequence, and Monitor will automatically detect the frame range. In this case, you should leave the checkbox marked Separate
+Input MI Files Per Frame checked. The frames you choose to render should correspond to the numbers on the .mi files.</p></li>
+<li><p>If your .mi file contains all the frames you wish to render, you should leave the Separate Input MI Files Per Frame box unchecked. In this case, you must specify the Input MI File Start Frame, which is the first frame
+in the input MI file being rendered, as it is used to offset the frame range being passed to the mental ray renderer. You may then specify the frame range as normal.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>Output Folder</strong>: The location to which your output files will be written.</p></li>
+<li><p><strong>Separate Input MI Files Per Frame</strong>: Should be checked if you are submitting a sequence of MI files that represent a single frame each.</p></li>
+<li><p><strong>Frame Offset</strong>: The first frame in the input MI file being rendered, which is used to offset the frame range being passed to the mental ray renderer.</p></li>
+<li><p><strong>Threads</strong>: The number of threads to use for rendering.</p></li>
+<li><p><strong>Verbosity</strong>: Control how much information Mental Ray prints out during rendering.</p></li>
+<li><p><strong>Build To Force</strong>: You can force 32 or 64 bit rendering.</p></li>
+<li><p><strong>Enable Local Rendering</strong>: If enabled, the frames will be rendered locally, and then copied to their final network location.</p></li>
+<li><p><strong>Command Line Args</strong>: Specify additional command line arguments you would like to pass to the mental ray renderer.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Mental Ray plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Mental Ray plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_mray.png"><img alt="../_images/cp_mray.png" src="../_images/cp_mray.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Render Executable</strong>: The path to the Mental Ray Standalone executable file used for rendering. Enter alternative paths on separate lines.</p></li>
+</ul>
+<p><strong>Render Options</strong></p>
+<ul class="simple">
+<li><p><strong>Error Codes To Ignore</strong>: Mental Ray error codes that Deadline should ignore and instead assume the render has finished successfully. Use a ; to separate the error codes.</p></li>
+<li><p><strong>Treat Exit Code 1 As Error</strong>: If set then Exit Code 1 will not be treated as success.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-mental-ray-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Can I submit a sequence of MI files that each contain one frame, or must I submit a single MI file that contains all the frames?</strong></p>
+<blockquote>
+<div><p>Deadline supports both methods.</p>
+</div></blockquote>
+<p><strong>When rendering a single MI file that contains all the frames, the frame range I tell Deadline to render doesn’t match up with the files that are actually rendered.</strong></p>
+<blockquote>
+<div><p>When submitting a single MI file that contains all the frames, make sure the Input MI File Start Frame option is set to the first frame that is in the MI file. This value is used to offset the frame range being passed
+to the mental ray renderer.</p>
+</div></blockquote>
+<p><strong>Mental Ray is printing out an error that is causing Deadline to fail the render, but when I render from the command line outside of Deadline, the error is still printed out, but the render finishes successfully.</strong></p>
+<blockquote>
+<div><p>By default, Deadline fails a Mental Ray job whenever it prints out an error. However, you can configure the Mental Ray plugin to ignore certain error codes, which are printed out alongside the error in the error lob.</p>
+</div></blockquote>
+<p><strong>After a frame is rendered, Deadline takes a long time releasing the task before it moves on to another. What’s going on?</strong></p>
+<blockquote>
+<div><p>This can occur when a single MI file that contains all the frames is submitted to Deadline. Try exporting your frames to a sequence of MI files (one per frame) and submit the sequence of MI files to Deadline instead.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Mental Ray error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Mental Ray Standalone</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#setup-your-mental-ray-files">Setup your Mental Ray Files</a></li>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-mediaencoder.html"
+                        title="previous chapter">Media Encoder</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-messiah.html"
+                        title="next chapter">Messiah</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-messiah.html" title="Messiah"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-mediaencoder.html" title="Media Encoder"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Mental Ray Standalone</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

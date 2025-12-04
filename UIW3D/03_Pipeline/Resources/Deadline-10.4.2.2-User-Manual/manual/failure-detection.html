@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Failure Detection &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Notifications" href="notifications.html" />
+    <link rel="prev" title="Limits and Machine Limits" href="limits.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="notifications.html" title="Notifications"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="limits.html" title="Limits and Machine Limits"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" accesskey="U">Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Job Failure Detection</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="job-failure-detection">
+<span id="failure-detection-ref-label"></span><h1>Job Failure Detection<a class="headerlink" href="#job-failure-detection" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Job Failure Detection can be used to prevent problematic Jobs from wasting previous render time on the farm. There are two types of Failure Detection, which are both explained below.
+By default, Jobs will fail after they have accumulated 100 errors, but this can be changed in the Job Settings section of the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Configuration</span></a>.</p>
+<a class="reference internal image-reference" href="../_images/cro_js_failure.png"><img alt="../_images/cro_js_failure.png" src="../_images/cro_js_failure.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="id1">
+<h2>Job Failure Detection<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>A Job will enter the Failed state when it has accumulated the maximum permitted number of errors. Once in the Failed state, the Job will no longer be picked up by Workers for rendering without manual intervention.
+Because of this, Job Failure Detection can help ensure that problematic Jobs are flagged appropriately and won’t waste precious rendering time. In the Repository Options, can setup failure thresholds for Jobs and
+for individual Tasks.</p>
+<a class="reference internal image-reference" href="../_images/failed_job.png"><img alt="../_images/failed_job.png" src="../_images/failed_job.png" style="height: 400px;" /></a>
+<p>If you’ve resolved the problems that were preventing the Job from rendering properly, you can right-click on it in the Monitor and select ‘Resume Failed Job’. You will then be prompted with the option to ignore or
+override Failure Detection for this Job going forward. Note that an Error Limit of 0 indicates that there is no limit, and the Job will never be marked as Failed by Failure Detection.</p>
+<img alt="../_images/resume_failed_job.png" src="../_images/resume_failed_job.png" />
+<p>If you choose not to ignore Failure Detection, make sure to clear the Job’s errors, or a single new error will result in the Job failing again, because its error limit is still over the maximum.
+To clear a Job’s errors, simply delete all of the Job’s Error Reports using the <a class="reference internal" href="job-controlling.html#job-reports-history-ref-label"><span class="std std-ref">Job Reports Panel</span></a>.</p>
+</div>
+<div class="section" id="worker-failure-detection">
+<h2>Worker Failure Detection<a class="headerlink" href="#worker-failure-detection" title="Permalink to this headline">¶</a></h2>
+<p>Worker Failure Detection works a little differently than Job Failure Detection. Basically, if a particular Worker reports consecutive errors for a given Job, it will add itself to the Job’s list of Bad Workers.
+When a Worker has been marked as bad for a particular Job, it will not try to render that Job again until it has no other Jobs available. This helps ensure that Workers aren’t wasting render time on Jobs that
+they likely aren’t able to render.</p>
+<p>If the issue preventing a Worker from rendering a particular Job properly has been resolved, you can remove it from a Job’s ‘bad’ list by navigating to the ‘Failure Detection’ section of a
+<a class="reference internal" href="job-controlling.html#job-controlling-fd-ref-label"><span class="std std-ref">Job’s Properties dialog</span></a>. There is also an option in this section to have your Job completely ignore Worker Failure Detection, if you wish.</p>
+<a class="reference internal image-reference" href="../_images/jp_failure.png"><img alt="../_images/jp_failure.png" src="../_images/jp_failure.png" style="height: 500px;" /></a>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Job Failure Detection</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#id1">Job Failure Detection</a></li>
+<li><a class="reference internal" href="#worker-failure-detection">Worker Failure Detection</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="limits.html"
+                        title="previous chapter">Limits and Machine Limits</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="notifications.html"
+                        title="next chapter">Notifications</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="notifications.html" title="Notifications"
+             >next</a></li>
+        <li class="right" >
+          <a href="limits.html" title="Limits and Machine Limits"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" >Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Job Failure Detection</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

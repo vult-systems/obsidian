@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Overview &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Feature Set" href="feature-set.html" />
+    <link rel="prev" title="Introduction to Deadline" href="index-introduction-to-deadline.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="feature-set.html" title="Feature Set"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="index-introduction-to-deadline.html" title="Introduction to Deadline"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-introduction-to-deadline.html" accesskey="U">Introduction to Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Overview</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Looking for a render solution?</strong>
+Deadline Cloud is a fully managed service designed for studios building cloud-first pipelines.
+It eliminates the need to manage infrastructure such as repositories, databases, or license servers, and handles scaling, asset syncing, and usage-based licensing directly within AWS.</p>
+</div>
+<div class="section" id="overview">
+<span id="overview-ref-label"></span><h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<p>Deadline 10 is a cross-platform render farm management tool for Windows, Linux, and macOS.
+It gives users control of their rendering resources and can be used on-premises, in the cloud, or both.
+It handles asset syncing to the cloud, manages data transfers, and supports tagging for cost tracking purposes.</p>
+<p>Deadline 10’s Remote Connection Server allows for communication over HTTPS, improving performance and scalability.
+Where supported, users can use usage-based licensing to supplement their existing fixed pool of software licenses when rendering through Deadline 10.</p>
+<div class="section" id="components">
+<h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
+<p>The Deadline Render Farm Management System is built up of 3 components:</p>
+<ul class="simple">
+<li><p>A single Deadline Database</p></li>
+<li><p>A single Deadline Repository</p></li>
+<li><p>One or more Deadline Clients</p></li>
+</ul>
+<p><a class="reference internal" href="../_images/deadline_components.png"><img alt="deadline components" src="../_images/deadline_components.png" style="height: 300px;" /></a></p>
+<p>The Database and Repository together act as a global system where all of Deadline’s data is stored. The Clients (workstations and render nodes) then connect to this system to submit, render, and monitor jobs. It is important to note that while the Database and Repository work together, they are still separate components, and therefore can be installed on separate machines if desired.</p>
+</div>
+<div class="section" id="database">
+<h2>Database<a class="headerlink" href="#database" title="Permalink to this headline">¶</a></h2>
+<p>The Database is the global database component of the Deadline Render Farm Management System. It stores the jobs, settings, and Worker configurations. The Clients access the Database via a direct socket connection over the network. It only needs to be installed on one machine (preferably a server).</p>
+</div>
+<div class="section" id="repository">
+<h2>Repository<a class="headerlink" href="#repository" title="Permalink to this headline">¶</a></h2>
+<p>The Repository is the global file system component of the Deadline Render Farm Management System. It stores the plugins, scripts, logs, and any auxiliary files (like scene files) that are submitted with the jobs. The Clients access the Repository via a shared network path. It only needs to be installed on one machine (preferably a server).</p>
+</div>
+<div class="section" id="client">
+<h2>Client<a class="headerlink" href="#client" title="Permalink to this headline">¶</a></h2>
+<p>The Client should be installed on your render nodes, workstations, and any other machines you wish to participate in submitting, rendering, or monitoring jobs. The Client consists of the following applications:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="launcher.html#launcher-ref-label"><span class="std std-ref">Launcher</span></a>: Acts as a launch point for the Deadline applications on workstations, and facilitates remote communication on render nodes.</p></li>
+<li><p><a class="reference internal" href="monitor.html#monitor-ref-label"><span class="std std-ref">Monitor</span></a>: An all-in-one application that artists can use to monitor their jobs and administrators can use to monitor the farm.</p></li>
+<li><p><a class="reference internal" href="worker.html#worker-ref-label"><span class="std std-ref">Worker</span></a>: Controls the rendering applications on the render nodes.</p></li>
+<li><p><a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">Command</span></a>: A command line tool that can submit jobs to the farm and query for information about the farm.</p></li>
+<li><p><a class="reference internal" href="pulse.html#pulse-ref-label"><span class="std std-ref">Pulse</span></a>: An optional mini server application that performs maintenance operations on the farm, and manages more advanced features like Auto Configuration, Power Management, Worker Throttling, Statistics Gathering, and the Web Service. If you choose to run Pulse, it only needs to be running on one machine.</p></li>
+<li><p><a class="reference internal" href="remote-connection-server.html#remote-connection-server-ref-label"><span class="std std-ref">Remote Connection Server</span></a>: An optional application that handles HTTP or HTTPS connections to a remote repository for use by Deadline applications.</p></li>
+<li><p><a class="reference internal" href="license-forwarder.html#license-forwarder-ref-label"><span class="std std-ref">License Forwarder</span></a>: An optional application that acts as a license server for third party applications when using <a class="reference internal" href="licensing-usage-based.html#licensing-3rd-party-ubl-ref-label"><span class="std std-ref">Third Party Usage-Based Licensing</span></a>.</p></li>
+<li><p><a class="reference internal" href="web-service.html#web-service-ref-label"><span class="std std-ref">Web Service</span></a>: An optional command line application that allows you to get query information from Deadline over an Internet connection such as via Deadline Mobile.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Starting with Deadline 10.1.23, Deadline and its components do not require a license. For older versions, only the Workers require a license.</p>
+</div>
+</div>
+<div class="section" id="jobs">
+<h2>Jobs<a class="headerlink" href="#jobs" title="Permalink to this headline">¶</a></h2>
+<p>A Deadline job typically represents one of the following:</p>
+<ul class="simple">
+<li><p>The rendering of an animation sequence from a 3D scene.</p></li>
+<li><p>The rendering of a frame sequence from a composition. It could represent a single write node, or multiple write nodes with the same frame range.</p></li>
+<li><p>The generation of a Quicktime movie from an existing image sequence.</p></li>
+<li><p>A simulation.</p></li>
+</ul>
+<p>These are just some common cases. Since a job simply represents some form of processing, a plugin can be created for Deadline to do almost anything you can think of.</p>
+<div class="section" id="job-breakdown">
+<h3>Job Breakdown<a class="headerlink" href="#job-breakdown" title="Permalink to this headline">¶</a></h3>
+<p>A job can be broken down into one or more tasks, where each task is an individual unit that can be rendered by the Worker application. Each task can then consist of a single frame or a sequence of frames. Here are some examples:</p>
+<ul class="simple">
+<li><p>When rendering an animation with 3ds Max where each frame can take hours to render, each frame can be rendered as a separate task.</p></li>
+<li><p>When rendering a compositing job with After Effects where each frame can take seconds to render, each task could consist of 20 frames.</p></li>
+<li><p>When rendering a Quicktime job to create a movie from an existing sequence of images, the job would consist of a single task, and that task would consist of the entire image sequence.</p></li>
+</ul>
+<p><a class="reference internal" href="../_images/job_breakdown.png"><img alt="job breakdown" src="../_images/job_breakdown.png" style="height: 300px;" /></a></p>
+</div>
+<div class="section" id="job-scheduling">
+<h3>Job Scheduling<a class="headerlink" href="#job-scheduling" title="Permalink to this headline">¶</a></h3>
+<p>Use numeric job priorities, machine groups and pools, and job-specific machine lists to explicitly control distribution of rendering resources among multiple departments. Limits allow you to handle both limited license plugins and render packages, while job dependencies and scheduling allow you to control when your jobs will begin rendering.</p>
+<p><a class="reference internal" href="../_images/pool_layout.png"><img alt="pool layout" src="../_images/pool_layout.png" style="height: 300px;" /></a></p>
+<p>The Worker applications are fully responsible for figuring out which job they should render next, and they do this by connecting directly to the Database. In other words, there is no central server application that controls which jobs the Workers are working on. The benefit to this is that as long as your Database and Repository are online, Deadline will be fully operational.</p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Overview</a><ul>
+<li><a class="reference internal" href="#components">Components</a></li>
+<li><a class="reference internal" href="#database">Database</a></li>
+<li><a class="reference internal" href="#repository">Repository</a></li>
+<li><a class="reference internal" href="#client">Client</a></li>
+<li><a class="reference internal" href="#jobs">Jobs</a><ul>
+<li><a class="reference internal" href="#job-breakdown">Job Breakdown</a></li>
+<li><a class="reference internal" href="#job-scheduling">Job Scheduling</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index-introduction-to-deadline.html"
+                        title="previous chapter">Introduction to Deadline</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="feature-set.html"
+                        title="next chapter">Feature Set</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="feature-set.html" title="Feature Set"
+             >next</a></li>
+        <li class="right" >
+          <a href="index-introduction-to-deadline.html" title="Introduction to Deadline"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-introduction-to-deadline.html" >Introduction to Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Overview</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

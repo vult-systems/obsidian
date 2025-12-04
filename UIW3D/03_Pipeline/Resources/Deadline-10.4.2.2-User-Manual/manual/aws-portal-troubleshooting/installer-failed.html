@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AWS Portal Server Installer Failed &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thinkbox.css" />
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="AWS Portal Infrastructure Fails To Start" href="infrastructure-fails-to-start.html" />
+    <link rel="prev" title="Troubleshooting AWS Portal" href="../aws-portal-troubleshooting.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="infrastructure-fails-to-start.html" title="AWS Portal Infrastructure Fails To Start"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="../aws-portal-troubleshooting.html" title="Troubleshooting AWS Portal"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWS Portal Server Installer Failed</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="../aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<span class="target" id="troubleshooting-aws-portal-installer-failed-label"></span><div class="section" id="aws-portal-server-installer-failed">
+<h1>AWS Portal Server Installer Failed<a class="headerlink" href="#aws-portal-server-installer-failed" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-went-wrong">
+<h2>What Went Wrong<a class="headerlink" href="#what-went-wrong" title="Permalink to this headline">¶</a></h2>
+<p>An error occured while installing AWS Portal Server.</p>
+</div>
+<div class="section" id="figuring-out-what-went-wrong">
+<h2>Figuring Out What Went Wrong<a class="headerlink" href="#figuring-out-what-went-wrong" title="Permalink to this headline">¶</a></h2>
+<p>You can find the installer logs in the following locations:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Windows</span><span class="p">:</span> <span class="o">%</span><span class="n">LOCALAPPDATA</span><span class="o">%</span>\<span class="n">Temp</span>\<span class="n">installbuilder_installer</span><span class="o">.</span><span class="n">log</span>
+<span class="n">Linux</span><span class="p">:</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">installbuilder_installer</span><span class="o">.</span><span class="n">log</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have installed AWS Portal Server more than once there may be one or multiple log files that look like installbuilder_installer_1234.log. The log file with the biggest number at the end is the most recent one. Deadline installers from versions before Deadline 10.2.1.0 will create files named bitrock_installer.log and bitrock_installer_1234.log</p>
+</div>
+</div>
+<div class="section" id="solutions">
+<h2>Solutions<a class="headerlink" href="#solutions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p>If you have uninstalled a previous version of aws portal you may need to go to the installation location of AWSPortalAssetServer and AWSPortalLink, and manually delete any .pyc files that persisted.</p></li>
+<li><p>Ensure that username and password that you provide during the installation of both AWS Portal Link and AWS Asset Server are both correct.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On Windows it’s required that you provide the domain of the username in the form of <code class="docutils literal notranslate"><span class="pre">domain\username</span></code>. If you don’t know the domain of your current user you find this out by running <code class="docutils literal notranslate"><span class="pre">whoami</span></code> on the Windows Command Prompt.</p>
+</div>
+</li>
+<li><p>Ensure that both the AWS Access Key ID and Secret Key that you provided during the installation of AWS Asset Server are correct. If you have lost your Secret Key for your account, you can create a new one by opening the AWS Management Console and going to Services &gt; IAM &gt; Users &gt; Select your Admin user &gt; Security Credentials &gt; Create access key.</p></li>
+<li><p>Outbound traffic to required AWS endpoints may be blocked. Below are the endpoints that are required to be open for AWS Portal to function properly.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">iam</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span>
+<span class="n">sts</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span>
+<span class="n">cloudformation</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span>
+<span class="n">ec2</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span>
+<span class="n">s3</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">checkip</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+<p>	Where <code class="docutils literal notranslate"><span class="pre">&lt;region&gt;</span></code> is the region you intend to run in. If you intend to use multiple regions you will also need to open endpoints for those regions as well. <a class="reference external" href="https://docs.aws.amazon.com/general/latest/gr/rande.html">Further Reading on AWS endpoints</a>.</p>
+</li>
+<li><p>Ensure that AWS Billing is setup on your AWS account. You can check this by opening the AWS Management Console and going to Services &gt; Billing &gt; Payment Methods.</p></li>
+</ol>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">AWS Portal Server Installer Failed</a><ul>
+<li><a class="reference internal" href="#what-went-wrong">What Went Wrong</a></li>
+<li><a class="reference internal" href="#figuring-out-what-went-wrong">Figuring Out What Went Wrong</a></li>
+<li><a class="reference internal" href="#solutions">Solutions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../aws-portal-troubleshooting.html"
+                        title="previous chapter">Troubleshooting AWS Portal</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="infrastructure-fails-to-start.html"
+                        title="next chapter">AWS Portal Infrastructure Fails To Start</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="infrastructure-fails-to-start.html" title="AWS Portal Infrastructure Fails To Start"
+             >next</a></li>
+        <li class="right" >
+          <a href="../aws-portal-troubleshooting.html" title="Troubleshooting AWS Portal"
+             >previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWS Portal Server Installer Failed</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

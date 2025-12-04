@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Configuring Firewall Exceptions &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Installing AWS Portal Server" href="aws-portal-installing.html" />
+    <link rel="prev" title="Installing The Deadline Client for AWS Portal" href="aws-portal-setup-installing-the-deadline-client.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-installing.html" title="Installing AWS Portal Server"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="aws-portal-setup-installing-the-deadline-client.html" title="Installing The Deadline Client for AWS Portal"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Configuring Firewall Exceptions</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<div class="section" id="configuring-firewall-exceptions">
+<span id="aws-portal-setup-firewall-exceptions-ref-label"></span><h1>Configuring Firewall Exceptions<a class="headerlink" href="#configuring-firewall-exceptions" title="Permalink to this headline">¶</a></h1>
+<p>If you have a firewall setup, you may be blocking outbound traffic to AWS Endpoints.</p>
+<p>To use AWS Portal, you may need to add firewall exceptions to the following endpoints</p>
+<p>It is recommended that you simply add all AWS endpoints to the allow list using the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+<p>If you can only permit specific endpoints for security reasons, the following ones must be put on the allow list:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">iam</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span>
+<span class="n">sts</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span>
+<span class="n">cloudformation</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span>
+<span class="n">ec2</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span>
+<span class="n">s3</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">checkip</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">&lt;region&gt;</span></code> is <code class="docutils literal notranslate"><span class="pre">us-west-2</span></code> or whatever AWS region(s) you will be using in AWS Portal.</p>
+<p>More information can be found <a class="reference external" href="https://docs.aws.amazon.com/general/latest/gr/rande.html">here</a>.</p>
+<p><a class="reference internal" href="aws-portal-installing.html#aws-portal-installing-ref-label"><span class="std std-ref">Next: Installing AWS Portal &gt;&gt;</span></a></p>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aws-portal-setup-installing-the-deadline-client.html"
+                        title="previous chapter">Installing The Deadline Client for AWS Portal</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="aws-portal-installing.html"
+                        title="next chapter">Installing AWS Portal Server</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-installing.html" title="Installing AWS Portal Server"
+             >next</a></li>
+        <li class="right" >
+          <a href="aws-portal-setup-installing-the-deadline-client.html" title="Installing The Deadline Client for AWS Portal"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Configuring Firewall Exceptions</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

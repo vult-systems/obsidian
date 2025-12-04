@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auto Configuration &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Render Environment" href="environment.html" />
+    <link rel="prev" title="Client Configuration" href="client-config.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="environment.html" title="Render Environment"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="client-config.html" title="Client Configuration"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" accesskey="U">Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Auto Configuration</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="auto-configuration">
+<span id="auto-config-ref-label"></span><h1>Auto Configuration<a class="headerlink" href="#auto-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Auto Configuration allows you to configure many Client settings from a single location. When the Deadline applications start up, they will automatically pull these settings, save them locally, and apply them before fully initializing.</p>
+<p>Note that Pulse must be running for the Deadline applications to pull the Repository Path setting. All the other settings are pulled directly from the Database once the applications are able to connect to it. Note that if Pulse isn’t running, the other settings will still be pulled directly from the Database. To configure and run Pulse, see the <a class="reference internal" href="pulse.html#pulse-ref-label"><span class="std std-ref">Pulse</span></a> documentation.</p>
+<a class="reference internal image-reference" href="../_images/auto_config_tab.png"><img alt="../_images/auto_config_tab.png" src="../_images/auto_config_tab.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="rulesets">
+<h2>Rulesets<a class="headerlink" href="#rulesets" title="Permalink to this headline">¶</a></h2>
+<p>You can set up Client Configuration Rulesets from the Auto Configuration section of the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Configuration</span></a>. If you want to configure groups of Clients differently from others, you can add multiple Rulesets. This is useful if you have more than one Repository on your network, or if you want to configure your render nodes differently than your workstations.</p>
+<p>New Rulesets can be added by pressing the Add button. You can give the Ruleset a name, enable the rule, and then choose a <strong>Client Filter Type</strong> to control which Clients will use this Ruleset. There are currently three types of Worker Filters:</p>
+<ul>
+<li><p><strong>Hostname Regex</strong>: You can use regular expressions to match a Client’s host name. If your Workers are using IPv6, this is probably the preferred method to use. Note that this is case-sensitive. For example:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>.*host.* will match hostnames containing the word ‘host’ in lower case.</p></li>
+<li><p>host.* will match hostnames starting with ‘host’.</p></li>
+<li><p>.*[Hh]ost will match ending with ‘Host’ or ‘host’.</p></li>
+<li><p>.* will match everything.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>IP Regex</strong>: You can use regular expressions to match a Client’s IP address. This works with both IPv4 and IPv6 addresses. For example:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>192.168..* will match IPv4 addresses not transported inside IPv6 starting with “192.168”.</p></li>
+<li><p>[:fF]*192.168. should match IPv4 address even if they are carried over IPv6 addresses (ex “::ffff:192.168.2.128”).</p></li>
+<li><p>.* will match everything.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>IPv4 Match</strong>: You can specify specific IP addresses, or a range of IP addresses (by using wildcards or ranges). Note that this only works with IPv4. Do not use this for IPv6 addresses. For example:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>192.168.0.1-150</p></li>
+<li><p>192.168.0.151-255</p></li>
+<li><p>192.168.*.*</p></li>
+<li><p>*.*.*.*</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>Configurations are generated starting from the top rule working down one by one. When there is a match for the requesting Client, any properties in the rule which are not marked as ‘(Inherited)’ will override a previous setting. By default, Workers will use their local configuration for any property which is not set by a rule. Based on the example in the image below, all clients starting with the name ‘Render-‘ and ending with a whole number will use the same Repository Path and launch the Client at startup, while the ‘Default’ rule above it matches all Clients and sets their license server.</p>
+<a class="reference internal image-reference" href="../_images/auto_config_tab_example.png"><img alt="../_images/auto_config_tab_example.png" src="../_images/auto_config_tab_example.png" style="height: 500px;" /></a>
+<p>The remaining available options are:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>Licensing</strong> (DEPRECATED - starting with Deadline 10.1.23, a license is no longer required to run Deadline):</dt><dd><ul>
+<li><p><strong>License Mode</strong> (DEPRECATED): The license mode to use. Choose between Floating and UsageBased.</p></li>
+<li><p><strong>License Server</strong> (DEPRECATED): For Floating Licensing. The license server setting. Use the format ‘&#64;SERVER’, or if you have configured your license file to use a specific port, use ‘PORT&#64;SERVER’.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>Region</strong>: Auto-configure the Region option. This will be set after the Client has connected to the Repository and can be used to ensure certain Workers are categorized by Deadline <a class="reference internal" href="repository-config.html#region-settings-label"><span class="std std-ref">Region</span></a> as defined in the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Configuration</span></a>.</p></li>
+<li><p><strong>Launch Worker At Startup</strong>: Whether or not the Worker should automatically launch when the Launcher starts up.</p></li>
+<li><p><strong>Auto Update Override</strong>: Whether or not launching the Client should trigger an automatic upgrade if it is available. Note that Deadline versions 10.4 and higher do not set write permissions to the install directory. If you wish to use automatic upgrades, you must manually grant access to the user you wish to perform automatic upgrades.</p></li>
+<li><p><strong>Restart Worker If It Stalls</strong>: If enabled, the Launcher will try to restart the Worker on the machine if it stalls.</p></li>
+<li><p><strong>Skip Permission Check</strong>: If enabled, read/write permissions are not checked when a Repository connection is validated.</p></li>
+<li><p><strong>Repository Path</strong>: This is the path to the Repository that the Worker will connect to. You can specify a different path for each operating system.</p></li>
+<li><p><strong>Local Data Path</strong>: The local path where the Client temporarily stores plugin and job data from the Repository during rendering. Note that this should be a local path to avoid conflicts and maintain performance. You can specify a different path for each operating system. <a class="reference internal" href="worker.html#worker-local-data-storage-ref-label"><span class="std std-ref">More information about the Worker Local Data Path is available here.</span></a></p></li>
+</ul>
+<p>The above options can also be controlled individually via <a class="reference internal" href="client-config.html#client-config-worker-data-root-ref-label"><span class="std std-ref">Client Configuration</span></a> of the <code class="docutils literal notranslate"><span class="pre">deadline.ini</span></code> file.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Auto Configuration</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#rulesets">Rulesets</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="client-config.html"
+                        title="previous chapter">Client Configuration</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="environment.html"
+                        title="next chapter">Render Environment</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="environment.html" title="Render Environment"
+             >next</a></li>
+        <li class="right" >
+          <a href="client-config.html" title="Client Configuration"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" >Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Auto Configuration</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

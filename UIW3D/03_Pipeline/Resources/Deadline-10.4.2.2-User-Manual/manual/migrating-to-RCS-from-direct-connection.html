@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Migrating from Direct Connection to Remote Connection type &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Upgrading or Downgrading Deadline" href="upgrading.html" />
+    <link rel="prev" title="Change Repository" href="changing-repository.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="upgrading.html" title="Upgrading or Downgrading Deadline"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="changing-repository.html" title="Change Repository"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" accesskey="U">Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Migrating from Direct Connection to Remote Connection type</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="migrating-from-direct-connection-to-remote-connection-type">
+<span id="migrating-to-rcs-from-direct-connection-ref-label"></span><h1>Migrating from Direct Connection to Remote Connection type<a class="headerlink" href="#migrating-from-direct-connection-to-remote-connection-type" title="Permalink to this headline">¶</a></h1>
+<p>Remote Connection is our recommended connection type as it includes more features and provides better separation between the Deadline Database, Repository and Client machines. Direct Connection is not recommended <a class="reference internal" href="security.html#security-direct-connection-caution-ref-label"><span class="std std-ref">(see here for more info)</span></a> . To migrate from Direct Connection to Remote Connection, it is required to install Remote Connection Server (RCS) on at least one of your machines.</p>
+<div class="section" id="installing-remote-connection-server">
+<h2>Installing Remote Connection Server<a class="headerlink" href="#installing-remote-connection-server" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="remote-connection-server.html#remote-connection-server-ref-label"><span class="std std-ref">Remote Connection Server</span></a> (RCS) is an application that allows other Deadline components (such as the Deadline Worker, Deadline Monitor, etc.) to communicate with a Deadline Repository.
+RCS installation must be explicitly selected at the installation type selection screen.</p>
+<a class="reference internal image-reference" href="../_images/windows_rcs_installation_selection.png"><img alt="../_images/windows_rcs_installation_selection.png" src="../_images/windows_rcs_installation_selection.png" style="height: 420px;" /></a>
+<p>If you have selected the option to configure the current machine as a Remote Connection Server, you will be prompted with configuration screens for the Remote Connection Server.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These configuration screens only come up once the regular configuration screens have been filled out.
+They do not appear immediately after the Component Selection screen.</p>
+</div>
+<a class="reference internal image-reference" href="../_images/windows_secrets_management_setup.png"><img alt="../_images/windows_secrets_management_setup.png" src="../_images/windows_secrets_management_setup.png" style="height: 420px;" /></a>
+<p>If <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-ref-label"><span class="std std-ref">Secrets Management</span></a> is enabled in the database you will be presented with the option to assign a server role and grant master key access to the machine that is running the installer. (Windows and Linux only)</p>
+<a class="reference internal image-reference" href="../_images/linux_secrets_management_os_user.png"><img alt="../_images/linux_secrets_management_os_user.png" src="../_images/linux_secrets_management_os_user.png" style="height: 420px;" /></a>
+<ul class="simple">
+<li><p><strong>Username</strong>: Name of the OS user who will be running the <a class="reference internal" href="remote-connection-server.html#remote-connection-server-ref-label"><span class="std std-ref">Remote Connection Server</span></a>. Secrets Management Identities are created for a specific OS User and machine. This field specifies which OS User to create the server identity for. (Linux only, on windows the OS user who is running the installer will be used.)</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/windows_secrets_management_credentials.png"><img alt="../_images/windows_secrets_management_credentials.png" src="../_images/windows_secrets_management_credentials.png" style="height: 420px;" /></a>
+<ul class="simple">
+<li><p><strong>Admin Username</strong>: The username of the Secrets Management Administrator that you entered during the <a class="reference internal" href="install-db-repo.html#install-db-repo-installation-label"><span class="std std-ref">repository installation</span></a>.</p></li>
+<li><p><strong>Password</strong>: The password of the Secrets Management Administrator that you entered during the <a class="reference internal" href="install-db-repo.html#install-db-repo-installation-label"><span class="std std-ref">repository installation</span></a>.</p></li>
+<li><p><strong>Name of the current master key</strong>: Name of the Secrets Management master key. The default master key name is “defaultKey”. Use the default name, unless you have manually changed it using <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-command-generatenewmasterkey"><span class="std std-ref">GenerateNewMasterKey</span></a>.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In order for the Secrets Management configuration to be succesful, you must enable TLS in the next section.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are installing on macOS and wish to configure Secrets Management, run the <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-command-configureservermachine"><span class="std std-ref">ConfigureServerMachine</span></a> after the installation.</p>
+</div>
+<a class="reference internal image-reference" href="../_images/client_install_rcs_config.png"><img alt="../_images/client_install_rcs_config.png" src="../_images/client_install_rcs_config.png" style="height: 420px;" /></a>
+<p>The first page consists of a few different settings:</p>
+<ul class="simple">
+<li><p><strong>User/Group running the RCS</strong>: This is the user (or user group) that will be expected to run the Connection Server process. This value will dictate the initial permissions on files needed by the Connection Server, and the user listed on the HTTP.SYS URL Reservation (Windows only).</p></li>
+<li><p><strong>Unsecured port for Deadline Clients</strong>: This is the port on which the Server will listen for incoming HTTP requests. On Windows, this will also be the port listed on the HTTP.SYS URL Reservation created by the installer.</p></li>
+<li><dl class="simple">
+<dt><strong>Require external Clients to use TLS</strong>: If enabled, the Remote Connection Server will serve remote clients exclusively over an encrypted connection. It will require clients to provide a valid x509 certificate when connecting.</dt><dd><ul>
+<li><p><strong>Secured Port</strong>: If TLS is enabled, remote clients will need to connect to this TLS port (and not the unsecured HTTP port).</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>Launch RCS when Launcher starts</strong></p></li>
+<li><p><strong>Launcher restarts RCS whenever RCS stops running</strong>, for example when it crashes or you close it. The restart will only happen if Launcher is running.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>HTTP-only configurations should <em>only</em> be used internally within a closed network, and should not be exposed to the internet.</p>
+</div>
+<a class="reference internal image-reference" href="../_images/client_install_rcs_certs.png"><img alt="../_images/client_install_rcs_certs.png" src="../_images/client_install_rcs_certs.png" style="height: 420px;" /></a>
+<p>If TLS was enabled, this next page allows for configuration of the x509 certificates that the Connection Server will use to serve clients over TLS.</p>
+<ul class="simple">
+<li><p><strong>Generate New Certificates</strong>: Select this option if you do not have a set of certificates to use.</p></li>
+<li><dl class="simple">
+<dt><strong>Use Existing Certificates</strong>: Select this option if you’ve already generated a set of certificates to use (either externally or previously through the installer).</dt><dd><ul>
+<li><p><strong>Server Certificate</strong>: The path to a Server x509 certificate, in PKCS#12 (*.pfx, *.p12) format. This must include the private key alongside the certificate.</p></li>
+<li><p><strong>CA Certificate</strong>: The path to a trusted root CA that should be used to validate incoming client certificates.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<a class="reference internal image-reference" href="../_images/client_install_rcs_certgen.png"><img alt="../_images/client_install_rcs_certgen.png" src="../_images/client_install_rcs_certgen.png" style="height: 420px;" /></a>
+<p>This page is the final page for configuring the Connection Server, and only appears if ‘Generate New Certificates’ was selected in the previous step.
+It contains settings related to generating the CA, server, and client certificates.</p>
+<ul class="simple">
+<li><p><strong>Output Directory</strong>: This is the directory in which the set of generated certificates will be placed.</p></li>
+<li><p><strong>Client Certificate Password</strong>: You may specify a password that will be used to encrypt the Client certificate and key. If specified, it will need to be provided by clients connecting using this certificate. If you do not wish to set a password, leave this field blank.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Once the certificates have been generated, the ‘Deadline10RemoteClient.pfx’ file should be securely moved to client machines that are expected to connect to this Connection Server; it will be needed at connection time.
+In addition, the user(s) running the client processes will need to be granted Read access to the file (the installer creates the file with restrictive permissions).</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>It is important to be aware of who might have access to the file throughout the process of distributing it to the client machines – the operating system might change the access level of the file to be overly broad on a copy, for example.
+We recommend always maintaining each certificate with the minimal subset of permissions for the users that need to connect to the Deadline Repository.</p>
+</div>
+<div class="section" id="changing-connection-type-in-all-machines">
+<h3>Changing connection type in all machines:<a class="headerlink" href="#changing-connection-type-in-all-machines" title="Permalink to this headline">¶</a></h3>
+<p>After a successful connection to the Deadline Repository from the RCS, you can change the connection type by following the instructions at <a class="reference internal" href="changing-repository.html#change-repository-rcs-ref-label"><span class="std std-ref">Changing Repository</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can also try updating the connection type for one of the clients and then share the updated <a class="reference internal" href="client-config.html#client-config-ref-label"><span class="std std-ref">client config file</span></a> with other machines.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Migrating from Direct Connection to Remote Connection type</a><ul>
+<li><a class="reference internal" href="#installing-remote-connection-server">Installing Remote Connection Server</a><ul>
+<li><a class="reference internal" href="#changing-connection-type-in-all-machines">Changing connection type in all machines:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="changing-repository.html"
+                        title="previous chapter">Change Repository</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="upgrading.html"
+                        title="next chapter">Upgrading or Downgrading Deadline</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="upgrading.html" title="Upgrading or Downgrading Deadline"
+             >next</a></li>
+        <li class="right" >
+          <a href="changing-repository.html" title="Change Repository"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" >Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Migrating from Direct Connection to Remote Connection type</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

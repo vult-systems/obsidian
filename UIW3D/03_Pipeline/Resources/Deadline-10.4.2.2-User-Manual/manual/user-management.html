@@ -1,0 +1,256 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Management &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Worker Configuration" href="worker-config.html" />
+    <link rel="prev" title="Plugin Configuration" href="plugin-config.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="worker-config.html" title="Worker Configuration"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="plugin-config.html" title="Plugin Configuration"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" accesskey="U">Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">User Management</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="user-management">
+<span id="user-management-ref-label"></span><h1>User Management<a class="headerlink" href="#user-management" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Deadline has its own user system, which is primarily used to tie users to Jobs. By default, in the Monitor, Users cannot see the options to control or modify the settings of another User’s Jobs.</p>
+<p>Each user can configure their own user settings from the Monitor by selecting Tools -&gt; Options. See the <a class="reference internal" href="user-settings.html#user-settings-us-ref-label"><span class="std std-ref">Monitor and User Settings</span></a> documentation for more information on the available user settings.</p>
+</div>
+<div class="section" id="managing-users">
+<h2>Managing Users<a class="headerlink" href="#managing-users" title="Permalink to this headline">¶</a></h2>
+<p>Administrators can manage the all users from the Monitor. This is done by selecting Tools -&gt; Manage Users in Power User mode, or as a user within an appropriate User Group. From here, you can add or remove individual users,
+and edit their user settings. See the <a class="reference internal" href="user-settings.html#user-settings-us-ref-label"><span class="std std-ref">Monitor and User Settings</span></a> documentation for more information on the available user settings.</p>
+<a class="reference internal image-reference" href="../_images/manage_users.png"><img alt="../_images/manage_users.png" src="../_images/manage_users.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="user-settings">
+<h2>User Settings<a class="headerlink" href="#user-settings" title="Permalink to this headline">¶</a></h2>
+<p>User Settings can be configured in the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Configuration</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to Deadline 10.3.1, “User Settings” was referred to as “User Security”.</p>
+</div>
+<a class="reference internal image-reference" href="../_images/cro_user_settings.png"><img alt="../_images/cro_user_settings.png" src="../_images/cro_user_settings.png" style="height: 500px;" /></a>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Power User mode can be enabled in the Monitor to display administrative features in the Deadline Monitor, however users can still call DeadlineCommand or APIs to use these administration features.</p>
+</div>
+<p>By default, Deadline does not enable Deadline User Switching. When this option is enabled, the Deadline Monitor runs with the System User as the Deadline User.</p>
+<p>It is also recommended that you add a Power User password. When a password is set, the Monitor will require entering this password before Power User mode can be activated and display administration features (see below).</p>
+</div>
+<div class="section" id="user-group">
+<h2>User Group<a class="headerlink" href="#user-group" title="Permalink to this headline">¶</a></h2>
+<p>User Groups allow Administrators to adjust what functionality is visible to users in the Monitor.</p>
+<p>Deadline automatically creates an ‘Everyone’ User Group, which always contains all Users, and cannot be removed or disabled. This User Group is also populated with the default settings recommended for
+normal users.</p>
+<div class="section" id="managing-user-groups">
+<h3>Managing User Groups<a class="headerlink" href="#managing-user-groups" title="Permalink to this headline">¶</a></h3>
+<p>The User Group Management section can be opened as a Power User through the Tools -&gt; Manage User Groups menu in the Monitor.</p>
+<a class="reference internal image-reference" href="../_images/manage_user_groups.png"><img alt="../_images/manage_user_groups.png" src="../_images/manage_user_groups.png" style="height: 500px;" /></a>
+<p>The left side of this dialog contains the list of User Groups that have already been created in the Repository. There are also controls allowing you to manipulate this list in many ways:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Add</strong>: Will create a new User Group using the default options and Feature Access Levels (equivalent to the default ‘Everyone’ group before modification).</p></li>
+<li><p><strong>Remove</strong>: Will delete the selected User Group from the Repository. Note that the ‘Everyone’ group can never be Removed in order to guarantee that all Users will at least be part of this group.</p></li>
+<li><p><strong>Clone</strong>: Will create a new User Group using the Options and Feature Access Levels of the currently selected group as defaults.</p></li>
+</ul>
+</div></blockquote>
+<p>This list is visible regardless of which tab is selected, allowing you to quickly change which Group you’re modifying, and ensuring you’re always aware of which one is currently selected.</p>
+</div>
+<div class="section" id="general-options">
+<h3>General Options<a class="headerlink" href="#general-options" title="Permalink to this headline">¶</a></h3>
+<p>This tab contains basic higher-level settings for User Groups. Note that most of the features on this tab, described below, will be disabled when modifying the ‘Everyone’ group, since it is a special Group that must
+always be active and enabled for all Users.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>Group Options</dt><dd><ul>
+<li><p><strong>Group Enabled</strong>: This indicates whether or not this User Group is currently active or not. This is always true for the ‘Everyone’ Group.</p></li>
+<li><p><strong>Group Expires</strong>: This setting will cause a Group to only be valid up to the specified Date and Time. This cannot be set for the ‘Everyone’ Group.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Job UI Filters</dt><dd><ul>
+<li><p><strong>Can View Other Users’ Jobs</strong>: This setting determines whether or not Users belonging to the Group can see other Users’ jobs in the Monitor.</p></li>
+<li><p><strong>Can Modify Other Users’ Jobs</strong>: This setting indicates whether or not Users in this Group can see the options to modify other users’ jobs (change properties, job state, etc) in the Monitor.</p></li>
+<li><p><strong>Can Handle Monitor Uneditable Jobs</strong>: This setting determines whether or not Users belonging to the Group can see the archive or delete actions in the Monitor to jobs that do not belong to them.</p></li>
+<li><p><strong>Can Submit Jobs</strong>: This setting determines whether or not Users belonging to the Group can submit jobs from the Monitor.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>Default Monitor Layout</strong>: Here you can select a Monitor layout that was added to the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Configuration</span></a>. This layout will act as the default for users belonging to this user group.
+The Priority setting is used as a tie breaker if a user is part of more than one group with a default layout. When a user selects View -&gt; Reset Layout, it will reset to their user group’s default layout instead
+of the normal default. Finally, if the Reset Layout On Startup setting is enabled, the Monitor will always start up with that layout when it is launched.</p></li>
+<li><p><strong>Active Time-Window</strong>: This section allows you to set windows of time during which this Group is considered Active. This is useful if you want settings to change based on the time of day. This cannot be enabled for the ‘Everyone’ Group.</p></li>
+<li><p><strong>Group Members</strong>: This is where you control which Users are considered members of the currently selected Group. Users can be part of multiple Groups. All Users are always part of the ‘Everyone’ Group,
+and this cannot be changed.</p></li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to Deadline 10.3.1, “Job UI Filters” was referred to as “Job Access Level”, and “Active Time-Window” was referred to as “Time-Restricted Access”.</p>
+</div>
+</div>
+<div class="section" id="controlling-feature-visibility">
+<span id="controlling-feature-access-ref-label"></span><h3>Controlling Feature Visibility<a class="headerlink" href="#controlling-feature-visibility" title="Permalink to this headline">¶</a></h3>
+<p>The other tabs in the Group Management dialog are dedicated to showing Features in the Monitor on a per-group basis.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to Deadline 10.3.1, this section was referred to as “Controlling Feature Access”.</p>
+</div>
+<p>Each tab groups displays a different type of Feature, that represent different aspects of the end-user experience:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Menu Items</strong>: This tab contains all the Menu Item features, including the main menu bar, right-click menus, and toolbar items.</p></li>
+<li><p><strong>Job Properties</strong>: This tab contains all of a Job’s modifiable properties. Note that this is only visible for Jobs a User is allowed to modify.</p></li>
+<li><p><strong>Scripts</strong>: This contains all the different type of scripts a User could run from the Monitor. This section dynamically generated based
+on which Scripts are currently in the Repository. Note that all scripts will default to a value of ‘Inherited’, so make sure to revisit this screen when adding new scripts to your Repository.</p></li>
+<li><p><strong>UI Features</strong>: This tab contains all the different types of Panels that a User can spawn in the Monitor, and controls whether or not a particular User Group is allowed to spawn them.</p></li>
+</ul>
+</div></blockquote>
+<p>These Features are also grouped further within each tab into logical categories, to try and make maintenance easier.</p>
+<a class="reference internal image-reference" href="../_images/ugp_menu.png"><img alt="../_images/ugp_menu.png" src="../_images/ugp_menu.png" style="height: 500px;" /></a>
+<p>There are three possible options that you can specify for each Feature:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Visible</strong>: The members of this Group will be able to see this Feature in the Monitor.</p></li>
+<li><p><strong>Hidden</strong>: The members of this Group will not be able to see this Feature in this Monitor. Note, however, that Users in this Group <em>might</em> be see this Feature via their membership in a different User Group.</p></li>
+<li><p><strong>Inherited</strong>: Whether or not this Feature is ‘Visible’ or ‘Hidden’ is deferred to the Feature’s Parent Category. Its current inherited value is reflected in the coloured square next to the dropdown;
+Red indicates it is currently Hidden, while Green indicates it is currently Visible. Top-level Parents in a category cannot be set to ‘Inherited’.</p></li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to Deadline 10.3.1, “Visible” and “Hidden” were referred to as “Enabled” and “Disabled”.</p>
+</div>
+<p>If Users are part of multiple Groups, they will always use the least-restrictive option for a particular Feature. In other words, a given User will have visibility of a Feature as long as they are part of at least one
+active Group that has visibility of that Feature, regardless of whether or not their other Groups allow it.</p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">User Management</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#managing-users">Managing Users</a></li>
+<li><a class="reference internal" href="#user-settings">User Settings</a></li>
+<li><a class="reference internal" href="#user-group">User Group</a><ul>
+<li><a class="reference internal" href="#managing-user-groups">Managing User Groups</a></li>
+<li><a class="reference internal" href="#general-options">General Options</a></li>
+<li><a class="reference internal" href="#controlling-feature-visibility">Controlling Feature Visibility</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="plugin-config.html"
+                        title="previous chapter">Plugin Configuration</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="worker-config.html"
+                        title="next chapter">Worker Configuration</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="worker-config.html" title="Worker Configuration"
+             >next</a></li>
+        <li class="right" >
+          <a href="plugin-config.html" title="Plugin Configuration"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" >Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">User Management</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

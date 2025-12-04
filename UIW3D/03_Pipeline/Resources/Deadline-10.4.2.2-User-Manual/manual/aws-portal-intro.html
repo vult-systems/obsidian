@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AWS Portal Introduction &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="AWS Portal Cost Structure" href="aws-portal-costs.html" />
+    <link rel="prev" title="AWS Portal" href="index-aws-portal-reference.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-costs.html" title="AWS Portal Cost Structure"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="index-aws-portal-reference.html" title="AWS Portal"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWS Portal Introduction</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<div class="section" id="aws-portal-introduction">
+<span id="aws-portal-intro-ref-label"></span><h1>AWS Portal Introduction<a class="headerlink" href="#aws-portal-introduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="aws-portal-overview">
+<h2>AWS Portal Overview<a class="headerlink" href="#aws-portal-overview" title="Permalink to this headline">¶</a></h2>
+<p>AWS Portal is a Deadline 10 feature that lets you create or extend a render farm using Amazon Web Services (AWS).
+It allows you to launch render nodes in the cloud, transfer files between your network and AWS, and manage rendering licenses—all from the Deadline Monitor.</p>
+</div>
+<div class="section" id="what-does-aws-portal-do">
+<h2>What Does AWS Portal Do?<a class="headerlink" href="#what-does-aws-portal-do" title="Permalink to this headline">¶</a></h2>
+<p>AWS Portal connects Deadline 10 to your AWS account and uses EC2 Spot Instances to run cloud-based workers.
+These workers can be used to build a render farm entirely in the cloud, or to supplement your existing on-premises deployment of Deadline 10.
+Through the Deadline Monitor, you can control how many workers are launched, monitor worker activity, and configure settings related to asset transfer and licensing.</p>
+</div>
+<div class="section" id="when-to-use-aws-portal">
+<h2>When to Use AWS Portal<a class="headerlink" href="#when-to-use-aws-portal" title="Permalink to this headline">¶</a></h2>
+<p>AWS Portal is suitable for teams that:
+* Want to extend their existing on-premises Deadline 10 farm temporarily using cloud capacity
+* Need to handle peaks in rendering workload
+* Are working on short-term projects that do not require permanent hardware</p>
+</div>
+<div class="section" id="main-capabilities">
+<h2>Main Capabilities<a class="headerlink" href="#main-capabilities" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="worker-management">
+<h3>Worker Management<a class="headerlink" href="#worker-management" title="Permalink to this headline">¶</a></h3>
+<p>You can launch and manage EC2 Spot Fleets directly from the Deadline Monitor to run cloud-based render Workers.
+These workers join your render farm and process jobs like any other Deadline 10 Worker running on your premises.</p>
+</div>
+<div class="section" id="asset-management">
+<h3>Asset Management<a class="headerlink" href="#asset-management" title="Permalink to this headline">¶</a></h3>
+<p>Scene files, assets, and render outputs are automatically transferred between your network and AWS over encrypted connections.
+AWS Portal service components handle this file movement in the background.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Assets stored on AWS EC2 instance storage are not encrypted by default.</p>
+</div>
+</div>
+<div class="section" id="additional-resources">
+<h3>Additional Resources<a class="headerlink" href="#additional-resources" title="Permalink to this headline">¶</a></h3>
+<p>If you’re looking for more information, we’ve got our:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="aws-portal-supported-software.html#aws-portal-supported-software-ref-label"><span class="std std-ref">List of supported software</span></a> with AWS Portal,</p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/user/ThinkboxSoftware/videos">YouTube channel</a> with guides for setting up and using AWS Portal,</p></li>
+<li><p>And our <a class="reference internal" href="aws-portal-faq.html#aws-portal-faq-ref-label"><span class="std std-ref">AWS Portal FAQ</span></a>.</p></li>
+</ul>
+<p>See also: <a class="reference internal" href="considerations.html#considerations-ec2-ref-label"><span class="std std-ref">AWS EC2 Considerations</span></a>.</p>
+<p><a class="reference internal" href="aws-portal-costs.html#aws-portal-costs-ref-label"><span class="std std-ref">Next: AWS Portal Cost &gt;&gt;</span></a></p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">AWS Portal Introduction</a><ul>
+<li><a class="reference internal" href="#aws-portal-overview">AWS Portal Overview</a></li>
+<li><a class="reference internal" href="#what-does-aws-portal-do">What Does AWS Portal Do?</a></li>
+<li><a class="reference internal" href="#when-to-use-aws-portal">When to Use AWS Portal</a></li>
+<li><a class="reference internal" href="#main-capabilities">Main Capabilities</a><ul>
+<li><a class="reference internal" href="#worker-management">Worker Management</a></li>
+<li><a class="reference internal" href="#asset-management">Asset Management</a></li>
+<li><a class="reference internal" href="#additional-resources">Additional Resources</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index-aws-portal-reference.html"
+                        title="previous chapter">AWS Portal</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="aws-portal-costs.html"
+                        title="next chapter">AWS Portal Cost Structure</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-costs.html" title="AWS Portal Cost Structure"
+             >next</a></li>
+        <li class="right" >
+          <a href="index-aws-portal-reference.html" title="AWS Portal"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWS Portal Introduction</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

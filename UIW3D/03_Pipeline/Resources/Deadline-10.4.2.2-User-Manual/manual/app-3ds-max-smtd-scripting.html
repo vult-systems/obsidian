@@ -1,0 +1,341 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3ds Max - Integrated Submitter - Scripting &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3ds Command" href="app-3ds-command.html" />
+    <link rel="prev" title="3ds Max - Integrated Submitter Workflow - V-Ray Standalone" href="app-3ds-max-workflow-vrayexport.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-3ds-command.html" title="3ds Command"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-3ds-max-workflow-vrayexport.html" title="3ds Max - Integrated Submitter Workflow - V-Ray Standalone"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Max - Integrated Submitter - Scripting</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ds-max-integrated-submitter-scripting">
+<span id="app-3ds-max-smtd-scripting-ref-label"></span><h1>3ds Max - Integrated Submitter - Scripting<a class="headerlink" href="#ds-max-integrated-submitter-scripting" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
+<li><p><a class="reference internal" href="#creating-new-3ds-max-to-deadline-submitters" id="id2">Creating New 3ds Max to Deadline Submitters</a></p>
+<ul>
+<li><p><a class="reference internal" href="#developing-a-submitter-from-scratch" id="id3">Developing A Submitter From Scratch</a></p></li>
+<li><p><a class="reference internal" href="#developing-a-new-submitter-using-the-smtd-backend-functions" id="id4">Developing A New Submitter Using the SMTD Backend Functions</a></p></li>
+<li><p><a class="reference internal" href="#developing-new-submission-functionality-using-workflows" id="id5">Developing New Submission Functionality Using Workflows</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#features-accessible-only-via-maxscript" id="id6">Features Accessible Only Via MAXScript</a></p>
+<ul>
+<li><p><a class="reference internal" href="#custom-frame-list-definition" id="id7">Custom Frame List Definition</a></p></li>
+<li><p><a class="reference internal" href="#extra-output-filenames" id="id8">Extra Output Filenames</a></p></li>
+<li><p><a class="reference internal" href="#extra-job-info-keys" id="id9">Extra Job Info Keys</a></p></li>
+<li><p><a class="reference internal" href="#extra-plugin-info-keys" id="id10">Extra Plugin Info Keys</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="overview">
+<h2><a class="toc-backref" href="#contents">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The Submit Max To Deadline (SMTD) integrated submitter for 3ds Max was implemented using MAXScript in a manner that allows both Thinkbox and 3rd party developers to:</p>
+<ul class="simple">
+<li><p>Use parts of its backend functionality to create new submitters</p></li>
+<li><p>Expand its functionality by adding new Workflows</p></li>
+<li><p>Access functionality that is not exposed in the SMTD User Interface</p></li>
+</ul>
+<p>SMTD consists of the following major parts:</p>
+<ul class="simple">
+<li><p>The SMTD Backend which implement the settings and functions related to the submission of a job and integration with Deadline, fully decoupled from any User Interface.</p></li>
+<li><p>The SMTD User Interface which is just one possible access point to the SMTD Backend functionality, but could be replaced by alternative implementations</p></li>
+<li><p>The SMTD Launcher which is the client script installed in the 3ds Max UI (Menu, Toolbar etc.) and is responsible for loading the SMTD Backend and User Interface scripts.</p></li>
+<li><p>Various additional script and INI files used by parts of SMTD.</p></li>
+</ul>
+</div>
+<div class="section" id="creating-new-3ds-max-to-deadline-submitters">
+<h2><a class="toc-backref" href="#contents">Creating New 3ds Max to Deadline Submitters</a><a class="headerlink" href="#creating-new-3ds-max-to-deadline-submitters" title="Permalink to this headline">¶</a></h2>
+<p>When creating a new submitter for a specific purpose, a developer can elect one of the following major approaches:</p>
+<ul class="simple">
+<li><p>Write the submitter entirely from scratch.</p></li>
+<li><p>Use the SMTD Backend functions and develop a completely new User Interface to match the end users’ needs.</p></li>
+<li><p>Use both the SMTD Backend functions and SMTD UI and implement new UI and logic components using SMTD Workflows.</p></li>
+</ul>
+<div class="section" id="developing-a-submitter-from-scratch">
+<h3><a class="toc-backref" href="#contents">Developing A Submitter From Scratch</a><a class="headerlink" href="#developing-a-submitter-from-scratch" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>This is obviously the most difficult and time consuming approach approach, as every single feature and function would have to be implemented by the developer.</p></li>
+</ul>
+<p><strong>Pros</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The main benefit would be that all functionality would be completely purpose-built for the specific task.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Cons</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Slowest development turnaround.</p></li>
+<li><p>Requires deep knowledge of both 3ds Max and Deadline.</p></li>
+<li><p>Bug fixes made by Thinkbox to SMTD would not apply automatically to such custom submitters.</p></li>
+<li><p>Resulting workflows and UI could appear alien to an SMTD user.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="developing-a-new-submitter-using-the-smtd-backend-functions">
+<h3><a class="toc-backref" href="#contents">Developing A New Submitter Using the SMTD Backend Functions</a><a class="headerlink" href="#developing-a-new-submitter-using-the-smtd-backend-functions" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Both Thinkbox and 3rd party developers can use the SMTDFunctions and SMTDSettings implemented by the SubmitMaxToDeadline_Functions.ms file to create new submitters.</p></li>
+<li><p>Several Thinkbox plugins like Krakatoa MX, Stoke MX, and XMesh Save MX use this approach and offer custom Deadline submission panels within their own UIs, but reuse the functionality offered by SMTD’s Backend.</p></li>
+<li><p>A few studios and individual users have also written their own custom submitters based on the SMTD Backend.</p></li>
+</ul>
+<p><strong>Pros</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Fast development turnaround.</p></li>
+<li><p>Will benefit from bug fixes, functionality and performance improvements rolled out with Deadline updates.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Cons</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Requires familiarity with the SMTD properties and functions.</p></li>
+<li><p>Resulting User Interface and workflow could differ from SMTD.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="developing-new-submission-functionality-using-workflows">
+<h3><a class="toc-backref" href="#contents">Developing New Submission Functionality Using Workflows</a><a class="headerlink" href="#developing-new-submission-functionality-using-workflows" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Starting with Deadline 10, developers can easily add new functionality to the existing SMTD User Interface via Workflow definitions.</p></li>
+<li><p><a class="reference internal" href="app-3ds-max-workflows.html#app-3ds-max-workflows-ref-label"><span class="std std-ref">See the Workflows topic for details</span></a>.</p></li>
+</ul>
+<p><strong>Pros</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Very fast development (often under an hour) to implement a completely new submitter.</p></li>
+<li><p>User Interface will be very familiar to the end user.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Cons</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Not optimal for deep integration with plugins, e.g. Krakatoa Partitioning on Deadline or XMesh Saver submission are better integrated within the Krakatoa UI than they would be as external Workflows.</p></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="features-accessible-only-via-maxscript">
+<h2><a class="toc-backref" href="#contents">Features Accessible Only Via MAXScript</a><a class="headerlink" href="#features-accessible-only-via-maxscript" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>A few features have been added to SMTD specifically for 3rd party developers using the SMTD Backend for custom submitter development.</p></li>
+<li><p>These features are not exposed to the SMTD User Interface shipping with Deadline and make sense only in the context of custom submission scripting.</p></li>
+<li><p>They include:</p>
+<ul>
+<li><p><strong>Custom Frame List Definition</strong> - allows the developer to specify the exact frame order beyond the pre-defined custom sequences available in the SMTD UI.</p></li>
+<li><p><strong>Extra Output Filenames</strong> - allows the developer to specify a list of paths to be exposed in the Monitor’s Job right-click menus beyond the paths acquired from render output and render elements in the 3ds Max Render Setup dialog.</p></li>
+<li><p><strong>Extra Job Info Keys</strong> - allows the developer to specify arbitrary Job Info Key=Value pairs to be included with the job.</p></li>
+<li><p><strong>Extra Plugin Info Keys</strong> - allows the developer to specify arbitrary Plugin Info Key=Value pairs to be included with the job.</p></li>
+</ul>
+</li>
+</ul>
+<div class="section" id="custom-frame-list-definition">
+<h3><a class="toc-backref" href="#contents">Custom Frame List Definition</a><a class="headerlink" href="#custom-frame-list-definition" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>The SMTD UI offers a number of possible pre-defined frame sequence orders, including straight and reversed, every Nth frame with different fill modes, etc.</p></li>
+<li><p>However, in production some more elaborate frame sequences might be required to ensure the most important frames are processed first to catch any issues before finishing the rest of the job.</p></li>
+<li><p>For that reason, the option to define a custom frame sequence entirely via MAXScript was added to SMTD in Deadline 10.</p></li>
+<li><p>Two new SMTDSettings properties have been introduced:</p>
+<ul>
+<li><p><strong>SMTDSettings.CustomFrameList</strong> - an array defaulting to empty array #(). It can be used to define the exact explicit order to process the frames.</p></li>
+<li><p><strong>SMTDSettings.UseCustomFrameList</strong> - a boolean value which defaults to false. When set to true, the custom frame sequence defined by SMTDSettings.CustomFrameList will be used.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>For example:</strong></p>
+<p>An actual customer asked for the following frame sequence on the Thinkbox Support Forum:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>First, Middle, and Last frames first</p></li>
+<li><p>First ten consecutive frames</p></li>
+<li><p>The remaining frames in the range, optionally supporting every Nth frame</p></li>
+</ol>
+</div></blockquote>
+<p>Using the new custom frame list definition, the solution in a custom SMTD-based submission script would look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SMTDSettings</span><span class="o">.</span><span class="n">UseCustomFrameList</span> <span class="o">=</span> <span class="n">true</span>
+<span class="n">SMTDSettings</span><span class="o">.</span><span class="n">CustomFrameList</span><span class="o">=</span><span class="c1">#(rendStart.frame as integer, (rendEnd.frame as integer - rendStart.frame as integer )/2, rendEnd.frame as integer) --first, middle, last</span>
+<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="n">rendStart</span><span class="o">+</span><span class="mi">1</span> <span class="n">to</span> <span class="n">rendStart</span><span class="o">+</span><span class="mi">10</span> <span class="n">do</span> <span class="n">appendIfUnique</span> <span class="n">SMTDSettings</span><span class="o">.</span><span class="n">CustomFrameList</span> <span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">frame</span> <span class="k">as</span> <span class="n">integer</span><span class="p">)</span>  <span class="o">--</span><span class="n">first</span> <span class="mi">10</span>
+<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="n">rendStart</span> <span class="n">to</span> <span class="n">rendEnd</span> <span class="n">by</span> <span class="mi">5</span> <span class="n">do</span> <span class="n">appendIfUnique</span> <span class="n">SMTDSettings</span><span class="o">.</span><span class="n">CustomFrameList</span> <span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">frame</span> <span class="k">as</span> <span class="n">integer</span><span class="p">)</span>  <span class="o">--</span> <span class="n">every</span> <span class="mi">5</span><span class="n">th</span>
+<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="n">rendStart</span> <span class="n">to</span> <span class="n">rendEnd</span> <span class="n">do</span> <span class="n">appendIfUnique</span> <span class="n">SMTDSettings</span><span class="o">.</span><span class="n">CustomFrameList</span> <span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">frame</span> <span class="k">as</span> <span class="n">integer</span><span class="p">)</span> <span class="o">--</span><span class="nb">all</span> <span class="n">others</span>
+<span class="k">with</span> <span class="n">PrintAllElements</span> <span class="n">on</span> <span class="nb">format</span> <span class="s2">&quot;%</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="n">SMTDSettings</span><span class="o">.</span><span class="n">CustomFrameList</span> <span class="o">--</span><span class="n">show</span> <span class="n">me</span> <span class="n">the</span> <span class="n">result</span>
+</pre></div>
+</div>
+<p>The output from the last line of the script when submitting frame range from 0 to 100 would look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--&gt;</span> <span class="c1">#(0, 50, 100, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 55, 60, 65, 70, 75, 80, 85, 90, 95, 11, 12, 13, 14, 16, 17, 18, 19, 21, 22, 23, 24, 26, 27, 28, 29, 31, 32, 33, 34, 36, 37, 38, 39, 41, 42, 43, 44, 46, 47, 48, 49, 51, 52, 53, 54, 56, 57, 58, 59, 61, 62, 63, 64, 66, 67, 68, 69, 71, 72, 73, 74, 76, 77, 78, 79, 81, 82, 83, 84, 86, 87, 88, 89, 91, 92, 93, 94, 96, 97, 98, 99)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="extra-output-filenames">
+<h3><a class="toc-backref" href="#contents">Extra Output Filenames</a><a class="headerlink" href="#extra-output-filenames" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Normally, the function <strong>SMTDFunctions.CreateSubmitInfoFile()</strong> will write any output paths referenced by the renderer to the Job Info file as <strong>OutputFilename%=</strong> entries, where % will be replaced with an incremental index.</p></li>
+<li><p>These paths automatically become visible in the Job’s right-click menu in the Monitor, allowing the user to explore them or open the files.</p></li>
+<li><p>However, in some cases the job in question might contain output paths that are not directly discoverable as renderer properties.</p></li>
+<li><p>For example, a script could be submitting a MAXScript job to perform some custom exporting, simulation, or data file creation unrelated to rendering - it would be useful to be able to add the output filename to the JOB file.</p></li>
+<li><p>In versions prior to Deadline 10, this would be done by appending to the already written JOB file.</p></li>
+<li><p>Starting with Deadline 10, it is now possible to simply populate the new property <strong>SMTDSettings.ExtraOutputFilenames</strong> with an array of paths to be included.</p></li>
+<li><p>Note that once set, the property will keep its value until it set explicitly to an empty array #(), or SMTD is restarted - be sure to set to #() when done submitting!</p></li>
+</ul>
+</div>
+<div class="section" id="extra-job-info-keys">
+<h3><a class="toc-backref" href="#contents">Extra Job Info Keys</a><a class="headerlink" href="#extra-job-info-keys" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>In many cases, submitting a custom job using the SMTD Backend functionality involves calling <strong>SMTDFunctions.CreateSubmitInfoFile()</strong> to create a Job Info file.</p></li>
+<li><p>However, the content of the file is relatively rigid and oriented at render submissions.</p></li>
+<li><p>In many cases, especially when submitting custom MAXScript jobs to perform non-rendering tasks, additional keys need to be added to the Job Info file.</p></li>
+<li><p>Prior to Deadline 10, this could be done either by appending to the already created Job Info file, or by writing the whole file from scratch using completely custom logic.</p></li>
+<li><p>Starting with Deadline 10, it is very easy to add arbitrary additional Key=Value Pairs by populating the property <strong>SMTDSettings.ExtraJobInfoKeys</strong> with an array of arrays</p></li>
+<li><p>Each array element must be a sub-array containing exactly two elements; anything else will be skipped automatically.</p></li>
+</ul>
+<p><strong>For example:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SMTDSettings</span><span class="o">.</span><span class="n">ExtraJobInfoKeys</span> <span class="o">=</span> <span class="c1">#( #(&quot;MyNewKey&quot;, &quot;MyNewValue&quot;), #(&quot;AnotherKey&quot;, 10.0) ) --define two key=value pairs</span>
+<span class="n">append</span> <span class="n">SMTDSettings</span><span class="o">.</span><span class="n">ExtraJobInfoKeys</span> <span class="c1">#(&quot;TheAnswer&quot;, 42) --add another key=value pair</span>
+<span class="n">append</span> <span class="n">SMTDSettings</span><span class="o">.</span><span class="n">ExtraJobInfoKeys</span> <span class="mf">123.456</span> <span class="o">--</span><span class="n">this</span> <span class="ow">is</span> <span class="n">of</span> <span class="n">course</span> <span class="n">invalid</span> <span class="n">because</span> <span class="ow">not</span> <span class="n">an</span> <span class="n">array</span><span class="p">,</span> <span class="n">but</span> <span class="n">will</span> <span class="n">be</span> <span class="n">handled</span> <span class="n">safely</span> <span class="ow">and</span> <span class="n">will</span> <span class="n">be</span> <span class="n">skipped</span>
+<span class="n">append</span> <span class="n">SMTDSettings</span><span class="o">.</span><span class="n">ExtraJobInfoKeys</span> <span class="c1">#(234.567) --this is also invalid, because the array has no second value, but it is safe and will be skipped</span>
+<span class="n">append</span> <span class="n">SMTDSettings</span><span class="o">.</span><span class="n">ExtraJobInfoKeys</span> <span class="c1">#(1,2,3) --this is also invalid, because the array has more than two values, it will also be skipped</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="extra-plugin-info-keys">
+<h3><a class="toc-backref" href="#contents">Extra Plugin Info Keys</a><a class="headerlink" href="#extra-plugin-info-keys" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Similar to the Extra Job Info Keys, the Extra Plugin Info Keys can be defined via the property <strong>SMTDSettings.ExtraPluginInfoKeys</strong>.</p></li>
+<li><p>If the property is set to an array of two-element sub-arrays, extra Key=Value pairs will be included in the Plugin Info file when the function <strong>SMTDFunctions.CreateJobInfoFile()</strong> is called.</p></li>
+<li><p>The same rules outlined in the previous section apply.</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3ds Max - Integrated Submitter - Scripting</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#creating-new-3ds-max-to-deadline-submitters">Creating New 3ds Max to Deadline Submitters</a><ul>
+<li><a class="reference internal" href="#developing-a-submitter-from-scratch">Developing A Submitter From Scratch</a></li>
+<li><a class="reference internal" href="#developing-a-new-submitter-using-the-smtd-backend-functions">Developing A New Submitter Using the SMTD Backend Functions</a></li>
+<li><a class="reference internal" href="#developing-new-submission-functionality-using-workflows">Developing New Submission Functionality Using Workflows</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#features-accessible-only-via-maxscript">Features Accessible Only Via MAXScript</a><ul>
+<li><a class="reference internal" href="#custom-frame-list-definition">Custom Frame List Definition</a></li>
+<li><a class="reference internal" href="#extra-output-filenames">Extra Output Filenames</a></li>
+<li><a class="reference internal" href="#extra-job-info-keys">Extra Job Info Keys</a></li>
+<li><a class="reference internal" href="#extra-plugin-info-keys">Extra Plugin Info Keys</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-3ds-max-workflow-vrayexport.html"
+                        title="previous chapter">3ds Max - Integrated Submitter Workflow - V-Ray Standalone</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-3ds-command.html"
+                        title="next chapter">3ds Command</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-3ds-command.html" title="3ds Command"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-3ds-max-workflow-vrayexport.html" title="3ds Max - Integrated Submitter Workflow - V-Ray Standalone"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Max - Integrated Submitter - Scripting</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

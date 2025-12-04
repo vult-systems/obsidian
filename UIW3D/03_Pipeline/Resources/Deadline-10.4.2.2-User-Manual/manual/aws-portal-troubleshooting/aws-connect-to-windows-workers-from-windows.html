@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connecting to a Windows AWS Portal Worker From a Windows Machine &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thinkbox.css" />
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Job Report Says it Failed to Load Scene" href="job-report-says-it-failed-to-load-scene.html" />
+    <link rel="prev" title="Connecting to a Windows AWS Portal Worker From Linux or macOS" href="aws-connect-to-windows-workers-from-linux-or-osx.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="job-report-says-it-failed-to-load-scene.html" title="Job Report Says it Failed to Load Scene"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="aws-connect-to-windows-workers-from-linux-or-osx.html" title="Connecting to a Windows AWS Portal Worker From Linux or macOS"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Connecting to a Windows AWS Portal Worker From a Windows Machine</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="../aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<span class="target" id="aws-connect-to-windows-workers-from-windows-ref-label"></span><div class="section" id="connecting-to-a-windows-aws-portal-worker-from-a-windows-machine">
+<h1>Connecting to a Windows AWS Portal Worker From a Windows Machine<a class="headerlink" href="#connecting-to-a-windows-aws-portal-worker-from-a-windows-machine" title="Permalink to this headline">¶</a></h1>
+<p>If you are connecting to the Gateway instance from a Windows machine use the following steps.</p>
+<ul class="simple">
+<li><p><strong>Install PuTTY</strong> <br /> Download and install PuTTY from the <a class="reference external" href="https://www.chiark.greenend.org.uk/~sgtatham/putty/">PuTTY download page</a>. If you already have an older version of PuTTY installed, we recommend that you download the latest version. Be sure to install the entire suite.</p></li>
+</ul>
+<p><strong>Converting Your Private Key Using PuTTYgen</strong></p>
+<p>AWS Portal Link creates the DashKey in a private key format (.pem) which PuTTY does not natively support. PuTTY has a tool named PuTTYgen, which can convert keys to the required PuTTY
+format (.ppk). You must convert your private key into this format (.ppk) before attempting to connect to the Gateway instance using PuTTY.</p>
+<p>To convert the DashKey</p>
+<ol class="arabic">
+<li><p>Start PuTTYgen as Administrator (for example, from the Start menu, choose All Programs &gt; PuTTY &gt; PuTTYgen, Right Click &gt; Run as administrator).</p></li>
+<li><p>Under Type of key to generate, choose RSA.</p>
+<img alt="../../_images/RSAPutty.png" src="../../_images/RSAPutty.png" />
+<p>If you’re using an older version of PuTTYgen, choose SSH-2 RSA.</p>
+</li>
+<li><p>Choose Load. By default, PuTTYgen displays only files with the extension .ppk. To locate your .pem file, select the option to display files of all types. Then navigate to the directory with the <a class="reference internal" href="aws-connect-to-infrastructure.html#dashkey"><span class="std std-ref">DashKey</span></a> that you found earlier.</p></li>
+<li><p>Select the DashKey file, and then choose Open. Choose OK to dismiss the confirmation dialog box.</p></li>
+<li><p>Choose Save private key to save the key in the format that PuTTY can use. PuTTYgen displays a warning about saving the key without a passphrase. Choose Yes.</p></li>
+<li><p>Specify the DashKey. PuTTY automatically adds the .ppk file extension.</p></li>
+</ol>
+<p>The DashKey is now in the correct format for use with PuTTY. You can now connect to your Gateway instance using PuTTY’s SSH client.</p>
+<p><strong>Starting a PuTTY Session</strong></p>
+<p>Use the following procedure to connect to the Gateway instance using PuTTY. You need the DashKey.ppk file that you created earlier for the DashKey.</p>
+<p>To start a PuTTY session</p>
+<ol class="arabic">
+<li><p>Start PuTTY as Administrator (from the Start menu, choose All Programs &gt; PuTTY &gt; PuTTY, Right Click &gt; Run as administrator).</p></li>
+<li><p>In the Category pane, choose Session and complete the following fields:</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>In the Host Name box, enter <a class="reference internal" href="aws-connect-to-infrastructure.html#public-dns-name-or-ipv4-address"><span class="std std-ref">ec2-user&#64;public_dns_name_or_ipv4_address</span></a>. <br /> <br /></p></li>
+<li><p>Under Connection type, select SSH. <br /> <br /></p></li>
+<li><p>Ensure that Port is 22. <br /> <br /></p></li>
+</ol>
+<img alt="../../_images/PuttyExample.png" src="../../_images/PuttyExample.png" />
+</div></blockquote>
+</li>
+<li><p>(Optional) You can configure PuTTY to automatically send ‘keepalive’ data at regular intervals to keep the session active. This is useful to avoid disconnecting from your instance due to session inactivity. In the Category pane, choose Connection, and then enter the required interval in the Seconds between keepalives field. For example, if your session disconnects after 10 minutes of inactivity, enter 180 to configure PuTTY to send keepalive data every 3 minutes.</p></li>
+<li><p>In the Category pane, expand Connection, expand SSH, and then choose Auth. Complete the following:</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>Choose Browse. <br /> <br /></p></li>
+<li><p>Select the <a class="reference internal" href="aws-connect-to-infrastructure-from-windows.html#dash-ppk"><span class="std std-ref">DashKey.ppk</span></a> file that you generated earlier, and then choose Open. <br /> <br /></p></li>
+</ol>
+<ol class="loweralpha simple" start="4">
+<li><p>Select the Allow agent forwarding check box. <br /> <br /></p></li>
+<li><p>(Optional) If you plan to start this session again later, you can save the session information for future use. Choose Session in the Category tree, enter a name for the session in Saved Sessions, and then choose Save. <br /> <br /></p></li>
+<li><p>Choose Open to start the PuTTY session. <br /> <br /></p></li>
+</ol>
+<img alt="../../_images/PuttyAuthExampleAgentForwarding.png" src="../../_images/PuttyAuthExampleAgentForwarding.png" />
+</div></blockquote>
+</li>
+<li><p>In the Category pane, expand Connection, expand SSH, and then choose Tunnels. Complete the following:</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>In the Source port box, enter 13389</p></li>
+<li><p>In the Destination box, enter the workers_private_ipv4_address:3389</p></li>
+<li><p>Click Add</p></li>
+<li><p>Ensure the Local box is checked</p></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p>If this is the first time you have connected to this instance, PuTTY displays a security alert dialog box that asks whether you trust the host you are connecting to.</p></li>
+<li><p>Choose Yes. A window opens and you are connected to your Gateway instance.</p></li>
+</ol>
+<p><strong>Configuring the Worker to accept RDP connections</strong></p>
+<p>By default the security group of the instance the Worker is running on won’t allow for incoming traffic on port 3389 (RDP). Follow these steps to allow incoming traffic on this port:</p>
+<ol class="arabic">
+<li><p>Open AWS Console</p></li>
+<li><p>Go to Services &gt; EC2 &gt; Instances</p></li>
+<li><p>Find the instance with the Worker you want to connect to</p></li>
+<li><p>With the Worker instance selected find the security group displayed in the description pane below, click the link to edit the security group</p></li>
+<li><p>Change to the Inbound tab then click Edit &gt; Add Rule &gt; Select RDP from the “Type” dropdown and for the source, copy the address from the “SSH” rule.</p>
+<blockquote>
+<div><img alt="../../_images/aws-connecting-to-windows-workers-from-windows-configure-inbound-rules.png" src="../../_images/aws-connecting-to-windows-workers-from-windows-configure-inbound-rules.png" />
+</div></blockquote>
+</li>
+</ol>
+<p><strong>Connecting to the Worker</strong></p>
+<p>Once you have logged into the Gateway instance you can now log into your AWS Portal Worker instances.</p>
+<ol class="arabic">
+<li><p>Open Remote Desktop Connection.</p></li>
+<li><p>Click Show Options</p></li>
+<li><p>In the Computer box, enter localhost:13389</p></li>
+<li><p>In the User name box, enter Administrator</p></li>
+<li><p>You will need the password for the Windows machine</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>Open AWS Console <br /> <br /></p></li>
+<li><p>Go to Services &gt; EC2 &gt; INSTANCES &gt; Instances <br /> <br /></p></li>
+<li><p>Filter by IP Address <br /> <br /></p></li>
+<li><p>Right Click instance &gt; Get Windows Password <br /> <br /></p></li>
+</ol>
+<img alt="../../_images/GetPasswordContext.png" src="../../_images/GetPasswordContext.png" />
+<ol class="loweralpha simple" start="5">
+<li><p>Click Browse… beside Key Pair path <br /> <br /></p></li>
+<li><p>Navigate to DashKey location <br /> <br /></p></li>
+<li><p>Select DashKey and click open <br /> <br /></p></li>
+<li><p>Click Decrypt Password <br /> <br /></p></li>
+</ol>
+<img alt="../../_images/DecryptPassword.png" src="../../_images/DecryptPassword.png" />
+<ol class="lowerroman simple">
+<li><p>Copy Password <br /> <br /></p></li>
+</ol>
+<img alt="../../_images/GetPassword.png" src="../../_images/GetPassword.png" />
+</div></blockquote>
+</li>
+<li><p>Click Connect</p></li>
+</ol>
+<ol class="arabic simple" start="8">
+<li><p>Paste in the Password</p></li>
+</ol>
+<ol class="arabic simple" start="7">
+<li><p>You will get a warning saying. The identity of the remote computer cannot be verified. Do you want to connect anyway?</p></li>
+<li><p>Click Yes</p></li>
+</ol>
+<blockquote>
+<div><p>	You are now connected to your AWS Portal Worker instance.</p>
+</div></blockquote>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aws-connect-to-windows-workers-from-linux-or-osx.html"
+                        title="previous chapter">Connecting to a Windows AWS Portal Worker From Linux or macOS</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="job-report-says-it-failed-to-load-scene.html"
+                        title="next chapter">Job Report Says it Failed to Load Scene</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="job-report-says-it-failed-to-load-scene.html" title="Job Report Says it Failed to Load Scene"
+             >next</a></li>
+        <li class="right" >
+          <a href="aws-connect-to-windows-workers-from-linux-or-osx.html" title="Connecting to a Windows AWS Portal Worker From Linux or macOS"
+             >previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Connecting to a Windows AWS Portal Worker From a Windows Machine</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,375 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AWSThinkboxDeadlineResourceTrackerAdminPolicy &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thinkbox.css" />
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../../search.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">AWSThinkboxDeadlineResourceTrackerAdminPolicy</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="awsthinkboxdeadlineresourcetrackeradminpolicy">
+<h1>AWSThinkboxDeadlineResourceTrackerAdminPolicy<a class="headerlink" href="#awsthinkboxdeadlineresourcetrackeradminpolicy" title="Permalink to this headline">¶</a></h1>
+<p>You can attach the AWSThinkboxDeadlineResourceTrackerAdminPolicy policy to your IAM identities.</p>
+<p>This policy grants administrative permissions that allow Deadline to create, destroy, and administer AWS Thinkbox’s Deadline <a class="reference internal" href="../resource-tracker-overview.html#resource-tracker-overview-ref-label"><span class="std std-ref">Resource Tracker</span></a>.</p>
+<div class="section" id="permissions-details">
+<h2>Permissions details<a class="headerlink" href="#permissions-details" title="Permalink to this headline">¶</a></h2>
+<p>This policy includes the following permissions.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">application-autoscaling</span></code> - Used for DynamoDB autoscaling, to automatically scale database capacity according to load.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cloudformation</span></code> - The Deadline Resource Tracker is implemented using a CloudFormation stack.  These permissions are used to create, delete, and configure this stack.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dynamodb</span></code> - Deadline Resource Tracker uses DynamoDB to store the state of the resources that it’s tracking. These permissions are used to create, delete, and configure these resources. We also include <cite>Scan</cite> in order for the Deadline applications to get fleet health information from AWS, and <cite>BatchWriteItem</cite> in order to remove unhealthy fleets from the Resource Tracker system.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">events</span></code> - We use EventBridge rules to trigger the execution of Resource Tracker Lambda functions.  These permissions are used to create, delete, and configure these rules.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">iam</span></code> - Used to retrieve information about IAM roles and users to improve error messages. We use <cite>CreateServiceLinkedRole</cite> to create DynamoDB Application Autoscaling that automatically provision capacity for the Deadline Resource Tracker’s DynamoDB tables. We also use <cite>PassRole</cite> to grant the permissions required by Resource Tracker Lambda functions and the DynamoDB Application Autoscaling service.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lambda</span></code> - The Resource Tracker execution is implemented using Lambda functions.  These permissions are used to create, delete, update, tag and configure these Lambda functions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">s3</span></code> - The Resource Tracker use S3 to store the Deadline Resource Tracker’s CloudFormation template and Lambda deployment package files. These permission grants read access to those files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sqs</span></code> - SQS is used to communicate between Deadline Worker instances and the Resource Tracker system.  These permissions are used to create, delete, and configure the queue that we use for this communication.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Statement&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AWSThinkboxDeadlineResourceTracker1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;application-autoscaling:DeleteScalingPolicy&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;application-autoscaling:DeregisterScalableTarget&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;application-autoscaling:DescribeScalableTargets&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;application-autoscaling:DescribeScalingPolicies&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;application-autoscaling:PutScalingPolicy&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;application-autoscaling:RegisterScalableTarget&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;*&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AWSThinkboxDeadlineResourceTracker2&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;cloudformation:ListStacks&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;*&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AWSThinkboxDeadlineResourceTracker3&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;cloudformation:CreateStack&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;cloudformation:DeleteStack&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;cloudformation:UpdateStack&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;cloudformation:DescribeStacks&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;cloudformation:UpdateTerminationProtection&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;cloudformation:TagResource&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;cloudformation:UntagResource&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;arn:aws:cloudformation:*:*:stack/DeadlineResourceTracker*&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AWSThinkboxDeadlineResourceTracker4&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;dynamodb:CreateTable&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;dynamodb:DeleteTable&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;dynamodb:DescribeTable&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;dynamodb:ListTagsOfResource&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;dynamodb:TagResource&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;dynamodb:UntagResource&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;arn:aws:dynamodb:*:*:table/DeadlineEC2ComputeNodeHealth*&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;arn:aws:dynamodb:*:*:table/DeadlineEC2ComputeNodeInfo*&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;arn:aws:dynamodb:*:*:table/DeadlineFleetHealth*&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AWSThinkboxDeadlineResourceTracker5&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;dynamodb:BatchWriteItem&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;dynamodb:Scan&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;arn:aws:dynamodb:*:*:table/DeadlineFleetHealth*&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AWSThinkboxDeadlineResourceTracker6&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;events:DeleteRule&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;events:DescribeRule&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;events:PutRule&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;events:PutTargets&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;events:RemoveTargets&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;arn:aws:events:*:*:rule/DeadlineResourceTracker*&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AWSThinkboxDeadlineResourceTracker7&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;iam:GetRole&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;iam:ListAttachedRolePolicies&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;arn:aws:iam::*:role/DeadlineResourceTracker*&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AWSThinkboxDeadlineResourceTracker8&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;iam:GetUser&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;*&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AWSThinkboxDeadlineResourceTracker9&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;iam:CreateServiceLinkedRole&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;arn:aws:iam::*:role/aws-service-role/*&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Condition&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;StringEquals&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;iam:AWSServiceName&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;dynamodb.application-autoscaling.amazonaws.com&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AWSThinkboxDeadlineResourceTracker10&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;iam:PassRole&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;arn:aws:iam::*:role/DeadlineResourceTrackerAccess*&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Condition&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;StringEquals&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;iam:PassedToService&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;lambda.amazonaws.com&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AWSThinkboxDeadlineResourceTracker11&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;iam:PassRole&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;arn:aws:iam::*:role/aws-service-role/dynamodb.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_DynamoDBTable&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Condition&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;StringEquals&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;iam:PassedToService&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;application-autoscaling.amazonaws.com&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AWSThinkboxDeadlineResourceTracker12&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;lambda:GetEventSourceMapping&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;*&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AWSThinkboxDeadlineResourceTracker13&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;lambda:CreateEventSourceMapping&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lambda:DeleteEventSourceMapping&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;*&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Condition&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;ArnLike&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;lambda:FunctionArn&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;arn:aws:lambda:*:*:function:DeadlineResourceTracker*&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AWSThinkboxDeadlineResourceTracker14&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;lambda:AddPermission&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lambda:RemovePermission&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;arn:aws:lambda:*:*:function:DeadlineResourceTracker*&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Condition&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;StringLike&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;lambda:Principal&quot;</span><span class="p">:</span> <span class="s2">&quot;events.amazonaws.com&quot;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+        <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AWSThinkboxDeadlineResourceTracker15&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;lambda:CreateFunction&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lambda:DeleteFunction&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lambda:DeleteFunctionConcurrency&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lambda:GetFunction&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lambda:GetFunctionConfiguration&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lambda:ListTags&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lambda:PutFunctionConcurrency&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lambda:TagResource&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lambda:UntagResource&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lambda:UpdateFunctionCode&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lambda:UpdateFunctionConfiguration&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;arn:aws:lambda:*:*:function:DeadlineResourceTracker*&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AWSThinkboxDeadlineResourceTracker16&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;s3:GetObject&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;arn:aws:s3:::*/deadline_aws_resource_tracker-*.zip&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;arn:aws:s3:::*/DeadlineAWSResourceTrackerTemplate-*.yaml&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;AWSThinkboxDeadlineResourceTracker17&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;sqs:CreateQueue&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sqs:DeleteQueue&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sqs:GetQueueAttributes&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sqs:ListQueueTags&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sqs:TagQueue&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sqs:UntagQueue&quot;</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;arn:aws:sqs:*:*:DeadlineAWSComputeNodeState*&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;arn:aws:sqs:*:*:DeadlineResourceTracker*&quot;</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">AWSThinkboxDeadlineResourceTrackerAdminPolicy</a><ul>
+<li><a class="reference internal" href="#permissions-details">Permissions details</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">AWSThinkboxDeadlineResourceTrackerAdminPolicy</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

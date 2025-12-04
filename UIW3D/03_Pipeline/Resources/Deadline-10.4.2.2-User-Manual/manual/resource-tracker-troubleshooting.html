@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Troubleshooting &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Scripting" href="index-scripting.html" />
+    <link rel="prev" title="Resource Tracker Release History" href="resource-tracker-release-notes.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="index-scripting.html" title="Scripting"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="resource-tracker-release-notes.html" title="Resource Tracker Release History"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-resource-tracker.html" accesskey="U">Resource Tracker</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Troubleshooting</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="troubleshooting">
+<span id="resource-tracker-troubleshooting-ref-label"></span><h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="instances-shutting-down">
+<h2>Instances Shutting Down<a class="headerlink" href="#instances-shutting-down" title="Permalink to this headline">¶</a></h2>
+<p>If some of your instances are shutting down, first check the status of the Resource Tracker. It can be found in the status label at the bottom right corner of the Deadline Monitor.</p>
+<ul class="simple">
+<li><p><strong>Healthy</strong>: This likely means that your instance was terminated by EC2. The can be caused by Spot Pricing changes.</p></li>
+<li><p><strong>Warning</strong>: Occasionally, individual instances won’t be performing correctly. If set to maintain the Spot Fleet Request should start new instances to replace the instances that were terminated.
+These new instances might also have trouble connecting to your repository. In that case, you may have saturated the network, or reached the capacity of your repository share. Try lowering the
+number of instances you have running or selecting a better instance type for upgraded network performance.</p></li>
+<li><p><strong>Error</strong>: Greater than 35% of your instances have failed. Check your connection to EC2, make sure that it’s working with all AWS Regions and Availability Zones that you’re using. For AWS Portal
+this includes AWS Portal Link. Check your connection to the repository. Check to see if the RCS is functioning correctly or that your network share is functioning properly.</p></li>
+</ul>
+</div>
+<div class="section" id="unable-to-start-new-instances">
+<h2>Unable to Start New Instances<a class="headerlink" href="#unable-to-start-new-instances" title="Permalink to this headline">¶</a></h2>
+<p>If you’re unable to start new Spot Fleet Requests, that means that your Resource Tracker is reporting in the “Error” state. Once you’ve resolved the cause of the error, you need to manually reset the Resource Tracker.</p>
+<p>Double-click on the status label in the bottom right corner of the Deadline Monitor. Here you can see the various fleets that have reported to be in the “Error” state. To reset your system, enter your
+AWS Access Key and AWS Secret Key and click OK.</p>
+<img alt="../_images/resolve_unhealthy_state.png" src="../_images/resolve_unhealthy_state.png" />
+</div>
+<div class="section" id="finding-logs-on-terminated-fleets">
+<h2>Finding Logs on Terminated Fleets<a class="headerlink" href="#finding-logs-on-terminated-fleets" title="Permalink to this headline">¶</a></h2>
+<p>When trying to determine why the Resource Tracker is terminating your Fleets it can be helpful to look at the “DeadlineResourceTracker-ResourceTrackerLogger” logs in CloudWatch.
+These can be found by going through the following steps:</p>
+<ol class="arabic">
+<li><p>These can be found by logging into your AWS Console and navigating to the CloudWatch service page.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/cloudwatch_logs_1.png"><img alt="../_images/cloudwatch_logs_1.png" src="../_images/cloudwatch_logs_1.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Then select <strong>Logs</strong> in the column on the left to open your CloudWatch Logs page.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/cloudwatch_logs_2.png"><img alt="../_images/cloudwatch_logs_2.png" src="../_images/cloudwatch_logs_2.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Click on the CloudWatch Log Group <strong>/aws/lambda/DeadlineResourceTracker-ResourceTrackerLogger</strong>.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/cloudwatch_logs_3.png"><img alt="../_images/cloudwatch_logs_3.png" src="../_images/cloudwatch_logs_3.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Click on the CloudWatch Log Stream that has a Last Event Time around the time of the incident.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/cloudwatch_logs_4.png"><img alt="../_images/cloudwatch_logs_4.png" src="../_images/cloudwatch_logs_4.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>All logs within that stream will be displayed.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/cloudwatch_logs_5.png"><img alt="../_images/cloudwatch_logs_5.png" src="../_images/cloudwatch_logs_5.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+</ol>
+<p>The CloudWatch Logs are created when:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>A render node fails to report to the Resource Tracker SQS Queue.</p></li>
+<li><p>A render node is marked as Unhealthy by the Resource Tracker.</p></li>
+<li><p>A Fleet’s health status changes. (i.e. Healthy -&gt; Unhealthy-Grace Period, Unhealthy-Grace Period -&gt; Healthy, Unhealthy-Grace Period -&gt; Unhealthy-Fleet Terminated)</p></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Troubleshooting</a><ul>
+<li><a class="reference internal" href="#instances-shutting-down">Instances Shutting Down</a></li>
+<li><a class="reference internal" href="#unable-to-start-new-instances">Unable to Start New Instances</a></li>
+<li><a class="reference internal" href="#finding-logs-on-terminated-fleets">Finding Logs on Terminated Fleets</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="resource-tracker-release-notes.html"
+                        title="previous chapter">Resource Tracker Release History</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="index-scripting.html"
+                        title="next chapter">Scripting</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="index-scripting.html" title="Scripting"
+             >next</a></li>
+        <li class="right" >
+          <a href="resource-tracker-release-notes.html" title="Resource Tracker Release History"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-resource-tracker.html" >Resource Tracker</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Troubleshooting</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

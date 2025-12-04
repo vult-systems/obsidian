@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spot Event Configuration Utility &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Spot Event Plugins - Deadline Connectivity Configuration" href="event-spot-deadline-connect.html" />
+    <link rel="prev" title="Spot Event Plugin - Configuration Options" href="event-spot-configuration-options.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-spot-deadline-connect.html" title="Spot Event Plugins - Deadline Connectivity Configuration"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="event-spot-configuration-options.html" title="Spot Event Plugin - Configuration Options"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" accesskey="U">Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Spot Event Configuration Utility</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="spot-event-configuration-utility">
+<span id="event-spot-config-utility-ref-label"></span><h1>Spot Event Configuration Utility<a class="headerlink" href="#spot-event-configuration-utility" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 22%" />
+<col style="width: 18%" />
+<col style="width: 19%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="event-spot.html#event-spot-ref-label"><span class="std std-ref">Spot Event Plugin</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-permissions.html#event-spot-iam-policies-ref-label"><span class="std std-ref">AWS Permissions Setup</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-ami.html#event-spot-ami-ref-label"><span class="std std-ref">Amazon Machine Images</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-fleet-request.html#event-spot-fleet-requests-ref-label"><span class="std std-ref">Spot Fleet Requests</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-config-credentials.html#event-spot-config-credentials-ref-label"><span class="std std-ref">Security Credentials Configuration</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="event-spot-fleet-configurations.html#event-spot-fleet-configurations-ref-label"><span class="std std-ref">Spot Fleet Configuration</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-configuration-options.html#event-spot-configure-event-plugin-dialog-ref-label"><span class="std std-ref">Spot Event Configuration Options</span></a></p></td>
+<td><p><a class="reference internal" href="#event-spot-config-utility-ref-label"><span class="std std-ref">Spot Event Configuration Utility</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-deadline-connect.html#event-spot-deadline-connect-ref-label"><span class="std std-ref">Deadline Connectivity Configuration</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-vpc-endpoints.html#event-spot-vpc-endpoints-ref-label"><span class="std std-ref">VPC Endpoints Configuration</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="event-spot-multi-region.html#event-spot-fleet-multi-region-ref-label"><span class="std std-ref">Multiple Region Support</span></a></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Originally, the Spot Fleet Request JSON Dictionary configuration had to be created exclusively using the AWS Management Console’s EC2 Service &gt; <strong>Spot Requests</strong> section.</p>
+<p>A scripted utility for configuring the Spot Event Plugin’s Spot Fleet Requests is available in <strong>Deadline v10.1.14 and higher</strong>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The <strong>Spot Event Configuration Utility</strong> does not currently support using <a class="reference internal" href="event-spot-multi-region.html#event-spot-fleet-multi-region-ref-label"><span class="std std-ref">Multiple Regions</span></a></p>
+</div>
+</div>
+<div class="section" id="accessing-the-utility">
+<h2>Accessing The Utility<a class="headerlink" href="#accessing-the-utility" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>Spot Event Configuration Utility</strong> can be accessed through the <strong>Scripts</strong> menu, under <strong>Configuration</strong>.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/sepui_01.png"><img alt="../_images/sepui_01.png" src="../_images/sepui_01.png" style="width: 466.5px; height: 137.25px;" /></a>
+</div></blockquote>
+</div>
+<div class="section" id="using-the-utility">
+<h2>Using The Utility<a class="headerlink" href="#using-the-utility" title="Permalink to this headline">¶</a></h2>
+<p>The configuration dialog uses the existing configurations as a starting point.</p>
+<p>If the Spot Event Plugin has already been configured on your system, the dialog will use your existing credentials and configurations.</p>
+<p>The dialog displayes a list of all existing configurations, and offers option to <strong>edit</strong> or <strong>create new</strong> configurations.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/sepui_02.png"><img alt="../_images/sepui_02.png" src="../_images/sepui_02.png" style="width: 707.25px; height: 240.75px;" /></a>
+</div></blockquote>
+<p>To edit, double-click on a row, or right-click a row and select an <strong>Open In…</strong> option.</p>
+<p>There are three modes of configuration creation. They all let you pick a Deadline Group and optional Deadline Pools as defined in your Deadline setup:</p>
+<ol class="arabic">
+<li><p><strong>Quick Create</strong></p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">The Quick Create dialog will display a subset of the options visible in the AWS Management Console.</div>
+<div class="line">Select the desired options and the dialog will automatically generate the correct JSON configuration.</div>
+</div>
+<a class="reference internal image-reference" href="../_images/sepui_03.png"><img alt="../_images/sepui_03.png" src="../_images/sepui_03.png" style="width: 891.75px; height: 711.75px;" /></a>
+<p>When using the Quick Create dialog, you can search for AMIs by the AMI name, or the AMI id.</p>
+<a class="reference internal image-reference" href="../_images/sepui_06.png"><img alt="../_images/sepui_06.png" src="../_images/sepui_06.png" style="width: 749.25px; height: 379.5px;" /></a>
+</div></blockquote>
+</li>
+<li><dl>
+<dt><strong>Advanced Create</strong></dt><dd><div class="line-block">
+<div class="line">This mode allows you to directly copy a configuration from the AWS Management Console without needing to manually edit in the group name.</div>
+<div class="line">The Advanced Create dialog will also validate the configuration, giving you instant feedback whether there are issues with it.</div>
+</div>
+<a class="reference internal image-reference" href="../_images/sepui_04.png"><img alt="../_images/sepui_04.png" src="../_images/sepui_04.png" style="width: 751.5px; height: 546.75px;" /></a>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt><strong>Create From Launch Template</strong></dt><dd><div class="line-block">
+<div class="line">This mode allows you to select an existing EC2 Launch Template from your AWS account.</div>
+</div>
+<a class="reference internal image-reference" href="../_images/sepui_05.png"><img alt="../_images/sepui_05.png" src="../_images/sepui_05.png" style="width: 752.25px; height: 495.0px;" /></a>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If using Launch Templates <strong>you must add</strong> the following key/value pair as a <strong>Tag</strong> in the <strong>Launch Template</strong>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">DeadlineTrackedAWSResource</span> <span class="pre">:</span> <span class="pre">SpotEventPlugin</span></code></p>
+<p>Failure to add this <strong>Tag</strong> will result in <strong>EC2 Instances</strong> being launched that won’t <strong>be managed/monitored by the Resource Tracker</strong> if it’s enabled.</p>
+<p>It’s possible that if this <strong>Tag</strong> is not included, <strong>EC2 Instances</strong> that can’t connect to the repository may become stuck and <strong>won’t shut themselves down</strong>.</p>
+<p>It’s crucial that this <strong>Tag</strong> is added to prevent <strong>large overspends</strong> in your AWS Account that could otherwise be prevented by the <strong>Resource Tracker</strong> and other mechanisms.</p>
+<a class="reference internal image-reference" href="../_images/spot_launch_template_tracking_tag.png"><img alt="../_images/spot_launch_template_tracking_tag.png" src="../_images/spot_launch_template_tracking_tag.png" style="height: 280px;" /></a>
+</div>
+</dd>
+</dl>
+</li>
+</ol>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Spot Event Configuration Utility</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#accessing-the-utility">Accessing The Utility</a></li>
+<li><a class="reference internal" href="#using-the-utility">Using The Utility</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="event-spot-configuration-options.html"
+                        title="previous chapter">Spot Event Plugin - Configuration Options</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="event-spot-deadline-connect.html"
+                        title="next chapter">Spot Event Plugins - Deadline Connectivity Configuration</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-spot-deadline-connect.html" title="Spot Event Plugins - Deadline Connectivity Configuration"
+             >next</a></li>
+        <li class="right" >
+          <a href="event-spot-configuration-options.html" title="Spot Event Plugin - Configuration Options"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" >Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Spot Event Configuration Utility</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

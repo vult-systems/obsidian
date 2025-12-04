@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multiple Workers On One Machine &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Client Configuration" href="client-config.html" />
+    <link rel="prev" title="Worker Scheduling" href="worker-schedule.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="client-config.html" title="Client Configuration"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="worker-schedule.html" title="Worker Scheduling"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" accesskey="U">Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Multiple Workers On One Machine</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="multiple-workers-on-one-machine">
+<span id="multiple-workers-ref-label"></span><h1>Multiple Workers On One Machine<a class="headerlink" href="#multiple-workers-on-one-machine" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Deadline has the ability to launch and configure an arbitrary number of Worker instances on a single machine. Each Worker instance can be given a unique name, and can be assigned its own list of Pools and Groups, which allows Workers to work independently on separate Jobs. A single high-performance machine could potentially process multiple 3D, compositing, and simulation Jobs simultaneously.</p>
+<p>Note that the configurations for these Worker instances are stored locally on the Worker machine. This means that these Worker instances exist independently from the repository that the Workers connect to. So if you delete a Worker from the repository, the local configuration for that Worker instance still exists. Conversely, if you delete a local Worker instance, the Worker will still have an entry in the repository. It is possible to remove both the Worker from the repository and the local Worker instance from the Worker machine, which is covered below.</p>
+</div>
+<div class="section" id="licensing">
+<h2>Licensing<a class="headerlink" href="#licensing" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Starting with Deadline 10.1.23, Deadline and its components do not require a license. This section is left for operators of older versions of Deadline.</p>
+</div>
+<p>In Deadline 7 or later, all Worker instances running on a single operating system (physical or virtual) will use the same license. For example, if you had 3 Worker instances running on one operating system, they would only use 1 license.</p>
+</div>
+<div class="section" id="adding-and-running-workers">
+<h2>Adding and Running Workers<a class="headerlink" href="#adding-and-running-workers" title="Permalink to this headline">¶</a></h2>
+<p>There are three ways to launch new Worker instances:</p>
+<ul>
+<li><p>From the Launcher menu by selecting Launch Worker By Name -&gt; New Worker Instance. This is disabled by default, but can be enabled in the <a class="reference internal" href="user-management.html#controlling-feature-access-ref-label"><span class="std std-ref">User Group Management</span></a> settings.</p>
+<blockquote>
+<div><img alt="../_images/start_new_worker_instance.png" src="../_images/start_new_worker_instance.png" />
+</div></blockquote>
+</li>
+<li><p>From the right-click menu in the Worker list in the Monitor by selecting Remote Control -&gt; Worker Commands -&gt; Start New Worker Instance. By default, this is only available when in Power User Mode.</p>
+<blockquote>
+<div><img alt="../_images/start_new_worker_instance.png" src="../_images/start_new_worker_instance.png" />
+</div></blockquote>
+</li>
+<li><p>From the command line using the -name option.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlineworker</span> <span class="o">-</span><span class="n">name</span> <span class="s2">&quot;instance-01&quot;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Additionally for a headless/no GUI machine, you would add a -nogui flag.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlineworker</span> <span class="o">-</span><span class="n">name</span> <span class="s2">&quot;instance-01&quot;</span> <span class="o">-</span><span class="n">nogui</span>
+</pre></div>
+</div>
+<p>Note that the name you enter is the postfix that is appended to the Worker’s base name. For example, if the Worker’s base name is “Render-02”, and you start a new instance on it called “instance-01”, the full name for that Worker instance will be “Render-02-instance-01”. This is done so that if the Worker’s machine name is changed, the full Worker name will be updated accordingly. Using the same example, if the machine was renamed to “Node-05”, the Worker instance will now be called “Node-05-instance-01”.</p>
+<p>Once the new Worker shows up in the Worker List in the Monitor, you can configure it like any other Worker. You might want to use Worker Settings (see <a class="reference internal" href="worker-config.html#worker-config-ref-label"><span class="std std-ref">Worker Configuration</span></a>) to assign the different Workers to run on separate CPUs. It might also be a good idea to assign them to different <a class="reference internal" href="pools-and-groups.html#pools-and-groups-ref-label"><span class="std std-ref">Pools and Groups</span></a>, so that they can work on different types of Jobs to avoid competing for the same resource (e.g., you could have one Worker assigned to CPU intensive Jobs, while the other works on RAM intensive ones).</p>
+<p>Once the Worker has been created, you can also launch it remotely like you would any other Worker. See the <a class="reference internal" href="remote-control.html#remote-control-ref-label"><span class="std std-ref">Remote Control</span></a> documentation for more information.</p>
+</div>
+<div class="section" id="removing-workers">
+<h2>Removing Workers<a class="headerlink" href="#removing-workers" title="Permalink to this headline">¶</a></h2>
+<p>There are three ways to remove existing Worker instances:</p>
+<ul>
+<li><p>From the Launcher menu by selecting Launch Worker By Name -&gt; Remove Worker Instances. This is disabled by default, but can be enabled in the <a class="reference internal" href="user-management.html#controlling-feature-access-ref-label"><span class="std std-ref">User Group Management</span></a> settings.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/launcher_delete_worker.png"><img alt="../_images/launcher_delete_worker.png" src="../_images/launcher_delete_worker.png" style="height: 250px;" /></a>
+</div></blockquote>
+</li>
+<li><p>From the right-click menu in the Worker list in the Monitor by selecting Remote Control -&gt; Worker Commands -&gt; Remove Worker Instance. This method gives the additional option to automatically remove the Worker instance from the repository as well. By default, this is only available when in Power User Mode. Note, the Worker must be disabled or offline before this option will be visible in the right-click menu.</p>
+<blockquote>
+<div><img alt="../_images/monitor_delete_worker.png" src="../_images/monitor_delete_worker.png" />
+</div></blockquote>
+</li>
+<li><p>Manually delete the .ini files that define the local Workers instances on the machine that the Worker runs on. See the <a class="reference internal" href="client-config.html#local-worker-instance-files-ref-label"><span class="std std-ref">Client Configuration</span></a> documentation for more information.</p></li>
+</ul>
+</div>
+<div class="section" id="limiting-and-disabling-multiple-workers">
+<h2>Limiting and Disabling Multiple Workers<a class="headerlink" href="#limiting-and-disabling-multiple-workers" title="Permalink to this headline">¶</a></h2>
+<p>By default, users do not have the ability to launch additional Workers on their own machines (see <a class="reference internal" href="user-management.html#controlling-feature-access-ref-label"><span class="std std-ref">User Group Management</span></a>). However, there are some cases where you might want to completely disable the ability to run multiple Workers on the same machine.</p>
+<p>The only known situation where this might be necessary is if your render nodes all net-boot off the same installation (meaning they share the same file system). In this case, if multiple Workers are enabled, each render node will end up trying to run a Worker instance for every other render node net-booting off the same installation.</p>
+<p>In this scenario, you can disable the multi-worker feature by opening the system’s deadline.ini file and adding this line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MultipleSlavesEnabled</span><span class="o">=</span><span class="kc">False</span>
+</pre></div>
+</div>
+<p>The system deadline.ini file can be found in the following locations. Note that the [VERSION] in the path will change based on the Deadline version number.</p>
+<ul class="simple">
+<li><p><strong>Windows</strong>: %PROGRAMDATA%\Thinkbox\Deadline[VERSION]\deadline.ini</p></li>
+<li><p><strong>Linux</strong>: /var/lib/Thinkbox/Deadline[VERSION]/deadline.ini</p></li>
+<li><p><strong>macOS</strong>: /Users/Shared/Thinkbox/Deadline[VERSION]/deadline.ini</p></li>
+</ul>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Multiple Workers On One Machine</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#licensing">Licensing</a></li>
+<li><a class="reference internal" href="#adding-and-running-workers">Adding and Running Workers</a></li>
+<li><a class="reference internal" href="#removing-workers">Removing Workers</a></li>
+<li><a class="reference internal" href="#limiting-and-disabling-multiple-workers">Limiting and Disabling Multiple Workers</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="worker-schedule.html"
+                        title="previous chapter">Worker Scheduling</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="client-config.html"
+                        title="next chapter">Client Configuration</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="client-config.html" title="Client Configuration"
+             >next</a></li>
+        <li class="right" >
+          <a href="worker-schedule.html" title="Worker Scheduling"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" >Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Multiple Workers On One Machine</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

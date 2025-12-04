@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Database Authentication &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Creating a Replica Set" href="db-mongo-replica-set.html" />
+    <link rel="prev" title="Database Maintenance" href="db-maintenance.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="db-mongo-replica-set.html" title="Creating a Replica Set"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="db-maintenance.html" title="Database Maintenance"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" accesskey="U">Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Database Authentication</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="database-authentication">
+<span id="db-authentication-ref-label"></span><h1>Database Authentication<a class="headerlink" href="#database-authentication" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some of the topics covered in this page require you to have administrator/root access to your database machine. Please consult your local IT staff if in doubt.</p>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>By default, the Deadline Repository installer will install MongoDB with access control, ie: <a class="reference external" href="https://docs.mongodb.com/manual/core/authentication/">Authentication</a> enabled. The installer will enable SSL/TLS authentication in MongoDB, and automatically generate the necessary certificates.</p>
+<p>Purely <strong>optional</strong>, you may decide to customize how authentication is enabled on your Deadline renderfarm. This page will explain the necessary steps to enable authentication in your Deadline setup via user name and password. It is recommended to install the Deadline DB/Repo first, test and verify all is well, before then proceeding with enabling authentication. Note, you should plan for a small outage period of your farm whilst you configure and deploy these settings.</p>
+</div>
+<div class="section" id="mongodb-configuration">
+<h2>MongoDB Configuration<a class="headerlink" href="#mongodb-configuration" title="Permalink to this headline">¶</a></h2>
+<p>First, create a user via the <a class="reference internal" href="db-maintenance.html#mongodb-shell-ref-label"><span class="std std-ref">Mongo shell</span></a> on the DB machine:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">use</span> <span class="n">deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="n">db</span>
+<span class="go">switched to db deadline[VERSION]db</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span><span class="o">.</span><span class="n">createUser</span><span class="p">(</span> <span class="p">{</span> <span class="n">user</span><span class="p">:</span><span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="n">pwd</span><span class="p">:</span><span class="s2">&quot;password&quot;</span><span class="p">,</span><span class="n">roles</span><span class="p">:[</span><span class="s2">&quot;readWrite&quot;</span><span class="p">]}</span> <span class="p">)</span>
+<span class="go">Successfully added user: { &quot;user&quot; : &quot;username&quot;, &quot;roles&quot; : [ &quot;readWrite&quot; ] }</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span><span class="o">.</span><span class="n">auth</span><span class="p">(</span> <span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span> <span class="p">)</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<p>where <strong>username</strong> and <strong>password</strong> should be replaced with your applicable settings and [VERSION] is the major version of Deadline such as: <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p>
+<p>Note that Deadline will try to authenticate on its own database (as opposed to the admin DB, or elsewhere), so it’s easiest to create the user there (default is <code class="docutils literal notranslate"><span class="pre">deadline&lt;VERSION&gt;db</span></code> as per above example, where <code class="docutils literal notranslate"><span class="pre">&lt;VERSION&gt;</span></code> is: <code class="docutils literal notranslate"><span class="pre">10</span></code>). The ‘clusterMonitor’ role is now also optional in Deadline 8.0 – you should only need readWrite access to Deadline’s database (or plural databases, if ‘splitDB’ is on – which is not recommended in MongoDB 3+).</p>
+</div>
+<div class="section" id="mongodb-restart">
+<h2>MongoDB Restart<a class="headerlink" href="#mongodb-restart" title="Permalink to this headline">¶</a></h2>
+<p>The current MongoDB service/daemon will now need to be configured to use authentication and restarted. This can be achieved by adding an additional CLI option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">auth</span>
+</pre></div>
+</div>
+<p>or more permanently, by un-commenting or adding the following lines in the <code class="docutils literal notranslate"><span class="pre">config.conf</span></code> file stored in <code class="docutils literal notranslate"><span class="pre">[DeadlineDatabase]/mongo/data/</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#enable authentication</span>
+<span class="n">security</span><span class="p">:</span>
+        <span class="n">authorization</span><span class="p">:</span> <span class="n">enabled</span>
+</pre></div>
+</div>
+<p>where [DeadlineDatabase] is the root install directory of your Deadline-MongoDB database.</p>
+<p>Finally, restart the MongoDB service/daemon to commit this configuration change. Note, this will temporarily take your farm offline during the service restart.</p>
+</div>
+<div class="section" id="deadline-configuration">
+<span id="db-authentication-configure-label"></span><h2>Deadline Configuration<a class="headerlink" href="#deadline-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Now to update the Database connection settings, we will use the Deadline client CLI application <a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">DeadlineCommand</span></a> and run two commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">deadlinecommand</span> <span class="n">UpdateDatabaseSettings</span> <span class="o">...</span>
+<span class="go">and</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">deadlinecommand</span> <span class="n">StoreDatabaseCredentials</span> <span class="o">...</span>
+</pre></div>
+</div>
+<div class="section" id="updatedatabasesettings">
+<h3>UpdateDatabaseSettings<a class="headerlink" href="#updatedatabasesettings" title="Permalink to this headline">¶</a></h3>
+<p>This command will update the settings Deadline pulls in to connect to your database. Here’s the arguments expected by the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Updates the given repository&#39;s connection.ini file with the given database settings.</span>
+
+<span class="p">[</span><span class="n">Repository</span><span class="p">]</span> <span class="n">The</span> <span class="n">path</span> <span class="n">to</span> <span class="n">the</span> <span class="n">repository</span> <span class="n">root</span>
+<span class="p">[</span><span class="n">Type</span><span class="p">]</span> <span class="n">The</span> <span class="n">database</span> <span class="nb">type</span> <span class="p">(</span><span class="n">currently</span> <span class="n">only</span> <span class="n">MongoDB</span><span class="p">)</span>
+<span class="p">[</span><span class="n">Host</span><span class="p">]</span> <span class="n">The</span> <span class="n">host</span> <span class="n">name</span> <span class="ow">or</span> <span class="n">IP</span> <span class="n">address</span> <span class="n">of</span> <span class="n">the</span> <span class="n">database</span> <span class="n">machine</span>
+<span class="p">[</span><span class="n">Name</span><span class="p">]</span> <span class="n">The</span> <span class="n">database</span> <span class="n">name</span>
+<span class="p">[</span><span class="n">Port</span><span class="p">]</span> <span class="n">The</span> <span class="n">database</span> <span class="n">port</span>
+<span class="p">[</span><span class="n">AltPort</span><span class="p">]</span> <span class="n">The</span> <span class="n">alternate</span> <span class="n">database</span> <span class="n">port</span> <span class="p">(</span><span class="ow">not</span> <span class="n">currently</span> <span class="n">used</span><span class="p">)</span>
+<span class="p">[</span><span class="n">SSL</span><span class="p">]</span> <span class="n">If</span> <span class="n">SSL</span> <span class="n">should</span> <span class="n">be</span> <span class="n">used</span> <span class="n">to</span> <span class="n">connect</span> <span class="p">(</span><span class="ow">not</span> <span class="n">currently</span> <span class="n">used</span><span class="p">)</span>
+<span class="p">[</span><span class="n">Authenticate</span><span class="p">]</span> <span class="n">If</span> <span class="n">authentication</span> <span class="ow">is</span> <span class="n">required</span>
+<span class="p">[</span><span class="n">Username</span><span class="p">]</span> <span class="n">The</span> <span class="n">username</span> <span class="n">used</span> <span class="n">to</span> <span class="n">authenticate</span>
+<span class="p">[</span><span class="n">Password</span><span class="p">]</span> <span class="n">The</span> <span class="n">password</span><span class="o">.</span> <span class="n">Passwords</span> <span class="n">have</span> <span class="n">three</span> <span class="n">modes</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span> <span class="n">Empty</span> <span class="o">-</span> <span class="n">The</span> <span class="n">password</span> <span class="n">will</span> <span class="n">be</span> <span class="n">prompted</span> <span class="kn">from</span> <span class="nn">standard</span> <span class="nb">input</span> <span class="mi">2</span><span class="p">)</span> <span class="n">A</span> <span class="n">value</span> <span class="o">-</span> <span class="n">The</span> <span class="n">value</span> <span class="ow">is</span> <span class="n">treated</span> <span class="k">as</span> <span class="n">the</span> <span class="n">actual</span> <span class="n">password</span> <span class="mi">3</span><span class="p">)</span> <span class="n">A</span> <span class="n">value</span> <span class="k">with</span> <span class="n">the</span> <span class="n">prefix</span> <span class="s1">&#39;env:&#39;</span> <span class="o">-</span> <span class="n">The</span> <span class="n">portion</span> <span class="n">after</span> <span class="s1">&#39;env:&#39;</span> <span class="n">indicates</span> <span class="n">the</span> <span class="n">environment</span> <span class="n">variable</span> <span class="n">to</span> <span class="n">pull</span> <span class="n">the</span> <span class="n">password</span> <span class="kn">from</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="n">env</span><span class="p">:</span><span class="n">MY_VARIABLE</span><span class="p">)</span>
+<span class="p">[</span><span class="n">Replica</span> <span class="n">Set</span><span class="p">]</span> <span class="n">The</span> <span class="n">Replica</span> <span class="nb">set</span> <span class="n">name</span>
+<span class="p">[</span><span class="n">Split</span> <span class="n">DB</span><span class="p">]</span> <span class="n">If</span> <span class="n">Database</span> <span class="n">should</span> <span class="n">be</span> <span class="n">split</span> <span class="p">(</span><span class="n">by</span> <span class="n">default</span><span class="p">,</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">disabled</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here is an example command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">deadlinecommand</span> <span class="n">UpdateDatabaseSettings</span> <span class="n">D</span><span class="p">:</span>\<span class="n">DeadlineRepository</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span> <span class="n">MongoDB</span> <span class="mf">10.10</span><span class="o">.</span><span class="mf">1.125</span> <span class="n">deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="n">db</span> <span class="p">[</span><span class="n">DB_PORT</span><span class="p">]</span> <span class="o">-</span><span class="mi">1</span> <span class="kc">False</span> <span class="kc">True</span> <span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span> <span class="s2">&quot;&quot;</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>where [VERSION] is the MAJOR version number of Deadline, such as: <code class="docutils literal notranslate"><span class="pre">10</span></code> and [DB_PORT] is the MongoDB port, such as: <code class="docutils literal notranslate"><span class="pre">27100</span></code>.</p>
+</div>
+<div class="section" id="storedatabasecredentials">
+<h3>StoreDatabaseCredentials<a class="headerlink" href="#storedatabasecredentials" title="Permalink to this headline">¶</a></h3>
+<p>This command is used to securely store the database credentials. Here’s the arguments expected by the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Securely stores the database credentials</span>
+<span class="p">[</span><span class="n">Username</span><span class="p">]</span> <span class="n">The</span> <span class="n">username</span>
+<span class="p">[</span><span class="n">Password</span><span class="p">]</span> <span class="n">The</span> <span class="n">password</span><span class="o">.</span> <span class="n">Passwords</span> <span class="n">have</span> <span class="n">three</span> <span class="n">modes</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span> <span class="n">Empty</span> <span class="o">-</span> <span class="n">The</span> <span class="n">password</span> <span class="n">will</span> <span class="n">be</span> <span class="n">prompted</span> <span class="kn">from</span> <span class="nn">standard</span> <span class="nb">input</span> <span class="mi">2</span><span class="p">)</span> <span class="n">A</span> <span class="n">value</span> <span class="o">-</span> <span class="n">The</span> <span class="n">value</span> <span class="ow">is</span> <span class="n">treated</span> <span class="k">as</span> <span class="n">the</span> <span class="n">actual</span> <span class="n">password</span> <span class="mi">3</span><span class="p">)</span> <span class="n">A</span> <span class="n">value</span> <span class="k">with</span> <span class="n">the</span> <span class="n">prefix</span> <span class="s1">&#39;env:&#39;</span> <span class="o">-</span> <span class="n">The</span> <span class="n">portion</span> <span class="n">after</span> <span class="s1">&#39;env:&#39;</span> <span class="n">indicates</span> <span class="n">the</span> <span class="n">environment</span> <span class="n">variable</span> <span class="n">to</span> <span class="n">pull</span> <span class="n">the</span> <span class="n">password</span> <span class="kn">from</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="n">env</span><span class="p">:</span><span class="n">MY_VARIABLE</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here is an example command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">deadlinecommand</span> <span class="n">StoreDatabaseCredentials</span> <span class="n">env</span><span class="p">:</span><span class="n">DBUSERNAME</span> <span class="n">env</span><span class="p">:</span><span class="n">DBPASSWORD</span>
+</pre></div>
+</div>
+<p>where DBUSERNAME is an environment variable that contains the username and DBPASSWORD is an environment variable that contains the password.</p>
+<p>After following the above steps, the Deadline applications (Monitor/Worker/Command) should all be able to connect to the database and authenticate properly.</p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Database Authentication</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#mongodb-configuration">MongoDB Configuration</a></li>
+<li><a class="reference internal" href="#mongodb-restart">MongoDB Restart</a></li>
+<li><a class="reference internal" href="#deadline-configuration">Deadline Configuration</a><ul>
+<li><a class="reference internal" href="#updatedatabasesettings">UpdateDatabaseSettings</a></li>
+<li><a class="reference internal" href="#storedatabasecredentials">StoreDatabaseCredentials</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="db-maintenance.html"
+                        title="previous chapter">Database Maintenance</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="db-mongo-replica-set.html"
+                        title="next chapter">Creating a Replica Set</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="db-mongo-replica-set.html" title="Creating a Replica Set"
+             >next</a></li>
+        <li class="right" >
+          <a href="db-maintenance.html" title="Database Maintenance"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" >Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Database Authentication</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

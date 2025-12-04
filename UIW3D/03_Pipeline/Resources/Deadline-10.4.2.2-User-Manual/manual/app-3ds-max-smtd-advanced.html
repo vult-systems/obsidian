@@ -1,0 +1,439 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3ds Max - Integrated Submitter - Advanced Features &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3ds Max - Integrated Submitter - Workflows" href="app-3ds-max-workflows.html" />
+    <link rel="prev" title="3ds Max - Integrated Submitter - Sanity Check" href="app-3ds-max-sanitycheck.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-3ds-max-workflows.html" title="3ds Max - Integrated Submitter - Workflows"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-3ds-max-sanitycheck.html" title="3ds Max - Integrated Submitter - Sanity Check"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Max - Integrated Submitter - Advanced Features</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ds-max-integrated-submitter-advanced-features">
+<span id="smtd-sticky-settings-ref-label"></span><h1>3ds Max - Integrated Submitter - Advanced Features<a class="headerlink" href="#ds-max-integrated-submitter-advanced-features" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#sticky-settings-and-defaults-management" id="id1">Sticky Settings And Defaults Management</a></p></li>
+<li><p><a class="reference internal" href="#advanced-features-for-technical-directors" id="id2">Advanced Features For Technical Directors</a></p>
+<ul>
+<li><p><a class="reference internal" href="#custom-job-name-controls" id="id3">Custom Job Name Controls</a></p></li>
+<li><p><a class="reference internal" href="#custom-comment-controls" id="id4">Custom Comment Controls</a></p></li>
+<li><p><a class="reference internal" href="#custom-extra-info-controls" id="id5">Custom Extra Info Controls</a></p></li>
+<li><p><a class="reference internal" href="#custom-plugin-ini-file-creation" id="id6">Custom Plugin.ini File Creation</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="sticky-settings-and-defaults-management">
+<h2><a class="toc-backref" href="#contents">Sticky Settings And Defaults Management</a><a class="headerlink" href="#sticky-settings-and-defaults-management" title="Permalink to this headline">¶</a></h2>
+<p>The Integrated 3ds Max Submitter (SMTD) offers a sophisticated multi-stage system to determine the values of all settings related to the job submission.
+This system was updated significantly in Deadline 10 to allow per-scene-file settings storage.</p>
+<p><strong>Factory Default Value</strong></p>
+<ul class="simple">
+<li><p>All setting involved in the SMTD functionality are stored as properties of the global SMTDSettings struct.</p></li>
+<li><p>Every property in the SMTDSettings struct has a default value hard-coded in the file <em>SubmitMaxToDeadline_Functions.ms</em></p></li>
+<li><p>When the SMTD backend functions are loaded (either by launching the SMTD UI, or by loading the file SubmitMaxToDeadline_Functions.ms via a 3rd party script), all settings are initialized to Factory Defaults.</p></li>
+</ul>
+<p><strong>Stickiness</strong></p>
+<ul class="simple">
+<li><p>A Sticky setting is a property that remembers the last value it was assigned via the SMTD UI, and restores that value to override the Factory Default.</p></li>
+<li><p>Sticky settings use a local INI file associated with the user of the workstation to store and restore values. The exact path is accessible via the SMTDPaths.InIFile MAXScript property.</p></li>
+<li><p>By default, every setting is assumed Sticky unless specified otherwise via one of the available methods:</p>
+<ul>
+<li><p>The SMTDFunctions.getSettingsList() function returns an array of arrays that map to the properties of the SMTDSettings struct. Each sub-array defines the INI Category and Key name to use when reading and writing related INI files, some description info, and optional stickiness controls.  The 7th element of the array controls whether to respect the Stickiness control files; the 8th element defines the default Stickiness. If these elements are undefined, they are assumed True, but can be set explicitly to True or False by Thinkbox developers. These definitions are considered Factory settings and should not be modified by the end users.</p></li>
+<li><p>If the 7th element of the setting’s sub-array produces True, the property name is checked against the Repository file SubmitMaxToDeadline_StickySettings.ini.</p>
+<ul>
+<li><p>If the file contains the respective key name in the specified category and the value is “false”, the setting is explicitly Not Sticky.</p></li>
+<li><p>If the key value is anything but “false”, the setting is explicitly Sticky.</p></li>
+<li><p>If the file does not contain the key, the Stickiness state from the previous step will persist.</p></li>
+</ul>
+</li>
+<li><p>The file SubmitMaxToDeadline_StickySettings.ini found in the Repository’s \submission\3dsmax\Main\ folder is checked for the property’s Sticky state.</p>
+<ul>
+<li><p>If the file contains the respective key name in the specified category and the value is “false”, the setting is explicitly Not Sticky.</p></li>
+<li><p>If the key value is anything but “false”, the setting is explicitly Sticky.</p></li>
+<li><p>If the file does not contain the key, the Stickiness state from the previous steps will persist.</p></li>
+</ul>
+</li>
+<li><p>If a local copy of the file SubmitMaxToDeadline_StickySettings.ini is found in the user’s local settings folder, the same checks are performed on it.</p>
+<ul>
+<li><p>If the file contains the respective key name in the specified category and the value is “false”, the setting is explicitly Not Sticky.</p></li>
+<li><p>If the key value is anything but “false”, the setting is explicitly Sticky.</p></li>
+<li><p>If the file does not contain the key, the Stickiness state from the previous steps will persist.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Stickiness Info In Tooltips</strong></p>
+<ul class="simple">
+<li><p>The tooltips of SMTD UI controls have been updated to show Stickiness information in addition to the *symbol next to the caption.</p></li>
+<li><p>The note about *denoting non-sticky settings available in builds prior to Deadline 10 has been removed to reduce UI clutter.</p></li>
+<li><p>Controls in the UI will still display the *symbol to denote the non-sticky status, but it applies only to new scenes.</p></li>
+</ul>
+<p><strong>Restoring Sticky Values</strong></p>
+<ul class="simple">
+<li><p>Each time a setting is changed via the SMTD UI, its value is written to a local user’s INI file.</p></li>
+<li><p>If the previous steps determined a setting’s value is Sticky, the last recorded value (if any) will be loaded from the INI file.</p></li>
+<li><p>If no such value is found, the Factory Value will persist.</p></li>
+<li><p>Note that changes to properties are always recorded in the local INI file even when a setting is set to Non-Sticky.</p></li>
+<li><p>This means that changing the Stickiness via the local or global SubmitMaxToDeadline_StickySettings.ini file would immediately make SMTD use the latest stored value.</p></li>
+<li><p>A few settings which are expected to never be Sticky might not store any data in the local INI file though.</p></li>
+</ul>
+<p><strong>Assigning Global Defaults To Non-Sticky Values</strong></p>
+<ul class="simple">
+<li><p>If the setting was set to be Non-Sticky via INI file or factory definition, its value is looked for in the Repository’s SubmitMaxToDeadline_Defaults.ini file.</p>
+<ul>
+<li><p>If the INI file does contain the property’s Category and Key, the value is read and assigned to the setting.</p></li>
+<li><p>If the INI file does not contain the Category and Key, the Factory Default value will persist.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Loading Settings From Scene File</strong></p>
+<ul class="simple">
+<li><p>At this point, the Per-Scene Storage System introduced in Deadline 10 comes to play.</p>
+<ul>
+<li><p>If there is a valid record of that setting in the current MAX scene, and the setting is not excluded from restoring via the Repository file SubmitMaxToDeadline_ExcludeFromSceneStorage.ini, the scene value will overwrite the last known value.</p></li>
+<li><p>If there is no valid record of that setting in the current MAX scene, or the setting is excluded from restoring via the SubmitMaxToDeadline_ExcludeFromSceneStorage.ini Repository file, then nothing will change.</p></li>
+</ul>
+</li>
+</ul>
+<p>The following behaviors are possible:</p>
+<ul class="simple">
+<li><p>The SMTD settings will be set from Factory Defaults, Global Defaults, and Sticky Settings like in previous versions of Deadline if you:</p>
+<ul>
+<li><p>Launch a new 3ds Max session, start a New scene, or Reset the scene, and then open the SMTD UI,</p></li>
+<li><p>Have the SMTD UI already open, and you start a New scene, or Reset the scene,</p></li>
+<li><p>Load a MAX scene file that has not been saved while SMTD was open and thus contains no SMTD settings, and then open the SMTD UI.</p></li>
+</ul>
+</li>
+<li><p>If you open the SMTD UI, and then you load a MAX scene file that has not been saved while SMTD was open, the currently displayed SMTD settings will not be changed.</p></li>
+<li><p>The SMTD settings not excluded from restoring will be loaded from the MAX scene file if you:</p>
+<ul>
+<li><p>Load a MAX scene file that has been saved while the SMTD UI was open and thus contains valid SMTD settings, and then open the SMTD UI.</p></li>
+<li><p>Open the SMTD UI, and then load a MAX scene file that has been saved while the SMTD UI was open and thus contains valid SMTD settings.</p></li>
+</ul>
+</li>
+</ul>
+<img alt="../_images/smtd_default_sticky_settings_flow.png" src="../_images/smtd_default_sticky_settings_flow.png" />
+<p><strong>Defaults And Sticky Settings Browser</strong></p>
+<ul class="simple">
+<li><p>The previously available dialog has been enhanced with a column showing the Scene File Value, if any.</p>
+<ul>
+<li><p>When a valid Scene File Value was found in the current scene, its value will be shown in the column and will cause the Final Value to change to it.</p></li>
+<li><p>When a valid Scene File Value was not found, the symbol – will be shown instead.</p></li>
+<li><p>When a setting is excluded from loading, it will be enclosed in parentheses. This includes both valid values, and the – placeholder.</p></li>
+</ul>
+</li>
+</ul>
+<img alt="../_images/smtd_defaults_sticky_settings_browser.png" src="../_images/smtd_defaults_sticky_settings_browser.png" />
+<p>In the above screenshot,</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Green-Yellow</strong> background denotes properties that are Sticky By Default. This means that there was no additional controls in INI files are factory definitions changing the behavior of the property, so it will be stored on disk when changed via the UI, and restored when a new scene is started.</p></li>
+<li><p><strong>Green</strong> background denotes properties that have been flagged as Sticky via the Global SubmitMaxToDeadline_StickySettings.INI file in the Repository.</p></li>
+<li><p><strong>Purple</strong> background denotes properties that have been flagged as Not Sticky via the Global SubmitMaxToDeadline_StickySettings.INI file in the Repository.</p></li>
+<li><p><strong>Pink</strong> background denotes properties which have been hard-coded as Not Sticky via the definitions inside the SubmitMaxToDeadline_Functions.ms file.</p></li>
+<li><p><strong>Yellow</strong> background (not visible in the screenshot) denotes properties that have been hard-coded as Sticky via the definitions inside the SubmitMaxToDeadline_Functions.ms file.</p></li>
+</ul>
+</div></blockquote>
+<p>Let’s look at one of these Properties - the UserOptions &gt; PerformSanityCheck:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>It is Sticky according to the Global INI file.</p></li>
+<li><p>It starts with a Factory Default value of True.</p></li>
+<li><p>It’s Global Default value would also set it to True if it were not Sticky,</p></li>
+<li><p>But since it is Sticky, it reads the value from the local INI file and gets set to False.</p></li>
+<li><p>The value stored in the MAX scene file would also set it to False,</p></li>
+<li><p>However PerformSanityCheck is set to be excluded when restoring from the MAX scene file (to avoid turning off the Sanity Check between sessions). This is why the Scene File Value is in parentheses.</p></li>
+<li><p>The Final Value shows that the Sanity Check will be off because the user had turned it off, and it sticks between sessions.</p></li>
+</ul>
+</div></blockquote>
+<p>If the Deadline administrator of a company would like to enforce Sanity Checks to be run on each submission, he could edit the file SubmitMaxToDeadline_StickySettings.INI in the Repository, locate the category [UserOptions], and change the property to PerformSanityCheck=false</p>
+<p>As result, the value of True defined via the global defaults in the file SubmitMaxToDeadline_Defaults.ini will be applied and will become the final value on all workstations, effectively enforcing a Sanity Check on every submission!</p>
+</div>
+<div class="section" id="advanced-features-for-technical-directors">
+<h2><a class="toc-backref" href="#contents">Advanced Features For Technical Directors</a><a class="headerlink" href="#advanced-features-for-technical-directors" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="custom-job-name-controls">
+<h3><a class="toc-backref" href="#contents">Custom Job Name Controls</a><a class="headerlink" href="#custom-job-name-controls" title="Permalink to this headline">¶</a></h3>
+<p>There are two ways to customize the job name. You can use keys in the job name that are replaced with actual values (like $scene), or you can have the job name be generated from a list of shows, shots, etc. You will then
+be able to use the [&gt;&gt;] button to the right of the Job Name field to select these custom job names.</p>
+<p><strong>Generate Job Name From Keys</strong></p>
+<p>There is a file in the ..\submission\3dsmax\Main\ folder in your Repository called SubmitMaxToDeadline_NameFormats.ini. In addition, a local copy of the SubmitMaxToDeadline_NameFormats.ini file can be saved in a user’s application
+data folder. This file will OVERRIDE the name formats in the Repository and can contain a sub-set of the definitions in the global file. This file will contain some key-value pairs such as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$scene=(getfilenamefile(maxfilename))
+$date=((filterstring (localtime) &quot; &quot;)[1])
+$deadlineusername=(SMTDFunctions.GetDeadlineUser())
+$username=(sysInfo.username)
+$maxversion=(((maxVersion())[1]/1000) as string)
+</pre></div>
+</div>
+<p>The key to the left of = is the string that will be replaced in the job name. The value to the right of the = is the maxscript code that is executed to return the replacement string (note that the value returned must be
+returned as a string). So if you use $scene in your job name, it will be swapped out for the scene file name. You can append additional key-value pairs or modify the existing ones as you see fit.</p>
+<p>By default, the [&gt;&gt;] button will already have $scene or $outputfilename as selectable options. You can then create an optional JobNames.ini file in the 3dsmax submission folder, with each line representing an option.
+For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$scene
+$outputfilename
+$scene_$camera_$username
+$maxversion_$date
+</pre></div>
+</div>
+<p>These options will then be available for selection in the submission dialog. This allows for all sorts of customization with regards to the job name.</p>
+<p><strong>Generate Job Name For Shows</strong></p>
+<p>This advanced feature allows the addition of custom project, sequence, shot and pass names to the [&gt;&gt;] list to the right of the Job Name field. Producers in larger facilities could provide full shot lists via a central set of
+files in the Repository to allow users to pick existing shot names and ensuring consistent naming conventions independent from the 3ds Max scene naming.</p>
+<p>To create a new set of files, go to the ..\submission\3dsmax\Main\ folder in your Repository and create the following files:</p>
+<p>Projects.ini - This file describes the projects currently available for Custom Job Naming. Each Project is defined as a Category inside this file, with two keys: Name and ShortName.</p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SomeProject</span><span class="p">]</span>
+ <span class="n">Name</span><span class="o">=</span><span class="n">Some</span> <span class="n">Project</span> <span class="ow">in</span> <span class="mi">3</span><span class="n">D</span>
+ <span class="n">ShortName</span><span class="o">=</span><span class="n">SP</span>
+ <span class="p">[</span><span class="n">AnotherProject</span><span class="p">]</span>
+ <span class="n">Name</span><span class="o">=</span><span class="n">Another</span> <span class="n">Project</span>
+ <span class="n">ShortName</span><span class="o">=</span><span class="n">AP</span>
+</pre></div>
+</div>
+<p>SomeProject.ini - This is a file whose name should match exactly the Category name inside the file Projects.ini and contains the actual sequence, shot and pass description of the particular project. One file is expected for each
+project definition inside the Projects.ini file.</p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SP_SS_010</span><span class="p">]</span>
+ <span class="n">Beauty</span><span class="o">=</span><span class="n">true</span>
+ <span class="n">Diffuse</span><span class="o">=</span><span class="n">true</span>
+ <span class="n">Normals</span><span class="o">=</span><span class="n">true</span>
+ <span class="n">ZDepth</span><span class="o">=</span><span class="n">true</span>
+ <span class="n">Utility</span><span class="o">=</span><span class="n">true</span>
+ <span class="p">[</span><span class="n">SP_SS_150</span><span class="p">]</span>
+ <span class="n">Beauty</span><span class="o">=</span><span class="n">true</span>
+ <span class="n">Diffuse</span><span class="o">=</span><span class="n">true</span>
+ <span class="n">Utility</span><span class="o">=</span><span class="n">true</span>
+ <span class="p">[</span><span class="n">SP_SO_020</span><span class="p">]</span>
+ <span class="n">Beauty</span><span class="o">=</span><span class="n">true</span>
+ <span class="p">[</span><span class="n">SP_SO_030</span><span class="p">]</span>
+ <span class="n">Beauty</span><span class="o">=</span><span class="n">true</span>
+</pre></div>
+</div>
+<p>The Submitter will parse this file and try to collect the Sequences by matching the prefix of the shot names, for example in the above file, it will collect two sequences - SP_SS and SP_SO - and build a list of shots within
+each sequence, then also build a list of passes within each shot.</p>
+<p>Then, when the [&gt;&gt;] button is pressed, the context menu will contain the name of each project and will provide a cascade of sub-menus for its sequences, shots and passes.</p>
+<img alt="../_images/smtd_customprojectnames_menu.png" src="../_images/smtd_customprojectnames_menu.png" />
+<p>If you selected the entry SomeProject&gt;SP_SS&gt;SP_SS_150&gt;Diffuse, the resulting Job Name will be “SP_SS_150_Diffuse”:</p>
+<img alt="../_images/smtd_customprojectnames_result.png" src="../_images/smtd_customprojectnames_result.png" />
+<p>You can enter as many projects into your Projects.ini file as you want and provide one INI file for each project describing all its shots and passes. If an INI file is missing, no data will be displayed for that project.</p>
+</div>
+<div class="section" id="custom-comment-controls">
+<h3><a class="toc-backref" href="#contents">Custom Comment Controls</a><a class="headerlink" href="#custom-comment-controls" title="Permalink to this headline">¶</a></h3>
+<p>Just like job names, you can use tokens in the comment field that are replaced with actual values (like $scene).</p>
+<p>The file SubmitMaxToDeadline_CommentFormats.ini in the ..\submission\3dsmax\Main\ folder in your Repository provides the comment shown in the Comment’s [&gt;&gt;] menu.</p>
+<p>In addition, a local copy of the SubmitMaxToDeadline_CommentFormats.ini file can be saved in the user’s application data folder stored in the property SMTDPaths.SettingsDir. For Deadline 10, the folder would be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;C:\Users\(UserName)\AppData\Local\Thinkbox\Deadline&lt;VERSION&gt;\settings</span><span class="se">\&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;VERSION&gt;</span></code> is the Deadline major version such as: <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p>
+</div>
+<p>The local file, if present, will OVERRIDE the comment formats in the Repository and can contain a sub-set of the definitions in the global file.</p>
+<p>The global and local files can contain key-value pairs such as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$default=(&quot;3ds Max &quot; + SMTDFunctions.getMaxVersion() + &quot; Scene Submission&quot;)
+$scene=(getfilenamefile(maxfilename))
+$date=((filterstring (localtime) &quot; &quot;)[1])
+$deadlineusername=(SMTDFunctions.GetDeadlineUser())
+$username=(sysInfo.username)
+$maxversion=(((maxVersion())[1]/1000) as string)
+</pre></div>
+</div>
+<p>The key to the left of = is the string that will be replaced in the comment. The value to the right of the = is the maxscript code that is executed to return the replacement string (note that the value returned must be returned
+as a string). So if you use $scene in your comment, it will be swapped out for the scene file name. You can append additional key-value pairs or modify the existing ones as you see fit.</p>
+<p>The [&gt;&gt;] button will always contain the options “CLEAR Comment” and “RESET to $default”.</p>
+<p>Starting with Deadline v10, the token definitions in the menu will have additive behavior, that is selecting an entry from the list other than CLEAR… or RESET… will append the token to the existing comment text without clearing it.</p>
+</div>
+<div class="section" id="custom-extra-info-controls">
+<h3><a class="toc-backref" href="#contents">Custom Extra Info Controls</a><a class="headerlink" href="#custom-extra-info-controls" title="Permalink to this headline">¶</a></h3>
+<p>Just like job names and comments, you can use keys in the Extra Info 0-9 fields (under the ‘Misc’ tab in SMTD) that are replaced with actual values (like $scene). There is a file in the ..\submission\3dsmax\Main\ folder in your Repository called SubmitMaxToDeadline_ExtraInfoFormats.ini.
+In addition, a local copy of the SubmitMaxToDeadline_ExtraInfoFormats.ini file can be saved in a user’s application data folder. This file will OVERRIDE the comment formats in the Repository and can contain a sub-set of the
+definitions in the global file. This file will contain some key-value pairs such as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$scene=(getfilenamefile(maxfilename))
+$date=((filterstring (localtime) &quot; &quot;)[1])
+$deadlineusername=(SMTDFunctions.GetDeadlineUser())
+$username=(sysInfo.username)
+$maxversion=(((maxVersion())[1]/1000) as string)
+</pre></div>
+</div>
+<p>The key to the left of = is the string that will be replaced in the extra info field. The value to the right of the = is the maxscript code that is executed to return the replacement string (note that the value returned must be returned
+as a string). So if you use $scene in your extra info field, it will be swapped out for the scene file name. You can append additional key-value pairs or modify the existing ones as you see fit.</p>
+<p>As an example, you may wish to use the automatic SMTD ‘BatchName’ functionality to group logical job submissions together in your Deadline queue, but also use custom Extra Info fields to help track pipeline information such as Project, Sequence, Shot or Job Number of a particular 3dsMax/Jigsaw/Draft/Quicktime job submission such as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$project=[execute maxscript code here, returning a string value]
+$sequence=123456
+$shot=[use maxscript to get shot # from the current render output naming convention]
+$jobnumber=[maxscript to query database and get project&#39;s job number as a string]
+</pre></div>
+</div>
+<p>Once this additional ‘pipeline’ information is injected into your Deadline jobs, the Extra Info columns can be given user friendly names so that they can easily be identified and used to filter and sort jobs in the Monitor. See the <a class="reference internal" href="repository-config.html#job-extra-properties-ref-label"><span class="std std-ref">Job Extra Properties</span></a> section for more information. NOTE, the Extra Info X columns are also injected into the Completed Job Stats, thereby allowing you to store and later analyse/create reports against previous jobs by the data stored in your Extra Info X columns.</p>
+</div>
+<div class="section" id="custom-plugin-ini-file-creation">
+<h3><a class="toc-backref" href="#contents">Custom Plugin.ini File Creation</a><a class="headerlink" href="#custom-plugin-ini-file-creation" title="Permalink to this headline">¶</a></h3>
+<p>This section covers the Alternate Plugin.ini feature in the 3ds Max Rendering rollout (under the Render tab).</p>
+<p><strong>Alternate Plugin.ini File</strong></p>
+<p>The plugin.ini list will show a list of alternative Plugin Configuration files located in the Repository. By default, there will be no alternative plugin.ini files defined in the repository. The list will show only one entry
+called [Default], which will cause all Workers to render using their own local plugin.ini configuration and is equivalent to having the Use Custom Plugin.ini file unchecked.</p>
+<p>To define an alternative plugin.ini, copy a local configuration file from one of the Workers to [Repository]\plugins\3dsmax in the repository. Edit the name of the file by adding a description of it. For example,
+plugin_brazil.ini, plugin_vray.ini, plugin_fr.ini, plugin_mentalray.ini, etc. Open the file and edit its content to include the plugins you want and exclude the ones you don’t want to use in the specific case. The next time you
+launch Submit To Deadline, the list will show all alternative files whose names start with “plugin” and end with “.ini”. The list will be alphabetically sorted, with [Default] always on top. You can then select an alternative
+plugin.ini file manually from the list.</p>
+<p>Pressing the Edit Plugin.ini File button will open the currently selected alternative configuration file in a MAXScript Editor window for quick browsing and editing, except when [Default] is selected. Pressing the
+Browse Directory button will open Windows Explorer, taking you directly to the plugins directory containing the alternative plugin.ini files. Note that if you create a new plugin.ini file, you will have to restart the
+Submit To Deadline script to update the list.</p>
+<p>Since the alternative Plugin Configuration file is located in the Repository and will be used by all Worker machines, the plugin paths specified inside the alternative plugin.ini will be used as LOCAL paths by each Worker.
+There are two possible installation configurations that would work with alternative plugins (you could mix the two methods, but it’s not recommended):</p>
+<ul class="simple">
+<li><p><strong>Centralized Plugins Repository</strong>: In this case, all 3dsmax plugins used in the network are located at a centralized location, with all Workers mapping a drive letter to the central plugin location and loading the SAME copy of the plugin. In this case, the alternative plugin.ini should also specify the common drive letter of the plugin repository.</p></li>
+<li><p><strong>Local Plugin</strong>: To avoid slow 3dsmax booting in networks with heavy traffic, some studios (including ones we used to work for) deploy local versions of the plugins. Every Worker’s 3dsmax installation contains a full set of all necessary plugins (which could potentially be automatically synchronized to a central repository to keep all machines up-to-date). In this case, the alternative plugin.ini files should use the LOCAL drive letter of the 3dsmax installation, and all Workers’ 3dsmax copies MUST be installed on the same partition, or at least have the plugins directory on the same drive, for example, “C:”.</p></li>
+</ul>
+<p><strong>Auto-Detect Plugin.ini For Current Renderer</strong></p>
+<p>When enabled, the following operations will be performed:</p>
+<ol class="arabic simple">
+<li><p>When you check the checkbox, the current renderer assigned to the scene will be queried.</p></li>
+<li><p>The first 3 characters of the renderer’s name will be compared to a list of known renderers.</p></li>
+<li><p>If the renderer is not on the list, the alternative list will be reset to [Default].</p></li>
+<li><p>If the renderer is the Default Scanline Renderer of 3dsmax, the alternative list will be reset to [Default].</p></li>
+<li><p>If the renderer is a known renderer, the plugin*.ini file that matches its name will be selected.</p></li>
+</ol>
+<p>Supported renderers for auto-suggesting an alternative configuration are:</p>
+<ul class="simple">
+<li><p>Brazil plugin*.ini should contain “brazil” in its name (i.e.: plugin_brazil.ini, plugin-brazil.ini, pluginbrazil_1_2.ini etc).</p></li>
+<li><p>Entropy plugin*.ini should contain “entropy” in its name (i.e.: plugin_entropy.ini, plugin-entropy.ini, pluginentropy.ini, etc).</p></li>
+<li><p>finalRender plugin*.ini should contain “fr” or “final” in its name (i.e.: plugin_fr.ini, plugin-finalrender.ini, plugin_finalRender_Stage1.ini etc).</p></li>
+<li><p>MaxMan plugin*.ini should contain “maxman” in its name (i.e.: plugin_maxman.ini, plugin-maxman.ini, pluginmaxman001.ini etc).</p></li>
+<li><p>mentalRay plugin*.ini should contain “mr” or “mental” in its name (i.e.: plugin_mr.ini, plugin-mentalray.ini, plugin_mental33.ini etc).</p></li>
+<li><p>V-Ray plugin*.ini should contain “vray” in its name (i.e.: plugin_vray.ini, plugin-vray.ini, pluginvray109.ini etc).</p></li>
+</ul>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>You can override the automatic settings anytime by disabling the Auto-Detect option and selecting from the list manually.</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3ds Max - Integrated Submitter - Advanced Features</a><ul>
+<li><a class="reference internal" href="#sticky-settings-and-defaults-management">Sticky Settings And Defaults Management</a></li>
+<li><a class="reference internal" href="#advanced-features-for-technical-directors">Advanced Features For Technical Directors</a><ul>
+<li><a class="reference internal" href="#custom-job-name-controls">Custom Job Name Controls</a></li>
+<li><a class="reference internal" href="#custom-comment-controls">Custom Comment Controls</a></li>
+<li><a class="reference internal" href="#custom-extra-info-controls">Custom Extra Info Controls</a></li>
+<li><a class="reference internal" href="#custom-plugin-ini-file-creation">Custom Plugin.ini File Creation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-3ds-max-sanitycheck.html"
+                        title="previous chapter">3ds Max - Integrated Submitter - Sanity Check</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-3ds-max-workflows.html"
+                        title="next chapter">3ds Max - Integrated Submitter - Workflows</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-3ds-max-workflows.html" title="3ds Max - Integrated Submitter - Workflows"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-3ds-max-sanitycheck.html" title="3ds Max - Integrated Submitter - Sanity Check"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Max - Integrated Submitter - Advanced Features</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Troubleshooting &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Software Deployment" href="software-deployment.html" />
+    <link rel="prev" title="Security" href="security.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="software-deployment.html" title="Software Deployment"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="security.html" title="Security"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" accesskey="U">Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Troubleshooting</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="troubleshooting">
+<span id="troubleshooting-ref-label"></span><h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>A render farm can be a complex system which can make diagnosing and resolving problems in the render pipeline difficult. This section should help handle many of the common issues that may occur during the usage of a Deadline-based render farm.</p>
+</div>
+<div class="section" id="isolating-render-errors-from-deadline">
+<h2>Isolating Render Errors from Deadline<a class="headerlink" href="#isolating-render-errors-from-deadline" title="Permalink to this headline">¶</a></h2>
+<p>The most difficult problems to diagnose tend to happen within the rendering process itself. It is usually easier to find the root of the problem by rendering outside of Deadline on the machine where the render failed. Many applications can be diagnosed this way, but there are some limitations on the jobs which can be used to run these type of tests on:</p>
+<ol class="arabic simple">
+<li><p>The error must be reproducible with batch mode disabled (Nuke, Maya, Cinema 4D, SoftImage, etc).</p></li>
+<li><p>Ideally, the scene file was not submitted with the job.</p></li>
+<li><p>Ideally, path mapping was not needed for the scene.</p></li>
+</ol>
+<p>It is possible to work around these limitations in many cases, but for simplicity it’s best to reproduce the issue while satisfying the above requirements. If there is an existing job which doesn’t meet these requirements, try creating a new job using the same scene file and submission settings which does. For example, to avoid needing to map paths, submit a new job on the same OS type as the machine which generated the original error.</p>
+<p>Once a job has been submitted and has generated the error you would like to resolve, view the <a class="reference internal" href="job-controlling.html#job-reports-history-ref-label"><span class="std std-ref">job reports</span></a> for the render and find which machines generated problems. Take note of below items from the reports:</p>
+<ol class="arabic simple">
+<li><p>Which machine(s) threw the error.</p></li>
+<li><p>What the “Full Command:” line says about which program was run and what arguments were passed and if “Full Command” cannot be found then</p></li>
+<li><p>What the “Render Executable:” line says about the program which was run.</p></li>
+<li><p>What the “Render Arguments:” line says about the options given to that program.</p></li>
+</ol>
+<p>With this information, we have everything we need to test the render manually. Here is a synthetic example:</p>
+<a class="reference internal image-reference" href="../_images/troubleshooting_log.png"><img alt="../_images/troubleshooting_log.png" src="../_images/troubleshooting_log.png" style="height: 450px;" /></a>
+<p>We can find the machine that threw the error in the bottom of the log, and the full command or command and arguments to use on the command line are:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">sh</span> <span class="o">-</span><span class="n">c</span> <span class="n">rm</span> <span class="s2">&quot;/Volumes/UnmountedShare/some file&quot;</span>
+</pre></div>
+</div>
+<p>So, the next step is to actually run the command from the Command Prompt, Terminal, or shell as applicable:</p>
+<a class="reference internal image-reference" href="../_images/troubleshooting_terminal.png"><img alt="../_images/troubleshooting_terminal.png" src="../_images/troubleshooting_terminal.png" style="height: 450px;" /></a>
+<p>You can see here that the output on the command line was the same as we saw within the <strong>STDOUT</strong> lines from the log above. That means we have the starting point we need to start figuring out the problem. If Deadline complained about an exit code in the log, you can run <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">%ERRORLEVEL%</span></code> on Windows or <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$?</span></code> on macOS and Linux to see what exit number the program returned when it closed. In general, any exit code other than zero denotes an error.</p>
+<p>There are some steps you can take now that you’ve run the render externally. For example, if the program ran properly when run from the command line, it is likely a problem with environment variables not yet being set. As a test, restart the rendering machine and requeue the job within Deadline to see if the problem has cleared. Another example might be that if the error was due to a missing plugin; you can install that plugin and re-run the render command manually to see if the error has cleared.</p>
+<p>You should now have everything you need to start fighting the root cause of the problem without the overhead of having to interact with the Monitor for testing. If you need additional help, feel free to ask your reseller or send an e-mail to <em>support&#64;thinkboxsoftware.com</em>. Please ensure you <a class="reference internal" href="logs.html#logs-job-reports"><span class="std std-ref">save and send the job report</span></a> when you contact the Thinkbox Software Support team.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Troubleshooting</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#isolating-render-errors-from-deadline">Isolating Render Errors from Deadline</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="security.html"
+                        title="previous chapter">Security</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="software-deployment.html"
+                        title="next chapter">Software Deployment</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="software-deployment.html" title="Software Deployment"
+             >next</a></li>
+        <li class="right" >
+          <a href="security.html" title="Security"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" >Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Troubleshooting</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

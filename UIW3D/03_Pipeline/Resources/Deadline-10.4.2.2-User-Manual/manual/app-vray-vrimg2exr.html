@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>V-Ray Vrimg2Exr &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="VRED" href="app-vred.html" />
+    <link rel="prev" title="V-Ray VDenoise" href="app-vray-vdenoise.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-vred.html" title="VRED"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-vray-vdenoise.html" title="V-Ray VDenoise"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">V-Ray Vrimg2Exr</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="v-ray-vrimg2exr">
+<span id="app-vray-vrimg2exr-ref-label"></span><h1>V-Ray Vrimg2Exr<a class="headerlink" href="#v-ray-vrimg2exr" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit Vrimg2Exr jobs from the Monitor. You can use the Submit menu, or you can use a job’s right-click Scripts menu to automatically populate some fields in the Vrimg2Exr submitter based on the job’s output.</p>
+<p><a class="reference internal" href="../_images/sub_vrimg.png"><img alt="submit" src="../_images/sub_vrimg.png" style="height: 500px;" /></a> <a class="reference internal" href="../_images/sub_vrimg_options.png"><img alt="options" src="../_images/sub_vrimg_options.png" style="height: 500px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. The Vrimg2Exr specific options are:</p>
+<ul class="simple">
+<li><p><strong>V-Ray Image File</strong>: The V-Ray Image file(s) to be converted. If you are submitting a sequence of files, you only need to select one vrimg file from the sequence.</p></li>
+<li><p><strong>Output File</strong>: Optionally override the output file name (do not specify padding). If left blank, the output name will be the same as the input name (with the exr extension).</p></li>
+<li><p><strong>Frame List</strong>: The list of frames convert.</p></li>
+<li><p><strong>Specify Channel</strong>: Enable this option to read the specified channel from the vrimg file and write it as the RGB channel in the output file.</p></li>
+<li><p><strong>Long Channel Names</strong>: Enable channel names with more than 31 characters. Produced .exr file will NOT be compatible with OpenEXR 1.x if a long channel name is present.</p></li>
+<li><p><strong>Set Gamma</strong>: Enable this option to apply the specified gamma correction to the RGB colors before writing to the exr file.</p></li>
+<li><p><strong>Crop EXR Data Window</strong>: Enable this option to auto-crop the EXR data window.</p></li>
+<li><p><strong>Set Buffer Size</strong>: Enable this option to set the maximum allocated buffer size per channel in megabytes. If the image does not fit into the max buffer size, it is converted in several passes.</p></li>
+<li><p><strong>Store EXR Data as 16-bit (Half)</strong>: Enable this option to store the data in the .exr file as 16-bit floating point numbers instead of 32-bit floating point numbers.</p></li>
+<li><p><strong>Set Compression</strong>: Enable this option to set the compression type. The Zip method is used by default.</p></li>
+<li><p><strong>Separate Files</strong>: Writes each channel into a separate .exr file.</p></li>
+<li><p><strong>Threads</strong>: The number of computation threads. Specify 0 to use the number of processors available.</p></li>
+<li><p><strong>Multi Part</strong>: Writes each channel into a separate OpenEXR2 ‘part’.</p></li>
+<li><p><strong>Convert RGB Data to the sRGB Color Space</strong>: Enable this option to converts the RGB data from the vrimg file to the sRGB color space (instead of linear RGB space) before writing to the exr file.</p></li>
+<li><p><strong>Delete Input vrimg Files After Conversion</strong>: Enable this option to delete the input vrimg file after the conversion has finished.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Vrimg2Exr plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Vrimg2Exr plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_vrimg.png"><img alt="../_images/cp_vrimg.png" src="../_images/cp_vrimg.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Vrimg2Exr Executable</strong>: The path to the vrimg2exr.exe executable file used for rendering. Enter alternative paths on separate lines.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-vray-vrimg2exr-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Is Vrimg2Exr supported?</strong></p>
+<blockquote>
+<div><p>Yes.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Vrimg2Exr error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here, please contact
+<a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">V-Ray Vrimg2Exr</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-vray-vdenoise.html"
+                        title="previous chapter">V-Ray VDenoise</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-vred.html"
+                        title="next chapter">VRED</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-vred.html" title="VRED"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-vray-vdenoise.html" title="V-Ray VDenoise"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">V-Ray Vrimg2Exr</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

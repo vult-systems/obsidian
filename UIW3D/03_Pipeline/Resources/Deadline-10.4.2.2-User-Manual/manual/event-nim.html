@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NIM &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Pipeline Tools" href="event-pipeline-tools.html" />
+    <link rel="prev" title="FTrack" href="event-ftrack.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-pipeline-tools.html" title="Pipeline Tools"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="event-ftrack.html" title="FTrack"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" accesskey="U">Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">NIM</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="nim">
+<span id="event-nim-ref-label"></span><h1>NIM<a class="headerlink" href="#nim" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>NIM is a browser based management tool created by artists for artists to track the post-production pipeline from start to finish. See the <a class="reference external" href="https://nim-labs.com/">NIM website</a> for more information.</p>
+<a class="reference internal image-reference" href="../_images/nim_dashboard.png"><img alt="../_images/nim_dashboard.png" src="../_images/nim_dashboard.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="creating-renders">
+<h2>Creating Renders<a class="headerlink" href="#creating-renders" title="Permalink to this headline">¶</a></h2>
+<p>Renders can either be created automatically on submission (using the NIM Event Plugin), or done manually afterwards.</p>
+<div class="section" id="automatic-render-creation">
+<h3>Automatic Render Creation<a class="headerlink" href="#automatic-render-creation" title="Permalink to this headline">¶</a></h3>
+<p>When you submit a new job to Deadline, you can have Deadline automatically create a new Render in NIM. This is done by connection to NIM during the submission process, and selecting the Task to which the Job should be tied to. Currently, only the submission scripts for After Effects, Cinema 4D, Maya, and Nuke include the NIM connection option, and other applications will be added when NIM supports them.</p>
+<p>For this example, we will use Maya, but the process is basically the same for each submission script.</p>
+<p>First, open the <a class="reference internal" href="event-pipeline-tools.html#event-pipeline-tools-ref-label"><span class="std std-ref">Pipeline Tools</span></a> window via the Pipeline Tools button and navigate to the Project Management tab.</p>
+<p><a class="reference internal" href="../_images/pipeline_tools_button.png"><img alt="first" src="../_images/pipeline_tools_button.png" style="height: 450px;" /></a> <a class="reference internal" href="../_images/pipeline_tools_nim.png"><img alt="second" src="../_images/pipeline_tools_nim.png" style="height: 450px;" /></a></p>
+<p>Choose NIM from the Project Management drop down, check the “Create new version” checkbox, and then press the Refresh button to begin. The browser pulls the NIM connection settings from your NIM preferences file, but you can change the user, job, type, etc, as necessary.</p>
+<a class="reference internal image-reference" href="../_images/nim_connect.png"><img alt="../_images/nim_connect.png" src="../_images/nim_connect.png" style="height: 450px;" /></a>
+<p>After you have selected a Task, you must specify a Render Name and a Description.</p>
+<a class="reference internal image-reference" href="../_images/nim_configure.png"><img alt="../_images/nim_configure.png" src="../_images/nim_configure.png" style="height: 450px;" /></a>
+<p>After you have configured the Render information, press OK to return to the Maya submitter. The NIM settings will now contain the information you just specified. To include this information with the job, leave the Create New Version option enabled. If you want to change the Render name or description before submitting, you must first reconnect to NIM in the Pipeline Tools window.</p>
+<p>Press the Submit Job button in the Maya submitter to finish the submission. When the job completes, the new Render will be created in NIM.</p>
+</div>
+<div class="section" id="manual-render-creation">
+<h3>Manual Render Creation<a class="headerlink" href="#manual-render-creation" title="Permalink to this headline">¶</a></h3>
+<p>You can also create a Render and tie it to a Job after submission, from the Deadline Monitor. To do this, simply right-click on the job and select ‘Scripts’ -&gt; ‘Integration’ -&gt; ‘Create NIM Render’. This will bring up a NIM browser so that you can connect, pick the appropriate task, and set a description. After specifying the required information, just press OK and the new Render should be created.</p>
+</div>
+</div>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>In order to be able to create NIM Renders within Deadline, you must first follow the steps below to setup Deadline’s connection to NIM.</p>
+<div class="section" id="nim-setup">
+<h3>NIM Setup<a class="headerlink" href="#nim-setup" title="Permalink to this headline">¶</a></h3>
+<p>You must already have NIM set up on your machine with one of its supported applications, see <a class="reference external" href="https://nim-labs.com/docs/NIM/html/connector_overview.html">https://nim-labs.com/docs/NIM/html/connector_overview.html</a> for more details. Once you have installed NIM to be used with one of its supported applications, no additional setup is required to use it for Deadline. The Deadline NIM browser will simply pull all information from your NIM preferences file.</p>
+</div>
+<div class="section" id="configure-deadline">
+<h3>Configure Deadline<a class="headerlink" href="#configure-deadline" title="Permalink to this headline">¶</a></h3>
+<p>You must configure Deadline’s NIM event plugin so that it can connect to NIM. To perform this setup, you need to enter Power User Mode (from the Tools menu), and then select ‘Tools’ -&gt; ‘Configure Events’.  Once in the Event Plugin Configuration window, select ‘NIM’ from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/nim_event_config.png"><img alt="../_images/nim_event_config.png" src="../_images/nim_event_config.png" style="height: 400px;" /></a>
+<p>This is where you will configure all the NIM relevant settings in Deadline.  There are several different categories of settings you can configure; they are described in more detail below.</p>
+<p><strong>Configuration</strong></p>
+<p>This section contains fields required for NIM integration to work.</p>
+<ul class="simple">
+<li><p><strong>State</strong>: There are three different states that an Event Plugin can be in: Global Enabled, Opt-In, and Disabled. In order for this feature to function properly, the State must be set to either Global Enabled or Opt-In. Note that if this plugin is in the Opt-In state, the jobs that want to run this plugin must opt into NIM.</p></li>
+<li><p><strong>NIM URL</strong>: The URL to access NIM’s API. Simply replace <em>hostname</em> in the screenshot with the host name or IP address of your actual NIM server.</p></li>
+</ul>
+<p>The <strong>Use Local Credentials</strong> and <strong>NIM API Key</strong> options are only relevant if your NIM Server is configured to require API Keys (see <a class="reference external" href="https://nim-labs.com/docs/NIM/html/api_web.html#api-keys">https://nim-labs.com/docs/NIM/html/api_web.html#api-keys</a>). If your NIM server is not configured to require API keys, you may ignore these fields.</p>
+<ul class="simple">
+<li><p><strong>Use Local Credentials</strong>: If set to True, use the NIM API Key stored in your nim.key file (<code class="docutils literal notranslate"><span class="pre">~/.nim/nim.key</span></code> on Linux and macOS or <code class="docutils literal notranslate"><span class="pre">%USERPROFILE%\.nim\nim.key</span></code> on Windows). The nim.key file must be present on <strong>every</strong> worker if you are using this option. If set to False, the NIM API Key entered into the ‘NIM API Key’ field will be used. We recommend using local credentials. To create a nim.key file, see the ‘Creating a nim.key file’ section below.</p></li>
+<li><p><strong>NIM API Key</strong>: The Render API key to use (located in NIM under Admin &gt; Security &gt; OPTIONS &gt; API KEYS &gt; RENDER API KEY). (Required if Use Local Credentials is set to False). If using the <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-ref-label"><span class="std std-ref">Deadline Secrets Management</span></a> feature, this parameter will be saved and retrieved based on the <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-secret-namespace-ref-label"><span class="std std-ref">Event Plugin Secrets Access Level</span></a>.</p></li>
+</ul>
+<p><strong>Options</strong></p>
+<p>This section contains general high-level options that control the behaviour of the Deadline’s NIM integration.</p>
+<ul class="simple">
+<li><p><strong>Auto Connect</strong>: Whether or not to connect to NIM when the pipeline tools dialog finishes loading.</p></li>
+<li><p><strong>Thumbnail Frame</strong>: The frame to upload to NIM as a thumbnail.</p></li>
+<li><p><strong>Convert Thumbnails with Draft</strong>: Whether or not to convert the frames to a different format before uploading them to NIM (requires Draft).</p></li>
+<li><p><strong>Thumbnail Conversion Format</strong>: The format to which Draft will convert the Thumbnail before uploading it.</p></li>
+</ul>
+<p><strong>Nim Draft Template</strong></p>
+<ul class="simple">
+<li><p><strong>Draft Template</strong>: The default Draft Template when selecting ‘Use Project Management Data’ with NIM when submitting a Custom Draft job.</p></li>
+</ul>
+</div>
+<div class="section" id="creating-a-nim-key-file">
+<h3>Creating a nim.key file<a class="headerlink" href="#creating-a-nim-key-file" title="Permalink to this headline">¶</a></h3>
+<p>If the ‘Use Local Credentials’ configuration setting is set to True, the API Key will be read from your nim.key file (<code class="docutils literal notranslate"><span class="pre">~/.nim/nim.key</span></code> on Linux and macOS or <code class="docutils literal notranslate"><span class="pre">%USERPROFILE%\.nim\nim.key</span></code> on Windows).</p>
+<a class="reference internal image-reference" href="../_images/nim_render_api_key.png"><img alt="../_images/nim_render_api_key.png" src="../_images/nim_render_api_key.png" style="height: 400px;" /></a>
+<p>If you do not have a nim.key file in your .nim folder (<code class="docutils literal notranslate"><span class="pre">~/.nim</span></code> on Linux and macOS or <code class="docutils literal notranslate"><span class="pre">%USERPROFILE%\.nim</span></code> on Windows), you can create one by copying the Render API Key from NIM (located in NIM under Admin &gt; Security &gt; OPTIONS &gt; API KEYS &gt; RENDER API KEY) to a file called <code class="docutils literal notranslate"><span class="pre">nim.key</span></code> and saving that file to your .nim folder (<code class="docutils literal notranslate"><span class="pre">~/.nim</span></code> on Linux and macOS or <code class="docutils literal notranslate"><span class="pre">%USERPROFILE%\.nim</span></code> on Windows).</p>
+</div>
+<div class="section" id="rename-extrainfo-columns">
+<h3>Rename ExtraInfo Columns<a class="headerlink" href="#rename-extrainfo-columns" title="Permalink to this headline">¶</a></h3>
+<p>The NIM integration uses ExtraInfo columns 0-5 to display relevant information about the NIM Renders that are tied to Deadline Jobs.  Given that “ExtraInfo0” isn’t exactly a descriptive name for what that column is being used for in this context, many people find it useful to rename these columns to be more descriptive.</p>
+<p>To do so, you must be in Power User mode and select ‘Tools’ -&gt; ‘Repository Options’. You must then go to the ‘Job Settings’ section, and select the ‘Extra Properties’ tab; from here you’ll be able to change these column names to something more appropriate.</p>
+<a class="reference internal image-reference" href="../_images/nim_columns.png"><img alt="../_images/nim_columns.png" src="../_images/nim_columns.png" style="height: 300px;" /></a>
+</div>
+</div>
+<div class="section" id="faq">
+<h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Is NIM supported?</strong></p>
+<blockquote>
+<div><p>Yes.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known NIM error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here, please contact
+<a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this event plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">NIM</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#creating-renders">Creating Renders</a><ul>
+<li><a class="reference internal" href="#automatic-render-creation">Automatic Render Creation</a></li>
+<li><a class="reference internal" href="#manual-render-creation">Manual Render Creation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#setup">Setup</a><ul>
+<li><a class="reference internal" href="#nim-setup">NIM Setup</a></li>
+<li><a class="reference internal" href="#configure-deadline">Configure Deadline</a></li>
+<li><a class="reference internal" href="#creating-a-nim-key-file">Creating a nim.key file</a></li>
+<li><a class="reference internal" href="#rename-extrainfo-columns">Rename ExtraInfo Columns</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="event-ftrack.html"
+                        title="previous chapter">FTrack</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="event-pipeline-tools.html"
+                        title="next chapter">Pipeline Tools</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-pipeline-tools.html" title="Pipeline Tools"
+             >next</a></li>
+        <li class="right" >
+          <a href="event-ftrack.html" title="FTrack"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" >Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">NIM</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

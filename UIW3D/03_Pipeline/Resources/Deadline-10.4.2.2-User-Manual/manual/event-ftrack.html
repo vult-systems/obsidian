@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FTrack &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="NIM" href="event-nim.html" />
+    <link rel="prev" title="FontSync" href="event-fontsync.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-nim.html" title="NIM"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="event-fontsync.html" title="FontSync"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" accesskey="U">Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">FTrack</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ftrack">
+<span id="event-ftrack-ref-label"></span><h1>FTrack<a class="headerlink" href="#ftrack" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>FTrack is a cloud-based Project Management tool that provides Production Tracking, Asset Management, and Team Collaboration tools to digital studios; see the <a class="reference external" href="https://www.ftrack.com/">FTrack website</a> for more information.</p>
+<p>Using Deadline’s FTrack event plugin, artists can automatically create new Asset Versions in FTrack when they submit a render Job to the farm.  When a Job completes, Deadline will automatically update associated Asset Versions with a proper Status, Thumbnail, and Components (if the output location is known).</p>
+<img alt="../_images/ftrack_versions.png" src="../_images/ftrack_versions.png" />
+</div>
+<div class="section" id="creating-versions">
+<h2>Creating Versions<a class="headerlink" href="#creating-versions" title="Permalink to this headline">¶</a></h2>
+<p>Versions can either be created automatically on submission (using the FTrack Event Plugin), or done manually afterwards.</p>
+<div class="section" id="automatic-version-creation">
+<h3>Automatic Version Creation<a class="headerlink" href="#automatic-version-creation" title="Permalink to this headline">¶</a></h3>
+<p>When you submit a new job to Deadline, you can have Deadline automatically create a new Asset Version in FTrack. This is done by connection to FTrack during the submission process, and selecting the Asset to which the Job should be tied. The majority of the submission scripts that ship with Deadline include the FTrack connection option. For this example, we will use Maya, but the process is basically the same for each submission script.</p>
+<p>First, open the <a class="reference internal" href="event-pipeline-tools.html#event-pipeline-tools-ref-label"><span class="std std-ref">Pipeline Tools</span></a> window via the Pipeline Tools button and navigate to the Project Management tab.</p>
+<p><a class="reference internal" href="../_images/pipeline_tools_button.png"><img alt="first" src="../_images/pipeline_tools_button.png" style="height: 450px;" /></a> <a class="reference internal" href="../_images/pipeline_tools_ftrack.png"><img alt="second" src="../_images/pipeline_tools_ftrack.png" style="height: 450px;" /></a></p>
+<p>Choose FTrack from the Project Management drop down, and then check the “Create new version” checkbox to begin. Enter your FTrack Login Name and press Connect. If the connection is successful, Deadline will collect the list of Projects and Tasks you are assigned to. If there are problems connecting, Deadline will try to display the appropriate error message to help you diagnose the problem.</p>
+<a class="reference internal image-reference" href="../_images/ftrack_connect.png"><img alt="../_images/ftrack_connect.png" src="../_images/ftrack_connect.png" style="height: 450px;" /></a>
+<p>After you have selected a Task and Asset, you must specify a Version Description.</p>
+<a class="reference internal image-reference" href="../_images/ftrack_configure.png"><img alt="../_images/ftrack_configure.png" src="../_images/ftrack_configure.png" style="height: 450px;" /></a>
+<p>After you have configured the Version information, press OK to return to the Maya submitter. The FTrack settings will now contain the Version information you just specified. To include this information with the job, leave the Create New Version option enabled. If you want to change the Version name or description before submitting, you must first reconnect to FTrack in the Pipeline Tools window.</p>
+<p>Press the Submit Job button in the Maya submitter to finish the submission. If the FTrack event plugin is configured to create the new version during Submission, the log report from the FTrack event plugin will show the Version’s ID. Otherwise, the Version won’t be created in FTrack until the job completes.</p>
+<p>You can view the log report for the job by right-clicking on the job in the Monitor and selecting View Job Reports.</p>
+<a class="reference internal image-reference" href="../_images/ftrack_log_report.png"><img alt="../_images/ftrack_log_report.png" src="../_images/ftrack_log_report.png" style="height: 400px;" /></a>
+</div>
+<div class="section" id="manual-version-creation">
+<h3>Manual Version Creation<a class="headerlink" href="#manual-version-creation" title="Permalink to this headline">¶</a></h3>
+<p>You can also create an Asset Version and tie it to a Job after submission, from the Deadline Monitor. To do this, simply right-click on the job and select ‘Scripts’ -&gt; ‘Integration’ -&gt; ‘Create FTrack Version’. This will bring up an FTrack browser so that you can connect, pick the appropriate asset, and set a description. After specifying the required information, just press OK and the new Version should be created.</p>
+<a class="reference internal image-reference" href="../_images/ftrack_ui.png"><img alt="../_images/ftrack_ui.png" src="../_images/ftrack_ui.png" style="height: 300px;" /></a>
+</div>
+</div>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>In order to be able to create versions within Deadline, you must first follow the steps below to setup Deadline’s connection to FTrack.</p>
+<div class="section" id="create-api-key">
+<h3>Create API Key<a class="headerlink" href="#create-api-key" title="Permalink to this headline">¶</a></h3>
+<p>The first thing you need to do is create an API Key in FTrack. This will be used by Deadline to authenticate when connecting to the FTrack API.</p>
+<p>To create a new API Key, you need to navigate to the ‘API Keys’ page, located under the ‘Security’ header of FTrack’s Settings section.  Once this page is displayed, press the ‘Create’ button to create a new key; while you could re-use an existing key, it is recommended that you create a separate one for Deadline.</p>
+<a class="reference internal image-reference" href="../_images/ftrack_create_key.png"><img alt="../_images/ftrack_create_key.png" src="../_images/ftrack_create_key.png" style="height: 200px;" /></a>
+<p>The name of the key doesn’t matter much (as long as it’s descriptive), but make sure Enabled is set to ‘On’ and that you select the ‘API’ role.  Once you’ve filled in all the values, click the ‘Create’ button to finalize the key’s creation.</p>
+<img alt="../_images/ftrack_copy_key.png" src="../_images/ftrack_copy_key.png" />
+<p>Once you’ve created the new entry, take note of its ‘Key’ value – you will need this when configuring Deadline in the next step.</p>
+</div>
+<div class="section" id="configure-deadline">
+<h3>Configure Deadline<a class="headerlink" href="#configure-deadline" title="Permalink to this headline">¶</a></h3>
+<p>Once you’ve created an API Key as detailed above, you can now set up the Event Plugin to connect to FTrack. To perform this setup, you need to enter Power User Mode (from the Tools menu), and then select ‘Tools’ -&gt; ‘Configure Events’.  Once in the Event Plugin Configuration window, select ‘FTrack’ from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/ftrack_event_config.png"><img alt="../_images/ftrack_event_config.png" src="../_images/ftrack_event_config.png" style="height: 400px;" /></a>
+<p>This is where you will configure all the FTrack relevant settings in Deadline.  There are several different categories of settings you can configure; they are described in more detail below.</p>
+<p><strong>Options</strong></p>
+<p>This section contains general high-level options that control the behaviour of the Deadline’s FTrack integration.</p>
+<ul class="simple">
+<li><p><strong>State</strong>: There are two different states that an Event Plugin can be in: <strong>Global Enabled</strong> or <strong>Disabled</strong>. In order for this feature to function properly, the State must be set to <strong>Global Enabled</strong>.</p></li>
+<li><p><strong>Create Version On Submission</strong>: This setting controls when an Asset Version is created in FTrack. If this is ‘True’, they will be created when a Job is submitted. On the other hand, if this is ‘False’, the Asset Version will <em>only</em> be created when the Job is Completed.</p></li>
+<li><p><strong>Create Separate Version for Draft Movie</strong>: This setting control what version Draft Movies are uploaded to.  If this is ‘True’, the movie will be uploaded to a separate version than the rest of the components.</p></li>
+<li><p><strong>Main Component Name</strong>: Specifies the name to use if only a single component is created.</p></li>
+<li><p><strong>Scene Component Name</strong>: Specifies the name to use for the scene if it is submitted as a component.</p></li>
+<li><p><strong>Draft Movie Component Name</strong>: Specifies the name to use for a component when uploading a rendered Draft movie.</p></li>
+</ul>
+<p><strong>Connection Settings</strong></p>
+<p>This section contains information that Deadline uses to connect to the FTrack API; these settings must be configured properly in order for this feature to work at all.</p>
+<ul class="simple">
+<li><p><strong>FTrack URL</strong>: This is the URL which you use to connect to your FTrack installation.</p></li>
+<li><p><strong>FTrack Proxy</strong>: The proxy you use to connect to FTrack. This is only relevant if you use a Proxy; if in doubt, leave this field blank.</p></li>
+<li><p><strong>FTrack API Key</strong>: This is where you must enter the API Key created in the ‘Create API Key’ step.  If using the <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-ref-label"><span class="std std-ref">Deadline Secrets Management</span></a> feature, this parameter will be saved and retrieved based on the <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-secret-namespace-ref-label"><span class="std std-ref">Event Plugin Secrets Access Level</span></a>.</p></li>
+</ul>
+<p><strong>Version Status Mappings</strong></p>
+<p>This section contains mappings from Deadline Job Statuses to FTrack Asset Version Statuses. These are not necessary, but if specified, Deadline will update the status of Asset Versions as Deadline Jobs change status (based on the mappings provided).</p>
+</div>
+<div class="section" id="rename-extrainfo-columns">
+<h3>Rename ExtraInfo Columns<a class="headerlink" href="#rename-extrainfo-columns" title="Permalink to this headline">¶</a></h3>
+<p>The FTrack integration uses ExtraInfo columns 0-5 to display relevant information about the Asset Versions that are tied to Deadline Jobs.  Given that “ExtraInfo0” isn’t exactly a descriptive name for what that column is being used for in this context, many people find it useful to rename these columns to be more descriptive.</p>
+<p>To do so, you must be in Power User mode and select ‘Tools’ -&gt; ‘Repository Options’. You must then go to the ‘Job Settings’ section, and select the ‘Extra Properties’ tab; from here you’ll be able to change these column names to something more appropriate.</p>
+<a class="reference internal image-reference" href="../_images/ftrack_columns.png"><img alt="../_images/ftrack_columns.png" src="../_images/ftrack_columns.png" style="height: 300px;" /></a>
+</div>
+</div>
+<div class="section" id="faq">
+<h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Is FTrack supported?</strong></p>
+<blockquote>
+<div><p>Yes.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known FTrack error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here, please contact
+<a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this event plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">FTrack</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#creating-versions">Creating Versions</a><ul>
+<li><a class="reference internal" href="#automatic-version-creation">Automatic Version Creation</a></li>
+<li><a class="reference internal" href="#manual-version-creation">Manual Version Creation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#setup">Setup</a><ul>
+<li><a class="reference internal" href="#create-api-key">Create API Key</a></li>
+<li><a class="reference internal" href="#configure-deadline">Configure Deadline</a></li>
+<li><a class="reference internal" href="#rename-extrainfo-columns">Rename ExtraInfo Columns</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="event-fontsync.html"
+                        title="previous chapter">FontSync</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="event-nim.html"
+                        title="next chapter">NIM</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-nim.html" title="NIM"
+             >next</a></li>
+        <li class="right" >
+          <a href="event-fontsync.html" title="FontSync"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" >Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">FTrack</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

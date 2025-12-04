@@ -1,0 +1,865 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Repository Configuration &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Plugin Configuration" href="plugin-config.html" />
+    <link rel="prev" title="Getting Started With Deadline Secrets Management" href="secrets-management/deadline-secrets-management-getting-started.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="plugin-config.html" title="Plugin Configuration"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="secrets-management/deadline-secrets-management-getting-started.html" title="Getting Started With Deadline Secrets Management"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" accesskey="U">Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Repository Configuration</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="repository-configuration">
+<span id="repository-config-ref-label"></span><h1>Repository Configuration<a class="headerlink" href="#repository-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>There are a wide variety of Repository options that can be configured. These options can be modified at any time from the Deadline Monitor while in Power User Mode by selecting Tools -&gt; Configure Repository Options. If you want to restore all the Repository Options to their defaults, simply click the <strong>Reset Settings</strong> button.</p>
+<a class="reference internal image-reference" href="../_images/cro_reset_button.png"><img alt="../_images/cro_reset_button.png" src="../_images/cro_reset_button.png" style="height: 500px;" /></a>
+<p>Note that long-running applications like the Launcher, Worker, and Pulse only update these settings every 10 minutes, so after making changes, it can take up to 10 minutes for all machines to recognize them.
+You can restart these applications to have them recognize the changes immediately.</p>
+</div>
+<div class="section" id="client-setup">
+<span id="client-setup-ref-label"></span><h2>Client Setup<a class="headerlink" href="#client-setup" title="Permalink to this headline">¶</a></h2>
+<p>These settings affect the Deadline Client installed on each machine.</p>
+<a class="reference internal image-reference" href="../_images/cro_client_setup.png"><img alt="../_images/cro_client_setup.png" src="../_images/cro_client_setup.png" style="height: 500px;" /></a>
+<p><strong>Client Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Automatic Upgrades / Downgrades</strong>: Enabling Automatic Upgrades / Downgrades allows the Deadline Clients to detect if the Repository has been changed via the running of the Deadline Repository Installer and upgrade/downgrade themselves if necessary. Note that the user performing the upgrade will need write permissions to the Deadline Client install directory. The upgrade check is only performed when launching applications via the Launcher. Finally, this is NOT an “Automatic Update” system and does NOT automatically download and install a new version of Deadline to either your repository or clients. Instead, this system allows all your Deadline clients to automatically upgrade/downgrade themselves, based on the version of Deadline installed to the Deadline Repository via the Repository Installer executable. So, in summary, you run the Deadline repository installer on the repository machine and with this setting enabled, the next time any of the Deadline local applications are started via the ‘launcher’ application, they will be upgraded/downgraded accordingly.</p></li>
+<li><p><strong>Use Event Timeouts</strong>: Enabling Event Timeouts will cause event triggers to time out if all Event Plugins do not finish in the specified amount of time.</p></li>
+<li><p><strong>Application Plugins Enabled By Default</strong>: Enabling this setting will cause new Application Plugins added to the Repository to be enabled. It is recommended that this setting be turned off for security reasons.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/cro_client_setup2.png" id="repo-config-remote-control-settings-ref-label"><img alt="../_images/cro_client_setup2.png" id="repo-config-remote-control-settings-ref-label" src="../_images/cro_client_setup2.png" style="height: 500px;" /></a>
+<p><strong>Remote Control Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Remote Administration</strong>: Enabling Remote Administration allows the Deadline Clients to be controlled remotely from the Monitor running on another machine. Note that this can be a security risk if you are not behind a firewall.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Remote Commands to your local machine only do not require Remote Administration to be enabled (assuming your username has been granted access to the right-click “Remote Control Machine” -&gt; “Execute Command” menu option). Remote Command Allow List is still applied if it is enabled.</p>
+</div>
+<ul class="simple">
+<li><p><strong>Remote Command Allow List</strong>: Defines which commands can be sent to a machine via an Execute command. Any command that doesn’t match an entry in the list will not be accepted.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The allow list can be enabled or disabled. If disabled, all remote commands are allowed.</p>
+</div>
+<ul class="simple">
+<li><p><strong>Redirect Remote Commands through Pulse</strong>: If enabled, remote commands will be redirected first to Pulse then to the target, in the case that the target cannot be accessed directly through the current network. Default is disabled.</p></li>
+</ul>
+</div>
+<div class="section" id="monitor-settings">
+<h2>Monitor Settings<a class="headerlink" href="#monitor-settings" title="Permalink to this headline">¶</a></h2>
+<p>These settings affect the Deadline Monitor application on each machine.</p>
+<div class="section" id="monitor-layouts">
+<h3>Monitor Layouts<a class="headerlink" href="#monitor-layouts" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have existing layouts saved from Deadline versions prior to 10.4, you will need to migrate them to the new version before you can use them. See the <a class="reference internal" href="command-line-arguments-repo.html#migratemonitorlayouts-dlc-ref-label"><span class="std std-ref">MigrateMonitorLayouts</span></a> DeadlineCommand documentation for more information.</p>
+</div>
+<p>Existing Monitor layouts can be added here. These layouts can be assigned to User Groups as a user’s default layout. If the Pinned option is enabled, they can also be chosen from the Pinned Layouts menu in the Monitor.
+The order of the layouts here will be the same in the Pinned Layouts menu.</p>
+<a class="reference internal image-reference" href="../_images/cro_ms_monitor_layouts.png"><img alt="../_images/cro_ms_monitor_layouts.png" src="../_images/cro_ms_monitor_layouts.png" style="height: 500px;" /></a>
+<p>To add a new layout, press the Add button, and then choose an existing Monitor layout file, or use the current Monitor’s layout. Monitor layout files can be saved from the Monitor by selecting View -&gt; Save Layout.</p>
+<p>Deadline 10.4 uses a new format for layout files. If you load a layout file that was created by an earlier version, it will be converted into the new format, and it will no longer work with earlier versions of Deadline. A backup of the layout file will be created alongside it with “Legacy Backup” appended to the layout file name, which can be used with prior Deadline versions.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Only open layout files from trusted sources.</p>
+</div>
+<a class="reference internal image-reference" href="../_images/add_monitor_layout.png"><img alt="../_images/add_monitor_layout.png" src="../_images/add_monitor_layout.png" style="height: 150px;" /></a>
+</div>
+<div class="section" id="update-settings">
+<span id="repository-config-monitor-update-settings-ref-label"></span><h3>Update Settings<a class="headerlink" href="#update-settings" title="Permalink to this headline">¶</a></h3>
+<p><strong>Enable Manual Refreshing</strong></p>
+<p>If your Auto Refreshing Intervals are set to longer intervals, manual refreshing in the Monitor can be enabled to allow users to get the most up to date data immediately. To prevent users from abusing manual refreshing,
+a minimum interval between manual refreshes can be configured.</p>
+<p><strong>Sorting and Filtering</strong></p>
+<p>For farms that have a large number of Jobs (10,000+) or Workers (1000+), disabling Automatic Sorting and Filtering in the lists in the Monitor can improve the Monitor’s overall performance.
+This option in the Repository Options can be used to disable Automatic Sorting and Filtering by default, and users can enable it later in their Monitors if desired.</p>
+<a class="reference internal image-reference" href="../_images/cro_ms_update_settings.png"><img alt="../_images/cro_ms_update_settings.png" src="../_images/cro_ms_update_settings.png" style="height: 500px;" /></a>
+</div>
+</div>
+<div class="section" id="worker-settings">
+<h2>Worker Settings<a class="headerlink" href="#worker-settings" title="Permalink to this headline">¶</a></h2>
+<p>These settings affect the Deadline Worker application on each machine.</p>
+<div class="section" id="repository-config-worker-settings-ref-label">
+<span id="id1"></span><h3>Worker Settings<a class="headerlink" href="#repository-config-worker-settings-ref-label" title="Permalink to this headline">¶</a></h3>
+<p><strong>General</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Limit the number of characters per line for standard output handling</strong>: Lines of standard output that are longer than the specified limit will be ignored by the Worker’s stdout handling.</p></li>
+<li><p><strong>Delete Offline/Stalled Workers from the Repository after this many days</strong>: Workers that are Offline or Stalled will be removed from the Repository after this many days.</p></li>
+<li><p><strong>Global Remote Command Port Override</strong>: If enabled, this port will be used by all Workers for remote commands instead of a random port. Note that this global override can be overridden on a per-Worker basis.</p></li>
+<li><p><strong>Gather System Resources (CPU and RAM) When Rendering Tasks On Linux/Mac</strong>: If enabled, the Worker will collect CPU and RAM usage for a task while it is rendering. We have seen cases where this can cause the Worker to crash on Linux or Mac, so you should only disable this feature if you run into this problem.</p></li>
+<li><p><strong>Use fully qualified domain name (FQDN) for Machine Name instead of host name</strong>: If enabled, the Worker will try to use the machine’s fully qualified domain name (FQDN) when setting its Machine Name instead of using the machine’s host name. The FQDN will then be used for Remote Control, which can be useful if the remote machine name isn’t recognized in the local network. If the Worker can’t resolve the FQDN, it will just use the host name instead.</p></li>
+<li><p><strong>Use Worker’s IP Address for Remote Control</strong>: If enabled, the Worker’s IP address will be used for remote control instead of trying to resolve the Worker’s host name.</p></li>
+<li><p><strong>Exclude Jobs in the ‘none’ Pool</strong>: Prevents the Workers from picking up Jobs that have been submitted to the ‘none’ pool.</p></li>
+<li><p><strong>Exclude Jobs in the ‘none’ Group</strong>: Prevents the Workers from picking up Jobs that have been submitted to the ‘none’ group.</p></li>
+<li><p><strong>Run Plugin Sandbox in Job’s Environment</strong>: If enabled, the Plugin <a class="reference internal" href="plugin-sandboxing.html#plugin-sandboxing-ref-label"><span class="std std-ref">Sandbox</span></a> will run in the same environment as the rendering Job. The Job’s environment variables will be available to Plugin scripts which some studio pipelines might rely on (instead of a clean Job environment). Default is disabled.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Wait Times</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Number of minutes before an unresponsive Worker is marked as Stalled</strong>: If a Worker has not provided a status update in this amount of time, it will be marked as stalled. If the Resource Tracker is tracking this Worker, the Worker will be terminated after this stall time.</p></li>
+<li><p><strong>Number of seconds between Thermal Shutdown checks if Pulse is offline</strong>: The number of seconds between thermal shutdown checks. The Worker only does this check if Pulse is not running.</p></li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_worker_settings.png"><img alt="../_images/cro_worker_settings.png" src="../_images/cro_worker_settings.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="extra-properties">
+<h3>Extra Properties<a class="headerlink" href="#extra-properties" title="Permalink to this headline">¶</a></h3>
+<p>Extra arbitrary properties can be set for Workers, and these properties can be given user friendly names so that they can easily be identified and used to filter and sort Workers in the Monitor.</p>
+<a class="reference internal image-reference" href="../_images/cro_worker_settings_ep.png"><img alt="../_images/cro_worker_settings_ep.png" src="../_images/cro_worker_settings_ep.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="throttling">
+<span id="throttle-ref-label"></span><h3>Throttling<a class="headerlink" href="#throttling" title="Permalink to this headline">¶</a></h3>
+<p>Throttling can be used to limit the number of Worker applications that are copying over the Job files at the same time. This can help network performance if large scene files are being submitted with the Jobs.
+Note that a Worker only copies over the Job files when it starts up a new Job. When it goes to render subsequent tasks for the same Job, it will not be affected by the throttling feature.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Enable Throttling</strong>: Allow throttling to occur.</p></li>
+<li><p><strong>Maximum Number of Workers That Can Copy Job Files at The Same Time</strong>: The maximum number of Workers that can copy a scene file at the same time.</p></li>
+<li><p><strong>The Interval a Worker Waits Between Updates To See If It Can Start Copying Job Files</strong>: The amount of time (in seconds) a Worker will wait to perform throttle checks and updates.</p></li>
+<li><p><strong>Throttle Update Timeout Multiplier (based on the Worker Interval)</strong>: The interval a Worker waits between updates is multiplied by this value to determine the timeout value.</p></li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_worker_throttling.png"><img alt="../_images/cro_worker_throttling.png" src="../_images/cro_worker_throttling.png" style="height: 500px;" /></a>
+</div>
+</div>
+<div class="section" id="performance-settings">
+<span id="performance-settings-ref-label"></span><h2>Performance Settings<a class="headerlink" href="#performance-settings" title="Permalink to this headline">¶</a></h2>
+<p>These settings are used to influence the performance of Deadline by modifying update intervals.</p>
+<p><strong>Auto Adjust</strong></p>
+<p>The auto adjust option will try to choose the best interval settings based on the number of Workers in your farm. These should act as a good base that you can modify later as necessary. Press the Auto Adjust button to bring up the interval settings. Note that this will show you what your current settings are, and what they’ll be changed to based on the number of Workers you entered.</p>
+<a class="reference internal image-reference" href="../_images/cro_performance_auto_adjust.png"><img alt="../_images/cro_performance_auto_adjust.png" src="../_images/cro_performance_auto_adjust.png" style="height: 400px;" /></a>
+<p><strong>Monitor Intervals</strong></p>
+<p>The Monitor periodically polls the Database for up-to-date information to populate its various panels. These intervals each control how often the Monitor checks for updates on particular items.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Number of seconds between Job updates</strong>: This controls how often the Monitor reads in new Job updates.</p></li>
+<li><p><strong>Number of seconds between Worker updates</strong>: This controls how often the Monitor reads in new Worker updates.</p></li>
+<li><p><strong>Number of seconds between Pulse updates</strong>: This controls how often the Monitor reads in new Pulse updates.</p></li>
+<li><p><strong>Number of seconds between Limit updates</strong>: This controls how often the Monitor reads in new Limit updates.</p></li>
+<li><p><strong>Number of seconds between Settings updates</strong>: This controls how often the Settings such as groups, pools and users are updated.</p></li>
+<li><p><strong>Number of seconds between Cloud updates</strong>: This controls how often the Monitor updates the Cloud Panel.</p></li>
+<li><p><strong>Number of seconds between Balancer updates</strong>: This controls how often the Monitor reads in new Balancer updates.</p></li>
+<li><p><strong>Number of seconds between Connection Server updates</strong>: This controls how often the Monitor updates the Connection Servers Panel.</p></li>
+<li><p><strong>Number of seconds between License Forwarder updates</strong>: This controls how often the Monitor updates the License Forwarders Panel.</p></li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_performance_monitor_intervals.png"><img alt="../_images/cro_performance_monitor_intervals.png" src="../_images/cro_performance_monitor_intervals.png" style="height: 500px;" /></a>
+<p><strong>Worker Intervals</strong></p>
+<p>These intervals control how often the Worker updates its information in the Database and how often it polls the Database for available tasks.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Number of seconds Between Worker Information Updates</strong>: This controls how often the Worker updates the information that’s shown in the Worker list in the Monitor. In addition to these regular updates, the Worker also updates its information when it changes status and before shutting down.</p></li>
+<li><p><strong>Number of seconds Between Queries For New Tasks While the Worker is Rendering</strong>: The number of seconds a Worker will wait after it finishes a task before moving on to another. This delay is not applied when the Worker is idle.</p></li>
+<li><p><strong>Multiplier to determine seconds between queries while the Worker is Idle</strong>: This multiplier is applied to the number of Workers and will determine how long a Worker will wait between polls to the Repository for tasks when it is idle. This is used to regulate network traffic by ensuring that the more idle Workers there are, the less frequently they each poll the Repository. The value of this multiplier controls the strength of this effect.</p></li>
+<li><p><strong>Maximum number of seconds between Job queries while the Worker is Idle</strong>: The maximum number of seconds a Worker will wait between polls to the Repository for tasks when it is idle.</p></li>
+<li><p><strong>Minimum number of seconds between Job queries when the Worker is Idle</strong>: The minimum number of seconds a Worker will wait between polls to the Repository for tasks when it is idle.</p></li>
+<li><p><strong>Number of seconds between updates for limits based on task progress percentage</strong>: This is the interval at which a Worker will check if the limit should be released. When a Worker is rendering a Job that has been assigned a Limit, and that Limit has “Release at Task Progress” enabled, based on this interval the Worker will check if the Limit should be released.</p></li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_performance_worker_intervals.png"><img alt="../_images/cro_performance_worker_intervals.png" src="../_images/cro_performance_worker_intervals.png" style="height: 500px;" /></a>
+<p><strong>Event Intervals</strong></p>
+<p>The time interval between checks if the Event Plugins need to be updated. The Event Plugins are marked as needing to be updated if any of the Event files are modified.</p>
+<a class="reference internal image-reference" href="../_images/cro_performance_event_intervals.png"><img alt="../_images/cro_performance_event_intervals.png" src="../_images/cro_performance_event_intervals.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="pulse-settings">
+<span id="pulse-settings-ref-label"></span><h2>Pulse Settings<a class="headerlink" href="#pulse-settings" title="Permalink to this headline">¶</a></h2>
+<p>These settings control how the Workers connect to Pulse, and are also used by the Worker to determine if Pulse is running.</p>
+<div class="section" id="general">
+<h3>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Maximum Incoming Connections</strong>: The maximum number of Workers that can connect to Pulse at any given time.</p></li>
+<li><p><strong>Connection Timeout (in milliseconds)</strong>: The amount of time (in milliseconds) that messages to and from Pulse have to complete before they timeout.</p></li>
+<li><p><strong>Maximum Connection Attempts</strong>: The maximum number of times a Worker will attempt to connect to Pulse before giving up.</p></li>
+<li><p><strong>Stalled Pulse Threshold (in minutes)</strong>: Deadline determines if a Pulse has stalled by checking the last time that the Pulse has provided a status update. If a Pulse has not updated its state in the specified amount of time, it will be marked as Stalled.</p></li>
+<li><p><strong>Global Remote Command Port Override</strong>: If enabled, this port will be used by all Pulses for remote commands instead of a random port. Note that this global override can be overridden on a per-Pulse basis.</p></li>
+<li><p><strong>Use Pulse’s IP Address When Workers Connect To Pulse and For Remote Control</strong>: If enabled, the Pulse’s IP address will be used when the Workers connect to Pulse, and for remote control, instead of trying to resolve the Pulse’s hostname.</p></li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_pulse_general.png"><img alt="../_images/cro_pulse_general.png" src="../_images/cro_pulse_general.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="power-management">
+<h3>Power Management<a class="headerlink" href="#power-management" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Power Management Check Interval</strong>: How often Pulse performs Power Management operations.</p></li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_pulse_power.png"><img alt="../_images/cro_pulse_power.png" src="../_images/cro_pulse_power.png" style="height: 500px;" /></a>
+</div>
+</div>
+<div class="section" id="balancer-settings-deprecated">
+<span id="balancer-settings-label"></span><h2>Balancer Settings (deprecated)<a class="headerlink" href="#balancer-settings-deprecated" title="Permalink to this headline">¶</a></h2>
+<p>These settings control general settings for the Balancer. Note that the Balancer is no longer a supported application.</p>
+<ul class="simple">
+<li><p><strong>Balancer Update Interval</strong>: How often the Balancer performs a balancing cycle.</p></li>
+<li><p><strong>Stalled Balancer Threshold (in minutes)</strong>: Deadline determines if a Balancer has stalled by checking the last time that the Balancer has provided a status update. If a Balancer has not updated its state in the specified amount of time, it will be marked as Stalled.</p></li>
+<li><p><strong>Current Algorithm Logic</strong>: The Balancer Plugin to use for determining balancing targets.</p></li>
+<li><p><strong>Error Limit</strong>: How many cycles the Balancer is allowed to error for before it restarts.</p></li>
+<li><p><strong>Global Remote Command Port Override</strong>: If enabled, this port will be used by all Balancers for remote commands. Otherwise, the port used will be randomly assigned on each Balancers’ startup.</p></li>
+<li><p><strong>Use Balancer’s IP Address for Remote Control</strong>: If enabled, the Balancer’s IP address will be used for remote control instead of trying to resolve the Balancer’s host name.</p></li>
+<li><p><strong>Enable Group Switching</strong>: If there are group mappings that have the same image and hardware types instances will move between groups as needed. If it’s not enabled instances will shutdown and startup like normal.</p></li>
+</ul>
+<p>The settings for the currently selected Algorithm Logic will be shown here as well.</p>
+<a class="reference internal image-reference" href="../_images/cro_balancer.png"><img alt="../_images/cro_balancer.png" src="../_images/cro_balancer.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="region-settings">
+<span id="region-settings-label"></span><h2>Region Settings<a class="headerlink" href="#region-settings" title="Permalink to this headline">¶</a></h2>
+<p>This is where you can set up Regions in Deadline. Regions are logical groupings for Workers. <a class="reference internal" href="cross-platform.html#cross-platform-ref-label"><span class="std std-ref">Cross Platform Rendering</span></a> and <a class="reference internal" href="#balancer-settings-label"><span class="std std-ref">Balancer Settings</span></a> can be unique to each Region. For example a Worker that’s in the ‘thinkbox_west’ Region will use the <a class="reference internal" href="#mapped-path-ref-label"><span class="std std-ref">path mapping</span></a> settings for that Region. The list on the right shows the Cloud Regions and the list on the left shows the general Regions. See <a class="reference internal" href="cross-platform.html#cross-plat-region-label"><span class="std std-ref">Cross Platform Rendering</span></a> for more information.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Regions must have a unique name. ‘All’, ‘none’ and ‘unrecognized’ are reserved names that cannot be used.</p>
+</div>
+<a class="reference internal image-reference" href="../_images/cro_region_settings.png"><img alt="../_images/cro_region_settings.png" src="../_images/cro_region_settings.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="email-notification">
+<span id="email-notification-settings-label"></span><h2>Email Notification<a class="headerlink" href="#email-notification" title="Permalink to this headline">¶</a></h2>
+<p>This section handles all email related settings within the repository.</p>
+<div class="section" id="primary-and-secondary-server">
+<h3>Primary and Secondary Server<a class="headerlink" href="#primary-and-secondary-server" title="Permalink to this headline">¶</a></h3>
+<p>Set up a primary SMTP server to send email notifications. You can set up an optional secondary SMTP server for Deadline to use if the primary server is unavailable.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>SMTP Server</strong>: The SMTP server used by Deadline to send emails.</p></li>
+<li><p><strong>Sender Account</strong>: The email account that Deadline will use to send emails from.</p></li>
+<li><p><strong>Port</strong>: The SMTP port to use.</p></li>
+<li><p><strong>Use SSL</strong>: The email account from which the notifications will be sent.</p></li>
+<li><p><strong>SMTP Server Requires Authentication</strong>: Enable if the SMTP server requires a user name and password to authenticate.</p></li>
+<li><p><strong>Testing</strong>: Send a test email to the specified email address.</p></li>
+<li><p><strong>Automatically Generate Email Addresses for New Users</strong>: Generates new email address for new users in the form <a class="reference external" href="mailto:username&#37;&#52;&#48;postfix">username<span>&#64;</span>postfix</a>, where ‘postfix’ is the value entered in the Email Address Postfix field.</p></li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_en_primary.png"><img alt="../_images/cro_en_primary.png" src="../_images/cro_en_primary.png" style="height: 500px;" /></a>
+<p>If you are using Google Mail to send emails (smtp.gmail.com), you will typically use port 25 if SSL is disabled, and port 465 if SSL is enabled. See Google’s documentation on <a class="reference external" href="https://support.google.com/a/answer/176600?hl=en">Sending Emails</a> for more information.</p>
+</div>
+<div class="section" id="notifications">
+<h3>Notifications<a class="headerlink" href="#notifications" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Job Completed</strong>: When a Job completes, an email will be sent to these email addresses.</p></li>
+<li><p><strong>Job Timed Out</strong>: When a Job times out, an email will be sent to these email addresses.</p></li>
+<li><p><strong>Job Error Warning</strong>: When a Job accumulates a certain number of errors, a warning email will be sent to these email addresses. You can configure the warning limit in the Failure Detection settings.</p></li>
+<li><p><strong>Job Failed</strong>: When a Job fails, an email will be sent to these email addresses.</p></li>
+<li><p><strong>Worker Error Warning</strong>: When a Worker accumulates a certain number of errors in one session, a warning email will be sent to these email addresses. You can configure the warning limit in the Failure Detection settings.</p></li>
+<li><p><strong>Stalled Applications</strong>: When a stalled Worker, Pulse or Connection Server is detected, an email will be sent to these email addresses.</p></li>
+<li><p><strong>System Administrator</strong>: When users use the option in the Error Report Viewer to report error messages to their system administrator, those emails will be sent to these email addresses.</p></li>
+<li><p><strong>Low Database Connections</strong>: Low Database connection notification emails will be sent to these email addresses. See <a class="reference internal" href="install-db-repo.html#db-resource-limits-ref-label"><span class="std std-ref">Database Resource Limits</span></a> for more information on this issue.</p></li>
+<li><p><strong>Database Connection Thresholds</strong>: When the number of available database connections is below the set threshold a warning email will be sent.</p></li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_en_notifications.png"><img alt="../_images/cro_en_notifications.png" src="../_images/cro_en_notifications.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="power-management-notifications">
+<h3>Power Management Notifications<a class="headerlink" href="#power-management-notifications" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Idle Shutdown</strong>: Notifications for Idle Shutdown operations will be sent to these email addresses.</p></li>
+<li><p><strong>Machine Startup</strong>: Notifications for Machine Startup operations will be sent to these email addresses.</p></li>
+<li><p><strong>Thermal Shutdown</strong>: Notifications for Thermal Shutdown operations will be sent to these email addresses.</p></li>
+<li><p><strong>Machine Restart</strong>: Notifications for Machine Restart operations will be sent to these email addresses.</p></li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_en_power.png"><img alt="../_images/cro_en_power.png" src="../_images/cro_en_power.png" style="height: 500px;" /></a>
+</div>
+</div>
+<div class="section" id="house-cleaning">
+<span id="repository-config-house-cleaning-ref-label"></span><h2>House Cleaning<a class="headerlink" href="#house-cleaning" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In Deadline 10.0.21 and later, client applications (Pulse, Worker, etc.) that are connected to the <a class="reference internal" href="remote-connection-server.html#remote-connection-server-ref-label"><span class="std std-ref">Remote Connection Server</span></a> will not be able to perform house cleaning operations. Instead, the Remote Connection Server has adopted this responsibility and will perform <a class="reference internal" href="#house-cleaning-settings-label"><span class="std std-ref">House Cleaning</span></a>, <a class="reference internal" href="#repository-repair-settings-label"><span class="std std-ref">Repository Repair</span></a>, and <a class="reference internal" href="#pending-job-scan-settings-label"><span class="std std-ref">Pending Job Scan</span></a> periodically.</p>
+<p>Client applications that use a direct Repository connection can still perform house cleaning operations as normal.</p>
+<p>When running several applications in Direct connection mode it might be necessary to prevent some of them from running house cleaning tasks. This could be done by setting the following environment variables to <cite>true</cite>:</p>
+<p>DCONFIG_DISABLEHOUSECLEANING</p>
+<p>DCONFIG_DISABLEREPOSITORYJOBSSCAN</p>
+<p>DCONFIG_DISABLEREPOSITORYREPAIR</p>
+<p>The same effect could be achieved with configuration file settings: <a class="reference internal" href="client-config.html#client-config-housecleaning-overrides-ref-label"><span class="std std-ref">House Cleaning Override Settings</span></a>.</p>
+</div>
+<div class="section" id="pending-job-scan">
+<span id="pending-job-scan-settings-label"></span><h3>Pending Job Scan<a class="headerlink" href="#pending-job-scan" title="Permalink to this headline">¶</a></h3>
+<p>The Pending Job Scan determines if any pending Jobs should be released, or if any pending Job events should be processed. If Pulse is running, it will perform the Pending Job Scan every interval. If Pulse is not running, the Workers will perform the Pending Job Scan between tasks if the interval has passed.</p>
+<blockquote>
+<div><ul>
+<li><p><strong>Pending Job Scan Interval</strong>: The maximum amount of time between Pending Job Scans in seconds.</p></li>
+<li><p><strong>Allow Workers to Perform the Pending Job Scan If Pulse is not Running</strong>: If enabled, the Workers will perform the pending Job scan if Pulse is not running. If disabled, only Pulse can perform the pending Job scan.</p></li>
+<li><p><strong>Run Pending Job Scan in a Separate Process</strong>: If enabled, the pending Job scan will be run in a separate process. This can be useful when using dependency scripts to ensure that a crash caused by the
+script doesn’t cause the main application (Pulse, Worker, or Monitor) to crash.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Write Pending Job Scan Output to Separate Log File</strong>: If enabled, all output from the pending Job scan will be placed into a separate log file.</p></li>
+<li><p><strong>Pending Job Scan Process Timeout</strong>: If running the pending Job scan in a separate process, this is the maximum amount of time the process can take before it is aborted.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Asynchronous Job Events</strong>: If enabled, many Job events will be processed asynchronously by the Pending Job Scan operation, which can help improve the performance of the Monitor when performing operations on
+batches of Jobs. If this is enabled, the OnJobSubmitted event will still be processed synchronously to ensure that any updates to the Job are committed before the Job can be picked up by Workers.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Maximum Job Events Per Session</strong>: The maximum number of pending Job events that can be processed per scan.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_house_pending.png"><img alt="../_images/cro_house_pending.png" src="../_images/cro_house_pending.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="house-cleaning-settings-label">
+<span id="id2"></span><h3>House Cleaning<a class="headerlink" href="#house-cleaning-settings-label" title="Permalink to this headline">¶</a></h3>
+<p>House Cleaning is responsible for purging old Jobs, Workers, and reports, and for regular maintenance of the repository and database. If Pulse is running, it will perform House Cleaning every interval. If Pulse is not running, the Workers will perform House Cleaning between tasks if the interval has passed.</p>
+<blockquote>
+<div><ul>
+<li><p><strong>House Cleaning Interval</strong>: The maximum amount of time between House Cleaning operations in seconds.</p></li>
+<li><p><strong>Allow Workers to Perform House Cleaning If Pulse is not Running</strong>: If enabled, the Workers will perform house cleaning if Pulse is not running. If disabled, only Pulse can perform house cleaning.</p></li>
+<li><p><strong>Run House Cleaning in a Separate Process</strong>: If enabled, the house cleaning operation will be run in a separate process.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Write House Cleaning Output to Separate Log File</strong>: If enabled, all output from the house cleaning will be placed into a separate log file.</p></li>
+<li><p><strong>House Cleaning Process Timeout</strong>: If running the house cleaning in a separate process, this is the maximum amount of time the process can take before it is aborted.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>House Cleaning Maximum Per Session</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Maximum Deleted Jobs</strong>: The maximum number of deleted Jobs that can be purged per session.</p></li>
+<li><p><strong>Maximum Archived Jobs</strong>: The maximum number of Jobs that can be archived per session.</p></li>
+<li><p><strong>Maximum Auxiliary Folders</strong>: The maximum number of Job auxiliary folders that can be deleted per session.</p></li>
+<li><p><strong>Maximum Job Reports</strong>: The maximum number of Jobs report files that can be deleted per session.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_house_cleaning.png"><img alt="../_images/cro_house_cleaning.png" src="../_images/cro_house_cleaning.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="repository-repair">
+<span id="repository-repair-settings-label"></span><h3>Repository Repair<a class="headerlink" href="#repository-repair" title="Permalink to this headline">¶</a></h3>
+<p>Repository Repair is responsible for finding orphaned tasks and limit stubs, and checking for stalled Workers. If Pulse is running, it will perform a Repository Repair every interval. If Pulse is not running, the Workers will perform the Repository Repair between tasks if the interval has passed.</p>
+<blockquote>
+<div><ul>
+<li><p><strong>Repository Repair Interval</strong>: The maximum amount of time between Repository Repair operations in seconds.</p></li>
+<li><p><strong>Allow Workers to Perform the Repository Repair If Pulse is not Running</strong>: If enabled, the Workers will perform the repository repair if Pulse is not running. If disabled, only Pulse can perform the repository repair.</p></li>
+<li><p><strong>Run Repository Repair in a Separate Process</strong>: If enabled, the repository repair operation will be run in a separate process.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Write Repository Repair Output to Separate Log File</strong>: If enabled, all output from the repository repair will be placed into a separate log file.</p></li>
+<li><p><strong>Repository Repair Process Timeout</strong>: If running the repository repair in a separate process, this is the maximum amount of time the process can take before it is aborted.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Enable Automatic Primary Pulse Election</strong>: If enabled, the Repository Repair operation will elect another running Pulse instance as the Primary if the current Primary Pulse instance is no longer running.</p></li>
+<li><p><strong>Enable Automatic Primary Balancer Election</strong>: If enabled, the Repository Repair operation will elect another running Balancer instance as the Primary if the current Primary Balancer instance is no longer running.</p></li>
+<li><p><strong>Enable Automatic Primary License Forwarder Election</strong>: If enabled, the Repository Repair operation will elect another running License Forwarder instance as the Primary if the current Primary License Forwarder instance is no longer running.</p></li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_repo_repair.png"><img alt="../_images/cro_repo_repair.png" src="../_images/cro_repo_repair.png" style="height: 500px;" /></a>
+</div>
+</div>
+<div class="section" id="auto-configuration">
+<h2>Auto Configuration<a class="headerlink" href="#auto-configuration" title="Permalink to this headline">¶</a></h2>
+<p>This allows you to configure your Workers from a single location. When a Worker starts up, it will automatically pull this configuration from Pulse and apply it before fully initializing.
+See the <a class="reference internal" href="auto-config.html#auto-config-ref-label"><span class="std std-ref">Auto Configuration</span></a> documentation for more information.</p>
+<a class="reference internal image-reference" href="../_images/cro_auto_config.png"><img alt="../_images/cro_auto_config.png" src="../_images/cro_auto_config.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="user-settings">
+<span id="user-settings-repository-options-ref-label"></span><h2>User Settings<a class="headerlink" href="#user-settings" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul>
+<li><p><strong>Power User Password</strong>: The password needed to access Power User Mode in the Monitor. Leave blank for no password.</p></li>
+<li><p><strong>Deadline User Switching</strong>: When using the System User as the Deadline User, the Monitor will use the Deadline User with the same name as the currently logged in operating system user.</p></li>
+<li><p><strong>Rendering Jobs As User</strong>: By default, the rendering process will run under the same user account that the Worker is running as. If Render Jobs As User is enabled, the rendering process will run under the user account associated with the Deadline User that submitted the job. Each Deadline User must have their Render Jobs As User settings configured properly for this to work. On Windows, the user’s Run As Name, Domain, and Password settings will be used to start the rendering process as that operating system user. On Linux and MacOS, only the User Run As Name setting will be used with ‘su’ or ‘sudo’ to start the rendering process as that user. Note that on Linux and MacOS, the Worker must have sudo privileges for this mode to work.</p>
+<blockquote>
+<div><ul>
+<li><p><strong>Render Jobs As User</strong>: Enable to have Jobs render as the user that submitted them.</p></li>
+<li><p><strong>Use ‘su’ Instead Of ‘sudo’ On Linux and macOS</strong>: If enabled, ‘su’ will be used to run the process as another user instead of ‘sudo’. ‘su’ will be invoked as <code class="docutils literal notranslate"><span class="pre">su</span> <span class="pre">username</span> <span class="pre">-c</span> <span class="pre">&quot;executable&quot;</span></code> while ‘sudo’ will be invoked as <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">-u</span> <span class="pre">username</span> <span class="pre">-e</span> <span class="pre">&quot;executable&quot;</span></code>. This setting is ignored on Windows.</p></li>
+<li><p><strong>Preserve Environment On Linux and macOS</strong>: If enabled, the user environment will be preserved when running the process as another user using ‘su’ (by passing the ‘-m’ option) or ‘sudo’ (by passing the ‘-E’ option). This setting is ignored on Windows. Note that when this option is disabled, any environment variables that are set for the process by the render plugin are ignored because su or sudo will reset the environment.</p></li>
+<li><p><strong>Simulate Login (‘su’ only)</strong>: If enabled, the ‘-l’ option will be passed to ‘su’ in order to simulate a user login. This has no effect when running ‘sudo’.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The behaviour of this ‘-l’ option can vary based on the OS, and the target user’s default SHELL. For <code class="docutils literal notranslate"><span class="pre">bash</span></code> based shell environments, this setting should be enabled if you are relying on <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> to be sourced in the target user’s SHELL. This ‘-l’ option is not required for <code class="docutils literal notranslate"><span class="pre">tcsh</span></code> shell environments which source <code class="docutils literal notranslate"><span class="pre">~/.tcshrc</span></code> regardless.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p><strong>Set HOME variable to user’s home directory (‘sudo’ only)</strong>: If enabled, the ‘-H’ option will be passed to ‘sudo’ causing the HOME environment variable will be set to the user’s home directory. This has no effect when running ‘su’.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Execute Remote Commands As User (Only On Linux and macOS)</strong>: By default, remote commands will be executed under the same user account that the Launcher is running as on the machine receiving the command. If Execute Remote Commands As User is enabled, the command will run using ‘su’ to change the user to the Deadline user that submitted the command. Note that the Launcher must be running as root for this to work properly.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Execute Remote Commands As User (‘su’ only)</strong>: Enable to have remote commands execute as the user that submitted them.</p></li>
+<li><p><strong>Preserve Environment (Linux only)</strong>: If enabled, the user environment will be preserved when running the process as another user using ‘su’. This option is only available on Linux.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_user_settings.png"><img alt="../_images/cro_user_settings.png" src="../_images/cro_user_settings.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="job-settings">
+<span id="job-settings-ref-label"></span><h2>Job Settings<a class="headerlink" href="#job-settings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="job-scheduling">
+<h3>Job Scheduling<a class="headerlink" href="#job-scheduling" title="Permalink to this headline">¶</a></h3>
+<p><strong>Scheduling Order</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Job Scheduling Order</strong>: The order of priority that Deadline uses to schedule Jobs. See the <a class="reference internal" href="job-scheduling.html#job-scheduling-ref-label"><span class="std std-ref">Job Scheduling</span></a> documentation for more details.</p></li>
+<li><p><strong>Priority Weight</strong>: Weight given to Job priority when using a Weighted scheduling order.</p></li>
+<li><p><strong>Submission Time Weight</strong>: Weight given to Job submission time when using a Weighted scheduling order.</p></li>
+<li><p><strong>Error Weight</strong>: Weight given to the number of errors a Job has when using a Weighted scheduling order.</p></li>
+<li><p><strong>Rendering Task Weight</strong>: Weight given to the number of rendering tasks a Job has when using a Weighted scheduling order.</p></li>
+<li><p><strong>Rendering Task Buffer</strong>: A buffer that is used by Workers to give their Job extra priority on the farm.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Submission Limitations</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Task Limit For Jobs</strong>: The maximum number of tasks a Job can have. Note that this does not impose a frame limit so you you can always increase the number of frames per task to stay below this limit.</p></li>
+<li><p><strong>Maximum Job Priority</strong>: The maximum priority value a Job can have.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Automatic Job Timeout</strong></p>
+<p>Configure Deadline to automatically determine a timeout for a Job based on the render times of tasks that have already completed. If a task goes longer than that timeout, a timeout error will occur and the task will be requeued.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Minimum number of completed tasks required before calculating a timeout</strong>: The minimum number of tasks that must be completed before Auto Job Timeout Checking occurs.</p></li>
+<li><p><strong>Minimum percent of completed tasks required before calculating a timeout</strong>: The minimum percent of tasks that must be completed before Auto Job Timeout Checking occurs.</p></li>
+<li><p><strong>Enforce an automatic Job timeout for all Jobs</strong>: If enabled, the Auto Job Timeout will be enabled for all Jobs overriding the per Job specification of the value.</p></li>
+<li><p><strong>Timeout Multiplier</strong>: To calculate the Auto Job Timeout, the longest render time of the completed tasks is multiplied by this value to determine the timeout time.</p></li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_js_job.png"><img alt="../_images/cro_js_job.png" src="../_images/cro_js_job.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="failure-detection">
+<span id="config-failure-detection-ref-label"></span><h3>Failure Detection<a class="headerlink" href="#failure-detection" title="Permalink to this headline">¶</a></h3>
+<p><strong>Job Failure Detection</strong></p>
+<p>Sends warnings and fail Jobs or tasks if they generate too many errors.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Send a warning to the Job’s user after it has generated this many errors</strong>: A warning will be sent to the Job’s notification list once its error count has reach. By default, the submitting user is automatically added to this list.</p></li>
+<li><p><strong>Mark a Job as failed after it has generated this many errors</strong>: The number of errors a Job must throw before it is marked as failed.</p></li>
+<li><p><strong>Mark a task as failed after it has generated this many errors</strong>: The number of errors a task must throw before it is marked as failed.</p></li>
+<li><p><strong>Maximum Number of Job Error Reports Allowed</strong>: This is the maximum number of error reports each Job can generate. Once a Job generate this many errors it will fail and can not be resumed until some of it’s error reports are
+deleted or this value is increased.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Worker Failure Detection</strong></p>
+<p>Sends warnings and prevent Workers from reattempting Jobs that keep generating errors.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Pick next available task for a Job if the Job’s previous task generated an error</strong>: If the Worker reports an error for a task, and this option is enabled, it will try to pick up the next available task for the Job instead of the one it just reported an error for. This prevents the Worker from failing to render the same task repeatedly. Note that this setting is ignored by Sequential Jobs.</p></li>
+<li><p><strong>Send a warning after a Worker has generated this many errors for a Job in a row</strong>: The maximum number of errors that can occur before email warnings are sent to the users specified in the Email Notification section.</p></li>
+<li><p><strong>Mark a Worker as bad after it has generated this many errors for a Job in a row</strong>: If a Worker hits this many errors, it will be marked as bad for its current Job.</p></li>
+<li><p><strong>Frequency at which a Worker will attempt a Job that it has been marked bad for</strong>: The percentage of time a Worker will attempt a task it has been marked bad for if no good Jobs are available.</p></li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_js_failure.png"><img alt="../_images/cro_js_failure.png" src="../_images/cro_js_failure.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="cleanup">
+<h3>Cleanup<a class="headerlink" href="#cleanup" title="Permalink to this headline">¶</a></h3>
+<p><strong>Automatic Job Cleanup</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Cleanup Jobs After This Many Days</strong>: If enabled, this is the number of days to wait before cleaning up completed Jobs.</p></li>
+<li><p><strong>Cleanup Mode</strong>: Whether the cleanup should archive the Jobs found or delete them.</p></li>
+<li><p><strong>Only cleanup completed jobs that have not been modified for this many hours</strong>: You can also set the number of hours since the Job was last modified before cleaning it up.</p></li>
+<li><p><strong>Suppress the Archive/Delete On Job Completion if there are Error reports</strong>: If enabled error messages don’t get lost to auto complete.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Deleted Job Purging</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Hours after a job is deleted before it is purged from the database</strong>: The number of hours after a job has been deleted before it is removed permanently from the database. This allows the job to be undeleted if necessary.</p></li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_js_cleanup.png"><img alt="../_images/cro_js_cleanup.png" src="../_images/cro_js_cleanup.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="auxiliary-files">
+<h3>Auxiliary Files<a class="headerlink" href="#auxiliary-files" title="Permalink to this headline">¶</a></h3>
+<p>Many Jobs have an option to submit the scene file and other auxiliary files with the Job. This can be useful because it stores a copy of the scene file with the Job that can be referred to later.
+However, if the size of these files are large and the Repository server isn’t designed to handle this load, it can seriously impact the Repository machine’s performance. This problem can be avoided by
+storing these files in a location on a different server that is designed to handle the load.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Store Job auxiliary files in a different location</strong>: If enabled, Job auxiliary files submitted to Deadline will be stored at a location specified and not the Repository.</p></li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_js_auxiliary.png"><img alt="../_images/cro_js_auxiliary.png" src="../_images/cro_js_auxiliary.png" style="height: 500px;" /></a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are hosting more than one Repository, you should not point them to use the same auxiliary file location. As part of housecleaning, auxiliary files belonging to deleted, archived, or otherwise missing Jobs are routinely deleted from this location. Since housecleaning cannot determine if an auxiliary folder belongs to a Job from a different Repository, each Repository should have its own separate auxiliary file location to avoid deleting another Repository’s auxiliary files.</p>
+</div>
+</div>
+<div class="section" id="job-extra-properties-ref-label">
+<span id="id3"></span><h3>Extra Properties<a class="headerlink" href="#job-extra-properties-ref-label" title="Permalink to this headline">¶</a></h3>
+<p>Extra arbitrary properties known as <a class="reference internal" href="job-controlling.html#job-control-extra-info-ref-label"><span class="std std-ref">Job Extra Info</span></a> values can be submitted with a Job, and these properties can be given user friendly column names so that they can easily be identified and used to filter and sort Jobs in the Monitor Job’s panel. Job Extra Info properties are very useful if you want to inject and track metadata per Job, which is specific to certain Jobs in your farm. These extra arbitrary properties form the backbone of our production tracking support for solutions such as Shotgun, FTrack and NIM, but remains highly customizable for your own in-house solution as well.</p>
+<a class="reference internal image-reference" href="../_images/cro_js_extra.png"><img alt="../_images/cro_js_extra.png" src="../_images/cro_js_extra.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="task-extra-properties">
+<span id="job-task-extra-properties-ref-label"></span><h3>Task Extra Properties<a class="headerlink" href="#task-extra-properties" title="Permalink to this headline">¶</a></h3>
+<p>Extra arbitrary task properties known as <a class="reference internal" href="job-controlling.html#job-control-task-extra-info-ref-label"><span class="std std-ref">Task Extra Info</span></a> values can be submitted with a Job, and these properties can be given user friendly column names so that they can easily be identified and used to filter and sort tasks in the Monitor task’s panel. Task Extra Info properties are very useful if you want to inject and track metadata per task, which is specific to a certain Job type in your farm.</p>
+<a class="reference internal image-reference" href="../_images/cro_js_task_extra.png"><img alt="../_images/cro_js_task_extra.png" src="../_images/cro_js_task_extra.png" style="height: 500px;" /></a>
+</div>
+</div>
+<div class="section" id="application-data">
+<span id="application-logging-ref-label"></span><h2>Application Data<a class="headerlink" href="#application-data" title="Permalink to this headline">¶</a></h2>
+<p><strong>Application Cleanup</strong></p>
+<blockquote>
+<div><p>The following settings allow you to specify when applications cleanup extraneous files. This includes log files and temporary files that are created by Deadline applications during normal operation. Each Deadline application is responsible for cleaning up its own log files, and must be running in order to do so. Temporary files created by various Deadline applications may be cleaned up by the Balancer, Pulse, Launcher, or Worker applications.</p>
+<ul class="simple">
+<li><p><strong>Delete Monitor logs after this many days</strong></p></li>
+<li><p><strong>Delete Worker logs after this many days</strong></p></li>
+<li><p><strong>Delete Pulse logs after this many days</strong></p></li>
+<li><p><strong>Delete Balancer logs after this many days</strong></p></li>
+<li><p><strong>Delete Launcher logs after this many days</strong></p></li>
+<li><p><strong>Delete RCS logs after this many days</strong></p></li>
+<li><p><strong>Delete Web Service logs after this many days</strong></p></li>
+<li><p><strong>Delete License Forwarder logs after this many days</strong></p></li>
+<li><p><strong>Delete Temporary files after this many days</strong></p></li>
+</ul>
+</div></blockquote>
+<p><strong>Logging Verbosity</strong></p>
+<blockquote>
+<div><p>These settings control the verbosity of output from the corresponding Deadline application. Disable these if you want to save disk space, as non-verbose logs should take up less disk space than verbose logs. Enabling verbose output will increase the size of your log files, but allow more detailed output to be captured (for troubleshooting).</p>
+<ul class="simple">
+<li><p><strong>Worker Verbose Logging</strong>: If enabled, more information will be written to the Worker log while it is running.</p></li>
+<li><p><strong>Pulse Verbose Logging</strong>: If enabled, more information will be written to the Pulse log while it is running.</p></li>
+<li><p><strong>Balancer Verbose Logging</strong>: If enabled, more information will be written to the Balancer log while it is running.</p></li>
+<li><p><strong>Web Service Verbose Logging</strong>: If enabled, more information will be written to the Web Service log while it is running.</p></li>
+<li><p><strong>RCS Verbose Logging</strong>: If enabled, more information will be written to the RCS log while it is running.</p></li>
+<li><p><strong>License Forwarder Verbose Logging</strong>: If enabled, more information will be written to the License Forwarder log while it is running.</p></li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_logging.png"><img alt="../_images/cro_logging.png" src="../_images/cro_logging.png" style="height: 500px;" /></a>
+<p><strong>History Entries</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Maximum Number of Repository History Entries</strong>: The maximum number of repository history entries that are stored before old entries are overwritten.</p></li>
+<li><p><strong>Maximum Number of Job History Entries</strong>: The maximum number of Job history entries that are stored before old entries are overwritten.</p></li>
+<li><p><strong>Maximum Number of Worker History Entries</strong>: The maximum number of Worker history entries that are stored before old entries are overwritten.</p></li>
+<li><p><strong>Maximum Number of Pulse History Entries</strong>: The maximum number of Pulse history entries that are stored before old entries are overwritten.</p></li>
+<li><p><strong>Maximum Number of Balancer History Entries</strong>: The maximum number of Balancer history entries that are stored before old entries are overwritten.</p></li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_history_entries.png"><img alt="../_images/cro_history_entries.png" src="../_images/cro_history_entries.png" style="height: 500px;" /></a>
+<p><strong>Metrics Tracking</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Enable Tracking</strong>: Checkbox to enable/disable metrics tracking for RCS connections.</p></li>
+<li><p><strong>Purge old tracked API calls after this many hours</strong>: Number of hours to keep API calls tracked before purging them.</p></li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_metrics_tracking.png"><img alt="../_images/cro_metrics_tracking.png" src="../_images/cro_metrics_tracking.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="statistics-gathering">
+<h2>Statistics Gathering<a class="headerlink" href="#statistics-gathering" title="Permalink to this headline">¶</a></h2>
+<p>Configure Deadline to keep track of Job and farm statistics. Note that Pulse must be running to gather Worker and Repository statistics. Job statistics will be gathered regardless if Pulse is running or not.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Enable Statistics Gathering</strong>: If enabled, Deadline will gather statistical information.</p></li>
+<li><p><strong>Worker Statistics Gathering Interval(in minutes)</strong>: The amount of time between polling Workers for statistical information.</p></li>
+<li><p><strong>Repository Statistics Gathering Interval(in minutes)</strong>: The amount of time between polling the Repository for statistical information.</p></li>
+<li><p><strong>Delete Job Statistics After This Many Days</strong>: The number of days from generation that Job statistics will be kept before they are deleted.</p></li>
+<li><p><strong>Delete Worker Statistics After This Many Days</strong>: The number of days from generation that Worker statistics will be kept before they are deleted.</p></li>
+<li><p><strong>Delete Repository Statistics After This Many Days</strong>: The number of days from generation that Repository statistics will be kept before they are deleted.</p></li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_stats_gathering.png"><img alt="../_images/cro_stats_gathering.png" src="../_images/cro_stats_gathering.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="mapped-paths">
+<span id="mapped-path-ref-label"></span><h2>Mapped Paths<a class="headerlink" href="#mapped-paths" title="Permalink to this headline">¶</a></h2>
+<p>Paths to be mapped before rendering (based on Operating System).</p>
+<p>You may add, remove, or edit paths as well as modify the order in which they will be mapped.</p>
+<p>Mapped paths can be configured by setting up rules in one of two ways. Either <strong>globally</strong> which will attempt to map your paths before render time in all situations, or at <strong>Submission-Time</strong> which will create a rule specific to all your submitted jobs based on the environment they were submitted from. The Submission-Time rules are not applied retroactively, so any existing jobs will not have new Path Mapping rules created for them upon creation of a new Submission-Time rule. See the <a class="reference internal" href="cross-platform.html#mapped-path-rule-types-ref-label"><span class="std std-ref">Path Mapping Rule Types</span></a> section for more details on the differences between the types of Path Mapping rules.</p>
+<p>Mapped paths also support Token Substitution, which allows for the use of defined tokens in your paths which can be substituted for values from your environment either at Submission or Render time. See the <a class="reference internal" href="cross-platform.html#token-substitution-ref-label"><span class="std std-ref">Token Substitution</span></a> section for more details on using tokens in your mapped paths.</p>
+<p>See the <a class="reference internal" href="cross-platform.html#cross-platform-ref-label"><span class="std std-ref">Path Mapping (Cross-Platform Rendering)</span></a> section for more details on setting up Mapped Paths in general.</p>
+<a class="reference internal image-reference" href="../_images/cro_paths.png"><img alt="../_images/cro_paths.png" src="../_images/cro_paths.png" style="height: 700px;" /></a>
+</div>
+<div class="section" id="mapped-drives">
+<span id="mapped-drives-ref-label"></span><h2>Mapped Drives<a class="headerlink" href="#mapped-drives" title="Permalink to this headline">¶</a></h2>
+<p>It is recommended to always configure any Windows mapped drives you may have globally available in your pipeline to provide another level of resilence in case your login scripts / AD domain based GPO fails on occasion to apply any mapped drive letters typically as a user logs on. Deadline Worker attempts to map any drive letters at the beginning of each Job it renders, but can be configured to skip if the drive letter is already in place via the <strong>Only Map If Unmapped</strong> setting. For more complicated configurations, our Script API provides functions such as <code class="docutils literal notranslate"><span class="pre">PathUtils.MapNetworkPath()</span></code> so you can adhoc map drive letters to network paths.</p>
+<p>Drives to be mapped before rendering (Windows Only).</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Drive</strong>: The drive to be mapped.</p></li>
+<li><p><strong>Remote Path</strong>: The remote path for the drive.</p></li>
+<li><p><strong>Only Map If Unmapped</strong>: Enable to only map the drive if it is unmapped. Disabled by default.</p></li>
+<li><p><strong>Requires Authentication</strong>: (Optional) Enable if the drive requires authentication. If unchecked, the existing logged in user account credentials will be used.</p></li>
+<li><p><strong>Username</strong>: Username. Must not be blank.</p></li>
+<li><p><strong>Password</strong>: Password. Must not be blank.</p></li>
+<li><p><strong>Region</strong>: The region that the drive mapping should be applied in.</p></li>
+</ul>
+</div></blockquote>
+<p>Note, drives can be mapped when running as a service. Beware that if a user is logged in and has mapped drives set up for them, the Deadline Worker service won’t see them because they run in a different environment. However, if the drives are mapped in the service’s environment (which is what the Worker is doing), then they will work fine. Using the following setting can help remove this potential situation.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Only map drives when the Worker is running as a service</strong>: If checked, the Worker will only map the drives if it’s running as a service. If unchecked, it will also do it when the Worker is running as a normal application.</p></li>
+</ul>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/cro_drives.png"><img alt="../_images/cro_drives.png" src="../_images/cro_drives.png" style="height: 500px;" /></a>
+<div class="section" id="regions">
+<h3>Regions<a class="headerlink" href="#regions" title="Permalink to this headline">¶</a></h3>
+<p>Regions can be used to setup different mappings for the same drive across your farm. For example, let’s say we have a local farm and a remote farm, and we want to map the drive <code class="docutils literal notranslate"><span class="pre">Z:\</span></code> to <code class="docutils literal notranslate"><span class="pre">\\sharedmachine\assets\</span></code> in our remote farm but not in our local farm. All we have to do is set the region of our mapping to the same region our remote Workers are in. Workers in the region will replace <code class="docutils literal notranslate"><span class="pre">Z:\</span></code> with <code class="docutils literal notranslate"><span class="pre">\\sharedmachine\assets\</span></code> but all the other Workers will use <code class="docutils literal notranslate"><span class="pre">Z:\</span></code> normally. We could also setup an alternate drive mapping for the Workers in our local farm.</p>
+<p>A mapping in the ‘All’ region will apply to every region, even unrecognized ones. If you are configured to the region ‘none’, then the path mapping with the regions configured to ‘All’ will apply. A mapping in the ‘unrecognized’ region will only apply to the regions that are unrecognized.</p>
+<p>It should be noted that the drive mappings are applied in top down order so if you wanted a mapping for a specific region to apply instead of an ALL region mapping, then you would have to reorder the drive mappings so that the All region mapping was above the specific region mapping.</p>
+</div>
+</div>
+<div class="section" id="python-settings">
+<h2>Python Settings<a class="headerlink" href="#python-settings" title="Permalink to this headline">¶</a></h2>
+<p>A list of additional paths to be added to the Python search paths. Specify one path per line, and use the Add Path button to browse for paths. Because these Python modules will be imported by all Deadline applications, it is best to keep scripts close to where they will be needed. For deployments with multiple offices or operating systems, these paths will be <a class="reference internal" href="#mapped-path-ref-label"><span class="std std-ref">path mapped</span></a> and so can be modified based on operating system or <a class="reference internal" href="#mapped-path-ref-label"><span class="std std-ref">region</span></a>.</p>
+<a class="reference internal image-reference" href="../_images/cro_python.png"><img alt="../_images/cro_python.png" src="../_images/cro_python.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="wake-on-lan-settings">
+<span id="wake-on-lan-settings-ref-label"></span><h2>Wake On Lan Settings<a class="headerlink" href="#wake-on-lan-settings" title="Permalink to this headline">¶</a></h2>
+<p>Deadline’s Power Management uses <a class="reference internal" href="power-management.html#wol-config-ref-label"><span class="std std-ref">Wake On Lan</span></a> to wake up machines, and you can configure which port(s) the WOL packet is sent over. If no ports are listed here, Deadline will use port 7 and 9 by default. Please see our <a class="reference internal" href="power-management.html#wol-config-ref-label"><span class="std std-ref">WOL</span></a> documentation for setup and configuration and also our <a class="reference internal" href="power-management.html#wol-troubleshooting-ref-label"><span class="std std-ref">WOL Troubleshooting</span></a> section for further help if required.</p>
+<a class="reference internal image-reference" href="../_images/cro_wake.png"><img alt="../_images/cro_wake.png" src="../_images/cro_wake.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="network-allow-list">
+<span id="repo-network-whitelist-ref-label"></span><h2>Network Allow List<a class="headerlink" href="#network-allow-list" title="Permalink to this headline">¶</a></h2>
+<p>The Network Allow List is a security feature that applies to both the Web Service and the Connection Servers. If the Network Allow List is enabled, these applications will only accept communications from IP addresses that are specified in this list. Both individual IP addresses and ranges of IP addresses (in CIDR notation) are allowed.</p>
+<a class="reference internal image-reference" href="../_images/cro_network_allow_list.png"><img alt="../_images/cro_network_allow_list.png" src="../_images/cro_network_allow_list.png" style="height: 500px;" /></a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Only IPv4 addresses and CIDR ranges are allowed. An IPv4 address may look like <code class="docutils literal notranslate"><span class="pre">52.232.87.63</span></code>. An IPv4 CIDR range may look like <code class="docutils literal notranslate"><span class="pre">192.168.0.0/16</span></code>.</p>
+</div>
+</div>
+<div class="section" id="web-service-settings">
+<span id="repo-web-service-ref-label"></span><h2>Web Service Settings<a class="headerlink" href="#web-service-settings" title="Permalink to this headline">¶</a></h2>
+<p>The Web Service allows you to execute commands and scripts from a browser, and must be enabled to use Deadline’s Mobile applications. The Web Service can be run as a console application. Note that only one instance of the Web Service can run on a machine at a time. Also note that all changes to the Web Service settings require the Web Service to be restarted before they will be implemented.</p>
+<a class="reference internal image-reference" href="../_images/cro_web_service.png"><img alt="../_images/cro_web_service.png" src="../_images/cro_web_service.png" style="height: 500px;" /></a>
+<p>If the Web Service requires authentication, users would use their Deadline user name along with the password stored in their User Settings. If empty passwords are allowed, they can leave their password setting blank, however please note that it is not recommended to allow empty passwords with the Web Service.</p>
+<ul class="simple">
+<li><p><strong>Require Authentication</strong>: If enabled, the Web Service will require a username and password. These are stored in the user settings.</p></li>
+<li><p><strong>Allow Empty Passwords</strong>: If enabled, the Web Service will accept empty passwords.</p></li>
+</ul>
+</div>
+<div class="section" id="usage-based-licensing">
+<span id="repo-usage-based-licensing-ref-label"></span><h2>Usage-Based Licensing<a class="headerlink" href="#usage-based-licensing" title="Permalink to this headline">¶</a></h2>
+<p>Usage-based licensing (UBL) settings have two types, “Deadline Cloud” which refers to the new preferred method of configuring UBL through AWS Deadline Cloud license endpoints, and “Legacy” which refers to the deprecated Thinkbox UBL configuration.</p>
+<div class="section" id="aws-deadline-cloud-usage-based-licensing">
+<h3>AWS Deadline Cloud Usage-Based Licensing<a class="headerlink" href="#aws-deadline-cloud-usage-based-licensing" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="licensing-usage-based.html#licensing-usage-based-ref-label"><span class="std std-ref">Usage-Based Licensing</span></a> is vended through the <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> service. AWS Deadline Cloud UBL offers a Pay-as-you-go model, billed monthly on your AWS bill. For UBL pricing see the <a class="reference external" href="https://aws.amazon.com/deadline-cloud/pricing/">AWS Deadline Cloud Usage-Based Licensing pricing guide</a>.</p>
+<a class="reference internal image-reference" href="../_images/3pl_add_license_endpoint.png"><img alt="../_images/3pl_add_license_endpoint.png" src="../_images/3pl_add_license_endpoint.png" style="height: 500px;" /></a>
+<a class="reference internal image-reference" href="../_images/3pl_license_endpoints.png"><img alt="../_images/3pl_license_endpoints.png" src="../_images/3pl_license_endpoints.png" style="height: 500px;" /></a>
+<p>You can configure multiple Deadline Cloud license endpoints to direct license traffic to when using Deadline Cloud license limits.</p>
+<ul class="simple">
+<li><p><strong>Display Name</strong>: A unique user-friendly identifier for a VPC endpoint DNS name for the license endpoint. This will be used to associate with Deadline Cloud license limits in the limits panel</p></li>
+<li><p><strong>VPC Endpoint DNS Name</strong>: The VPC endpoint DNS name of the Deadline Cloud license endpoint. See the <a class="reference internal" href="licensing-usage-based.html#licensing-usage-based-ref-label"><span class="std std-ref">Usage-Based Licensing documentation</span></a> on how to create a license endpoint and retrieve the VPC endpoint DNS name.</p></li>
+</ul>
+</div>
+<div class="section" id="legacy-usage-based-licensing">
+<h3>Legacy Usage-Based Licensing<a class="headerlink" href="#legacy-usage-based-licensing" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The below documentation shows how to configure legacy Thinkbox usage-based licensing (UBL), which is no longer available as of September 30, 2025. The UBL feature in Deadline 10 is now available through <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> UBL. For detailed setup instructions, please see the <a class="reference internal" href="licensing-usage-based.html#licensing-usage-based-ref-label"><span class="std std-ref">Deadline Cloud UBL Documentation</span></a>.</p>
+<p>For more details, please refer to <a class="reference external" href="https://marketplace.thinkboxsoftware.com/">the marketplace website</a>.</p>
+</div>
+<p>If you are using Usage-Based Licensing, you must specify the information that the Deadline Workers will use to connect to your Cloud License Server.</p>
+<a class="reference internal image-reference" href="../_images/cro_usage_based_licensing.png"><img alt="../_images/cro_usage_based_licensing.png" src="../_images/cro_usage_based_licensing.png" style="height: 500px;" /></a>
+<p><strong>Usage-Based Licensing Settings</strong></p>
+<ul>
+<li><p><strong>URL</strong>: This is the URL that is used to connect to your Cloud License Server. It can be in one of two forms, depending on if you’re using a Cloud License Server or a Cloud License Server Proxy. Here are a couple of examples (where XXXXXXXXXXXXis the ID of your Cloud License Server):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Cloud License Server: <em>https://thinkbox.compliance.flexnetoperations.com/instances/XXXXXXXXXXXX/request</em></p></li>
+<li><p>Cloud License Server Proxy: <em>https://haproxy-01/instances/XXXXXXXXXXXX/request</em></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Use Cloud License Server</strong>: Enable this section if you are using a Cloud License Server, as it requires an <strong>Activation Code</strong> to connect to it.</p></li>
+</ul>
+<p>See the <a class="reference internal" href="licensing-usage-based.html#licensing-usage-based-ref-label"><span class="std std-ref">Usage-Based Licensing documentation</span></a> for more information on UBL, including how to access your Customer Portal, and how to find your Cloud License Server URL and Activation Code.</p>
+<p>Note that if you happen to be using a Local License Server, the Activation Code is not required, so you can leave the Cloud License Server section disabled. In addition, the URL will look like <em>http://[MACHINE]:7070/request</em>, where [MACHINE] is the host name or IP address of the machine that the Local License Server is running on. Note that 7070 is the default port that the Local License Server listens on. Please contact <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Support</a> for more information about the Local License Server.</p>
+<ul class="simple">
+<li><p><strong>Use Dynamic Licensing Mode</strong> (DEPRECATED): Starting with Deadline 10.1.23, Deadline and its components do not require a license. For older versions, if this mode is enabled, the Deadline Workers will always try to use floating licenses if they are available. They will only attempt to use Usage-Based Licensing if they can not obtain a floating license, and if the number of Workers already using floating licenses is equal or greater than the <strong>Standard Threshold</strong> value. The maximum number of Workers that can use Usage-Based Licensing can be capped using the <strong>UBL Limit</strong> value, or <strong>Unlimited UBL</strong> can be enabled for no cap.</p></li>
+<li><p><strong>Enable Web Forwarding</strong>: If enabled, the Workers will connect to the License Forwarder, instead of going directly to the internet, to perform requests for UBL credits.</p></li>
+<li><p><strong>Auto-detect 3rd Party Usage Based License Consumption</strong>: When enabled, if a Limit for 3rd Party UBL is assigned to a job, credits for that 3rd Party application will only be consumed if the application requests a license. See <a class="reference internal" href="licensing-usage-based-legacy.html#worker-port-forwarding-ref-label"><span class="std std-ref">here</span></a> for more information about the benefits and limitations of this setting.</p></li>
+</ul>
+<p><strong>License Forwarder Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Stalled License Forwarder Threshold (in minutes)</strong>: Deadline determines if a License Forwarder has stalled by checking the last time that the License Forwarder has provided a status update. If a License Forwarder has not updated its state in the specified amount of time, it will be marked as Stalled.</p></li>
+<li><p><strong>Global Remote Command Port Override</strong>: If enabled, this port will be used by all License Forwarders for remote commands. Otherwise, the port used will be randomly assigned on each License Forwarder’s startup.</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Repository Configuration</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#client-setup">Client Setup</a></li>
+<li><a class="reference internal" href="#monitor-settings">Monitor Settings</a><ul>
+<li><a class="reference internal" href="#monitor-layouts">Monitor Layouts</a></li>
+<li><a class="reference internal" href="#update-settings">Update Settings</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#worker-settings">Worker Settings</a><ul>
+<li><a class="reference internal" href="#repository-config-worker-settings-ref-label">Worker Settings</a></li>
+<li><a class="reference internal" href="#extra-properties">Extra Properties</a></li>
+<li><a class="reference internal" href="#throttling">Throttling</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#performance-settings">Performance Settings</a></li>
+<li><a class="reference internal" href="#pulse-settings">Pulse Settings</a><ul>
+<li><a class="reference internal" href="#general">General</a></li>
+<li><a class="reference internal" href="#power-management">Power Management</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#balancer-settings-deprecated">Balancer Settings (deprecated)</a></li>
+<li><a class="reference internal" href="#region-settings">Region Settings</a></li>
+<li><a class="reference internal" href="#email-notification">Email Notification</a><ul>
+<li><a class="reference internal" href="#primary-and-secondary-server">Primary and Secondary Server</a></li>
+<li><a class="reference internal" href="#notifications">Notifications</a></li>
+<li><a class="reference internal" href="#power-management-notifications">Power Management Notifications</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#house-cleaning">House Cleaning</a><ul>
+<li><a class="reference internal" href="#pending-job-scan">Pending Job Scan</a></li>
+<li><a class="reference internal" href="#house-cleaning-settings-label">House Cleaning</a></li>
+<li><a class="reference internal" href="#repository-repair">Repository Repair</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#auto-configuration">Auto Configuration</a></li>
+<li><a class="reference internal" href="#user-settings">User Settings</a></li>
+<li><a class="reference internal" href="#job-settings">Job Settings</a><ul>
+<li><a class="reference internal" href="#job-scheduling">Job Scheduling</a></li>
+<li><a class="reference internal" href="#failure-detection">Failure Detection</a></li>
+<li><a class="reference internal" href="#cleanup">Cleanup</a></li>
+<li><a class="reference internal" href="#auxiliary-files">Auxiliary Files</a></li>
+<li><a class="reference internal" href="#job-extra-properties-ref-label">Extra Properties</a></li>
+<li><a class="reference internal" href="#task-extra-properties">Task Extra Properties</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#application-data">Application Data</a></li>
+<li><a class="reference internal" href="#statistics-gathering">Statistics Gathering</a></li>
+<li><a class="reference internal" href="#mapped-paths">Mapped Paths</a></li>
+<li><a class="reference internal" href="#mapped-drives">Mapped Drives</a><ul>
+<li><a class="reference internal" href="#regions">Regions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#python-settings">Python Settings</a></li>
+<li><a class="reference internal" href="#wake-on-lan-settings">Wake On Lan Settings</a></li>
+<li><a class="reference internal" href="#network-allow-list">Network Allow List</a></li>
+<li><a class="reference internal" href="#web-service-settings">Web Service Settings</a></li>
+<li><a class="reference internal" href="#usage-based-licensing">Usage-Based Licensing</a><ul>
+<li><a class="reference internal" href="#aws-deadline-cloud-usage-based-licensing">AWS Deadline Cloud Usage-Based Licensing</a></li>
+<li><a class="reference internal" href="#legacy-usage-based-licensing">Legacy Usage-Based Licensing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="secrets-management/deadline-secrets-management-getting-started.html"
+                        title="previous chapter">Getting Started With Deadline Secrets Management</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="plugin-config.html"
+                        title="next chapter">Plugin Configuration</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="plugin-config.html" title="Plugin Configuration"
+             >next</a></li>
+        <li class="right" >
+          <a href="secrets-management/deadline-secrets-management-getting-started.html" title="Getting Started With Deadline Secrets Management"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" >Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Repository Configuration</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,365 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nuke &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Nuke Frame Server" href="app-nukeframeserver.html" />
+    <link rel="prev" title="Natron" href="app-natron.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-nukeframeserver.html" title="Nuke Frame Server"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-natron.html" title="Natron"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Nuke</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="nuke">
+<span id="app-nuke-ref-label"></span><h1>Nuke<a class="headerlink" href="#nuke" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="render-job-submission">
+<h2>Render Job Submission<a class="headerlink" href="#render-job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs from within Nuke by installing the <a class="reference internal" href="#app-nuke-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a>, or you can submit them from the Monitor. The instructions for installing the <a class="reference internal" href="#app-nuke-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<p>To submit from within Nuke, select Submit To Deadline from the Thinkbox menu.</p>
+<p><a class="reference internal" href="../_images/integrated_nuke.png"><img alt="int" src="../_images/integrated_nuke.png" style="height: 450px;" /></a> <a class="reference internal" href="../_images/sub_nuke.png"><img alt="mon1" src="../_images/sub_nuke.png" style="height: 450px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.
+The Nuke specific options are:</p>
+<ul class="simple">
+<li><p><strong>Render With NukeX</strong>: Enable this option if you want to render with NukeX instead of Nuke.</p></li>
+<li><p><strong>Use Batch Mode</strong>: If enabled, Deadline will keep the Nuke file loaded in memory between tasks.</p></li>
+<li><p><strong>Render Threads</strong>: The number of threads to use for rendering.</p></li>
+<li><p><strong>Use The GPU For Rendering</strong>: If Nuke should also use the GPU for rendering (Nuke 7 and later only).</p></li>
+<li><p><strong>Use Specific GPU Override</strong>: If Nuke should use the specified GPU, otherwise the Workers GPU Affinity will be used ( Nuke 8 and later only ).</p></li>
+<li><p><strong>Maximum RAM Usage</strong>: The maximum RAM usage (in MB) to be used for rendering.</p></li>
+<li><p><strong>Enforce Write Node Render Order</strong>: Forces Nuke to obey the render order of Write nodes.</p></li>
+<li><p><strong>Minimum Stack Size</strong>: The minimum stack size (in MB) to be used for rendering. Set to 0 to not enforce a minimum stack size.</p></li>
+<li><p><strong>Continue On Error</strong>: If enabled, Nuke will attempt to keep rendering if an error occurs.</p></li>
+<li><p><strong>Reload Plugin Between Tasks</strong>: If enabled, Nuke will be restarted between tasks. This can add overhead, but ensures that Nuke’s memory is flushed between tasks.</p></li>
+<li><p><strong>Use Performance Profiler</strong>: If enabled, Nuke will profile the performance of the Nuke script while rendering and create a xml file per task for later analysis (Nuke 9 and later only).</p></li>
+<li><p><strong>XML Directory</strong>: If Use Performance Profiler is enabled, this is the directory on the network where the performance profile xml files will be saved.</p></li>
+<li><p><strong>Render Mode</strong>: Use scene settings, the proxy file paths, or force Nuke to use full resolution when rendering.</p></li>
+<li><p><strong>Choose Views To Render</strong>: Enable this option to choose which view(s) to render. By default, all views are rendered.</p></li>
+<li><p><strong>Submit Write Nodes As Separate Jobs</strong>: Each write node is submitted as a separate job.</p></li>
+<li><p><strong>Use Node’s Frame List</strong>: If submitting each write node as a separate job or task, enable this to pull the frame range from the write node, instead of using the global frame range.</p></li>
+<li><p><strong>Set Dependencies Based on Write Node Render Order</strong>: When submitting write nodes as separate jobs, this option will make the separate jobs dependent on each other based on write node render order.</p></li>
+<li><p><strong>Submit Write Nodes As Separate Tasks For The Same Job</strong>: Enable to submit a job where each task for the job represents a different write node, and all frames for that write node are rendered by its corresponding task.</p></li>
+<li><p><strong>Selected Nodes Only</strong>: If enabled, only the selected Write nodes will be rendered.</p></li>
+<li><p><strong>Nodes With ‘Read File’ Enabled Only</strong>: If enabled, only the Write nodes that have the ‘Read File’ option enabled will be rendered.</p></li>
+<li><p><strong>Render Precomp Nodes First</strong>: If enabled, all write nodes in precomp nodes will be rendered before the main job.</p></li>
+<li><p><strong>Only Render Precomp Nodes</strong>: If enabled, only the Write nodes that are in precomp nodes will be rendered.</p></li>
+<li><p><strong>Only Simulate Eddy Nodes</strong>: If enabled, only the Eddy Nodes will be simulated.</p></li>
+</ul>
+<p>The Submit Each Write Node As A Separate Task option can be useful if you have a bunch of write nodes in a Nuke script to output different Quicktime movies. You can enable this option, and bump up the Concurrent Tasks value to
+allow machines to process multiple write nodes concurrently. Since Quicktime generation only uses a single thread, you can get much better throughput with this option on multi-core machines.</p>
+</div>
+<div class="section" id="nuke-script-job">
+<span id="nuke-script-job-ref-label"></span><h3>Nuke Script Job<a class="headerlink" href="#nuke-script-job" title="Permalink to this headline">¶</a></h3>
+<p>To run a Nuke Script Job, select the Nuke Script Job type.</p>
+<a class="reference internal image-reference" href="../_images/nuke_script_job.png"><img alt="../_images/nuke_script_job.png" src="../_images/nuke_script_job.png" style="height: 125px;" /></a>
+<p>This job will execute a submitted Python file.</p>
+<p>The following options are available:</p>
+<ul class="simple">
+<li><p><strong>Script File Name</strong>: The directory and name of the Python file that will be run.</p></li>
+</ul>
+</div>
+<div class="section" id="pipeline-tools">
+<h3>Pipeline Tools<a class="headerlink" href="#pipeline-tools" title="Permalink to this headline">¶</a></h3>
+<p>When using the integrated submitter to submit through Nuke you have the ability to use any of the event plugins that you have enabled through the Deadline Monitor. This is done by opening the Pipeline Tools window via the Pipeline Tools button. This window is explained further in the <a class="reference internal" href="event-pipeline-tools.html#event-pipeline-tools-ref-label"><span class="std std-ref">Pipeline Tools</span></a> documentation.</p>
+</div>
+</div>
+<div class="section" id="nuke-vray-standalone-submission">
+<h2>Nuke Vray Standalone Submission<a class="headerlink" href="#nuke-vray-standalone-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit V-Ray Standalone Jobs from within Nuke by installing the <a class="reference internal" href="#app-nuke-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a>.</p>
+<p>To submit from within Nuke, select Submit V-Ray Standalone to Deadline from the Thinkbox menu.</p>
+<p><a class="reference internal" href="../_images/integrated_nuke_vray.png"><img alt="intvray" src="../_images/integrated_nuke_vray.png" style="height: 400px;" /></a></p>
+<div class="section" id="id1">
+<h3>Submission Options<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.
+The Nuke specific options are:</p>
+<ul class="simple">
+<li><p><strong>Output File</strong>: The name of the output file from the V-Ray Render.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="cross-platform-rendering-considerations">
+<h2>Cross-Platform Rendering Considerations<a class="headerlink" href="#cross-platform-rendering-considerations" title="Permalink to this headline">¶</a></h2>
+<p>In order to perform cross-platform rendering with Nuke, you must setup Mapped Paths so that Deadline can swap out Read Node and Write Node file paths where appropriate. You can access the Mapped Paths Setup in the Monitor while in
+power user mode by selecting Tools -&gt; Configure Repository. You’ll find the Mapped Paths Setup in the list on the left.</p>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Nuke plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Nuke plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_nuke.png"><img alt="../_images/cp_nuke.png" src="../_images/cp_nuke.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Nuke Executable</strong>: The path to the Nuke executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes. Note that the versions supported are the <strong>MAJOR.MINOR</strong> (9.0 or 9.1) versions of Nuke. If you wish to run a particular <strong>REVISION</strong> of Nuke then you will need to change the actual exe path under 9.0v1 to actually point at say, the 9.0v8 version. We don’t directly support <strong>MAJOR.MINOR.REVISION</strong>’s of Nuke, but rather just the first two levels <strong>MAJOR.MINOR</strong> and leave the specific REVISION to a studio to control. Multiple exe paths can still be declared and the first one that is found on a Worker will be used from the exe list.</p></li>
+</ul>
+<p><strong>Licensing Options</strong></p>
+<ul class="simple">
+<li><p><strong>Workers To Use Interactive License</strong>: A list of Workers that should use an interactive Nuke license instead of a render license. Use a , to separate multiple Worker names, for example: worker001,worker002,worker003</p></li>
+</ul>
+<p><strong>OFX Cache</strong></p>
+<ul class="simple">
+<li><p><strong>Prepare OFX Cache Before Rendering</strong>: If enabled, Deadline will try to create the temporary ofxplugincache folder before rendering, which helps ensure that comps that use OFX plugins render properly.</p></li>
+</ul>
+<p><strong>Path Mapping (For Mixed Farms)</strong></p>
+<ul class="simple">
+<li><p><strong>Enable Path Mapping</strong>: If enabled, a temporary Nuke file will be created locally on the Worker for rendering because Deadline does the path mapping directly in the Nuke file. This feature can be turned off if there are no Path Mapping entries defined in the Repository Options.</p></li>
+</ul>
+</div>
+<div class="section" id="nuke-studio-sequence-submission">
+<span id="nuke-studio-sequence-label"></span><h2>Nuke Studio Sequence Submission<a class="headerlink" href="#nuke-studio-sequence-submission" title="Permalink to this headline">¶</a></h2>
+<p>If you are using Nuke Studio you can submit individual comps to Deadline from the Integrated Submitter as you would in Nuke or NukeX; however, there is also the option of submitting sequences of comps to Deadline as individual
+jobs. You can submit all the sequences’ comps for a project by selecting the project and submitting.</p>
+<a class="reference internal image-reference" href="../_images/nukestudio_sub_notcsr.png"><img alt="../_images/nukestudio_sub_notcsr.png" src="../_images/nukestudio_sub_notcsr.png" style="height: 400px;" /></a>
+<p>You can also choose which sequences you want to submit comps for</p>
+<a class="reference internal image-reference" href="../_images/nukestudio_sub_csr.png"><img alt="../_images/nukestudio_sub_csr.png" src="../_images/nukestudio_sub_csr.png" style="height: 400px;" /></a>
+<p>Note this is only an option in the Integrated Submitter in Nuke Studio. It is also required to have a saved project with sequences that have comps in order to have this option.</p>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-nuke-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to install the integrated Nuke submission script. This script allows for submitting Nuke render jobs to Deadline directly from within the Nuke editing GUI. Note that this has only been
+tested with Nuke version 6 to 12.1.</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/Nuke/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="n">Nuke</span>\<span class="n">Client</span>\<span class="n">DeadlineNukeClient</span><span class="o">.</span><span class="n">py</span> <span class="n">to</span> <span class="n">your</span> <span class="o">.</span><span class="n">nuke</span> <span class="n">user</span> <span class="n">folder</span> <span class="p">(</span><span class="o">~/.</span><span class="n">nuke</span> <span class="ow">or</span> <span class="o">%</span><span class="n">USERPROFILE</span><span class="o">%</span>\<span class="o">.</span><span class="n">nuke</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>If menu.py does not exist in your .nuke user folder, copy <code class="docutils literal notranslate"><span class="pre">[Repository]\submission\Nuke\Client\menu.py</span></code> to your .nuke user folder.</p></li>
+<li><p>If menu.py does exist, then open it in a text editor and add the following lines of code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">DeadlineNukeClient</span>
+<span class="n">menubar</span> <span class="o">=</span> <span class="n">nuke</span><span class="o">.</span><span class="n">menu</span><span class="p">(</span><span class="s2">&quot;Nuke&quot;</span><span class="p">)</span>
+<span class="n">tbmenu</span> <span class="o">=</span> <span class="n">menubar</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="s2">&quot;&amp;Thinkbox&quot;</span><span class="p">)</span>
+<span class="n">tbmenu</span><span class="o">.</span><span class="n">addCommand</span><span class="p">(</span><span class="s2">&quot;Submit Nuke To Deadline&quot;</span><span class="p">,</span> <span class="n">DeadlineNukeClient</span><span class="o">.</span><span class="n">main</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="verify-installation">
+<h3>Verify Installation<a class="headerlink" href="#verify-installation" title="Permalink to this headline">¶</a></h3>
+<p>The next time you launch Nuke, there should be a Thinkbox menu with the option to <strong>Submit Nuke to Deadline</strong>.</p>
+<ul>
+<li><p>To manually install the Submit V-Ray Standalone submitter you will need to add the following lines of code to your menu.py:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">DeadlineNukeVrayStandaloneClient</span>
+    <span class="n">tbmenu</span><span class="o">.</span><span class="n">addCommand</span><span class="p">(</span><span class="s2">&quot;Submit V-Ray Standalone to Deadline&quot;</span><span class="p">,</span> <span class="n">DeadlineNukeVrayStandaloneClient</span><span class="o">.</span><span class="n">main</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="custom-sanity-check">
+<h3>Custom Sanity Check<a class="headerlink" href="#custom-sanity-check" title="Permalink to this headline">¶</a></h3>
+<p>A CustomSanityChecks.py file can be created alongside the main SubmitNukeToDeadline.py submission script (in [Repository]\submission\Nuke\Main), and will be evaluated if it exists. This script will let you set any of the initial properties in the submission script prior to displaying the submission window. You can also use it to run your own checks and display errors or warnings to the user. Here is a very simple example of what this script could look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nuke</span>
+<span class="kn">import</span> <span class="nn">DeadlineGlobals</span>
+
+<span class="k">def</span> <span class="nf">RunSanityCheck</span><span class="p">():</span>
+    <span class="n">DeadlineGlobals</span><span class="o">.</span><span class="n">initDepartment</span> <span class="o">=</span> <span class="s2">&quot;The Best Department!&quot;</span>
+    <span class="n">DeadlineGlobals</span><span class="o">.</span><span class="n">initPriority</span> <span class="o">=</span> <span class="mi">33</span>
+    <span class="n">DeadlineGlobals</span><span class="o">.</span><span class="n">initConcurrentTasks</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="n">nuke</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="s2">&quot;This is a custom sanity check!&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>The DeadlineGlobals module can be found in the same folder as the SubmitNukeToDeadline.py script mentioned above. It just contains the list of global variables that you can set, which are then used by the submission script to set the initial values in the submission dialog. Simply open DeadlineGlobals.py in a text editor to view the global variables.</p>
+<p>Finally, if the RunSanityCheck method returns False, the submission will be cancelled.</p>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-nuke-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Nuke are supported?</strong></p>
+<blockquote>
+<div><p>Nuke 6 to 16.0 are supported.</p>
+</div></blockquote>
+<p><strong>Can I render with NukeX instead of Nuke?</strong></p>
+<blockquote>
+<div><p>Yes. Simply enable the Render With NukeX option when submitting your Nuke job.</p>
+</div></blockquote>
+<p><strong>What’s the benefit to using Batch Mode?</strong></p>
+<blockquote>
+<div><p>If enabled, Deadline will keep the Nuke file loaded in memory between tasks. This can help reduce overhead, because the Nuke file is only loaded once when the job is started on the Worker.</p>
+</div></blockquote>
+<p><strong>Is Nuke Studio Supported?</strong></p>
+<blockquote>
+<div><p>Yes. It functions the same way as Nuke with the additions of <a class="reference internal" href="#nuke-studio-sequence-label"><span class="std std-ref">Sequence Submission</span></a> and <a class="reference internal" href="app-nukeframeserver.html#app-nuke-frame-server-ref-label"><span class="std std-ref">Frame Server</span></a> rendering.</p>
+</div></blockquote>
+<p><strong>In Nuke Studio, when clicking the Submit button in the Deadline Submitter window: The current Nuke project contains no saved comps that can be rendered. Please save any existing Nuke scripts before submitting to Deadline.</strong></p>
+<blockquote>
+<div><p>It is likely that Nuke Studio did not load the individual elements of your project. Double click any project component (e.g. composition, sequence, clip) and ensure that its content is reflected in the Viewer and Node Graphs windows.</p>
+</div></blockquote>
+<p><strong>Nuke render fails as write node’s output directory does not exist</strong></p>
+<blockquote>
+<div><p>As a write node’s render file path can sometimes be dynamically generated at render time, it is recommended to implement a <a class="reference external" href="https://docs.thefoundry.co.uk/nuke/63/pythondevguide/callbacks.html#beforerender">beforeRender</a> callback within your studio’s Nuke setup.</p>
+</div></blockquote>
+<p><strong>Can I use 3rd party plugins such as Peregrine Lab’s Bokeh plugin with Nuke via Deadline?</strong></p>
+<blockquote>
+<div><p>Yes. Ensure all machines have the same plugin software installed locally or via a network where applicable (depending on your studio pipeline/software deployment management and if the plugin in question supports deployment in this manner). Ensure any neccessary environment variables required are also present on each Worker. In the case of Peregrine Lab’s Bokeh plugin, ensure the Workers have the environment variable available: “<a class="reference external" href="mailto:PEREGRINE_LICENSE=port&#37;&#52;&#48;hostname">PEREGRINE_LICENSE=port<span>&#64;</span>hostname</a>”, where port &amp; hostname are your license server details. Environment variables can be set for a job in Deadline, and these variables will be applied to the rendering process’ environment. These variables can be set in the <a class="reference internal" href="job-controlling.html#job-controlling-enviro-ref-label"><span class="std std-ref">Job Properties</span></a> in the Monitor, and they can be set during <a class="reference internal" href="manual-submission.html#manual-submission-enviro-ref-label"><span class="std std-ref">Manual Job Submission</span></a>.</p>
+</div></blockquote>
+<p><strong>Can I export my scene and render using V-Ray Standalone?</strong></p>
+<blockquote>
+<div><p>Yes.  You are able to submit your scene using the Nuke V-Ray Standalone submitter.  This submitter will export the Nuke scene as a *.vrscene file locally and then submit a render job using the <a class="reference internal" href="app-vray.html#app-vray-ref-label"><span class="std std-ref">V-Ray Standalone</span></a> plugin.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Nuke error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><strong>Nuke out-of-license errors</strong></p>
+<blockquote>
+<div><p>A number of issues beyond the control of Deadline may be causing this situation to arise on your render farm. Please consider the following possible scenarios:</p>
+<ul class="simple">
+<li><p>One or more Nuke (<code class="docutils literal notranslate"><span class="pre">render</span></code> or <code class="docutils literal notranslate"><span class="pre">interactive</span></code> if applicable) licenses are being used in a Nuke process outside of the Deadline ecosystem which Deadline is unaware of. This could be an artist/TD executing a py/shell/batch script for some local Nuke processing, consuming a Nuke <code class="docutils literal notranslate"><span class="pre">-r</span></code> license.</p></li>
+<li><p>The order in which Nuke <code class="docutils literal notranslate"><span class="pre">features</span></code> are declared in your Nuke license file can make a difference. Say you have a temporary license and then buy a permanent license, but the permanent feature is added to the end of your license file. As a result, Nuke will try to grab the temporary license first. If that feature happens to be expired then it doesn’t continue down the list and try again. We understand that this situation can possibly be resolved by having Foundry support regenerate your Nuke license file for you.</p></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Nuke</a><ul>
+<li><a class="reference internal" href="#render-job-submission">Render Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#nuke-script-job">Nuke Script Job</a></li>
+<li><a class="reference internal" href="#pipeline-tools">Pipeline Tools</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nuke-vray-standalone-submission">Nuke Vray Standalone Submission</a><ul>
+<li><a class="reference internal" href="#id1">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cross-platform-rendering-considerations">Cross-Platform Rendering Considerations</a></li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#nuke-studio-sequence-submission">Nuke Studio Sequence Submission</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+<li><a class="reference internal" href="#verify-installation">Verify Installation</a></li>
+<li><a class="reference internal" href="#custom-sanity-check">Custom Sanity Check</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-natron.html"
+                        title="previous chapter">Natron</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-nukeframeserver.html"
+                        title="next chapter">Nuke Frame Server</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-nukeframeserver.html" title="Nuke Frame Server"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-natron.html" title="Natron"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Nuke</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

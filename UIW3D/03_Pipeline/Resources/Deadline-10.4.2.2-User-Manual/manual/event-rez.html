@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rez &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Salt" href="event-salt.html" />
+    <link rel="prev" title="Puppet" href="event-puppet.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-salt.html" title="Salt"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="event-puppet.html" title="Puppet"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" accesskey="U">Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Rez</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="rez">
+<span id="event-rez-ref-label"></span><h1>Rez<a class="headerlink" href="#rez" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Rez is an open source cross-platform package manager capable of package configuration, build and deployment system for software. See the Academy Software Foundation’s (<a class="reference external" href="https://www.aswf.io/">ASWF</a>) Rez <a class="reference external" href="https://github.com/AcademySoftwareFoundation/rez">repository</a> for more information.</p>
+<p>When enabled this event plugin will attach Extra Info Key Values <code class="docutils literal notranslate"><span class="pre">DEADLINE_REZ_REQUEST_PACKAGES</span></code> and <code class="docutils literal notranslate"><span class="pre">DEADLINE_REZ_TOOLS</span></code> to a Deadline Job when submitted. If a Job has these two Extra Info Key Values then the Worker will launch the compute process with a resolved Rez context.</p>
+<p>For example, outside of Rez a Deadline Job rendering a Blender scene may try to execute:</p>
+<p><code class="docutils literal notranslate"><span class="pre">/usr/local/Blender/blender</span> <span class="pre">-b</span> <span class="pre">/home/&lt;username&gt;/cube_diorama.blend</span> <span class="pre">-t</span> <span class="pre">0</span> <span class="pre">-s</span> <span class="pre">1</span> <span class="pre">-e</span> <span class="pre">1</span> <span class="pre">-a</span></code></p>
+<p>The same submission with this event plugin enabled, Rez would execute:</p>
+<p><code class="docutils literal notranslate"><span class="pre">/opt/rez/bin/rez/rez-env</span> <span class="pre">blender-3.0+</span> <span class="pre">--</span> <span class="pre">blender</span> <span class="pre">-b</span> <span class="pre">/home/&lt;username&gt;/cube_diorama.blend</span> <span class="pre">-t</span> <span class="pre">0</span> <span class="pre">-s</span> <span class="pre">1</span> <span class="pre">-e</span> <span class="pre">1</span> <span class="pre">-a</span></code></p>
+<p><strong>Compatibility</strong></p>
+<p>The following are supported plugins:</p>
+<ul class="simple">
+<li><p>After Effects</p></li>
+<li><p>Arion Standalone</p></li>
+<li><p>Arnold Standalone</p></li>
+<li><p>Autopano Video</p></li>
+<li><p>Blender</p></li>
+<li><p>Cinebench</p></li>
+<li><p>Clarisse iFX</p></li>
+<li><p>Clarisse BUiLDER</p></li>
+<li><p>Combustion</p></li>
+<li><p>Command Line</p></li>
+<li><p>Composite</p></li>
+<li><p>Corona Standalone</p></li>
+<li><p>Corona DR</p></li>
+<li><p>CSiETABS</p></li>
+<li><p>DeadlineCommand</p></li>
+<li><p>DJV</p></li>
+<li><p>Draft</p></li>
+<li><p>FFmpeg</p></li>
+<li><p>ftrack</p></li>
+<li><p>Generation</p></li>
+<li><p>Harmony</p></li>
+<li><p>Hiero</p></li>
+<li><p>Houdini</p></li>
+<li><p>Katana</p></li>
+<li><p>KeyShot</p></li>
+<li><p>Lightwave</p></li>
+<li><p>LuxRender</p></li>
+<li><p>Mantra Standalone</p></li>
+<li><p>Maxwell</p></li>
+<li><p>Mental Ray Standalone</p></li>
+<li><p>Messiah</p></li>
+<li><p>MetaFuze</p></li>
+<li><p>MetaRender</p></li>
+<li><p>Mistika VR</p></li>
+<li><p>Mocha Pro</p></li>
+<li><p>Modo</p></li>
+<li><p>Moho (Anime Studio)</p></li>
+<li><p>Naiad</p></li>
+<li><p>Natron</p></li>
+<li><p>Nuke</p></li>
+<li><p>Octane Standalone</p></li>
+<li><p>Puppet</p></li>
+<li><p>Python</p></li>
+<li><p>REDLine</p></li>
+<li><p>Redshift Standalone</p></li>
+<li><p>Rendition</p></li>
+<li><p>Rhino</p></li>
+<li><p>RVIO</p></li>
+<li><p>Salt</p></li>
+<li><p>Shake</p></li>
+<li><p>Shotgun</p></li>
+<li><p>Silhouette</p></li>
+<li><p>SketchUp</p></li>
+<li><p>Terragen</p></li>
+<li><p>TVPaint</p></li>
+<li><p>Unreal Engine</p></li>
+<li><p>UnrealSwarm</p></li>
+<li><p>VRED</p></li>
+<li><p>Vue</p></li>
+<li><p>xNormal</p></li>
+</ul>
+<p>Please note that following are supported with limited features:</p>
+<ul class="simple">
+<li><p>Corona is supported except distributed rendering</p></li>
+<li><p>Nuke is supported except Frame Server support</p></li>
+<li><p>Unreal Engine prior to version 5 is supported</p></li>
+<li><p>VRED is supported except VRED Cluster support</p></li>
+</ul>
+</div>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>Prior to using Rez with Deadline you should ensure that Rez is installed and configured on your workstations and Worker machines. Deadline assumes that Rez is on your system PATH as per their standard <a class="reference external" href="https://github.com/AcademySoftwareFoundation/rez/wiki/Installation#installation-script">install instructions</a>. Once Rez is installed, the Rez event plugin can be used. To access the Rez event plugin settings, simply enter Power User mode and select Tools -&gt; Configure Events from the Monitor’s menu. From there, select the Rez entry from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/RezEventPlugin_ConfigurationPanel.png"><img alt="../_images/RezEventPlugin_ConfigurationPanel.png" src="../_images/RezEventPlugin_ConfigurationPanel.png" style="height: 620px;" /></a>
+<p><strong>Options</strong></p>
+<ul class="simple">
+<li><p><strong>State</strong>: There are three different states that an Event Plugin can be in: Global Enabled, Opt-In, and Disabled. In order for this feature to function properly, the State must be set to either Global Enabled or Opt-In. Note that if this plugin is in the Opt-In state, the Jobs that want to run this plugin must opt into <code class="docutils literal notranslate"><span class="pre">Rez</span></code> via <a class="reference internal" href="job-controlling.html#event-opt-in-plugins-ref-label"><span class="std std-ref">Job Properties</span></a>. Default: <code class="docutils literal notranslate"><span class="pre">Disabled</span></code>.</p></li>
+<li><p><strong>Force Job Submission To Use Rez</strong>: If enabled, the Rez event plugin will fail all job submissions NOT made within a Rez context. If set to <code class="docutils literal notranslate"><span class="pre">False</span></code>, job submission will succeed with a warning, indicating that submission was made outside a Rez context. Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>Derive Package Mode</strong>: This selects one of three modes, detailed below, that controls how Deadline derives packages from the Rez context. Default: <code class="docutils literal notranslate"><span class="pre">REZ_USED_RESOLVE</span></code>.</p></li>
+<li><p><strong>REZ_USED_RESOLVE Mode Separator</strong>: Package-version separator used in <code class="docutils literal notranslate"><span class="pre">REZ_USED_RESOLVE</span></code> and <code class="docutils literal notranslate"><span class="pre">REZ_RXT_FILE</span></code> modes; by default the used separator is <code class="docutils literal notranslate"><span class="pre">==</span></code>, alternative separators available are <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>, and <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>. Default: <code class="docutils literal notranslate"><span class="pre">==</span></code>.</p></li>
+</ul>
+<p>The Rez event plugin operates in one of three derive package modes:</p>
+<ul class="simple">
+<li><p><strong>REZ_USED_REQUEST</strong>: Using this mode, if a Job is submitted from within a resolved Rez context, Deadline will attach the contents of the Rez set environment variable <code class="docutils literal notranslate"><span class="pre">REZ_USED_REQUEST</span></code> to the Job as an Extra Info Key Value. The Worker will then use this value to resolve its Rez context.</p></li>
+<li><p><strong>REZ_USED_RESOLVE</strong>: Using this mode, if a Job is submitted from within a resolved Rez context, Deadline will attach the contents of the Rez set environment variable <code class="docutils literal notranslate"><span class="pre">REZ_USED_RESOLVE</span></code>; minus the implicit packages, taken from <code class="docutils literal notranslate"><span class="pre">REZ_USED_IMPLICIT_PACKAGES</span></code>; to the Job as an Extra Info Key Value. The Worker will then use this value to resolve its Rez context. This mode allows you to specify a package-version separator in the Rez event plugin configuration by setting the <code class="docutils literal notranslate"><span class="pre">REZ_USED_RESOLVE</span> <span class="pre">mode</span> <span class="pre">separator</span></code> parameter.</p></li>
+<li><p><strong>REZ_RXT_FILE</strong>: Using this mode, if a Job is submitted from within a resolved Rez context, Deadline will access the current Rez context’s .rxt file pointed to by Rez set environment variable <code class="docutils literal notranslate"><span class="pre">REZ_RXT_FILE</span></code>. Content from the file will be parsed to create a list of package-versions and attach that list to the Job as an Extra Info Key Value. The Worker will then use this value to resolve its Rez context.</p></li>
+</ul>
+<p><strong>(Step 1/4:) Job Submission</strong></p>
+<p>During Job submission, Deadline sets the <code class="docutils literal notranslate"><span class="pre">DEADLINE_REZ_TOOLS</span></code> Extra Info Key Value on the Job by running <code class="docutils literal notranslate"><span class="pre">rez-context</span> <span class="pre">--tools</span></code> as a subprocess and then parsing the output to compile a list of <a class="reference external" href="https://github.com/AcademySoftwareFoundation/rez/wiki/Suites#suite-tools">tools</a> available. If Deadline cannot derive the package or tool list it will log a warning and complete the Job submission without Rez. This is done in all Rez plugin modes.</p>
+<p><strong>(Step: 2/4) Post Job Submission</strong></p>
+<p>After a Job is submitted with Rez you can view the Extra Info Key Values added from the Job properties panel. Available by double-clicking the Job in the Monitor. <code class="docutils literal notranslate"><span class="pre">DEADLINE_REZ_REQUEST_PACKAGES</span></code> is the list of package-versions the Worker will attempt to resolve, and <code class="docutils literal notranslate"><span class="pre">DEADLINE_REZ_TOOLS</span></code> is the list of tool names available in the resolved context.</p>
+<a class="reference internal image-reference" href="../_images/RezEventPlugin_SampleJobProperties.png"><img alt="../_images/RezEventPlugin_SampleJobProperties.png" src="../_images/RezEventPlugin_SampleJobProperties.png" style="height: 565px;" /></a>
+<p><strong>(Step: 3/4) Render Plugin Configuration</strong></p>
+<p>To use Rez in conjunction with existing Deadline render plugins, one additional step is needed. You must add the Rez tool for the appropriate renderer to that render plugin’s executable list. For example, if you have a <code class="docutils literal notranslate"><span class="pre">blender</span></code> Rez package and in that package a <code class="docutils literal notranslate"><span class="pre">blender</span></code> tool then you will need to add the tool name to the list of Blender Executables in the Blender plugin. Render Plugin configurations can be found by entering Power User mode and selecting Tools -&gt; Configure Plugins from the Monitor’s menu. The executable list is first checked for Rez tools so will choose a listed tool before any full executable path. If multiple Rez tools are listed, the Worker will select the first tool from <code class="docutils literal notranslate"><span class="pre">DEADLINE_REZ_TOOLS</span></code> found in the ordered executable list.</p>
+<a class="reference internal image-reference" href="../_images/RezEventPlugin_PluginWithTool.png"><img alt="../_images/RezEventPlugin_PluginWithTool.png" src="../_images/RezEventPlugin_PluginWithTool.png" style="height: 480px;" /></a>
+<p><strong>(Step: 4/4) Job Execution</strong></p>
+<p>A Worker dequeues a task for a Deadline Job, the Worker checks if this is a Rez enabled Job via the <code class="docutils literal notranslate"><span class="pre">DEADLINE_REZ_TOOLS</span></code> Job Extra Info key. If <code class="docutils literal notranslate"><span class="pre">DEADLINE_REZ_TOOLS</span></code> has a value, then the <code class="docutils literal notranslate"><span class="pre">Deadline.Plugins.DeadlinePlugin.GetRenderExecutable</span></code> scripting function returns the first Rez tool found in the ordered render executable list; if no Rez tool is found then it searches the executable list in order, as usual. The Worker then invokes the <code class="docutils literal notranslate"><span class="pre">rez-env</span></code> binary executable as a inline prefix command to the render command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>rez-env DEADLINE_REZ_REQUEST_PACKAGES -- $RENDERER $RENDER_ARGUMENTS
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">rez-env</span></code> will attempt to resolve a context using the Rez packages defined in the Job Extra Info value: <code class="docutils literal notranslate"><span class="pre">DEADLINE_REZ_REQUEST_PACKAGES</span></code> then within that context, continue to execute command <code class="docutils literal notranslate"><span class="pre">$RENDERER</span> <span class="pre">$RENDER_ARGUMENTS</span></code> and immediately exit the context after the command runs.</p>
+</div>
+<div class="section" id="faq">
+<h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>I don’t have Rez as a tool, why is Rez listed in my DEADLINE_REZ_TOOLS?</strong></p>
+<blockquote>
+<div><p>So that the Rez CLI is available to contexts resolved by the Worker, <code class="docutils literal notranslate"><span class="pre">rez</span></code> should be included in <code class="docutils literal notranslate"><span class="pre">DEADLINE_REZ_TOOLS</span></code>. In all modes, Deadline will automatically add <code class="docutils literal notranslate"><span class="pre">rez</span></code> to the tool list if not already present.</p>
+</div></blockquote>
+<p><strong>How does Deadline know what package-versions to request?</strong></p>
+<blockquote>
+<div><p>This depends on which derive package mode is selected in the Rez event plugin options.</p>
+<p><strong>Mode 1</strong>: The <code class="docutils literal notranslate"><span class="pre">REZ_USED_REQUEST</span></code> mode copies the request used to resolve your current context. This mode replicates the behaviour of the <a class="reference external" href="https://github.com/AcademySoftwareFoundation/rez/wiki/Basic-Concepts#package-requests">package versioning</a> syntax of the Rez CLI; it copies the exact text stored in the environment variable <code class="docutils literal notranslate"><span class="pre">REZ_USED_REQUEST</span></code> as loose versioning.</p>
+<p><strong>Mode 2</strong>: The <code class="docutils literal notranslate"><span class="pre">REZ_USED_RESOLVE</span></code> mode copies the text stored in the environment variable <code class="docutils literal notranslate"><span class="pre">REZ_USED_RESOLVE</span></code> minus implicit packages from <code class="docutils literal notranslate"><span class="pre">REZ_USED_IMPLICIT_PACKAGES</span></code>. It recognises the implicit packages by matching the versions of the package-versions in <code class="docutils literal notranslate"><span class="pre">REZ_USED_IMPLICIT_PACKAGES</span></code> to the versions listed in <code class="docutils literal notranslate"><span class="pre">REZ_USED_RESOLVE</span></code>. If you have the environment variables:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">REZ_USED_IMPLICIT_PACKAGES</span><span class="o">=</span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">platform</span><span class="o">==</span><span class="n">windows</span> <span class="o">~</span><span class="n">arch</span><span class="o">==</span><span class="n">AMD64</span> <span class="o">~</span><span class="n">os</span><span class="o">==</span><span class="n">windows</span><span class="o">-</span><span class="mf">10.0</span><span class="o">.</span><span class="mi">19041</span>
+<span class="n">REZ_USED_RESOLVE</span><span class="o">=</span><span class="n">platform</span><span class="o">-</span><span class="n">windows</span> <span class="n">arch</span><span class="o">-</span><span class="n">AMD64</span> <span class="n">os</span><span class="o">-</span><span class="n">windows</span><span class="o">-</span><span class="mf">10.0</span><span class="o">.</span><span class="mi">19041</span> <span class="n">python</span><span class="o">-</span><span class="mf">3.7</span><span class="o">.</span><span class="mi">12</span> <span class="n">hello_world</span><span class="o">-</span><span class="mf">1.0</span><span class="o">.</span><span class="mi">0</span>
+</pre></div>
+</div>
+<p>then the plugin will strip those package-versions from <code class="docutils literal notranslate"><span class="pre">REZ_USED_RESOLVE</span></code> that end with <code class="docutils literal notranslate"><span class="pre">windows</span></code>, <code class="docutils literal notranslate"><span class="pre">AMD64</span></code>, or <code class="docutils literal notranslate"><span class="pre">windows-10.0.19041</span></code> leaving <code class="docutils literal notranslate"><span class="pre">python-3.7.12</span> <span class="pre">hello_world-1.0.0</span></code> as the string attached to the Job as <code class="docutils literal notranslate"><span class="pre">DEADLINE_REZ_REQUEST_PACKAGES</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The plugin configuration setting: <strong>REZ_USED_RESOLVE Mode Separator</strong> will control the Rez package-version separator used such as <code class="docutils literal notranslate"><span class="pre">==</span></code>.</p>
+</div>
+<p><strong>Mode 3</strong>: The <code class="docutils literal notranslate"><span class="pre">REZ_RXT_FILE</span></code> mode parses an .rxt file uses the package-versions, minus the implicit packages, found therein. If the rxt file lists:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;filesystem.variant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;variables&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;/mnt/rez/packages&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;numpy&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;repository_type&quot;</span><span class="p">:</span> <span class="s2">&quot;filesystem&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1.21.6&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>then the resultant package-version requested is <code class="docutils literal notranslate"><span class="pre">numpy-1.21.6</span></code>.</p>
+</div></blockquote>
+<p><strong>My workstation and my Worker require different software versions, does the Rez event plugin support this?</strong></p>
+<blockquote>
+<div><p>Yes, to accomplish this you should use <code class="docutils literal notranslate"><span class="pre">REZ_USED_REQUEST</span></code> mode. It is sufficient to create a <a class="reference external" href="https://github.com/AcademySoftwareFoundation/rez/wiki/Basic-Concepts#package-requests">package request</a> that resolves correctly on both your workstation and your Worker via loose versioning.</p>
+</div></blockquote>
+<p><strong>Does Deadline support a mixture of Rez enabled and disabled render plugins?</strong></p>
+<blockquote>
+<div><p>Yes. Simply do not enter any Rez tool names in the render executable list for each render plugin that you wish to remain Rez disabled or otherwise known as ‘off-pipeline’.</p>
+</div></blockquote>
+<p><strong>I have other event plugins in Deadline that execute on Job submission</strong></p>
+<blockquote>
+<div><p>You can modify the order of execution of event plugins in Deadline. Enter Power User mode and select Tools -&gt; Configure Events from the Monitor’s menu and click and drag an event plugin name to change the order.</p>
+</div></blockquote>
+<p><strong>Does the Rez context persist after the render executable exits?</strong></p>
+<blockquote>
+<div><p>No, when invoking your chosen render executable the Deadline Worker executes the CLI equivalent of <code class="docutils literal notranslate"><span class="pre">rez-env</span> <span class="pre">$REZ_USED_REQUEST</span> <span class="pre">--</span> <span class="pre">$RENDERER</span> <span class="pre">$RENDER_ARGUMENTS</span></code> where <code class="docutils literal notranslate"><span class="pre">$REZ_USED_REQUEST</span></code> is provided by the Job Extra Info: <code class="docutils literal notranslate"><span class="pre">DEADLINE_REZ_REQUEST_PACKAGES</span></code>. This statement means it will attempt to resolve a context using the Rez packages defined in the Job Extra Info: <code class="docutils literal notranslate"><span class="pre">DEADLINE_REZ_REQUEST_PACKAGES</span></code> then within that context, execute command <code class="docutils literal notranslate"><span class="pre">$RENDERER</span> <span class="pre">$RENDER_ARGUMENTS</span></code> and immediately exit the context after the command runs.</p>
+</div></blockquote>
+<p><strong>My custom render plugin launches multiple processes, will this work with the Rez event plugin?</strong></p>
+<blockquote>
+<div><p>Yes, although it is important to note that each <code class="docutils literal notranslate"><span class="pre">RunProcess</span></code> or <code class="docutils literal notranslate"><span class="pre">RunManagedprocess</span></code> invoked in your plugin will run in separate, identical Rez contexts. Each Rez context created based off the Extra Info Key Values <code class="docutils literal notranslate"><span class="pre">DEADLINE_REZ_REQUEST_PACKAGES</span></code> and <code class="docutils literal notranslate"><span class="pre">DEADLINE_REZ_TOOLS</span></code> attached to the Job. If you need both processes to run in the same context you should constuct a meta- Rez tool that manages launching both processes and launch that tool from your plugin.</p>
+</div></blockquote>
+<p><strong>Does the Rez event plugin support cloud based Workers?</strong></p>
+<blockquote>
+<div><p>Yes. If you wish to use the Rez event plugin with cloud based Workers you will need to configure additional infrastructure so that your Workers can reach your Rez <a class="reference external" href="https://github.com/AcademySoftwareFoundation/rez/wiki/Glossary#package-repository">package repositories</a>. As latency increases, you should consider Rez <code class="docutils literal notranslate"><span class="pre">resolve</span> <span class="pre">caching</span></code> via a <a class="reference external" href="https://aws.amazon.com/memcached">memcache</a> service and Rez <code class="docutils literal notranslate"><span class="pre">package</span> <span class="pre">caching</span></code> (copying Rez package payloads from a package repository to a local disk to speed up runtime environments) to handle latency between your origin Rez repository and your remote cloud location. Rez package caching is explained <a class="reference external" href="https://github.com/AcademySoftwareFoundation/rez/wiki/Managing-Packages#package-caching">here</a>.</p>
+</div></blockquote>
+<p><strong>Does the Rez event plugin support AWS Portal Workers?</strong></p>
+<blockquote>
+<div><p>Yes, but not out of the box. Our available Deadline AMIs do not come with Rez installed. You will need to create a <a class="reference internal" href="aws-custom-ami.html#customize-ami-aws-portal-ref-label"><span class="std std-ref">custom AWS AMI</span></a> that has Rez installed and configured. Additionally you will need to customize the security and network settings of your AWS Portal infrastructure to allow your Workers to reach your Rez package repositories.</p>
+</div></blockquote>
+<p><strong>Does the Rez event plugin support DeadlinePlugin.StartMonitoredProgram?</strong></p>
+<blockquote>
+<div><p>No, not at this time. <code class="docutils literal notranslate"><span class="pre">DeadlinePlugin.StartMonitoredProgram</span></code> and <code class="docutils literal notranslate"><span class="pre">DeadlinePlugin.StartMonitoredProgramAsUser</span></code> do not engage Rez, so processes launched using these commands will not recreate a Rez context to run within.</p>
+</div></blockquote>
+<p><strong>Does the Rez event plugin support DeadlineEventListener.RunProcess?</strong></p>
+<blockquote>
+<div><p>No, not at this time. <code class="docutils literal notranslate"><span class="pre">DeadlineEventListener.RunProcess</span></code> and <code class="docutils literal notranslate"><span class="pre">DeadlineEventListener.RunProcessAsUser</span></code> do not engage Rez, so processes launched using these commands will not recreate a Rez context to run within.</p>
+</div></blockquote>
+<p><strong>Which plugins are not supported?</strong></p>
+<blockquote>
+<div><p>The following plugins are not supported:</p>
+<ul class="simple">
+<li><p>3D Studio Max</p></li>
+<li><p>Adobe Media Encoder</p></li>
+<li><p>Altus</p></li>
+<li><p>AutoCAD</p></li>
+<li><p>Cinema 4D</p></li>
+<li><p>CSiBridge</p></li>
+<li><p>CSiSAFE</p></li>
+<li><p>CSiSAP2000</p></li>
+<li><p>EnergyPlus</p></li>
+<li><p>Episode</p></li>
+<li><p>Fusion</p></li>
+<li><p>Guerilla</p></li>
+<li><p>LuxWorker</p></li>
+<li><p>Maya</p></li>
+<li><p>Microstation</p></li>
+<li><p>Realflow</p></li>
+<li><p>RenderMan</p></li>
+<li><p>Softimage</p></li>
+<li><p>Unreal Engine 5</p></li>
+<li><p>Vray</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Rez error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here, please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this event plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Rez</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="event-puppet.html"
+                        title="previous chapter">Puppet</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="event-salt.html"
+                        title="next chapter">Salt</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-salt.html" title="Salt"
+             >next</a></li>
+        <li class="right" >
+          <a href="event-puppet.html" title="Puppet"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" >Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Rez</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

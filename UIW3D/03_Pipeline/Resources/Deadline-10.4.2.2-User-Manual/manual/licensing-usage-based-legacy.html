@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>(Unsupported) Legacy Usage-Based Licensing &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="(Unsupported) Cloud License Server Proxy" href="licensing-usage-based-proxy.html" />
+    <link rel="prev" title="Usage-Based Licensing" href="licensing-usage-based.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="licensing-usage-based-proxy.html" title="(Unsupported) Cloud License Server Proxy"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="licensing-usage-based.html" title="Usage-Based Licensing"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installing-deadline.html" accesskey="U">Installing Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">(Unsupported) Legacy Usage-Based Licensing</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="unsupported-legacy-usage-based-licensing">
+<span id="licensing-usage-based-legacy-ref-label"></span><h1>(Unsupported) Legacy Usage-Based Licensing<a class="headerlink" href="#unsupported-legacy-usage-based-licensing" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Topics covered in this page refer to legacy Thinkbox usage-based licensing (UBL), which is no longer available as of September 30, 2025. The UBL feature in Deadline 10 is now available through <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> UBL. For detailed setup instructions, please see the <a class="reference internal" href="licensing-usage-based.html#licensing-usage-based-ref-label"><span class="std std-ref">Deadline Cloud UBL Documentation</span></a>.</p>
+<p>For more details, please refer to <a class="reference external" href="https://marketplace.thinkboxsoftware.com/">the marketplace website</a>.</p>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Usage-Based Licensing is an on-demand licensing model for select 3rd party products. It can be used as an alternative to floating licenses, or as supplemental licensing to cover temporary increases in render nodes (cloud burst compute, rentals, artist machines overnight, etc). See the <a class="reference internal" href="#licensing-3rd-party-ubl-legacy-ref-label"><span class="std std-ref">3rd Party Usage-Based Licensing</span></a> documentation for more information.</p>
+<p>There are some new components that are introduced by this Usage-Based Licensing system, which are covered in more detail below:</p>
+<ul class="simple">
+<li><p>Cloud License Server: The license server that hosts your Usage-Based Licensing render time.</p></li>
+<li><p><a class="reference external" href="https://marketplace.thinkboxsoftware.com">Thinkbox Marketplace</a>: This is where you can purchase render time bundles for Usage-Based Licensing.</p></li>
+<li><p><a class="reference external" href="https://thinkbox.flexnetoperations.com/">Customer Portal</a>: This is where you can view your render time order history, monitor your render time usage, and view your Cloud License Server.</p></li>
+<li><p>License Forwarder: The Forwarder is required for 3rd Party Usage-Based Licensing. It allows the rendering products to communicate with Thinkbox’s cloud-hosted License Server Gateway.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Before using Usage-Based Licensing, please review the <a class="reference internal" href="system-requirements.html#system-requirements-license-server-ref-label"><span class="std std-ref">System Requirements</span></a>. In addition, you can check out some videos from the <a class="reference external" href="https://deadline.thinkboxsoftware.com/usage-based-licensing/">Usage-Based Licensing</a> page on the Deadline website, or refer to the <a class="reference internal" href="faq.html#faq-usage-based-licensing-ref-label"><span class="std std-ref">Usage-Based Licensing FAQ</span></a>.</p>
+</div>
+</div>
+<div class="section" id="cloud-license-server">
+<h2>Cloud License Server<a class="headerlink" href="#cloud-license-server" title="Permalink to this headline">¶</a></h2>
+<p>The Cloud License Server is hosted by Thinkbox via your Thinkbox Customer Portal, and the Deadline Workers connect to it via a URL, which means that your render nodes must have access to the internet. Alternatively, if you have a NO internet access rule, then please see the next section on configuring a <a class="reference internal" href="#cloud-license-server-proxy-ref-label"><span class="std std-ref">Cloud License Server Proxy</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The render nodes require <code class="docutils literal notranslate"><span class="pre">TCP</span></code> port <code class="docutils literal notranslate"><span class="pre">443</span></code> to be opened for outbound traffic to access the internet to obtain a Deadline Worker UBL token if you are not using <a class="reference internal" href="#cloud-license-server-proxy-ref-label"><span class="std std-ref">Cloud License Server Proxy</span></a>.</p>
+</div>
+<img alt="../_images/licensing_cls_diagram.png" src="../_images/licensing_cls_diagram.png" />
+<p>There are many benefits to using the Cloud License Server:</p>
+<ul class="simple">
+<li><p>You do not need any additional services running on your local network in order to use Usage-Based Licensing.</p></li>
+<li><p>Any render time purchased from the Thinkbox Marketplace can be automatically mapped to your Cloud License Server, which means your render nodes can start using that render time without any manual steps.</p></li>
+<li><p>By associating all Usage-Based Licensing render time with a single Cloud License Server, you can share it across on-premise, remote office and cloud-based render nodes in various regions.</p></li>
+</ul>
+<div class="section" id="cloud-license-server-proxy">
+<span id="cloud-license-server-proxy-ref-label"></span><h3>Cloud License Server Proxy<a class="headerlink" href="#cloud-license-server-proxy" title="Permalink to this headline">¶</a></h3>
+<p>When using Usage-Based Licensing with a Cloud License Server, it is normally required that all render nodes have access to the internet. However, this is not always possible due to security reasons. The recommended alternative is to set up a Cloud License Server Proxy on a single machine that does have internet access, and have the Deadline Workers point to it instead. See the <a class="reference internal" href="licensing-usage-based-proxy.html#licensing-usage-based-proxy-ref-label"><span class="std std-ref">Cloud License Server Proxy Documentation</span></a> for more information.</p>
+<img alt="../_images/licensing_cls_proxy_diagram.png" src="../_images/licensing_cls_proxy_diagram.png" />
+<p>Our documentation walks you through the steps of installing and configuring a Cloud License Server Proxy using HAProxy on an Ubuntu machine (note that this can be a physical or virtual machine). While there are probably many ways to set up a Cloud License Server Proxy, this is the solution we have tested and we can confirm it works.</p>
+</div>
+<div class="section" id="local-license-server">
+<h3>Local License Server<a class="headerlink" href="#local-license-server" title="Permalink to this headline">¶</a></h3>
+<p>If using a Cloud License Server or Cloud License Server Proxy is not possible due to security concerns, there is still the option to use the Local License Server. However, we don’t recommend this option because it comes with some significant limitations:</p>
+<ul class="simple">
+<li><p>We’ll need to customize your Thinkbox Marketplace account so that any Usage-Based Licensing purchase you make aren’t automatically mapped to your Cloud License Server. You will have to manually map them to your Local License Server going forward.</p></li>
+<li><p>You cannot share render time between a Local License Server and a Cloud License Server. Once render time is mapped to a Local License Server, you cannot map it to your Cloud License Server later.</p></li>
+<li><p>The Local License Server cannot be used to consume 3rd Party Usage-Based Licensing. If you want to use 3rd Party Usage-Based Licensing, you must use either the Cloud License Server directly, or a Cloud License Server Proxy.</p></li>
+</ul>
+<p>Due to these limitations, we highly recommend using the Cloud License Server Proxy if security is a concern. Please contact <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Support</a> if you need help setting up the Cloud License Server Proxy, or if you would like to discuss using the Local License Server.</p>
+</div>
+</div>
+<div class="section" id="the-thinkbox-marketplace">
+<span id="licensing-usage-based-store-ref-label"></span><h2>The Thinkbox Marketplace<a class="headerlink" href="#the-thinkbox-marketplace" title="Permalink to this headline">¶</a></h2>
+<p>Before you can purchase any Usage-Based Licensing render time, you must first create a Thinkbox Marketplace account. Visit the <a class="reference external" href="https://marketplace.thinkboxsoftware.com">Thinkbox Marketplace</a> and click the Create Account link in the top-right corner. Specify your name and email address, and then click the Create button.</p>
+<a class="reference internal image-reference" href="../_images/store_create_account.png"><img alt="../_images/store_create_account.png" src="../_images/store_create_account.png" style="height: 400px;" /></a>
+<p>After your account has been created, you will receive an email confirming that your Marketplace account was created successfully. The next step is to log into your Marketplace account and purchase some render time.</p>
+</div>
+<div class="section" id="purchasing-render-time">
+<h2>Purchasing Render Time<a class="headerlink" href="#purchasing-render-time" title="Permalink to this headline">¶</a></h2>
+<p>Now that your Thinkbox Marketplace account has been created, you are ready to purchase some render time! Simply visit the <a class="reference external" href="https://marketplace.thinkboxsoftware.com">Thinkbox Marketplace</a>, log in with your Marketplace account, and choose the Usage-Based Licensing products you wish to purchase. When you’re ready to purchase, please review your Cart first, and then agree to the Terms and Conditions.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To prevent unexpected issues or interruptions we advise customers to calculate and purchase the total amount of hours needed to complete a given render workload. Depending on your version of Deadline you may experience issues when licenses are exhausted or incremental units are purchased. See Deadline release notes for details by version.</p>
+</div>
+<p>You can now proceed to the Check Out page, where you can enter your billing information. Note that you can enter a Company name in your billing address. If you do, your Customer Portal account name will reflect this after you complete the purchase process (more on this below). In addition, if you have any discount codes, be sure to enter them in before entering in your payment details and completing your order.</p>
+<a class="reference internal image-reference" href="../_images/store_billing_info.png"><img alt="../_images/store_billing_info.png" src="../_images/store_billing_info.png" style="height: 400px;" /></a>
+<p>Once your order has been processed, you should receive an email confirming your order. If this is your <strong>first</strong> Usage-Based Licensing purchase, you should receive a second email within five minutes that confirms the creation of your Customer Portal account. This email will also contain the URL for your Cloud License Server, and an Activation Code.</p>
+<p>The URL and Activation Code will look like this (in the URL, XXXXXXXXXXXX would be replaced with your Cloud License Server ID):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">thinkbox</span><span class="o">.</span><span class="n">compliance</span><span class="o">.</span><span class="n">flexnetoperations</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">instances</span><span class="o">/</span><span class="n">XXXXXXXXXXXX</span><span class="o">/</span><span class="n">request</span>
+<span class="n">XXXX</span><span class="o">-</span><span class="n">XXXX</span><span class="o">-</span><span class="n">XXXX</span><span class="o">-</span><span class="n">XXXX</span>
+</pre></div>
+</div>
+<p>Note that this information is only emailed out once, so make sure to keep the URL and Activation Code on hand, as you will need this information to configure Deadline for Usage-Based Licensing. If you lose this information, you can log into your Customer Portal to retrieve it (see below).</p>
+<div class="section" id="per-core-render-time">
+<h3>PER-CORE Render Time<a class="headerlink" href="#per-core-render-time" title="Permalink to this headline">¶</a></h3>
+<p>Some products in the Thinkbox Marketplace can consume render time on a PER-CORE basis. PER-CORE minutes are consumed based on the number of CORES the rendering machine has. For example, a 4-CORE machine will consume 40 minutes of render time during a 10 minute render.</p>
+<p>If a product doesn’t mention that it is PER-CORE, then it consumes render time on a WALL-CLOCK basis. For example, a 4-CORE machine and an 8-CORE machine will both consume 10 minutes of render time during a 10 minute render because the number of CORES doesn’t affect the usage.</p>
+</div>
+</div>
+<div class="section" id="the-customer-portal">
+<h2>The Customer Portal<a class="headerlink" href="#the-customer-portal" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned above, your <a class="reference external" href="https://thinkbox.flexnetoperations.com/">Customer Portal</a> account is created automatically after you make your first Usage-Based Licensing purchase from the Thinkbox Marketplace. If you haven’t logged into the Customer Portal before, or if you have lost your password, use the <strong>Password Finder</strong> link at the bottom of the Portal’s login page, enter your email address, and your password and login ID will be emailed to you. Note that you should enter the email address that you used to create your Thinkbox Marketplace account.</p>
+<a class="reference internal image-reference" href="../_images/customer_portal_order_history.png"><img alt="../_images/customer_portal_order_history.png" src="../_images/customer_portal_order_history.png" style="height: 400px;" /></a>
+<p>Once you’ve logged in, you’ll be able to view specific information using the navigation side-bar on the left, including:</p>
+<ul class="simple">
+<li><p>Order History: This is the default page when you log in, and it shows you your previous order history.</p></li>
+<li><p>Search Line Items: This can be used to find your Activation Code.</p></li>
+<li><p>Search Servers: View your Cloud License Server, and review the render time that has been mapped to it. This can also be used to find your License Server ID, which is used to build up the Cloud License Server URL.</p></li>
+<li><p>Usage Report: View different graphs and tables to show current and historical usage of your render time.</p></li>
+</ul>
+<p>Note that the Home page currently shows an error message stating that <strong>No software is currently associated with your Customer Portal account</strong>. This is normal, because the actual Deadline product is not associated with the Customer Portal, just the render time entitlements for Usage-Based Licensing.</p>
+<p>For more information on using the Customer Portal, refer to the <strong>Get Help</strong> section on the navigation side-bar.</p>
+<div class="section" id="cloud-license-server-url-and-activation-code">
+<span id="cloud-license-server-url-and-activation-code-label"></span><h3>Cloud License Server URL and Activation Code<a class="headerlink" href="#cloud-license-server-url-and-activation-code" title="Permalink to this headline">¶</a></h3>
+<p>The Cloud License Server URL and Activation Code are required to configure Deadline to use Usage-Based Licensing. This information was included in the email you received when you made your first Usage-Based Licensing purchase from the Thinkbox Marketplace. However, it’s also possible to retrieve this information from the Customer Portal.</p>
+<p><strong>Cloud License Server URL</strong></p>
+<p>To get the Cloud License Server URL, you must first find the Cloud License Server ID. This can be done by clicking <strong>Search Servers</strong> in the side-bar on the left. Here, you will see the ID of your Cloud License Server.</p>
+<a class="reference internal image-reference" href="../_images/customer_portal_search_servers.png"><img alt="../_images/customer_portal_search_servers.png" src="../_images/customer_portal_search_servers.png" style="height: 500px;" /></a>
+<p>Click on the License Server ID, and the License Server URL will be shown near the top of the page.</p>
+<a class="reference internal image-reference" href="../_images/customer_portal_server_url.png"><img alt="../_images/customer_portal_server_url.png" src="../_images/customer_portal_server_url.png" style="height: 500px;" /></a>
+<p>For this example, let’s assume the ID is XXXXXXXXXXXX, in which case the URL would look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">thinkbox</span><span class="o">.</span><span class="n">compliance</span><span class="o">.</span><span class="n">flexnetoperations</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">instances</span><span class="o">/</span><span class="n">XXXXXXXXXXXX</span><span class="o">/</span><span class="n">request</span>
+</pre></div>
+</div>
+<p><strong>Activation Code</strong></p>
+<p>To find your Activation Code, click Search Line Items in the side-bar on the left, and look in the Details columns for a line item that has <em>enable_usage</em> as the Catalog Item ID and <em>Enable License Usage</em> as the Catalog Item Name. Expand the Additional Details section for that line item to find the Activate Code. It is in the format <em>XXXX-XXXX-XXXX-XXXX</em>. Note that you might have more than one of these <em>Enable License Usage</em> line items, in which case you just need to pick one that still has an available quantity.</p>
+<a class="reference internal image-reference" href="../_images/store_activation_code.png"><img alt="../_images/store_activation_code.png" src="../_images/store_activation_code.png" style="height: 500px;" /></a>
+</div>
+</div>
+<div class="section" id="configuring-deadline">
+<h2>Configuring Deadline<a class="headerlink" href="#configuring-deadline" title="Permalink to this headline">¶</a></h2>
+<p>Before you can start using Usage-Based Licensing, you must enter the Cloud License Server URL and Activation Code in the <a class="reference internal" href="repository-config.html#repo-usage-based-licensing-ref-label"><span class="std std-ref">Repository Options</span></a>. This can be done from the Deadline Monitor while in Power User Mode (use the Tools Menu to enter Power User Mode). Then select Configure Repository Options from the Tools menu, and select Usage-Based Licensing from the list on the left. Note that if you are using the <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-ref-label"><span class="std std-ref">Deadline Secrets Management</span></a> feature, you will need to provide Administrator credentials to save these values.</p>
+<p>The Cloud License Server URL and Activation Code was included in the email you received when you first created your Thinkbox Marketplace account. However, if you have misplaced this email, you can get this information from the Customer Portal (see above).</p>
+<a class="reference internal image-reference" href="../_images/cro_usage_based_licensing.png"><img alt="../_images/cro_usage_based_licensing.png" src="../_images/cro_usage_based_licensing.png" style="height: 500px;" /></a>
+<p>Note that you should have the Cloud License Server box checked unless you are using a Local License Server. In addition, if you are using a Cloud License Server Proxy, the URL will look a bit different. See the <a class="reference internal" href="licensing-usage-based-proxy.html#licensing-usage-based-proxy-configure-ref-label"><span class="std std-ref">Cloud License Server Proxy documentation</span></a> for more information on configuring Deadline.</p>
+<div class="section" id="deadline-usage-based-licensing">
+<h3>Deadline Usage-Based Licensing<a class="headerlink" href="#deadline-usage-based-licensing" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Starting with Deadline 10.1.23, Deadline and its components do not require a license. This section is left for operators of older versions of Deadline.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This step is only required if you are using Deadline Usage-Based Licensing. You do not need to perform this step if you are only planning on using 3rd Party Usage-Based Licensing.**</p>
+</div>
+<p>Now that Deadline is configured to use Usage-Based Licensing, you need to configure the Deadline Worker applications.</p>
+<p>License configuration can be done from the File menu in the Deadline Worker application, or from the Deadline Launcher menu on the machines that the Deadline Worker is running on. If the Deadline Worker is already running, restart it so that it can recognize the licensing change.</p>
+<a class="reference internal image-reference" href="../_images/change_license_server_ubl.png"><img alt="../_images/change_license_server_ubl.png" src="../_images/change_license_server_ubl.png" style="height: 250px;" /></a>
+<p>Note that if are also using floating licenses for Deadline, you can keep some Deadline Workers configured to use Usage-Based Licensing, and some configured to use your existing Deadline floating license server. You can also use <a class="reference internal" href="auto-config.html#auto-config-ref-label"><span class="std std-ref">Auto Configuration</span></a> to configure which Deadline Workers you want to use Usage-Based Licensing automatically.</p>
+</div>
+<div class="section" id="third-party-usage-based-licensing">
+<span id="licensing-3rd-party-ubl-legacy-ref-label"></span><h3>Third Party Usage-Based Licensing<a class="headerlink" href="#third-party-usage-based-licensing" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These steps are only required if you are using 3rd Party Usage-Based Licensing.</p>
+</div>
+<p>Before you can start using 3rd Party Usage-Based Licensing, you must do the following:</p>
+<ul class="simple">
+<li><p>Purchase 3rd Party render time from the Thinkbox Marketplace.</p></li>
+<li><p>Download the 3rd Party Licencing Certificates.</p></li>
+<li><p>Install and configure the Deadline License Forwarder application to use the Certificates.</p></li>
+<li><p>Set up Deadline Limits to use Third Party Usage-Based Licensing, and configure your render jobs to use these Limits.</p></li>
+</ul>
+<p><strong>Purchasing Render Time</strong></p>
+<p>Please visit the <a class="reference external" href="https://marketplace.thinkboxsoftware.com">Thinkbox Marketplace</a> to see which products are supported, and to purchase render time. Also make sure to review the <a class="reference external" href="https://marketplace.thinkboxsoftware.com/pages/usage-based-licensing-requirements">Usage-Based Licensing Requirements</a> before making a purchase to ensure you are using a supported version of the product.</p>
+<p><strong>Certificates</strong></p>
+<p>To use Third Party Usage-Based Licensing with Deadline, you will first need to obtain Certificates for each product you will be rendering with. These Certificates ensure a secure connection with Thinkbox’s Cloud-hosted License Server Gateway.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These certificates are automatically added to your Thinkbox Customer Portal when you purchase 3rd Party render time from the Thinkbox Marketplace, but note that it can take up to 30 minutes before the certificates will appear in your Portal account.</p>
+</div>
+<p>To download them Log in to the Thinkbox <a class="reference external" href="https://thinkbox.flexnetoperations.com/">Customer Portal</a>. using the instructions shown above.</p>
+<p>Go to your Home page shown below</p>
+<a class="reference internal image-reference" href="../_images/licencing-usage-based-certificates-home.png"><img alt="../_images/licencing-usage-based-certificates-home.png" src="../_images/licencing-usage-based-certificates-home.png" style="height: 400px;" /></a>
+<p>Click on the ‘certificate’ link and and you will be shown the certificates download link.</p>
+<a class="reference internal image-reference" href="../_images/licencing-usage-based-certificates-files.png"><img alt="../_images/licencing-usage-based-certificates-files.png" src="../_images/licencing-usage-based-certificates-files.png" style="height: 400px;" /></a>
+<p>If you do not see the certificates, please contact Thinkbox Sales. Note though that it can take up to 30 minutes after purchase before the certificates will appear in your Portal account.</p>
+<p><strong>The License Forwarder</strong></p>
+<p>The new <a class="reference internal" href="license-forwarder.html#license-forwarder-ref-label"><span class="std std-ref">License Forwarder</span></a> application does exactly what it’s name implies. It forwards license requests for 3rd Party products to Thinkbox’s Cloud-hosted License Server Gateway, and must be running on your network before you can start using 3rd Party render time. It must be configured to use the 3rd Party Certificates you obtained from Thinkbox Sales, and it must also have access to the Internet so that it can communicate with the License Server Gateway.</p>
+<p>The License Forwarder can run on any machine, but because multiple machines will be connecting to it, we recommend a machine running Windows Server or Linux. See the <a class="reference internal" href="system-requirements.html#system-requirements-ref-label"><span class="std std-ref">Client System Requirements</span></a> for more information. In addition, you should avoid running the Forwarder on a machine that is already hosting other floating licenses servers to avoid potential port conflicts.</p>
+<p>To install the License Forwarder, simply run the <a class="reference internal" href="install-client.html#install-client-ref-label"><span class="std std-ref">Deadline Client installer</span></a>. The Forwarder will be installed to Deadline’s bin directory, and is called deadlinelicenseforwarder.exe on Windows, and deadlinelicenseforwarder on Linux and macOS. Before running the Forwarder though, you must first create a directory on the machine for your 3rd Party Certificates (ie: C:3PL_Certs), and place all the 3rd Party Certificates that you received from Thinkbox Sales into this directory.</p>
+<p>The License Forwarder is a console application, so to run it the first time, open a Command Prompt or a Terminal, change directories to the Deadline bin folder, and run it without arguments. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">On</span> <span class="n">Windows</span><span class="p">)</span>
+<span class="n">cd</span> <span class="s2">&quot;C:\Program Files\Thinkbox\Deadline[VERSION]</span><span class="se">\b</span><span class="s2">in&quot;</span>
+<span class="n">deadlinelicenseforwarder</span><span class="o">.</span><span class="n">exe</span>
+
+<span class="p">(</span><span class="n">On</span> <span class="n">Linux</span><span class="p">)</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Thinkbox</span><span class="o">/</span><span class="n">Deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="o">/</span><span class="nb">bin</span>
+<span class="o">./</span><span class="n">deadlinelicenseforwarder</span>
+
+<span class="p">(</span><span class="n">On</span> <span class="n">macOS</span><span class="p">)</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">Applications</span><span class="o">/</span><span class="n">Thinkbox</span><span class="o">/</span><span class="n">Deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="o">/</span><span class="n">Resources</span>
+<span class="o">./</span><span class="n">deadlinelicenseforwarder</span>
+
+<span class="p">(</span><span class="n">where</span> <span class="p">[</span><span class="n">VERSION</span><span class="p">]</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">major</span> <span class="n">version</span> <span class="n">of</span> <span class="n">Deadline</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The first time the License Forwarder starts up, it will check if it knows where the 3rd Party Certificates are located. If it does not, it will prompt you for a path to the directory that contains them. Enter the path to the directory you created earlier (ie: C:3PL_Certs).</p>
+<p>If you need to change the location of the certificates folder, you can do so from the command line or by editing the system deadline.ini file on the machine.</p>
+<p>Finally, if you want to start up the Deadline Forwarder automatically when the Deadline Launcher starts, you can add the following line to your system deadline.ini file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LaunchLicenseForwarderAtStartup</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>Now, if you configure your Deadline Launcher to run as a service, the License Forwarder will run as a service as well! More information on configuring and running the License Forwarder can be found in the <a class="reference internal" href="license-forwarder.html#license-forwarder-ref-label"><span class="std std-ref">License Forwarder documentation</span></a>.</p>
+<p><strong>3rd Party Limits</strong></p>
+<p>3rd Party render time is consumed per minute and only while Deadline is rendering a task for a job that requires special Limits. Limits in Deadline have traditionally been used to support applications and plugins that use floating licenses. They enforce the maximum number of concurrent render jobs that use those applications and plugins, which prevents licensing errors from affecting productivity.</p>
+<p>Limits can be configured to allow additional Deadline Workers to render these jobs, but these additional Workers will enter an Overage mode. While in Overage mode, the Deadline Workers will redirect license requests for the necessary applications and plugins to the Deadline Forwarder instead of your local license server. At the same time, the Deadline Workers will consume 3rd Party render time until the job has finished (or until the render time has been exhausted). Because Deadline only consumes 3rd Party render time when in Overage mode, your floating licenses will always be preferred.</p>
+<p>Note that if you want all Workers to use 3rd Party render time, you can set the Limit field to zero. This will force all Workers to check out this limit in Overage mode.</p>
+<p>Once you have your 3rd Party Limit set up, you need to assign that Limit to any Deadline Jobs that use that 3rd Party product. 3rd Party render time usage will then happen automatically, provided that the License Forwarder is running and that the Deadline Workers can communicate with it.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that in order to dequeue a Job that uses a 3rd Party Limit there must be credits available for the corresponding 3rd Party product. Credits will only be consumed if a license is actually used for that product if the <a class="reference internal" href="#worker-port-forwarding-ref-label"><span class="std std-ref">Auto-detect 3rd Party Usage-Based License Consumption</span></a> feature is enabled in the <a class="reference internal" href="repository-config.html#repo-usage-based-licensing-ref-label"><span class="std std-ref">Repository Options</span></a>. Otherwise credits will be consumed while the Job is in the rendering state.</p>
+</div>
+<p>Note that you must be in Power User Mode in the Deadline Monitor to create and modify Limits. For more information about configuring Limits, see the <a class="reference internal" href="limits.html#global-limits-ref-label"><span class="std std-ref">Limits Documentation</span></a>.</p>
+<p><strong>3rd Party Limits Example Using Krakatoa</strong></p>
+<p>Let’s say you have 2 floating licenses of Krakatoa, and 4 render nodes that are capable of rendering Krakatoa jobs. To ensure that you don’t run into Krakatoa licensing errors, you would create a krakatoa Limit and set it to 2. Then any job that requires the Krakatoa renderer would specify the krakaota Limit at submission time. This ensures that you won’t run out of licenses because no more than 2 instances of Krakatoa would be used on the farm at any given time.</p>
+<p>If you would like all 4 render nodes to join the render, you can configure the krakatoa Limit to allow your other 2 render nodes to use 3rd Party Usage-Based Licensing. First, you will leave the existing Limit maximum at 2, since that is still your floating license count. Instead, you will set the Limit Overage to 2 so that your additional render nodes can pick up Krakatoa jobs. Finally, you need to enable the Use Usage-Based Third Party Licensing option and select krakatoa as the License Application. After you press OK, you are now ready to consume Krakatoa 3rd Party render time!</p>
+<a class="reference internal image-reference" href="../_images/3pl_krakatoa.png"><img alt="../_images/3pl_krakatoa.png" src="../_images/3pl_krakatoa.png" style="height: 250px;" /></a>
+<p>When the additional 2 render nodes pick up your Krakatoa jobs, they will recognize that they are in Overage mode, and will consume Krakatoa render time instead of connecting to your local Krakatoa license server. Because Krakatoa render time will only be consumed in Overage mode, it ensures that Deadline always prefers your existing floating licenses before using 3rd Party render time!</p>
+</div>
+</div>
+<div class="section" id="monitoring-render-time-usage">
+<span id="monitoring-render-time-legacy-ref-label"></span><h2>Monitoring Render Time Usage<a class="headerlink" href="#monitoring-render-time-usage" title="Permalink to this headline">¶</a></h2>
+<p>You can log into your Customer Portal at any time to review your order history and monitor the usage of your render time.</p>
+<img alt="../_images/customer_portal_usage_report_2.png" src="../_images/customer_portal_usage_report_2.png" />
+<p>Important notes about render time usage:</p>
+<ul class="simple">
+<li><p>When the Deadline Workers check out render time, they do so in 5 minute increments, and will hold on to those minutes until they are used up (at which point they will request 5 more minutes). Keep this in mind when viewing your Usage Report in the Thinkbox Portal.</p></li>
+<li><p>Render time is consumed during the entire duration of a Task, between when a Task starts and when it finishes.</p></li>
+<li><p>Unlike Floating Licenses, Usage-Based Licensing for Deadline and 3rd party products is consumed on a per-Worker basis. For example if you have 2 Workers on the same machine each render a task over a 5 minute period, you will consume 10 minutes of Deadline render time.</p></li>
+<li><p>Rendering overhead (launching the rendering application, loading the scene file, etc) is included in the total Task time, and therefore will consume render time. In cases where Task times are quick, it might be beneficial to increase the number of frames per task to reduce this overhead.</p></li>
+<li><p>When the Deadline Worker exits, any unused minutes are then returned. Note that killing the Deadline Worker can result in a loss of minutes, since it won’t have a chance to return them. This loss cannot be reverted, so always make sure you close your Deadline Workers properly!</p></li>
+</ul>
+</div>
+<div class="section" id="auto-detect-3rd-party-usage-based-license-consumption">
+<span id="worker-port-forwarding-ref-label"></span><h2>Auto-detect 3rd Party Usage-Based License Consumption<a class="headerlink" href="#auto-detect-3rd-party-usage-based-license-consumption" title="Permalink to this headline">¶</a></h2>
+<p>If this feature is enabled, the Worker will run a port forwarder for Third-Party Usage-Based Licensing.
+This port forwarder will accept license traffic from the render application and forward it to the License Forwarder.
+It will also act to ensure that credit consumption is not started until a license request has been made.
+If this is enabled, the License Forwarder and the Worker will not be able to run on the same machine due to port binding conflicts.
+If disabled, all license traffic from the render application will go straight to the License Forwarder. Changing this setting requires restarting the Workers to take effect.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">(Unsupported) Legacy Usage-Based Licensing</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#cloud-license-server">Cloud License Server</a><ul>
+<li><a class="reference internal" href="#cloud-license-server-proxy">Cloud License Server Proxy</a></li>
+<li><a class="reference internal" href="#local-license-server">Local License Server</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-thinkbox-marketplace">The Thinkbox Marketplace</a></li>
+<li><a class="reference internal" href="#purchasing-render-time">Purchasing Render Time</a><ul>
+<li><a class="reference internal" href="#per-core-render-time">PER-CORE Render Time</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-customer-portal">The Customer Portal</a><ul>
+<li><a class="reference internal" href="#cloud-license-server-url-and-activation-code">Cloud License Server URL and Activation Code</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuring-deadline">Configuring Deadline</a><ul>
+<li><a class="reference internal" href="#deadline-usage-based-licensing">Deadline Usage-Based Licensing</a></li>
+<li><a class="reference internal" href="#third-party-usage-based-licensing">Third Party Usage-Based Licensing</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#monitoring-render-time-usage">Monitoring Render Time Usage</a></li>
+<li><a class="reference internal" href="#auto-detect-3rd-party-usage-based-license-consumption">Auto-detect 3rd Party Usage-Based License Consumption</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="licensing-usage-based.html"
+                        title="previous chapter">Usage-Based Licensing</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="licensing-usage-based-proxy.html"
+                        title="next chapter">(Unsupported) Cloud License Server Proxy</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="licensing-usage-based-proxy.html" title="(Unsupported) Cloud License Server Proxy"
+             >next</a></li>
+        <li class="right" >
+          <a href="licensing-usage-based.html" title="Usage-Based Licensing"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installing-deadline.html" >Installing Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">(Unsupported) Legacy Usage-Based Licensing</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

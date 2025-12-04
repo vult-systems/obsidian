@@ -1,0 +1,619 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pools &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Limits" href="rest-limits.html" />
+    <link rel="prev" title="Groups" href="rest-groups.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="rest-limits.html" title="Limits"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="rest-groups.html" title="Groups"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-rest-api.html" accesskey="U">RESTful HTTP API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Pools</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pools">
+<span id="rest-pools-ref-label"></span><h1>Pools<a class="headerlink" href="#pools" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 11%" />
+<col style="width: 9%" />
+<col style="width: 8%" />
+<col style="width: 9%" />
+<col style="width: 10%" />
+<col style="width: 8%" />
+<col style="width: 9%" />
+<col style="width: 8%" />
+<col style="width: 11%" />
+<col style="width: 8%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td colspan="11"><p><a class="reference internal" href="rest-overview.html#rest-overview-ref-label"><span class="std std-ref">REST Overview</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="rest-jobs.html#rest-jobs-ref-label"><span class="std std-ref">Jobs</span></a></p></td>
+<td><p><a class="reference internal" href="rest-job-reports.html#rest-job-reports-ref-label"><span class="std std-ref">Job Reports</span></a></p></td>
+<td><p><a class="reference internal" href="rest-groups.html#rest-groups-ref-label"><span class="std std-ref">Groups</span></a></p></td>
+<td><p><a class="reference internal" href="#rest-pools-ref-label"><span class="std std-ref">Pools</span></a></p></td>
+<td><p><a class="reference internal" href="rest-limits.html#rest-limits-ref-label"><span class="std std-ref">Limits</span></a></p></td>
+<td><p><a class="reference internal" href="rest-repository.html#rest-repository-ref-label"><span class="std std-ref">Repository</span></a></p></td>
+<td><p><a class="reference internal" href="rest-pulse.html#rest-pulse-ref-label"><span class="std std-ref">Pulse</span></a></p></td>
+<td><p><a class="reference internal" href="rest-workers.html#rest-workers-ref-label"><span class="std std-ref">Workers</span></a></p></td>
+<td><p><a class="reference internal" href="rest-tasks.html#rest-tasks-ref-label"><span class="std std-ref">Tasks</span></a></p></td>
+<td><p><a class="reference internal" href="rest-task-reports.html#rest-task-reports-ref-label"><span class="std std-ref">Task Reports</span></a></p></td>
+<td><p><a class="reference internal" href="rest-users.html#rest-users-ref-label"><span class="std std-ref">Users</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
+<li><p><a class="reference internal" href="#requests-and-responses" id="id2">Requests and Responses</a></p>
+<ul>
+<li><p><a class="reference internal" href="#get-pool-names" id="id3">Get Pool Names</a></p></li>
+<li><p><a class="reference internal" href="#get-workers-for-pools" id="id4">Get Workers For Pools</a></p></li>
+<li><p><a class="reference internal" href="#add-pools" id="id5">Add Pools</a></p></li>
+<li><p><a class="reference internal" href="#set-pools" id="id6">Set Pools</a></p></li>
+<li><p><a class="reference internal" href="#add-pools-to-workers" id="id7">Add Pools to Workers</a></p></li>
+<li><p><a class="reference internal" href="#set-pools-for-workers" id="id8">Set Pools for Workers</a></p></li>
+<li><p><a class="reference internal" href="#purge-pools" id="id9">Purge Pools</a></p></li>
+<li><p><a class="reference internal" href="#set-and-purge-pools" id="id10">Set and Purge Pools</a></p></li>
+<li><p><a class="reference internal" href="#add-and-purge-pools" id="id11">Add and Purge Pools</a></p></li>
+<li><p><a class="reference internal" href="#delete-pools" id="id12">Delete Pools</a></p></li>
+<li><p><a class="reference internal" href="#delete-pools-from-workers" id="id13">Delete Pools From Workers</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="overview">
+<h2><a class="toc-backref" href="#contents">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Pool requests can be used to set and retrieve information for one or many Pools.</p>
+<p>Pool requests support <code class="docutils literal notranslate"><span class="pre">GET</span></code>, <code class="docutils literal notranslate"><span class="pre">PUT</span></code>, <code class="docutils literal notranslate"><span class="pre">POST</span></code>, and <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> request types.</p>
+<p>For more about these request types and their uses see the <a class="reference internal" href="rest-overview.html#types-of-http-ref-label"><span class="std std-ref">Request Formats and Responses</span></a> documentation.</p>
+</div>
+<div class="section" id="requests-and-responses">
+<h2><a class="toc-backref" href="#contents">Requests and Responses</a><a class="headerlink" href="#requests-and-responses" title="Permalink to this headline">¶</a></h2>
+<p>List of possible requests for Pools</p>
+<div class="section" id="get-pool-names">
+<h3><a class="toc-backref" href="#contents">Get Pool Names</a><a class="headerlink" href="#get-pool-names" title="Permalink to this headline">¶</a></h3>
+<p>Gets Pool Names.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/pools</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>GET</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>JSON object containing all the Pool names.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="get-workers-for-pools">
+<h3><a class="toc-backref" href="#contents">Get Workers For Pools</a><a class="headerlink" href="#get-workers-for-pools" title="Permalink to this headline">¶</a></h3>
+<p>Gets all the Worker names for the provided Pool names.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/pools?Pool=oneOrMorePoolNames</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>GET</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>JSON object containing all Worker names that are in the provided Pools.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="add-pools">
+<h3><a class="toc-backref" href="#contents">Add Pools</a><a class="headerlink" href="#add-pools" title="Permalink to this headline">¶</a></h3>
+<p>Creates new Pools using the provided Pool names.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/pools</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>POST</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><dl class="simple">
+<dt>JSON object that must contain the following keys:</dt><dd><ul class="simple">
+<li><p>Pool = Pool name(s) (may be an Array)</p></li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>“Success”</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="set-pools">
+<h3><a class="toc-backref" href="#contents">Set Pools</a><a class="headerlink" href="#set-pools" title="Permalink to this headline">¶</a></h3>
+<p>Removes all Pools not provided and creates any provided Pools that did not exist.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/pools</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>PUT</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><dl class="simple">
+<dt>JSON object that must contain the following keys:</dt><dd><ul class="simple">
+<li><p>Pool = Pool name(s) (may be an Array)</p></li>
+<li><p>OverWrite = true</p></li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>“Success”</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="add-pools-to-workers">
+<h3><a class="toc-backref" href="#contents">Add Pools to Workers</a><a class="headerlink" href="#add-pools-to-workers" title="Permalink to this headline">¶</a></h3>
+<p>Adds the provided Pools to the assigned Pools for each provided Worker. For both Pools and Workers, only the names are required.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/pools</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>PUT</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><dl class="simple">
+<dt>JSON object that must contain the following keys:</dt><dd><ul class="simple">
+<li><p>Slave = Worker name(s) (may be an Array)</p></li>
+<li><p>Pool = Pool name(s) (may be an Array)</p></li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>“Success”</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="set-pools-for-workers">
+<h3><a class="toc-backref" href="#contents">Set Pools for Workers</a><a class="headerlink" href="#set-pools-for-workers" title="Permalink to this headline">¶</a></h3>
+<p>Sets provided Pools as the assigned Pools for each provided Worker. For both Pools and Workers, only the names are required.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/pools</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>PUT</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><dl class="simple">
+<dt>JSON object that must contain the following keys:</dt><dd><ul class="simple">
+<li><p>Slave = Worker name(s) (may be an Array)</p></li>
+<li><p>Pool = Pool name(s) (may be an Array)</p></li>
+<li><p>OverWrite = true</p></li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>“Success”</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="purge-pools">
+<h3><a class="toc-backref" href="#contents">Purge Pools</a><a class="headerlink" href="#purge-pools" title="Permalink to this headline">¶</a></h3>
+<p>Purges all obsolete Pools using the provided replacement Pool.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/pools</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>PUT</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><dl class="simple">
+<dt>JSON object that must contain the following keys:</dt><dd><ul class="simple">
+<li><p>OverWrite = false</p></li>
+<li><p>ReplacementPool = Pool name to replace the Pools being purged</p></li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>“Success”</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><ul class="simple">
+<li><p>500 Internal Server Error: An exception occurred within the Deadline code, or</p></li>
+<li><p>Replacement Pool name provided does not exist.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="set-and-purge-pools">
+<h3><a class="toc-backref" href="#contents">Set and Purge Pools</a><a class="headerlink" href="#set-and-purge-pools" title="Permalink to this headline">¶</a></h3>
+<p>Sets the list of Pools to the provided list of Pool names, creating them if necessary. Purges all the obsolete Pools using the provided replacement Pool.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/pools</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>PUT</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><dl class="simple">
+<dt>JSON object that must contain the following keys:</dt><dd><ul class="simple">
+<li><p>OverWrite = true</p></li>
+<li><p>ReplacementPool = Pool name to replace the Pools being purged</p></li>
+<li><p>Pool = the Pool(s) provided for setting, the replacement Pool must be in this Pool list or must be “none” (may be an Array)</p></li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>“Success”</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><ul class="simple">
+<li><p>500 Internal Server Error: An exception occurred within the Deadline code, or</p></li>
+<li><p>Replacement Pool name provided does not exist.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="add-and-purge-pools">
+<h3><a class="toc-backref" href="#contents">Add and Purge Pools</a><a class="headerlink" href="#add-and-purge-pools" title="Permalink to this headline">¶</a></h3>
+<p>Adds the list of provided Pools, creating them if necessary. Purges all the obsolete Pools using the provided replacement Pool.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/pools</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>PUT</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><dl class="simple">
+<dt>JSON object that must contain the following keys:</dt><dd><ul class="simple">
+<li><p>ReplacementPool = Pool name to replace the Pools being purged</p></li>
+<li><p>Pool = the Pool(s) provided for adding (may be an Array)</p></li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>“Success”</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><ul class="simple">
+<li><p>500 Internal Server Error: An exception occurred within the Deadline code, or</p></li>
+<li><p>Replacement Pool name provided does not exist.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="delete-pools">
+<h3><a class="toc-backref" href="#contents">Delete Pools</a><a class="headerlink" href="#delete-pools" title="Permalink to this headline">¶</a></h3>
+<p>Deletes all Pools with the provided Pool names.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/pools?Pool=oneOrMorePoolNames</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>DELETE</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>“Success”</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="delete-pools-from-workers">
+<h3><a class="toc-backref" href="#contents">Delete Pools From Workers</a><a class="headerlink" href="#delete-pools-from-workers" title="Permalink to this headline">¶</a></h3>
+<p>Deletes all Pools from the Worker’s list of Pools.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/pools?Pool=oneOrMorePoolNames&amp;Slaves=oneOrMoreSlaveNames</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>DELETE</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>“Success”</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Pools</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#requests-and-responses">Requests and Responses</a><ul>
+<li><a class="reference internal" href="#get-pool-names">Get Pool Names</a></li>
+<li><a class="reference internal" href="#get-workers-for-pools">Get Workers For Pools</a></li>
+<li><a class="reference internal" href="#add-pools">Add Pools</a></li>
+<li><a class="reference internal" href="#set-pools">Set Pools</a></li>
+<li><a class="reference internal" href="#add-pools-to-workers">Add Pools to Workers</a></li>
+<li><a class="reference internal" href="#set-pools-for-workers">Set Pools for Workers</a></li>
+<li><a class="reference internal" href="#purge-pools">Purge Pools</a></li>
+<li><a class="reference internal" href="#set-and-purge-pools">Set and Purge Pools</a></li>
+<li><a class="reference internal" href="#add-and-purge-pools">Add and Purge Pools</a></li>
+<li><a class="reference internal" href="#delete-pools">Delete Pools</a></li>
+<li><a class="reference internal" href="#delete-pools-from-workers">Delete Pools From Workers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="rest-groups.html"
+                        title="previous chapter">Groups</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="rest-limits.html"
+                        title="next chapter">Limits</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="rest-limits.html" title="Limits"
+             >next</a></li>
+        <li class="right" >
+          <a href="rest-groups.html" title="Groups"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-rest-api.html" >RESTful HTTP API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Pools</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

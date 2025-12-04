@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Realflow &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="REDLine" href="app-redline.html" />
+    <link rel="prev" title="Python" href="app-python.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-redline.html" title="REDLine"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-python.html" title="Python"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Realflow</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="realflow">
+<span id="app-realflow-ref-label"></span><h1>Realflow<a class="headerlink" href="#realflow" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs from within RealFlow by installing the <a class="reference internal" href="#app-realflow-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a>, or you can submit them from the Monitor. The instructions for installing the <a class="reference internal" href="#app-realflow-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<p>To submit from within RealFlow 5 or later, select Commands -&gt; System Commands -&gt; SubmitToDeadline.py.</p>
+<p>To submit from within RealFlow 4, select ‘Scripts’ -&gt; ‘User Scripts’ -&gt; ‘Deadline’ -&gt; ‘Submit To Deadline’.</p>
+<a class="reference internal image-reference" href="../_images/sub_realflow.png"><img alt="../_images/sub_realflow.png" src="../_images/sub_realflow.png" style="height: 500px;" /></a>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.</p>
+<p>The Realflow specific options are:</p>
+<ul class="simple">
+<li><p><strong>RealFlow File</strong>: The scene file to be rendered.</p></li>
+<li><p><strong>Submit IDOC Jobs</strong>: Enable to submit separate IDOC jobs for each IDOC name specified. Separate multiple IDOC names with commas. For example: IDOC01,IDOC02,IDOC03.</p></li>
+<li><p><strong>Script File</strong>: Use an external batch script file (.rfs) with your simulation.</p></li>
+<li><p><strong>Graph File</strong>: Use an external RealFlow graph file (.rfg) with your simulation.</p></li>
+<li><p><strong>Start Frame</strong>: The first frame to render.</p></li>
+<li><p><strong>Start Rendering At [Start Frame - 1]</strong>: Enable this option if RealFlow rendering should start at the frame preceding the Start Frame. For example, if you are rendering frames 1-100, but you need to pass 0-100 to RealFlow, then you should enable this option.</p></li>
+<li><p><strong>End Frame</strong>: The last frame to render.</p></li>
+<li><p><strong>Use One Machine Only</strong>: Forces the entire job to be rendered on one machine. If this is enabled, the Machine Limit, Task Chunk Size and Concurrent Tasks settings will be ignored.</p></li>
+<li><p><strong>Frames Per Task</strong>: This is the number of frames that will be rendered at a time for each job task.</p></li>
+<li><p><strong>Submit RealFlow Scene</strong>: If this option is enabled, the scene file will be submitted with the job, and then copied locally to the Worker machine during rendering.</p></li>
+<li><p><strong>Version</strong>: The version of RealFlow to render with.</p></li>
+<li><p><strong>Reset Scene</strong>: If this option is enabled, the scene will be reset before the simulation starts.</p></li>
+<li><p><strong>Build</strong>: You can force 32 or 64 bit rendering with this option.</p></li>
+<li><p><strong>Generate Mesh</strong>: This option will generate the mesh for a scene where particle cache files were created previously.</p></li>
+<li><p><strong>Rendering Threads</strong>: The number of threads to use for rendering.</p></li>
+<li><p><strong>Use Particle Cache</strong>: If you have created particle cache files for a specific frame and you want to resume your simulation from that frame you have to use this option. The starting cached frame is the Start Frame entered above.</p></li>
+<li><p><strong>Render Preview</strong>: Enable this option to create a Maxwell Render preview.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the RealFlow plugin settings from the Monitor. While in power user mode, select Tools -&gt; Plugins Configuration and select the RealFlow plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_realflow.png"><img alt="../_images/cp_realflow.png" src="../_images/cp_realflow.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Realflow Executable</strong>: The path to the Realflow executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-realflow-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to install the integrated RealFlow submission script. This script allows for submitting RealFlow render jobs to Deadline directly from within the RealFlow editing GUI.</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/RealFlow/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<p><strong>RealFlow 2014 and Later</strong>:</p>
+<ul>
+<li><p>Launch RealFlow.</p></li>
+<li><dl>
+<dt>Select Tools -&gt; Shelves Manager.</dt><dd><a class="reference internal image-reference" href="../_images/realflow-shelves-manager.png"><img alt="../_images/realflow-shelves-manager.png" src="../_images/realflow-shelves-manager.png" style="height: 300px;" /></a>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Select Add a New Shelf to create a new shelf.</dt><dd><a class="reference internal image-reference" href="../_images/realflow-add-deadline-shelf.png"><img alt="../_images/realflow-add-deadline-shelf.png" src="../_images/realflow-add-deadline-shelf.png" style="height: 300px;" /></a>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Select Command Manager to open up the Command Manager.</dt><dd><a class="reference internal image-reference" href="../_images/realflow-commands-manager.png"><img alt="../_images/realflow-commands-manager.png" src="../_images/realflow-commands-manager.png" style="height: 300px;" /></a>
+</dd>
+</dl>
+</li>
+<li><p>In the Command Manager - select Add -&gt; Add New Python Script From File.</p></li>
+<li><p>In the Add Script Dialog, find the script <code class="docutils literal notranslate"><span class="pre">[Repository]\submission\RealFlow\Client\DeadlineRealFlowClient.py</span></code>. You may wish to copy this script to a local drive to improve the speed at which the submitter will open.</p></li>
+<li><p>Close the Command Manager.</p></li>
+<li><p>In the Shelves Manager add the new command DeadlineRealFlowClient to your Deadline Shelf.</p></li>
+</ul>
+<p><strong>RealFlow 5 to RealFlow 2013</strong>:</p>
+<ul>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="n">RealFlow</span>\<span class="n">Client</span>\<span class="n">DeadlineRealFlowClient</span><span class="o">.</span><span class="n">py</span> <span class="n">to</span> <span class="p">[</span><span class="n">RealFlow</span> <span class="n">Install</span> <span class="n">Directory</span><span class="p">]</span>\<span class="n">scripts</span>
+</pre></div>
+</div>
+</li>
+<li><p>Launch RealFlow.</p></li>
+<li><p>Now you can select Commands -&gt; System Commands -&gt; DeadlineRealFlowClient.py.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/realflow_submit.png"><img alt="../_images/realflow_submit.png" src="../_images/realflow_submit.png" style="height: 300px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+<p><strong>RealFlow 4</strong>:</p>
+<ul>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="n">RealFlow</span>\<span class="n">Client</span>\<span class="n">DeadlineRealFlowClient</span><span class="o">.</span><span class="n">py</span> <span class="n">to</span> <span class="p">[</span><span class="n">RealFlow</span> <span class="n">Install</span> <span class="n">Directory</span><span class="p">]</span>\<span class="n">scripts</span>
+</pre></div>
+</div>
+</li>
+<li><p>Launch RealFlow and select Scripts -&gt; Add.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/realflow_add_script.png"><img alt="../_images/realflow_add_script.png" src="../_images/realflow_add_script.png" style="height: 300px;" /></a>
+</div></blockquote>
+</li>
+<li><p>In the Add Script dialog, for the Name enter <strong>Submit To Deadline</strong>, and for the Script enter the path to the DeadlineRealFlowClient.py file that you just copied over. Then click the New Folder button and name the folder ‘Deadline’. Then select the ‘Deadline’ folder and click OK.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/realflow_add_script_dialog.png"><img alt="../_images/realflow_add_script_dialog.png" src="../_images/realflow_add_script_dialog.png" style="height: 300px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Now you can select ‘Scripts’ -&gt; ‘User Scripts’ -&gt; ‘Deadline’ -&gt; <strong>Submit To Deadline</strong> to launch the submission dialog.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-realflow-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>What versions of RealFlow are supported by Deadline?</strong></p>
+<blockquote>
+<div><p>RealFlow versions 3 and later are supported. The integrated submission script is only supported in RealFlow 4 and later. RealFlow 3 jobs can still be submitted from the Monitor.</p>
+</div></blockquote>
+<p><strong>Does rendering with RealFlow require a separate license?</strong></p>
+<blockquote>
+<div><p>Yes. You need separate command line licenses to render.</p>
+</div></blockquote>
+<p><strong>Can I render separate IDOCs from the same scene across different machines?</strong></p>
+<blockquote>
+<div><p>Yes. You can specify which IDOCs you want to render in the submitter, and a separate job will be submitted for each one.</p>
+</div></blockquote>
+<p><strong>Why is RealFlow looking for the particle cache on the local C:\ instead of on the network?</strong></p>
+<blockquote>
+<div><p>This is likely happening because you are choosing to submit the RealFlow file with the job. This means the file is copied locally to the Worker machines, which is why they are looking for the cache locally. If you disable the
+option to submit the file with the job, the Worker machines should be able to find the cache properly.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known RealFlow error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here, please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><strong>Exception during render: [RealFlow Error]: License file not found.</strong></p>
+<blockquote>
+<div><p>RealFlow requires a separate license for network rendering, and that licensing system needs to be setup before you can render through Deadline.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Realflow</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-python.html"
+                        title="previous chapter">Python</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-redline.html"
+                        title="next chapter">REDLine</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-redline.html" title="REDLine"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-python.html" title="Python"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Realflow</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

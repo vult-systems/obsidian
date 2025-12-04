@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Episode &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="FFmpeg" href="app-ffmpeg.html" />
+    <link rel="prev" title="EnergyPlus" href="app-energyplus.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-ffmpeg.html" title="FFmpeg"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-energyplus.html" title="EnergyPlus"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Episode</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="episode">
+<span id="app-episode-ref-label"></span><h1>Episode<a class="headerlink" href="#episode" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Supported for Telestream Episode is via 2 distinctly different workflows for your studio:</p>
+<ul class="simple">
+<li><p>Monitor submitter will submit an Episode encoding job per input source file (movie) or image sequence to Deadline.</p></li>
+<li><p>Monitor submitter will submit an Episode encoding job to an independent, already running Episode ‘cluster’.</p></li>
+</ul>
+</div>
+<div class="section" id="guidelines">
+<span id="app-episode-guidelines-ref-label"></span><h2>Guidelines<a class="headerlink" href="#guidelines" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Episode background processes <strong>MUST</strong> be running locally to submit an independent cluster job from the Deadline Monitor submitter. Additionally, these same Episode processes <strong>MUST</strong> be running on each Worker that performs an Episode encoding job via Deadline queue. In both cases, the Episode background processes can be started and stopped <a class="reference internal" href="#app-episode-background-processes-ref-label"><span class="std std-ref">automatically</span></a> by Deadline. The background processes must be started by <code class="docutils literal notranslate"><span class="pre">root</span></code> on macOS platform or someone with local admin rights to install a service on Windows platform. Alternatively, ensure the Episode background processes are already installed and running prior to submitting a Deadline job or independent Episode cluster job.</p></li>
+<li><p>When using the first workflow described above, Deadline Worker will apply <a class="reference internal" href="repository-config.html#mapped-path-ref-label"><span class="std std-ref">Path Mappings</span></a> to the various incoming/outgoing file paths to handle Telestream Episode executing in a mixed Windows/macOS environment.</p></li>
+<li><p>All footage should be stored on a network file server, with the exception of the encoding *.epitask file which can be optionally included with the Deadline job submission as described in the first workflow in the above overview section.</p></li>
+<li><p>When running Episode in a mixed-platform cluster, jobs requiring QuickTime are only submitted to nodes running on the same platform as the submitting node, because QuickTime does not support the same codecs across platforms.</p></li>
+<li><p>If you are using third-party QuickTime components, make sure that the same components are installed on all nodes on each platform.</p></li>
+<li><p>All computers in an Episode cluster must be on the same subnet.</p></li>
+<li><p>If you have an Episode cluster, and you are using shared storage (SAN, NAS, etc.) then you should set the file cache path to the same location on all nodes in the cluster.</p></li>
+<li><p>Make sure the ports aren’t blocked by a firewall. Episode uses ports between 40410 and 40440.</p></li>
+<li><p>Ensure you create any *.epitask file with exactly the same version of Episode that will be used to execute any encoding job.</p></li>
+</ul>
+</div>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit Telestream Episode jobs from the Monitor.</p>
+<p><a class="reference internal" href="../_images/sub_episode.png"><img alt="submitter" src="../_images/sub_episode.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_episode_adv_options.png"><img alt="episodeOptions" src="../_images/sub_episode_adv_options.png" style="height: 400px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation.</p>
+<p>The Telestream Episode specific options are:</p>
+<ul>
+<li><p><strong>Selection Method</strong>: Choose the selection method by file or by directory.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Select by Directory</strong>: Choose a root directory to scan for all supported files.</p></li>
+<li><p><strong>Select by File</strong>: Choose by individual file selection.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Input Source Directory</strong>: Choose a root directory to scan for all supported files. Multiple image sequences will be resolved at submission time to only submit the first frame of each image sequence, due to how Episode handles image sequences for encoding. Duplicate image sequence files will be de-duplicated at submission time.</p></li>
+<li><p><strong>Process Sub-Directories</strong>: Optionally choose to scan sub-directories as well for supported files.</p></li>
+<li><p><strong>Input Source File(s)</strong>: The path to the media file(s) to be encoded. It may be a media file(s) in any of the formats supported by Episode.</p></li>
+<li><p><strong>Encoder (*.epitask) File</strong>: The Episode encoder *.epitask file that will be used (required).</p></li>
+<li><p><strong>Submit Encoder File with Job</strong>: If enabled, the Encoder file will be uploaded to the Deadline Repository along with the Job (useful if the file is local). The default value is False.</p></li>
+<li><p><strong>Output Path (optional)</strong>: The output path of the encoded output. If left blank, the job will output beside the Input Source File with the default naming convention. The default value is blank.</p></li>
+<li><p><strong>Custom Output Name (optional)</strong>: Optionally, override the default output file naming convention. Built-in Episode $tokens are supported. The default value is blank.</p></li>
+<li><p><strong>Split and Stitch</strong>: If enabled, the encoder(s) will split the encoding and stitch to the final output. The default value is False. Additional split options are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Minimum Split Duration (sec)</strong>: Specify minimum duration in seconds for each split. The default value is 30.</p></li>
+<li><p><strong>Maximum Number of Video Splits</strong>: Specify maximum number of splits created. The default value is 16.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Additional CLI Arguments (optional)</strong>: Any additional command line arguments to be submitted. The default value is blank.</p></li>
+<li><p><strong>Cluster Submission</strong>: 2 options are available:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Disabled</strong>: No cluster encoding will take place. An Episode standalone job will be submitted to the Deadline queue.</p></li>
+<li><p><strong>Submit To Independent Cluster</strong>: Submit the encoding job to an existing Episode cluster on the network outside of Deadline queue. This will not submit a job to the Deadline queue.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Cluster Name (Bonjour required)</strong>: If clustering enabled, the name of the cluster that you wish to use for encoding (requires Bonjour to work).</p></li>
+<li><p><strong>Hostname / IP Address</strong>: If clustering enabled, the hostname or ip address of the cluster’s master node that you wish to submit to for encoding. (Alternative to using the Cluster Name).</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Episode plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Episode plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_episode.png"><img alt="../_images/cp_episode.png" src="../_images/cp_episode.png" style="height: 400px;" /></a>
+<p><strong>CLI Interpreter Executables</strong></p>
+<ul class="simple">
+<li><p><strong>CLI Interpreter Executable</strong>: The path to the Telestream Episode CLI Interpreter executable file used for encoding. Enter alternative paths on separate lines.</p></li>
+</ul>
+<p><strong>General Options</strong></p>
+<ul id="app-episode-background-processes-ref-label">
+<li><p><strong>Force Start Episode Processes</strong>: Enable to force start the required background Episode processes for encoding to take place. The default value is False.</p></li>
+<li><p><strong>Episode Processes List</strong>: When ‘Force Start Episode Processes’ is enabled, this is the list of Episode process names to start. By default, these processes are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>EpisodeClientProxy</p></li>
+<li><p>EpisodeAssistant</p></li>
+<li><p>EpisodeIOServer</p></li>
+<li><p>EpisodeXMLRPCServer</p></li>
+<li><p>EpisodeNode</p></li>
+<li><p>EpisodeJSONRPCServer</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Max Time To Wait for Initialization</strong>: If ‘Force Start Episode Processes’ is enabled, this is the max time to wait for initialization of background Episode processes in seconds. (Default: 5 seconds).</p></li>
+<li><p><strong>Demo Version</strong>: Enable if you are using the demo version of Episode. A watermark will be applied automatically by Episode. The default value is False.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-episode-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Is Episode supported by Deadline?</strong></p>
+<blockquote>
+<div><p>Yes.</p>
+</div></blockquote>
+<p><strong>Can I submit on macOS and encode on Windows with Episode or vice-versa?</strong></p>
+<blockquote>
+<div><p>Yes, Deadline supports this workflow in terms of job submission and execution across the 2 platforms that the Episode application supports. However, please see our <a class="reference internal" href="#app-episode-guidelines-ref-label"><span class="std std-ref">Guidelines</span></a> section which highlights a number of limitations due to codec support.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Episode error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><strong>STDOUT: *** Error: Failed to open file file:/Z%3a/H264%20MOV%20640x360.epitask (The system cannot find the path specified.)</strong></p>
+<blockquote>
+<div><p>On Windows only, Episode uses Bonjour and can’t use a mapped drive or a local drive letter for a network share. One option is to configure Episode “Named Storage” paths on Windows. UNC file paths are currently broken in Episode 7.4 on Windows.</p>
+</div></blockquote>
+<p><strong>STDOUT: *** Error: Not connected to local IOServer, unable to share</strong></p>
+<blockquote>
+<div><p>The local Episode IOServer service/daemon is unavailable for connection. Ensure you start the Episode IOServer service/daemon on the Worker machine either via <code class="docutils literal notranslate"><span class="pre">root</span></code> user account or use the Plugin Configuration settings to force start the Episode processes (requiring <code class="docutils literal notranslate"><span class="pre">root</span></code> user account).</p>
+</div></blockquote>
+<p><strong>STDOUT: *** Error: Failed to connect to ClientProxy</strong></p>
+<blockquote>
+<div><p>The Episode processes are not running on the Worker machine. Please start the services on the Worker machine either via <code class="docutils literal notranslate"><span class="pre">root</span></code> user account or use the Plugin Configuration settings to force start the Episode processes (requiring <code class="docutils literal notranslate"><span class="pre">root</span></code> user account).</p>
+</div></blockquote>
+<p><strong>Error submitting Episode job: *** Error: Unknown component: filter chmp</strong></p>
+<blockquote>
+<div><p>If the Episode background processes are not running, then you will see the above error. For an Episode job to be successfully submitted to an existing standalone Episode cluster or for a Deadline Worker to process the Episode job locally, the Episode background processes must be already running on this submitting machine. Episode interaction is automatically executed by Deadline via the <code class="docutils literal notranslate"><span class="pre">episodectl</span></code> binary executable which has a limitation that it must be run as <code class="docutils literal notranslate"><span class="pre">root</span></code> or with a user account with <code class="docutils literal notranslate"><span class="pre">sudo</span></code> permissions to execute.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Episode</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#guidelines">Guidelines</a></li>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-energyplus.html"
+                        title="previous chapter">EnergyPlus</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-ffmpeg.html"
+                        title="next chapter">FFmpeg</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-ffmpeg.html" title="FFmpeg"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-energyplus.html" title="EnergyPlus"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Episode</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

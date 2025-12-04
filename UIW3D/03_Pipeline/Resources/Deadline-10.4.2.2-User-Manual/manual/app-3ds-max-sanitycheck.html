@@ -1,0 +1,1115 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3ds Max - Integrated Submitter - Sanity Check &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3ds Max - Integrated Submitter - Advanced Features" href="app-3ds-max-smtd-advanced.html" />
+    <link rel="prev" title="3ds Max - Integrated Submitter" href="app-3ds-max-smtd.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-3ds-max-smtd-advanced.html" title="3ds Max - Integrated Submitter - Advanced Features"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-3ds-max-smtd.html" title="3ds Max - Integrated Submitter"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Max - Integrated Submitter - Sanity Check</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ds-max-integrated-submitter-sanity-check">
+<span id="dsmax-sanity-check-ref-label"></span><h1>3ds Max - Integrated Submitter - Sanity Check<a class="headerlink" href="#ds-max-integrated-submitter-sanity-check" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
+<li><p><a class="reference internal" href="#the-error-report" id="id2">The Error Report</a></p>
+<ul>
+<li><p><a class="reference internal" href="#repairing-errors" id="id3">Repairing Errors</a></p></li>
+<li><p><a class="reference internal" href="#updating-the-error-report" id="id4">Updating the Error Report</a></p></li>
+<li><p><a class="reference internal" href="#fatal-sanity-checks" id="id5">FATAL Sanity Checks</a></p></li>
+<li><p><a class="reference internal" href="#can-be-fixed-sanity-checks" id="id6">Can Be Fixed Sanity Checks</a></p></li>
+<li><p><a class="reference internal" href="#warnings" id="id7">Warnings</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#defining-private-sanity-checks" id="id8">Defining Private Sanity Checks</a></p>
+<ul>
+<li><p><a class="reference internal" href="#general-vs-private-checks" id="id9">General vs. Private Checks</a></p></li>
+<li><p><a class="reference internal" href="#the-sanity-check-definition-array" id="id10">The Sanity Check Definition Array</a></p></li>
+<li><p><a class="reference internal" href="#adding-a-new-private-check" id="id11">Adding A New Private Check</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="overview">
+<h2><a class="toc-backref" href="#contents">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The 3ds Max Sanity Check script is part of the “Submit Max To Deadline” (SMTD) integrated submitter.</p>
+<p>It defines a set of functions to be called to ensure that the scene submission does not contain typical errors like wrong render view and frame range settings, incorrect output path, etc.</p>
+<ul class="simple">
+<li><p>The Sanity Check is enabled by the <strong>Run Sanity Check Automatically Before Submission</strong> checkbox in the bottom part of the SMTD UI.</p></li>
+<li><p>You can also run the Sanity Check manually by clicking the <strong>Run Sanity Check Now!</strong> button located next to the checkbox.</p></li>
+</ul>
+<img alt="../_images/sanity_checker.png" src="../_images/sanity_checker.png" />
+<p>The dialog contains the following elements:</p>
+<ul class="simple">
+<li><p>The upper area (<strong>Error Report</strong>) lists the problems found in the current scene.</p></li>
+<li><p>The lower area (<strong>Feedback Messages</strong>) lists the actions the Sanity Check performs and gives feedback to the user. The latest message is always on top.</p></li>
+<li><p>Between the two areas, there is a summary text line listing the total number of errors and a color indicator of the current Sanity Check state. When red, the Sanity Check will not allow a job submission to be performed.</p></li>
+</ul>
+</div>
+<div class="section" id="the-error-report">
+<h2><a class="toc-backref" href="#contents">The Error Report</a><a class="headerlink" href="#the-error-report" title="Permalink to this headline">¶</a></h2>
+<p>The left column of the Error Report displays a checkbox and the type of the error. The checkbox determines whether the error will be taken into account by the final result of the check. Currently, there are 3 types of errors:</p>
+<ul class="simple">
+<li><p><strong>FATAL</strong>: The error cannot be fixed automatically and requires manual changes to the scene itself. A job submission with such an error would be pointless. The state of the checkbox is ignored and considered always checked.</p></li>
+<li><p><strong>Can Be Fixed</strong>: The error can be fixed automatically or manually. If the checkbox is active, the error contributes to the final result. If unchecked, the error is ignored and handled as a warning.</p></li>
+<li><p><strong>Warning</strong>: The problem might not require fixing, but could be of importance to the user. It is not taken into account by the final result (the state of the checkbox is ignored and considered always unchecked).</p></li>
+</ul>
+<div class="section" id="repairing-errors">
+<h3><a class="toc-backref" href="#contents">Repairing Errors</a><a class="headerlink" href="#repairing-errors" title="Permalink to this headline">¶</a></h3>
+<p>Right-clicking an Error Message in the Error Report window will cause an associated repair function to be executed and/or a Report Message to be output in the Feedback Messages window.</p>
+</div>
+<div class="section" id="updating-the-error-report">
+<h3><a class="toc-backref" href="#contents">Updating the Error Report</a><a class="headerlink" href="#updating-the-error-report" title="Permalink to this headline">¶</a></h3>
+<p>You can re-run/update the Sanity Check in one of the following ways:</p>
+<ul class="simple">
+<li><p>Clicking the dialog anywhere outside of the two message areas will rerun the Sanity Check and update all messages.</p></li>
+<li><p>Double-clicking any Message in the Feedback Messages window will rerun the Sanity Check and update all messages.</p></li>
+<li><p>Repairing an error by double-clicking will also automatically rerun the Sanity Check</p></li>
+<li><p>Pressing the Run Now! button in the Submit To Deadline dialog will update the Sanity Check.</p></li>
+</ul>
+</div>
+<div class="section" id="fatal-sanity-checks">
+<h3><a class="toc-backref" href="#contents">FATAL Sanity Checks</a><a class="headerlink" href="#fatal-sanity-checks" title="Permalink to this headline">¶</a></h3>
+<p>These are errors that must be fixed manually before the job can be submitted.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Message</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Fix</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>The scene does not contain
+ANY objects!</p></td>
+<td><p>The scene is empty and should
+not be sent to Deadline.</p></td>
+<td><p>Load a valid scene or create/
+merge objects, then try again.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Maxwell is the renderer and
+the current view is NOT a
+Camera.</p></td>
+<td><p>Maxwell renderer must render
+through an actual camera and
+will fail through a viewport.</p></td>
+<td><p>Double-click the error message
+to open a Select By Name
+dialog to pick a camera for
+the current viewport.</p></td>
+</tr>
+<tr class="row-even"><td><p>The scene contains objects or
+groups with the same name as a
+camera!</p></td>
+<td><p>The scene contains objects or
+groups with a duplicate name
+to a camera which could result
+in an incorrect object being
+used as the camera.</p></td>
+<td><p>Ensure you remove any
+duplicate named objects from
+your scene.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Maxwell is the renderer and
+the Render Time Output is set
+to a SINGLE FRAME! (Check
+is currently disabled in SMTD)</p></td>
+<td><p>Maxwell has an issue with
+single frame rendering.</p></td>
+<td><p>Double-click the error message
+will change the Rendering
+Output Time to animation with
+just the current frame.</p></td>
+</tr>
+<tr class="row-even"><td><p>Render Output Path length
+exceeds 255 characters!</p></td>
+<td><p>Ensure the render output file
+save path is less than 255
+characters in length.</p></td>
+<td><p>Double-click the error message
+will open the Render Scene
+Dialog for you to manually
+shorten the path length.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Render Elements Output Path
+length exceeds 255 characters!</p></td>
+<td><p>Ensure any Render Element file
+save path lengths are less
+than 255 characters in length.</p></td>
+<td><p>Double-click the error message
+will open the Render Scene
+Dialog for you to manually
+shorten the RE path length.</p></td>
+</tr>
+<tr class="row-even"><td><p>Duplicate Render Elements
+saving to same File Found!</p></td>
+<td><p>1 or more Render Elements are
+saving to an identical file
+path and file name.</p></td>
+<td><p>Double-click the error message
+will open the Render Scene
+Dialog for you to manually
+resolve the duplication.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Scene Object(s) contain names
+&gt; 255 characters!</p></td>
+<td><p>1 or more objects in the scene
+has an object name which is
+greater than 255 characters in
+length, which will crash Max.</p></td>
+<td><p>Shorten the character length
+of all the objects in your
+scene to ensure stability.</p></td>
+</tr>
+<tr class="row-even"><td><p>Corrupt Group(s) detected
+in your Scene!</p></td>
+<td><p>One or more objects in your
+scene are a group head but
+have no child members!</p></td>
+<td><p>Double-click the error message
+to automatically have these
+corrupt nodes deleted from the
+scene. Results are printed to
+the Sanity Check Window.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Multi-Region Rendering
+Requested, But No Active
+Regions Found!</p></td>
+<td><p>Jigsaw Multi-Region Rendering
+has been enabled, but there
+are NO active regions enabled
+in the SMTD Tiles Tab UI.</p></td>
+<td><p>Ensure at least 1 region is
+active in the Jigsaw Multi-
+Region Rendering UI in the
+Tiles tab of SMTD.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>V-Ray Save Raw Image File is
+Enabled, but Raw Image File
+Path is Empty!</p></td>
+<td><p>V-Ray VFB Save Raw Image File
+is enabled but NO save file
+path has been declared!</p></td>
+<td><p>Double-click the error message
+will open the Render Scene
+Dialog for you to manually
+enter a valid file save path.</p></td>
+</tr>
+<tr class="row-even"><td><p>V-Ray Save Separate Render
+Channels is Enabled, but
+Separate Render Channels File
+Path is Empty!</p></td>
+<td><p>V-Ray VFB Save Separate Render
+Channels is Enabled, but NO
+save file path has been
+declared!</p></td>
+<td><p>Double-click the error message
+will open the Render Scene
+Dialog for you to manually
+enter a valid file save path.</p></td>
+</tr>
+<tr class="row-odd"><td><p>V-Ray VFB - [Region render]
+button should be Disabled!</p></td>
+<td><p>V-Ray VFB [Region render] must
+be disabled for network
+rendering.</p></td>
+<td><p>Double-click the error message
+will disable the [Region
+render] button in the VFB.</p></td>
+</tr>
+<tr class="row-even"><td><p>V-Ray VFB - [Track mouse while
+rendering] button should be
+Disabled!</p></td>
+<td><p>V-Ray VFB [Track mouse while
+rendering] button must be
+disabled for network
+rendering.</p></td>
+<td><p>Double-click the error message
+will disable the [Track mouse
+while rendering] button in the
+VFB.</p></td>
+</tr>
+<tr class="row-odd"><td><p>V-Ray RE:[Alpha,Reflection,
+Refraction] or [Save alpha]
+requires Draft Tile Assembler.
+NOT supported with TA.</p></td>
+<td><p>When using Jigsaw SingleFrame
+Tile Rendering with V-Ray RE’s
+such as Alpha, Reflection,
+Refraction OR [Save alpha] via
+the VFB, ensure you use Draft
+Tile Assembler which is able
+to support the higher bit
+depths created by these RE’s.</p></td>
+<td><p>Double-click the error message
+will enable Draft as the Tile
+Assembler.</p></td>
+</tr>
+<tr class="row-even"><td><p>V-Ray VFB - Render Region is
+outside the bounds of the
+current render resolution!</p></td>
+<td><p>V-Ray VFB [Region Render] size
+is currently beyond the coords
+of the current render
+resolution.</p></td>
+<td><p>Double-click the error message
+will disable the [Region
+render] button in the VFB.</p></td>
+</tr>
+<tr class="row-odd"><td><p>V-Ray - AA Render mask
+selection is currently invalid,
+which will cause the render to
+hang!</p></td>
+<td><p>V-Ray Image Sampler (AA)
+‘Render mask’ selection is
+currently empty or invalid
+which will cause the render
+to hang once submitted.</p></td>
+<td><p>Ensure a valid ‘Render mask’
+selection is used prior to
+submitting the job to
+Deadline.</p></td>
+</tr>
+<tr class="row-even"><td><p>‘Select GPU Devices’ syntax is
+invalid! Trailing ‘commas’ if
+present, should be removed.</p></td>
+<td><p>Trailing ‘commas’ should be
+removed. Valid Examples: 0 or
+2 or 0,1,2 or 0,3,4 etc.</p></td>
+<td><p>Ensure GPU syntax is valid as
+entered in the ‘Select GPU
+Devices’ text field.</p></td>
+</tr>
+<tr class="row-odd"><td><p>If using ‘Select GPU Devices’,
+then ‘Concurrent Tasks’ must
+be set to 1!</p></td>
+<td><p>Due to Task to GPU device ID
+mapping, ensure Concurrent
+Tasks is set to 1 if using
+‘Select GPU Devices’ option.</p></td>
+<td><p>Double-click the error message
+to set Concurrent Tasks to 1.</p></td>
+</tr>
+<tr class="row-even"><td><p>At least one camera name has
+whitespace, newline, or tab at
+start/end of camera name.</p></td>
+<td><p>One or more cameras in the
+scene have ‘bad’ characters at
+the start or end of the camera
+name which will cause the
+camera to be ‘undefined’ at
+render time.</p></td>
+<td><p>Double-click the error message
+to trim any bad characters
+from each identified camera.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="can-be-fixed-sanity-checks">
+<h3><a class="toc-backref" href="#contents">Can Be Fixed Sanity Checks</a><a class="headerlink" href="#can-be-fixed-sanity-checks" title="Permalink to this headline">¶</a></h3>
+<p>The following Sanity Checks can be fixed automatically by right-clicking the message before the job is submitted.</p>
+<p>You can also ignore each message without fixing the cause for the issue by unchecking the checkbox in front of it.
+This is useful in cases where the Sanity Check is too conservative and reporting a setting that is intentional (e.g. single frame rendering).</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Message</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Fix</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>The current Scene Name is
+Untitled.</p></td>
+<td><p>The scene has never been saved
+to a MAX file.</p>
+<p>While it is possible to submit
+an untitled scene to Deadline,
+it is not a good practice.</p>
+</td>
+<td><p>Double-click the error message
+to open a Save As dialog and
+save to disk.</p></td>
+</tr>
+<tr class="row-odd"><td><p>The current view is NOT a
+camera.</p></td>
+<td><p>The active viewport is not a
+camera viewport.</p></td>
+<td><p>Double-click the error message
+to open a Select By Name
+dialog to pick a camera for
+the current viewport.</p></td>
+</tr>
+<tr class="row-even"><td><p>The Render Time Output is set
+to SINGLE FRAME!</p></td>
+<td><p>While it is ok to send a
+single frame to Deadline,
+users are sending animations
+99% of the cases.</p></td>
+<td><p>Double-click the error message
+to set the Render Time Output
+to “Active Time Segment:. The
+Render Dialog will open so you
+can check the options and set
+to Range or Frames instead.</p></td>
+</tr>
+<tr class="row-odd"><td><p>The Render Output Path appears
+to point at a LOCAL DRIVE!</p></td>
+<td><p>While it is technically
+possible to save locally on
+each Worker, this is a bad
+idea
+- all Workers should write
+their output to a central
+location on the network.
+Currently, disks C:, D: and E:
+are considered local and will
+be tested against the output
+path.</p></td>
+<td><p>Double-click the error message
+to open the Render Dialog and</p>
+<p>select a valid path, then
+double-click again to retest.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>The Render Output File Name
+ends with a DIGIT - trailing
+numbers might fail.</p></td>
+<td><p>The Name to be saved to ends
+with one, two or three digits.
+Rendering to this file name
+will append 4 more digits and
+make loading sequential files
+in other applications hard or
+impossible. This check is
+performed only when the type
+is not AVI or MOV and will
+ignore 4 trailing digits which
+will be replaced by 3dsmax
+correctly when rendering to
+sequential files.</p></td>
+<td><p>Double-click the error message
+to add an underscore _ to the
+end of the file name, for
+example z:\temp\test123.tga
+will be changed to
+z:\temp\test123_.tga</p></td>
+</tr>
+<tr class="row-odd"><td><p>The Render Output will not be
+saved to a file.</p></td>
+<td><p>No renders will be saved as
+Render Scene Dialog checkbox
+is currently disabled.</p></td>
+<td><p>Double-click the error message
+to open the Render Dialog and
+to enable the Save File
+checkbox.</p></td>
+</tr>
+<tr class="row-even"><td><p>The Distributed Rendering
+option is enabled for this
+renderer.</p></td>
+<td><p>Check if Distributed Rendering
+is enabled for MR or V-Ray
+renderer.</p></td>
+<td><p>Double-click the error message
+to disable Distributed
+rendering.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Workstation Mode must be
+enabled to use V-Ray
+Distributed Rendering (via
+3dsmax plugin).</p></td>
+<td><p>3dsMax must use a workstation
+license to allow Distributed
+Rendering to work, when it is
+being offloaded onto the farm.</p></td>
+<td><p>Double-click the error message
+and Workstation Mode will be
+enabled in SMTD.</p></td>
+</tr>
+<tr class="row-even"><td><p>The Render Time Output is NOT
+set to single frame, and
+Remove Filename Padding is
+enabled!</p></td>
+<td><p>When rendering animations, you
+should allow filename padding
+to ensure an image sequence
+is created during rendering.</p></td>
+<td><p>Double-click the error message
+will change the Rendering
+Output Time to SINGLE FRAME.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>The current Renderer is
+Krakatoa and Particle Cache is
+ON!</p></td>
+<td><p>Particle and Lighting Cache
+should be disabled during SMTD
+submission to Deadline queue.</p></td>
+<td><p>Double-click the error message
+to set the PCache &amp; LCache to
+be disabled.</p></td>
+</tr>
+<tr class="row-even"><td><p>One or more Render Element
+Save File Paths are EMPTY!
+(V-Ray? - Disable the
+Individual RE)</p></td>
+<td><p>Ensure that a Render Element
+Output File has been selected
+for each Render Element! If
+using V-Ray Frame Buffer and
+ALL RE’s have been Disabled,
+then IGNORE this Sanity Check!</p></td>
+<td><p>Double-click the error message
+will open the Render Scene
+Dialog for you to manually
+resolve the issue or it can be
+safely ignored.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Camera Match Background
+Image(s) in your Scene.
+Right-click to REMOVE these
+ref. bitmaps!</p></td>
+<td><p>Surplus camera match bkgrd
+images in your scene cause
+unnecessary bitmap refs. in
+your scene file.</p></td>
+<td><p>Double-click the error message
+will delete any background
+image in ALL cameras in your
+scene file.</p></td>
+</tr>
+<tr class="row-even"><td><p>Alpha Channel will NOT be
+stored if saving *.tga file
+&#64; 16/24bit depth! Select 32bit
+for Alpha!</p></td>
+<td><p>Ensure you select 32bit in the
+TGA image plugin file format
+options to ensure an alpha
+channel is stored in the TGA
+file.</p></td>
+<td><p>Double-click the error message
+will open the Render Scene
+Dialog for you to manually
+configure the bit depth of the
+TGA image file to be saved.</p></td>
+</tr>
+<tr class="row-odd"><td><p>V-Ray IMAP File (*.vrmap) set
+to ‘From File’ is missing /
+invalid file path!</p></td>
+<td><p>V-Ray GI tab, IMAP File is
+either missing or set to an
+invalid file path.</p></td>
+<td><p>Double-click the error message
+will open the Render Scene
+Dialog for you to manually
+enter a valid file save path.</p></td>
+</tr>
+<tr class="row-even"><td><p>V-Ray Photon File (*.vrpmap)
+set to ‘From File’ is missing /
+invalid file path!</p></td>
+<td><p>V-Ray GI tab, Photon File is
+either missing or set to an
+invalid file path.</p></td>
+<td><p>Double-click the error message
+will open the Render Scene
+Dialog for you to manually
+enter a valid file save path.</p></td>
+</tr>
+<tr class="row-odd"><td><p>V-Ray LC File (*.vrlmap) set
+to ‘From File’ is missing /
+invalid file path!</p></td>
+<td><p>V-Ray GI tab, LC File is
+either missing or set to an
+invalid file path.</p></td>
+<td><p>Double-click the error message
+will open the Render Scene
+Dialog for you to manually
+enter a valid file save path.</p></td>
+</tr>
+<tr class="row-even"><td><p>V-Ray Caustics File (*.vrpmap)
+set to ‘From File’ is missing /
+invalid file path!</p></td>
+<td><p>V-Ray GI tab, Caustics File is
+either missing or set to an
+invalid file path.</p></td>
+<td><p>Double-click the error message
+will open the Render Scene
+Dialog for you to manually
+enter a valid file save path.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Current Scene is Rendering in
+Active Shade Mode. Are you sure
+you want to Submit?</p></td>
+<td><p>Render Scene Dialog is set to
+Active Shade Mode currently,
+which is unsupported.</p></td>
+<td><p>Double-click the error message
+will set #Production renderer
+as the current scene renderer.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>FumeFX Sim Job? - Disable
+Progress Timeout MUST be
+ENABLED!</p></td>
+<td><p>FumeFX node(s) are configured
+to simulate in this job, so
+Deadline’s Progress Update
+Timeout should be disabled.</p></td>
+<td><p>Double-click the error message
+will check the ‘Disable
+Progress Update Timeout’
+checkbox in ‘Render’ tab.</p></td>
+</tr>
+<tr class="row-even"><td><p>FumeFX - Sim Jobs ONLY need to
+be a SINGLE FRAME (ALL Frames
+will be Simulated)</p></td>
+<td><p>FumeFX node(s) are configured
+to simulate in this job, so
+3ds Max Render Time should be
+set to SINGLE FRAME only.</p></td>
+<td><p>Double-click the error message
+will automatically change the
+current Render Time Output to
+Single Frame.</p></td>
+</tr>
+<tr class="row-odd"><td><p>FumeFX - Sim Jobs MUST have a
+MACHINE LIMIT = 1 (RUN only on
+1 machine)</p></td>
+<td><p>FumeFX node(s) are configured
+to simulate in this job, so
+Deadline’s Machine Limit must
+be set to 1 (run on 1 Worker).</p></td>
+<td><p>Double-click the error message
+will automatically change the
+SMTD Machine Limit to enabled
+and set to 1 Worker only.</p></td>
+</tr>
+<tr class="row-even"><td><p>V-Ray DBR off-load requires
+WORKSTATION mode to be ENABLED.
+[Use 3dsCmd Plugin] to avoid!</p></td>
+<td><p>Off-load V-Ray DBR requires a
+workstation license for the
+first task (MASTER machine).
+Avoid this by submitting to
+the 3dsCmd plugin instead.</p></td>
+<td><p>Double-click the error message
+will automatically enable the
+the [Use 3dsCmd Plugin]
+checkbox in SMTD -&gt; render
+tab.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Render output file already has
+a delimiter in it!</p></td>
+<td><p>Main render output filename &amp;
+path contains “..”. Possibly
+due to Delimiter set in
+Defaults ini file.</p></td>
+<td><p>Double-click the error message
+to remove the extra delimiter
+from render output filename.</p></td>
+</tr>
+<tr class="row-even"><td><p>V-Ray raw image file [DUPLICATE
+DOT] delimiter/user entered</p></td>
+<td><p>V-Ray RAW image filename has
+duplicate “..”. Possibly due
+to Delimiter set in Defaults
+ini file.</p></td>
+<td><p>Double-click the error message
+to remove the extra delimiter
+from V-Ray RAW image filename.</p></td>
+</tr>
+<tr class="row-odd"><td><p>V-Ray raw image file [DUPLICATE
+DOT] fileName_addDot/user
+entered</p></td>
+<td><p>V-Ray RAW image filename has
+duplicate “..”. Possibly due
+to V-Ray’s own addDot option
+in RAW File Browser Dialog.</p></td>
+<td><p>Double-click the error message
+to remove the extra delimiter
+from V-Ray RAW image filename.</p></td>
+</tr>
+<tr class="row-even"><td><p>V-Ray separate render channel
+files already have a delimiter
+in them!</p></td>
+<td><p>V-Ray separate render channel
+filename has duplicate “..”.
+Possibly due to Delimiter set
+in Defaults ini file.</p></td>
+<td><p>Double-click the error message
+to remove the extra delimiter
+from V-Ray separate render
+channel image filename.</p></td>
+</tr>
+<tr class="row-odd"><td><p>At least one render element
+output file already has a
+delimiter in it!</p></td>
+<td><p>One or more V-Ray Render
+Elements contain a duplicate
+“..” in their image filename.</p></td>
+<td><p>Double-click the error message
+to remove the extra delimiter
+from all V-Ray Render Element
+filenames.</p></td>
+</tr>
+<tr class="row-even"><td><p>Render Elements may overwrite
+each other as file paths may
+NOT be unique! Check!</p></td>
+<td><p>1 or more Render Elements are
+destined to save to an
+identical file path and file
+name.</p></td>
+<td><p>Ensure at least one ‘Include’
+RE checkbox option is enabled
+in SMTD -&gt; Render -&gt; 3ds Max
+Pathing.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Corona VFB - [Region render]
+button might need to be
+Disabled!</p></td>
+<td><p>Corona [Region render] might
+need to be disabled for the
+correct render to be produced?</p></td>
+<td><p>Double-click the error message
+will disable the [Region
+render] button in the VFB.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="warnings">
+<h3><a class="toc-backref" href="#contents">Warnings</a><a class="headerlink" href="#warnings" title="Permalink to this headline">¶</a></h3>
+<p>The following Sanity Check messages are simply warnings which do not affect the ability to submit the job.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Message</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Fix</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>The Render Output Path is NOT
+DEFINED!</p></td>
+<td><p>No frames will be saved to
+disk. This is allowed if you
+want to output render elements
+only.</p></td>
+<td><p>Double-click the error message
+to open the Render Dialog and
+select a valid path, then
+double-click again to retest.</p></td>
+</tr>
+<tr class="row-odd"><td><p>The Render Output is set to a
+MOVIE format.</p></td>
+<td><p>The file extension is set to
+an AVI or MOV format.</p>
+<p>In the current version of
+Deadline, this would result in
+a sequence of single frame MOV
+files rendered by separate
+Workers. In the future, the
+behaviour might be changed to
+render a single MOV or AVI
+file on a single Worker as one
+Task.</p>
+</td>
+<td><p>Double-click the error message
+to open the Render Dialog and
+select a single frame output
+format, then double-click
+again to retest.</p></td>
+</tr>
+<tr class="row-even"><td><p>Not rendering final image (GI)
+so Restart Renderer should be
+disabled, and Machine Limit
+set to 1.</p></td>
+<td><p>“Don’t render final image” is
+enabled, so Restart Renderer
+and Machine Limit should be
+set to 1 in SMTD.</p></td>
+<td><p>Double-click the error message
+and Restart Renderer will be
+disabled and Machine Limit
+enabled and set to 1 in SMTD.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Restart Renderer Between
+Frames is disabled and V-Ray
+or Brazil is the selected
+renderer.</p></td>
+<td><p>V-Ray &amp; Brazil renderers need
+Restart Renderer to be enabled
+to ensure memory levels are
+purged during rendering.</p></td>
+<td><p>Double-click the error message
+to enable Restart Renderer in
+the SMTD settings.</p></td>
+</tr>
+<tr class="row-even"><td><p>Viewport is currently locked,
+which can result in incorrect
+renders with Deadline.</p></td>
+<td><p>The locked viewport setting in
+3dsMax 2009-2014 is ignored in
+the SDK but is fixed in 3dsMax
+2015 onwards.</p></td>
+<td><p>Double-click the error message
+to disable the Locked Viewport
+(padlock) in the Render Scene
+Dialog.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Tile Rendering is enabled and
+the V-Ray VFB is currently on.</p></td>
+<td><p>Unexpected results can occur
+when the V-Ray VFB is enabled
+and you are Tile Rendering.
+Consider where any Render
+Elements may be saving to,
+including the use of the VFB
+Split Channels and RAW output.</p></td>
+<td><p>Double-click the error message
+to disable the V-Ray VFB
+output checkbox.</p></td>
+</tr>
+<tr class="row-even"><td><p>V-Ray VFB Enabled - 3ds Max
+‘Render Elements’ will NOT
+save. This may be as intended?</p></td>
+<td><p>No render elements will be
+saved if V-Ray’s VFB is
+enabled and the ‘Split render
+channels’ option is disabled.</p></td>
+<td><p>Double-click the error message
+to disable the V-Ray VFB
+output checkbox or ignore this
+message as this setup may be
+as you intended.</p></td>
+</tr>
+</tbody>
+</table>
+<p>This list will be extended to include future checks and can be edited by 3rd parties by adding new definitions and functions to the original script.
+Please email suggestions for enhancements and additional test cases to <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a>.</p>
+</div>
+</div>
+<div class="section" id="defining-private-sanity-checks">
+<h2><a class="toc-backref" href="#contents">Defining Private Sanity Checks</a><a class="headerlink" href="#defining-private-sanity-checks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="general-vs-private-checks">
+<h3><a class="toc-backref" href="#contents">General vs. Private Checks</a><a class="headerlink" href="#general-vs-private-checks" title="Permalink to this headline">¶</a></h3>
+<p>The Sanity Check consists of two sets of check and repair functions definitions - a General set, and a Private set.</p>
+<ul class="simple">
+<li><p>The file <em>SubmitMaxToDeadline_SanityCheck_General.ms</em> located in the Repository’s <em>submission3dsmaxMain</em> subfolder contains the definitions of the General functions.</p>
+<ul>
+<li><p>This file will be updated by the Deadline Repository installer when new versions of the software are installed on top of existing ones.</p></li>
+</ul>
+</li>
+<li><p>The file <em>SubmitMaxToDeadline_SanityCheck_Private.ms</em> located in the Repository’s <em>submission3dsmaxMain</em> subfolder contains the definitions of the Private functions.</p>
+<ul>
+<li><p>This file <strong>will not be updated</strong> by the Deadline Repository installer when new versions of the software are installed on top of existing ones.</p></li>
+<li><p>It will only be created if it does not exist yet (new installation, or it was deleted manually).</p></li>
+<li><p>This means that any changes made to the Private definitions will be preserved between Deadline minor version updates.</p></li>
+<li><p>When switching to a new major version, the existing Private definitions file will have to be copied over manually.</p></li>
+</ul>
+</li>
+<li><p>Upon launch, SMTD will merge the array of Private definitions with the array of General definitions, and the Sanity Check will process both as one set of rules.</p></li>
+</ul>
+</div>
+<div class="section" id="the-sanity-check-definition-array">
+<h3><a class="toc-backref" href="#contents">The Sanity Check Definition Array</a><a class="headerlink" href="#the-sanity-check-definition-array" title="Permalink to this headline">¶</a></h3>
+<p>The Private Sanity Checks file looks like this when first installed:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-----------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="o">--</span><span class="n">THIS</span> <span class="n">FILE</span> <span class="n">CONTAINS</span> <span class="n">YOUR</span> <span class="n">USER</span><span class="o">-</span><span class="n">DEFINED</span> <span class="n">CHECKS</span> <span class="n">TO</span> <span class="n">BE</span> <span class="n">PERFORMED</span> <span class="n">AND</span> <span class="n">THE</span> <span class="n">FUNCTIONS</span>
+<span class="o">--</span><span class="n">TO</span> <span class="n">BE</span> <span class="n">USED</span> <span class="n">TO</span> <span class="n">CHECK</span> <span class="n">AND</span> <span class="n">REPAIR</span> <span class="n">THE</span> <span class="n">SCENE</span> <span class="n">BEFORE</span> <span class="n">SUBMISSION</span>
+<span class="o">-----------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="o">--</span><span class="n">THIS</span> <span class="n">FILE</span> <span class="n">WILL</span> <span class="o">**</span><span class="n">NOT</span><span class="o">**</span> <span class="n">BE</span> <span class="n">UPDATED</span> <span class="n">AUTOMATICALLY</span> <span class="n">BY</span> <span class="n">THINKBOX</span> <span class="n">SOFTWARE</span> <span class="n">INC</span>
+<span class="o">--</span><span class="n">AND</span> <span class="n">SHOULD</span> <span class="n">BE</span> <span class="n">USED</span> <span class="n">FOR</span> <span class="n">YOUR</span> <span class="n">IN</span><span class="o">-</span><span class="n">HOUSE</span> <span class="n">NEEDS</span><span class="o">.</span>
+<span class="o">-----------------------------------------------------------------------------------------------------------------------------------------------</span>
+
+<span class="p">(</span>
+<span class="k">global</span> <span class="n">SMTD_Private_SanityCheckFunctions</span>
+<span class="k">global</span> <span class="n">SMTD_Private_SanityChecksToPerform</span>
+<span class="k">global</span> <span class="n">SMTD_Private_RepairFunctions</span>
+
+<span class="k">global</span> <span class="n">SMTD_RepairFunctions</span>
+<span class="k">global</span> <span class="n">SMTD_SanityChecksToPerform</span>
+<span class="k">global</span> <span class="n">SMTD_SanityCheckFunctions</span>
+
+<span class="n">struct</span> <span class="n">SMTD_Private_SanityCheckFunctions</span>
+<span class="p">(</span>
+    <span class="n">fn</span> <span class="n">Blank</span> <span class="o">=</span>
+    <span class="p">(</span>
+    <span class="p">)</span>
+<span class="p">)</span><span class="o">--</span><span class="n">end</span> <span class="n">struct</span>
+
+
+<span class="n">struct</span> <span class="n">SMTD_Private_RepairFunctions</span>
+<span class="p">(</span>
+    <span class="n">fn</span> <span class="n">Blank</span> <span class="o">=</span>
+    <span class="p">(</span>
+    <span class="p">)</span>
+<span class="p">)</span><span class="o">--</span><span class="n">end</span> <span class="n">struct</span>
+
+
+<span class="o">------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="o">--</span><span class="n">SANITY</span> <span class="n">CHECK</span> <span class="n">PRIVATE</span> <span class="n">DEFINITIONS</span>
+<span class="o">------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+
+<span class="n">SMTD_Private_SanityChecksToPerform</span> <span class="o">=</span> <span class="c1">#(</span>
+
+<span class="p">)</span><span class="o">--</span><span class="n">end</span> <span class="n">checks</span> <span class="n">array</span>
+
+<span class="p">)</span><span class="o">--</span><span class="n">End</span> <span class="n">File</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>The file contains</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Some global variable definitions,</p></li>
+<li><p>Two structs with blank place-holder functions, and</p></li>
+<li><p>The global SMTD_Private_SanityChecksToPerform array containing no sub-arrays.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="adding-a-new-private-check">
+<h3><a class="toc-backref" href="#contents">Adding A New Private Check</a><a class="headerlink" href="#adding-a-new-private-check" title="Permalink to this headline">¶</a></h3>
+<p>Let’s edit the file to add a new Private function to check whether the current renderer is set to render type “View”.</p>
+<ul class="simple">
+<li><p>First, we will rename the “blank” function in the SMTD_Private_SanityCheckFunctions struct to “CheckRenderType”.</p></li>
+<li><p>In the function’s body, we will compare the return value of getRenderType() with the name value #view, and will return True if they are equal, and False if they are not.</p></li>
+<li><p>Next, we will rename the “bland” function in the SMTD_Private_RepairFunctions struct to “FixRenderType”.</p></li>
+<li><p>In the function’s body, we will close the Render dialog, set the render type to #view, and open the Render dialog again.</p></li>
+<li><p>Finally, in the global SMTD_Private_SanityChecksToPerform array, we will add a new sub-array containing</p>
+<ul>
+<li><p>the new check function,</p></li>
+<li><p>the check type #fix as it is a fixable issue,</p></li>
+<li><p>the description of the issue</p></li>
+<li><p>the repair function to execute if right-clicked,</p></li>
+<li><p>and the boolean value of True which means the check is enabled by default.</p></li>
+</ul>
+</li>
+</ul>
+<p>The modified file would look like this:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-----------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="o">--</span><span class="n">THIS</span> <span class="n">FILE</span> <span class="n">CONTAINS</span> <span class="n">YOUR</span> <span class="n">USER</span><span class="o">-</span><span class="n">DEFINED</span> <span class="n">CHECKS</span> <span class="n">TO</span> <span class="n">BE</span> <span class="n">PERFORMED</span> <span class="n">AND</span> <span class="n">THE</span> <span class="n">FUNCTIONS</span>
+<span class="o">--</span><span class="n">TO</span> <span class="n">BE</span> <span class="n">USED</span> <span class="n">TO</span> <span class="n">CHECK</span> <span class="n">AND</span> <span class="n">REPAIR</span> <span class="n">THE</span> <span class="n">SCENE</span> <span class="n">BEFORE</span> <span class="n">SUBMISSION</span>
+<span class="o">-----------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="o">--</span><span class="n">THIS</span> <span class="n">FILE</span> <span class="n">WILL</span> <span class="o">**</span><span class="n">NOT</span><span class="o">**</span> <span class="n">BE</span> <span class="n">UPDATED</span> <span class="n">AUTOMATICALLY</span> <span class="n">BY</span> <span class="n">THINKBOX</span> <span class="n">SOFTWARE</span> <span class="n">INC</span>
+<span class="o">--</span><span class="n">AND</span> <span class="n">SHOULD</span> <span class="n">BE</span> <span class="n">USED</span> <span class="n">FOR</span> <span class="n">YOUR</span> <span class="n">IN</span><span class="o">-</span><span class="n">HOUSE</span> <span class="n">NEEDS</span><span class="o">.</span>
+<span class="o">-----------------------------------------------------------------------------------------------------------------------------------------------</span>
+
+<span class="p">(</span>
+<span class="k">global</span> <span class="n">SMTD_Private_SanityCheckFunctions</span>
+<span class="k">global</span> <span class="n">SMTD_Private_SanityChecksToPerform</span>
+<span class="k">global</span> <span class="n">SMTD_Private_RepairFunctions</span>
+
+<span class="k">global</span> <span class="n">SMTD_RepairFunctions</span>
+<span class="k">global</span> <span class="n">SMTD_SanityChecksToPerform</span>
+<span class="k">global</span> <span class="n">SMTD_SanityCheckFunctions</span>
+
+<span class="n">struct</span> <span class="n">SMTD_Private_SanityCheckFunctions</span>
+<span class="p">(</span>
+    <span class="n">fn</span> <span class="n">CheckRenderType</span> <span class="o">=</span>
+    <span class="p">(</span>
+        <span class="n">getRenderType</span><span class="p">()</span> <span class="o">==</span> <span class="c1">#view</span>
+    <span class="p">)</span>
+<span class="p">)</span><span class="o">--</span><span class="n">end</span> <span class="n">struct</span>
+
+
+<span class="n">struct</span> <span class="n">SMTD_Private_RepairFunctions</span>
+<span class="p">(</span>
+    <span class="n">fn</span> <span class="n">FixRenderType</span> <span class="o">=</span>
+    <span class="p">(</span>
+        <span class="n">renderSceneDialog</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">setRenderType</span> <span class="c1">#view</span>
+        <span class="n">renderSceneDialog</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+    <span class="p">)</span>
+<span class="p">)</span><span class="o">--</span><span class="n">end</span> <span class="n">struct</span>
+
+
+<span class="o">------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="o">--</span><span class="n">SANITY</span> <span class="n">CHECK</span> <span class="n">PRIVATE</span> <span class="n">DEFINITIONS</span>
+<span class="o">------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+
+<span class="n">SMTD_Private_SanityChecksToPerform</span> <span class="o">=</span> <span class="c1">#(</span>
+        <span class="c1">#(SMTD_Private_SanityCheckFunctions.CheckRenderType, #fix, &quot;The Area To Render is NOT set to VIEW!&quot;, SMTD_Private_RepairFunctions.FixRenderType, true)</span>
+<span class="p">)</span><span class="o">--</span><span class="n">end</span> <span class="n">checks</span> <span class="n">array</span>
+
+<span class="p">)</span><span class="o">--</span><span class="n">End</span> <span class="n">File</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>After the file is saved and SMTD restarted, if you would set the Area To Render option in the Render Scene dialog to anything but “View”, the new Sanity Check will detect the issue and show up in the Error Report list.</p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3ds Max - Integrated Submitter - Sanity Check</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#the-error-report">The Error Report</a><ul>
+<li><a class="reference internal" href="#repairing-errors">Repairing Errors</a></li>
+<li><a class="reference internal" href="#updating-the-error-report">Updating the Error Report</a></li>
+<li><a class="reference internal" href="#fatal-sanity-checks">FATAL Sanity Checks</a></li>
+<li><a class="reference internal" href="#can-be-fixed-sanity-checks">Can Be Fixed Sanity Checks</a></li>
+<li><a class="reference internal" href="#warnings">Warnings</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#defining-private-sanity-checks">Defining Private Sanity Checks</a><ul>
+<li><a class="reference internal" href="#general-vs-private-checks">General vs. Private Checks</a></li>
+<li><a class="reference internal" href="#the-sanity-check-definition-array">The Sanity Check Definition Array</a></li>
+<li><a class="reference internal" href="#adding-a-new-private-check">Adding A New Private Check</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-3ds-max-smtd.html"
+                        title="previous chapter">3ds Max - Integrated Submitter</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-3ds-max-smtd-advanced.html"
+                        title="next chapter">3ds Max - Integrated Submitter - Advanced Features</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-3ds-max-smtd-advanced.html" title="3ds Max - Integrated Submitter - Advanced Features"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-3ds-max-smtd.html" title="3ds Max - Integrated Submitter"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Max - Integrated Submitter - Sanity Check</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

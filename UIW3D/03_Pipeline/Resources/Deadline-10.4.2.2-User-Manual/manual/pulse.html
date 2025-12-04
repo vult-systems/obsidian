@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pulse &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Remote Connection Server" href="remote-connection-server.html" />
+    <link rel="prev" title="Version and Help - Command Arguments" href="command-line-arguments-version.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="remote-connection-server.html" title="Remote Connection Server"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="command-line-arguments-version.html" title="Version and Help - Command Arguments"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" accesskey="U">Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Pulse</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pulse">
+<span id="pulse-ref-label"></span><h1>Pulse<a class="headerlink" href="#pulse" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Pulse is an optional mini server application that performs maintenance operations on the farm, and manages more advanced features like Auto Configuration, Power Management and Statistics Gathering. If you choose to run Pulse, it only needs to be running on one machine. Note that Pulse does not play a role in job scheduling, so if you are running Pulse and it goes down, Deadline will still be
+fully operational (minus the advanced features). Note to build redundancy if Primary Pulse fails in your environment, consider protecting yourself by configuring <a class="reference internal" href="pulse-config.html#pulse-config-redundancy-ref-label"><span class="std std-ref">Pulse Redundancy</span></a>.</p>
+<a class="reference internal image-reference" href="../_images/pulse.png"><img alt="../_images/pulse.png" src="../_images/pulse.png" style="height: 500px;" /></a>
+<p>If you are choosing a machine to run Pulse, you should be aware that non-Server editions of Windows have a TCP/IP connection limitation of 10 new connections per second. If your render farm consists of more than 10
+render nodes, it is very likely that you’ll hit this limitation every now and then (and the odds continue to increase as the number of machines increase). This is a limitation of the operating systems, and isn’t
+something that we can workaround, so we recommend using a Server edition of Windows, or a different operating system like Linux.</p>
+</div>
+<div class="section" id="running-pulse">
+<h2>Running Pulse<a class="headerlink" href="#running-pulse" title="Permalink to this headline">¶</a></h2>
+<p>To start Pulse:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>On Windows, you can start Pulse from the Start Menu under Thinkbox\Deadline.</p></li>
+<li><p>On Linux, you can start Pulse from a terminal window by running the deadlinepulse script in the bin folder.</p></li>
+<li><p>On macOS, you can start Pulse from Finder by running the DeadlinePulse application in Applications/Thinkbox/Deadline.</p></li>
+</ul>
+</div></blockquote>
+<p>You can configure Pulse to launch automatically when the Launcher starts up (similar to how the Worker does this). This can be done by adding the LaunchPulseAtStartup=True to the system’s deadline.ini file. See the <a class="reference internal" href="client-config.html#client-config-ref-label"><span class="std std-ref">Client Configuration</span></a> documentation for more information.</p>
+<p>Pulse can also be started from a command prompt or terminal window. For more information, see the <a class="reference internal" href="#pulse-command-line-ref-label"><span class="std std-ref">Pulse Command Line</span></a> documentation.</p>
+</div>
+<div class="section" id="viewing-the-pulse-log">
+<span id="viewing-pulse-log-ref-label"></span><h2>Viewing the Pulse Log<a class="headerlink" href="#viewing-the-pulse-log" title="Permalink to this headline">¶</a></h2>
+<p>To view Pulse’s current log, simply press the Open Pulse Log button at the bottom of the Pulse window. This will open the Pulse log in a new window to avoid impacting the performance of the main Pulse application.</p>
+<a class="reference internal image-reference" href="../_images/pulse_log.png"><img alt="../_images/pulse_log.png" src="../_images/pulse_log.png" style="height: 450px;" /></a>
+<p>If Pulse is running in the background or without an interface, you can connect to the Pulse log from the command line. In a command prompt or terminal window, navigate to the Deadline bin folder (Windows or Linux) or the
+Resources folder (macOS) and run the following, where “PULSENAME” is the name of the Pulse you want to connect to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span> <span class="o">-</span><span class="n">ConnectToPulseLog</span> <span class="s2">&quot;PULSENAME&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuring-pulse">
+<h2>Configuring Pulse<a class="headerlink" href="#configuring-pulse" title="Permalink to this headline">¶</a></h2>
+<p>Pulse needs to be configured so that the Worker applications know how to connect to Pulse. There are a couple different ways to configure Pulse, which are described below.</p>
+<div class="section" id="auto-configuration">
+<h3>Auto Configuration<a class="headerlink" href="#auto-configuration" title="Permalink to this headline">¶</a></h3>
+<p>If you launch Pulse, and a Primary Pulse hasn’t been set yet, it will automatically configure itself to be the Primary, and configure itself to be connected to by its host name. These settings can be changed from the Pulse Panel in the Monitor at any time. See the <a class="reference internal" href="pulse-config.html#pulse-config-ref-label"><span class="std std-ref">Pulse Configuration</span></a> documentation for more information.</p>
+<p>If Pulse has already been configured, but you want to quickly switch to another machine to run Pulse on, simply launch Pulse on the desired machine. Then when it appears in the Pulse list in the Monitor, right-click on it and select Auto Configure Pulse. Generally, this feature is only available in Power User mode.</p>
+<img alt="../_images/pulse_panel_menu.png" src="../_images/pulse_panel_menu.png" />
+</div>
+<div class="section" id="manual-configuration">
+<h3>Manual Configuration<a class="headerlink" href="#manual-configuration" title="Permalink to this headline">¶</a></h3>
+<p>The connection settings, as well as additional settings, can be configured for Pulse from the Monitor. Advanced features like Auto Configuration, Power Management, and Statistics Gathering can also be configured in the Monitor. See the <a class="reference internal" href="pulse-config.html#pulse-config-ref-label"><span class="std std-ref">Pulse Configuration</span></a> documentation for more information.</p>
+</div>
+</div>
+<div class="section" id="pulse-menu-options">
+<h2>Pulse Menu Options<a class="headerlink" href="#pulse-menu-options" title="Permalink to this headline">¶</a></h2>
+<p>The available options are listed below. They are available in Pulse’s window, or from the Pulse system tray icon’s right-click menu. Note that if Pulse is running in the background or without an interface,
+these options will be unavailable.</p>
+<div class="section" id="options-menu">
+<h3>Options Menu<a class="headerlink" href="#options-menu" title="Permalink to this headline">¶</a></h3>
+<p><strong>Hide When Minimized</strong></p>
+<blockquote>
+<div><p>Pulse is hidden when minimized, but can be restored using the Pulse icon in the system tray.</p>
+</div></blockquote>
+<p><strong>Minimize On Startup</strong></p>
+<blockquote>
+<div><p>Starts Pulse in the minimized state.</p>
+</div></blockquote>
+</div>
+<div class="section" id="control-menu">
+<h3>Control Menu<a class="headerlink" href="#control-menu" title="Permalink to this headline">¶</a></h3>
+<p><strong>Perform Pending Job Scan</strong></p>
+<blockquote>
+<div><p>If Pulse is between repository pending job scans, this option can be used to force Pulse to perform a pending job scan immediately. A pending job scan releases pending jobs by checking their dependencies or scheduling options.</p>
+</div></blockquote>
+<p><strong>Perform Repository Clean-up</strong></p>
+<blockquote>
+<div><p>If Pulse is between repository clean-ups, this option can be used to force Pulse to perform a repository clean-up immediately. A repository clean-up includes deleting jobs that are marked for automatic deletion.</p>
+</div></blockquote>
+<p><strong>Perform Repository Repair</strong></p>
+<blockquote>
+<div><p>If Pulse is between repository repairs, this option can be used to force Pulse to perform a repository repair immediately. A repository repair includes checking for stalled Workers and orphaned limit stubs.</p>
+</div></blockquote>
+<p><strong>Perform Power Management Check</strong></p>
+<blockquote>
+<div><p>If Pulse is between power management checks, this option can be used to force Pulse to perform a power management check immediately.</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="command-line-options">
+<span id="pulse-command-line-ref-label"></span><h2>Command Line Options<a class="headerlink" href="#command-line-options" title="Permalink to this headline">¶</a></h2>
+<p>To run Pulse from a command prompt or terminal window, navigate to the Deadline bin folder (Windows or Linux) or the Resources folder (macOS) and run the ‘deadlinepulse’ application. To view all available
+command line arguments, you can run the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinepulse</span> <span class="o">-</span><span class="n">help</span>
+</pre></div>
+</div>
+<div class="section" id="available-options">
+<h3>Available Options<a class="headerlink" href="#available-options" title="Permalink to this headline">¶</a></h3>
+<p>To start Pulse without a user interface, use the -nogui option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinepulse</span> <span class="o">-</span><span class="n">nogui</span>
+</pre></div>
+</div>
+<p>To start Pulse without the splash screen, use the -nosplash option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinepulse</span> <span class="o">-</span><span class="n">nosplash</span>
+</pre></div>
+</div>
+<p>To shut down Pulse if it’s already running, use the -shutdown option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinepulse</span> <span class="o">-</span><span class="n">shutdown</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="pulse-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Can I run Pulse on any machine in my farm?</strong></p>
+<blockquote>
+<div><p>You can run Pulse on any machine in your farm, including the Repository or Database machine. However, for larger farms, we recommend running Pulse on a dedicated machine.</p>
+<p>When choosing a machine to run Pulse on, you should be aware that non-Server editions of Windows have a TCP/IP connection limitation of 10 new connections per second. If your
+render farm consists of more than 100 machines, it is very likely that you’ll hit this limitation every now and then (and the odds continue to increase as the number of machines increase).
+Therefore, if you are running Pulse on a farm with 100 machines or more, we recommend using a Server edition of Windows, or a different operating system like Linux.</p>
+</div></blockquote>
+<p><strong>Can I run Pulse as a service or daemon?</strong></p>
+<blockquote>
+<div><p>Yes. If you’re running the Launcher as a service or daemon, then it will run Pulse in the background as well. See the <a class="reference internal" href="install-client.html#install-as-service-ref-label"><span class="std std-ref">Client Installation</span></a> documentation for more information.</p>
+</div></blockquote>
+<p><strong>If Pulse is shutdown or terminated, is the Power Management feature still functional?</strong></p>
+<blockquote>
+<div><p>In this case, the only aspect of Power Management that is still functional is the Temperature Checking. Redundancy for Temperature checking has been built into the Worker application,
+so if Pulse isn’t running, you’re still protected if the temperature in your farm room begins to rise.</p>
+</div></blockquote>
+<p><strong>Which temperature sensors work with Power Management?</strong></p>
+<blockquote>
+<div><p>We have tested with many different temperature sensors. Basically, as long as the temperature sensors use SNMP, and you know its OID (which is configurable in the Power Management settings), it should work.</p>
+</div></blockquote>
+<p><strong>Can I run multiple Pulse’s on separate machines?</strong></p>
+<blockquote>
+<div><p>Yes and like typical IT best practices, this will provide <a class="reference internal" href="pulse-config.html#pulse-config-redundancy-ref-label"><span class="std std-ref">Pulse Redundancy</span></a>. Note, only one Pulse can be Primary at any given time.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Pulse</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#running-pulse">Running Pulse</a></li>
+<li><a class="reference internal" href="#viewing-the-pulse-log">Viewing the Pulse Log</a></li>
+<li><a class="reference internal" href="#configuring-pulse">Configuring Pulse</a><ul>
+<li><a class="reference internal" href="#auto-configuration">Auto Configuration</a></li>
+<li><a class="reference internal" href="#manual-configuration">Manual Configuration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pulse-menu-options">Pulse Menu Options</a><ul>
+<li><a class="reference internal" href="#options-menu">Options Menu</a></li>
+<li><a class="reference internal" href="#control-menu">Control Menu</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#command-line-options">Command Line Options</a><ul>
+<li><a class="reference internal" href="#available-options">Available Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="command-line-arguments-version.html"
+                        title="previous chapter">Version and Help - Command Arguments</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="remote-connection-server.html"
+                        title="next chapter">Remote Connection Server</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="remote-connection-server.html" title="Remote Connection Server"
+             >next</a></li>
+        <li class="right" >
+          <a href="command-line-arguments-version.html" title="Version and Help - Command Arguments"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" >Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Pulse</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

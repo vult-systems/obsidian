@@ -1,0 +1,581 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Power Management &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="SQS Notifications" href="sqs-notifications.html" />
+    <link rel="prev" title="Farm Statistics" href="statistics.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="sqs-notifications.html" title="SQS Notifications"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="statistics.html" title="Farm Statistics"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" accesskey="U">Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Power Management</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="power-management">
+<span id="power-management-ref-label"></span><h1>Power Management<a class="headerlink" href="#power-management" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some of the topics covered in this page require you to have administrator/root access to initially configure your machines. Please consult your local IT staff if in doubt.</p>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Power Management is a system that automatically controls when machines in the farm start up or shut down, based on the current conditions of the farm. It can start machines if they are required to render jobs in the farm, and it can shut down machines that are no longer needed for rendering. It can also poll an external temperature sensor using SNMP and shut down machines if the server room is too hot. Finally, it can reboot problematic machines or cleanup temporary local machine disk space on a regular basis. Our Power Management <a class="reference internal" href="event-plugins.html#event-plugins-ref-label"><span class="std std-ref">Event Plugins</span></a> can also be used to integrate 3rd party software such as environmental reporting systems. Benefits to using Deadline’s Power Management:</p>
+<ul class="simple">
+<li><p>Considerable financial savings in electricity/cooling can be made by actively shutting down machines when not in use!</p></li>
+<li><p>Extend machine longevity (wear and tear) by shutting down machines when not in use.</p></li>
+<li><p>Protect machines from a thermal outrage in your server room by auto sensing and shutting down machines.</p></li>
+<li><p>Regularly restart machines to clean up temporary working space.</p></li>
+</ul>
+</div>
+<div class="section" id="running-pulse">
+<h2>Running Pulse<a class="headerlink" href="#running-pulse" title="Permalink to this headline">¶</a></h2>
+<p>Power Management is built into Pulse, so Pulse <strong>MUST</strong> be running for Power Management to work. The only exception for this is the Thermal Shutdown feature. Redundancy for this feature has been built into the Worker applications, so if Pulse isn’t running, you’re still protected if the temperature of your server room gets too hot (see caveat in <a class="reference internal" href="#thermal-shutdown-ref-label"><span class="std std-ref">Thermal Shutdown</span></a> section).</p>
+<p>See the <a class="reference internal" href="pulse.html#pulse-ref-label"><span class="std std-ref">Pulse</span></a> documentation for more information about running and configuring Pulse.</p>
+<a class="reference internal image-reference" href="../_images/deadline_pulse.png"><img alt="../_images/deadline_pulse.png" src="../_images/deadline_pulse.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>Power Management can be configured from the Monitor by selecting ‘Tools’ -&gt; ‘Configure Power Management’. You will need to be in Power User mode for this, if you are not part of a User Group that has access to this feature.</p>
+<a class="reference internal image-reference" href="../_images/pm_idle_shutdown.png"><img alt="../_images/pm_idle_shutdown.png" src="../_images/pm_idle_shutdown.png" style="height: 450px;" /></a>
+<p>Machine Groups are used by Power Management to organize Worker machines on the farm, and each group has four sections of settings that can be configured independently of each other. To add a new Machine Group, simply click the Add button in the Machine Group section.</p>
+<a class="reference internal image-reference" href="../_images/add_power_management.png"><img alt="../_images/add_power_management.png" src="../_images/add_power_management.png" style="height: 400px;" /></a>
+<p>Power Management Group Settings:</p>
+<ul class="simple">
+<li><p><strong>Group Name</strong>: The name with which the Power Management Group will be identified.</p></li>
+<li><p><strong>Group Mode</strong>: Whether this particular Group is enabled or disabled.</p></li>
+<li><p><strong>Include All Workers in this Group</strong>: If enabled, all Workers will be included in this group. Note that you cannot override the Worker order for the Power Management features if this is enabled.</p></li>
+<li><p><strong>Unassigned Workers</strong>: The Workers that will not be part of this Group.</p></li>
+<li><p><strong>Workers In Group</strong>: Workers that will be part of this Group.</p></li>
+</ul>
+<p>To edit the Power Management settings within a group, simply click on the group in the Machine Groups list.</p>
+<div class="section" id="idle-shutdown-ref-label">
+<span id="idle-shutdown"></span><h3>Idle Shutdown<a class="headerlink" href="#idle-shutdown-ref-label" title="Permalink to this headline">¶</a></h3>
+<p>Idle Shutdown is a system that forces Workers to shutdown after they have been idle for a certain period of time. This can be used to save on energy costs when the render farm is idle, without having to shutdown machines manually. Combining this feature with Wake-On-Lan will ensure that machines in the render farm are only running when they are needed.</p>
+<p>You can split the idle time period between a Daytime period and an Evening period. This is useful because in most cases, you want most of your machines to stay on during the workday, and then shutdown during the evening when there are no renders left. In addition, you can also specify exceptions to these two periods, which means (for example) you could have different idle periods for the weekend.</p>
+<p>Please note that specific configuration should be done for Linux machines. See <a class="reference internal" href="considerations.html#considerations-reboot-ref-label"><span class="std std-ref">Rebooting Linux Nodes</span></a> for more details.</p>
+<a class="reference internal image-reference" href="../_images/pm_idle_shutdown.png"><img alt="../_images/pm_idle_shutdown.png" src="../_images/pm_idle_shutdown.png" style="height: 450px;" /></a>
+<p>Idle Shutdown Settings:</p>
+<ul class="simple">
+<li><p><strong>Idle Shutdown Mode</strong>: Select Disabled, Enabled, or Debug mode. In Debug mode, all the checks are performed as normal, but no action is actually taken.</p></li>
+<li><p><strong>Number of Minutes Before Idles Workers Will be Shutdown</strong>: Self explanatory.</p></li>
+<li><p><strong>Minimum Number of Workers to Leave Running</strong>: The minimum number of Workers to keep running at all times.</p></li>
+<li><p><strong>Worker Shutdown Type</strong>: The method that will be used to shutdown Idle Workers:</p></li>
+<li><p><strong>Shutdown</strong>: Power off the machine using the normal shutdown method.</p>
+<ul>
+<li><p><strong>Hybrid Shutdown</strong>: If enabled, the machine is prepared for a fast startup. This option only works on Windows 8 machines and later. Note, Machine Startup via WOL does not support waking a Windows 8 or later machine which has entered the Hybrid Shutdown state (S4).</p></li>
+</ul>
+</li>
+<li><p><strong>Suspend</strong>: Suspends the machines instead of shutting them down. Only works for Windows Workers.</p></li>
+<li><p><strong>Run Command</strong>: Use this method to have the Worker run a command when attempting to shutdown a Worker.</p></li>
+<li><p><strong>Important Processes</strong>: If the Worker has any of these processes running, it will not shutdown.</p></li>
+<li><p><strong>Overrides</strong>: Define overrides for different days and times. Simply specify the day(s) of the week, the time period, the minimum number of Workers, and the idle shutdown time for each override required. For example, if more machines are required to be running continuously for Friday evening and Saturday afternoon, this can be accomplished with an override.</p></li>
+<li><p><strong>Override Shutdown Order</strong>: Whether or not to define the order in which Workers are shutdown. If disabled, Workers will be shut down in alphabetical order. If enabled, use the Set Shutdown Order dialog to define the order in which you would like the Workers to shut down. Note that this feature is not available if the Power Management Group is configured to include all Workers.</p></li>
+</ul>
+</div>
+<div class="section" id="machine-startup">
+<span id="machine-startup-ref-label"></span><h3>Machine Startup<a class="headerlink" href="#machine-startup" title="Permalink to this headline">¶</a></h3>
+<p>This is a system that allows powered-down machines to be started automatically when new Jobs are submitted to the render farm. Combining this feature with Idle Shutdown will ensure that machines in the render farm are only running when they are needed. If Worker machines support it, Wake On Lan (<a class="reference internal" href="#wol-config-ref-label"><span class="std std-ref">WOL</span></a>) or Intelligent Platform Management Interface (<a class="reference internal" href="#ipmi-amt-config-ref-label"><span class="std std-ref">IPMI</span></a>) commands can be used to start them up after they shutdown.</p>
+<p>Note that if machines in the group begin to be shutdown due to <a class="reference internal" href="#thermal-shutdown-ref-label"><span class="std std-ref">temperature</span></a>, this feature may be automatically disabled for the group to prevent machines from starting up and raising the temperature again.</p>
+<a class="reference internal image-reference" href="../_images/pm_machine_startup.png"><img alt="../_images/pm_machine_startup.png" src="../_images/pm_machine_startup.png" style="height: 450px;" /></a>
+<p>Machine Startup Settings:</p>
+<ul class="simple">
+<li><p><strong>Machine Startup Mode</strong>: Select Disabled, Enabled, or Debug mode. In Debug mode, all the checks are performed, but no action is actually taken.</p></li>
+<li><p><strong>Maximum Number of Workers to Wake Up Per Interval</strong>: The maximum number of machines that will be started in a given Power Management check interval. The interval itself can be configured in the Pulse section of the Repository Options.</p></li>
+<li><p><strong>Target Number of Extra Idle Workers</strong>: The target number of extra idle Workers. Power Management will attempt to start enough machines to have this many extra Workers available on top of what is currently needed by jobs on the Repository. Default is 0. This setting ensures that a number of extra idle Workers are always available, essentially acting as a “buffer” for machine startup. It can be used to ensure that there is always at least X machines available (from a given power management group) to start a Job immediately. This can be important to give users the sense that the farm is always ready to render their jobs.</p></li>
+<li><p><strong>Wake Up Mode</strong>: This determines how the machines will be woken up. See the available Wake Up Modes below for more information.</p></li>
+<li><p><strong>Send Remote Command To Start Worker After Waking Up Machines</strong>: If enabled, a remote command to start the Worker will be sent after waking up the machines. This ensures that the Worker starts on the machine after it has woken up. This should only be disabled if the Worker will start another way (for example, by Worker Scheduling).</p></li>
+<li><p><strong>Override Startup Order</strong>: Whether or not to define the order in which Workers are started up. If disabled, Workers will be started in alphabetical order. If enabled, use the ‘Set Startup Order’ dialog to define the order. Note that this feature is not available if the Power Management Group is configured to include all Workers.</p></li>
+</ul>
+<p>Wake Up Modes:</p>
+<ul>
+<li><p><strong>Use Wake On Lan</strong>: Wake On Lan packets will be sent to machines to wake them up.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Delay Between Wake On Lan Packets (seconds)</strong>: The number of seconds between WOL packets when multiple Worker machines are being started. This can be used to add a delay between machine startups.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Run Command</strong>: This is primarily for IPMI support. If enabled, Pulse will run a given command to start Worker machines. This command will be run once for each Worker that is being woken up. A few tags can be used within the command:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>{WORKER_NAME}</strong> is replaced with the current Worker’s hostname. Support for {SLAVE_NAME} is deprecated and will be removed in a future release.</p></li>
+<li><p><strong>{WORKER_MAC}</strong> is replaced with the current Worker’s MAC address. Support for {SLAVE_MAC} is deprecated and will be removed in a future release.</p></li>
+<li><p><strong>{WORKER_IP}</strong> is replaced with the current Worker’s IP address. Support for {SLAVE_IP} is deprecated and will be removed in a future release.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>Please see our dedicated section on <a class="reference internal" href="#ipmi-amt-config-ref-label"><span class="std std-ref">IPMI</span></a> for further configuration information.</p>
+<div class="section" id="wol">
+<span id="wol-config-ref-label"></span><h4>WOL<a class="headerlink" href="#wol" title="Permalink to this headline">¶</a></h4>
+<p>Wake-on-LAN (<a class="reference external" href="https://en.wikipedia.org/wiki/Wake-on-LAN">WoL</a>) is an ethernet or token ring computer networking standard that allows a computer to be turned on or awakened by a network message. In order to use Deadline’s <a class="reference internal" href="#machine-startup-ref-label"><span class="std std-ref">Machine Startup</span></a> functionality with <a class="reference external" href="https://en.wikipedia.org/wiki/Wake-on-LAN">WOL</a>, you will need an understanding of how <a class="reference external" href="https://en.wikipedia.org/wiki/Wake-on-LAN">WOL</a> can be enabled and configured to successfully send a <a class="reference external" href="https://en.wikipedia.org/wiki/Wake-on-LAN#Magic_packet">Magic Packet</a> to startup a machine. Here are some notes to consider when configuring WOL:</p>
+<ul class="simple">
+<li><p>WOL is <a class="reference external" href="https://en.wikipedia.org/wiki/Wake-on-LAN#Receiving_the_magic_packet">supported</a> across Windows, Linux and macOS.</p></li>
+<li><p>WOL Packets are sent to the MAC addresses that Deadline has on file for each of the Workers. If your Workers have multiple Ethernet ports, the Worker may have registered the wrong MAC address, which may prevent WOL from working properly. If this is the case, you will have to manually set MAC Address overrides for the Workers that are having this problem, which can be done through the <a class="reference internal" href="worker-config.html#worker-config-settings-ref-label"><span class="std std-ref">Worker Settings</span></a> dialog.</p></li>
+<li><p>By default, the WOL packet is sent over UDP ports 7 and 9 (industry standard), but you can change this in the Wake On Lan settings in the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Configuration</span></a>. Make sure there isn’t a firewall or other security software/hardware blocking communication over the selected UDP port(s).</p></li>
+<li><p>Some machines do not support Wake-on-LAN after they have been disconnected from power (e.g., when power is restored after a power failure). Use of an uninterruptible power supply (<a class="reference external" href="https://en.wikipedia.org/wiki/Uninterruptible_power_supply">UPS</a>) will give protection against a short period without power, although the battery will discharge during a prolonged power cut.</p></li>
+<li><p>Most 802.11 wireless interfaces do not maintain a link in low power states and therefore cannot receive a magic packet.</p></li>
+<li><p>Typically, WOL broadcasting of “Magic Packets” is restricted to a VLAN or LAN. However, it can be configured to reach remote machines via a VPN, so called <a class="reference external" href="https://en.wikipedia.org/wiki/Wake-on-LAN#Wake_on_Internet">Wake on Internet</a>.</p></li>
+<li><p>WOL is generally not secure. Some NIC manufacturers do provide a <a class="reference external" href="https://en.wikipedia.org/wiki/Wake-on-LAN#Unauthorized_access">SecureOn Password</a> authentication system, but this has limitations as well.</p></li>
+<li><p>WOL has no reporting mechanism to explain what machine was responsible for starting up a machine. However, Deadline’s Power Management log history will report if it is responsible for sending the WOL signal.</p></li>
+<li><p>Each receiving machine’s hardware needs to support WOL for it to work! Both the machine’s motherboard and network card (NIC) must support WOL and be enabled.</p></li>
+<li><p>On newer machines (to save power on say, a blade chassis) WOL has been removed and <a class="reference internal" href="#ipmi-amt-config-ref-label"><span class="std std-ref">IPMI</span></a> or <a class="reference internal" href="#ipmi-amt-config-ref-label"><span class="std std-ref">AMT</span></a> support is provided instead.</p></li>
+<li><p>Some routers/switches do not allow WOL broadcasts to pass through or must be configured to allow it. Port Forwarding might be required to be configured on your router.</p></li>
+</ul>
+<p><strong>BIOS Configuration</strong></p>
+<p>WOL needs to be enabled in each of your machine’s BIOS. It may already be enabled but you should double-check. Some PC manufacturers provide the option to pre-configure the BIOS settings as the machine is built on ordering; which can be a handy time saver if your about to deploy many machines! Depending on the manufacturer/age of the motherboard, WOL support made be referred to as PCIE Wake or another term used. Don’t forget, it may NOT even be present and be replaced by <a class="reference internal" href="#ipmi-amt-config-ref-label"><span class="std std-ref">IPMI</span></a> instead! Consult your PC manufacturers manual for further information. Here are a couple of example images:</p>
+<p><a class="reference internal" href="../_images/pm_wol_bios_pcie.png"><img alt="wolbios1" src="../_images/pm_wol_bios_pcie.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/pm_wol_bios_wol.png"><img alt="wolbios2" src="../_images/pm_wol_bios_wol.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/pm_wol_bios_hp_s5.png"><img alt="wolbios3" src="../_images/pm_wol_bios_hp_s5.png" style="height: 300px;" /></a></p>
+<p><strong>NIC Configuration</strong></p>
+<p>WOL will need to be enabled on each of the network adapters which you expect to be exposed and visible to Deadline to target it’s MAC address. Typically, it will just be your main copper network connection. Please consult your specific NIC manufacturers manual for more information. Here are Intel’s <a class="reference external" href="https://www.intel.com/support/motherboards/desktop/sb/CS-034257.htm">configuration instructions</a> and some example images to help:</p>
+<ul>
+<li><dl class="simple">
+<dt><strong>Windows</strong></dt><dd><p><a class="reference internal" href="../_images/pm_wol_nic_win1.png"><img alt="win1" src="../_images/pm_wol_nic_win1.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/pm_wol_nic_win2.png"><img alt="win2" src="../_images/pm_wol_nic_win2.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/pm_wol_nic_win3.png"><img alt="win3" src="../_images/pm_wol_nic_win3.png" style="height: 300px;" /></a></p>
+</dd>
+</dl>
+</li>
+<li><p><strong>Linux</strong></p>
+<blockquote>
+<div><p>Most Linux distributions have a great tool that can check to see if your machine supports WoL and can enable it. On CentOS, open up a terminal and install “ethtool” with the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="n">ethtool</span>
+</pre></div>
+</div>
+<p>On Ubuntu:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">ethtool</span>
+</pre></div>
+</div>
+<p>You can check your compatibility by running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">ethtool</span> <span class="n">eth0</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/pm_wol_nic_linux.png"><img alt="../_images/pm_wol_nic_linux.png" src="../_images/pm_wol_nic_linux.png" style="height: 300px;" /></a>
+<p>Look for the “Supports Wake-on” section. As long as one of the letters listed is “g”, you can use magic packets for WoL. To enable this option, use the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">ethtool</span> <span class="o">-</span><span class="n">s</span> <span class="n">eth0</span> <span class="n">wol</span> <span class="n">g</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p><strong>macOS</strong></p>
+<blockquote>
+<div><p>Open up your System Settings and choose Energy Saver. Under the Options or Power Adapter tab, you should see “Wake for Ethernet” or something similar. This enables Wake-on-LAN.</p>
+<p><a class="reference internal" href="../_images/pm_wol_nic_osx_old.png"><img alt="osx1" src="../_images/pm_wol_nic_osx_old.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/pm_wol_nic_osx_new.png"><img alt="osx2" src="../_images/pm_wol_nic_osx_new.png" style="height: 300px;" /></a></p>
+<p>If you find your <a class="reference external" href="https://discussions.apple.com/message/23695961#23695961">Mac sleeps after being woken up by WOL</a>, then you may need to disable <strong>Dark Wake</strong>, as per these instructions:</p>
+<ul>
+<li><p>As an administrator, edit the following file: <code class="docutils literal notranslate"><span class="pre">/Library/Preferences/SystemConfiguration/com.apple.Boot.plist</span></code>.</p></li>
+<li><p>Find the KernelFlags key and update the <strong>Dark Wake</strong> setting as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">key</span><span class="o">&gt;</span><span class="n">Kernel</span> <span class="n">Flags</span><span class="o">&lt;/</span><span class="n">key</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="n">darkwake</span><span class="o">=</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">string</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Reboot your Mac. Wake on LAN should now work.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p><strong>WOL via Deadline</strong></p>
+<p>To support machines which exist on different subnets in Deadline, we first send the magic packet to the Worker’s IP address, as displayed in the Workers Panel in Monitor. For example, 192.168.2.10. Then we send four additional packets by masking each part of the IP. Using the same example, we send the packet to 192.168.2.255, 192.168.255.255, 192.255.255.255, and finally 255.255.255.255. Please note, this only works though if the Worker is using an IPv4 address.</p>
+<p id="wol-troubleshooting-ref-label"><strong>Troubleshooting WOL</strong></p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Wake-on-LAN#Troubleshooting_magic_packets">Troubleshooting</a> WOL configuration can be difficult. However, many WOL packet sender/sniffer applications are available. For further debugging, <a class="reference external" href="https://en.wikipedia.org/wiki/Packet_analyzer">packet analyzer</a> tools such as <a class="reference external" href="https://www.wireshark.org/">Wireshark</a> can be used to confirm (while the PC is still on) that the magic packet is indeed visible to a particular computer’s NIC. Here are some common WOL tools that can be used to confirm your WOL configuration is working before then testing with Deadline. To test, run the “sender” software on the machine that will send the WOL magic packet (<a class="reference internal" href="pulse.html#pulse-ref-label"><span class="std std-ref">Pulse</span></a>) and run the “sniffer” (receiving) application on one of your rendernodes you are testing. Use the DNS hostname or IP address of this rendernode and “Send” the Magic Packet and see if it is received (displayed) by the sniffer application. If not, then you need to resolve the software/hardware that is blocking the signal. There are many WOL applications available via the internet. Here are a few handy links:</p>
+<dl class="simple">
+<dt>WOL Sender/Sniffer:</dt><dd><ul class="simple">
+<li><p><a class="reference external" href="https://www.yarovy.com/wol/index.html">Wake-On-LAN Sender</a></p></li>
+<li><p><a class="reference external" href="https://magicpacket.free.fr/">WOL - Magic Packet Sender</a></p></li>
+<li><p><a class="reference external" href="https://www.depicus.com/wake-on-lan/wake-on-lan-gui.aspx">Depicus GUI</a></p></li>
+<li><p><a class="reference external" href="https://www.depicus.com/wake-on-lan/wake-on-lan-monitor.aspx">Depicus Monitor</a></p></li>
+</ul>
+</dd>
+</dl>
+<p><a class="reference internal" href="../_images/pm_wol_sender.png"><img alt="sender" src="../_images/pm_wol_sender.png" style="height: 200px;" /></a> <a class="reference internal" href="../_images/pm_wol_sniffer.png"><img alt="sniffer" src="../_images/pm_wol_sniffer.png" style="height: 200px;" /></a></p>
+<dl class="simple">
+<dt>Mobile Apps that can send a WOL ‘Magic Packet’:</dt><dd><ul class="simple">
+<li><p><a class="reference external" href="https://www.mochasoft.dk/iphone_wol.htm">Mocha WOL (iOS)</a></p></li>
+<li><p><a class="reference external" href="https://www.overlooksoft.com/">Fling (Android/iOS)</a></p></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="ipmi-amt">
+<span id="ipmi-amt-config-ref-label"></span><h4>IPMI / AMT<a class="headerlink" href="#ipmi-amt" title="Permalink to this headline">¶</a></h4>
+<p>Lights Out Management (LOM) involves the use of a dedicated management channel to control devices. It allows IT to monitor and manage servers and other network equipment by remote control regardless of whether the machine is powered on, or if an operating system is installed or functional. The Intelligent Platform Management Interface (<a class="reference external" href="https://en.wikipedia.org/wiki/Intelligent_Platform_Management_Interface">IPMI</a>) is a standardised computer system interface used by IT for <a class="reference external" href="https://en.wikipedia.org/wiki/Out-of-band_management">out-of-band</a> management of computer systems. It is a way to manage a computer that may be powered off or otherwise unresponsive by using a network connection to the hardware rather than to an operating system or login shell. Typically, this is achieved via a dedicated NIC interfacing with a machine or chassis of blade servers via the <a class="reference external" href="https://en.wikipedia.org/wiki/Intelligent_Platform_Management_Interface#Baseboard_management_controller">BMC</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Dell_DRAC">DRAC</a> or <a class="reference external" href="https://en.wikipedia.org/wiki/IBM_Remote_Supervisor_Adapter">RSA</a>. In modern hardware, Wake-On-Lan (WOL) is now replaced by IPMI as a power consumption saving.</p>
+<p>IPMI was developed as an industry standard protocol. However, each of the manufacturers have implemented it in slightly different ways! There are also a couple of open-source projects which attempt to wrap and solve these difficulties. Finally, Intel has another solution known as Active Management Technology (<a class="reference external" href="https://en.wikipedia.org/wiki/Intel_Active_Management_Technology">AMT</a>):</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/MegaRAC">MegaRAC</a> (SuperMicro, ASUS, Tyan and Intel)</p></li>
+<li><p>Dell <a class="reference external" href="https://en.wikipedia.org/wiki/Dell_DRAC">DRAC</a></p></li>
+<li><p>HP Integrated Lights-Out (<a class="reference external" href="https://en.wikipedia.org/wiki/HP_Integrated_Lights-Out">iLO</a>)</p></li>
+<li><p>IBM Remote Supervisor Adapter (<a class="reference external" href="https://en.wikipedia.org/wiki/IBM_Remote_Supervisor_Adapter">RSA</a>)</p></li>
+<li><p>Open-source <a class="reference external" href="https://ipmiutil.sourceforge.net/">IPMIUtils</a> (BSD 2.0 license)</p></li>
+<li><p>Open-source <a class="reference external" href="https://sourceforge.net/projects/ipmitool/">IPMITool</a> (BSD 2.0 license)</p></li>
+<li><p>Intel’s Active Management Technology (<a class="reference external" href="https://en.wikipedia.org/wiki/Intel_Active_Management_Technology">AMT</a>)</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/pm_ipmi_bios.png"><img alt="../_images/pm_ipmi_bios.png" src="../_images/pm_ipmi_bios.png" style="height: 300px;" /></a>
+<p>Each manufacturer will have slightly different IPMI configuration settings in the BIOS of the machine and/or chassis/DRAC in the case of blade servers. Please consult individual manufacturer manuals for specific guidance. Here are some useful instructions for <a class="reference external" href="https://www.thomas-krenn.com/en/wiki/Supermicro_IPMI_Configuration_through_BIOS_or_Web_Interface">SuperMicro BIOS</a> and <a class="reference external" href="http://wiki.adamsweet.org/doku.php?id=ipmi_on_linux">Linux</a> configuration of IPMI. Note, that a <a class="reference internal" href="#pm-mgmt-vlan-ref-label"><span class="std std-ref">Management VLAN</span></a> may be required to successfully send IPMI signals to your machines. <a class="reference external" href="https://www.supermicro.com/solutions/SMS_IPMI.cfm">SuperMicro</a> provide in-band (<strong>IPMICFG</strong>) and out-of-band (<strong>SMCIPMITool</strong>) utilities as well as a GUI (<strong>IPMIView</strong>) to assist in configuring IPMI on their machines. DELL, IBM and HP (iLO) have equivalent software tools to assist users as well.</p>
+<p>The machine(s) running Pulse will send out the IPMI signals if configured in Power Management -&gt; <a class="reference internal" href="#machine-startup-ref-label"><span class="std std-ref">Machine Startup</span></a> and <a class="reference internal" href="#idle-shutdown-ref-label"><span class="std std-ref">Idle Shutdown</span></a>. On each of these Pulse running machines, you will need to install the relevant IPMI software to support all your manufacturer types of machines in your studio. In the following examples, different IPMI toolkits have been used to construct a batch or shell script, which is configured in the PM settings and executed by the Pulse machine. It is recommended to always test that your IPMI script is working correctly outside of Deadline before configuring Power Management.</p>
+<div class="section" id="examples">
+<h5>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h5>
+<p><strong>Windows</strong></p>
+<a class="reference internal image-reference" href="../_images/pm_ipmi_basic_windows.png"><img alt="../_images/pm_ipmi_basic_windows.png" src="../_images/pm_ipmi_basic_windows.png" style="height: 350px;" /></a>
+<p>For example, if you had a batch file in <code class="docutils literal notranslate"><span class="pre">c:\ipmiutil</span></code> called <code class="docutils literal notranslate"><span class="pre">Deadline_power_Boxx_on.bat</span></code> on the Pulse machine that takes the Worker’s IPv4 address as a command line option, your command would look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="p">:</span>\<span class="n">ipmiutil</span>\<span class="n">Deadline_power_Boxx_on</span><span class="o">.</span><span class="n">bat</span> <span class="p">{</span><span class="n">WORKER_IP</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Here is an example of the <code class="docutils literal notranslate"><span class="pre">Deadline_power_Boxx_on.bat</span></code> script that transforms a Worker’s IPv4 address. It assumes the last two octets match between the two machines, so if a render node’s IP is 10.1.1.2, then its corresponding power management module is 10.0.1.2.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@ECHO</span> <span class="n">OFF</span>
+<span class="n">SET</span> <span class="n">IP</span><span class="o">=%~</span><span class="mi">1</span>
+
+<span class="n">FOR</span> <span class="o">/</span><span class="n">F</span> <span class="s2">&quot;tokens=3,4 delims=.&quot;</span> <span class="o">%%</span><span class="n">A</span> <span class="n">IN</span> <span class="p">(</span><span class="s2">&quot;%IP%&quot;</span><span class="p">)</span> <span class="n">DO</span> <span class="p">(</span>
+    <span class="n">ipmiutil</span> <span class="n">reset</span> <span class="o">-</span><span class="n">u</span> <span class="o">-</span><span class="n">N</span> <span class="mf">10.0</span><span class="o">.%%</span><span class="n">A</span><span class="o">.%%</span><span class="n">B</span> <span class="o">-</span><span class="n">U</span> <span class="n">user</span> <span class="o">-</span><span class="n">P</span> <span class="n">password</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Linux</strong></p>
+<p><a class="reference internal" href="../_images/pm_ipmi_basic_linux_startup.png"><img alt="startup" src="../_images/pm_ipmi_basic_linux_startup.png" style="height: 350px;" /></a> <a class="reference internal" href="../_images/pm_ipmi_basic_linux_shutdown.png"><img alt="shutdown" src="../_images/pm_ipmi_basic_linux_shutdown.png" style="height: 350px;" /></a></p>
+<p>For example, if you had a bash shell script file in <code class="docutils literal notranslate"><span class="pre">/root/scripts/ipmi_control.sh</span></code> on the Pulse machine that takes the Worker’s IP address as a command line option, swaps the Worker’s IP address for it’s equivalent mgmt vlan IP address, then your commands would look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">ipmi_control</span><span class="o">.</span><span class="n">sh</span> <span class="p">{</span><span class="n">WORKER_IP</span><span class="p">}</span> <span class="n">on</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">ipmi_control</span><span class="o">.</span><span class="n">sh</span> <span class="p">{</span><span class="n">WORKER_IP</span><span class="p">}</span> <span class="n">off</span>
+</pre></div>
+</div>
+<p>Here is an example of what <code class="docutils literal notranslate"><span class="pre">/root/scripts/ipmi_control.sh</span></code> might look like. Note, how the data vlan IP address range 10.2.1.x is swapped out for the dedicated mgmt vlan IP address range 10.2.16.x. This script supports both the shutdown and startup of machines via IPMI:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/sh
+
+logfile=&quot;/var/log/Thinkbox/Deadline&lt;VERSION&gt;/ipmi_control.log&quot;
+
+worker_ip=$1
+
+echo &quot;`date` : $@&quot; &gt;&gt; $logfile
+export LD_LIBRARY_PATH=&quot;&quot;
+
+if [[ ! $worker_ip == &#39;10.2.1.&#39;* ]] ; then
+  echo &quot;$worker_ip is not a valid node IP. Exiting ...&quot;
+else
+  echo &quot;$worker_ip seems to be valid node IP. Continuing ...&quot;
+  ipmi_ip=`echo $worker_ip | sed &#39;s/10.2.1./10.2.16./g&#39;`
+  cal_number=`echo $worker_ip | sed &#39;s/10.2.1.//g&#39;`
+  echo &quot;IPMI node IP should be : $ipmi_ip&quot;
+
+  $user=root
+  $password=calvin
+
+  if [[ &quot;$2&quot; == &quot;on&quot; ]] ; then
+    echo &quot;Launching power on ...&quot;
+    ipmitool -H $ipmi_ip -U $user -P $password chassis power on &gt;&gt; $logfile 2&gt;&amp;1
+  elif [[ &quot;$2&quot; == &quot;softoff&quot; ]] ; then
+    echo &quot;Launching soft power off ...&quot;
+    ipmitool -H $ipmi_ip -U $user -P $password chassis power soft &gt;&gt; $logfile 2&gt;&amp;1
+  elif [[ &quot;$2&quot; == &quot;off&quot; ]] ; then
+    echo &quot;Launching power off ...&quot;
+    ipmitool -H $ipmi_ip -U $user -P $password chassis power off &gt;&gt; $logfile 2&lt;&amp;1
+  elif [[ &quot;$2&quot; == &quot;reset&quot; ]] ; then
+    echo &quot;Launching power reset ...&quot;
+    ipmitool -H $ipmi_ip -U $user -P $password chassis power reset &gt;&gt; $logfile 2&lt;&amp;1
+  elif [[ &quot;$2&quot; == &quot;status&quot; ]] ; then
+    echo &quot;Quering power status ...&quot;
+    ipmitool -H $ipmi_ip -U $user -P $password chassis power status &gt;&gt; $logfile 2&lt;&amp;1
+  else
+    echo &quot;Invalid command. Usage is $0 IP [on|soft|off|reset|status]&quot;
+  fi
+fi
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;VERSION&gt;</span></code> is the Deadline major version, such as: <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="thermal-shutdown">
+<span id="thermal-shutdown-ref-label"></span><h3>Thermal Shutdown<a class="headerlink" href="#thermal-shutdown" title="Permalink to this headline">¶</a></h3>
+<p>The Thermal Shutdown system polls temperature sensors and responds by shutting down machines if the temperature gets too high and if optionally configured; will re-enable <a class="reference internal" href="#machine-startup-ref-label"><span class="std std-ref">Machine Startup</span></a> when the temperature drops below a configurable threshold. The sensors we have used for development/testing are <a class="reference external" href="https://www.neurotica.com/wiki/NetTherm">NetTherms</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/APC_by_Schneider_Electric">APC</a> Sensors are also known to be compatible. Any network queryable and compliant <a class="reference external" href="https://en.wikipedia.org/wiki/Simple_Network_Management_Protocol">SNMP</a> v1+ thermal sensor should work here both in-band (OS based) or using out-of-band (firmware based) equipment. Note that the SNMP <em>GET</em> request on a temperature sensor communicates over <a class="reference external" href="https://en.wikipedia.org/wiki/User_Datagram_Protocol">UDP</a> port 161, so ensure this UDP port is NOT blocked across your network by firewalls or network devices. See the next section on <a class="reference internal" href="#snmp-sensors-ref-label"><span class="std std-ref">SNMP Sensors</span></a> for more information on how to find the correct <a class="reference external" href="https://en.wikipedia.org/wiki/Object_identifier">OID</a> for your thermal sensor(s).</p>
+<a class="reference internal image-reference" href="../_images/pm_thermal_shutdown.png"><img alt="../_images/pm_thermal_shutdown.png" src="../_images/pm_thermal_shutdown.png" style="height: 450px;" /></a>
+<p>Thermal Shutdown settings:</p>
+<ul class="simple">
+<li><p><strong>Thermal Shutdown Mode</strong>: Select Disabled, Enabled, or Debug mode. In Debug mode, all the checks will be performed, but no action is actually taken.</p></li>
+<li><p><strong>Temperature Units</strong>: The units used to display and configure the temperatures. Note that this is separate from the units that the actual sensors use. Default is Celsius.</p></li>
+<li><p><strong>Thermal Sensors</strong>: The hostname (or IP Address) and OID (Object Identifier) of the sensor(s) in the zone. To add a new sensor, simply click the ‘Add’ button.</p></li>
+<li><p><strong>Thermal Thresholds</strong>: Thresholds can be added for any temperature. When a sensor reports a temperature higher than a particular threshold, the Workers in the zone will respond accordingly. Note that higher temperature thresholds take precedence over lower ones.</p></li>
+<li><p><strong>Shut down Workers if sensors are offline for this many minutes</strong>: If enabled, Workers will shut down after a period of time in which the temperature sensor could not be reached for temperature information. Default is 20 minutes.</p></li>
+<li><p><strong>Disable Machine Startup if thermal threshold is reached</strong>: If enabled, Machine Startup for the current group will be disabled if a thermal threshold is reached.</p></li>
+<li><p><strong>Re-Enable Machine Startup when temperature returns to</strong>: If enabled, this will re-enable Machine Startup when the temperature returns to the specified temperature. Default is 0 Celsius.</p></li>
+<li><p><strong>Override Shutdown Order</strong>: Whether or not to define a custom order in which Workers will be shutdown. If disabled, Workers will be shut down in alphabetical order. If enabled, use the ‘Set Shutdown Order’ dialog to define the order. Note that this feature is not available if the Power Management Group is configured to include all Workers.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/pm_add_thermal.png"><img alt="../_images/pm_add_thermal.png" src="../_images/pm_add_thermal.png" style="height: 300px;" /></a>
+<p>Thermal Sensors:</p>
+<p>Currently any SNMP v1+ compliant temperature sensor which returns a String, Integer or Gauge value are supported.</p>
+<ul class="simple">
+<li><p><strong>Sensor Name</strong>: A user definable name for the temperature sensor to add. Default is ‘sensor’.</p></li>
+<li><p><strong>Sensor Hostname or IP Address</strong>: The hostname or ip address of the temperature sensor. Default is BLANK. Typically IP address is used here as most studios do not have DNS configured for 3rd party Thermal Sensors.</p></li>
+<li><p><strong>Sensor OID (Object Identifier)</strong>: The OID (Object Identifier) of the temperature sensor. The default OID is for the particular type of sensor we use. See the next section on <a class="reference internal" href="#snmp-sensors-ref-label"><span class="std std-ref">SNMP Sensors</span></a> for more information on how to find the correct OID for your thermal sensor(s).</p></li>
+<li><p><strong>Sensor SNMP Community</strong>: SNMP community name of the temperature sensor. If during testing the sensor fails with ‘public’, try using ‘private’. Default is ‘public’. Note, your studio may have a custom defined SNMP Community ‘name’ so please contact your local IT system administrator.</p></li>
+<li><p><strong>Sensor Reports Temperature As</strong>: Select the units that your temperature sensor uses to report the temperature. Default is Celsius.</p></li>
+<li><p><strong>Sensor Timeout in Milliseconds</strong>: The timeout value for contacting the sensor. Default is 1000 milliseconds.</p></li>
+<li><p><strong>Sensor Testing Temperature</strong>: If enabled, the corresponding temperature will always be returned by this sensor. This is useful for testing purposes. Default is 25 Celsius.</p></li>
+<li><p><strong>Test Sensor</strong>: Queries the sensor for the current temperature, and displays it. If the temperature displayed seems incorrect, make sure you have selected the correct unit of temperature above.</p></li>
+</ul>
+<p>If you simply want to test the Thermal Shutdown feature, but you don’t have any thermal sensors to test with, you can enable the Sensor Testing Temperature in the Sensor settings above. When enabled, you don’t need to provide a Sensor Hostname/IP address or Sensor OID, and the test sensor will always return the specified temperature.</p>
+<a class="reference internal image-reference" href="../_images/pm_thermal_thresholds.png"><img alt="../_images/pm_thermal_thresholds.png" src="../_images/pm_thermal_thresholds.png" style="height: 100px;" /></a>
+<p>Thermal Thresholds:</p>
+<ul class="simple">
+<li><p><strong>Threshold Temperature (In Celsius)</strong>: The threshold temperature for shutdown in Celsius. Default is 0 Celsius.</p></li>
+<li><p><strong>Number of Workers To Shutdown Per Interval</strong>: Number of Workers to be shutdown per interval. Default is 1.</p></li>
+</ul>
+<p id="pm-mgmt-vlan-ref-label">Note, many studios/network administrators use separate <a class="reference external" href="https://en.wikipedia.org/wiki/Virtual_LAN">VLAN’s</a> to segegrate different types of traffic in their LAN. Typically, <em>data vlan</em> traffic is separated from <em>mgmt vlan</em> traffic, where <em>data</em> traffic would be your normal data/file i/o across your network and <em>mgmt vlan</em> traffic might by your IT/environment monitoring systems, sampling many data points across your different hardware devices ranging from SNMP querying (incl. temperature sensors, file server IOPS, machine status) to more complex IPMI/Intel AMT system startup/shutdown commands. If this is applicable to your studio/network, then please note that as the <a class="reference internal" href="pulse.html#pulse-ref-label"><span class="std std-ref">Pulse</span></a> (and <a class="reference internal" href="worker.html#worker-ref-label"><span class="std std-ref">Worker</span></a> in failover mode) application will be executing the various PM commands such as probe for SNMP temperature sensors or IPMI machine shutdown/startup, then any machine which will run Pulse (and <a class="reference internal" href="worker.html#worker-ref-label"><span class="std std-ref">Worker</span></a> in failover mode), must reside or bridge both the <em>data vlan</em> and your <em>mgmt vlan</em> so that communication is possible. Note, if your running multiple <a class="reference internal" href="pulse-config.html#pulse-config-redundancy-ref-label"><span class="std std-ref">Pulse instances</span></a> for redundancy, then they will all need to have the same routable network access. Alternatively, you might consider just placing your thermal sensors onto your <em>data vlan</em> to cover both Pulse and Worker PM querying via SNMP.</p>
+<div class="section" id="snmp-sensors">
+<span id="snmp-sensors-ref-label"></span><h4>SNMP Sensors<a class="headerlink" href="#snmp-sensors" title="Permalink to this headline">¶</a></h4>
+<p>In order to use Deadline’s <a class="reference internal" href="#thermal-shutdown-ref-label"><span class="std std-ref">Thermal Shutdown</span></a> functionality, you will need an understanding of how <a class="reference external" href="https://en.wikipedia.org/wiki/Simple_Network_Management_Protocol">SNMP</a> can be enabled, configured and queried to return the relevant value of a temperature sensor. SNMP versions 1, 2c, 3 are supported by Deadline. However, SNMP v3 authentication options are not currently supported. <a class="reference external" href="https://en.wikipedia.org/wiki/Simple_Network_Management_Protocol">SNMP</a> was introduced in the 1980’s so don’t be surprised if you are spoilt with choice on which devices you use to query for a temperature in your data center to control which group of machines are shutdown. Consider using multiple temperature sensors via different devices (to provide redundancy), in the case of physical or network communication failure. Also, consider the positioning of your temperature sensors to provide the best possible indicators that a certain chassis of blade servers in a rack position or a certain a/c unit has failed, in the case of directional a/c cooling being used in a server room. Chassis based <a class="reference external" href="https://en.wikipedia.org/wiki/Dell_M1000e">Blade</a> servers are known for ‘hot-spotting’ in a rack, so measuring the temperature of the chassis baseboard as well as possible individual blade servers is recommended here. You may even find devices such as your APC rack doors are networkable and have temperature sensors built-in to them. Investing in 3rd party temperature sensors is also recommended and supported as long as they are queryable via SNMP and present themselves with an IP address. If your sensors are on a separate <a class="reference external" href="https://en.wikipedia.org/wiki/Virtual_LAN">Management VLAN</a>, then ensure any machine which runs ‘Pulse’ has routable access to the sensors.</p>
+</div>
+<div class="section" id="snmp-in-band-sensors">
+<span id="snmp-inband-sensors-ref-label"></span><h4>SNMP in-band Sensors<a class="headerlink" href="#snmp-in-band-sensors" title="Permalink to this headline">¶</a></h4>
+<p>Some computers have temperature sensors available via their motherboards. If an <a class="reference external" href="https://en.wikipedia.org/wiki/Simple_Network_Management_Protocol#Overview_and_basic_concepts">SNMP agent</a> is running on these machines, then it can be queried via it’s hostname or IP address. Typically, SNMP is disabled/not installed by default on operating systems. Note, the obvious caveat with in-band SNMP agents that they rely on the machine being powered on, booted up to the OS level and the agent running/queryable across the network. For greater redundancy, it is typical to consider using dedicated hardware temperature sensor devices rather than rely on a server’s uptime for critical server room temperature monitoring. Note, Microsoft has deprecated SNMP in some versions of it’s OS such as Server 2012. This does not mean its not available, just that you have to install it as a feature. SNMP can also be extended by writing a custom MIB file via dedicated OID numbers to expose a temperature sensor that might be available on your local machine. Note, you don’t need to install a <a class="reference external" href="https://en.wikipedia.org/wiki/Simple_Network_Management_Protocol#Overview_and_basic_concepts">SNMP agent</a> to carry out querying via snmpwalk/snmpget. On Linux, you would just need the <code class="docutils literal notranslate"><span class="pre">snmp-utils</span></code> package. See the <a class="reference internal" href="#snmp-walk-ref-label"><span class="std std-ref">SNMP Walk</span></a> section for more information. Here are some URL links to help you to install the <a class="reference external" href="https://en.wikipedia.org/wiki/Simple_Network_Management_Protocol#Overview_and_basic_concepts">SNMP agent</a> on the different OS:</p>
+<ul>
+<li><dl class="simple">
+<dt><strong>Windows Install</strong></dt><dd><ul class="simple">
+<li><p><a class="reference external" href="https://technet.microsoft.com/en-us/library/Ff716193.aspx">https://technet.microsoft.com/en-us/library/Ff716193.aspx</a></p></li>
+<li><p><a class="reference external" href="https://support.microsoft.com/en-us/kb/324263">https://support.microsoft.com/en-us/kb/324263</a></p></li>
+<li><p><a class="reference external" href="https://kb.paessler.com/en/topic/663-how-do-i-install-the-snmp-service-on-windows-systems">https://kb.paessler.com/en/topic/663-how-do-i-install-the-snmp-service-on-windows-systems</a></p></li>
+<li><p><a class="reference external" href="https://joshancel.wordpress.com/2013/04/02/windows-server-2012-no-security-tab-in-snmp/">https://joshancel.wordpress.com/2013/04/02/windows-server-2012-no-security-tab-in-snmp/</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Linux Install</strong></dt><dd><ul class="simple">
+<li><p><a class="reference external" href="https://wiki.debian.org/SNMP">https://wiki.debian.org/SNMP</a></p></li>
+<li><p><a class="reference external" href="https://www.cyberciti.biz/nixcraft/linux/docs/uniqlinuxfeatures/mrtg/mrtg_config_step_1.php">https://www.cyberciti.biz/nixcraft/linux/docs/uniqlinuxfeatures/mrtg/mrtg_config_step_1.php</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>macOS Install</strong></p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">nano</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">snmp</span><span class="o">/</span><span class="n">snmpd</span><span class="o">.</span><span class="n">conf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">launchctl</span> <span class="n">load</span> <span class="o">-</span><span class="n">w</span> <span class="o">/</span><span class="n">System</span><span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">LaunchDaemons</span><span class="o">/</span><span class="n">org</span><span class="o">.</span><span class="n">net</span><span class="o">-</span><span class="n">snmp</span><span class="o">.</span><span class="n">snmpd</span><span class="o">.</span><span class="n">plist</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="snmp-hardware-devices">
+<span id="snmp-hardware-devices-ref-label"></span><h4>SNMP Hardware Devices<a class="headerlink" href="#snmp-hardware-devices" title="Permalink to this headline">¶</a></h4>
+<p>Here is a non-exhaustive list of some commercial/free SNMP sensors which will work with Deadline. Many other sensors are available, including those already built-in to your machines and other server room equipment.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>Sensor Gateway + Temperature Sensors</strong></dt><dd><ul>
+<li><p><a class="reference external" href="https://www.serverscheck.com/sensors/">https://www.serverscheck.com/sensors/</a></p></li>
+<li><p><a class="reference external" href="https://www.serverscheck.com/sensors/sensor_wireless.asp">https://www.serverscheck.com/sensors/sensor_wireless.asp</a></p></li>
+<li><p><a class="reference external" href="https://www.serverscheck.com/sensors/sensor_temperature.asp">https://www.serverscheck.com/sensors/sensor_temperature.asp</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>APC NetBotz 200-500</strong></dt><dd><ul>
+<li><p><a class="reference external" href="https://www.apc.com/products/family/index.cfm?id=346">https://www.apc.com/products/family/index.cfm?id=346</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Raspberry Pi</strong></dt><dd><ul>
+<li><p><a class="reference external" href="https://www.brandonkester.com/tech/2014/04/01/cheap-temperature-monitoring.html">https://www.brandonkester.com/tech/2014/04/01/cheap-temperature-monitoring.html</a></p></li>
+<li><p><a class="reference external" href="https://bigdanzblog.wordpress.com/2015/01/03/installing-snmp-onto-a-raspberry-pi/">https://bigdanzblog.wordpress.com/2015/01/03/installing-snmp-onto-a-raspberry-pi/</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="snmp-walk">
+<span id="snmp-walk-ref-label"></span><h4>SNMP Walk<a class="headerlink" href="#snmp-walk" title="Permalink to this headline">¶</a></h4>
+<p>Before running, you might need to <a class="reference external" href="http://www.net-snmp.org/wiki/index.php/TUT:Using_and_loading_MIBS">install</a> one or more 3rd party MIB files if you are using a custom device. A <a class="reference external" href="https://en.wikipedia.org/wiki/Management_information_base">MIB</a> file is essentially a database (look-up table) allowing us to identify a specific OID (Object Identifier) for your temperature sensor. Typically, MIB files can be downloaded from a manufacturer’s website. Here’s what a DELL blade chassis baseboard thermal sensor OID number looks like after downloading the DELL specific MIB file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">.</span><span class="n">iso</span><span class="o">.</span><span class="n">org</span><span class="o">.</span><span class="n">dod</span><span class="o">.</span><span class="n">internet</span><span class="o">.</span><span class="n">private</span><span class="o">.</span><span class="n">enterprises</span><span class="o">.</span><span class="n">dell</span><span class="o">.</span><span class="n">server3</span><span class="o">.</span><span class="n">baseboardGroup</span><span class="o">.</span><span class="n">thermalGroup</span><span class="o">.</span><span class="n">temperatureProbeTable</span><span class="o">.</span><span class="n">temperatureProbeTableEntry</span><span class="o">.</span><span class="n">temperatureProbeReading</span>
+<span class="o">.</span><span class="mf">1.3</span><span class="o">.</span><span class="mf">6.1</span><span class="o">.</span><span class="mf">4.1</span><span class="o">.</span><span class="mf">674.10892</span><span class="o">.</span><span class="mf">1.700</span><span class="o">.</span><span class="mf">20.1</span><span class="o">.</span><span class="mi">6</span>
+</pre></div>
+</div>
+<p>You will need a <a class="reference external" href="https://en.wikipedia.org/wiki/Management_information_base#MIB_Browsers">MIB Browser</a> application to load, view and potentially query the SNMP OID number on your device across your network. <a class="reference external" href="http://net-snmp.sourceforge.net/docs/man/snmpwalk.html">SNMPWALK</a> and <a class="reference external" href="http://net-snmp.sourceforge.net/docs/man/snmpget.html">SNMPGET</a> may already be installed by default on your Linux/macOS machine. Check with your local system administrator or try the following in a terminal on Linux/macOS to verify if it’s available:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">whereis</span> <span class="n">snmpwalk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">whereis</span> <span class="n">snmpget</span>
+</pre></div>
+</div>
+<p>Windows equivalent snmpwalk/snmpget command-line tools can be downloaded from the <a class="reference external" href="https://www.snmpsoft.com/freetools/snmpwalk.html">SNMP Soft</a> website.</p>
+<p>An example snmpwalk command and result might look like this:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">snmpwalk</span> <span class="o">-</span><span class="n">v1</span> <span class="o">-</span><span class="n">c</span> <span class="n">public</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.10</span> <span class="mf">1.3</span><span class="o">.</span><span class="mf">6.1</span><span class="o">.</span><span class="mf">4.1</span><span class="o">.</span><span class="mf">318.1</span><span class="o">.</span><span class="mf">1.25</span><span class="o">.</span><span class="mf">1.2</span><span class="o">.</span><span class="mf">1.6</span><span class="o">.</span><span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">NET</span><span class="o">-</span><span class="n">SNMP</span><span class="o">-</span><span class="n">EXTEND</span><span class="o">-</span><span class="n">MIB</span><span class="p">::</span><span class="n">nsExtendOutputFull</span><span class="o">.</span><span class="s2">&quot;temp&quot;</span> <span class="o">=</span> <span class="n">STRING</span><span class="p">:</span> <span class="mf">73.2866</span>
+</pre></div>
+</div>
+<p>where arguments:</p>
+<ul class="simple">
+<li><p><strong>-v1</strong>: Use SNMP version 1.</p></li>
+<li><p><strong>-c public</strong>: SNMP community string “public” (the usual default name).</p></li>
+<li><p><strong>192.168.0.10</strong>: IP address of the SNMP device or machine that the SNMP device is connected to.</p></li>
+<li><p><strong>1.3.6.1.4.1.318.1.1.25.1.2.1.6.1</strong>: An example OID (an APC temperature sensor connected via port 1 of an AP9631 card). Note, valid OID numbers should start with: <code class="docutils literal notranslate"><span class="pre">1.3.6.x</span></code>.</p></li>
+</ul>
+<p>returns:</p>
+<ul class="simple">
+<li><p><strong>NET-SNMP-EXTEND-MIB::nsExtendOutputFull.”temp”</strong>: Returned OID temperature description string via MIB file: “NET-SNMP-EXTEND-MIB”.</p></li>
+<li><p><strong>STRING</strong>: Returned SNMP value data type.</p></li>
+<li><p><strong>73.2866</strong>: Returned temperature in Fahrenheit.</p></li>
+</ul>
+</div>
+<div class="section" id="mib-browsers">
+<span id="mib-browsers-ref-label"></span><h4>MIB Browsers<a class="headerlink" href="#mib-browsers" title="Permalink to this headline">¶</a></h4>
+<p>Far easier than using the command line SNMP tools; many MIB/SNMP querying GUI based tools exist, which some also include preloaded common MIB files. Here are a few handy links:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.manageengine.com/products/mibbrowser-free-tool/">ManageEngine MibBrowser</a></p></li>
+<li><p><a class="reference external" href="https://ireasoning.com/mibbrowser.shtml">iReason Mib Browser</a></p></li>
+<li><p><a class="reference external" href="https://www.oidview.com/mibbrowser.html">Oidview</a></p></li>
+</ul>
+<p><a class="reference internal" href="../_images/pm_snmp_mibbrowser.png"><img alt="mibbrowser" src="../_images/pm_snmp_mibbrowser.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/pm_snmp_getif.png"><img alt="getif" src="../_images/pm_snmp_getif.png" style="height: 300px;" /></a></p>
+<p>Once you have a correctly working temperature sensor, returning a string/integer value which makes sense, it’s time to add the sensor details into Deadline’s <a class="reference internal" href="#thermal-shutdown-ref-label"><span class="std std-ref">Thermal Shutdown</span></a> dialog and use the ‘Test Sensor’ button to provide final confirmation. Note, that SNMP sensors can sometimes be unavailable on the network so consider the <strong>Sensor Timeout in Milliseconds</strong> and <strong>Shut down Workers if sensors are offline for this many minutes</strong> settings in <a class="reference internal" href="#thermal-shutdown-ref-label"><span class="std std-ref">Thermal Shutdown</span></a> to fine tune control and eliminate false-positive results.</p>
+</div>
+</div>
+<div class="section" id="machine-restart">
+<span id="machine-restart-ref-label"></span><h3>Machine Restart<a class="headerlink" href="#machine-restart" title="Permalink to this headline">¶</a></h3>
+<p>If you have problematic machines that you need to reboot periodically, you can configure the Machine Restart feature of Power Management to restart your Workers for you . Note that if the Worker on the machine is in the middle of rendering a Task, it will finish its current Task before the machine is restarted.</p>
+<p>Please note that specific configuration must be done for Linux machines here as well. See <a class="reference internal" href="considerations.html#considerations-reboot-ref-label"><span class="std std-ref">Rebooting Linux Nodes</span></a> for more details.</p>
+<a class="reference internal image-reference" href="../_images/pm_machine_restart.png"><img alt="../_images/pm_machine_restart.png" src="../_images/pm_machine_restart.png" style="height: 450px;" /></a>
+<p>Machine Restart settings:</p>
+<ul class="simple">
+<li><p><strong>Machine Restart Mode</strong>: Select Disabled, Enabled, or Debug mode. In Debug mode, all the checks are performed as normal, but no action is actually taken.</p></li>
+<li><p><strong>Number of Minutes Before a Running Worker is Restarted</strong>: The interval, in minutes, at which this group of Workers will be restarted. Default is 10 minutes.</p></li>
+<li><p><strong>Worker Restart Type</strong>: The Worker can either be restarted or will execute a specified command after the set time limit is reached.</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Power Management</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#running-pulse">Running Pulse</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li><a class="reference internal" href="#idle-shutdown-ref-label">Idle Shutdown</a></li>
+<li><a class="reference internal" href="#machine-startup">Machine Startup</a><ul>
+<li><a class="reference internal" href="#wol">WOL</a></li>
+<li><a class="reference internal" href="#ipmi-amt">IPMI / AMT</a><ul>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#thermal-shutdown">Thermal Shutdown</a><ul>
+<li><a class="reference internal" href="#snmp-sensors">SNMP Sensors</a></li>
+<li><a class="reference internal" href="#snmp-in-band-sensors">SNMP in-band Sensors</a></li>
+<li><a class="reference internal" href="#snmp-hardware-devices">SNMP Hardware Devices</a></li>
+<li><a class="reference internal" href="#snmp-walk">SNMP Walk</a></li>
+<li><a class="reference internal" href="#mib-browsers">MIB Browsers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#machine-restart">Machine Restart</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="statistics.html"
+                        title="previous chapter">Farm Statistics</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sqs-notifications.html"
+                        title="next chapter">SQS Notifications</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="sqs-notifications.html" title="SQS Notifications"
+             >next</a></li>
+        <li class="right" >
+          <a href="statistics.html" title="Farm Statistics"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" >Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Power Management</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

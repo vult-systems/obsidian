@@ -1,0 +1,2859 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jobs - Command Arguments &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tasks - Command Arguments" href="command-line-arguments-tasks.html" />
+    <link rel="prev" title="Workers - Command Arguments" href="command-line-arguments-workers.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command-line-arguments-tasks.html" title="Tasks - Command Arguments"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="command-line-arguments-workers.html" title="Workers - Command Arguments"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" accesskey="U">Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Jobs - Command Arguments</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="jobs-command-arguments">
+<span id="command-arguments-jobs"></span><h1>Jobs - Command Arguments<a class="headerlink" href="#jobs-command-arguments" title="Permalink to this headline">¶</a></h1>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td colspan="2"><p><a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">Command Overview</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-repo.html#command-arguments-repo"><span class="std std-ref">Database and Repository</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-clients.html#command-arguments-clients"><span class="std std-ref">Clients and Logs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-workers.html#command-arguments-workers"><span class="std std-ref">Workers</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#command-arguments-jobs"><span class="std std-ref">Jobs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-tasks.html#command-arguments-tasks"><span class="std std-ref">Tasks</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-pools-groups.html#command-arguments-pools"><span class="std std-ref">Pools, Groups, and Limits</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-users.html#command-arguments-users"><span class="std std-ref">Users and User Groups</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-pathmapping.html#command-arguments-pathmapping"><span class="std std-ref">Path and Drive Mapping</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="command-line-arguments-cloud.html#command-arguments-cloud"><span class="std std-ref">AWS Portal and Cloud</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-scripting.html#command-arguments-scripting"><span class="std std-ref">Scripting</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-system.html#command-arguments-system"><span class="std std-ref">System Functions and Dialogs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-housekeeping.html#command-arguments-housekeeping"><span class="std std-ref">Scans, History, and Reports</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-version.html#command-arguments-version"><span class="std std-ref">Version and Help</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#get-jobs" id="id1">Get Jobs</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getjobids" id="id2">GetJobIds</a></p></li>
+<li><p><a class="reference internal" href="#getjobidsfilter" id="id3">GetJobIdsFilter</a></p></li>
+<li><p><a class="reference internal" href="#getjobidsfilterand" id="id4">GetJobIdsFilterAnd</a></p></li>
+<li><p><a class="reference internal" href="#getjobsfilter" id="id5">GetJobsFilter</a></p></li>
+<li><p><a class="reference internal" href="#getjobsfilterand" id="id6">GetJobsFilterAnd</a></p></li>
+<li><p><a class="reference internal" href="#getjobsfilterini" id="id7">GetJobsFilterIni</a></p></li>
+<li><p><a class="reference internal" href="#getjobsfilteriniand" id="id8">GetJobsFilterIniAnd</a></p></li>
+<li><p><a class="reference internal" href="#getjob" id="id9">GetJob</a></p></li>
+<li><p><a class="reference internal" href="#getjobs" id="id10">GetJobs</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#modify-job-states" id="id11">Modify Job States</a></p>
+<ul>
+<li><p><a class="reference internal" href="#suspendjob" id="id12">SuspendJob</a></p></li>
+<li><p><a class="reference internal" href="#suspendjobnonrenderingtasks" id="id13">SuspendJobNonRenderingTasks</a></p></li>
+<li><p><a class="reference internal" href="#resumejob" id="id14">ResumeJob</a></p></li>
+<li><p><a class="reference internal" href="#resumefailedjob" id="id15">ResumeFailedJob</a></p></li>
+<li><p><a class="reference internal" href="#releasependingjob" id="id16">ReleasePendingJob</a></p></li>
+<li><p><a class="reference internal" href="#completejob" id="id17">CompleteJob</a></p></li>
+<li><p><a class="reference internal" href="#failjob" id="id18">FailJob</a></p></li>
+<li><p><a class="reference internal" href="#requeuejob" id="id19">RequeueJob</a></p></li>
+<li><p><a class="reference internal" href="#resubmitjob" id="id20">ResubmitJob</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#archive-and-import-jobs" id="id21">Archive and Import Jobs</a></p>
+<ul>
+<li><p><a class="reference internal" href="#archivejob" id="id22">ArchiveJob</a></p></li>
+<li><p><a class="reference internal" href="#importjob" id="id23">ImportJob</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#delete-job" id="id24">Delete Job</a></p>
+<ul>
+<li><p><a class="reference internal" href="#deletejob" id="id25">DeleteJob</a></p></li>
+<li><p><a class="reference internal" href="#getdeletedjobids" id="id26">GetDeletedJobIds</a></p></li>
+<li><p><a class="reference internal" href="#getdeletedjob" id="id27">GetDeletedJob</a></p></li>
+<li><p><a class="reference internal" href="#getdeletedjobs" id="id28">GetDeletedJobs</a></p></li>
+<li><p><a class="reference internal" href="#undeletejob" id="id29">UndeleteJob</a></p></li>
+<li><p><a class="reference internal" href="#purgedeletedjob" id="id30">PurgeDeletedJob</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#dependencies" id="id31">Dependencies</a></p>
+<ul>
+<li><p><a class="reference internal" href="#selectdependencies" id="id32">SelectDependencies</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#job-settings" id="id33">Job Settings</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getjobauxiliarypath" id="id34">GetJobAuxiliaryPath</a></p></li>
+<li><p><a class="reference internal" href="#getjobdetails" id="id35">GetJobDetails</a></p></li>
+<li><p><a class="reference internal" href="#getjoblogreportfilenames" id="id36">GetJobLogReportFilenames</a></p></li>
+<li><p><a class="reference internal" href="#getjoberrorreportfilenames" id="id37">GetJobErrorReportFilenames</a></p></li>
+<li><p><a class="reference internal" href="#getjobplugininfokeyvalue" id="id38">GetJobPluginInfoKeyValue</a></p></li>
+<li><p><a class="reference internal" href="#setjobplugininfokeyvalue" id="id39">SetJobPluginInfoKeyValue</a></p></li>
+<li><p><a class="reference internal" href="#getjobextrainfokeyvalue" id="id40">GetJobExtraInfoKeyValue</a></p></li>
+<li><p><a class="reference internal" href="#setjobextrainfokeyvalue" id="id41">SetJobExtraInfoKeyValue</a></p></li>
+<li><p><a class="reference internal" href="#getjobsetting" id="id42">GetJobSetting</a></p></li>
+<li><p><a class="reference internal" href="#setjobsetting" id="id43">SetJobSetting</a></p></li>
+<li><p><a class="reference internal" href="#setjobframerange" id="id44">SetJobFrameRange</a></p></li>
+<li><p><a class="reference internal" href="#setjobmachinelimit" id="id45">SetJobMachineLimit</a></p></li>
+<li><p><a class="reference internal" href="#setjobmachinelimitlistedslaves" id="id46">SetJobMachineLimitListedSlaves</a></p></li>
+<li><p><a class="reference internal" href="#setjobmachinelimitmaximum" id="id47">SetJobMachineLimitMaximum</a></p></li>
+<li><p><a class="reference internal" href="#setjobmachinelimitreleaseprogress" id="id48">SetJobMachineLimitReleaseProgress</a></p></li>
+<li><p><a class="reference internal" href="#setjobmachinelimitwhitelistflag" id="id49">SetJobMachineLimitWhiteListFlag</a></p></li>
+<li><p><a class="reference internal" href="#updatejobsubmissiondate" id="id50">UpdateJobSubmissionDate</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#job-submission-and-rendering" id="id51">Job Submission and Rendering</a></p>
+<ul>
+<li><p><a class="reference internal" href="#submitbackgroundjob" id="id52">SubmitBackgroundJob</a></p></li>
+<li><p><a class="reference internal" href="#pluginsubmissioninfofromjob" id="id53">PluginSubmissionInfoFromJob</a></p></li>
+<li><p><a class="reference internal" href="#jobsubmissioninfofromjob" id="id54">JobSubmissionInfoFromJob</a></p></li>
+<li><p><a class="reference internal" href="#generatesubmissioninfofiles" id="id55">GenerateSubmissionInfoFiles</a></p></li>
+<li><p><a class="reference internal" href="#getsubmissioninfo" id="id56">GetSubmissionInfo</a></p></li>
+<li><p><a class="reference internal" href="#submitcommandlinejob" id="id57">SubmitCommandLineJob</a></p></li>
+<li><p><a class="reference internal" href="#submitjobandnotify" id="id58">SubmitJobAndNotify</a></p></li>
+<li><p><a class="reference internal" href="#notify" id="id59">Notify</a></p></li>
+<li><p><a class="reference internal" href="#submitmultiplejobsv2" id="id60">SubmitMultipleJobsV2</a></p></li>
+<li><p><a class="reference internal" href="#submitmultiplejobs" id="id61">SubmitMultipleJobs</a></p></li>
+<li><p><a class="reference internal" href="#renderjob" id="id62">RenderJob</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="get-jobs">
+<h2><a class="toc-backref" href="#contents">Get Jobs</a><a class="headerlink" href="#get-jobs" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getjobids">
+<span id="getjobids-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobIds</a><a class="headerlink" href="#getjobids" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays all Job IDs.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobIds</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobIds
+    5980fbb13e08523c444eacd3
+    5992603e3e08523248bcca63
+    59935a6b3e08523f3ccd9a23
+    59b775fa3e085266e410a04d
+    59b782be3e085266e410a051
+    5a3c4c893e0852bbe8e7887d
+    5aa7230a3e08521d90a276e2
+    5b2acd43c3ca5112c8651645
+    ...
+</pre></div>
+</div>
+</div>
+<div class="section" id="getjobidsfilter">
+<span id="getjobidsfilter-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobIdsFilter</a><a class="headerlink" href="#getjobidsfilter" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display Job IDs of Jobs that fulfill ANY of the specified filters.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobIdsFilter</strong> &lt;Filter 1&gt; &lt;…&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Filter 1&gt;</p></td>
+<td><p>A filter, in the form of &lt;Setting=Value&gt;</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;…&gt;</p></td>
+<td><p>Additional filters…</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobIdsFilter Status=Queued UserName=john
+    5b747b30c3ca512de42d01d2
+    5d434e08c3ca51565c1b44cb
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="getjobidsfilterand">
+<span id="getjobidsfilterand-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobIdsFilterAnd</a><a class="headerlink" href="#getjobidsfilterand" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display Job IDs of Jobs that fulfill ALL the specified filters.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobIdsFilterAnd</strong> &lt;Filter 1&gt; &lt;…&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Filter 1&gt;</p></td>
+<td><p>A filter, in the form of &lt;Setting=Value&gt;</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;…&gt;</p></td>
+<td><p>Additional filters…</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobIdsFilterAnd Status=Queued UserName=john
+    5d434e08c3ca51565c1b44cb
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="getjobsfilter">
+<span id="getjobsfilter-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobsFilter</a><a class="headerlink" href="#getjobsfilter" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display information of Jobs that fulfill ANY of the specified filters.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobsFilter</strong> &lt;Filter 1&gt; &lt;…&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Filter 1&gt;</p></td>
+<td><p>A filter, in the form of &lt;Setting=Value&gt;</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;…&gt;</p></td>
+<td><p>Additional filters…</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobsFilter UserName=john UserName=ben
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The output of this command is too long to include here.</p>
+</div>
+</div>
+<div class="section" id="getjobsfilterand">
+<span id="getjobsfilterand-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobsFilterAnd</a><a class="headerlink" href="#getjobsfilterand" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display information of Jobs that fulfill ALL the specified filters.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobsFilterAnd</strong> &lt;Filter 1&gt; &lt;…&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Filter 1&gt;</p></td>
+<td><p>A filter, in the form of &lt;Setting=Value&gt;</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;…&gt;</p></td>
+<td><p>Additional filters…</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobsFilterAnd Status=Queued UserName=john
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The output of this command is too long to include here.</p>
+</div>
+</div>
+<div class="section" id="getjobsfilterini">
+<span id="getjobsfilterini-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobsFilterIni</a><a class="headerlink" href="#getjobsfilterini" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display information of Jobs that fulfill the specified filters, in an INI format.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobsFilterIni</strong> &lt;Filter 1&gt; &lt;…&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Filter 1&gt;</p></td>
+<td><p>A filter, in the form of &lt;Setting=Value&gt;</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;…&gt;</p></td>
+<td><p>Additional filters…</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobsFilterIni Status=Suspended UserName=john
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The output of this command is too long to include here.</p>
+</div>
+</div>
+<div class="section" id="getjobsfilteriniand">
+<span id="getjobsfilteriniand-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobsFilterIniAnd</a><a class="headerlink" href="#getjobsfilteriniand" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display information of Jobs that fulfill ALL the specified filters, in an ini format.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobsFilterIniAnd</strong> &lt;Filter 1&gt; &lt;…&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Filter 1&gt;</p></td>
+<td><p>A filter, in the form of &lt;Setting=Value&gt;</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;…&gt;</p></td>
+<td><p>Additional filters…</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobsFilterIni Status=Failed UserName=john
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The output of this command is too long to include here.</p>
+</div>
+</div>
+<div class="section" id="getjob">
+<span id="getjob-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJob</a><a class="headerlink" href="#getjob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display information for the specified Job(s).</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJob</strong> &lt;Job ID(s)&gt; [&lt;Use Ini Display&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Use Ini Display&gt;</p></td>
+<td><p>true/false (optional, default is false)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">Requesting INI Display includes a category for the Job ID, e.g. [5b747b30c3ca512de42d01d2] in this case.</div>
+<div class="line">It is recommended to use when requesting information for multiple Job IDs.</div>
+</div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJob 5b747b30c3ca512de42d01d2 True
+    [5b747b30c3ca512de42d01d2]
+    AuxiliarySubmissionFileNames=
+    AWSPortalAssets=
+    BadSlaves=
+    BatchName=
+    ChunkSize=1
+    Comment=
+    CompletedChunks=0
+    CompletedDateTime=Jan 01/01  00:00:00
+    CompletedDateTimeString=01/01/0001 00:00:00
+    CompletedFrames=0
+    ConcurrentTasks=1
+    CustomEventPluginDirectory=
+    CustomPluginDirectory=
+    Department=
+    EmailNotification=False
+    EnableAutoTimeout=False
+    EnableFrameTimeouts=False
+    EnableTimeoutsForScriptTasks=False
+    EnvironmentDictionary=
+    ErrorReports=2
+    EventOptIns=
+    ExtraElements=
+    ExtraInfo0=
+    ExtraInfo1=
+    ExtraInfo2=
+    ...
+    SynchronizeAllAuxiliaryFiles=False
+    TaskCount=11
+    TaskExtraInfoName0=
+    TaskExtraInfoName1=
+    TaskExtraInfoName2=
+    TaskExtraInfoName3=
+    TaskExtraInfoName4=
+    TaskExtraInfoName5=
+    TaskExtraInfoName6=
+    TaskExtraInfoName7=
+    TaskExtraInfoName8=
+    TaskExtraInfoName9=
+    TaskTimeout=00:00:00
+    TaskTimeoutSeconds=0
+    ThursdayStartTime=-10675199.02:48:05.4775808
+    ThursdayStopTime=-10675199.02:48:05.4775808
+    TileJob=False
+    TileJobFrame=0
+    TileJobTileCount=0
+    TileJobTilesInX=0
+    TileJobTilesInY=0
+    TotalRenderTime=00:00:00
+    TotalRenderTimeTicks=0
+    TuesdayStartTime=-10675199.02:48:05.4775808
+    TuesdayStopTime=-10675199.02:48:05.4775808
+    UseJobEnvironmentOnly=False
+    UserName=aws
+    WednesdayStartTime=-10675199.02:48:05.4775808
+    WednesdayStopTime=-10675199.02:48:05.4775808
+    WhitelistFlag=True
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The output of this command is too long to include here in full.</p>
+</div>
+</div>
+<div class="section" id="getjobs">
+<span id="getjobs-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobs</a><a class="headerlink" href="#getjobs" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays information for all the Jobs.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobs</strong> [&lt;Use Ini Display&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Use Ini Display&gt;</p></td>
+<td><p>true/false (optional, default is false)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">Requesting INI Display produces Job ID categories.</div>
+<div class="line">It is recommended to set the argument to True to make access to individual Jobs’ data easier, especially if dumping the output to a text file to parse in another application that supports INI file category/key/value access.</div>
+</div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobs True
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The output of this command is too long to include here.</p>
+</div>
+</div>
+</div>
+<div class="section" id="modify-job-states">
+<span id="modify-job-states-dlc-ref-label"></span><h2><a class="toc-backref" href="#contents">Modify Job States</a><a class="headerlink" href="#modify-job-states" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="suspendjob">
+<span id="suspendjob-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SuspendJob</a><a class="headerlink" href="#suspendjob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Suspends the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SuspendJob</strong> &lt;Job ID(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Suspend the Job with ID ‘5b747b30c3ca512de42d01d2’, including the Tasks that are currently rendering:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SuspendJob 5b747b30c3ca512de42d01d2
+    Suspended job(s) 5b747b30c3ca512de42d01d2
+</pre></div>
+</div>
+<p>If the Job is already suspended, the following message will be printed:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SuspendJob 5b747b30c3ca512de42d01d2
+    Could not suspend the following job(s) 5b747b30c3ca512de42d01d2
+</pre></div>
+</div>
+</div>
+<div class="section" id="suspendjobnonrenderingtasks">
+<span id="suspendjobnonrenderingtasks-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SuspendJobNonRenderingTasks</a><a class="headerlink" href="#suspendjobnonrenderingtasks" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Suspends the tasks that are not rendering for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SuspendJobNonRenderingTasks</strong> &lt;Job ID(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Suspends only the tasks of Job with ID ‘5b747b30c3ca512de42d01d2’ that are not rendering .</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SuspendJobNonRenderingTasks 5b747b30c3ca512de42d01d2
+</pre></div>
+</div>
+</div>
+<div class="section" id="resumejob">
+<span id="resumejob-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">ResumeJob</a><a class="headerlink" href="#resumejob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Resumes the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -ResumeJob</strong> &lt;Job ID(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>To resume a Job, it must be in the <strong>Suspended</strong> state:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SuspendJob 5b747b30c3ca512de42d01d2
+    Suspended job(s) 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -ResumeJob 5b747b30c3ca512de42d01d2
+    Resumed job(s) 5b747b30c3ca512de42d01d2
+
+C:\&gt;
+</pre></div>
+</div>
+<p>If the Job is already resumed (in <strong>Queued</strong> state), the following message will be printed:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -ResumeJob 5b747b30c3ca512de42d01d2
+    Could not resume the following job(s): 5b747b30c3ca512de42d01d2
+
+C:\&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the Job ID is invalid, no message will be printed</p>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -ResumeJob notavalidID
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="resumefailedjob">
+<span id="resumefailedjob-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">ResumeFailedJob</a><a class="headerlink" href="#resumefailedjob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Resumes the failed Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -ResumeFailedJob</strong> &lt;Job ID(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>The Job’s state must be <strong>Failed</strong> for this command to succeed:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -ResumeFailedJob 5b747b30c3ca512de42d01d2
+    Could not resume the following job(s) as they are not in the failed state: 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -FailJob 5b747b30c3ca512de42d01d2
+    Marked job(s) as failed 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -ResumeFailedJob 5b747b30c3ca512de42d01d2
+    Resumed failed job 5b747b30c3ca512de42d01d2
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="releasependingjob">
+<span id="releasependingjob-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">ReleasePendingJob</a><a class="headerlink" href="#releasependingjob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Releases the pending Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -ReleasePendingJob</strong> &lt;Job ID(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>The Job’s state must be <strong>Pending</strong> for this command to succeed:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -ReleasePendingJob 5b747b30c3ca512de42d01d2
+    Could not release the following job(s): 5b747b30c3ca512de42d01d2
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="completejob">
+<span id="completejob-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">CompleteJob</a><a class="headerlink" href="#completejob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Marks one or more Jobs as complete.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -CompleteJob</strong> &lt;Job ID(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>The Job’s state must not be <strong>Completed</strong> for this command to succeed:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -CompleteJob 5b747b30c3ca512de42d01d2
+    Marked job as complete 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -CompleteJob 5b747b30c3ca512de42d01d2
+    The following jobs were already in the completed state: 5b747b30c3ca512de42d01d2
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="failjob">
+<span id="failjob-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">FailJob</a><a class="headerlink" href="#failjob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Fails a Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -FailJob</strong> &lt;Job ID(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<blockquote>
+<div><p>See the example for <a class="reference internal" href="#resumefailedjob-dlc-ref-label"><span class="std std-ref">ResumeFailedJob</span></a></p>
+</div></blockquote>
+</div>
+<div class="section" id="requeuejob">
+<span id="requeuejob-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">RequeueJob</a><a class="headerlink" href="#requeuejob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Requeues the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -RequeueJob</strong> &lt;Job ID(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>The Job can be in <strong>any state</strong> for this command to succeed:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -RequeueJob 5b747b30c3ca512de42d01d2
+    Requeued job(s) 5b747b30c3ca512de42d01d2
+
+C:\&gt;deadlinecommand -RequeueJob 5b747b30c3ca512de42d01d2
+    Requeued job(s) 5b747b30c3ca512de42d01d2
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="resubmitjob">
+<span id="resubmitjob-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">ResubmitJob</a><a class="headerlink" href="#resubmitjob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Resubmits an existing Job with a new frame list and chunksize.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -ResubmitJob</strong> &lt;Job ID&gt; &lt;Frame List&gt; &lt;Chunk Size&gt; &lt;Submit Suspended&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The ID of the Job to resubmit</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Frame List&gt;</p></td>
+<td><p>The new frame list</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Chunk Size&gt;</p></td>
+<td><p>The new chunk size</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Submit Suspended&gt;</p></td>
+<td><p>If the Job should be submitted suspended (optional)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -ResubmitJob 5b747b30c3ca512de42d01d2 1,5,7-10 1 True
+
+    Submitting to Repository: C:\DeadlineRepository10
+
+    Submission Contains No Auxiliary Files.
+
+    Result=Success
+    JobID=5eeefe01c702a2509001f6da
+
+    The job was submitted successfully.
+
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="archive-and-import-jobs">
+<h2><a class="toc-backref" href="#contents">Archive and Import Jobs</a><a class="headerlink" href="#archive-and-import-jobs" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="archivejob">
+<span id="archivejob-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">ArchiveJob</a><a class="headerlink" href="#archivejob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Archives the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -ArchiveJob</strong> &lt;Job ID(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Archiving the Job created in the previous example for <a class="reference internal" href="#resubmitjob-dlc-ref-label"><span class="std std-ref">ResubmitJob</span></a>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -ArchiveJob 5eeefe01c702a2509001f6da
+    Archived job 5eeefe01c702a2509001f6da
+</pre></div>
+</div>
+</div>
+<div class="section" id="importjob">
+<span id="importjob-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">ImportJob</a><a class="headerlink" href="#importjob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Imports the archived Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -ImportJob</strong> &lt;Delete Archive&gt; &lt;Archived Job File&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Delete Archive&gt;</p></td>
+<td><p>If the original archive should be deleted (true/false).</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Archived Job File&gt;</p></td>
+<td><p>The archived Job file. Specify multiple files as separate parameters.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Importing the Job archived in the previous example for <a class="reference internal" href="#archivejob-dlc-ref-label"><span class="std std-ref">ArchiveJob</span></a>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -ImportJob False &quot;C:\DeadlineRepository10\jobsArchived\2020-06\aws__Redshift__Untitled 1.c4d - Main - Redshi__5eeefe01c702a2509001f6da.zip&quot;
+    Imported job C:\DeadlineRepository10\jobsArchived\2020-06\aws__Redshift__Untitled 1.c4d - Main - Redshi__5eeefe01c702a2509001f6da.zip
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="delete-job">
+<h2><a class="toc-backref" href="#contents">Delete Job</a><a class="headerlink" href="#delete-job" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="deletejob">
+<span id="deletejob-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">DeleteJob</a><a class="headerlink" href="#deletejob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Deletes the Job(s).</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -DeleteJob</strong> &lt;Job ID(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Deleting the Job imported in the previous example for <a class="reference internal" href="#importjob-dlc-ref-label"><span class="std std-ref">ImportJob</span></a>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -DeleteJob 5eeefe01c702a2509001f6da
+    Deleted job 5eeefe01c702a2509001f6da
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">The validity of the supplied Job ID will not be checked - if it is valid, it will be marked as deleted.</div>
+<div class="line">Re-running the command with the same Job ID will still report the Job was deleted.</div>
+<div class="line">Changing to an invalid ID will also report the Job was deleted.</div>
+</div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -DeleteJob TotallyNotAValidID
+    Deleted job TotallyNotAValidID
+</pre></div>
+</div>
+</div>
+<div class="section" id="getdeletedjobids">
+<span id="getdeletedjobids-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetDeletedJobIds</a><a class="headerlink" href="#getdeletedjobids" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays all the deleted job IDs</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetDeletedJobIds</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Showing the deleted Job from the previous example for <a class="reference internal" href="#deletejob-dlc-ref-label"><span class="std std-ref">DeleteJob</span></a>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetDeletedJobIds
+    5eeefe01c702a2509001f6da
+</pre></div>
+</div>
+</div>
+<div class="section" id="getdeletedjob">
+<span id="getdeletedjob-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetDeletedJob</a><a class="headerlink" href="#getdeletedjob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Display information for the deleted job(s).</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetDeletedJob</strong> &lt;Job ID(s)&gt; [&lt;Use Ini Display&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The job ID, or a list of job IDs separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Use Ini Display&gt;</p></td>
+<td><p>true/false (optional, default is false)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetDeletedJob 5eeefe01c702a2509001f6da
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The output of this command is too long to include here.</p>
+</div>
+</div>
+<div class="section" id="getdeletedjobs">
+<span id="getdeletedjobs-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetDeletedJobs</a><a class="headerlink" href="#getdeletedjobs" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays information for all the deleted jobs.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetDeletedJobs</strong> [&lt;Use Ini Display&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Use Ini Display&gt;</p></td>
+<td><p>true/false (optional, default is false)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetDeletedJobs True
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The output of this command is too long to include here.</p>
+</div>
+</div>
+<div class="section" id="undeletejob">
+<span id="undeletejob-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">UndeleteJob</a><a class="headerlink" href="#undeletejob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Undeletes the Job(s).</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -UndeleteJob</strong> &lt;Job ID(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The deleted Job ID, or a list of deleted Job IDs separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Undeleting the Job deleted in the previous example for <a class="reference internal" href="#deletejob-dlc-ref-label"><span class="std std-ref">DeleteJob</span></a>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -UndeleteJob 5eeefe01c702a2509001f6da
+    Undeleted job 5eeefe01c702a2509001f6da
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">The validity of the supplied Job ID will not be checked - if it is valid, it will be marked as not deleted.</div>
+<div class="line">Re-running the command with the same Job ID will still report the Job was undeleted.</div>
+<div class="line">Changing to an invalid ID will also report the Job was undeleted.</div>
+</div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -UndeleteJob TotallyNotAValidID
+    Undeleted job TotallyNotAValidID
+</pre></div>
+</div>
+</div>
+<div class="section" id="purgedeletedjob">
+<span id="purgedeletedjob-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">PurgeDeletedJob</a><a class="headerlink" href="#purgedeletedjob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Purges the deleted Job(s).</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -PurgeDeletedJob</strong> &lt;Job ID(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The deleted Job ID, or a list of deleted Job IDs separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -PurgeDeletedJob 5eeefe01c702a2509001f6da
+    Purged deleted job 5eeefe01c702a2509001f6da
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">The validity of the supplied Job ID will not be checked - if it is valid, it will be purged.</div>
+<div class="line">Re-running the command with the same Job ID will still report the Job was purged.</div>
+<div class="line">Changing to an invalid ID will also report the Job was purged.</div>
+</div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -PurgeDeletedJob TotallyNotAValidID
+    Purged deleted job TotallyNotAValidID
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="dependencies">
+<h2><a class="toc-backref" href="#contents">Dependencies</a><a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="selectdependencies">
+<span id="selectdependencies-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SelectDependencies</a><a class="headerlink" href="#selectdependencies" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Allows you to select a list of dependencies, then prints them to stdout.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SelectDependencies</strong> &lt;Initial Dependencies&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Initial Dependencies&gt;</p></td>
+<td><p>A comma separated list of the initially selected dependencies (optional)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="job-settings">
+<h2><a class="toc-backref" href="#contents">Job Settings</a><a class="headerlink" href="#job-settings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getjobauxiliarypath">
+<span id="getjobauxiliarypath-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobAuxiliaryPath</a><a class="headerlink" href="#getjobauxiliarypath" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays the Jobs Auxillary path</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobAuxiliaryPath</strong> &lt;Job ID&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobAuxiliaryPath 5b747b30c3ca512de42d01d2
+    C:\DeadlineRepository10\jobs\5b747b30c3ca512de42d01d2
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="getjobdetails">
+<span id="getjobdetails-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobDetails</a><a class="headerlink" href="#getjobdetails" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays the Job details.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobDetails</strong> &lt;Job ID(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobDetails 5b747b30c3ca512de42d01d2
+
+    Details for &quot;5b747b30c3ca512de42d01d2&quot;:
+
+        Job
+                ID:5b747b30c3ca512de42d01d2
+                Name:Untitled 1.c4d - Main - Redshift Standalone
+                User:aws
+                Submit Date:2018/08/15 12:12:47
+                Submit Machine:DESKTOP-GJ9K16C
+                Plugin:Redshift
+                Mode:Normal
+                Frames:0-10
+                Frames Per Task:1
+                Progress:0 %   (0/11)
+                Errors:2
+                Status:Queued
+                Start Date:2018/08/15 12:12:48
+                Finish Date:
+        Task States
+                Completed:0
+                Failed:0
+                Pending:0
+                Queued:11
+                Rendering:0
+                Suspended:0
+        Auxiliary Files
+                No auxiliary files.:
+        Output Directories
+                Output Path 1:C:\Users\AWS
+        Output Filenames
+                Output File 1:Desktop####.tif
+        Statistics
+                Running Time:675:09:30:32
+                Estimated Time Remaining:unknown
+                Total Task Time:00:00:00:00
+                Total Task Startup Time:00:00:00:00
+                Total Task Render Time:00:00:00:00
+                Total Normalized Task Render Time:00:00:00:00
+                Average Task Time:00:00:00:00
+                Average Task Startup Time:00:00:00:00
+                Average Task Render Time:00:00:00:00
+                Average Normalized Task Render Time:00:00:00:00
+                Average Frame Time:00:00:00:00
+                Average Normalized Frame Time:00:00:00:00
+                Peak RAM Usage:0 Bytes
+                Peak CPU Usage:0 %
+                Average RAM Usage:0 Bytes
+                Average CPU Usage:0 %
+                Total Output File Size:0 Bytes
+                Average Output File Size:0 Bytes
+        General Properties
+                Comment:
+                Department:
+                Pool:none
+                Secondary Pool:
+                Group:none
+                Batch Name:
+                Priority:50
+                Concurrent Tasks:1
+                Limit Tasks to Worker&#39;s Task Limit:Yes
+                On Job Complete:Do nothing
+                Job Is Protected:No
+                Re-synchronize Auxiliary Files Beteween Tasks:No
+                Reload Plugin Between Tasks:No
+                Enforce Sequential Rendering:No
+                Job Is Interruptible:No
+                Progress cut-off for Job Interruption:100
+                Remaining Time Threshold for Job Interruption:0
+                Suppress Event Plugins:No
+        Timeouts
+                Minimum Render Time:(no minimum)
+                Maximum Render Time:(no maximum)
+                Enable Timeouts for Pre/Post Job Scripts:No
+                Use the Timeouts for Frames instead of Tasks.:No
+                Auto Task Timeout:No
+                On Task Timeout:Error
+        Notifications
+                Override Notification Method:No
+                Notification Method:No Notification
+        Notification Users
+                User 1:aws
+        Notification Email Addresses
+                No notification emails:
+        Machine Limit
+                Machine Limit:(disabled)
+                Limit Stub Release Progress:(disabled)
+        Whitelisted Workers
+                Worker 1:desktop-gj9k16c
+        Limits
+                No limits:
+        Dependency Properties
+                Resume on Completed Dependencies:Yes
+                Resume on Failed Dependencies:No
+                Resume on Deleted Dependencies:No
+                Use Frame Dependencies:Yes
+                Frame Offset Start:0
+                Frame Offset End:0
+                Dependency Release Percentage:
+        Job Dependencies
+                Job 1:5b74aad0c3ca513524a7ae6b
+        Required Assets
+                No assets:
+        Failure Detection
+                Override Failed Job Detection:No
+                Override Failed Task Detection:No
+                Send Warning For Job Errors:Yes
+                Ignore Bad Worker Detection:No
+        Scheduling
+                Mode:Disabled
+        Scripts
+                Pre Job Script:
+                Post Job Script:
+                Pre Task Script:
+                Post Task Script:
+        Script Dependencies
+                No script dependencies:
+        Environment Variables
+                No environment variables:
+        Extra Info
+                Extra Info 0:
+                Extra Info 1:
+                Extra Info 2:
+                Extra Info 3:
+                Extra Info 4:
+                Extra Info 5:
+                Extra Info 6:
+                Extra Info 7:
+                Extra Info 8:
+                Extra Info 9:
+        Extra Info Key/Value Pairs
+                No extra info key/value pairs:
+        Redshift Properties
+                SceneFile:Z:\RS Scenes\v001\justABox_Main0000.rs
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="getjoblogreportfilenames">
+<span id="getjoblogreportfilenames-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobLogReportFilenames</a><a class="headerlink" href="#getjoblogreportfilenames" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Gets the log report filenames for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobLogReportFilenames</strong> &lt;Job ID&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobLogReportFilenames 5b747b30c3ca512de42d01d2
+    C:\DeadlineRepository10\reports\jobs\1d\2\5b747b30c3ca512de42d01d2\5b747c1fae5ef133d8625e4f.bz2
+    C:\DeadlineRepository10\reports\jobs\1d\2\5b747b30c3ca512de42d01d2\5b747c16ae5ef133d8625e4e.bz2
+    C:\DeadlineRepository10\reports\jobs\1d\2\5b747b30c3ca512de42d01d2\5b747c0bae5ef133d8625e4d.bz2
+    C:\DeadlineRepository10\reports\jobs\1d\2\5b747b30c3ca512de42d01d2\5b747c00ae5ef133d8625e4c.bz2
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="getjoberrorreportfilenames">
+<span id="getjoberrorreportfilenames-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobErrorReportFilenames</a><a class="headerlink" href="#getjoberrorreportfilenames" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Gets the error report filenames for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobErrorReportFilenames</strong> &lt;Job ID&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobErrorReportFilenames 5b747b30c3ca512de42d01d2
+    C:\DeadlineRepository10\reports\jobs\1d\2\5b747b30c3ca512de42d01d2\5b747bf780a7eb0bf14d1d03.bz2
+    C:\DeadlineRepository10\reports\jobs\1d\2\5b747b30c3ca512de42d01d2\5eeee1efcf30205f3001e6e6.bz2
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="getjobplugininfokeyvalue">
+<span id="getjobplugininfokeyvalue-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobPluginInfoKeyValue</a><a class="headerlink" href="#getjobplugininfokeyvalue" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Gets the value from the plugin info dictionary.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobPluginInfoKeyValue</strong> &lt;Job ID&gt; &lt;Plugin Info Key&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Plugin Info Key&gt;</p></td>
+<td><p>The plugin info key to get.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobPluginInfoKeyValue 5b747b30c3ca512de42d01d2 SceneFile
+    Z:\RS Scenes\v001\justABox_Main0000.rs
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="setjobplugininfokeyvalue">
+<span id="setjobplugininfokeyvalue-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetJobPluginInfoKeyValue</a><a class="headerlink" href="#setjobplugininfokeyvalue" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Sets the value of the specified key within the plugin info dictionary.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetJobPluginInfoKeyValue</strong> &lt;Job ID&gt; &lt;Plugin Info Key&gt; &lt;Value&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Plugin Info Key&gt;</p></td>
+<td><p>The plugin info key to get.</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Value&gt;</p></td>
+<td><p>The new value</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SetJobPluginInfoKeyValue 5b747b30c3ca512de42d01d2 SceneFile &quot;Z:\RS Scenes\v001\justABox_Main0001.rs&quot;
+    Set the key: SceneFile to: Z:\RS Scenes\v001\justABox_Main0001.rs
+
+C:\&gt;deadlinecommand -GetJobPluginInfoKeyValue 5b747b30c3ca512de42d01d2 SceneFile
+    Z:\RS Scenes\v001\justABox_Main0001.rs
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="getjobextrainfokeyvalue">
+<span id="getjobextrainfokeyvalue-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobExtraInfoKeyValue</a><a class="headerlink" href="#getjobextrainfokeyvalue" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Gets the value from the extra info dictionary.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobExtraInfoKeyValue</strong> &lt;Job ID&gt; &lt;Extra Info Key&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Extra Info Key&gt;</p></td>
+<td><p>The extra info key to get.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<blockquote>
+<div><p>See the example for the following command <a class="reference internal" href="#setjobextrainfokeyvalue-dlc-ref-label"><span class="std std-ref">SetJobExtraInfoKeyValue</span></a></p>
+</div></blockquote>
+</div>
+<div class="section" id="setjobextrainfokeyvalue">
+<span id="setjobextrainfokeyvalue-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetJobExtraInfoKeyValue</a><a class="headerlink" href="#setjobextrainfokeyvalue" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Sets the value of the specified key within the extra info dictionary.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetJobExtraInfoKeyValue</strong> &lt;Job ID&gt; &lt;Extra Info Key&gt; &lt;Value&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Extra Info Key&gt;</p></td>
+<td><p>The extra info key to get.</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Value&gt;</p></td>
+<td><p>The new value</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SetJobExtraInfoKeyValue 5b747b30c3ca512de42d01d2 CostCenter 033
+    Set the key: CostCenter to: 033
+
+C:\&gt;deadlinecommand -GetJobExtraInfoKeyValue 5b747b30c3ca512de42d01d2 CostCenter
+    033
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="getjobsetting">
+<span id="getjobsetting-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobSetting</a><a class="headerlink" href="#getjobsetting" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Gets the value of a setting for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobSetting</strong> &lt;Job ID&gt; &lt;Extra Setting&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Job Setting&gt;</p></td>
+<td><p>The Job setting</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="setjobsetting">
+<span id="setjobsetting-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetJobSetting</a><a class="headerlink" href="#setjobsetting" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Sets the value of a setting for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetJobSetting</strong> &lt;Job ID(s)&gt; &lt;Job Setting&gt; &lt;Value&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Job Setting&gt;</p></td>
+<td><p>The Job setting</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Value&gt;</p></td>
+<td><p>The new value</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="setjobframerange">
+<span id="setjobframerange-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetJobFrameRange</a><a class="headerlink" href="#setjobframerange" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Modifies the Job’s frame range.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetJobFrameRange</strong> &lt;Job ID(s)&gt; &lt;Frame List&gt; &lt;Chunk Size&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Frame List&gt;</p></td>
+<td><p>The new frame list</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Chunk Size&gt;</p></td>
+<td><p>The new chunk size</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="setjobmachinelimit">
+<span id="setjobmachinelimit-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetJobMachineLimit</a><a class="headerlink" href="#setjobmachinelimit" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Sets the machine limit for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetJobMachineLimit</strong> &lt;Job ID(s)&gt; &lt;Limit&gt; &lt;Listed&gt; &lt;Whitelist Flag&gt; [&lt;Limit Progress&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Limit&gt;</p></td>
+<td><p>The new limit</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Listed&gt;</p></td>
+<td><p>The listed Workers</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Whitelist Flag&gt;</p></td>
+<td><p>true/false</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Limit Progress&gt;</p></td>
+<td><p>The limit progress (optional)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="setjobmachinelimitlistedslaves">
+<span id="setjobmachinelimitlistedslaves-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetJobMachineLimitListedSlaves</a><a class="headerlink" href="#setjobmachinelimitlistedslaves" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Sets the Job’s listed Workers.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetJobMachineLimitListedSlaves</strong> &lt;Job ID(s)&gt;  &lt;Workers&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Workers&gt;</p></td>
+<td><p>The Workers, separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="setjobmachinelimitmaximum">
+<span id="setjobmachinelimitmaximum-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetJobMachineLimitMaximum</a><a class="headerlink" href="#setjobmachinelimitmaximum" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Sets the Job’s machine limit.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetJobMachineLimitMaximum</strong> &lt;Job ID(s)&gt;  &lt;Limit&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Limit&gt;</p></td>
+<td><p>The machine limit</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="setjobmachinelimitreleaseprogress">
+<span id="setjobmachinelimitreleaseprogress-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetJobMachineLimitReleaseProgress</a><a class="headerlink" href="#setjobmachinelimitreleaseprogress" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Sets the Job’s machine limit progress.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetJobMachineLimitReleaseProgress</strong> &lt;Job ID(s)&gt;  &lt;Limit Progress&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Limit Progress&gt;</p></td>
+<td><p>The limit progress</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="setjobmachinelimitwhitelistflag">
+<span id="setjobmachinelimitwhitelistflag-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetJobMachineLimitWhiteListFlag</a><a class="headerlink" href="#setjobmachinelimitwhitelistflag" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Sets the Job’s whitelist flag.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetJobMachineLimitWhiteListFlag</strong> &lt;Job ID(s)&gt;  &lt;Whitelist&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Whitelist&gt;</p></td>
+<td><p>True/False</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="updatejobsubmissiondate">
+<span id="updatejobsubmissiondate-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">UpdateJobSubmissionDate</a><a class="headerlink" href="#updatejobsubmissiondate" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Updates the Job submission date for the specified Job to be the current date.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -UpdateJobSubmissionDate</strong> &lt;Job ID&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="job-submission-and-rendering">
+<h2><a class="toc-backref" href="#contents">Job Submission and Rendering</a><a class="headerlink" href="#job-submission-and-rendering" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="submitbackgroundjob">
+<span id="submitbackgroundjob-dlc-ref-label"></span><span id="background-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SubmitBackgroundJob</a><a class="headerlink" href="#submitbackgroundjob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Submits a Job as a background process.</p>
+<p><strong>Alias:</strong> <code class="docutils literal notranslate"><span class="pre">Background</span></code></p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SubmitBackgroundJob</strong> &lt;notify&gt; &lt;Job Files&gt;</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>deadlinecommand -Background</strong> &lt;notify&gt; &lt;Job Files&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;notify&gt;</p></td>
+<td><p>This flag displays a notification window after the Jobs have been submitted</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Job Files&gt;</p></td>
+<td><p>The list of Job files</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="pluginsubmissioninfofromjob">
+<span id="pluginsubmissioninfofromjob-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">PluginSubmissionInfoFromJob</a><a class="headerlink" href="#pluginsubmissioninfofromjob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Generates a list of Plugin Submission Parameters that can be used to submit a similar Job to the one provided.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -PluginSubmissionInfoFromJob</strong> &lt;Job ID&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The ID of the Job on which to base the Plugin Submission Parameters.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="jobsubmissioninfofromjob">
+<span id="jobsubmissioninfofromjob-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">JobSubmissionInfoFromJob</a><a class="headerlink" href="#jobsubmissioninfofromjob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Generates a list of Job Submission Parameters that can be used to submit a similar Job to the one provided.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -JobSubmissionInfoFromJob</strong> &lt;Job ID&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The ID of the Job on which to base the Job Submission Parameters.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="generatesubmissioninfofiles">
+<span id="generatesubmissioninfofiles-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GenerateSubmissionInfoFiles</a><a class="headerlink" href="#generatesubmissioninfofiles" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Generates a Job Info file and a Plugin Info file that can be used to submit a new Job, based on an existing one.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GenerateSubmissionInfoFiles</strong> &lt;Job ID&gt; &lt;Job Info File&gt; &lt;Plugin Info File&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The ID of the Job on which to base the Submission Parameters.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Job Info File&gt;</p></td>
+<td><p>The file to which the Job Submission Info will be output.</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Plugin Info File&gt;</p></td>
+<td><p>The file to which the Plugin Submission Info will be output.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="getsubmissioninfo">
+<span id="getsubmissioninfo-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetSubmissionInfo</a><a class="headerlink" href="#getsubmissioninfo" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays common submission information that can be used by Job submission scripts.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetSubmissionInfo</strong> &lt;Type(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Type(s)&gt;</p></td>
+<td><p>A list of specific submission information. Each type should be separated by a space.
+The available types are:
+<code class="docutils literal notranslate"><span class="pre">version</span></code>, <code class="docutils literal notranslate"><span class="pre">shortversion</span></code>, <code class="docutils literal notranslate"><span class="pre">pools</span></code>, <code class="docutils literal notranslate"><span class="pre">groups</span></code>, <code class="docutils literal notranslate"><span class="pre">maxpriority</span></code>, <code class="docutils literal notranslate"><span class="pre">tasklimit</span></code>, <code class="docutils literal notranslate"><span class="pre">homedir</span></code>,
+<code class="docutils literal notranslate"><span class="pre">userhomedir</span></code>, <code class="docutils literal notranslate"><span class="pre">repodir:&lt;folder&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">repodirnocustom:&lt;folder&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">filetransferserver</span></code>.
+Note that <code class="docutils literal notranslate"><span class="pre">repodir</span></code> and <code class="docutils literal notranslate"><span class="pre">repodirnocustom</span></code> can be specified multiple times, and each one should be followed by a colon and a repository folder.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="submitcommandlinejob">
+<span id="submitcommandlinejob-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SubmitCommandLineJob</a><a class="headerlink" href="#submitcommandlinejob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Submits a generic command line Job to Deadline. The &lt;STARTFRAME&gt; and &lt;ENDFRAME&gt; strings in the command line arguments will be replaced with the actual start and end frame for each task. The &lt;QUOTE&gt; string in the command line arguments will be replaced with a ‘”’ character.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SubmitCommandLineJob</strong> &lt;<strong>executable</strong> &lt;Value&gt;&gt; [<strong>arguments</strong> &lt;Value&gt;] &lt;<strong>frames</strong> &lt;Value&gt;&gt; [<strong>chunksize</strong> &lt;Value&gt;] [<strong>pool</strong> &lt;Value&gt;] [<strong>group</strong> &lt;Value&gt;] [<strong>priority</strong> &lt;Value&gt;] [<strong>name</strong> &lt;Value&gt;] [<strong>department</strong> &lt;Value&gt;] [<strong>initialstatus</strong> &lt;Value&gt;] [<strong>prop</strong> &lt;Key=Value&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;<strong>executable</strong> &lt;Value&gt;&gt;</p></td>
+<td><p>Required: The command line executable.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;<strong>arguments</strong> &lt;Value&gt;&gt;</p></td>
+<td><p>Optional: The command line arguments.</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;<strong>frames</strong> &lt;Value&gt;&gt;</p></td>
+<td><p>Required: The frame range to render.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;<strong>chunksize</strong> &lt;Value&gt;&gt;</p></td>
+<td><p>Optional: The task chunk size.</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;<strong>pool</strong> &lt;Value&gt;&gt;</p></td>
+<td><p>Optional: The pool the Job belongs to.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;<strong>group</strong> &lt;Value&gt;&gt;</p></td>
+<td><p>Optional: The group the Job belongs to.</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;<strong>priority</strong> &lt;Value&gt;&gt;</p></td>
+<td><p>Optional: The Job priority (0 is the lowest).</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;<strong>name</strong> &lt;Value&gt;&gt;</p></td>
+<td><p>Optional: The Job name.</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;<strong>department</strong> &lt;Value&gt;&gt;</p></td>
+<td><p>Optional: The Job department.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;<strong>initialstatus</strong> &lt;Value&gt;&gt;</p></td>
+<td><p>Optional: The Job’s initial state (Active/Suspended).</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;<strong>prop</strong> &lt;Key=Value&gt;&gt;</p></td>
+<td><p>Optional: Extra submission properties in the form Key=Value.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="submitjobandnotify">
+<span id="submitjobandnotify-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SubmitJobAndNotify</a><a class="headerlink" href="#submitjobandnotify" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Submits a Job and notifies upon completion.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SubmitJobAndNotify</strong>  &lt;deleteFiles&gt; &lt;Job Files&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;deleteFiles&gt;</p></td>
+<td><p>Specify this flag to delete local files after submission</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Job Files&gt;</p></td>
+<td><p>The Job files</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="notify">
+<span id="notify-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">Notify</a><a class="headerlink" href="#notify" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Submits a Job and notifies upon completion.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -Notify</strong>  &lt;drop&gt; &lt;notify&gt; &lt;deleteFiles&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;drop&gt;</p></td>
+<td><p>Specify this flag to do a drop Job</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;notify&gt;</p></td>
+<td><p>Specify this flag to display a notification when submission completes</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;deleteFiles&gt;</p></td>
+<td><p>Specify this flag to delete local files after submission</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="submitmultiplejobsv2">
+<span id="submitmultiplejobs-dlc-ref-label"></span><span id="multi-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SubmitMultipleJobsV2</a><a class="headerlink" href="#submitmultiplejobsv2" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>SubmitMultipleJobsV2 is a new command for the submission of multiple jobs to Deadline, at the same time.
+Compared to SubmitMultipleJobs, SubmitMultipleJobsV2 allows the submission of complex dependency structures -
+that is submissions with jobs dependencies both on already existing jobs and on jobs already part of the submission.
+The new command minimizes the number of requests and responses needed to submit multiple jobs, resulting in better overall performance.</p>
+<p>SubmitMultipleJobsV2 requires the Deadline Client to be connected to the Repository using the Remote Connection Server.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SubmitMultipleJobsV2</strong> -jsonfilepath &lt;JSON File Path&gt; -auxFileChunkSizeInMiB &lt;Max Aux File Batch Size in MB&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;JSON File Path&gt;</p></td>
+<td><p>Required: The path to a file containing the definition for the job submission.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Max Aux File Batch Size in MB&gt;</p></td>
+<td><p>Optional: How large should each chunk of an aux file be when uploading. (Defaults to 1MB)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example Json File:</strong></p>
+<p>The JSON structure contains a <cite>Jobs</cite> field, which is an array of jobs. Each job should have the following fields:</p>
+<ul class="simple">
+<li><p>JobInfoFilePath - job path;</p></li>
+<li><p>PluginInfoFilePath - plugin information;</p></li>
+<li><p>JobDependencies - a list describe jobs on which a job depends on;</p></li>
+<li><p>AuxiliaryFiles - a list of job’s auxiliary files.</p></li>
+</ul>
+<p>Note that JobDependencies in the following can be set to null, or a list of existing jobs using the jobId:// prefix followed by the ID of a job already in Deadline.
+Additionally, jobs in the current submission - which don’t yet have an ID - can be referred by their position in the list of jobs using the index:// syntax.
+Indexation starts with 0, making the first job index  index://0.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+     &quot;Jobs&quot;: [
+                 {
+                     &quot;JobInfoFilePath&quot;:&quot;/path/to/job_1_info_file.txt&quot;,
+                     &quot;PluginInfoFilePath&quot;:&quot;/path/to/job_1_plugin_file.txt&quot;,
+                     &quot;JobDependencies&quot;:null,
+                     &quot;AuxiliaryFiles&quot;:[
+                         &quot;/path/to/aux_file_1.ext&quot;,
+                         &quot;/path/to/aux_file_2.ext&quot;,
+                     ]
+                 },
+                 {
+                 &quot;JobInfoFilePath&quot;:&quot;/path/to/job_2_info_file.txt&quot;,
+                 &quot;PluginInfoFilePath&quot;:&quot;/path/to/job_2_plugin_file.txt&quot;,
+                     &quot;JobDependencies&quot;:[
+                         &quot;index://0&quot;,
+                         &quot;jobId://6140bf0ddc2a9267443e5778&quot;,
+                         &quot;jobId://6140be77841dc62b94d05cc2&quot;
+                     ]
+                     &quot;AuxiliaryFiles&quot;:[
+                         &quot;/path/to/aux_file_1.ext&quot;,
+                         &quot;/path/to/aux_file_2.ext&quot;,
+                     ]
+                 },
+                 {
+                 &quot;JobInfoFilePath&quot;:&quot;/path/to/job_3_info_file.txt&quot;,
+                 &quot;PluginInfoFilePath&quot;:&quot;/path/to/job_3_plugin_file.txt&quot;,
+                     &quot;JobDependencies&quot;:[
+                         &quot;index://0&quot;,
+                         &quot;index://1&quot;
+                     ]
+                     &quot;AuxiliaryFiles&quot;:[
+                         &quot;/path/to/aux_file_3.ext&quot;,
+                         &quot;/path/to/aux_file_4.ext&quot;
+                     ]
+                 }
+             ]
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="submitmultiplejobs">
+<h3><a class="toc-backref" href="#contents">SubmitMultipleJobs</a><a class="headerlink" href="#submitmultiplejobs" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Note: For more flexible job submissions, it is recommended to use SubmitMultipleJobsV2 command instead.</p>
+<p>Submits multiple Jobs at once.</p>
+<p><strong>Alias:</strong> <code class="docutils literal notranslate"><span class="pre">Multi</span></code></p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SubmitMultipleJobs</strong>  &lt;dependent&gt; &lt;notify&gt; &lt;<strong>job</strong> &lt;Job Files&gt;&gt;</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>deadlinecommand -Multi</strong>  &lt;dependent&gt; &lt;notify&gt; &lt;<strong>job</strong> &lt;Job Files&gt;&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;dependent&gt;</p></td>
+<td><p>This flag makes each Job in the list of Jobs specified dependent on the previous Job. This is shorthand for specifying -dependsonprevious for each Job being submitted</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;notify&gt;</p></td>
+<td><p>This flag displays a notification window after the Jobs have been submitted</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;job &lt;Job Files&gt;&gt;</p></td>
+<td><p>This flag must precede each list of files for each individual Job being submitted. You can also add the -dependsonprevious flag to make a single Job dependent on the previous Job</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="renderjob">
+<span id="renderjob-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">RenderJob</a><a class="headerlink" href="#renderjob" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Renders a Job immediately on the local machine without submitting it to the Repository.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -RenderJob</strong>  &lt;JobInfoFile&gt; &lt;PluginInfoFile&gt; &lt;Auxiliary Files&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;JobInfoFile&gt;</p></td>
+<td><p>The Job info file</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;PluginInfoFile&gt;</p></td>
+<td><p>The plugin info file</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Auxiliary Files&gt;</p></td>
+<td><p>Additional optional files to submit with the Job (specify each file as a separate argument)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Jobs - Command Arguments</a><ul>
+<li><a class="reference internal" href="#get-jobs">Get Jobs</a><ul>
+<li><a class="reference internal" href="#getjobids">GetJobIds</a></li>
+<li><a class="reference internal" href="#getjobidsfilter">GetJobIdsFilter</a></li>
+<li><a class="reference internal" href="#getjobidsfilterand">GetJobIdsFilterAnd</a></li>
+<li><a class="reference internal" href="#getjobsfilter">GetJobsFilter</a></li>
+<li><a class="reference internal" href="#getjobsfilterand">GetJobsFilterAnd</a></li>
+<li><a class="reference internal" href="#getjobsfilterini">GetJobsFilterIni</a></li>
+<li><a class="reference internal" href="#getjobsfilteriniand">GetJobsFilterIniAnd</a></li>
+<li><a class="reference internal" href="#getjob">GetJob</a></li>
+<li><a class="reference internal" href="#getjobs">GetJobs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#modify-job-states">Modify Job States</a><ul>
+<li><a class="reference internal" href="#suspendjob">SuspendJob</a></li>
+<li><a class="reference internal" href="#suspendjobnonrenderingtasks">SuspendJobNonRenderingTasks</a></li>
+<li><a class="reference internal" href="#resumejob">ResumeJob</a></li>
+<li><a class="reference internal" href="#resumefailedjob">ResumeFailedJob</a></li>
+<li><a class="reference internal" href="#releasependingjob">ReleasePendingJob</a></li>
+<li><a class="reference internal" href="#completejob">CompleteJob</a></li>
+<li><a class="reference internal" href="#failjob">FailJob</a></li>
+<li><a class="reference internal" href="#requeuejob">RequeueJob</a></li>
+<li><a class="reference internal" href="#resubmitjob">ResubmitJob</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#archive-and-import-jobs">Archive and Import Jobs</a><ul>
+<li><a class="reference internal" href="#archivejob">ArchiveJob</a></li>
+<li><a class="reference internal" href="#importjob">ImportJob</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#delete-job">Delete Job</a><ul>
+<li><a class="reference internal" href="#deletejob">DeleteJob</a></li>
+<li><a class="reference internal" href="#getdeletedjobids">GetDeletedJobIds</a></li>
+<li><a class="reference internal" href="#getdeletedjob">GetDeletedJob</a></li>
+<li><a class="reference internal" href="#getdeletedjobs">GetDeletedJobs</a></li>
+<li><a class="reference internal" href="#undeletejob">UndeleteJob</a></li>
+<li><a class="reference internal" href="#purgedeletedjob">PurgeDeletedJob</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dependencies">Dependencies</a><ul>
+<li><a class="reference internal" href="#selectdependencies">SelectDependencies</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#job-settings">Job Settings</a><ul>
+<li><a class="reference internal" href="#getjobauxiliarypath">GetJobAuxiliaryPath</a></li>
+<li><a class="reference internal" href="#getjobdetails">GetJobDetails</a></li>
+<li><a class="reference internal" href="#getjoblogreportfilenames">GetJobLogReportFilenames</a></li>
+<li><a class="reference internal" href="#getjoberrorreportfilenames">GetJobErrorReportFilenames</a></li>
+<li><a class="reference internal" href="#getjobplugininfokeyvalue">GetJobPluginInfoKeyValue</a></li>
+<li><a class="reference internal" href="#setjobplugininfokeyvalue">SetJobPluginInfoKeyValue</a></li>
+<li><a class="reference internal" href="#getjobextrainfokeyvalue">GetJobExtraInfoKeyValue</a></li>
+<li><a class="reference internal" href="#setjobextrainfokeyvalue">SetJobExtraInfoKeyValue</a></li>
+<li><a class="reference internal" href="#getjobsetting">GetJobSetting</a></li>
+<li><a class="reference internal" href="#setjobsetting">SetJobSetting</a></li>
+<li><a class="reference internal" href="#setjobframerange">SetJobFrameRange</a></li>
+<li><a class="reference internal" href="#setjobmachinelimit">SetJobMachineLimit</a></li>
+<li><a class="reference internal" href="#setjobmachinelimitlistedslaves">SetJobMachineLimitListedSlaves</a></li>
+<li><a class="reference internal" href="#setjobmachinelimitmaximum">SetJobMachineLimitMaximum</a></li>
+<li><a class="reference internal" href="#setjobmachinelimitreleaseprogress">SetJobMachineLimitReleaseProgress</a></li>
+<li><a class="reference internal" href="#setjobmachinelimitwhitelistflag">SetJobMachineLimitWhiteListFlag</a></li>
+<li><a class="reference internal" href="#updatejobsubmissiondate">UpdateJobSubmissionDate</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#job-submission-and-rendering">Job Submission and Rendering</a><ul>
+<li><a class="reference internal" href="#submitbackgroundjob">SubmitBackgroundJob</a></li>
+<li><a class="reference internal" href="#pluginsubmissioninfofromjob">PluginSubmissionInfoFromJob</a></li>
+<li><a class="reference internal" href="#jobsubmissioninfofromjob">JobSubmissionInfoFromJob</a></li>
+<li><a class="reference internal" href="#generatesubmissioninfofiles">GenerateSubmissionInfoFiles</a></li>
+<li><a class="reference internal" href="#getsubmissioninfo">GetSubmissionInfo</a></li>
+<li><a class="reference internal" href="#submitcommandlinejob">SubmitCommandLineJob</a></li>
+<li><a class="reference internal" href="#submitjobandnotify">SubmitJobAndNotify</a></li>
+<li><a class="reference internal" href="#notify">Notify</a></li>
+<li><a class="reference internal" href="#submitmultiplejobsv2">SubmitMultipleJobsV2</a></li>
+<li><a class="reference internal" href="#submitmultiplejobs">SubmitMultipleJobs</a></li>
+<li><a class="reference internal" href="#renderjob">RenderJob</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="command-line-arguments-workers.html"
+                        title="previous chapter">Workers - Command Arguments</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="command-line-arguments-tasks.html"
+                        title="next chapter">Tasks - Command Arguments</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command-line-arguments-tasks.html" title="Tasks - Command Arguments"
+             >next</a></li>
+        <li class="right" >
+          <a href="command-line-arguments-workers.html" title="Workers - Command Arguments"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" >Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Jobs - Command Arguments</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

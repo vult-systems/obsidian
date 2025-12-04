@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Software Deployment &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Farm Statistics" href="statistics.html" />
+    <link rel="prev" title="Troubleshooting" href="troubleshooting.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="statistics.html" title="Farm Statistics"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="troubleshooting.html" title="Troubleshooting"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" accesskey="U">Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Software Deployment</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="software-deployment">
+<span id="software-deploy-ref-label"></span><h1>Software Deployment<a class="headerlink" href="#software-deployment" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Topics covered in this page require you to have administrator/root access to your machines to install/deploy software.</p>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Software <a class="reference external" href="https://en.wikipedia.org/wiki/Installation_(computer_programs)">Installation</a> across multiple machines can quickly become a time consuming process for IT professionals. Deadline provides support and compatibility with industry standard <a class="reference internal" href="event-plugins.html#scm-integration-ref-label"><span class="std std-ref">Software Configuration Management</span></a> solutions via it’s event plugin architecture. SCM solutions are best placed to provide comprehensive software deployment and configuration tools to support the various <a class="reference external" href="https://en.wikipedia.org/wiki/Installation_(computer_programs)#Types">installation methods</a>.</p>
+<p>Alternatively, you can use Deadline via its <a class="reference internal" href="manual-submission.html#maintenance-jobs-ref-label"><span class="std std-ref">Maintenance Job</span></a> type to carry out basic software deployment tasks as well as any operation which requires something to be executed ‘just once’ on each of your Deadline Workers. This allows you to submit a job to Deadline with the number of tasks equating to the number of Workers in your queue, taking into account Workers on the allow list or deny list during job submission. Additionally, <a class="reference internal" href="remote-control.html#remote-control-commands-ref-label"><span class="std std-ref">Remote Commands</span></a> can be executed from the Deadline Monitor for adhoc execution on a remote machine and feedback is provided via the <a class="reference internal" href="monitor.html#remote-commands-panel-ref-label"><span class="std std-ref">Remote Commands Panel</span></a>.</p>
+</div>
+<div class="section" id="software-configuration-management">
+<h2>Software Configuration Management<a class="headerlink" href="#software-configuration-management" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://cfengine.com"><img alt="CFEngine" src="../_images/events_scm_cfengine_logo.png" style="width: 200px; height: 100px;" /></a> <a class="reference external" href="https://puppetlabs.com"><img alt="Puppet" src="../_images/events_scm_puppet_logo.png" style="width: 200px; height: 100px;" /></a> <a class="reference external" href="https://saltstack.com"><img alt="Saltstack" src="../_images/events_scm_saltstack_logo.png" style="width: 200px; height: 100px;" /></a> <a class="reference external" href="https://www.chef.io"><img alt="Chef" src="../_images/events_scm_chef_logo.png" style="width: 200px; height: 100px;" /></a> <a class="reference external" href="https://www.ansible.com"><img alt="Ansible" src="../_images/events_scm_ansible_logo.png" style="width: 200px; height: 100px;" /></a></p>
+<p><a class="reference external" href="https://www.microsoft.com/en-gb/server-cloud/products/system-center-2012-r2-configuration-manager"><img alt="SCCM" src="../_images/events_scm_sccm_logo.png" style="width: 200px; height: 100px;" /></a> <a class="reference external" href="https://www.apple.com/remotedesktop"><img alt="ARD" src="../_images/events_scm_apple_remote_desktop_logo.png" style="width: 200px; height: 100px;" /></a> <a class="reference external" href="https://www.jamfsoftware.com/products/casper-suite"><img alt="Casper" src="../_images/events_scm_casper_logo.png" style="width: 200px; height: 100px;" /></a> <a class="reference external" href="https://www.munki.org/munki/"><img alt="Munki" src="../_images/events_scm_munki_logo.png" style="width: 200px; height: 100px;" /></a></p>
+<p>Deadline provides the possibility of integration with Software Configuration Management (SCM) systems such as <a class="reference external" href="https://cfengine.com/">CFEngine</a>, <a class="reference external" href="https://puppetlabs.com/">Puppet</a>, <a class="reference external" href="https://saltstack.com/">Saltstack</a>, <a class="reference external" href="https://www.chef.io/">Chef</a>, <a class="reference external" href="https://www.ansible.com">Ansible</a>, <a class="reference external" href="https://www.microsoft.com/en-gb/server-cloud/products/system-center-2012-r2-configuration-manager/">SCCM</a>, <a class="reference external" href="https://www.apple.com/remotedesktop">ARD</a>, <a class="reference external" href="https://www.jamfsoftware.com/products/casper-suite">Casper Suite</a>, <a class="reference external" href="https://www.munki.org/munki/">Munki</a> or indeed any SCM software via the Worker event callbacks. Deadline ships with <a class="reference internal" href="app-puppet.html#app-puppet-ref-label"><span class="std std-ref">Puppet</span></a> and <a class="reference internal" href="app-salt.html#app-salt-ref-label"><span class="std std-ref">Salt</span></a> <a class="reference internal" href="manual-submission.html#maintenance-jobs-ref-label"><span class="std std-ref">Maintenance Jobs</span></a> which can be submitted to Deadline via their Monitor submission scripts and also via <a class="reference internal" href="event-puppet.html#event-puppet-ref-label"><span class="std std-ref">Puppet</span></a> and <a class="reference internal" href="event-salt.html#event-salt-ref-label"><span class="std std-ref">Salt</span></a> <strong>Worker centric</strong> <a class="reference internal" href="event-plugins.html#event-plugins-ref-label"><span class="std std-ref">event</span></a> plugins.</p>
+</div>
+<div class="section" id="platform-installation">
+<h2>Platform Installation<a class="headerlink" href="#platform-installation" title="Permalink to this headline">¶</a></h2>
+<p>Software installation differs between studio pipelines but also between OS platforms. Windows typically provides a <code class="docutils literal notranslate"><span class="pre">Setup.exe</span></code> program that asks you some easy questions and takes care of the job for you. While Linux software can be almost that easy to install, you will sometimes find software that seems to fight you every step of the way. It’s beyond the scope of this manual to cover all the problems you might run into (searching Google can help here!), but here are a few pointers. Software tends to come in “packages”. In the Windows world a package is a <code class="docutils literal notranslate"><span class="pre">Setup.exe</span></code> or a <code class="docutils literal notranslate"><span class="pre">Program.zip</span></code> file. On a Mac a package is a <code class="docutils literal notranslate"><span class="pre">program.dmg</span></code> or a <code class="docutils literal notranslate"><span class="pre">program.pkg</span></code> file. In the Linux world, there are several kinds of packages, and each distribution has its own preferred package format and manager.</p>
+<div class="section" id="linux">
+<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h3>
+<p>The standard Linux package format (according to the Linux Standard Base) is RPM. An RPM package file normally will be named something like <code class="docutils literal notranslate"><span class="pre">program-version-other.rpm</span></code>. Another popular package format is DEB, the Debian software package. Debian packages and the Advanced Packaging Tool (<a class="reference external" href="https://en.wikipedia.org/wiki/Advanced_Packaging_Tool">APT</a>) were the first to introduce several advanced features that are now common, such as automatic dependency resolution and signed packages. A Debian package file normally will be named something like <code class="docutils literal notranslate"><span class="pre">program-version-other.deb</span></code>.</p>
+<p>There is a broad array of tools for working with DEB packages, but the one you will commonly use is <code class="docutils literal notranslate"><span class="pre">apt-get</span></code>, arguably the easiest of Linux package management tools. Typical <code class="docutils literal notranslate"><span class="pre">apt-get</span></code> commands for <strong>Debian</strong> and <strong>Ubuntu</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">packagename</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">remove</span> <span class="n">packagename</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">upgrade</span>
+</pre></div>
+</div>
+<p>where packagename is the name of the package you wish to install, remove, update or upgrade all packages on a system.</p>
+<p>On <strong>RedHat</strong> and <strong>Fedora</strong>, the <a class="reference external" href="https://en.wikipedia.org/wiki/Yellowdog_Updater,_Modified">YUM</a> package manager is used. Typical <code class="docutils literal notranslate"><span class="pre">yum</span></code> commands might be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">yum</span> <span class="n">install</span> <span class="n">packagename</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yum</span> <span class="n">remove</span> <span class="n">packagename</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yum</span> <span class="n">update</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yum</span> <span class="n">update</span> <span class="n">packagename</span>
+</pre></div>
+</div>
+<p>On <strong>Mandriva</strong> Linux (formerly Mandrake and Connectiva), the <code class="docutils literal notranslate"><span class="pre">urpm</span></code> manager is used with typical commands such as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">urpmi</span> <span class="n">packagename</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">urpme</span> <span class="n">packagename</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">urpmi</span><span class="o">.</span><span class="n">update</span> <span class="o">-</span><span class="n">a</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">urpmi</span> <span class="o">--</span><span class="n">auto</span><span class="o">-</span><span class="n">select</span>
+</pre></div>
+</div>
+<p>Finally, a <a class="reference external" href="https://en.wikipedia.org/wiki/Tar_(computing)">tar ball</a> is a (usually compressed) archive of files, similar to a Zip file on Windows or a Sit on the Mac. Tar balls come in files that end in .tar, .tar.gz, or .tgz. To unpack a tar ball, use this command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">tar</span> <span class="o">-</span><span class="n">xzvf</span> <span class="n">filename</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">filename</span></code> is the name of the tarball file received. This command will not install the software, it will only extract the archived files. It is your job then to find the <em>README</em> file or <em>INSTALL</em> file and read its instructions for installation. If the archive contains binaries there will usually be a setup script (often called <code class="docutils literal notranslate"><span class="pre">install.sh</span></code>) that you must execute with root privileges. Very often, software delivered in tar balls is not in executable form, but in source code, which must first be compiled before it can be installed.</p>
+</div>
+<div class="section" id="macos">
+<h3>macOS<a class="headerlink" href="#macos" title="Permalink to this headline">¶</a></h3>
+<p>Typical macOS *.dmg and *.pkg commercial and open-source software deployment solutions:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.apple.com/remotedesktop/">Apple Remote Desktop</a></p></li>
+<li><p><a class="reference external" href="https://www.jamfsoftware.com/products/casper-suite/">Casper</a></p></li>
+<li><p><a class="reference external" href="https://www.munki.org/munki/">Munki</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Installer_(OS_X)">macOS Installer</a>, executed via a shell script, possibly by <a class="reference external" href="https://en.wikipedia.org/wiki/Automator_(software)">macOS Automater</a>.</p></li>
+<li><p><a class="reference external" href="https://sveinbjorn.org/platypus">Platypus</a> to wrap native, Ruby, Perl, Python scripts as a standalone bundled app.</p></li>
+</ul>
+<p>There are also many tools to create an installer package from an “Install macOS.app” or *.dmg file in preparation to be deployed such as <a class="reference external" href="https://www.munki.org/createOSXinstallPkg/">Createosxinstallpkg</a>.</p>
+</div>
+<div class="section" id="windows">
+<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
+<p>The remainder of this document will explain various techniques to deploy software on Windows OS based machines.</p>
+</div>
+</div>
+<div class="section" id="unattended-installation">
+<h2>Unattended Installation<a class="headerlink" href="#unattended-installation" title="Permalink to this headline">¶</a></h2>
+<p>A popular approach when a large quantity of software/configuration is required is to create a pre-defined OS image of a known ‘good’ machine and use a tool such as the <a class="reference external" href="https://www.fogproject.org/">FOG Project</a> or Microsoft’s <a class="reference external" href="https://en.wikipedia.org/wiki/Remote_Installation_Services">Remote Installation Services</a> to deploy the computer image across your network. There are software installer packages which typically provide the means to install their ‘wrapped’ software in a silent and/or unattended manner. The open-source project <a class="reference external" href="https://unattended.sourceforge.net/index.php">Unattended</a> attempts to support many of these installer systems, whilst <a class="reference external" href="https://www.silentinstall.org/">Silent Install Builder</a> provides a commercial solution.</p>
+<div class="section" id="common-installers">
+<h3>Common Installers<a class="headerlink" href="#common-installers" title="Permalink to this headline">¶</a></h3>
+<p>There are many commercial software installers commonly in use which all have some kind of silent <a class="reference external" href="https://www.itninja.com/blog/view/packaging-software-making-software-install-silently">install</a> option:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.installshield.com/">InstallShield</a>. InstallShield has the following <a class="reference external" href="https://helpnet.installshield.com/installshield18helplib/HelpLib.htm#IHelpSetup_EXECmdLine.htm">Command-Line Parameters</a>.</p></li>
+<li><p><a class="reference external" href="https://www.jrsoftware.org/isinfo.php">Inno Setup</a>. Inno Setup has the following <a class="reference external" href="https://www.silentinstall.org/inno_setup">Setup Install Parameters</a>.</p></li>
+<li><p><a class="reference external" href="https://nsis.sourceforge.net/Main_Page">Nullsoft Installer (NSIS)</a>. NSIS has the following <a class="reference external" href="https://www.silentinstall.org/nsis">Silent Options</a>.</p></li>
+<li><p><a class="reference external" href="https://msdn.microsoft.com/en-us/library/cc185688(VS.85).aspx">Windows Installer MSI/MSP</a>. MSI has the following <a class="reference external" href="https://www.silentinstall.org/msiexec">Silent Install Options</a>.</p></li>
+<li><p><a class="reference external" href="https://installbuilder.com">InstallBuilder</a> (<a class="reference internal" href="logs.html#logs-installbuilder-installers-ref-label"><span class="std std-ref">Deadline</span></a> uses InstallBuilder)</p></li>
+</ul>
+</div>
+<div class="section" id="probing-installers">
+<h3>Probing Installers<a class="headerlink" href="#probing-installers" title="Permalink to this headline">¶</a></h3>
+<p>Beyond the common installer systems used, it is sometimes necessary to manually probe an installer or application for <em>hidden</em> command line flags. Several approaches are possible here.</p>
+<ul>
+<li><p><strong>Manual Command Prompt</strong>.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/software_deploy_probe_cmd.png"><img alt="../_images/software_deploy_probe_cmd.png" src="../_images/software_deploy_probe_cmd.png" style="height: 300px;" /></a>
+<p>Try executing the installer/application at the command line with administrator rights. Try all of these possible flags:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>installer.exe /?
+installer.exe -?
+installer.exe /help
+installer.exe -help
+installer.exe --help
+installer.exe /silent
+installer.exe -silent
+installer.exe --silent
+installer.exe /s
+installer.exe -s
+installer.exe --s
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p><strong>Universal-Silent-Switch-Finder</strong> (USSF) may find a hidden flag. An old style application, which you may need to search the internet to download, possibly from one of these locations; <a class="reference external" href="https://www.itninja.com/link/universal-silent-switch-finder">link1</a>, <a class="reference external" href="https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Universal-Silent-Switch-Finder.shtml">link2</a> or <a class="reference external" href="https://www.raymond.cc/blog/find-hidden-command-line-silent-switches-for-setup-files/">link3</a>. In the example below, the 3ds Max 2016 Extension 1 install executable is actually a WinRAR file with a silent install “/s” flag being available.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/software_deploy_probe_ussf.png"><img alt="../_images/software_deploy_probe_ussf.png" src="../_images/software_deploy_probe_ussf.png" style="height: 300px;" /></a>
+</div></blockquote>
+</li>
+<li><p><strong>Process Explorer</strong> available <a class="reference external" href="https://technet.microsoft.com/en-gb/sysinternals/bb896653.aspx">here</a> can be useful. Download and run ProcessExplorer, run the installer or application executable you wish to probe, right-click in ProcessExplorer, click on Properties and String Values, then copy and paste this entire list of any string variables found in the binary executable to a text editor of choice, then search for anything starting with the characters: “/”, “-” or “–”, which will possibly find any command line parameters. For example, Autodesk’s <a class="reference internal" href="app-vred.html#app-vred-ref-label"><span class="std std-ref">VREDPro.exe</span></a> and the <a class="reference internal" href="app-vred.html#app-vred-ref-label"><span class="std std-ref">VREDServerNode.exe</span></a> have an un-documented “-prepython” flag which was found by this approach.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/software_deploy_probe_process_explorer.png"><img alt="../_images/software_deploy_probe_process_explorer.png" src="../_images/software_deploy_probe_process_explorer.png" style="height: 300px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="repackaging">
+<h3>RePackaging<a class="headerlink" href="#repackaging" title="Permalink to this headline">¶</a></h3>
+<p>There are several tools around which can take a snapshot of a machine’s state before and after a manual installation, compute the differences between the states, and bundle them up as an “installer”. This approach tends to be unreliable, requiring re-packaging for every new release of an application. An installer’s behavior may depend on the exact initial state of the machine, such as the OS version or the presence/absence of other installed software. So the repackaged installer will almost never do exactly the same thing that a fresh installation would, unless the target machine is completely identical to the original machine. Repackaging isn’t recommended.</p>
+</div>
+<div class="section" id="click-automation">
+<h3>Click Automation<a class="headerlink" href="#click-automation" title="Permalink to this headline">¶</a></h3>
+<p>Far from ideal, software does exist to emulate the keyboard and mouse clicks for an installer to successfully execute. There are commercial software solutions such as <a class="reference external" href="https://www.silentinstall.org/">Silent Install</a> as well as open source Win32 API based scripting solutions such as <a class="reference external" href="https://www.autoitscript.com">AutoITScript</a>.</p>
+</div>
+</div>
+<div class="section" id="remote-commands">
+<h2>Remote Commands<a class="headerlink" href="#remote-commands" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="monitor.html#monitor-ref-label"><span class="std std-ref">Deadline Monitor</span></a> or <a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">DeadlineCommand</span></a> can be used to execute <a class="reference internal" href="remote-control.html#remote-control-commands-ref-label"><span class="std std-ref">Remote Commands</span></a> on a machine running Worker and Pulse. Any kind of script or executable could be used here, assuming Deadline Launcher and Worker has the permission to execute the contents of the script on the target machine(s). Software wrappers are available to ‘compile’ a script into an executable, which can be used to also embed user credentials. Consider using <a class="reference external" href="https://cx-freeze.sourceforge.net/">cx_Freeze</a> to ‘freeze’ the state of a Python script and to ensure it works on any platform that Python supports.</p>
+<p>Once you have a working, network accessible script, it could be executed ad hoc such as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cmd</span> <span class="o">/</span><span class="n">C</span> <span class="s2">&quot;/path/to/batch_script_to_install_software.bat&quot;</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="remote-control.html#remote-control-commands-panel-ref-label"><span class="std std-ref">Remote Commands Panel</span></a> shows all pending and completed remote commands that were sent from the Monitor. When sending a remote command, if this panel is not already displayed, it will be displayed automatically (assuming you have permissions to see the Remote Command panel). If a command returns a non-zero exit code, the command will be interpreted as having failed.</p>
+<a class="reference internal image-reference" href="../_images/monitor_remote_panel.png"><img alt="../_images/monitor_remote_panel.png" src="../_images/monitor_remote_panel.png" style="height: 300px;" /></a>
+</div>
+<div class="section" id="maintenance-job">
+<h2>Maintenance Job<a class="headerlink" href="#maintenance-job" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="../_images/sub_cmdline.png"><img alt="CommandLine" src="../_images/sub_cmdline.png" style="height: 500px;" /></a> <a class="reference internal" href="../_images/sub_python.png"><img alt="Python" src="../_images/sub_python.png" style="height: 500px;" /></a></p>
+<p>Any Deadline job can be submitted as a <a class="reference internal" href="manual-submission.html#maintenance-jobs-ref-label"><span class="std std-ref">Maintenance Job</span></a>. However, the option is only exposed in the UI submitters for the <a class="reference internal" href="app-command-line.html#app-command-line-ref-label"><span class="std std-ref">CommandLine</span></a> and <a class="reference internal" href="app-python.html#app-python-ref-label"><span class="std std-ref">Python</span></a> plugins. However, another scripting language such as Perl or Ruby could easily be created to support this workflow. The <a class="reference internal" href="manual-submission.html#manual-submission-ref-label"><span class="std std-ref">Manual Job Submission</span></a> section explains that maintenance jobs are special jobs where each task for the job will render on a different machine in your farm. This is useful for performing benchmark tests, installing new software, synchronizing files to each machine, etc. When a maintenance job is submitted, a task will automatically be created for each Worker, and once a Worker has finished a task, it will no longer pick up the job. Note that if you specify an allow list or deny list in the job info file, the number of tasks that are created for the Maintenance job will equal the number of valid Workers that the job could render on.</p>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="autodesk">
+<h3>Autodesk<a class="headerlink" href="#autodesk" title="Permalink to this headline">¶</a></h3>
+<p>Many of Autodesk’s software installers allow a <strong>network deployment</strong> to be created, which creates a full copy (network located) of the software to be installed and provides a “silent install” shortcut, which can simply be double-clicked by a user with permissions to install or executed via a SCCM solution, Deadline <a class="reference internal" href="remote-control.html#remote-control-commands-ref-label"><span class="std std-ref">Remote Command</span></a> or Deadline <a class="reference internal" href="manual-submission.html#maintenance-jobs-ref-label"><span class="std std-ref">Maintenance Job</span></a>. Autodesk provides specific guidance here:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://knowledge.autodesk.com/search-result/caas/CloudHelp/cloudhelp/2015/ENU/Autodesk-NetworkAdmin/files/GUID-F46A4A5C-51F8-49AA-BF53-EBF2FDA532B9-htm.html">How to Create a Deployment</a></p></li>
+<li><p><a class="reference external" href="https://knowledge.autodesk.com/customer-service/network-license-administration/network-deployment/overview-deployments/best-practices-for-creating-deployment">Best Practices for Creating a Deployment</a></p></li>
+</ul>
+<p>Once built, deployments can later be modified, in the case of an extension/service pack becoming available.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://knowledge.autodesk.com/support/3ds-max/troubleshooting/caas/sfdcarticles/sfdcarticles/How-do-Install-3ds-MAX-extensions-silently-in-deployment.html">How to install 3ds Max extensions silently in deployment</a></p></li>
+</ul>
+<p>Additionally, Autodesk service pack / hotfix / extensions (msi/msp) files can typically be silently installed as well:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">msiexec</span><span class="o">.</span><span class="n">exe</span> <span class="o">/</span><span class="n">p</span> <span class="s2">&quot;3dsMax2016_SP1.msp&quot;</span> <span class="o">/</span><span class="n">qn</span> <span class="o">/</span><span class="n">norestart</span> <span class="o">/</span><span class="n">log</span> <span class="n">output</span><span class="o">.</span><span class="n">log</span>
+</pre></div>
+</div>
+<p>This <em>should</em> work with any of the EXE update releases that Autodesk provides. You will need to convert the EXE file to an MSP with the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AutoCAD_2013_SP1</span><span class="o">.</span><span class="mi">1</span><span class="n">_64bit</span><span class="o">.</span><span class="n">exe</span> <span class="o">/</span><span class="n">e</span> <span class="o">./</span><span class="n">AutoCAD_2013_SP1</span><span class="o">.</span><span class="mi">1</span><span class="n">_64bit</span><span class="o">.</span><span class="n">msp</span>
+</pre></div>
+</div>
+<p>Note, there has been the odd exception, where an EXE file is actually a WinRAR EXE file, which after ‘extracting’ the files, you will then be able to run an EXE or MSP file.</p>
+</div>
+<div class="section" id="chaos-group">
+<h3>Chaos Group<a class="headerlink" href="#chaos-group" title="Permalink to this headline">¶</a></h3>
+<p>Here are silent install instructions for <a class="reference external" href="https://docs.chaosgroup.com/display/VRAY3/Silent+Installation+of+V-Ray+for+3ds+Max">V-Ray for 3ds Max</a>, <a class="reference external" href="https://docs.chaosgroup.com/display/VRAY3MAYA/Silent+Installation+of+V-Ray+for+Maya">V-Ray for Maya</a>, and <a class="reference external" href="https://docs.chaosgroup.com/display/VS/Silent+Installation+of+V-Ray+Standalone">V-Ray Standalone</a>.</p>
+<p>Here are instructions to run V-Ray for <a class="reference external" href="https://docs.chaosgroup.com/display/VRAY3/Running+V-Ray+from+an+arbitrary+location">3ds Max</a> or <a class="reference external" href="https://docs.chaosgroup.com/display/VRAY3MAYA/Installation+of+V-Ray+for+Maya+from+a+.zip+File">Maya/Standalone</a> from an arbitrary location.</p>
+</div>
+<div class="section" id="render-legion">
+<h3>Render Legion<a class="headerlink" href="#render-legion" title="Permalink to this headline">¶</a></h3>
+<p>To install the Corona Renderer software silently into 3dsMax, you should first run the installer manually, select the option to <strong>just unpack</strong>, then you will get a folder structure that you can copy directly into your 3dsmax folder to perform the installation. The copying of the files could be automated via a simple batch or Python script, executed as a Remote Command or Maintenance Job in Deadline. It’s noted from the developers of Corona that the option for silent install is not in the installer because the customer needs to agree to the EULA at least once when unpacking.</p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Software Deployment</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#software-configuration-management">Software Configuration Management</a></li>
+<li><a class="reference internal" href="#platform-installation">Platform Installation</a><ul>
+<li><a class="reference internal" href="#linux">Linux</a></li>
+<li><a class="reference internal" href="#macos">macOS</a></li>
+<li><a class="reference internal" href="#windows">Windows</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#unattended-installation">Unattended Installation</a><ul>
+<li><a class="reference internal" href="#common-installers">Common Installers</a></li>
+<li><a class="reference internal" href="#probing-installers">Probing Installers</a></li>
+<li><a class="reference internal" href="#repackaging">RePackaging</a></li>
+<li><a class="reference internal" href="#click-automation">Click Automation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#remote-commands">Remote Commands</a></li>
+<li><a class="reference internal" href="#maintenance-job">Maintenance Job</a></li>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#autodesk">Autodesk</a></li>
+<li><a class="reference internal" href="#chaos-group">Chaos Group</a></li>
+<li><a class="reference internal" href="#render-legion">Render Legion</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="troubleshooting.html"
+                        title="previous chapter">Troubleshooting</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="statistics.html"
+                        title="next chapter">Farm Statistics</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="statistics.html" title="Farm Statistics"
+             >next</a></li>
+        <li class="right" >
+          <a href="troubleshooting.html" title="Troubleshooting"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" >Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Software Deployment</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

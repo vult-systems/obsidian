@@ -1,0 +1,474 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Reports &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Users" href="rest-users.html" />
+    <link rel="prev" title="Tasks" href="rest-tasks.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="rest-users.html" title="Users"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="rest-tasks.html" title="Tasks"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-rest-api.html" accesskey="U">RESTful HTTP API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Task Reports</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="task-reports">
+<span id="rest-task-reports-ref-label"></span><h1>Task Reports<a class="headerlink" href="#task-reports" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 11%" />
+<col style="width: 9%" />
+<col style="width: 8%" />
+<col style="width: 9%" />
+<col style="width: 10%" />
+<col style="width: 8%" />
+<col style="width: 9%" />
+<col style="width: 8%" />
+<col style="width: 11%" />
+<col style="width: 8%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td colspan="11"><p><a class="reference internal" href="rest-overview.html#rest-overview-ref-label"><span class="std std-ref">REST Overview</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="rest-jobs.html#rest-jobs-ref-label"><span class="std std-ref">Jobs</span></a></p></td>
+<td><p><a class="reference internal" href="rest-job-reports.html#rest-job-reports-ref-label"><span class="std std-ref">Job Reports</span></a></p></td>
+<td><p><a class="reference internal" href="rest-groups.html#rest-groups-ref-label"><span class="std std-ref">Groups</span></a></p></td>
+<td><p><a class="reference internal" href="rest-pools.html#rest-pools-ref-label"><span class="std std-ref">Pools</span></a></p></td>
+<td><p><a class="reference internal" href="rest-limits.html#rest-limits-ref-label"><span class="std std-ref">Limits</span></a></p></td>
+<td><p><a class="reference internal" href="rest-repository.html#rest-repository-ref-label"><span class="std std-ref">Repository</span></a></p></td>
+<td><p><a class="reference internal" href="rest-pulse.html#rest-pulse-ref-label"><span class="std std-ref">Pulse</span></a></p></td>
+<td><p><a class="reference internal" href="rest-workers.html#rest-workers-ref-label"><span class="std std-ref">Workers</span></a></p></td>
+<td><p><a class="reference internal" href="rest-tasks.html#rest-tasks-ref-label"><span class="std std-ref">Tasks</span></a></p></td>
+<td><p><a class="reference internal" href="#rest-task-reports-ref-label"><span class="std std-ref">Task Reports</span></a></p></td>
+<td><p><a class="reference internal" href="rest-users.html#rest-users-ref-label"><span class="std std-ref">Users</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
+<li><p><a class="reference internal" href="#requests-and-responses" id="id2">Requests and Responses</a></p>
+<ul>
+<li><p><a class="reference internal" href="#get-all-task-reports" id="id3">Get All Task Reports</a></p></li>
+<li><p><a class="reference internal" href="#get-task-error-reports" id="id4">Get Task Error Reports</a></p></li>
+<li><p><a class="reference internal" href="#get-task-log-reports" id="id5">Get Task Log Reports</a></p></li>
+<li><p><a class="reference internal" href="#get-task-requeue-reports" id="id6">Get Task Requeue Reports</a></p></li>
+<li><p><a class="reference internal" href="#get-all-task-report-contents" id="id7">Get All Task Report Contents</a></p></li>
+<li><p><a class="reference internal" href="#get-all-task-error-report-contents" id="id8">Get All Task Error Report Contents</a></p></li>
+<li><p><a class="reference internal" href="#get-all-task-log-report-contents" id="id9">Get All Task Log Report Contents</a></p></li>
+<li><p><a class="reference internal" href="#get-all-task-requeue-report-contents" id="id10">Get All Task Requeue Report Contents</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#task-report-property-values" id="id11">Task Report Property Values</a></p></li>
+</ul>
+</div>
+<div class="section" id="overview">
+<h2><a class="toc-backref" href="#contents">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Task Report requests can be used to retrieve Task Reports for a Job Task using the <code class="docutils literal notranslate"><span class="pre">GET</span></code> request type.</p>
+<p><code class="docutils literal notranslate"><span class="pre">PUT</span></code>, <code class="docutils literal notranslate"><span class="pre">POST</span></code>, and <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> are <strong>not supported</strong> and sending a message of any of these types will result in a <strong>501 Not Implemented Error</strong> message.</p>
+<p>For more about these request types and their uses see the <a class="reference internal" href="rest-overview.html#types-of-http-ref-label"><span class="std std-ref">Request Formats and Responses</span></a> documentation.</p>
+</div>
+<div class="section" id="requests-and-responses">
+<h2><a class="toc-backref" href="#contents">Requests and Responses</a><a class="headerlink" href="#requests-and-responses" title="Permalink to this headline">¶</a></h2>
+<p>List of possible requests for Task Reports.</p>
+<p>It is possible to get a <strong>400 Bad Request Error</strong> message for any of the requests if the value for Data is incorrect.</p>
+<p>All requests may return a <strong>400 Bad Request Error</strong> message if no Job ID is provided or a <strong>500 Internal Server Error</strong> if the Job ID provided does not correspond to any Job in the Repository.</p>
+<p>All requests may also return a <strong>400 Bad Request Error</strong> message if the Task ID was not provided, or was not valid, or was not an integer.</p>
+<div class="section" id="get-all-task-reports">
+<h3><a class="toc-backref" href="#contents">Get All Task Reports</a><a class="headerlink" href="#get-all-task-reports" title="Permalink to this headline">¶</a></h3>
+<p>Gets all the Task Reports for the Job Task that corresponds to the provided Job ID and provided Task ID.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/taskreports?Data=all&amp;JobID=validJobID&amp;TaskID=validTaskID</p>
+<p>http://hostname:portnumber/api/taskreports?JobID=validJobID&amp;TaskID=validTaskID</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>GET</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>JSON object containing all the Task reports for the requested Job Task, or a message stating that there are no reports for the Job Task.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="get-task-error-reports">
+<h3><a class="toc-backref" href="#contents">Get Task Error Reports</a><a class="headerlink" href="#get-task-error-reports" title="Permalink to this headline">¶</a></h3>
+<p>Gets all the Task Error Reports for the Job Task that corresponds to the provided Job ID and provided Task ID.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/taskreports?Data=error&amp;JobID=validJobID&amp;TaskID=validTaskID</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>GET</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>JSON object containing the Task error reports for the requested Job Task, or a message stating that there are no error reports for the Job Task.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="get-task-log-reports">
+<h3><a class="toc-backref" href="#contents">Get Task Log Reports</a><a class="headerlink" href="#get-task-log-reports" title="Permalink to this headline">¶</a></h3>
+<p>Gets all the Task Log Reports for the Job Task that corresponds to the provided Job ID and provided Task ID.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/taskreports?Data=log&amp;JobID=validJobID&amp;TaskID=validTaskID</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>GET</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>JSON object containing the Task log reports for the requested Job Task, or a message stating that there are no log reports for the Job Task.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="get-task-requeue-reports">
+<h3><a class="toc-backref" href="#contents">Get Task Requeue Reports</a><a class="headerlink" href="#get-task-requeue-reports" title="Permalink to this headline">¶</a></h3>
+<p>Gets all the Task Requeue Reports for the Job Task that corresponds to the provided Job ID and provided Task ID.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/taskreports?Data=requeue&amp;JobID=validJobID&amp;TaskID=validTaskID</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>GET</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>JSON object containing the Task requeue reports for the requested Job Task, or a message stating that there are no requeue reports for the Job Task.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="get-all-task-report-contents">
+<h3><a class="toc-backref" href="#contents">Get All Task Report Contents</a><a class="headerlink" href="#get-all-task-report-contents" title="Permalink to this headline">¶</a></h3>
+<p>Gets the contents of all types of reports for a single task.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/taskreports?Data=allcontents&amp;JobID=validJobID&amp;TaskID=validTaskID</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>GET</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>JSON object containing an array of string logs.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="get-all-task-error-report-contents">
+<h3><a class="toc-backref" href="#contents">Get All Task Error Report Contents</a><a class="headerlink" href="#get-all-task-error-report-contents" title="Permalink to this headline">¶</a></h3>
+<p>Gets the contents of all error reports for a single task.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/taskreports?Data=allerrorcontents&amp;JobID=validJobID&amp;TaskID=validTaskID</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>GET</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>JSON object containing an array of string logs.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="get-all-task-log-report-contents">
+<h3><a class="toc-backref" href="#contents">Get All Task Log Report Contents</a><a class="headerlink" href="#get-all-task-log-report-contents" title="Permalink to this headline">¶</a></h3>
+<p>Gets the contents of all log reports for a single task.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/taskreports?Data=alllogcontents&amp;JobID=validJobID&amp;TaskID=validTaskID</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>GET</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>JSON object containing an array of string logs.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="get-all-task-requeue-report-contents">
+<h3><a class="toc-backref" href="#contents">Get All Task Requeue Report Contents</a><a class="headerlink" href="#get-all-task-requeue-report-contents" title="Permalink to this headline">¶</a></h3>
+<p>Gets the contents of all requeue reports for a single task.</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>URL:</strong></p></td>
+<td><p>http://hostname:portnumber/api/taskreports?Data=allrequeuecontents&amp;JobID=validJobID&amp;TaskID=validTaskID</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Request Type:</strong></p></td>
+<td><p>GET</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Message Body:</strong></p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Response:</strong></p></td>
+<td><p>JSON object containing an array of string logs.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Possible Errors:</strong></p></td>
+<td><p>500 Internal Server Error: An exception occurred within the Deadline code.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="task-report-property-values">
+<h2><a class="toc-backref" href="#contents">Task Report Property Values</a><a class="headerlink" href="#task-report-property-values" title="Permalink to this headline">¶</a></h2>
+<p>Values for some Task Report properties are represented by numbers. Those properties and their possible values are listed below.</p>
+<dl class="simple">
+<dt>Type (ReportType)</dt><dd><ul class="simple">
+<li><p>0 = LogReport</p></li>
+<li><p>1 = ErrorReport</p></li>
+<li><p>2 = RequeueReport</p></li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Task Reports</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#requests-and-responses">Requests and Responses</a><ul>
+<li><a class="reference internal" href="#get-all-task-reports">Get All Task Reports</a></li>
+<li><a class="reference internal" href="#get-task-error-reports">Get Task Error Reports</a></li>
+<li><a class="reference internal" href="#get-task-log-reports">Get Task Log Reports</a></li>
+<li><a class="reference internal" href="#get-task-requeue-reports">Get Task Requeue Reports</a></li>
+<li><a class="reference internal" href="#get-all-task-report-contents">Get All Task Report Contents</a></li>
+<li><a class="reference internal" href="#get-all-task-error-report-contents">Get All Task Error Report Contents</a></li>
+<li><a class="reference internal" href="#get-all-task-log-report-contents">Get All Task Log Report Contents</a></li>
+<li><a class="reference internal" href="#get-all-task-requeue-report-contents">Get All Task Requeue Report Contents</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#task-report-property-values">Task Report Property Values</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="rest-tasks.html"
+                        title="previous chapter">Tasks</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="rest-users.html"
+                        title="next chapter">Users</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="rest-users.html" title="Users"
+             >next</a></li>
+        <li class="right" >
+          <a href="rest-tasks.html" title="Tasks"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-rest-api.html" >RESTful HTTP API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Task Reports</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

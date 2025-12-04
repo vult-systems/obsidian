@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generation &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Guerilla" href="app-guerilla.html" />
+    <link rel="prev" title="Fusion Quicktime" href="app-fusion-quicktime.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-guerilla.html" title="Guerilla"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-fusion-quicktime.html" title="Fusion Quicktime"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Generation</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="generation">
+<span id="app-generation-ref-label"></span><h1>Generation<a class="headerlink" href="#generation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit comp jobs to Fusion from within Generation by installing the <a class="reference internal" href="#app-generation-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a>. The instructions for installing the <a class="reference internal" href="#app-generation-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<p>In Generation, select the comp(s) you want to submit, and then right-click and select Submit.</p>
+<a class="reference internal image-reference" href="../_images/gen_submit_menu.png"><img alt="../_images/gen_submit_menu.png" src="../_images/gen_submit_menu.png" style="height: 400px;" /></a>
+<p>This will bring up the submission window. Note that the submission window is only shown once, and all jobs that are submitted will use the same job settings.</p>
+<a class="reference internal image-reference" href="../_images/sub_fusion.png"><img alt="../_images/sub_fusion.png" src="../_images/sub_fusion.png" style="height: 500px;" /></a>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. The Fusion options are:</p>
+<ul class="simple">
+<li><p><strong>Use Frame List In Comp</strong>: Uses the frame list defined in the comp files instead of the Frame List setting. If you are submitting more than one comp from Generation, you should leave this option enabled unless you want the Frame List setting to be used for each comp.</p></li>
+<li><p><strong>Proxy</strong>: The proxy level to use.</p></li>
+<li><p><strong>High Quality Mode</strong>: Whether or not to render with high quality.</p></li>
+<li><p><strong>Check Output</strong>: If checked, Deadline will check all savers to ensure they have saved their image file.</p></li>
+<li><p><strong>Version</strong>: The version of Fusion to render with.</p></li>
+<li><p><strong>Build</strong>: Force 32 or 64 bit rendering.</p></li>
+<li><p><strong>Command Line Mode</strong>: Render using separate command line calls instead of keeping the scene loaded in memory between tasks. Using this feature disables the High Quality, Proxy, and Check Saver Output options. This uses the FusionCmd plugin, instead of the Fusion one.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The Generation submitter submits jobs to the Fusion plugin. See the <a class="reference internal" href="app-fusion.html#app-fusion-ref-label"><span class="std std-ref">Fusion Plugin Guide</span></a> for information on configuring the Fusion plugin.</p>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-generation-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to install the integrated Generation submission script. This script allows for submitting Generation comp jobs to Deadline directly from within the Generation editing GUI.</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/Generation/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="n">Generation</span>\<span class="n">Client</span>\<span class="n">DeadlineGenerationClient</span><span class="o">.</span><span class="n">lua</span> <span class="n">to</span> <span class="p">[</span><span class="n">Generation</span> <span class="n">Install</span> <span class="n">Folder</span><span class="p">]</span>\<span class="n">scripts</span>\<span class="n">generation</span>
+</pre></div>
+</div>
+</li>
+<li><p>In the Generation program data folder <code class="docutils literal notranslate"><span class="pre">%PROGRAMDATA%\eyeon\Generation</span></code> or equivalent <code class="docutils literal notranslate"><span class="pre">&quot;%PROGRAMDATA%\[Black</span> <span class="pre">Magic</span> <span class="pre">Design</span> <span class="pre">Install</span> <span class="pre">Folder]\Generation</span></code> directory, you’ll need to edit your Generation.cfg file. If you currently do not have a Generation.cfg file, create an empty one. Open your Generation.cfg file and add this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SCRIPT_FARMSUBMIT</span><span class="o">=</span><span class="s2">&quot;scripts\generation\DeadlineGenerationClient.lua&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Save the file. The next time you start up Generation, this script will be used when you select the Submit option for the selected comps.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-generation-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Generation are supported?</strong></p>
+<blockquote>
+<div><p>Generation 2 and later are supported.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>The Generation submitter submits jobs to the Fusion plugin. See the <a class="reference internal" href="app-fusion.html#app-fusion-ref-label"><span class="std std-ref">Fusion Plugin Guide</span></a> for Fusion error messages and meanings.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Generation</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-fusion-quicktime.html"
+                        title="previous chapter">Fusion Quicktime</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-guerilla.html"
+                        title="next chapter">Guerilla</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-guerilla.html" title="Guerilla"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-fusion-quicktime.html" title="Fusion Quicktime"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Generation</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

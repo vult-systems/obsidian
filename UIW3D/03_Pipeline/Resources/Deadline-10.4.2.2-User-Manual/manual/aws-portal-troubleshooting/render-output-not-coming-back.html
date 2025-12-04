@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Render Output Not Coming Back &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thinkbox.css" />
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="AWS Account Considerations" href="../aws-account-considerations.html" />
+    <link rel="prev" title="Job Report Says it Failed to Checkout Third Party License" href="job-report-says-it-failed-to-checkout-third-party-license.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../aws-account-considerations.html" title="AWS Account Considerations"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="job-report-says-it-failed-to-checkout-third-party-license.html" title="Job Report Says it Failed to Checkout Third Party License"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Render Output Not Coming Back</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="../aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<span class="target" id="troubleshooting-render-output-not-coming-back-label"></span><div class="section" id="render-output-not-coming-back">
+<h1>Render Output Not Coming Back<a class="headerlink" href="#render-output-not-coming-back" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-went-wrong">
+<h2>What Went Wrong<a class="headerlink" href="#what-went-wrong" title="Permalink to this headline">¶</a></h2>
+<p>Output is not coming back from renders.</p>
+</div>
+<div class="section" id="figuring-out-what-went-wrong">
+<h2>Figuring Out What Went Wrong<a class="headerlink" href="#figuring-out-what-went-wrong" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="check-the-job-report">
+<h3>Check the Job Report<a class="headerlink" href="#check-the-job-report" title="Permalink to this headline">¶</a></h3>
+<p>First check the job report to make sure it’s not an issue with the scene.</p>
+</div>
+<div class="section" id="check-cloudwatch-logs">
+<h3>Check CloudWatch Logs<a class="headerlink" href="#check-cloudwatch-logs" title="Permalink to this headline">¶</a></h3>
+<p><strong>Go to CloudWatch</strong></p>
+<ol class="arabic simple">
+<li><p>Open the AWS Management Console.</p></li>
+<li><p>Go to Services &gt; CloudWatch &gt; Logs</p></li>
+</ol>
+<p><strong>Check the Central Asset Server Log</strong></p>
+<ol class="arabic simple">
+<li><p>Click the <code class="docutils literal notranslate"><span class="pre">/thinkbox/S3BackedCache/central</span></code> Log Group.</p></li>
+<li><p>The newest log will be at the top, click it.</p></li>
+<li><p>Check the log for any errors.</p></li>
+</ol>
+<p><strong>Check the Worker Asset Log</strong></p>
+<ol class="arabic simple">
+<li><p>Click the <code class="docutils literal notranslate"><span class="pre">/thinkbox/S3BackedCache/worker</span></code> Log Group.</p></li>
+<li><p>In the Filter field input the stack name.</p></li>
+<li><p>Select the Worker log of the machine not returning the output. It will have the instance id appended to the end of it.</p></li>
+</ol>
+<p><strong>Check the AWS Asset Server Log</strong></p>
+<p>Click here for <a class="reference internal" href="aws-portal-log-locations.html#aws-portal-asset-server-log-location"><span class="std std-ref">how to find the AWS Portal Asset Server logs</span></a></p>
+</div>
+</div>
+<div class="section" id="solutions">
+<h2>Solutions<a class="headerlink" href="#solutions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="check-output-paths-in-job-report">
+<h3>Check Output Paths in Job Report<a class="headerlink" href="#check-output-paths-in-job-report" title="Permalink to this headline">¶</a></h3>
+<p>Check the Job Report to make sure the output path is correct. Also make sure that if the output path is correct, it is also in one of your <a class="reference internal" href="#check-file-roots"><span class="std std-ref">AWS Asset Server Root Directories</span></a>.</p>
+</div>
+<div class="section" id="check-file-roots">
+<span id="id1"></span><h3>Check File Roots<a class="headerlink" href="#check-file-roots" title="Permalink to this headline">¶</a></h3>
+<p>Check to make sure that your output path is in one of the AWS Asset Server Root Directories. You can check this by:</p>
+<ol class="arabic simple">
+<li><p>Opening the Deadline Monitor.</p></li>
+<li><p>In Power User mode open the AWS Portal panel and login if necessary.</p></li>
+<li><p>Go to Tools &gt; Configure Asset Server.</p></li>
+<li><p>Check to make sure that the output path is in the <code class="docutils literal notranslate"><span class="pre">Root</span> <span class="pre">Directories</span></code> field.</p></li>
+<li><p>If it isn’t either add it or change the output path to be in one of the Root Directories.</p></li>
+</ol>
+</div>
+<div class="section" id="check-mapped-drives">
+<h3>Check Mapped Drives<a class="headerlink" href="#check-mapped-drives" title="Permalink to this headline">¶</a></h3>
+<p>Ensure that your Mapped Drives are configured correctly. More reading on <a class="reference internal" href="../repository-config.html#mapped-drives-ref-label"><span class="std std-ref">Mapped Drives here</span></a></p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Render Output Not Coming Back</a><ul>
+<li><a class="reference internal" href="#what-went-wrong">What Went Wrong</a></li>
+<li><a class="reference internal" href="#figuring-out-what-went-wrong">Figuring Out What Went Wrong</a><ul>
+<li><a class="reference internal" href="#check-the-job-report">Check the Job Report</a></li>
+<li><a class="reference internal" href="#check-cloudwatch-logs">Check CloudWatch Logs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#solutions">Solutions</a><ul>
+<li><a class="reference internal" href="#check-output-paths-in-job-report">Check Output Paths in Job Report</a></li>
+<li><a class="reference internal" href="#check-file-roots">Check File Roots</a></li>
+<li><a class="reference internal" href="#check-mapped-drives">Check Mapped Drives</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="job-report-says-it-failed-to-checkout-third-party-license.html"
+                        title="previous chapter">Job Report Says it Failed to Checkout Third Party License</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../aws-account-considerations.html"
+                        title="next chapter">AWS Account Considerations</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../aws-account-considerations.html" title="AWS Account Considerations"
+             >next</a></li>
+        <li class="right" >
+          <a href="job-report-says-it-failed-to-checkout-third-party-license.html" title="Job Report Says it Failed to Checkout Third Party License"
+             >previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Render Output Not Coming Back</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,405 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The AWS Portal Asset Transfer System (Advanced) - Overview &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thinkbox.css" />
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="The AWS Portal Asset Transfer System (Advanced) - Output File Configuration" href="output-file-configuration.html" />
+    <link rel="prev" title="The AWS Portal Asset Transfer System (Advanced)" href="index.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="output-file-configuration.html" title="The AWS Portal Asset Transfer System (Advanced) - Output File Configuration"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="index.html" title="The AWS Portal Asset Transfer System (Advanced)"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="index.html" accesskey="U">The AWS Portal Asset Transfer System (Advanced)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">The AWS Portal Asset Transfer System (Advanced) - Overview</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="../aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<div class="section" id="the-aws-portal-asset-transfer-system-advanced-overview">
+<span id="aws-portal-asset-transfer-system-overview-ref-label"></span><h1>The AWS Portal Asset Transfer System (Advanced) - Overview<a class="headerlink" href="#the-aws-portal-asset-transfer-system-advanced-overview" title="Permalink to this headline">¶</a></h1>
+<p>The AWS Portal Asset Transfer System is made up of the following components:</p>
+<ul class="simple">
+<li><p>the AWS Portal Asset Server,</p></li>
+<li><p>the S3 Backed Cache Central Controller, and</p></li>
+<li><p>the S3-Backed Cache Client</p></li>
+</ul>
+<img alt="../../_images/aws_portal_asset_transfer_system_overview.png" src="../../_images/aws_portal_asset_transfer_system_overview.png" />
+<p>The diagram above illustrates the components of the AWS Portal Asset Transfer
+System and the ways in which they interact. The sections that follow provide an
+overview of the components in more detail.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>You don’t need to set up the S3 Backed Cache Central Controller and the S3-Backed Cache
+Client</strong>. These services will automatically be deployed for you when you
+launch an infrastructure or start an spot fleet.</p>
+</div>
+<div class="section" id="aws-portal-asset-server">
+<h2>AWS Portal Asset Server<a class="headerlink" href="#aws-portal-asset-server" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you want to know how to configure AWS Portal Asset Server, please refer to
+<a class="reference internal" href="../aws-asset-server.html#asset-server-ref-label"><span class="std std-ref">Asset Server Options</span></a>.</p>
+</div>
+<p>AWS Portal Asset Server is a service/daemon (program that runs in the background)
+that resides on your on-premise network. It serves the following functions:</p>
+<ul class="simple">
+<li><p>Transfer files between the on-premise network file system and your AWS S3 bucket.</p></li>
+<li><p>Handle requests from the other components of AWS Portal Asset Transfer system,
+such as file downloads and file uploads.</p></li>
+</ul>
+<p>It uses the credentials provided by you during the installation of
+AWS Portal Asset Server to create a restricted IAM user. This new user has very
+limited access to your AWS resources. It can only:</p>
+<ol class="arabic simple">
+<li><p>Upload and download objects from the S3 bucket of the AWS Portal Asset Transfer System.</p></li>
+<li><p>Read logs from the S3 bucket of AWS Portal log stream.</p></li>
+</ol>
+<p>AWS Portal Asset Server receives file requests from other components of the AWS
+Portal Asset Transfer System. Upon receiving a file request, AWS Portal Asset
+Server will upload/download the files to/from the S3 bucket as requested. These
+actions are completed through a secure channel(HTTPS).</p>
+<p>AWS Portal Asset Server also pre-caches asset files to the S3 bucket and informs
+other components about this. When a job is submitted to Deadline with pre-caching
+enabled, AWS Portal Asset Server will pre-upload the asset files onto the S3
+bucket, then when the Workers launched with a spot fleet begin to render, all of
+the assets will be ready to download from the S3 bucket.</p>
+<div class="section" id="configuration">
+<h3>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h3>
+<p>If you want to know how to configure AWS Portal Asset Server, please refer to
+<a class="reference internal" href="../aws-asset-server.html#asset-server-ref-label"><span class="std std-ref">Asset Server Options</span></a>.</p>
+</div>
+<div class="section" id="service-daemon">
+<h3>Service/Daemon<a class="headerlink" href="#service-daemon" title="Permalink to this headline">¶</a></h3>
+<p>AWS Portal Asset Server is run as a service on Windows or a daemon on Linux.</p>
+<p>On Windows, you can control the service through the Services snap-in panel.
+You can open the Services panel by:</p>
+<ol class="arabic simple">
+<li><p>Press the key combination <code class="docutils literal notranslate"><span class="pre">WINDOWS</span></code> + <code class="docutils literal notranslate"><span class="pre">R</span></code></p></li>
+<li><p>Type <code class="docutils literal notranslate"><span class="pre">services.msc</span></code></p></li>
+<li><p>Press <code class="docutils literal notranslate"><span class="pre">RETURN</span></code></p></li>
+<li><p>Right click the name <code class="docutils literal notranslate"><span class="pre">AWS</span> <span class="pre">Portal</span> <span class="pre">Asset</span> <span class="pre">Server</span></code> to start/stop/restart the service</p></li>
+</ol>
+<p>On Linux, run the following commands to control the service:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>service awsportalassetservershellscript start <span class="c1"># starts the service</span>
+service awsportalassetservershellscript stop <span class="c1"># stops the service</span>
+service awsportalassetservershellscript restart <span class="c1"># restarts the service</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="logs">
+<h3>Logs<a class="headerlink" href="#logs" title="Permalink to this headline">¶</a></h3>
+<p>AWS Portal Asset Server maintains logs that can be useful for troubleshooting any
+issues related to the AWS Portal Asset Transfer System.</p>
+<p>On Windows, the log is stored at this location.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>C:<span class="se">\P</span>rogramData<span class="se">\T</span>hinkbox<span class="se">\A</span>WS Portal Asset Server<span class="se">\l</span>ogs<span class="se">\a</span>wsportalassetserver_controller.log
+</pre></div>
+</div>
+<p>On Linux, the log is stored here.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/var/log/Thinkbox/AWS Portal Asset Server/awsportalassetserver_controller.log
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="the-s3-backed-cache-central-controller">
+<h2>The S3 Backed Cache Central Controller<a class="headerlink" href="#the-s3-backed-cache-central-controller" title="Permalink to this headline">¶</a></h2>
+<p>The S3 Backed Cache Central Controller is a daemon that runs on the “Gateway” EC2 instance that
+gets created within an AWS Portal Infrastructure. The S3 Backed Cache Central Controller
+communicates with the AWS Portal Asset Server and the S3-Backed Cache Clients
+running on AWS Portal Spot Fleets to coordinate asset transfers between the
+on-premise network and the AWS Portal Infrastructure using the S3 bucket.</p>
+<p>The S3 Backed Cache Central Controller is responsible for determining when on-premise assets have
+changed and need to be transferred again. For this purpose, the S3 Backed Cache Central Controller
+maintains a cache of the asset file meta-data which includes:</p>
+<ul class="simple">
+<li><p>the file name</p></li>
+<li><p>the file size</p></li>
+<li><p>the file permissions</p></li>
+<li><p>the last access time</p></li>
+<li><p>the last modification time</p></li>
+<li><p>the last change time.</p></li>
+</ul>
+<p>The S3 Backed Cache Central Controller makes requests for meta-data from the AWS Portal Asset Server.
+When it determines that the file has changed, it makes a request to the AWS Portal
+Asset Server to upload the asset to the S3 bucket.</p>
+<p><strong>IMPORTANT</strong>: The AWS Portal Asset Transfer system assumes that on-premise
+assets will not change during the course of a render job.</p>
+<div class="section" id="id1">
+<h3>Service/Daemon<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You need to ssh into the gateway instance in order to check the status of
+the S3 Backed Cache Central Controller. Please refer to <a class="reference internal" href="../aws-portal-troubleshooting/aws-connect-to-infrastructure.html#aws-connect-infrastructure-ref-label"><span class="std std-ref">this page on how to ssh into the
+gateway instance</span></a>.</p>
+</div>
+<p>To check the status of the S3 Backed Cache Central Controller</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo service s3backedcache_central_service status
+</pre></div>
+</div>
+<p>To stop the S3 Backed Cache Central Controller</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo service s3backedcache_central_service stop
+</pre></div>
+</div>
+<p>To start the S3 Backed Cache Central Controller</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo service s3backedcache_central_service start
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>Logs<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>You can find its log here. It is also available on CloudWatch.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/var/log/Thinkbox/S3BackedCache/central_controller.log
+</pre></div>
+</div>
+<p>CloudWatch logs expire after 60 days (default). You can change the expiration by right clicking on a running
+infrastructure, and selecting ‘Log Retention Policy’.</p>
+<a class="reference internal image-reference" href="../../_images/AWSPanelLogRetention.png"><img alt="../../_images/AWSPanelLogRetention.png" src="../../_images/AWSPanelLogRetention.png" style="width: 567.5px; height: 411.0px;" /></a>
+</div>
+</div>
+<div class="section" id="the-s3-backed-cache-client">
+<h2>The S3-Backed Cache Client<a class="headerlink" href="#the-s3-backed-cache-client" title="Permalink to this headline">¶</a></h2>
+<p>The S3-Backed Cache Client (formerly known as the Worker Controller) is a daemon
+that runs on the Spot instances that are created by AWS Portal. The S3-Backed
+Cache Client provides a file system that is mounted on the Spot instances and
+used by rendering software to access asset files.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The S3-Backed Cache Client also runs on the Gateway instance created on
+infrastructures launched by AWS Portal. Windows Deadline AMIs prior to
+version 10.0.26.0 mounted this Samba file share hosted on the Gateway
+instance. The Gateway instance continues to host a S3-Backed Cache Client
+for backwards compatibility with these AMIs.</p>
+<p>The AMIs that are shown in the Launch New Spot Fleet dialog in version
+10.0.26.0 and later host their own S3-Backed Cache Client and do not
+mount the Samba share.</p>
+</div>
+<p>The S3-Backed Cache Client fetches assets from the S3 bucket using HTTPS and caches
+the contents to an <a class="reference external" href="https://aws.amazon.com/ebs/">EBS</a> volume. All filenames are obfuscated by the S3-Backed
+Cache Client.</p>
+<p>It also gets the file metadata from other components. These metadata are stored
+in a database managed by the S3-Backed Cache Client. The S3-Backed Cache Client
+would return these metadata when they are requested by rendering software via
+the mounted file-system provided by the S3-Backed Cache Client.  File metadata
+consists of:</p>
+<ul class="simple">
+<li><p>filename</p></li>
+<li><p>size of the file</p></li>
+<li><p>permission bits</p></li>
+<li><p>last access time</p></li>
+<li><p>last modification time</p></li>
+<li><p>last change time</p></li>
+</ul>
+<p>An output file would be stored on the EBS volume temporarily as well. Once a
+job has completed, the S3-Backed Cache Client would decide on whether the
+output files would get uploaded or not.</p>
+<p>If the EBS volume used by the S3-Backed Cache Client does not have enough free
+space, the S3-Backed Cache Client would attempt to automatically clean up
+unused files. However, if all the files on the EBS volume are currently being
+used, a not-enough-space error would be reported.</p>
+<div class="section" id="id3">
+<h3>Configuration<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Be careful when changing the configuration file.  Any changes may cause
+unpredicatable behavior.</p>
+</div>
+<p>The S3-Backed Cache Client’s configuration file can be found at the following
+platform-specific locations.</p>
+<p><strong>Windows</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">PROGRAMFILES</span><span class="o">%</span>\<span class="n">Thinkbox</span>\<span class="n">S3backedCache</span>\<span class="n">Client</span>\<span class="n">Lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span>\<span class="n">slave</span>\<span class="n">etc</span>\<span class="n">client</span><span class="o">.</span><span class="n">yaml</span><span class="o">.</span><span class="n">windows</span>
+</pre></div>
+</div>
+<p><strong>Linux</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">Thinkbox</span><span class="o">/</span><span class="n">S3BackedCache</span><span class="o">/</span><span class="n">Client</span><span class="o">/</span><span class="n">client</span><span class="o">-</span><span class="n">config</span><span class="o">-</span><span class="n">linux</span><span class="o">.</span><span class="n">yaml</span>
+</pre></div>
+</div>
+<p>To make the configuration changes persistent, you should make these changes to
+an on-demand instance, and then make an AMI snapshot. Otherwise, you will have
+to ssh into each spot instance, make the changes, and restart the service every
+time you create a new spot fleet.</p>
+</div>
+<div class="section" id="id4">
+<h3>Service/Daemon<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You need to SSH/RDP into the spot fleet instances in order to check the
+status of the S3-Backed Cache Client. Please refer to the documentation
+on <a class="reference internal" href="../aws-portal-troubleshooting/aws-connect-to-workers.html#aws-connect-workers-ref-label"><span class="std std-ref">connecting to the AWS portal Worker instances</span></a>.</p>
+</div>
+<p><strong>Windows</strong>:</p>
+<p>On Windows, you can control the service through the Services snap-in panel.
+You can open the Services panel by:</p>
+<ol class="arabic simple">
+<li><p>Press the key combination <code class="docutils literal notranslate"><span class="pre">WINDOWS</span></code> + <code class="docutils literal notranslate"><span class="pre">R</span></code></p></li>
+<li><p>Type <code class="docutils literal notranslate"><span class="pre">services.msc</span></code></p></li>
+<li><p>Press <code class="docutils literal notranslate"><span class="pre">RETURN</span></code></p></li>
+<li><p>Right click the name <code class="docutils literal notranslate"><span class="pre">DeadlineS3BackedCacheClient</span></code> to start/stop/restart the service</p></li>
+</ol>
+<p><strong>Linux</strong>:</p>
+<p>To check the status of the S3-Backed Cache Client:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">service</span> <span class="n">s3backedcache_client_service</span> <span class="n">status</span>
+</pre></div>
+</div>
+<p>To stop the S3-Backed Cache Client:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">service</span> <span class="n">s3backedcache_client_service</span> <span class="n">stop</span>
+</pre></div>
+</div>
+<p>To start the S3-Backed Cache Client:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">service</span> <span class="n">s3backedcache_client_service</span> <span class="n">start</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3>Logs<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>You can find its log here. It is also available on CloudWatch.</p>
+<p><strong>Windows</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">PROGRAMDATA</span><span class="o">%</span>\<span class="n">Thinkbox</span>\<span class="n">S3backedCache</span>\<span class="n">Client</span>\<span class="n">Logs</span>\<span class="n">worker_controller</span><span class="o">.</span><span class="n">log</span>
+</pre></div>
+</div>
+<p><strong>Linux</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">dtu</span><span class="o">/</span><span class="n">worker_controller</span><span class="o">.</span><span class="n">log</span>
+</pre></div>
+</div>
+<p>CloudWatch logs expire after 60 days (default). You can change the expiration by right clicking on a running
+infrastructure, and selecting ‘Log Retention Policy’.</p>
+<a class="reference internal image-reference" href="../../_images/AWSPanelLogRetention.png"><img alt="../../_images/AWSPanelLogRetention.png" src="../../_images/AWSPanelLogRetention.png" style="width: 567.5px; height: 411.0px;" /></a>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The AWS Portal Asset Transfer System (Advanced) - Overview</a><ul>
+<li><a class="reference internal" href="#aws-portal-asset-server">AWS Portal Asset Server</a><ul>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#service-daemon">Service/Daemon</a></li>
+<li><a class="reference internal" href="#logs">Logs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-s3-backed-cache-central-controller">The S3 Backed Cache Central Controller</a><ul>
+<li><a class="reference internal" href="#id1">Service/Daemon</a></li>
+<li><a class="reference internal" href="#id2">Logs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-s3-backed-cache-client">The S3-Backed Cache Client</a><ul>
+<li><a class="reference internal" href="#id3">Configuration</a></li>
+<li><a class="reference internal" href="#id4">Service/Daemon</a></li>
+<li><a class="reference internal" href="#id5">Logs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">The AWS Portal Asset Transfer System (Advanced)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="output-file-configuration.html"
+                        title="next chapter">The AWS Portal Asset Transfer System (Advanced) - Output File Configuration</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="output-file-configuration.html" title="The AWS Portal Asset Transfer System (Advanced) - Output File Configuration"
+             >next</a></li>
+        <li class="right" >
+          <a href="index.html" title="The AWS Portal Asset Transfer System (Advanced)"
+             >previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="index.html" >The AWS Portal Asset Transfer System (Advanced)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">The AWS Portal Asset Transfer System (Advanced) - Overview</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arnold Standalone &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="AutoCAD" href="app-autocad.html" />
+    <link rel="prev" title="Arion Standalone" href="app-arion.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-autocad.html" title="AutoCAD"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-arion.html" title="Arion Standalone"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Arnold Standalone</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="arnold-standalone">
+<span id="app-arnold-ref-label"></span><h1>Arnold Standalone<a class="headerlink" href="#arnold-standalone" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit Arnold Standalone jobs from the Monitor or via an in-app submitter such as <a class="reference internal" href="app-maya.html#app-maya-ref-label"><span class="std std-ref">MayaBatch</span></a> as an export job.</p>
+<a class="reference internal image-reference" href="../_images/sub_arnold.png"><img alt="../_images/sub_arnold.png" src="../_images/sub_arnold.png" style="height: 500px;" /></a>
+<div class="section" id="setup-your-arnold-files">
+<h3>Setup your Arnold Files<a class="headerlink" href="#setup-your-arnold-files" title="Permalink to this headline">¶</a></h3>
+<p>Before you can submit an Arnold Standalone job, you must export your scene into .ass files.</p>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.
+The Arnold specific options are:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>Arnold File</strong>: The Arnold file(s) to be rendered.</dt><dd><ul>
+<li><p>If you are submitting a sequence of .ass files, select one of the numbered frames in the sequence, and the frame range will automatically be detected if Calculate Frames From Arnold File is enabled.
+The frames you choose to render should correspond to the numbers in the .ass files.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>Output File</strong>: The output file. If left blank, Arnold will save the output to the location defined in the .ass file.</p></li>
+<li><p><strong>Version</strong>: Choose the Beta or Release version of Arnold to render with (these can be configured in the Arnold plugin configuration).</p></li>
+<li><p><strong>Threads</strong>: The number of threads to use for rendering.</p></li>
+<li><p><strong>Verbosity</strong>: The verbosity level for the render output.</p></li>
+<li><p><strong>Enable Local Rendering</strong>: If enabled, Deadline will render the frames locally before copying them over to the final network location.</p></li>
+<li><p><strong>Command Line Args</strong>: Specify additional command line arguments you would like to pass to the Arnold renderer.</p></li>
+<li><p><strong>Additional Plugin Folders</strong>: Specify up to three additional plugin folders that Arnold should use when rendering.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Arnold plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Arnold plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_arnold.png"><img alt="../_images/cp_arnold.png" src="../_images/cp_arnold.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Arnold Kick Executable</strong>: The path to the Arnold kick executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+<p><strong>Render Options</strong></p>
+<ul class="simple">
+<li><p><strong>Abort On License Fail</strong>: If Arnold cannot get a license and this option is enabled, the rendering job will fail. If disabled, the job will still render but with a watermark.</p></li>
+</ul>
+<p><strong>Path Mapping (For Mixed Farms)</strong></p>
+<ul class="simple">
+<li><p><strong>Enable Path Mapping</strong>: If enabled, a temporary Arnold scene source (.ass) file will be created locally on the Worker for rendering because Deadline does the path mapping directly in the Arnold scene source file. This feature can be turned off if there are no Path Mapping entries defined in the Repository Options.</p></li>
+</ul>
+<p><strong>CPU Affinity</strong></p>
+<ul class="simple">
+<li><p><strong>Limit Threads To CPU Affinity</strong>: If enabled, the number of render threads will be limited to the CPU affinity of the rendering Worker.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-arnold-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Can I submit a sequence of Arnold .ass files that each contain one frame?</strong></p>
+<blockquote>
+<div><p>Yes, this is supported.</p>
+</div></blockquote>
+<p><em>When rendering my Workers are ignoring the CPU Affinity.*</em></p>
+<blockquote>
+<div><p>Some renderers modify the CPU affinity when a render starts.  In these cases you can enable the Plugin Configuration option “Limit Threads To CPU Affinity” which will limit the number of threads the renderer can use.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Arnold error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><strong>ERROR | [driver_exr] defaultArnoldDriver&#64;driver_exr.RGBA: can’t create file “.exr”: OpenEXR exception: Permission denied.</strong></p>
+<blockquote>
+<div><p>This error means that Arnold could not find the path to the output location.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Arnold Standalone</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#setup-your-arnold-files">Setup your Arnold Files</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-arion.html"
+                        title="previous chapter">Arion Standalone</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-autocad.html"
+                        title="next chapter">AutoCAD</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-autocad.html" title="AutoCAD"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-arion.html" title="Arion Standalone"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Arnold Standalone</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

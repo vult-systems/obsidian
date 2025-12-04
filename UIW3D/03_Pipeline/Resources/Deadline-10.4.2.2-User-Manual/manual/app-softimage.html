@@ -1,0 +1,410 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Softimage &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Terragen" href="app-terragen.html" />
+    <link rel="prev" title="SketchUp" href="app-sketchup.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-terragen.html" title="Terragen"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-sketchup.html" title="SketchUp"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Softimage</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="softimage">
+<span id="app-softimage-ref-label"></span><h1>Softimage<a class="headerlink" href="#softimage" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs from within Softimage by installing the <a class="reference internal" href="#app-softimage-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a>, or you can submit them from the Monitor. The instructions for installing the <a class="reference internal" href="#app-softimage-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<p><a class="reference internal" href="../_images/integrated_xsi.png"><img alt="int" src="../_images/integrated_xsi.png" style="height: 450px;" /></a> <a class="reference internal" href="../_images/sub_softimage.png"><img alt="mon" src="../_images/sub_softimage.png" style="height: 450px;" /></a></p>
+<p>To submit from within Softimage, select the Render toolbar on the left and click Render -&gt; Submit To Deadline.</p>
+<a class="reference internal image-reference" href="../_images/xsi_submitbutton.png"><img alt="../_images/xsi_submitbutton.png" src="../_images/xsi_submitbutton.png" style="height: 400px;" /></a>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.
+The Softimage specific options are:</p>
+<ul class="simple">
+<li><p><strong>Frame List</strong>: The frame range to render for the scene.</p></li>
+<li><p><strong>Ignore Per Pass Frame List (Use Frame List)</strong>: If enabled, when rendering passes, each pass will render using the main Frame List range, instead of it’s own pass frame range.</p></li>
+<li><p><strong>Group Size</strong>: The number of frames per individual task when submitted to Deadline. Group Size=10, would mean 10 frames to be rendered per task in Deadline queue.</p></li>
+<li><p><strong>Workgroup</strong>: Specify the workgroup that Softimage should use during rendering. Leave blank to ignore.</p></li>
+<li><p><strong>Force Build</strong>: Force 32 bit or 64 bit rendering.</p></li>
+<li><p><strong>Submit Softimage Scene File</strong>: The Softimage scene file will be submitted with the job. If your Softimage scene is stored in a project folder on the network, it is recommended that you leave this box unchecked.</p></li>
+<li><p><strong>Threads</strong>: The number of render threads to use during rendering.</p></li>
+<li><p><strong>Use Softimage Batch Plugin</strong>: This plugin keeps Softimage and the scene loaded in memory between tasks.</p></li>
+<li><p><strong>Enable Local Rendering</strong>: If enabled, the frames will be rendered locally, and then will be copied to the final network location. Note that this feature doesn’t support the “Skip Existing Frame” option.</p></li>
+<li><p><strong>Skip Batch Licensing Check</strong>: If enabled, Softimage won’t try to check out a Batch license during rendering. This allows you to use 3rd party renderers like V-Ray or Arnold without using a Softimage batch license.</p></li>
+</ul>
+<p>Selecting passes to render:</p>
+<ul>
+<li><p>Select which passes you would like to render. A separate job is submitted for each pass. If no passes are selected, then the current pass is submitted. Note that if you are using FxTree Rendering, the passes are ignored.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/xsi_integrated_passes.png"><img alt="../_images/xsi_integrated_passes.png" src="../_images/xsi_integrated_passes.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+<p>Setting up a tile rendering job:</p>
+<ul>
+<li><p>Enable tile rendering to split up a frame into multiple tiles that are rendered individually. By default, a separate job is submitted for each tile (this allows for tile rendering of a sequence of frames). For easier
+management of single frame tile rendering, you can choose to submit all the tiles as a single job.</p></li>
+<li><p>You can submit a dependent assembly job to assemble the image when the main tile job completes. Otherwise, the output formats that are supported are BMP,
+DDS, EXR, JPG, JPE, JPEG, PNG, RGB, RGBA, SGI, TGA, TIF, and TIFF.</p></li>
+<li><p>Note that the Error On Missing Tiles option only applies to Draft assemblies.</p></li>
+<li><p>Note that if you are using FxTree Rendering, the tile rendering settings are ignored.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/xsi_integrated_tile.png"><img alt="../_images/xsi_integrated_tile.png" src="../_images/xsi_integrated_tile.png" style="height: 260px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+<p>Setting up an FxTree rendering job:</p>
+<ul>
+<li><p>Enable FxTree rendering to render a specific FxTree output node, which can be selected from the FxTree Output dropdown box. You can also set the frame offset for the output files. Some things to note are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The frame range to be rendered is pulled from the Frame List setting under the Submission Options tab.</p></li>
+<li><p>If you are rendering to a movie file, be sure to set the Group Size to the number of frames in your animation.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/xsi_integrated_fxtree.png"><img alt="../_images/xsi_integrated_fxtree.png" src="../_images/xsi_integrated_fxtree.png" style="height: 150px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>Softimage gives the option to specify file paths as being relative to the current directory or absolute. Deadline requires that all file paths be absolute.</p></li>
+<li><p>When specifying the image output, make sure to include the extension (.pic, .tga, etc) at the end so that you can view the individual rendered images from the task list in the Monitor.</p></li>
+</ul>
+</div>
+<div class="section" id="pipeline-tools">
+<h3>Pipeline Tools<a class="headerlink" href="#pipeline-tools" title="Permalink to this headline">¶</a></h3>
+<p>When using the integrated submitter to submit through Softimage you have the ability to use any of the event plugins that you have enabled through the Deadline Monitor. This is done by opening the Pipeline Tools window via the Pipeline Tools button. This window is explained further in the <a class="reference internal" href="event-pipeline-tools.html#event-pipeline-tools-ref-label"><span class="std std-ref">Pipeline Tools</span></a> documentation.</p>
+</div>
+<div class="section" id="redshift-renderer-options">
+<span id="redshift-renderer-options-ref-label"></span><h3>Redshift Renderer Options<a class="headerlink" href="#redshift-renderer-options" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="../_images/integrated_xsi_redshift_options.png"><img alt="../_images/integrated_xsi_redshift_options.png" src="../_images/integrated_xsi_redshift_options.png" style="height: 100px;" /></a>
+<p>If submitting a Softimage scene that uses the Redshift renderer, there will be a couple of additional options in the integrated submitter.</p>
+<ul>
+<li><p><strong>GPUs Per Task</strong>: If set to 0 (the default), then Redshift will be responsible to automatically choose the GPUs to use for rendering.</p>
+<blockquote>
+<div><p>If this is set to 1 or greater, then each task for the job will be assigned specific GPUs. This can be used in combination with concurrent tasks to get a distribution over the GPUs. For example:</p>
+<ul class="simple">
+<li><p>if this is set to 1, then tasks rendered by the Workers thread 0 would use GPU 0, thread 1 would use GPU 1, etc.</p></li>
+<li><p>if this is set to 2, then tasks rendered by the Workers thread 0 would use GPUs {0,1}, thread 1 would use GPUs {2,3}, etc.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Select GPU Devices</strong>: A comma separated list of specific GPU device Id(s) can be entered instead of using the above ‘GPUs Per Task’ option (which must be set to “0”). Valid examples include: “0” or “1” or “0,1” or “2,4” without the quotation marks.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="cross-platform-rendering-considerations">
+<h2>Cross-Platform Rendering Considerations<a class="headerlink" href="#cross-platform-rendering-considerations" title="Permalink to this headline">¶</a></h2>
+<p>In order to perform cross-platform rendering with Softimage, you must setup Mapped Paths so that Deadline can swap out file paths where appropriate. You can access the Mapped Paths Setup in the Monitor while in power user mode by
+selecting Tools -&gt; Configure Repository. You’ll find the Mapped Paths Setup in the list on the left.</p>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Softimage and SoftimageBatch plugin settings from the Monitor. While in power user mode, select Tools -&gt; Plugins Configuration and select the Softimage or SoftimageBatch plugin from the list on the left.</p>
+<div class="section" id="id1">
+<h3>Softimage<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="../_images/cp_softimage.png"><img alt="../_images/cp_softimage.png" src="../_images/cp_softimage.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Softimage Render Executable</strong>: The path to the XSIBatch.bat file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+<p><strong>Options</strong></p>
+<ul class="simple">
+<li><p><strong>Enable Strict Error Checking</strong>: If enabled, Deadline will fail in almost all cases when the job whenever Softimage prints out ‘ERROR’ for whatever reason.</p></li>
+<li><p><strong>Return Codes To Ignore</strong>: Error codes (other than 0) that Deadline should ignore and instead assume the render has finished successfully. Use a ; to separate the error codes.</p></li>
+</ul>
+</div>
+<div class="section" id="softimagebatch">
+<h3>SoftimageBatch<a class="headerlink" href="#softimagebatch" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="../_images/cp_softimage_batch.png"><img alt="../_images/cp_softimage_batch.png" src="../_images/cp_softimage_batch.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Softimage Render Executable</strong>: The path to the XSIBatch.bat file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+<p><strong>Options</strong></p>
+<ul class="simple">
+<li><p><strong>Enable Strict Error Checking</strong>: If enabled, Deadline will fail in almost all cases when the job whenever Softimage prints out ‘ERROR’ for whatever reason.</p></li>
+<li><p><strong>Connection Timeout</strong>: The amount of seconds to give the Deadline plugin and Softimage to establish a connection before the job fails.</p></li>
+<li><p><strong>Timeout For Progress Updates</strong>: The amount of seconds to between Softimage progress updates before the job is failed. Set to 0 to disable this feature.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-softimage-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to install the integrated Softimage submission script. This script allows for submitting Softimage render jobs to Deadline directly from within the Softimage editing GUI.</p>
+<p>Earlier versions of Softimage might not ship with Python out of the box. In this case, follow these steps:</p>
+<ul>
+<li><p>Install the Python engine for Softimage. For more information, see the <a class="reference external" href="https://xsisupport.com/2010/02/22/getting-python-to-show-up-in-softimage/">Softimage Python installation documentation</a>.</p></li>
+<li><p>Check that the Python engine has been installed correctly. This can be done by opening up Softimage and selecting File -&gt; Preferences. Under the Scripting preferences, you should have the option to select Python as the Script Language. If you don’t see this option, then Python has not been installed correctly, and you should contact the Softimage support team.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/xsi_script.png"><img alt="../_images/xsi_script.png" src="../_images/xsi_script.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+<p>Once Python is an available scripting option in Softimage, you can follow these steps to install the submission script:</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/Softimage/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span><span class="o">/</span><span class="n">submission</span><span class="o">/</span><span class="n">Softimage</span><span class="o">/</span><span class="n">Client</span><span class="o">/</span><span class="n">DeadlineSoftimageClient</span><span class="o">.</span><span class="n">py</span> <span class="n">to</span> <span class="n">the</span> <span class="n">folder</span> <span class="p">[</span><span class="n">Softimage</span> <span class="n">Install</span> <span class="n">Directory</span><span class="p">]</span><span class="o">/</span><span class="n">Application</span><span class="o">/</span><span class="n">Plugins</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="verify-installation">
+<h3>Verify Installation<a class="headerlink" href="#verify-installation" title="Permalink to this headline">¶</a></h3>
+<p>Launch Softimage. The submission script is automatically installed when Softimage starts up. To make sure the script was installed correctly, select the Render toolbar on the left and click the Render button. A <strong>Submit Softimage To Deadline</strong> menu item should be available.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/xsi_submitbutton.png"><img alt="../_images/xsi_submitbutton.png" src="../_images/xsi_submitbutton.png" style="height: 400px;" /></a>
+</div></blockquote>
+</div>
+<div class="section" id="custom-sanity-check">
+<h3>Custom Sanity Check<a class="headerlink" href="#custom-sanity-check" title="Permalink to this headline">¶</a></h3>
+<p>A CustomSanityChecks.py file can be created alongside the main Softimage submission scripts (in [Repository]\submission\Softimage\Main), and will be evaluated if it exists. This script will let you set any of the initial
+properties in the submission script prior to displaying the submission window. You can also use it to run your own checks and display errors or warnings to the user. Here is a very simple example of what this script could look
+like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">win32com.client</span>
+<span class="n">Application</span> <span class="o">=</span> <span class="n">win32com</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">Dispatch</span><span class="p">(</span> <span class="s1">&#39;XSI.Application&#39;</span> <span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">RunSanityCheck</span><span class="p">(</span><span class="n">opSet</span><span class="p">):</span>
+
+    <span class="n">opSet</span><span class="o">.</span><span class="n">Parameters</span><span class="p">(</span><span class="s2">&quot;DepartmentTextBox&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">Value</span> <span class="o">=</span> <span class="s2">&quot;The Best Department!&quot;</span>
+    <span class="n">opSet</span><span class="o">.</span><span class="n">Parameters</span><span class="p">(</span><span class="s2">&quot;PriorityNumeric&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">Value</span> <span class="o">=</span> <span class="mi">33</span>
+    <span class="n">opSet</span><span class="o">.</span><span class="n">Parameters</span><span class="p">(</span><span class="s2">&quot;BatchBox&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">Value</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="n">Application</span><span class="o">.</span><span class="n">LogMessage</span><span class="p">(</span><span class="s2">&quot;An example of how to set Arnold renderer to fail if unable to checkout an Arnold license during rendering&quot;</span><span class="p">)</span>
+    <span class="n">Application</span><span class="o">.</span><span class="n">SetValue</span><span class="p">(</span><span class="s2">&quot;Passes.Arnold_Render_Options.abort_on_license_fail&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>The opSet parameters can be found in the SoftimageToDeadline.py script in the Main folder mentioned above. Look for the following line in the script:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">opSet</span> <span class="o">=</span> <span class="n">Application</span><span class="o">.</span><span class="n">ActiveSceneRoot</span><span class="o">.</span><span class="n">AddProperty</span><span class="p">(</span>
+    <span class="s2">&quot;CustomProperty&quot;</span><span class="p">,</span><span class="kc">False</span><span class="p">,</span><span class="s2">&quot;SubmitSoftimageToDeadline&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After this line, all the available parameters are added to the opSet. These can be used to set the initial values in the submission dialog.</p>
+<p>Finally, if the RunSanityCheck method returns False, the submission will be cancelled.</p>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-softimage-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Softimage are supported?</strong></p>
+<blockquote>
+<div><p>Softimage versions 2010 and later are supported.</p>
+</div></blockquote>
+<p><strong>What is the difference between the Softimage and SoftimageBatch plugins?</strong></p>
+<blockquote>
+<div><p>The SoftimageBatch plugin keeps the scene loaded in memory between subsequent tasks for the same job. This saves on the overhead of having to load Softimage and the scene file for each task. The Softimage plugin uses
+standard command line rendering, and should only be used if you experience problems with the SoftimageBatch plugin.</p>
+</div></blockquote>
+<p><strong>Is FxTree rendering supported?</strong></p>
+<blockquote>
+<div><p>Yes. Simply enable FxTree rendering in the submission dialog and specify the FxTree and Output Node you want to render.</p>
+</div></blockquote>
+<p><strong>Is the Arnold renderer for Softimage supported?</strong></p>
+<blockquote>
+<div><p>Yes. Deadline supports the Arnold plugin for Softimage, as well as Arnold’s standalone renderer (kick.exe). For more information on rendering Arnold Standalone jobs, see the
+<a class="reference internal" href="app-arnold.html#app-arnold-ref-label"><span class="std std-ref">Arnold Standalone Plugin Guide</span></a>.</p>
+</div></blockquote>
+<p><strong>Can Softimage script jobs be submitted to Deadline?</strong></p>
+<blockquote>
+<div><p>Yes. Deadline provides very basic support for script jobs, though there is currently no interface to submit them. The option for submitting a script job can be specified in the plugin info file.</p>
+</div></blockquote>
+<p><strong>After installing the Softimage integrated submission script, Softimage fails to load (it goes to a white screen and hangs).</strong></p>
+<blockquote>
+<div><p>We have heard of this problem before, but we have not been able to reproduce it. The workaround for this problem is to remove the script from the plugins folder, and manually path to the submission script plugin after
+starting Softimage.</p>
+</div></blockquote>
+<p><strong>When Deadline renders the job, Softimage isn’t able to find anything in the scene’s project folder.</strong></p>
+<blockquote>
+<div><p>If you’re Softimage scene file is saved in a project folder on the network, leave the Submit Softimage Scene File check box unchecked in the submission dialog. This allows Deadline to load the Softimage scene in the context
+of its project folder.</p>
+</div></blockquote>
+<p><strong>I have Softimage configured to save output to a network share, but when Deadline renders the scene, the render Workers save their output to their local C drive rather than to the network share.</strong></p>
+<blockquote>
+<div><dl class="simple">
+<dt>There are two possible solutions:</dt><dd><ol class="arabic simple">
+<li><p>If you’re Softimage scene file is saved in a project folder on the network, leave the Submit Softimage Scene File check box unchecked in the submission dialog. This is the recommend solution.</p></li>
+<li><p>Specify the full resolved path for the scene output directory, instead of something like [Project Path]\Render_Pictures.</p></li>
+</ol>
+</dd>
+</dl>
+</div></blockquote>
+<p><strong>Rendering with Deadline seems a lot slower than rendering through Softimage itself.</strong></p>
+<blockquote>
+<div><p>If you’re submitting your jobs with the Use Softimage Batch option disabled, then Softimage needs to be restarted and the scene needs to be reloaded for every task in the job, which can add a lot of overhead to the render
+time, especially if cached data needs to be loaded.</p>
+<p>To speed up your renders, you can increase the task group size (aka: chunk size) from 1 to 5 or 10. This way, the scene is loaded once for every 5 or 10 frames. Increasing the chunksize like this is recommended if you know
+ahead of time your frames will only take seconds to render, or if a large amount of cached data needs to be loaded.</p>
+</div></blockquote>
+<p><strong>Running multiple Deadline Workers, Softimage doesn’t use the correct ‘workgroup’.</strong></p>
+<blockquote>
+<div><p>The problem is that each instance of Softimage by default reads in the <code class="docutils literal notranslate"><span class="pre">default.xsipref</span></code> file or indeed any other <code class="docutils literal notranslate"><span class="pre">*.xsipref</span></code> files in the user preferences directory under: <code class="docutils literal notranslate"><span class="pre">C:\Users\%USERNAME%\Autodesk\Softimage_2015_SP2\Data\Preferences</span></code> which is where the ‘workgroup’ is set by default. So, although Deadline is successfully executing a set ‘workgroup’ command (via an external process), it unfortunately has the individual file-collision issue where for a brief period of time, it is set to potentially the wrong ‘workgroup’ for one of the Workers if it is trying to render a different job compared to another Worker.</p>
+<p>If you are wanting to run multiple Workers to allow for GPU rendering to be controlled by affinity, then we suggest a different approach to solve this situation. Run just 1 x Deadline Worker, but increase the “ConcurrentTasks” setting to say, “2” in Softimage which will cause 2 x instances of Softimage to execute, but also use the <a class="reference internal" href="#redshift-renderer-options-ref-label"><span class="std std-ref">GPUs Per Task</span></a> setting, which will allow you to create a virtual mapping between thread id and GPU id. You can dial up the number of concurrent instances of Softimage: 1, 2, 3, etc and use the <a class="reference internal" href="#redshift-renderer-options-ref-label"><span class="std std-ref">GPUs Per Task</span></a> to control the mapping of 1 or more GPU cards to each instance of Softimage. The major advantage of this setup is each concurrent instance of Softimage will be from the same scene file, therefore using the same ‘workgroup’ and therefore will not collide.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Softimage error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here, please
+contact <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> and let us know.</p>
+<p><strong>Exception during render: Renderer returned non-zero error code, -1073741819</strong></p>
+<blockquote>
+<div><p>The error code -1073741819 is equivalent to 0xC0000005, which represents a Memory Access Violation error. So Softimage is either running out of memory, or memory is becoming corrupt. If you find that your frames are still
+being rendered, you can configure the Softimage plugin configuration to ignore this error.</p>
+</div></blockquote>
+<p><strong>Exception during render: ‘ ERROR : 2000 - Library not found: …</strong></p>
+<blockquote>
+<div><p>This can occur if the Worker application’s environment variables haven’t been updated. Try rebooting the machine and see if that fixes the problem.</p>
+</div></blockquote>
+<p><strong>ERROR : 2004 - Invalid pointer - [line 2]</strong></p>
+<blockquote>
+<div><p>You can workaround this by renaming the ICEFlow plugin (Application\Plugins\ICEFlow.dll). This plugin manages the transfer of data between Softimage and Maya (the one-click ICE workflow).</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Softimage</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#pipeline-tools">Pipeline Tools</a></li>
+<li><a class="reference internal" href="#redshift-renderer-options">Redshift Renderer Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cross-platform-rendering-considerations">Cross-Platform Rendering Considerations</a></li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a><ul>
+<li><a class="reference internal" href="#id1">Softimage</a></li>
+<li><a class="reference internal" href="#softimagebatch">SoftimageBatch</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+<li><a class="reference internal" href="#verify-installation">Verify Installation</a></li>
+<li><a class="reference internal" href="#custom-sanity-check">Custom Sanity Check</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-sketchup.html"
+                        title="previous chapter">SketchUp</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-terragen.html"
+                        title="next chapter">Terragen</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-terragen.html" title="Terragen"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-sketchup.html" title="SketchUp"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Softimage</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

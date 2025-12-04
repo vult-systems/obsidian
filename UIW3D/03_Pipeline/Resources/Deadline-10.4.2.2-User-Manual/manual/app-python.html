@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Realflow" href="app-realflow.html" />
+    <link rel="prev" title="Puppet" href="app-puppet.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-realflow.html" title="Realflow"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-puppet.html" title="Puppet"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Python</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="python">
+<span id="app-python-ref-label"></span><h1>Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This plugin is deemed a potential security risk because it allows users to submit arbitrary Python scripts to Deadline, which are then executed on the render nodes. Customers are encouraged to read the AWS Thinkbox Deadline <a class="reference internal" href="shared-security-model.html#shared-security-model-ref-label"><span class="std std-ref">Shared Responsibility Model</span></a> before using this plugin in their environment.</p>
+</div>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit Python jobs from the Monitor.</p>
+<a class="reference internal image-reference" href="../_images/sub_python.png"><img alt="../_images/sub_python.png" src="../_images/sub_python.png" style="height: 600px;" /></a>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. The Python specific options are:</p>
+<ul class="simple">
+<li><p><strong>Job Type</strong>: Choose a normal job or <a class="reference internal" href="manual-submission.html#maintenance-jobs-ref-label"><span class="std std-ref">maintenance job</span></a>. A normal job will let you specify an arbitrary frame list, but a maintenance job requires a start frame and an end frame.</p></li>
+<li><p><strong>Single Frames Only</strong>: If enabled, the plugin will only render one frame at a time even if a single task contains a chunk of frames.</p></li>
+<li><p><strong>Python Script File</strong>: The Python script you want to submit.</p></li>
+<li><p><strong>Arguments (optional)</strong>: The arguments to pass to the executable. Use the Start Frame Tag, End Frame Tag and Quote Tag buttons to add their corresponding tags to the end of the current arguments.</p></li>
+<li><p><strong>Argument Tags</strong>: See the <a class="reference internal" href="manual-submission.html#arbitrary-command-line-jobs-ref-label"><span class="std std-ref">Manual Job Submission</span></a> documentation for more information on these tags.</p></li>
+<li><p><strong>Frame Tag Padding</strong>: Determines the amount of frame padding to be added to the Start and End Frame tags.</p></li>
+<li><p><strong>Version</strong>: The version of Python to use.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Python plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Python plugin from the list on the left. To get a description of each setting,
+simply hover the mouse cursor over a setting and a tool tip will be displayed.</p>
+<a class="reference internal image-reference" href="../_images/cp_python.png"><img alt="../_images/cp_python.png" src="../_images/cp_python.png" style="height: 400px;" /></a>
+<p><strong>Python Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Python Executable</strong>: The path to the Python executable file used. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+<p><strong>Configuration</strong></p>
+<ul class="simple">
+<li><p><strong>Additional Python Search Paths</strong>: An additional list of paths that will be appended to the PYTHONPATH  environment variable. This will allow Python jobs to find custom modules in non-standard locations.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-python-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Python are supported?</strong></p>
+<blockquote>
+<div><p>Python 3.0 to 3.12 are supported. Additional versions can be added when necessary.</p>
+</div></blockquote>
+<p><strong>Can I execute (Load-Once) a Python script file once on each of my Deadline Workers?</strong></p>
+<blockquote>
+<div><p>Yes. Select <a class="reference internal" href="manual-submission.html#maintenance-jobs-ref-label"><span class="std std-ref">Maintenance</span></a> as the Job Type.</p>
+</div></blockquote>
+<p><strong>How can I report % progress of the task?</strong></p>
+<blockquote>
+<div><p>The Python plugin ships with a basic StdOut handler to report progress based on StdOut/print statements from the Python script you are executing. You can customize this StdOut handler in the Python.py plugin file to your needs or create additional ones. The default regular expression based handler expects to see StdOut with the syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Progress</span><span class="p">:</span> <span class="mi">10</span><span class="o">%</span>
+<span class="n">Progress</span><span class="p">:</span> <span class="mi">22</span><span class="o">%</span>
+<span class="n">Progress</span><span class="p">:</span> <span class="mi">33</span><span class="o">%</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>Basic usage from your Python script would be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">progress</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Progress: </span><span class="si">{}</span><span class="s2">%&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">progress</span><span class="p">))</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Python</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-puppet.html"
+                        title="previous chapter">Puppet</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-realflow.html"
+                        title="next chapter">Realflow</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-realflow.html" title="Realflow"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-puppet.html" title="Puppet"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Python</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

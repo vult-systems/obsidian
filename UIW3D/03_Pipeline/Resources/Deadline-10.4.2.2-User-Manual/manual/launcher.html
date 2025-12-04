@@ -1,0 +1,386 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Launcher &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Monitor" href="monitor.html" />
+    <link rel="prev" title="Deadline Client Applications" href="index-client-applications.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="monitor.html" title="Monitor"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="index-client-applications.html" title="Deadline Client Applications"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" accesskey="U">Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Launcher</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="launcher">
+<span id="launcher-ref-label"></span><h1>Launcher<a class="headerlink" href="#launcher" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The Launcher’s main use is to provide a means of remote communication between the Monitor and the Worker or Pulse applications, and therefore should always be left running on your render nodes and workstations.
+It can also detect if the Worker running on the machine has stalled, and restart it if it does.</p>
+<p>Unless the Launcher is running as a service or daemon, you should see the <img alt="launchericon" src="../_images/launcher_icon.png" /> icon in your system tray or notification area.
+You can right-click on the icon to access the Launcher menu, or double-click it to launch the Monitor.</p>
+</div>
+<div class="section" id="running-the-launcher">
+<h2>Running The Launcher<a class="headerlink" href="#running-the-launcher" title="Permalink to this headline">¶</a></h2>
+<p>To start the Launcher:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>On Windows, you can start the Launcher from the Start Menu under Thinkbox\Deadline.</p></li>
+<li><p>On Linux, you can start the Launcher from a terminal window by running the deadlinelauncher script in the bin folder.</p></li>
+<li><p>On macOS, you can start the Launcher from Finder by running the DeadlineLauncher application in Applications/Thinkbox/Deadline.</p></li>
+</ul>
+</div></blockquote>
+<p>The Launcher can also be started from a command prompt or terminal window. For more information, see the <a class="reference internal" href="#launcher-command-line-args-ref-label"><span class="std std-ref">Launcher Command Line</span></a> documentation.</p>
+</div>
+<div class="section" id="administration-features">
+<h2>Administration Features<a class="headerlink" href="#administration-features" title="Permalink to this headline">¶</a></h2>
+<p>Running the Launcher can help make some administrative tasks easier, which is why it’s recommended to keep it running at all times on your render nodes and workstations.</p>
+<div class="section" id="automatic-updates">
+<h3>Automatic Updates<a class="headerlink" href="#automatic-updates" title="Permalink to this headline">¶</a></h3>
+<p>If you have enabled Automatic Upgrades under the Client Setup section of the <a class="reference internal" href="repository-config.html#client-setup-ref-label"><span class="std std-ref">Repository Options</span></a>, whenever you launch the Monitor, Worker, or Pulse using the Launcher, it will check the
+Repository for updates and upgrade itself automatically if necessary before starting the selected application.</p>
+<p>Note that the upgrade will only trigger when launching applications through the Launcher. Also, if the Launcher is running as a service on Windows, launching the Monitor will not trigger an update.</p>
+</div>
+<div class="section" id="remote-administration">
+<h3>Remote Administration<a class="headerlink" href="#remote-administration" title="Permalink to this headline">¶</a></h3>
+<p>If you have enabled Remote Administration under the Client Setup section of the <a class="reference internal" href="repository-config.html#client-setup-ref-label"><span class="std std-ref">Repository Options</span></a>, you will be able to control the Worker or Pulse applications remotely, and remotely execute arbitrary commands.
+Note that it may be a potential security risk to leave it running if you are connected to the internet and are not behind a firewall. In this case, you should leave Remote Administration disabled.</p>
+</div>
+</div>
+<div class="section" id="launcher-menu-options">
+<span id="launcher-menu-ref-label"></span><h2>Launcher Menu Options<a class="headerlink" href="#launcher-menu-options" title="Permalink to this headline">¶</a></h2>
+<p>Right-click on the Launcher system tray icon to bring up the Launcher menu. The available options are listed below. Note that if the Launcher is running as a service or daemon,
+this menu is unavailable because the system tray icon will be hidden.</p>
+<img alt="../_images/launcher_menu.png" src="../_images/launcher_menu.png" />
+<p><strong>Launch Monitor</strong></p>
+<blockquote>
+<div><p>Launches the Monitor application. If the Repository has been upgraded recently, and Automatic Updates is enabled, this will automatically upgrade the client machine.</p>
+</div></blockquote>
+<p><strong>Launch Monitor for Repository</strong></p>
+<blockquote>
+<div><p>Provides a sub-menu to allow the launching of a new instance of Monitor connecting to a known repository directly, via a Connection Server or enter a NEW repository to connect to. If the Repository has been upgraded recently, and Automatic Updates is enabled, this will automatically upgrade the client machine.</p>
+</div></blockquote>
+<p><strong>Launch Worker(s)</strong></p>
+<blockquote>
+<div><p>Launches the Worker application. If this machine has been configured to run more than one Worker instance, this will launch all of them. If the Repository has been upgraded recently, and Automatic Updates is enabled,
+this will automatically upgrade the client machine.</p>
+</div></blockquote>
+<p><strong>Launch Worker By Name</strong></p>
+<blockquote>
+<div><p>Launch a specific Worker instance, or add/remove Worker instances from this machine (if enabled for the current user). Note that new Worker instances must have names that only contain alphanumeric characters,
+underscores, or hyphens. See the documentation on running <a class="reference internal" href="multiple-workers.html#multiple-workers-ref-label"><span class="std std-ref">Multiple Workers On One Machine</span></a> for more information.</p>
+</div></blockquote>
+<p><strong>Local Worker Controls</strong></p>
+<blockquote>
+<div><p>Opens the <a class="reference internal" href="local-worker.html#local-worker-ref-label"><span class="std std-ref">Local Worker Controls</span></a> window, which allows you to control and configure the Worker that runs on your machine.</p>
+</div></blockquote>
+<p><strong>Launch Worker at Startup</strong></p>
+<blockquote>
+<div><p>If enabled, the Worker will launch when the Launcher starts up.</p>
+</div></blockquote>
+<p><strong>Restart Worker If It Stalls</strong></p>
+<blockquote>
+<div><p>If enabled, the Launcher will try to restart the Worker on the machine if it stalls.</p>
+</div></blockquote>
+<p><strong>Scripts</strong></p>
+<blockquote>
+<div><p>Allows you to run general scripts that you can create. Note that these are the same scripts that you can access from the Scripts menu in the Monitor. Check out the <a class="reference internal" href="monitor-scripts.html#monitor-scripts-ref-label"><span class="std std-ref">Monitor Scripts</span></a>
+documentation for more information.</p>
+</div></blockquote>
+<p><strong>Submit</strong></p>
+<blockquote>
+<div><p>Allows you to submit jobs for different rendering plugins. Note that these are the same submission scripts that you can access from the Submit menu in the Monitor.
+More information regarding the Monitor submission scripts for each plugin can be found in the plugins section of the documentation. You can also add your own submission scripts to the submission menu.
+Check out the <a class="reference internal" href="monitor-scripts.html#monitor-scripts-ref-label"><span class="std std-ref">Monitor Scripts</span></a> documentation for more information.</p>
+</div></blockquote>
+<p><strong>Change Repository…</strong></p>
+<blockquote>
+<div><p>Change the Repository that the client connects to. See <a class="reference internal" href="changing-repository.html#change-repository-ref-label"><span class="std std-ref">Change Repository</span></a> for more information.</p>
+</div></blockquote>
+<p><strong>Change User…</strong></p>
+<blockquote>
+<div><p>Change the current user on the client.</p>
+</div></blockquote>
+<p><strong>Change License Server…</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Starting with Deadline 10.1.23, Deadline and its components do not require a license. For older versions, use this to change the license server that the Worker connects to.</p>
+</div>
+<p><strong>Change Region…</strong></p>
+<blockquote>
+<div><p>Change the region that the machine belongs to.</p>
+</div></blockquote>
+<p><strong>Keep Local Repository Cache</strong></p>
+<blockquote>
+<div><p>If enabled, Deadline applications on this machine that are not connected to a Deadline Remote Connection Server will keep a local cache of some Repository files instead of pulling them directly from the Repository file server (scripts, plugins, etc). Note that a local cache will always be used when connecting to a Deadline Remote Connection Server.</p>
+</div></blockquote>
+<p><strong>Explore Log Folder</strong></p>
+<blockquote>
+<div><p>Opens the Deadline log folder on the machine.</p>
+</div></blockquote>
+<p><strong>About Deadline Launcher</strong></p>
+<blockquote>
+<div><p>Opens the Deadline About dialog.</p>
+</div></blockquote>
+</div>
+<div class="section" id="command-line-options">
+<span id="launcher-command-line-args-ref-label"></span><h2>Command Line Options<a class="headerlink" href="#command-line-options" title="Permalink to this headline">¶</a></h2>
+<p>To run the Launcher from a command prompt or terminal window, navigate to the Deadline bin folder (Windows or Linux) or the Resources folder (macOS) and run the ‘deadlinelauncher’ application.
+To view all available command line arguments, you can run the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinelauncher</span> <span class="o">-</span><span class="n">help</span>
+</pre></div>
+</div>
+<div class="section" id="available-options">
+<h3>Available Options<a class="headerlink" href="#available-options" title="Permalink to this headline">¶</a></h3>
+<p>To start the Monitor with the Launcher, use the -monitor option. If another Launcher is already running, this will tell the existing Launcher to start the Monitor.
+If an upgrade is available, this will trigger an automatic upgrade:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinelauncher</span> <span class="o">-</span><span class="n">monitor</span>
+</pre></div>
+</div>
+<p>To start the Worker with the Launcher, use the -slave option. If another Launcher is already running, this will tell the existing Launcher to start the Worker.
+If an upgrade is available, this will trigger an automatic upgrade:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinelauncher</span> <span class="o">-</span><span class="n">slave</span>
+</pre></div>
+</div>
+<p>To launch specific Workers with Launcher, after the -slaves option use the -slavenames option along with a comma-separated list of Worker name suffixes.  The resulting Worker names will have the unique suffixes appended to the base Worker name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinelauncher</span> <span class="o">-</span><span class="n">slave</span> <span class="o">-</span><span class="n">slavenames</span> <span class="s2">&quot;suffix1,suffix2&quot;</span>
+</pre></div>
+</div>
+<p>To start Pulse with the Launcher, use the -pulse option. If another Launcher is already running, this will tell the existing Launcher to start Pulse.
+If an upgrade is available, this will trigger an automatic upgrade:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinelauncher</span> <span class="o">-</span><span class="n">pulse</span>
+</pre></div>
+</div>
+<p>To start the License Forwarder with the Launcher, use the -licenseforwarder option. If another Launcher is already running, this will tell the existing Launcher to start the License Forwarder.
+If an upgrade is available, this will trigger an automatic upgrade:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinelauncher</span> <span class="o">-</span><span class="n">licenseforwarder</span>
+</pre></div>
+</div>
+<p>To start the Remote Connection Server with the Launcher, use the -rcs option. If another Launcher is already running, this will tell the existing Launcher to start the Remote Connection Server.
+If an upgrade is available, this will trigger an automatic upgrade:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinelauncher</span> <span class="o">-</span><span class="n">rcs</span>
+</pre></div>
+</div>
+<p>To start the Web Service with the Launcher, use the -webservice option. If another Launcher is already running, this will tell the existing Launcher to start the Web Service.
+If an upgrade is available, this will trigger an automatic upgrade:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinelauncher</span> <span class="o">-</span><span class="n">webservice</span>
+</pre></div>
+</div>
+<p>To trigger an automatic upgrade if one is available, use the -upgrade flag:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinelauncher</span> <span class="o">-</span><span class="n">upgrade</span>
+</pre></div>
+</div>
+<p>To prevent the Worker from being started if the Launcher is configured to launch the Worker at startup:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinelauncher</span> <span class="o">-</span><span class="n">noslave</span>
+</pre></div>
+</div>
+<p>To run the Launcher without a user interface, use the -nogui option. Note that if the Launcher is running in this mode, if you launch the Worker or Pulse through the Launcher, they will also run without a user interface:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinelauncher</span> <span class="o">-</span><span class="n">nogui</span>
+<span class="n">deadlinelauncher</span> <span class="o">-</span><span class="n">nogui</span> <span class="o">-</span><span class="n">slave</span>
+</pre></div>
+</div>
+<p>To shutdown the Launcher if it’s already running, use the -shutdown option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinelauncher</span> <span class="o">-</span><span class="n">shutdown</span>
+</pre></div>
+</div>
+<p>To shutdown the Workers and Pulse on the machine before shutting down the Launcher, use the -shutdownall option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinelauncher</span> <span class="o">-</span><span class="n">shutdownall</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="launcher-as-a-service">
+<h2>Launcher As A Service<a class="headerlink" href="#launcher-as-a-service" title="Permalink to this headline">¶</a></h2>
+<p>When <a class="reference internal" href="install-client.html#install-client-ref-label"><span class="std std-ref">installing the Deadline Client</span></a>, you can choose to install the Launcher as a service (Windows) or a daemon (Linux and macOS). If you want to configure the Launcher to run as a service or daemon after the Client has been installed, simply run the Client installer again and enable the service or daemon option during installation.</p>
+<p>There are also some considerations that need to be made when installing the Launcher as a service or daemon. See the <a class="reference internal" href="install-client.html#install-as-service-ref-label"><span class="std std-ref">Installing as a Service or Daemon</span></a> documentation for more information.</p>
+<div class="section" id="manually-installing-the-launcher-service-on-windows">
+<h3>Manually Installing the Launcher Service on Windows<a class="headerlink" href="#manually-installing-the-launcher-service-on-windows" title="Permalink to this headline">¶</a></h3>
+<p>On Windows, you can use <a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">Deadline Command</span></a> along with the following commands to install or uninstall the Launcher service:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">InstallLauncherService</span>               <span class="n">Installs</span> <span class="n">the</span> <span class="n">Deadline</span> <span class="n">Launcher</span> <span class="n">Service</span><span class="p">,</span> <span class="ow">and</span>
+                                     <span class="n">optionally</span> <span class="n">starts</span> <span class="n">it</span><span class="o">.</span>
+  <span class="p">[</span><span class="n">true</span><span class="o">/</span><span class="n">false</span><span class="p">]</span>                       <span class="n">Whether</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">to</span> <span class="n">start</span> <span class="n">the</span> <span class="n">Launcher</span> <span class="n">Service</span>
+                                     <span class="n">after</span> <span class="n">it</span> <span class="n">has</span> <span class="n">been</span> <span class="n">installed</span> <span class="p">(</span><span class="n">optional</span><span class="p">)</span>
+
+
+<span class="n">InstallLauncherServiceLogOn</span>          <span class="n">Installs</span> <span class="n">the</span> <span class="n">Deadline</span> <span class="n">Launcher</span> <span class="n">Service</span> <span class="k">with</span> <span class="n">the</span>
+                                     <span class="n">given</span> <span class="n">account</span><span class="p">,</span> <span class="ow">and</span> <span class="n">optionally</span> <span class="n">starts</span> <span class="n">it</span><span class="o">.</span>
+  <span class="p">[</span><span class="n">User</span> <span class="n">Name</span><span class="p">]</span>                        <span class="n">The</span> <span class="n">account</span> <span class="n">user</span> <span class="n">name</span>
+  <span class="p">[</span><span class="n">Password</span><span class="p">]</span>                         <span class="n">The</span> <span class="n">account</span> <span class="n">password</span><span class="o">.</span> <span class="n">Submitting</span> <span class="n">a</span> <span class="n">value</span> <span class="k">with</span> <span class="n">the</span> <span class="n">prefix</span> <span class="s1">&#39;env:&#39;</span> <span class="n">will</span> <span class="n">instruct</span> <span class="n">the</span> <span class="n">installer</span> <span class="n">to</span> <span class="n">pull</span> <span class="n">the</span> <span class="n">password</span> <span class="kn">from</span> <span class="nn">an</span> <span class="n">environment</span> <span class="n">variable</span><span class="o">.</span> <span class="n">The</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">environment</span> <span class="n">variable</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">value</span> <span class="n">after</span> <span class="s1">&#39;env:&#39;</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="n">env</span><span class="p">:</span><span class="n">MY_VARIABLE</span><span class="p">)</span><span class="o">.</span>
+  <span class="p">[</span><span class="n">true</span><span class="o">/</span><span class="n">false</span><span class="p">]</span>                       <span class="n">Whether</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">to</span> <span class="n">start</span> <span class="n">the</span> <span class="n">Launcher</span> <span class="n">Service</span>
+                                     <span class="n">after</span> <span class="n">it</span> <span class="n">has</span> <span class="n">been</span> <span class="n">installed</span> <span class="p">(</span><span class="n">optional</span><span class="p">)</span>
+
+
+<span class="n">UninstallLauncherService</span>             <span class="n">Stops</span> <span class="ow">and</span> <span class="n">uninstalls</span> <span class="n">the</span> <span class="n">Deadline</span> <span class="n">Launcher</span>
+                                     <span class="n">Service</span><span class="o">.</span>
+
+
+<span class="n">StartLauncherService</span>                 <span class="n">Starts</span> <span class="n">the</span> <span class="n">Deadline</span> <span class="n">Launcher</span> <span class="n">Service</span> <span class="k">if</span> <span class="n">it</span> <span class="ow">is</span>
+                                     <span class="n">running</span><span class="o">.</span>
+
+
+<span class="n">StopLauncherService</span>                  <span class="n">Stops</span> <span class="n">the</span> <span class="n">Deadline</span> <span class="n">Launcher</span> <span class="n">Service</span> <span class="k">if</span> <span class="n">it</span> <span class="ow">is</span>
+                                     <span class="n">running</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Here is an example command line to install the service:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span><span class="o">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">InstallLauncherServiceLogOn</span> <span class="s2">&quot;USER&quot;</span> <span class="s2">&quot;env:PASSWORD&quot;</span>
+</pre></div>
+</div>
+<p>Here is an example command line to uninstall the service:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span><span class="o">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">UninstallLauncherService</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="launcher-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Why should the Launcher application be left running on the client machines?</strong></p>
+<blockquote>
+<div><p>Its main purpose is to provide a means of remote communication between the Monitor and the Worker applications. If it’s not running, the Worker will have to be stopped and started manually.</p>
+<p>In addition, whenever you launch the Monitor or Worker using the Launcher, it will check the Repository for updates and upgrade itself automatically if necessary before starting the selected application.
+If the Launcher is not running, updates will not be detected.</p>
+<p>Finally, the Launcher can detect if the Worker running on the machine has stalled, and restart it.</p>
+</div></blockquote>
+<p><strong>Can I run the Launcher without a user interface?</strong></p>
+<blockquote>
+<div><p>Yes, you can do this by passing the -nogui command line argument to the Launcher application:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinelauncher</span> <span class="o">-</span><span class="n">nogui</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>I have Idle Detection enabled, but the Launcher doesn’t start the Worker on Linux when it’s been idle long enough.</strong></p>
+<blockquote>
+<div><p>Please ensure you comply with our <a class="reference internal" href="system-requirements.html#system-requirements-linux-ref-label"><span class="std std-ref">System Requirements</span></a> for Linux.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Launcher</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#running-the-launcher">Running The Launcher</a></li>
+<li><a class="reference internal" href="#administration-features">Administration Features</a><ul>
+<li><a class="reference internal" href="#automatic-updates">Automatic Updates</a></li>
+<li><a class="reference internal" href="#remote-administration">Remote Administration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#launcher-menu-options">Launcher Menu Options</a></li>
+<li><a class="reference internal" href="#command-line-options">Command Line Options</a><ul>
+<li><a class="reference internal" href="#available-options">Available Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#launcher-as-a-service">Launcher As A Service</a><ul>
+<li><a class="reference internal" href="#manually-installing-the-launcher-service-on-windows">Manually Installing the Launcher Service on Windows</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index-client-applications.html"
+                        title="previous chapter">Deadline Client Applications</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="monitor.html"
+                        title="next chapter">Monitor</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="monitor.html" title="Monitor"
+             >next</a></li>
+        <li class="right" >
+          <a href="index-client-applications.html" title="Deadline Client Applications"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" >Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Launcher</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

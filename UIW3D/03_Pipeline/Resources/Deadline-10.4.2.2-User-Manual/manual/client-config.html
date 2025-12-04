@@ -1,0 +1,973 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Client Configuration &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Auto Configuration" href="auto-config.html" />
+    <link rel="prev" title="Multiple Workers On One Machine" href="multiple-workers.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="auto-config.html" title="Auto Configuration"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="multiple-workers.html" title="Multiple Workers On One Machine"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" accesskey="U">Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Client Configuration</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="client-configuration">
+<span id="client-config-ref-label"></span><h1>Client Configuration<a class="headerlink" href="#client-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The Deadline applications are typically configured on each machine using the deadline.ini file, and most of these settings are set during
+the <a class="reference internal" href="install-client.html#install-client-ref-label"><span class="std std-ref">Client Installation (Advanced)</span></a>, but they can be changed afterwards by editing the deadline.ini file directly. Some of these settings can also be updated using <a class="reference internal" href="auto-config.html#auto-config-ref-label"><span class="std std-ref">Auto Configuration</span></a>.</p>
+<p>This guide will cover the various settings, and how they can be configured. Note, you may wish to deploy your Linux/macOS client software onto a <a class="reference internal" href="deploy-client-centrally-managed.html#deploy-client-centrally-managed-ref-label"><span class="std std-ref">NFS share</span></a> via the use of additional environment variable overrides.</p>
+</div>
+<div class="section" id="client-configuration-files">
+<span id="client-configuration-file-ref-label"></span><h2>Client Configuration Files<a class="headerlink" href="#client-configuration-files" title="Permalink to this headline">¶</a></h2>
+<p>Configuration for Deadline clients typically reside in a system-wide <code class="docutils literal notranslate"><span class="pre">deadline.ini</span></code> file.
+There is also a user-specific <code class="docutils literal notranslate"><span class="pre">deadline.ini</span></code> file that allows for configuration overrides at the user level.</p>
+<p>Starting with v10.1.24, individual Deadline applications may also look for settings in (system-wide) application-specific <code class="docutils literal notranslate"><span class="pre">*.ini</span></code> files.
+This allows for persistent application-level configuration of Deadline settings.
+The table below outlines the applications that currently support this, along with the name of their corresponding <code class="docutils literal notranslate"><span class="pre">*.ini</span></code> file.</p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 47%" />
+<col style="width: 53%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Application</p></th>
+<th class="head"><p>Filename</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Launcher</p></td>
+<td><p>launcher.ini</p></td>
+</tr>
+<tr class="row-odd"><td><p>Monitor</p></td>
+<td><p>monitor.ini</p></td>
+</tr>
+<tr class="row-even"><td><p>Pulse</p></td>
+<td><p>pulse.ini</p></td>
+</tr>
+<tr class="row-odd"><td><p>Connection Server (RCS)</p></td>
+<td><p>remoteconnectionserver.ini</p></td>
+</tr>
+<tr class="row-even"><td><p>Web Service</p></td>
+<td><p>webservice.ini</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All of these files are located in the system-wide configuration folder, alongside <code class="docutils literal notranslate"><span class="pre">deadline.ini</span></code> (see below for the location of this folder for each OS).</p>
+</div>
+<p>When a Deadline client is loading settings, it will search configuration files in the following order (earlier files have higher priority):</p>
+<ol class="arabic simple">
+<li><p>The per-user <code class="docutils literal notranslate"><span class="pre">deadline.ini</span></code> file.</p></li>
+<li><p>The system-wide application-specific <code class="docutils literal notranslate"><span class="pre">*.ini</span></code> file (if applicable).</p></li>
+<li><p>The system-wide <code class="docutils literal notranslate"><span class="pre">deadline.ini</span></code> file.</p></li>
+</ol>
+<div class="section" id="configuration-file-locations">
+<h3>Configuration File Locations<a class="headerlink" href="#configuration-file-locations" title="Permalink to this headline">¶</a></h3>
+<p>The system deadline.ini file (and application-specific <code class="docutils literal notranslate"><span class="pre">*.ini</span></code> files) can be found in the following locations.
+Note that the [VERSION] in the path will change based on the Deadline version number.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Windows: <code class="docutils literal notranslate"><span class="pre">%PROGRAMDATA%\Thinkbox\Deadline[VERSION]\deadline.ini</span></code></p></li>
+<li><p>Linux: <code class="docutils literal notranslate"><span class="pre">/var/lib/Thinkbox/Deadline[VERSION]/deadline.ini</span></code></p></li>
+<li><p>macOS: <code class="docutils literal notranslate"><span class="pre">/Users/Shared/Thinkbox/Deadline[VERSION]/deadline.ini</span></code></p></li>
+</ul>
+</div></blockquote>
+<p>The per-user deadline.ini file can be found in the following locations.
+Note that the [VERSION] in the path will change based on the Deadline version number.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Windows: <code class="docutils literal notranslate"><span class="pre">%LOCALAPPDATA%\Thinkbox\Deadline[VERSION]\deadline.ini</span></code></p></li>
+<li><p>Linux: <code class="docutils literal notranslate"><span class="pre">~/Thinkbox/Deadline[VERSION]/deadline.ini</span></code></p></li>
+<li><p>macOS: <code class="docutils literal notranslate"><span class="pre">~/Library/Application</span> <span class="pre">Support/Thinkbox/Deadline[VERSION]/deadline.ini</span></code></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="configuration-file-format">
+<h3>Configuration File Format<a class="headerlink" href="#configuration-file-format" title="Permalink to this headline">¶</a></h3>
+<p>The deadline.ini file has an ini file format, so there will be a [Deadline] section followed by a number of key=value pairs that represent each setting. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Deadline</span><span class="p">]</span>
+<span class="n">NetworkRoot</span><span class="o">=</span>\\<span class="n">repository</span>\<span class="n">path</span>
+<span class="n">LauncherListeningPort</span><span class="o">=</span><span class="mi">17000</span>
+<span class="n">AutoConfigurationPort</span><span class="o">=</span><span class="mi">17001</span>
+</pre></div>
+</div>
+<p>As mentioned above, the Deadline Client will first check the per-user deadline.ini file for a setting (represented by the key in this file). If that key isn’t present in the per-user file, the Client will then look for the key in the system deadline.ini file.</p>
+</div>
+<div class="section" id="configuration-settings">
+<h3>Configuration Settings<a class="headerlink" href="#configuration-settings" title="Permalink to this headline">¶</a></h3>
+<p>The following settings can be configured in the system or per-user deadline.ini files. Just remember that the Deadline Client will always prefer the setting in the per-user deadline.ini file over the system deadline.ini file. Note that other settings can show up in these files, but they are used internally by Deadline and are not documented here.</p>
+<div class="section" id="connectiontype">
+<h4>ConnectionType<a class="headerlink" href="#connectiontype" title="Permalink to this headline">¶</a></h4>
+<p>The ConnectionType setting tells the client how to connect to the Deadline Repository. These are the supported values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ConnectionType</span><span class="o">=</span><span class="n">Direct</span> <span class="c1">#Direct/Repository connection</span>
+<span class="n">ConnectionType</span><span class="o">=</span><span class="n">Remote</span> <span class="c1">#RCS connection</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Direct: The client will connect to the Repository defined in the <code class="docutils literal notranslate"><span class="pre">NetworkRoot</span></code> setting.</p></li>
+<li><p>Repository: Same as <code class="docutils literal notranslate"><span class="pre">Direct</span></code>.</p></li>
+<li><p>Remote: The client will connect to the Connection Server defined in the <code class="docutils literal notranslate"><span class="pre">ProxyRoot</span></code> setting. It also uses the <code class="docutils literal notranslate"><span class="pre">ProxyUseSSL</span></code> and <code class="docutils literal notranslate"><span class="pre">ProxySSLCertificate</span></code> settings.</p></li>
+<li><p>Proxy: Same as <code class="docutils literal notranslate"><span class="pre">Remote</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="networkroot">
+<h4>NetworkRoot<a class="headerlink" href="#networkroot" title="Permalink to this headline">¶</a></h4>
+<p>The NetworkRoot setting tells the Client which Repository to connect to if the <strong>ConnectionType</strong> setting above is set to <strong>Direct</strong> or <strong>Repository</strong>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">NetworkRoot</span><span class="o">=</span>\\<span class="n">repository</span>\<span class="n">path</span>
+</pre></div>
+</div>
+<p>There can also be additional NetworkRoot# settings that store previous Repository paths. These paths will be pre-populated in the drop down list when changing how the Client connects.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">NetworkRoot0</span><span class="o">=</span>\\<span class="n">repository</span>\<span class="n">path</span>
+<span class="n">NetworkRoot1</span><span class="o">=</span>\\<span class="n">another</span>\<span class="n">repository</span>
+<span class="n">NetworkRoot2</span><span class="o">=</span>\\<span class="n">test</span>\<span class="n">repository</span>
+</pre></div>
+</div>
+<p>This setting can be changed using the Change Repository option in the Launcher or the Monitor, and it can also be configured using <a class="reference internal" href="auto-config.html#auto-config-ref-label"><span class="std std-ref">Auto Configuration</span></a>.</p>
+</div>
+<div class="section" id="dbsslcertificate">
+<h4>DbSSLCertificate<a class="headerlink" href="#dbsslcertificate" title="Permalink to this headline">¶</a></h4>
+<p>The DbSSLCertificate setting is the path to the x509 client certificate used for connecting to the Database. The default is BLANK.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DbSSLCertificate</span><span class="o">=</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="proxyroot">
+<h4>ProxyRoot<a class="headerlink" href="#proxyroot" title="Permalink to this headline">¶</a></h4>
+<p>The ProxyRoot setting tells the Client which Connection Server to connect to if the <strong>ConnectionType</strong> setting above is set to <strong>Remote</strong>. The <em>server</em> part below can be the host name or IP address of a Connection Server machine, and the <em>port</em> is the port that it’s listening on. The <em>server</em> and <em>port</em> should be separated with a colon.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ProxyRoot</span><span class="o">=</span><span class="n">server</span><span class="p">:</span><span class="n">port</span>
+</pre></div>
+</div>
+<p>There can also be additional ProxyRoot# settings that store previous Connection Servers. These servers will be pre-populated in the drop down list when changing how the Client connects.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ProxyRoot0</span><span class="o">=</span><span class="n">server</span><span class="p">:</span><span class="n">port</span>
+<span class="n">ProxyRoot1</span><span class="o">=</span><span class="n">server</span><span class="p">:</span><span class="n">port</span>
+<span class="n">ProxyRoot2</span><span class="o">=</span><span class="n">server</span><span class="p">:</span><span class="n">port</span>
+</pre></div>
+</div>
+<p>If any of these additional proxies require an SSL certificate, the path to the certificate is appended to the end of the ProxyRoot# setting, and is separated from the <em>server:port</em> with a semicolon.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ProxyRoot0</span><span class="o">=</span><span class="n">server</span><span class="p">:</span><span class="n">port</span>
+<span class="n">ProxyRoot1</span><span class="o">=</span><span class="n">server</span><span class="p">:</span><span class="n">port</span><span class="p">;</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">certificate</span><span class="o">.</span><span class="n">crt</span>
+<span class="n">ProxyRoot2</span><span class="o">=</span><span class="n">server</span><span class="p">:</span><span class="n">port</span><span class="p">;</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">certificate</span><span class="o">.</span><span class="n">crt</span>
+</pre></div>
+</div>
+<p>This setting can be changed using the Change Repository option in the Launcher or the Monitor, and it can also be configured using <a class="reference internal" href="auto-config.html#auto-config-ref-label"><span class="std std-ref">Auto Configuration</span></a>.</p>
+</div>
+<div class="section" id="proxyusessl">
+<h4>ProxyUseSSL<a class="headerlink" href="#proxyusessl" title="Permalink to this headline">¶</a></h4>
+<p>The ProxyUseSSL setting is only used if the <strong>ConnectionType</strong> setting above is set to <strong>Remote</strong>. If set to True, the Client will connect to a Connection Server over SSL. The default is False.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ProxyUseSSL</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="proxysslcertificate">
+<h4>ProxySSLCertificate<a class="headerlink" href="#proxysslcertificate" title="Permalink to this headline">¶</a></h4>
+<p>The ProxySSLCertificate setting is only used if the <strong>ConnectionType</strong> setting above is set to <strong>Remote</strong>, and if the <strong>ProxyUseSSL</strong> setting above is set to <strong>True</strong>. This is the path to the SSL certificate to use to connect to a Connection Server over SSL.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ProxySSLCertificate</span><span class="o">=</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">certificate</span><span class="o">.</span><span class="n">crt</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="clientsslauthentication">
+<h4>ClientSSLAuthentication<a class="headerlink" href="#clientsslauthentication" title="Permalink to this headline">¶</a></h4>
+<p>The ClientSSLAuthentication setting is only used if the <strong>ConnectionType</strong> setting above is set to <strong>Remote</strong>, and if the <strong>ProxyUseSSL</strong> setting above is set to <strong>True</strong>. Indicates whether a client cert is required for SSL authentication on the RCS or not. Defaults to Required.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ClientSSLAuthentication</span><span class="o">=</span><span class="n">Required</span><span class="o">/</span><span class="n">NotRequired</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="proxysslca">
+<h4>ProxySSLCA<a class="headerlink" href="#proxysslca" title="Permalink to this headline">¶</a></h4>
+<p>The ProxySSLCA setting is only used if the <strong>ConnectionType</strong> setting above is set to <strong>Remote</strong>, and if the <strong>ProxyUseSSL</strong> setting above is set to <strong>True</strong>. The path to the SSL CA used for the proxy server. Must be set if ClientSSLAuthentication is set to Required.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ProxySSLCA</span><span class="o">=</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">CA</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="licensemode-deprecated">
+<h4>LicenseMode (DEPRECATED)<a class="headerlink" href="#licensemode-deprecated" title="Permalink to this headline">¶</a></h4>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Starting with Deadline 10.1.23, Deadline and its components do not require a license. This section is left for operators of older versions of Deadline. Please see the <a class="reference internal" href="floating-license-portal.html#floating-license-portal-ref-label"><span class="std std-ref">Thinkbox Floating License Portal</span></a> documentation if you require Deadline licenses.</p>
+</div>
+<p>The LicenseMode setting controls whether a floating Deadline Worker license is checked out during rendering or a metered, usage-based Deadline license is used.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LicenseMode</span><span class="o">=</span><span class="n">Floating</span>
+<span class="c1">#LicenseMode=UsageBased</span>
+</pre></div>
+</div>
+<p>This setting can be changed using the Change License Server option in the Launcher or the Worker, and it can also be configured using <a class="reference internal" href="auto-config.html#auto-config-ref-label"><span class="std std-ref">Auto Configuration</span></a>.</p>
+</div>
+<div class="section" id="licenseserver-deprecated">
+<h4>LicenseServer (DEPRECATED)<a class="headerlink" href="#licenseserver-deprecated" title="Permalink to this headline">¶</a></h4>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Starting with Deadline 10.1.23, Deadline and its components do not require a license. This section is left for operators of older versions of Deadline. Please see the <a class="reference internal" href="floating-license-portal.html#floating-license-portal-ref-label"><span class="std std-ref">Thinkbox Floating License Portal</span></a> documentation if you require Deadline licenses.</p>
+</div>
+<p>The LicenseServer setting tells the Client where it can get a license from.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LicenseServer</span><span class="o">=</span><span class="nd">@my</span><span class="o">-</span><span class="n">server</span>
+<span class="c1">#ip address and optional port number can be used instead</span>
+<span class="c1">#LicenseServer=27008@192.168.0.10</span>
+</pre></div>
+</div>
+<p>This setting can be changed using the Change License Server option in the Launcher or the Worker, and it can also be configured using <a class="reference internal" href="auto-config.html#auto-config-ref-label"><span class="std std-ref">Auto Configuration</span></a>.</p>
+</div>
+<div class="section" id="launcherlisteningport">
+<h4>LauncherListeningPort<a class="headerlink" href="#launcherlisteningport" title="Permalink to this headline">¶</a></h4>
+<p>The LauncherListeningPort setting is the port that the Launcher listens on for Remote Control. It must be the same on all Clients.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LauncherListeningPort</span><span class="o">=</span><span class="mi">17000</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="launcherservicestartupdelay">
+<h4>LauncherServiceStartupDelay<a class="headerlink" href="#launcherservicestartupdelay" title="Permalink to this headline">¶</a></h4>
+<p>The LauncherServiceStartupDelay setting is the number of seconds that the Launcher waits during startup when running as a service or daemon. This delay helps ensure that the machine has set its host name before the Launcher starts up any other Deadline applications.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LauncherServiceStartupDelay</span><span class="o">=</span><span class="mi">60</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="slavestartupport">
+<h4>SlaveStartupPort<a class="headerlink" href="#slavestartupport" title="Permalink to this headline">¶</a></h4>
+<p>The SlaveStartupPort setting is the port that the Workers on this machine use when starting up to ensure that only one Worker starts up at a time.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SlaveListeningPort</span><span class="o">=</span><span class="mi">17003</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="applicationstartupport">
+<h4>ApplicationStartupPort<a class="headerlink" href="#applicationstartupport" title="Permalink to this headline">¶</a></h4>
+<p>Similar to <em>SlaveStartupPort</em>, this setting is the port that Deadline Pulse, License Forwarder and Web Service use to ensure only one instance of each of those applications starts up at a time.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ApplicationStartupPort</span><span class="o">=</span><span class="mi">17006</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="autoconfigurationport">
+<h4>AutoConfigurationPort<a class="headerlink" href="#autoconfigurationport" title="Permalink to this headline">¶</a></h4>
+<p>The AutoConfigurationPort setting is the port that the Clients use when Auto Configuring themselves. It must be the same on all Clients.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AutoConfigurationPort</span><span class="o">=</span><span class="mi">17001</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="noguimode">
+<span id="client-config-worker-data-root-ref-label"></span><h4>NoGuiMode<a class="headerlink" href="#noguimode" title="Permalink to this headline">¶</a></h4>
+<p>The NoGuiMode setting controls whether or not no GUI mode is set for all Deadline GUI based applications. The default is False.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">NoGuiMode</span><span class="o">=</span><span class="kc">False</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="logreportsyntaxhighlighting">
+<h4>LogReportSyntaxHighlighting<a class="headerlink" href="#logreportsyntaxhighlighting" title="Permalink to this headline">¶</a></h4>
+<p>The LogReportSyntaxHighlighting setting controls whether or not syntax highlighting is enabled for logs and reports. The default is True.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LogReportSyntaxHighlighting</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="slavedataroot">
+<h4>SlaveDataRoot<a class="headerlink" href="#slavedataroot" title="Permalink to this headline">¶</a></h4>
+<p>The SlaveDataRoot setting tells the Worker where to copy its job files temporarily during rendering. The default location is stated in <cite>Worker Local Data Storage&lt;worker_local_data_storage_ref_label&gt;.</cite></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SlaveDataRoot</span><span class="o">=</span><span class="n">C</span><span class="p">:</span>\<span class="n">LocalSlaveData</span>
+</pre></div>
+</div>
+<p>This setting can be configured manually or using the <a class="reference internal" href="auto-config.html#auto-config-ref-label"><span class="std std-ref">Auto Configuration</span></a> Local Data Path option. More information about the purpose of this config value is at <a class="reference internal" href="worker.html#worker-local-data-storage-ref-label"><span class="std std-ref">Worker Local Data Storage</span></a>.</p>
+</div>
+<div class="section" id="region">
+<h4>Region<a class="headerlink" href="#region" title="Permalink to this headline">¶</a></h4>
+<p>The Region setting can be used to ensure certain Workers are categorized by a Deadline Region as defined in the <a class="reference internal" href="repository-config.html#region-settings-label"><span class="std std-ref">Repository Configuration</span></a>. The default is BLANK.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Region</span><span class="o">=</span>
+</pre></div>
+</div>
+<p>This setting can be changed from the Launcher menu, manually and also be configured using <a class="reference internal" href="auto-config.html#auto-config-ref-label"><span class="std std-ref">Auto Configuration</span></a>.</p>
+</div>
+<div class="section" id="multipleslavesenabled">
+<h4>MultipleSlavesEnabled<a class="headerlink" href="#multipleslavesenabled" title="Permalink to this headline">¶</a></h4>
+<p>The MultipleSlavesEnabled setting indicates if multiple Workers are allowed to run on this machine or not. The default is True.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MultipleSlavesEnabled</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="restartstalledslave">
+<h4>RestartStalledSlave<a class="headerlink" href="#restartstalledslave" title="Permalink to this headline">¶</a></h4>
+<p>The RestartStalledSlave setting indicates if the Launcher should try to restart the Worker on the machine if it becomes stalled. The default is True.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RestartStalledSlave</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>This setting can be changed from the Launcher menu, and it can also be configured using <a class="reference internal" href="auto-config.html#auto-config-ref-label"><span class="std std-ref">Auto Configuration</span></a>.</p>
+</div>
+<div class="section" id="keepworkerrunning">
+<h4>KeepWorkerRunning<a class="headerlink" href="#keepworkerrunning" title="Permalink to this headline">¶</a></h4>
+<p>The KeepWorkerRunning setting controls if the Launcher should automatically relaunch Worker if it is shut down or crashes. The default is False.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KeepWorkerRunning</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="launchpulseatstartup">
+<h4>LaunchPulseAtStartup<a class="headerlink" href="#launchpulseatstartup" title="Permalink to this headline">¶</a></h4>
+<p>The LaunchPulseAtStartup setting controls if the Launcher should automatically launch Pulse after the Launcher starts up. The default is False.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LaunchPulseAtStartup</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="keeppulserunning">
+<h4>KeepPulseRunning<a class="headerlink" href="#keeppulserunning" title="Permalink to this headline">¶</a></h4>
+<p>The KeepPulseRunning setting controls if the Launcher should automatically relaunch Pulse if it is shut down or crashes. The default is False.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KeepPulseRunning</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="launchwebserviceatstartup">
+<h4>LaunchWebServiceAtStartup<a class="headerlink" href="#launchwebserviceatstartup" title="Permalink to this headline">¶</a></h4>
+<p>The LaunchWebServiceAtStartup setting controls if the Launcher should automatically launch the Web Service after the Launcher starts up. The default is False.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LaunchWebServiceAtStartup</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="keepwebservicerunning">
+<h4>KeepWebServiceRunning<a class="headerlink" href="#keepwebservicerunning" title="Permalink to this headline">¶</a></h4>
+<p>The KeepWebServiceRunning setting controls if the Launcher should automatically relaunch the Web Service if it is shut down or crashes. The default is False.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KeepWebServiceRunning</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="launchremoteconnectionserveratstartup">
+<span id="client-config-rcs-startup-ref-label"></span><h4>LaunchRemoteConnectionServerAtStartup<a class="headerlink" href="#launchremoteconnectionserveratstartup" title="Permalink to this headline">¶</a></h4>
+<p>The LaunchRemoteConnectionServerAtStartup setting controls if the Launcher should automatically launch the Remote Connection Server after the Launcher starts up. The default is False.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LaunchRemoteConnectionServerAtStartup</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="keepremoteconnectionserverrunning">
+<h4>KeepRemoteConnectionServerRunning<a class="headerlink" href="#keepremoteconnectionserverrunning" title="Permalink to this headline">¶</a></h4>
+<p>The KeepRemoteConnectionServerRunning setting controls if the Launcher should automatically relaunch the Remote Connection Server if it is shut down or crashes. The default is False.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KeepRemoteConnectionServerRunning</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="licenseforwarderlisteningport">
+<h4>LicenseForwarderListeningPort<a class="headerlink" href="#licenseforwarderlisteningport" title="Permalink to this headline">¶</a></h4>
+<p>The LicenseForwarderListeningPort setting controls a port override for the License Forwarder’s incoming licensing requests.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LicenseForwarderListeningPort</span><span class="o">=</span><span class="mi">17004</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="launchlicenseforwarderatstartup">
+<span id="client-config-license-forwarder-startup-ref-label"></span><h4>LaunchLicenseForwarderAtStartup<a class="headerlink" href="#launchlicenseforwarderatstartup" title="Permalink to this headline">¶</a></h4>
+<p>The LaunchLicenseForwarderAtStartup setting controls if the Launcher should automatically launch the License Forwarder after the Launcher starts up. The default is False.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LaunchLicenseForwarderAtStartup</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="keeplicenseforwarderrunning">
+<h4>KeepLicenseForwarderRunning<a class="headerlink" href="#keeplicenseforwarderrunning" title="Permalink to this headline">¶</a></h4>
+<p>The KeepLicenseForwarderRunning setting controls if the Launcher should automatically relaunch License Forwarder if it is shut down or crashes. The default is False.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KeepLicenseForwarderRunning</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="licenseforwardersslpath">
+<span id="client-config-forwarder-ssl-path-ref-label"></span><h4>LicenseForwarderSSLPath<a class="headerlink" href="#licenseforwardersslpath" title="Permalink to this headline">¶</a></h4>
+<p>The <a class="reference internal" href="license-forwarder.html#license-forwarder-ref-label"><span class="std std-ref">License Forwarder</span></a> requires an 3rd Party certificate for each application that will be used with <a class="reference internal" href="licensing-usage-based.html#licensing-3rd-party-ubl-ref-label"><span class="std std-ref">Third Party Usage-Based Licensing</span></a>. The LicenseForwarderSSLPath setting specifies the directory where the 3rd Party certificates are located. The certificates themselves will be provided to you upon purchase of third party licensing credits.</p>
+<p>This setting is not set by default. If it is not present, the License Forwarder will ask for a valid 3rd Party certificate path when it is launched.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LicenseForwarderSSLPath</span><span class="o">=</span><span class="n">C</span><span class="p">:</span>\<span class="mi">3</span><span class="n">PL_Certs</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="includercsinlaunchermenu">
+<h4>IncludeRCSInLauncherMenu<a class="headerlink" href="#includercsinlaunchermenu" title="Permalink to this headline">¶</a></h4>
+<p>The IncludeRCSInLauncherMenu setting controls if the Launcher menu has the option to launch the Remote Connection Server. The default is False.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IncludeRCSInLauncherMenu</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="includewebserviceinlaunchermenu">
+<h4>IncludeWebServiceInLauncherMenu<a class="headerlink" href="#includewebserviceinlaunchermenu" title="Permalink to this headline">¶</a></h4>
+<p>The IncludeWebServiceInLauncherMenu setting controls if the Launcher menu has the option to launch the Web Service. The default is False.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IncludeWebServiceInLauncherMenu</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="includelicenseforwarderinlaunchermenu">
+<h4>IncludeLicenseForwarderInLauncherMenu<a class="headerlink" href="#includelicenseforwarderinlaunchermenu" title="Permalink to this headline">¶</a></h4>
+<p>The IncludeLicenseForwarderInLauncherMenu setting controls if the Launcher menu has the option to launch the License Forwarder. The default is False.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IncludeLicenseForwarderInLauncherMenu</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>This setting can only be changed manually.</p>
+</div>
+<div class="section" id="autoupdateoverride">
+<span id="autoupdateoverride-ref-label"></span><h4>AutoUpdateOverride<a class="headerlink" href="#autoupdateoverride" title="Permalink to this headline">¶</a></h4>
+<p>The AutoUpdateOverride setting can be used to override the Automatic Upgrades setting in the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Configuration</span></a>. If left blank, then it will not override the Repository Options, which is also
+the default behavior if this setting isn’t specified.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AutoUpdateOverride</span><span class="o">=</span><span class="kc">False</span>
+</pre></div>
+</div>
+<p>This setting can be configured using <a class="reference internal" href="auto-config.html#auto-config-ref-label"><span class="std std-ref">Auto Configuration</span></a>.</p>
+</div>
+<div class="section" id="remotecontrol">
+<span id="remotecontroloverride-ref-label"></span><h4>RemoteControl<a class="headerlink" href="#remotecontrol" title="Permalink to this headline">¶</a></h4>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Enabling remote administration grants others on the network arbitrary access to this machine. This is generally not recommended, especially on server or user-facing machines.</p>
+</div>
+<p>The RemoteControl setting can be used to override the Remote Administration setting in the <a class="reference internal" href="repository-config.html#repo-config-remote-control-settings-ref-label"><span class="std std-ref">Repository Configuration</span></a>. This is useful in the case where Remote Administration is enabled to control worker machines remotely, while allowing you to prevent remote control for servers or user-facing machines.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RemoteControl</span><span class="o">=</span><span class="n">Blocked</span>
+</pre></div>
+</div>
+<p>To enable remote control, change the setting to <code class="docutils literal notranslate"><span class="pre">NotBlocked</span></code>. This setting can be configured in the Client Installer options.</p>
+</div>
+<div class="section" id="skippermissioncheck">
+<h4>SkipPermissionCheck<a class="headerlink" href="#skippermissioncheck" title="Permalink to this headline">¶</a></h4>
+<p>The SkipPermissionCheck setting can be used to forgo checking for read/write permissions when the Deadline Client applications validate their connection to the Repository. The default is False.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SkipPermissionCheck</span><span class="o">=</span><span class="kc">False</span>
+</pre></div>
+</div>
+<p>This setting can be configured using <a class="reference internal" href="auto-config.html#auto-config-ref-label"><span class="std std-ref">Auto Configuration</span></a>.</p>
+</div>
+<div class="section" id="user">
+<h4>User<a class="headerlink" href="#user" title="Permalink to this headline">¶</a></h4>
+<p>The User setting is used by the Client to know which user you are when launching the Monitor or when submitting jobs.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">User</span><span class="o">=</span><span class="n">Ryan</span>
+</pre></div>
+</div>
+<p>This setting can be changed using the Change User option in the Launcher or the Monitor. To prevent users from changing who they are, see the User Management documentation.</p>
+</div>
+<div class="section" id="launchslaveatstartup">
+<h4>LaunchSlaveAtStartup<a class="headerlink" href="#launchslaveatstartup" title="Permalink to this headline">¶</a></h4>
+<p>The LaunchSlaveAtStartup setting controls if the Launcher should automatically launch the Worker after the Launcher starts up. The default is True.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LaunchSlaveAtStartup</span><span class="o">=</span><span class="kc">False</span>
+</pre></div>
+</div>
+<p>This setting can be changed from the Launcher menu, and it can also be configured using <a class="reference internal" href="auto-config.html#auto-config-ref-label"><span class="std std-ref">Auto Configuration</span></a>.</p>
+</div>
+<div class="section" id="ignoresync">
+<h4>IgnoreSync<a class="headerlink" href="#ignoresync" title="Permalink to this headline">¶</a></h4>
+<p>The “Keep Local Repository Cache” setting in Launcher. If enabled, Deadline applications on this machine that are not connected to a Remote Connection Server (RCS) will keep a local cache of some Repository files instead of pulling them directly from the Repository (scripts, plugins, etc). Note that a local cache will always be used when connecting to a RCS.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IgnoreSync</span><span class="o">=</span><span class="kc">False</span>
+</pre></div>
+</div>
+<p>This setting can be changed from the Launcher menu.</p>
+</div>
+<div class="section" id="connection-server-settings">
+<span id="client-config-conn-server-ref-label"></span><h4>Connection Server Settings<a class="headerlink" href="#connection-server-settings" title="Permalink to this headline">¶</a></h4>
+<p>The following is a group of settings that act together to control the behaviour of the Deadline <a class="reference internal" href="remote-connection-server.html#remote-connection-server-ref-label"><span class="std std-ref">Remote Connection Server</span></a> when it is run on this machine.</p>
+<p>These settings can also be configured using <a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">Deadline Command</span></a>. For more details, run the following in a console:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span> <span class="o">-</span><span class="n">help</span> <span class="n">ConfigureConnectionServer</span>
+</pre></div>
+</div>
+<div class="section" id="serverlistenip">
+<h5>ServerListenIP<a class="headerlink" href="#serverlistenip" title="Permalink to this headline">¶</a></h5>
+<p>The IP of the interface on which the Server will accept incoming connections. If left blank or unspecified, defaults to <cite>0.0.0.0</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ServerListenIP</span><span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="httplistenport">
+<h5>HttpListenPort<a class="headerlink" href="#httplistenport" title="Permalink to this headline">¶</a></h5>
+<p>The Port on which the Server will accept incoming HTTP requests. Defaults to <cite>8080</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HttpListenPort</span><span class="o">=</span><span class="mi">8080</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tlslistenport">
+<h5>TlsListenPort<a class="headerlink" href="#tlslistenport" title="Permalink to this headline">¶</a></h5>
+<p>The Port on which the Server will accept incoming HTTP requests. Defaults to <cite>4433</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TlsListenPort</span><span class="o">=</span><span class="mi">4433</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tlsservercert">
+<h5>TlsServerCert<a class="headerlink" href="#tlsservercert" title="Permalink to this headline">¶</a></h5>
+<p>The path to a .pfx file containing a x509 certificate and key used for TLS communication. Omit or leave blank to use un-encrypted HTTP. Defaults to <cite>Blank</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TlsServerCert</span><span class="o">=</span><span class="n">C</span><span class="p">:</span>\<span class="n">Certificates</span>\<span class="n">ServerCert</span><span class="o">.</span><span class="n">pfx</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tlsauth">
+<h5>TlsAuth<a class="headerlink" href="#tlsauth" title="Permalink to this headline">¶</a></h5>
+<p>If set to True, the Server will require incoming client connections to present a valid (trusted) certificate when connecting, or the connection will be rejected. Defaults to <cite>False</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TlsAuth</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tlscacert">
+<h5>TlsCaCert<a class="headerlink" href="#tlscacert" title="Permalink to this headline">¶</a></h5>
+<p>The path to a .crt file containing an additional trusted root certificate to use when authenticating incoming client certificates. Defaults to <cite>Blank</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TlsCaCert</span><span class="o">=</span><span class="n">C</span><span class="p">:</span>\<span class="n">Certificates</span>\<span class="n">ca</span><span class="o">.</span><span class="n">crt</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="localonly">
+<span id="client-deadline-path-ref-label"></span><h5>LocalOnly<a class="headerlink" href="#localonly" title="Permalink to this headline">¶</a></h5>
+<p>If set to True, the Remote Connection Server should only accept connections coming from the local loopback interface (127.0.0.1). Defaults to <cite>False</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LocalOnly</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="remoteconnectionserverincognito">
+<h5>RemoteConnectionServerIncognito<a class="headerlink" href="#remoteconnectionserverincognito" title="Permalink to this headline">¶</a></h5>
+<p>If set to True, the Remote Connection Server shouldn’t save its settings to the repository. Defaults to <cite>False</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RemoteConnectionServerIncognito</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="remoteconnectionserververboselogging">
+<h5>RemoteConnectionServerVerboseLogging<a class="headerlink" href="#remoteconnectionserververboselogging" title="Permalink to this headline">¶</a></h5>
+<p>If set to True, the Remote Connection Server will enable verbose logging. Defaults to <cite>False</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RemoteConnectionServerVerboseLogging</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="remoteconnectionserverlogapicalls">
+<h5>RemoteConnectionServerLogApiCalls<a class="headerlink" href="#remoteconnectionserverlogapicalls" title="Permalink to this headline">¶</a></h5>
+<p>If set to True, the Remote Connection Server will enable detailed logging of API requests. Defaults to <cite>False</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RemoteConnectionServerLogApiCalls</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="remoteconnectionserverlogapicaches">
+<h5>RemoteConnectionServerLogApiCaches<a class="headerlink" href="#remoteconnectionserverlogapicaches" title="Permalink to this headline">¶</a></h5>
+<p>If set to True, the Remote Connection Server will enable detailed logging of API caches. Defaults to <cite>False</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RemoteConnectionServerLogApiCaches</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="webservice-settings">
+<span id="client-config-web-service-ref-label"></span><h4>WebService Settings<a class="headerlink" href="#webservice-settings" title="Permalink to this headline">¶</a></h4>
+<p>The following is a group of settings that act together to control the behaviour of the Deadline <a class="reference internal" href="web-service.html#web-service-ref-label"><span class="std std-ref">Web Service</span></a> when it is run on this machine.</p>
+<p>These settings can also be configured using <a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">Deadline Command</span></a>. For more details, run the following in a console:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span> <span class="o">-</span><span class="n">help</span> <span class="n">ConfigureWebservice</span>
+</pre></div>
+</div>
+<div class="section" id="webserviceserverlistenip">
+<h5>WebServiceServerListenIP<a class="headerlink" href="#webserviceserverlistenip" title="Permalink to this headline">¶</a></h5>
+<p>The IP of the interface on which the Server will accept incoming connections. If left blank or unspecified, defaults to <cite>0.0.0.0</cite>. <cite>0.0.0.0</cite> represents it binds and listens to all interfaces.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ServerListenIP</span><span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="webservicehttplistenport">
+<h5>WebServiceHttpListenPort<a class="headerlink" href="#webservicehttplistenport" title="Permalink to this headline">¶</a></h5>
+<p>The Port on which the Server will accept incoming HTTP requests. Defaults to <cite>8081</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WebServiceHttpListenPort</span><span class="o">=</span><span class="mi">8081</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="webservicetlslistenport">
+<h5>WebServiceTlsListenPort<a class="headerlink" href="#webservicetlslistenport" title="Permalink to this headline">¶</a></h5>
+<p>The Port on which the Server will accept incoming HTTP requests. Defaults to <cite>4434</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WebServiceTlsListenPort</span><span class="o">=</span><span class="mi">4434</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="webservicetlsservercert">
+<h5>WebServiceTlsServerCert<a class="headerlink" href="#webservicetlsservercert" title="Permalink to this headline">¶</a></h5>
+<p>The path to a .pfx file containing a x509 certificate and key used for TLS communication. Omit or leave blank to use un-encrypted HTTP. Defaults to <cite>Blank</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WebServiceTlsServerCert</span><span class="o">=</span><span class="n">C</span><span class="p">:</span>\<span class="n">Certificates</span>\<span class="n">ServerCert</span><span class="o">.</span><span class="n">pfx</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="webservicetlsauth">
+<h5>WebServiceTlsAuth<a class="headerlink" href="#webservicetlsauth" title="Permalink to this headline">¶</a></h5>
+<p>If set to True, the Server will require incoming client connections to present a valid (trusted) certificate when connecting, or the connection will be rejected. Defaults to <cite>False</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WebServiceTlsAuth</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="webservicetlscacert">
+<h5>WebServiceTlsCaCert<a class="headerlink" href="#webservicetlscacert" title="Permalink to this headline">¶</a></h5>
+<p>The path to a .crt file containing an additional trusted root certificate to use when authenticating incoming client certificates. Defaults to <cite>Blank</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WebServiceTlsCaCert</span><span class="o">=</span><span class="n">C</span><span class="p">:</span>\<span class="n">Certificates</span>\<span class="n">ca</span><span class="o">.</span><span class="n">crt</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="webservicelocalonly">
+<h5>WebServiceLocalOnly<a class="headerlink" href="#webservicelocalonly" title="Permalink to this headline">¶</a></h5>
+<p>If set to True, the Webservice should only accept connections coming from the local loopback interface (127.0.0.1). Defaults to <cite>False</cite>. <cite>False</cite> means the Webservices should accept external connections</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WebServiceLocalOnly</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="webservicelogapicalls">
+<h5>WebServiceLogApiCalls<a class="headerlink" href="#webservicelogapicalls" title="Permalink to this headline">¶</a></h5>
+<p>If set to True, the Webservice will enable detailed logging of API requests. Defaults to <cite>False</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WebServiceLogApiCalls</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="webservicelogapicaches">
+<h5>WebServiceLogApiCaches<a class="headerlink" href="#webservicelogapicaches" title="Permalink to this headline">¶</a></h5>
+<p>If set to True, the Webservice will enable detailed logging of API caches. Defaults to <cite>False</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WebServiceLogApiCaches</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="house-cleaning-override-settings">
+<span id="client-config-housecleaning-overrides-ref-label"></span><h4>House Cleaning Override Settings<a class="headerlink" href="#house-cleaning-override-settings" title="Permalink to this headline">¶</a></h4>
+<p>The following is a group of settings that could be used to disable certain house cleaning operations on a machine.
+This is useful if you would like to force house cleaning to only run on a certain machine or if you’d like to run it manually.</p>
+<div class="section" id="disablerepositoryjobsscan">
+<h5>DisableRepositoryJobsScan<a class="headerlink" href="#disablerepositoryjobsscan" title="Permalink to this headline">¶</a></h5>
+<p>Defaults to <cite>False</cite>. If set to <cite>True</cite> disables <a class="reference internal" href="repository-config.html#pending-job-scan-settings-label"><span class="std std-ref">Pending Job Scan</span></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DisableRepositoryJobsScan</span><span class="o">=</span><span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="disablehousecleaning">
+<h5>DisableHouseCleaning<a class="headerlink" href="#disablehousecleaning" title="Permalink to this headline">¶</a></h5>
+<p>Defaults to <cite>False</cite>. If set to <cite>True</cite> disables <a class="reference internal" href="repository-config.html#repository-config-house-cleaning-ref-label"><span class="std std-ref">House Cleaning</span></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DisableHouseCleaning</span><span class="o">=</span><span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="disablerepositoryrepair">
+<h5>DisableRepositoryRepair<a class="headerlink" href="#disablerepositoryrepair" title="Permalink to this headline">¶</a></h5>
+<p>Defaults to <cite>False</cite>. If set to <cite>True</cite> disables <a class="reference internal" href="repository-config.html#repository-repair-settings-label"><span class="std std-ref">Repository Repair</span></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DisableRepositoryRepair</span><span class="o">=</span><span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="environment-variables">
+<h2>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h2>
+<p>Environment variables can also be used to configure the Deadline Client. The can be used to override settings in the deadline.ini file, and there are a couple additional variables that are also supported.</p>
+<div class="section" id="overriding-the-configuration-file">
+<h3>Overriding the Configuration File<a class="headerlink" href="#overriding-the-configuration-file" title="Permalink to this headline">¶</a></h3>
+<p>All deadline.ini settings can be overridden using environment variables. Simply prefix “DCONFIG_” to any supported deadline.ini key listed above and give it a value. For example, to override the LaunchSlaveAtStartup key and set it to True, simply define the following in your environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DCONFIG_LAUNCHSLAVEATSTARTUP</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>Note that the environment will always take priority over the deadline.ini files. So if LaunchSlaveAtStartup is configured in the environment, Deadline will use that value. If a setting is not defined in the environment, Deadline will fall back to the per-user deadline.ini, followed by the system deadline.ini.</p>
+</div>
+<div class="section" id="deadline-path">
+<h3>DEADLINE_PATH<a class="headerlink" href="#deadline-path" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>DEADLINE_PATH</strong> environment variable is an environment variable on Windows and Linux which contains the path to Deadline’s bin directory. On macOS, it is instead a file located at /Users/Shared/Thinkbox which contains the path to Deadline’s resources directory.</p>
+<p><strong>DEADLINE_PATH</strong> is used by the integrated submission scripts that are shipped with Deadline to determine where the Deadline Client is installed to, and what the Repository path is. While it is possible to modify this value on the system manually, you can instead use one of the Submitter installers to <a class="reference internal" href="install-submitters.html#submitter-installer-deadline-path-ref-label"><span class="std std-ref">Change the DEADLINE_PATH Value</span></a>.</p>
+</div>
+<div class="section" id="deadline-custom-path">
+<h3>DEADLINE_CUSTOM_PATH<a class="headerlink" href="#deadline-custom-path" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>DEADLINE_CUSTOM_PATH</strong> is an environment override variable allowing clients a way to locally redirect where a Deadline client application will look for a Deadline script, plugin, etc. This is similar to the existing <em>custom</em> directory in the repository but works locally. Deadline uses this search order when loading a plugin/event/script:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>In the appropriate subfolder of <strong>DEADLINE_CUSTOM_PATH</strong>, if defined/present.</p></li>
+<li><p>In the appropriate subfolder of <code class="docutils literal notranslate"><span class="pre">&lt;repo_path&gt;/custom</span></code>, if present.</p></li>
+<li><p>In the appropriate subfolder of the <code class="docutils literal notranslate"><span class="pre">&lt;repo_path&gt;</span></code> root.</p></li>
+</ol>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="other-client-files">
+<span id="local-worker-instance-files-ref-label"></span><h2>Other Client Files<a class="headerlink" href="#other-client-files" title="Permalink to this headline">¶</a></h2>
+<p>These are some additional Client files that are used.</p>
+<div class="section" id="local-worker-instance-files">
+<h3>Local Worker Instance Files<a class="headerlink" href="#local-worker-instance-files" title="Permalink to this headline">¶</a></h3>
+<p>Deadline supports the ability to run <a class="reference internal" href="multiple-workers.html#multiple-workers-ref-label"><span class="std std-ref">Multiple Workers On One Machine</span></a>. The local Worker instances are represented by .ini files which are stored in the “slaves” folder in the following locations. Note that the [VERSION] in the path will change based on the Deadline version number.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Windows: <code class="docutils literal notranslate"><span class="pre">%PROGRAMDATA%\Thinkbox\Deadline[VERSION]\slaves\</span></code></p></li>
+<li><p>Linux: <code class="docutils literal notranslate"><span class="pre">/var/lib/Thinkbox/Deadline[VERSION]/slaves/</span></code></p></li>
+<li><p>macOS: <code class="docutils literal notranslate"><span class="pre">/Users/Shared/Thinkbox/Deadline[VERSION]/slaves/</span></code></p></li>
+</ul>
+</div></blockquote>
+<p>To remove local Worker instances, simply delete their corresponding .ini file. Note that this does not remove the Worker entries from the repository that the Workers connected to.</p>
+</div>
+<div class="section" id="ui-state-files">
+<h3>UI State Files<a class="headerlink" href="#ui-state-files" title="Permalink to this headline">¶</a></h3>
+<p>The Deadline Client applications use configuration files to keep track of their UI states between sessions. This is how the Monitor, for example, is able to launch with the same size and dock layout as the last time it was closed. Although these files are .ini files stored on disk, they are not intended to be modified manually. They are stored in the following locations:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Windows: <code class="docutils literal notranslate"><span class="pre">%APPDATA%\Thinkbox\</span></code></p></li>
+<li><p>Linux: <code class="docutils literal notranslate"><span class="pre">~/.config/Thinkbox/</span></code></p></li>
+<li><p>macOS: <code class="docutils literal notranslate"><span class="pre">~/.config/Thinkbox/</span></code></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="local-secured-configuration-file">
+<h3>Local Secured Configuration File<a class="headerlink" href="#local-secured-configuration-file" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">secure.ini</span></code> file stores some configurations that can only be modified by root/administrators. It needs to be stored under the home directory of the user who will run Deadline Launcher, typically it will be administrator/root. Note that the [VERSION] in the path will change based on the Deadline version number.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Windows: <code class="docutils literal notranslate"><span class="pre">%LOCALAPPDATA%\Thinkbox\Deadline[VERSION]\secure.ini</span></code></p></li>
+<li><p>Linux: <code class="docutils literal notranslate"><span class="pre">~/Thinkbox/Deadline[VERSION]/secure.ini</span></code></p></li>
+<li><p>macOS: <code class="docutils literal notranslate"><span class="pre">~/Library/Application</span> <span class="pre">Support/Thinkbox/Deadline[VERSION]/secure.ini</span></code></p></li>
+</ul>
+</div></blockquote>
+<div class="section" id="autoupdateblock">
+<h4>AutoUpdateBlock<a class="headerlink" href="#autoupdateblock" title="Permalink to this headline">¶</a></h4>
+<p>The AutoUpdateBlock setting controls whether to block auto-upgrade, regardless of the upgrade settings in the repository. When it is <code class="docutils literal notranslate"><span class="pre">Blocked</span></code>, no auto-upgrade will be performed on this machine even if auto-upgrade is enabled via Monitor <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Options</span></a>. By default, it is <code class="docutils literal notranslate"><span class="pre">Blocked</span></code>. root/administrators can change this value to <code class="docutils literal notranslate"><span class="pre">NotBlocked</span></code> value to unblock auto-upgrade.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AutoUpdateBlock</span><span class="o">=</span><span class="n">Blocked</span>
+</pre></div>
+</div>
+<p>The table below shows the effect when both <code class="docutils literal notranslate"><span class="pre">AutoUpdateBlock</span></code> and <a class="reference internal" href="#autoupdateoverride-ref-label"><span class="std std-ref">AutoUpdateOverride</span></a> are configured.</p>
+<table class="colwidths-given docutils align-left">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 60%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>AutoUpdateBlock</p></th>
+<th class="head"><p>AutoUpdateOverride</p></th>
+<th class="head"><p>Effect</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Blocked</p></td>
+<td><p>true</p></td>
+<td><p>Auto-upgrade is disabled.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Blocked</p></td>
+<td><p>false</p></td>
+<td><p>Auto-upgrade is disabled.</p></td>
+</tr>
+<tr class="row-even"><td><p>Blocked</p></td>
+<td><p>&lt;empty&gt;</p></td>
+<td><p>Auto-upgrade is disabled.</p></td>
+</tr>
+<tr class="row-odd"><td><p>NotBlocked</p></td>
+<td><p>true</p></td>
+<td><p>Auto-upgrade is enabled on this client.</p></td>
+</tr>
+<tr class="row-even"><td><p>NotBlocked</p></td>
+<td><p>false</p></td>
+<td><p>Auto-upgrade is disabled on this client.</p></td>
+</tr>
+<tr class="row-odd"><td><p>NotBlocked</p></td>
+<td><p>&lt;empty&gt;</p></td>
+<td><p>Auto-upgrade is enabled/disabled based on the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Options</span></a> setting.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Client Configuration</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#client-configuration-files">Client Configuration Files</a><ul>
+<li><a class="reference internal" href="#configuration-file-locations">Configuration File Locations</a></li>
+<li><a class="reference internal" href="#configuration-file-format">Configuration File Format</a></li>
+<li><a class="reference internal" href="#configuration-settings">Configuration Settings</a><ul>
+<li><a class="reference internal" href="#connectiontype">ConnectionType</a></li>
+<li><a class="reference internal" href="#networkroot">NetworkRoot</a></li>
+<li><a class="reference internal" href="#dbsslcertificate">DbSSLCertificate</a></li>
+<li><a class="reference internal" href="#proxyroot">ProxyRoot</a></li>
+<li><a class="reference internal" href="#proxyusessl">ProxyUseSSL</a></li>
+<li><a class="reference internal" href="#proxysslcertificate">ProxySSLCertificate</a></li>
+<li><a class="reference internal" href="#clientsslauthentication">ClientSSLAuthentication</a></li>
+<li><a class="reference internal" href="#proxysslca">ProxySSLCA</a></li>
+<li><a class="reference internal" href="#licensemode-deprecated">LicenseMode (DEPRECATED)</a></li>
+<li><a class="reference internal" href="#licenseserver-deprecated">LicenseServer (DEPRECATED)</a></li>
+<li><a class="reference internal" href="#launcherlisteningport">LauncherListeningPort</a></li>
+<li><a class="reference internal" href="#launcherservicestartupdelay">LauncherServiceStartupDelay</a></li>
+<li><a class="reference internal" href="#slavestartupport">SlaveStartupPort</a></li>
+<li><a class="reference internal" href="#applicationstartupport">ApplicationStartupPort</a></li>
+<li><a class="reference internal" href="#autoconfigurationport">AutoConfigurationPort</a></li>
+<li><a class="reference internal" href="#noguimode">NoGuiMode</a></li>
+<li><a class="reference internal" href="#logreportsyntaxhighlighting">LogReportSyntaxHighlighting</a></li>
+<li><a class="reference internal" href="#slavedataroot">SlaveDataRoot</a></li>
+<li><a class="reference internal" href="#region">Region</a></li>
+<li><a class="reference internal" href="#multipleslavesenabled">MultipleSlavesEnabled</a></li>
+<li><a class="reference internal" href="#restartstalledslave">RestartStalledSlave</a></li>
+<li><a class="reference internal" href="#keepworkerrunning">KeepWorkerRunning</a></li>
+<li><a class="reference internal" href="#launchpulseatstartup">LaunchPulseAtStartup</a></li>
+<li><a class="reference internal" href="#keeppulserunning">KeepPulseRunning</a></li>
+<li><a class="reference internal" href="#launchwebserviceatstartup">LaunchWebServiceAtStartup</a></li>
+<li><a class="reference internal" href="#keepwebservicerunning">KeepWebServiceRunning</a></li>
+<li><a class="reference internal" href="#launchremoteconnectionserveratstartup">LaunchRemoteConnectionServerAtStartup</a></li>
+<li><a class="reference internal" href="#keepremoteconnectionserverrunning">KeepRemoteConnectionServerRunning</a></li>
+<li><a class="reference internal" href="#licenseforwarderlisteningport">LicenseForwarderListeningPort</a></li>
+<li><a class="reference internal" href="#launchlicenseforwarderatstartup">LaunchLicenseForwarderAtStartup</a></li>
+<li><a class="reference internal" href="#keeplicenseforwarderrunning">KeepLicenseForwarderRunning</a></li>
+<li><a class="reference internal" href="#licenseforwardersslpath">LicenseForwarderSSLPath</a></li>
+<li><a class="reference internal" href="#includercsinlaunchermenu">IncludeRCSInLauncherMenu</a></li>
+<li><a class="reference internal" href="#includewebserviceinlaunchermenu">IncludeWebServiceInLauncherMenu</a></li>
+<li><a class="reference internal" href="#includelicenseforwarderinlaunchermenu">IncludeLicenseForwarderInLauncherMenu</a></li>
+<li><a class="reference internal" href="#autoupdateoverride">AutoUpdateOverride</a></li>
+<li><a class="reference internal" href="#remotecontrol">RemoteControl</a></li>
+<li><a class="reference internal" href="#skippermissioncheck">SkipPermissionCheck</a></li>
+<li><a class="reference internal" href="#user">User</a></li>
+<li><a class="reference internal" href="#launchslaveatstartup">LaunchSlaveAtStartup</a></li>
+<li><a class="reference internal" href="#ignoresync">IgnoreSync</a></li>
+<li><a class="reference internal" href="#connection-server-settings">Connection Server Settings</a><ul>
+<li><a class="reference internal" href="#serverlistenip">ServerListenIP</a></li>
+<li><a class="reference internal" href="#httplistenport">HttpListenPort</a></li>
+<li><a class="reference internal" href="#tlslistenport">TlsListenPort</a></li>
+<li><a class="reference internal" href="#tlsservercert">TlsServerCert</a></li>
+<li><a class="reference internal" href="#tlsauth">TlsAuth</a></li>
+<li><a class="reference internal" href="#tlscacert">TlsCaCert</a></li>
+<li><a class="reference internal" href="#localonly">LocalOnly</a></li>
+<li><a class="reference internal" href="#remoteconnectionserverincognito">RemoteConnectionServerIncognito</a></li>
+<li><a class="reference internal" href="#remoteconnectionserververboselogging">RemoteConnectionServerVerboseLogging</a></li>
+<li><a class="reference internal" href="#remoteconnectionserverlogapicalls">RemoteConnectionServerLogApiCalls</a></li>
+<li><a class="reference internal" href="#remoteconnectionserverlogapicaches">RemoteConnectionServerLogApiCaches</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#webservice-settings">WebService Settings</a><ul>
+<li><a class="reference internal" href="#webserviceserverlistenip">WebServiceServerListenIP</a></li>
+<li><a class="reference internal" href="#webservicehttplistenport">WebServiceHttpListenPort</a></li>
+<li><a class="reference internal" href="#webservicetlslistenport">WebServiceTlsListenPort</a></li>
+<li><a class="reference internal" href="#webservicetlsservercert">WebServiceTlsServerCert</a></li>
+<li><a class="reference internal" href="#webservicetlsauth">WebServiceTlsAuth</a></li>
+<li><a class="reference internal" href="#webservicetlscacert">WebServiceTlsCaCert</a></li>
+<li><a class="reference internal" href="#webservicelocalonly">WebServiceLocalOnly</a></li>
+<li><a class="reference internal" href="#webservicelogapicalls">WebServiceLogApiCalls</a></li>
+<li><a class="reference internal" href="#webservicelogapicaches">WebServiceLogApiCaches</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#house-cleaning-override-settings">House Cleaning Override Settings</a><ul>
+<li><a class="reference internal" href="#disablerepositoryjobsscan">DisableRepositoryJobsScan</a></li>
+<li><a class="reference internal" href="#disablehousecleaning">DisableHouseCleaning</a></li>
+<li><a class="reference internal" href="#disablerepositoryrepair">DisableRepositoryRepair</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#environment-variables">Environment Variables</a><ul>
+<li><a class="reference internal" href="#overriding-the-configuration-file">Overriding the Configuration File</a></li>
+<li><a class="reference internal" href="#deadline-path">DEADLINE_PATH</a></li>
+<li><a class="reference internal" href="#deadline-custom-path">DEADLINE_CUSTOM_PATH</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#other-client-files">Other Client Files</a><ul>
+<li><a class="reference internal" href="#local-worker-instance-files">Local Worker Instance Files</a></li>
+<li><a class="reference internal" href="#ui-state-files">UI State Files</a></li>
+<li><a class="reference internal" href="#local-secured-configuration-file">Local Secured Configuration File</a><ul>
+<li><a class="reference internal" href="#autoupdateblock">AutoUpdateBlock</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="multiple-workers.html"
+                        title="previous chapter">Multiple Workers On One Machine</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="auto-config.html"
+                        title="next chapter">Auto Configuration</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="auto-config.html" title="Auto Configuration"
+             >next</a></li>
+        <li class="right" >
+          <a href="multiple-workers.html" title="Multiple Workers On One Machine"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" >Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Client Configuration</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

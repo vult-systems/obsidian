@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Client Installation (Quick) &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Integrated Submitter Installation (Quick)" href="quick-install-submitters.html" />
+    <link rel="prev" title="Installing Remote Connection Server" href="install-client-conn-server-installation.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="quick-install-submitters.html" title="Integrated Submitter Installation (Quick)"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="install-client-conn-server-installation.html" title="Installing Remote Connection Server"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installing-deadline.html" accesskey="U">Installing Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Client Installation (Quick)</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="client-installation-quick">
+<span id="quick-install-client-ref-label"></span><h1>Client Installation (Quick)<a class="headerlink" href="#client-installation-quick" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Before proceeding with this installation, it is highly recommended to read through the <a class="reference internal" href="considerations.html#considerations-ref-label"><span class="std std-ref">Render Farm Considerations</span></a> documentation, including the <a class="reference internal" href="shared-security-model.html#shared-security-model-ref-label"><span class="std std-ref">AWS Thinkbox Deadline Shared Responsibility Model</span></a>. It outlines what AWS Thinkbox is responsible for and what customers are responsible for, and should be considered before installing and using Deadline.</p>
+<p>This guide will walk you through the installation of the Client. At this point, you should already have the Database and Repository installed. If you do not, please see the <a class="reference internal" href="install-db-repo.html#install-db-repo-ref-label"><span class="std std-ref">Database and Repository Installation (Advanced)</span></a> documentation for installation instructions.</p>
+</div>
+<div class="section" id="installing-the-clients">
+<h2>Installing The Clients<a class="headerlink" href="#installing-the-clients" title="Permalink to this headline">¶</a></h2>
+<p>The Client should be installed on your render nodes, workstations, and any other machines you wish to participate in submitting, rendering, or monitoring jobs.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Starting with Deadline 10.1.23, Deadline and its components do not require a license. For older versions, the Workers are the only Client applications that require a license. Before you can configure the license for the Client, the license server must be running. See the <a class="reference external" href="https://docs.thinkboxsoftware.com/products/licensing/1.0/Licensing%20Guide/index.html">Licensing</a>  documentation for more information.</p>
+</div>
+<p>If you choose to run Pulse, you need to install the Client on the chosen machine. Note that if you wish to run it on the same machine as the Database and/or Repository, you still have to install the Client on that machine.</p>
+<p>There are Client installers for Windows, Linux, and macOS. To install the Client, simply run the appropriate installer for your operating system and follow the steps.</p>
+<div class="section" id="windows">
+<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
+<p>Start the installation process by double-clicking on the Windows Client Installer. The Windows Client installer also supports <a class="reference internal" href="install-client.html#silent-install-client-ref-label"><span class="std std-ref">silent installations</span></a> with additional options.</p>
+<p><a class="reference internal" href="../_images/windows_client_setup.png"><img alt="windows_setup" src="../_images/windows_client_setup.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/windows_client_directory.png"><img alt="windows_directory" src="../_images/windows_client_directory.png" style="height: 300px;" /></a></p>
+<p>Choose an installation location and press Next to continue.</p>
+<p>To increase security, by default files and directories under the client installation directory cannot be modified by anyone but root/administrators. However, auto-upgrade will fail if a non-root/administrators user is used to run Launcher. To resolve that, you can either set the proper permission to the user you intend to run Launcher or check this box to bypass the security limitation at your own risk. It is recommended you set up a dedicated user with the proper file permissions to run Deadline Launcher.</p>
+<a class="reference internal image-reference" href="../_images/windows_client_components.png"><img alt="../_images/windows_client_components.png" src="../_images/windows_client_components.png" style="height: 300px;" /></a>
+<dl class="simple">
+<dt>You will be presented with a component selection screen. Typically, only the ‘General Client Files’ (mandatory) component is needed. Optional components are not part of the basic setup and are covered in their own sections:</dt><dd><ul class="simple">
+<li><p><a class="reference internal" href="install-client.html#connection-server-setup-ref-label"><span class="std std-ref">Remote Connection Server</span></a></p></li>
+</ul>
+</dd>
+</dl>
+<p>Once you have selected any optional components you may wish to install, proceed to the next screen.</p>
+<p><a class="reference internal" href="../_images/windows_client_connection_type.png"><img alt="windows_connection_type" src="../_images/windows_client_connection_type.png" style="height: 300px;" /></a></p>
+<p>Choose a Connection Type (Direct or Remote).</p>
+<p>Remote Connection is our recommended connection type as it includes more features and provides better separation between Deadline Database and Repository and Client machines.</p>
+<p>The following settings are available for a Remote Connection:</p>
+<p><a class="reference internal" href="../_images/windows_client_proxy.png"><img alt="windows_client_proxy" src="../_images/windows_client_proxy.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/windows_client_proxy_2.png"><img alt="windows_client_proxy_2" src="../_images/windows_client_proxy_2.png" style="height: 300px;" /></a></p>
+<ul class="simple">
+<li><p><strong>Server Address</strong>: This is the address (IP/Hostname and Port) of the Remote Connection Server.</p></li>
+<li><p><strong>Client Certificate</strong>: This is the path to the SSL certificate required to connect to the Connection Server machine. If the Connection Server does not use authentication then this field must be left blank.</p></li>
+</ul>
+<p><a class="reference internal" href="../_images/windows_client_launcher.png"><img alt="windows_launcher" src="../_images/windows_client_launcher.png" style="height: 300px;" /></a></p>
+<p>The following Launcher settings are available:</p>
+<ul class="simple">
+<li><p><strong>Launch Worker When Launcher Starts</strong>: If enabled, the Worker will launch whenever the Launcher starts.</p></li>
+<li><p><strong>Install Launcher As A Service</strong>: Enable this if you wish to install the Launcher as a service. The service must run under an account that has network access.  In order for auto-upgrade to work, the account also needs the sufficient write permissions to access the Deadline client binary folder(<code class="docutils literal notranslate"><span class="pre">&lt;Installation</span> <span class="pre">Directory&gt;\bin</span></code>). See the <a class="reference internal" href="install-client.html#windows-service-ref-label"><span class="std std-ref">Windows Service</span></a> documentation below for more information.</p></li>
+</ul>
+<p>After configuring the Client and Launcher settings, press Next to continue with the installation.</p>
+<p><a class="reference internal" href="../_images/windows_client_block_autoupgrade.png"><img alt="windows_block_autoupgrade" src="../_images/windows_client_block_autoupgrade.png" style="height: 300px;" /></a></p>
+<p>From 10.1.16, it is recommended to block auto-upgrade on Deadline client machines to improve the security. When it is blocked, <a class="reference internal" href="client-config.html#autoupdateoverride-ref-label"><span class="std std-ref">AutoUpdateOverride</span></a> setting will be ignored. No auto-upgrade will be performed on this machine even if auto-upgrade is enabled via Monitor <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Options</span></a>.</p>
+</div>
+<div class="section" id="linux">
+<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h3>
+<p>Before you start, it is highly recommended to go through <a class="reference internal" href="validation-linux-installers.html#validation-linux-installers-ref-label"><span class="std std-ref">Validation of Linux Installers</span></a>.</p>
+<p>Note that on Linux, the Deadline applications have dependencies on some libraries that are installed with the lsb (Linux Standard Base) package. To ensure you have all the dependencies you need, we recommend installing the full lsb package. Note, CentOS 7 by default, no longer has the LSB package installed, so this must be installed. In addition, the <code class="docutils literal notranslate"><span class="pre">libX11</span></code> and <code class="docutils literal notranslate"><span class="pre">libXext</span></code> must be installed on Linux for the Deadline applications to run on your user-based WORKSTATIONS, even if running them with the -nogui flag. They’re required for the <a class="reference internal" href="local-worker.html#local-worker-ref-label"><span class="std std-ref">Idle Detection</span></a> feature to work on your WORKSTATIONS. This means, that X11 is NOT required on your headless RENDERNODES. To check if <code class="docutils literal notranslate"><span class="pre">libX11</span></code> and <code class="docutils literal notranslate"><span class="pre">libXext</span></code> are installed, open a Terminal and run the following commands. If they are installed, then the path to the libraries will be printed out by these commands.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ldconfig</span> <span class="o">-</span><span class="n">p</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">libX11</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ldconfig</span> <span class="o">-</span><span class="n">p</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">libXext</span>
+</pre></div>
+</div>
+<p>Addtionally, libQtCommercialCharts requires OpenGL on your workstations. Normally this is shipped with your graphics card drivers, but a software-only solution called Mesa exists if users wish to use Deadline without a graphics card.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ldconfig</span> <span class="o">-</span><span class="n">p</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">libMesaGL1</span> <span class="p">(</span><span class="n">libgl1</span><span class="o">-</span><span class="n">mesa</span><span class="o">-</span><span class="n">glx</span> <span class="n">on</span> <span class="n">Debian</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If any of these libraries are missing, then please contact your local system administrator to resolve this issue. Here is an example assuming you have root access, using YUM (RedHat/CentOS) to install them on your system:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="o">-</span><span class="n">s</span>
+
+<span class="go"># WORKSTATIONS</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yum</span> <span class="n">install</span> <span class="n">redhat</span><span class="o">-</span><span class="n">lsb</span> <span class="n">libX11</span> <span class="n">libXext</span>
+<span class="go"># old version</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yum</span> <span class="n">install</span> <span class="n">libMesaGL1</span>
+<span class="go"># new version</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yum</span> <span class="n">install</span> <span class="n">mesa</span><span class="o">-</span><span class="n">libGL</span> <span class="n">mesa</span><span class="o">-</span><span class="n">libGLU</span>
+
+<span class="go"># RENDERNODES</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yum</span> <span class="n">install</span> <span class="n">redhat</span><span class="o">-</span><span class="n">lsb</span>
+</pre></div>
+</div>
+<p>On Amazon Linux 2 (AL2):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="o">-</span><span class="n">s</span>
+
+<span class="go"># WORKSTATIONS / RENDERNODES</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yum</span> <span class="n">install</span> <span class="n">lsb</span>
+</pre></div>
+</div>
+<p>On Ubuntu:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="o">-</span><span class="n">s</span>
+
+<span class="go"># WORKSTATIONS</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">lsb</span> <span class="n">libx11</span><span class="o">-</span><span class="mi">6</span> <span class="n">libxext</span><span class="o">-</span><span class="mi">6</span> <span class="n">libgl1</span><span class="o">-</span><span class="n">mesa</span><span class="o">-</span><span class="mi">6</span>
+
+<span class="go"># RENDERNODES</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">lsb</span>
+</pre></div>
+</div>
+<p>Start the installation process by double-clicking on the Linux Client Installer. The Linux Client installer also supports <a class="reference internal" href="install-client.html#silent-install-client-ref-label"><span class="std std-ref">silent installations</span></a> with additional options.</p>
+<p><a class="reference internal" href="../_images/linux_client_setup.png"><img alt="linux_setup" src="../_images/linux_client_setup.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/linux_client_directory.png"><img alt="linux_directory" src="../_images/linux_client_directory.png" style="height: 300px;" /></a></p>
+<p>Choose an installation location and press Next to continue.</p>
+<p>To increase security, by default files and directories under the client installation directory cannot be modified by anyone but root/administrators. However, auto-upgrade will fail if a non-root/administrators user is used to run Launcher. To resolve that, you can either set the proper permission to the user you intend to run Launcher or check this box to bypass the security limitation at your own risk. It is recommended you set up a dedicated user with the proper file permissions to run Deadline Launcher.</p>
+<a class="reference internal image-reference" href="../_images/linux_client_components.png"><img alt="../_images/linux_client_components.png" src="../_images/linux_client_components.png" style="height: 300px;" /></a>
+<dl class="simple">
+<dt>You will be presented with a installation type selection screen. Client installation is the default option. Other options are covered in their own sections:</dt><dd><ul class="simple">
+<li><p><a class="reference internal" href="install-client.html#connection-server-setup-ref-label"><span class="std std-ref">Remote Connection Server</span></a></p></li>
+<li><p><a class="reference internal" href="install-client.html#web-server-setup-ref-label"><span class="std std-ref">Web Service</span></a></p></li>
+</ul>
+</dd>
+</dl>
+<p>Once you have selected any optional components you may wish to install, proceed to the next screen.</p>
+<p><a class="reference internal" href="../_images/linux_client_connection_type.png"><img alt="linux_connection_type" src="../_images/linux_client_connection_type.png" style="height: 300px;" /></a></p>
+<p>Choose a Connection Type (Direct or Remote).</p>
+<p>Remote Connection is our recommended connection type as it includes more features and provides better separation between Deadline Database and Repository and Client machines.</p>
+<p>The following settings are available for a Remote Connection:</p>
+<p><a class="reference internal" href="../_images/linux_client_proxy.png"><img alt="linux_client_proxy" src="../_images/linux_client_proxy.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/linux_client_proxy_2.png"><img alt="linux_client_proxy_2" src="../_images/linux_client_proxy_2.png" style="height: 300px;" /></a></p>
+<ul class="simple">
+<li><p><strong>Server Address</strong>: This is the address (IP/Hostname and Port) of the remote Connection Server.</p></li>
+<li><p><strong>Client Certificate</strong>: This is the path to the SSL certificate required to connect to the Connection Server machine. If the Connection Server does not use authentication then this field must be left blank.</p></li>
+</ul>
+<p><a class="reference internal" href="../_images/linux_client_launcher.png"><img alt="linux_launcher" src="../_images/linux_client_launcher.png" style="height: 300px;" /></a></p>
+<p>The following Launcher settings are available:</p>
+<ul class="simple">
+<li><p><strong>Launch Worker When Launcher Starts</strong>: If enabled, the Worker will launch whenever the Launcher launches.</p></li>
+<li><p><strong>Install Launcher As A Daemon</strong>: Enable this if you wish to install the Launcher as a daemon. You can also choose to run the daemon as a specific user. If you choose to run it as a non-root user, please make sure you give the user all the required file permissions to run it as a daemon. In order for auto-upgrade to work, the account also needs the sufficient write permissions to access the Deadline client binary/library folders(<code class="docutils literal notranslate"><span class="pre">&lt;Installation</span> <span class="pre">Directory&gt;/bin</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;Installation</span> <span class="pre">Directory&gt;/lib</span></code>) See the <a class="reference internal" href="install-client.html#linux-daemon-ref-label"><span class="std std-ref">Linux Daemon</span></a> documentation below for more information.</p></li>
+</ul>
+<p>After configuring the Client and Launcher settings, press Next to continue with the installation.</p>
+<p><a class="reference internal" href="../_images/linux_client_block_autoupgrade.png"><img alt="linux_block_autoupgrade" src="../_images/linux_client_block_autoupgrade.png" style="height: 300px;" /></a></p>
+<p>From 10.1.16, it is recommended to block auto-upgrade on Deadline client machines to improve the security. When it is blocked, <a class="reference internal" href="client-config.html#autoupdateoverride-ref-label"><span class="std std-ref">AutoUpdateOverride</span></a> setting will be ignored. No auto-upgrade will be performed on this machine even if auto-upgrade is enabled via Monitor <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Options</span></a>.</p>
+</div>
+<div class="section" id="macos">
+<h3>macOS<a class="headerlink" href="#macos" title="Permalink to this headline">¶</a></h3>
+<p>Start the installation process by double-clicking on the Mac Client Installer. The Mac Client installer also supports <a class="reference internal" href="install-client.html#silent-install-client-ref-label"><span class="std std-ref">silent installations</span></a> with additional options.
+If you are installing on macOS Catalina, you may see a warning that the installer ‘can’t be opened because Apple cannot check it for malicious software’. This is because the installer has not been notarized by Apple.
+In this case you need to right-click the installer icon, and choose “Open” in the pop-up menu that appears.</p>
+<p><a class="reference internal" href="../_images/osx_client_setup.png"><img alt="osx_setup" src="../_images/osx_client_setup.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/osx_client_directory.png"><img alt="osx_directory" src="../_images/osx_client_directory.png" style="height: 300px;" /></a></p>
+<p>Choose an installation location and press Next to continue.</p>
+<p>To increase security, by default files and directories under the client installation directory cannot be modified by anyone but root/administrators. However, auto-upgrade will fail if a non-root/administrators user is used to run Launcher. To resolve that, you can either set the proper permission to the user you intend to run Launcher or check this box to bypass the security limitation at your own risk. It is recommended you set up a dedicated user with the proper file permissions to run Deadline Launcher.</p>
+<a class="reference internal image-reference" href="../_images/osx_client_components.png"><img alt="../_images/osx_client_components.png" src="../_images/osx_client_components.png" style="height: 300px;" /></a>
+<dl class="simple">
+<dt>You will be presented with a component selection screen. Typically, only the ‘General Client Files’ (mandatory) component is needed. Optional components are not part of the basic setup and are covered in their own sections:</dt><dd><ul class="simple">
+<li><p><a class="reference internal" href="install-client.html#connection-server-setup-ref-label"><span class="std std-ref">Remote Connection Server</span></a></p></li>
+</ul>
+</dd>
+</dl>
+<p>Once you have selected any optional components you may wish to install, proceed to the next screen.</p>
+<p><a class="reference internal" href="../_images/osx_client_connection_type.png"><img alt="osx_connection_type" src="../_images/osx_client_connection_type.png" style="height: 300px;" /></a></p>
+<p>Choose a Connection Type (Direct or Remote).</p>
+<p>Remote Connection is our recommended connection type as it includes more features and provides better separation between Deadline Database and Repository and Client machines.</p>
+<p>The following settings are available for a Remote Connection:</p>
+<p><a class="reference internal" href="../_images/osx_client_proxy.png"><img alt="osx_client_proxy" src="../_images/osx_client_proxy.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/osx_client_proxy_2.png"><img alt="osx_client_proxy_2" src="../_images/osx_client_proxy_2.png" style="height: 300px;" /></a></p>
+<ul class="simple">
+<li><p><strong>Server Address</strong>: This is the address (IP/Hostname and Port) of the remote Connection Server.</p></li>
+<li><p><strong>Client Certificate</strong>: This is the path to the SSL certificate required to connect to the Connection Server machine. If the Connection Server does not use authentication then this field must be left blank.</p></li>
+</ul>
+<p><a class="reference internal" href="../_images/osx_client_launcher.png"><img alt="osx_launcher" src="../_images/osx_client_launcher.png" style="height: 300px;" /></a></p>
+<p>The following Launcher settings are available:</p>
+<ul class="simple">
+<li><p><strong>Launch Worker When Launcher Starts</strong>: If enabled, the Worker will launch whenever the Launcher launches.</p></li>
+<li><p><strong>Install Launcher As A Daemon</strong>: Enable this if you wish to install the Launcher as a daemon. You can also choose to run the daemon as a specific user. If you choose to run it as a non-root user, please make sure you give the user all the required file permissions to run it as a daemon. In order for auto-upgrade to work, the account also needs the sufficient write permissions to access the Deadline client binary folder(<code class="docutils literal notranslate"><span class="pre">&lt;Installation</span> <span class="pre">Directory&gt;/Resources</span></code>). See the <a class="reference internal" href="install-client.html#mac-daemon-ref-label"><span class="std std-ref">macOS Daemon</span></a> documentation below for more information.</p></li>
+</ul>
+<p>After configuring the Client and Launcher settings, press Next to continue with the installation.</p>
+<p><a class="reference internal" href="../_images/osx_client_block_autoupgrade.png"><img alt="osx_block_autoupgrade" src="../_images/osx_client_block_autoupgrade.png" style="height: 300px;" /></a></p>
+<p>From 10.1.16, it is recommended to block auto-upgrade on Deadline client machines to improve the security. When it is blocked, <a class="reference internal" href="client-config.html#autoupdateoverride-ref-label"><span class="std std-ref">AutoUpdateOverride</span></a> setting will be ignored. No auto-upgrade will be performed on this machine even if auto-upgrade is enabled via Monitor <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Options</span></a>.</p>
+</div>
+</div>
+<div class="section" id="change-connection-type-repository">
+<h2>Change Connection type / Repository<a class="headerlink" href="#change-connection-type-repository" title="Permalink to this headline">¶</a></h2>
+<p>If you wish to change the Connection type / Repository after the installation, you can refer to <a class="reference internal" href="changing-repository.html#change-repository-ref-label"><span class="std std-ref">Change Repository</span></a>.</p>
+</div>
+<div class="section" id="installing-as-a-service">
+<h2>Installing as a Service<a class="headerlink" href="#installing-as-a-service" title="Permalink to this headline">¶</a></h2>
+<p>On Windows and Linux, you can choose to install the Launcher as a service or daemon during installation. There are a few things to keep in mind when running Deadline in this mode.</p>
+<div class="section" id="windows-service">
+<h3>Windows Service<a class="headerlink" href="#windows-service" title="Permalink to this headline">¶</a></h3>
+<p>When running as a service on Windows, the Launcher will run without displaying its system tray icon. If the Worker or Pulse application is started through the Launcher while it is in this mode, they will also run without a user interface. Finally, the Launcher can still perform an auto-upgrade, but only when launching the Worker and Pulse applications (launching the Monitor, for example, will not invoke an upgrade).</p>
+<p>Note that when running the Launcher as a service, the Worker or Pulse application will also run in a service context. Since services run in a different environment, and potentially under a different user profile than the one currently logged in, certain considerations need to be made.</p>
+<p>First, the default user for a service has no access to network resources, so while Launcher service will run without any issues, neither the Worker nor Pulse applications will be able to access the Repository. To avoid network access issues, you must configure the service to run as a user with network privileges. Typical desktop users have this permission, but check with your system administrator to find which account is best for this application.</p>
+<p>Another issue presented by the service context is that there is no access to the default set of mapped drives. Applications will either need to map drives for themselves, or make use of UNC paths. While Deadline supports <a class="reference internal" href="repository-config.html#mapped-drives-ref-label"><span class="std std-ref">Automatic Drive Mapping</span></a>, the SMB protocol does not allow sharing a resource between two users on the same machine. This means that mapping of drives or accessing a resource with different credentials may fail when running as a service on a machine which already requires access to the Repository.</p>
+<p>There is also an issue with hardware-based renderers. Starting with Windows Vista, services now run in a virtualized environment which prevents them from accessing hardware resources. Because the renderer will run in the context of a service, hardware-based renderers will typically fail to work.</p>
+<p>To ensure Deadline’s Automatic Upgrade/Downgrade system works correctly; make sure the service account used to run Deadline Launcher has the ability to start and stop the service. This permission can be added to the service account by an Administrator user as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setacl</span><span class="o">.</span><span class="n">exe</span> \\<span class="n">computername</span>\<span class="n">deadline</span><span class="o">&lt;</span><span class="n">VERSION</span><span class="o">&gt;</span><span class="n">launcherservice</span> <span class="o">/</span><span class="n">service</span> <span class="o">/</span><span class="n">grant</span> <span class="o">&lt;</span><span class="n">serviceaccount</span><span class="o">&gt;</span> <span class="o">/</span><span class="n">start_stop</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;VERSION&gt;</span></code> is the Deadline major version, such as: <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p>
+</div>
+</div>
+<div class="section" id="linux-daemon">
+<h3>Linux Daemon<a class="headerlink" href="#linux-daemon" title="Permalink to this headline">¶</a></h3>
+<p>When installing the daemon, the Client installer creates the appropriate deadlinelauncherservice script in <code class="docutils literal notranslate"><span class="pre">/etc/systemd/system</span></code>.</p>
+<p>When running as a daemon on Linux, the Launcher will run without displaying its system tray icon. If the Worker or Pulse application is started through the Launcher while it is in this mode, they will also run without a user interface. This is useful when running Deadline on a Linux machine that doesn’t have a Desktop environment.</p>
+<div class="section" id="linux-resource-limits">
+<h4>Linux Resource Limits<a class="headerlink" href="#linux-resource-limits" title="Permalink to this headline">¶</a></h4>
+<p>UNIX-based operating systems impose a limit on the number of resources a process can use, and these limits can affect the number of open files used by a process. Each open network connection is tracked as an open file by UNIX-based operating systems, so the open file limit restricts the number of network connections that a process can have. For Linux processes, default limit is 1024.
+Deadline Launcher daemon’s limits for the number of open files will be increased to 200000.</p>
+<p>You can adjust this limit by editing the LimitNOFILE value in <code class="docutils literal notranslate"><span class="pre">/etc/systemd/system/deadline10launcher.service</span></code>. Run <code class="docutils literal notranslate"><span class="pre">systemctl</span> <span class="pre">daemon-reload</span></code> and restart the service using <code class="docutils literal notranslate"><span class="pre">systemctl</span> <span class="pre">restart</span> <span class="pre">deadline1-launcher</span></code> for your changes to take effect.</p>
+</div>
+</div>
+<div class="section" id="macos-daemon">
+<h3>macOS Daemon<a class="headerlink" href="#macos-daemon" title="Permalink to this headline">¶</a></h3>
+<p>When installing the daemon, the Client installer creates the appropriate <code class="docutils literal notranslate"><span class="pre">com.thinkboxsoftware.deadlinelauncher.plist</span></code> file in <code class="docutils literal notranslate"><span class="pre">/Library/LaunchDaemons</span></code>.</p>
+<p>When running as a daemon on macOS, the Launcher will run without displaying its system tray icon. If the Worker or Pulse application is started through the Launcher while it is in this mode, they will also run without a user interface.</p>
+</div>
+</div>
+<div class="section" id="client-license-configuration-deprecated">
+<h2>Client License Configuration (DEPRECATED)<a class="headerlink" href="#client-license-configuration-deprecated" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Starting with Deadline 10.1.23, Deadline and its components do not require a license. This section is left for operators of older versions of Deadline.</p>
+</div>
+<p>Before you can configure the license for the Client, the license server must be running. See the <a class="reference external" href="https://docs.thinkboxsoftware.com/products/licensing/1.0/Licensing%20Guide/index.html">Licensing</a> documentation for more information.</p>
+<p>If you didn’t configure the license for the Client during installation (see above), there are a couple of ways to set the license for the Client. The quickest way is to use the right-click menu in the
+<a class="reference internal" href="launcher.html#launcher-menu-ref-label"><span class="std std-ref">Launcher</span></a> or the File menu in the Worker application to change the license server.</p>
+<a class="reference internal image-reference" href="../_images/change_license_server_ubl.png"><img alt="../_images/change_license_server_ubl.png" src="../_images/change_license_server_ubl.png" style="height: 250px;" /></a>
+<p>The other option is to set up <a class="reference internal" href="auto-config.html#auto-config-ref-label"><span class="std std-ref">Auto Configuration</span></a> so that the Client automatically pulls the license server information.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Client Installation (Quick)</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#installing-the-clients">Installing The Clients</a><ul>
+<li><a class="reference internal" href="#windows">Windows</a></li>
+<li><a class="reference internal" href="#linux">Linux</a></li>
+<li><a class="reference internal" href="#macos">macOS</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#change-connection-type-repository">Change Connection type / Repository</a></li>
+<li><a class="reference internal" href="#installing-as-a-service">Installing as a Service</a><ul>
+<li><a class="reference internal" href="#windows-service">Windows Service</a></li>
+<li><a class="reference internal" href="#linux-daemon">Linux Daemon</a><ul>
+<li><a class="reference internal" href="#linux-resource-limits">Linux Resource Limits</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#macos-daemon">macOS Daemon</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#client-license-configuration-deprecated">Client License Configuration (DEPRECATED)</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="install-client-conn-server-installation.html"
+                        title="previous chapter">Installing Remote Connection Server</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="quick-install-submitters.html"
+                        title="next chapter">Integrated Submitter Installation (Quick)</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="quick-install-submitters.html" title="Integrated Submitter Installation (Quick)"
+             >next</a></li>
+        <li class="right" >
+          <a href="install-client-conn-server-installation.html" title="Installing Remote Connection Server"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installing-deadline.html" >Installing Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Client Installation (Quick)</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

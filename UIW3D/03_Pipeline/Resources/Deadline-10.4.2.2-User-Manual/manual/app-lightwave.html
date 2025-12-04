@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lightwave &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="LuxRender" href="app-luxrender.html" />
+    <link rel="prev" title="KeyShot Distributed Rendering" href="app-keyshot-dr.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-luxrender.html" title="LuxRender"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-keyshot-dr.html" title="KeyShot Distributed Rendering"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Lightwave</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="lightwave">
+<span id="app-lightwave-ref-label"></span><h1>Lightwave<a class="headerlink" href="#lightwave" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs from within Lightwave by installing the <a class="reference internal" href="#app-lightwave-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a>, or you can submit them from the Monitor. The instructions for installing the <a class="reference internal" href="#app-lightwave-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<p><a class="reference internal" href="../_images/integrated_lightwave.png"><img alt="integrated" src="../_images/integrated_lightwave.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_lightwave.png"><img alt="monitor" src="../_images/sub_lightwave.png" style="height: 400px;" /></a></p>
+<p>To submit from within Lightwave, select the Render Tab and click the SubmitToDeadline button on the left.</p>
+<a class="reference internal image-reference" href="../_images/lightwave_submitbutton.png"><img alt="../_images/lightwave_submitbutton.png" src="../_images/lightwave_submitbutton.png" style="height: 300px;" /></a>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.
+The Lightwave specific options are:</p>
+<ul class="simple">
+<li><p><strong>Content Directory</strong>: The Lightwave Content directory. Refer to your Lightwave documentation for more information.</p></li>
+<li><p><strong>Config Directory</strong>: The Lightwave Config directory. Refer to your Lightwave documentation for more information.</p></li>
+<li><p><strong>Force Build</strong>: For Lightwave 9 and later, force rendering in 32 bit or 64 bit.</p></li>
+<li><p><strong>Use FPrime Renderer</strong>: If you want to use the FPrime renderer instead of the normal Lightwave renderer.</p></li>
+<li><p><strong>Use ScreamerNet Rendering</strong>: ScreamerNet rendering keeps the Lightwave scene loaded in memory between frames, which reduces overhead time when rendering.</p></li>
+</ul>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>At the moment, there is no support for rendering animation (movie) files. Any animation options will be ignored, and an RGB output and/or Alpha output must be specified in order to submit to Deadline.</p></li>
+<li><p>In the Scene file, some versions of Lightwave use a number to specify the output file type and some use the actual file type extension (.tif, .tga, etc). In the versions that use the actual file type extension, individual
+rendered images can be viewed from the Monitor task list by right-clicking on them.</p></li>
+<li><p>For information on how to properly set up your network for Lightwave rendering, see the ScreamerNet section of your Lightwave documentation. When Lightwave is properly configured for ScreamerNet rendering, it will then render properly through Deadline.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="cross-platform-rendering-considerations">
+<h2>Cross-Platform Rendering Considerations<a class="headerlink" href="#cross-platform-rendering-considerations" title="Permalink to this headline">¶</a></h2>
+<p>In order to perform cross-platform rendering with Lightwave, you must setup Mapped Paths so that Deadline can swap out file paths where appropriate. You can access the Mapped Paths Setup in the Monitor while in power user mode
+by selecting Tools -&gt; Configure Repository. You’ll find the Mapped Paths Setup in the list on the left.</p>
+<p>Note, if the executable supports a MAJOR.MINOR.REVISION (9.0.123) numbering system in its path, then you will need to configure the explicit exe path to the particular revision that you have installed on your machines. Deadline does not track every possible revision available or indeed where it might be custom installed to, so a studio should verify their exe paths are correct for each application version they choose to use with Deadline. Multiple exe paths can still be declared and the first one that is found on a particular Worker on a particular platform will be used from the exe list.</p>
+<a class="reference internal image-reference" href="../_images/cp_lightwave.png"><img alt="../_images/cp_lightwave.png" src="../_images/cp_lightwave.png" style="height: 400px;" /></a>
+<p>From here, you can set the list of executables that will be used for rendering. To get a more detailed description of each setting, simply hover the mouse cursor over a setting and a tool tip will be displayed.</p>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-lightwave-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>This section describes how to install the integrated render job submission script for Lightwave. This script allows for submitting Lightwave render jobs to Deadline directly from within the Lightwave editing GUI. Note that on
+macOS, this script is only supported by the Universal Binary versions of Lightwave.</p>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Click the Utilities tab. Find the Plugins section on the right and click the Add Plugins button. Select the DeadlineLightwaveClient.ls file found in <code class="docutils literal notranslate"><span class="pre">[Repository]\submission\Lightwave\Client</span></code>.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/lightwave_addplugin.png"><img alt="../_images/lightwave_addplugin.png" src="../_images/lightwave_addplugin.png" style="height: 300px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Click the Edit menu in the top-left corner and select the Edit Menu Layout… option.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/lightwave_editmenu.png"><img alt="../_images/lightwave_editmenu.png" src="../_images/lightwave_editmenu.png" style="height: 300px;" /></a>
+</div></blockquote>
+</li>
+<li><p>In the Command list on the left, expand the Plugins section in Lightwave 8 or the Additional section in Lightwave 9 and later, and find the DeadlineLightwaveClient plugin. Drag and drop it into the Menus list in the
+Render section. Click Done.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/lightwave_addmenu.png"><img alt="../_images/lightwave_addmenu.png" src="../_images/lightwave_addmenu.png" style="height: 300px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="verify-installation">
+<h3>Verify Installation<a class="headerlink" href="#verify-installation" title="Permalink to this headline">¶</a></h3>
+<p>Click the Render tab. There should be a DeadlineLightwaveClient button on the right. If there is not, check to make sure you placed the DeadlineLightwaveClient plugin in the correct section.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/lightwave_submitbutton.png"><img alt="../_images/lightwave_submitbutton.png" src="../_images/lightwave_submitbutton.png" style="height: 300px;" /></a>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-lightwave-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which version of Lightwave are supported?</strong></p>
+<blockquote>
+<div><p>Lightwave versions 8 and later are supported. On macOS, both the PPC and Universal Binary versions work. However, the integrated Lightwave submission script only works with the Universal Binary version.</p>
+</div></blockquote>
+<p><strong>Lightwave 10 integrated submitter crashes with Deadline 5.0 and older on macOS.</strong></p>
+<blockquote>
+<div><p>Due to an API change in LightWave, previous integrated submission scripts will not work under LightWave 10 on macOS. This is fixed in Deadline 5.1.</p>
+</div></blockquote>
+<p><strong>Does Deadline support the FPrime renderer?</strong></p>
+<blockquote>
+<div><p>Yes. FPrime has its own net rendering application called wsn.exe, which can be configured in the Lightwave plugin configuration. When you submit your Lightwave job, just make sure to have the Use FPrime Renderer option
+checked.</p>
+</div></blockquote>
+<p><strong>When rendering with FPrime, I get an error that it can’t create a temporary config directory.</strong></p>
+<blockquote>
+<div><p>This can occur when the job is using a shared Config folder on the network. FPrime tries to create a temporary config directory in this shared folder, and this can fail if many Workers are trying to access that Config
+folder at the same time.</p>
+<p>To avoid this problem, we suggest enabling the FPrime Use Local Config option in the Lightwave Plugin Configuration, which can be accessed from the Monitor while in Power User mode by selecting Tools -&gt; Configure Plugins.
+When this option is enabled, Deadline will copy the contents of the shared Config folder to a local folder, and this is the Config folder that FPrime will use.</p>
+</div></blockquote>
+<p><strong>What does the Use ScreamerNet Rendering option in the submission dialog do?</strong></p>
+<blockquote>
+<div><p>When using ScreamerNet rendering, the Lightwave scene is kept loaded in memory between each frame for a job, which greatly reduces the overhead of having to load the scene at the beginning of each frame.</p>
+</div></blockquote>
+<p><strong>Does Deadline work if one renames the Lightwave configuration files in the configuration directory?</strong></p>
+<blockquote>
+<div><p>Currently, Deadline assumes that you have not renamed the Lightwave configuration files in the Lightwave configuration directory.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Lightwave error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Lightwave</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cross-platform-rendering-considerations">Cross-Platform Rendering Considerations</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+<li><a class="reference internal" href="#verify-installation">Verify Installation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-keyshot-dr.html"
+                        title="previous chapter">KeyShot Distributed Rendering</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-luxrender.html"
+                        title="next chapter">LuxRender</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-luxrender.html" title="LuxRender"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-keyshot-dr.html" title="KeyShot Distributed Rendering"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Lightwave</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

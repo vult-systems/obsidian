@@ -1,0 +1,392 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Client Deployment - Centrally Managed &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Change Repository" href="changing-repository.html" />
+    <link rel="prev" title="Client Deployment - Windows" href="deploy-client-windows.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="changing-repository.html" title="Change Repository"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="deploy-client-windows.html" title="Client Deployment - Windows"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" accesskey="U">Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Client Deployment - Centrally Managed</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="client-deployment-centrally-managed">
+<span id="deploy-client-centrally-managed-ref-label"></span><h1>Client Deployment - Centrally Managed<a class="headerlink" href="#client-deployment-centrally-managed" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some of the topics covered in this page require you to have administrator/root access to your infrastructure. Please consult your local IT staff if in doubt.</p>
+</div>
+<p>Here are instructions to install Deadline client software locally on <a class="reference internal" href="quick-install-client.html#quick-install-client-ref-label"><span class="std std-ref">Linux &amp; macOS</span></a>. If you wish to centrally manage your install of the Deadline client software on Linux &amp; macOS, please read on (Windows is unsupported with this configuration).</p>
+<div class="section" id="network-install">
+<h2>Network Install<a class="headerlink" href="#network-install" title="Permalink to this headline">¶</a></h2>
+<p>A new option in Deadline 9.0 is the ability to deploy Deadline client software on a network located NFS share and clients run the software without needing a local installation. This approach delivers the option to have a centrally managed software installation. This is ONLY supported on Linux/macOS platforms. This document outlines the process to deploy Deadline in this manner. Zero to hero in the following steps:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#deploy-client-nfs-shares-ref-label"><span class="std std-ref">Create NFS Shares</span></a></p></li>
+<li><p><a class="reference internal" href="#deploy-client-client-installer-ref-label"><span class="std std-ref">Run Client Installer</span></a></p></li>
+<li><p><a class="reference internal" href="#deploy-client-env-vars-ref-label"><span class="std std-ref">Environment Variables</span></a></p></li>
+<li><p><a class="reference internal" href="#deploy-client-create-config-files-ref-label"><span class="std std-ref">Create Config Files</span></a></p></li>
+<li><p><a class="reference internal" href="#deploy-client-deadline-ini-file-ref-label"><span class="std std-ref">Update deadline.ini File</span></a></p></li>
+<li><p><a class="reference internal" href="#deploy-client-create-aliases-ref-label"><span class="std std-ref">Create Aliases</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="create-nfs-shares">
+<span id="deploy-client-nfs-shares-ref-label"></span><h2>Create NFS Shares<a class="headerlink" href="#create-nfs-shares" title="Permalink to this headline">¶</a></h2>
+<p>To follow along with these example guidelines, create the following directories under a NFS share (you may already have a ‘software’ file server in your pipeline):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/<span class="o">[</span>MOUNT<span class="o">]</span>/nfs/sw/thinkbox/deadlinerepo/<span class="o">[</span>VERSION<span class="o">]</span> <span class="c1"># Deadline Repository (DB runs locally)</span>
+/mnt/nfs/sw/thinkbox/deadline/linux/<span class="o">[</span>VERSION<span class="o">]</span> <span class="c1"># Deadline Linux client software</span>
+/Volumes/nfs/sw/thinkbox/deadline/macOS/<span class="o">[</span>VERSION<span class="o">]</span> <span class="c1"># Deadline macOS client software</span>
+
+<span class="c1"># where [MOUNT] might be &#39;/mnt/&#39; or &#39;/Volumes/&#39; (depending on OS) and [VERSION] would be the version of Deadline, such as 9.0.0.0</span>
+</pre></div>
+</div>
+<p>We shall assume you have already <a class="reference internal" href="install-db-repo.html#install-db-repo-ref-label"><span class="std std-ref">installed</span></a> the Deadline DB onto your Database machine’s local fast disk and the Repository onto the above NFS share <code class="docutils literal notranslate"><span class="pre">/[MOUNT]/nfs/sw/thinkbox/deadlinerepo/[VERSION]/</span></code> which ideally will be tier 0 or 1 fast network disk.</p>
+</div>
+<div class="section" id="run-the-client-installer">
+<span id="deploy-client-client-installer-ref-label"></span><h2>Run the Client Installer<a class="headerlink" href="#run-the-client-installer" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Deadline’s <a class="reference internal" href="repository-config.html#client-setup-ref-label"><span class="std std-ref">Automatic Upgrades / Downgrades</span></a> option is <strong>NOT</strong> supported and should be disabled if you choose to deploy and run Deadline from a network located NFS share.</p>
+</div>
+<p>We will take advantage of a new client installer option in Deadline 9.0 to extract just the binary files from the client installer.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--binariesonly</span> <span class="pre">&lt;binariesonly&gt;</span></code>: If enabled, the installer will only install files to the installation directory. The installer will not perform any additional configuration to run Deadline on this machine. Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
+</ul>
+<p>Initially, you will either elect a machine (could be a disposable VM or your local machine’s hard-disk) which you will use to carry out a dummy install and then copy the Deadline application files onto the NFS share (if you don’t have direct access) or you can create the applicable <a class="reference internal" href="#deploy-client-nfs-shares-ref-label"><span class="std std-ref">NFS share</span></a> and tell the client installer to extract and directly copy the binary files to this NFS location. Run the <a class="reference internal" href="quick-install-client.html#quick-install-client-ref-label"><span class="std std-ref">Client Installer</span></a> on that machine. The installer will prompt you for a Repository path, and if you are installing Deadline 10.1.22 or earlier, a license server. Setting these now avoids having to change these settings manually later, but neither the Repository nor the license server need to be reachable by this machine at this point. Alternatively, use the <code class="docutils literal notranslate"><span class="pre">--mode</span> <span class="pre">unattended</span></code> option to silently execute and copy the binaries only to your directed location. Here are Linux and macOS examples for your NFS share:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Linux</span>
+&gt;&gt;&gt; ./DeadlineClient-X.X.X.X-linux-x64-installer.run --mode unattended --prefix <span class="s2">&quot;/mnt/nfs/sw/thinkbox/deadline/linux/X.X.X.X&quot;</span> --binariesonly <span class="nb">true</span>
+<span class="c1"># macOS</span>
+&gt;&gt;&gt; ./DeadlineClient-X.X.X.X-osx-installer.app/Contents/MacOS/installbuilder.sh --mode unattended --prefix <span class="s2">&quot;/Volumes/nfs/sw/thinkbox/deadline/macOS/X.X.X.X&quot;</span> --binariesonly <span class="nb">true</span>
+</pre></div>
+</div>
+<div class="section" id="rsync-files-to-nfs">
+<h3>Rsync Files to NFS<a class="headerlink" href="#rsync-files-to-nfs" title="Permalink to this headline">¶</a></h3>
+<p><strong>OPTIONAL</strong> - This section can be skipped if the client installer extracted it’s binary files directly to your NFS share.</p>
+<p>If you elected to extract the client installer files locally, then you will need to use Rsync to copy the files over to your NFS share. It is important to copy the root installation directory, rather than just the binaries folder. By default, the root installation directory is <code class="docutils literal notranslate"><span class="pre">/opt/Thinkbox/Deadline[VERSION]</span></code> where [VERSION] is the MAJOR version number of Deadline. It is important to use the <code class="docutils literal notranslate"><span class="pre">--links</span></code> flag to preserve symbolic links when performing the rsync transfer (<code class="docutils literal notranslate"><span class="pre">-a</span></code> (archive) already includes this follow <code class="docutils literal notranslate"><span class="pre">--links</span></code> argument) and ensure you elevate by using <code class="docutils literal notranslate"><span class="pre">su</span> <span class="pre">-s</span></code> or <code class="docutils literal notranslate"><span class="pre">sudo</span></code> to ensure permissions are carried over for all the files. Any file permission errors during the transfer will be reported by Rsync. An example Rsync command that accomplishes this is the following:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Linux</span>
+&gt;&gt;&gt; sudo rsync -avH /opt/Thinkbox/Deadline&lt;VERSION&gt; user@hostname:/mnt/nfs/sw/thinkbox/deadline/linux/9.0.0.0/
+<span class="c1"># macOS</span>
+&gt;&gt;&gt; sudo rsync -aVH /Applications/Thinkbox/Deadline&lt;VERSION&gt; user@hostname:/Volumes/nfs/sw/thinkbox/deadline/macOS/9.0.0.0/
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;VERSION&gt;</span></code> is the Deadline major version.</p>
+</div>
+<p>You may also wish to copy the <code class="docutils literal notranslate"><span class="pre">deadline.ini</span></code> <a class="reference internal" href="client-config.html#client-config-ref-label"><span class="std std-ref">Client Configuration</span></a> file to a network location as well. This file contains settings that you may want to apply to all render nodes on your farm, such as connection information for the Repository and license server. By default, this file is located in <code class="docutils literal notranslate"><span class="pre">/var/lib/Thinkbox/Deadline[VERSION]/deadline.ini</span></code>.</p>
+</div>
+</div>
+<div class="section" id="control-environment-variables">
+<span id="deploy-client-env-vars-ref-label"></span><h2>Control Environment Variables<a class="headerlink" href="#control-environment-variables" title="Permalink to this headline">¶</a></h2>
+<p>To run successfully, Deadline client applications need to have read and write access to a handful of locations which store settings, system and temporary files. It is possible in Deadline 9.0 and above to customize these locations by means of environment variables. Please see the next section for an overview of these <a class="reference internal" href="#deploy-client-environment-variables-ref-label"><span class="std std-ref">environment variables</span></a> and how they can then be used to create <a class="reference internal" href="#deploy-client-create-config-files-ref-label"><span class="std std-ref">*.config</span></a> files.</p>
+<p>At the bare minimum, Deadline must have read access to a <code class="docutils literal notranslate"><span class="pre">deadline.ini</span></code> configuration file. The location of this file can be set via the <strong>DEADLINE_CONFIG_FILE</strong> environment variable using your preferred shell and shell configuration file such as <code class="docutils literal notranslate"><span class="pre">bash</span></code> and <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code>. To change the environment variable “permanently” you’ll need to consider at least these situations:</p>
+<ul class="simple">
+<li><p>Higher level ‘pipeline’ tool controlling ‘project’/context switching in your studio</p></li>
+<li><p>Login/Non-login shell</p></li>
+<li><p>Interactive/Non-interactive shell</p></li>
+</ul>
+<p>Here are some examples:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># bash</span>
+&gt;&gt;&gt; <span class="nb">export</span> <span class="nv">DEADLINE_CONFIG_FILE</span><span class="o">=</span>/path/to/dir/deadline.ini
+
+<span class="c1"># csh or tcsh</span>
+&gt;&gt;&gt; setenv DEADLINE_CONFIG_FILE /path/to/dir/deadline.ini
+</pre></div>
+</div>
+<p>If the machines running Deadline are diskless, it may be necessary to redirect other paths as well. The full set of environment variables which can be modified are described in the <a class="reference internal" href="#deploy-client-environment-variables-ref-label"><span class="std std-ref">Environment Variables</span></a> section below. You can use these to configure Deadline to avoid writing to local directories, protected directories, or to paths which aren’t mapped to persistent storage.</p>
+<p>Lastly, if you are going to be using any <a class="reference internal" href="quick-install-submitters.html#quick-install-submitters-ref-label"><span class="std std-ref">Integrated Submitters</span></a>, you will need to set the <strong>DEADLINE_PATH</strong> environment variable to point to the directory that contains the application binaries.</p>
+</div>
+<div class="section" id="environment-variables">
+<span id="deploy-client-environment-variables-ref-label"></span><h2>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>DEADLINE_PATH</strong> <a class="reference internal" href="client-config.html#client-deadline-path-ref-label"><span class="std std-ref">environment variable</span></a> is used by the <a class="reference internal" href="quick-install-submitters.html#quick-install-submitters-ref-label"><span class="std std-ref">Integrated Submitters</span></a> to determine the location of the Deadline client applications. It should be configured to point to the directory which contains the application binaries. On Linux, this is the path to Deadline’s bin directory (<code class="docutils literal notranslate"><span class="pre">/opt/Thinkbox/Deadline[VERSION]/bin</span></code> by default). On macOS, it is instead a file located by default at <code class="docutils literal notranslate"><span class="pre">/Users/Shared/Thinkbox</span></code> which contains the path to Deadline’s resources directory. In both cases, it should be re-directed to your NFS share.</p>
+<p>All of the following environment variables are available in Deadline 9.0 and onwards. These can be optionally used to override where the Deadline client applications store various settings and files. <strong>ALL</strong> of these environment variables should be configured to locate all client files onto a network share.</p>
+<ul>
+<li><p><strong>DEADLINE_SYSTEM_PATH</strong>: This is where Deadline stores system-level information. This is where process information is stored while the applications are running, and is also the default location for the system <code class="docutils literal notranslate"><span class="pre">deadline.ini</span></code> file. The default locations for this directory on each operating system in a typical Deadline local install are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Linux: <code class="docutils literal notranslate"><span class="pre">/var/lib/Thinkbox</span></code></p></li>
+<li><p>macOS: <code class="docutils literal notranslate"><span class="pre">/Users/Shared/Thinkbox</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>DEADLINE_LOCAL_USER_PATH</strong>: This is where Deadline stores user-level information. This is where files for job submission are stored, as well as Repository cache folders. It is also where the user-level <code class="docutils literal notranslate"><span class="pre">deadline.ini</span></code> file is stored. Ideally, for Worker performance reasons, <strong>DEADLINE_LOCAL_USER_PATH</strong> should be located on local storage to the machine such as a ~tmp scratch disk. The default locations for this directory on each operating system in a typical Deadline local install are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Linux: <code class="docutils literal notranslate"><span class="pre">~/Thinkbox</span></code></p></li>
+<li><p>macOS: <code class="docutils literal notranslate"><span class="pre">~/Library/Application</span> <span class="pre">Support/Thinkbox</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The job and plugin files used for rendering used to be stored in the DEADLINE_LOCAL_USER_PATH. As of Deadline 10.1.11, they are stored in the <a class="reference internal" href="worker.html#worker-local-data-storage-ref-label"><span class="std std-ref">Worker Local Data Storage</span></a></p>
+</div>
+<ul>
+<li><p><strong>DEADLINE_ROAMING_USER_PATH</strong>: This is where Deadline stores roaming user-level information. This is where UI state files for the GUI applications are stored. The default locations for this directory on each operating system in a typical Deadline local install are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Linux: <code class="docutils literal notranslate"><span class="pre">~/.config/Thinkbox</span></code></p></li>
+<li><p>macOS: <code class="docutils literal notranslate"><span class="pre">~/.config/Thinkbox</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>DEADLINE_LOG_PATH</strong>: This is where application log files are stored. The default locations for this directory on each operating system in a typical Deadline local install are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Linux: <code class="docutils literal notranslate"><span class="pre">/var/log/Thinkbox</span></code></p></li>
+<li><p>macOS: <code class="docutils literal notranslate"><span class="pre">$DEADLINE_SYSTEM_PATH/deadline[VERSION]/logs</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>DEADLINE_CONFIG_FILE</strong>: This variable can be used to override where Deadline looks for the system <code class="docutils literal notranslate"><span class="pre">deadline.ini</span></code> file. By default, Deadline expects it to be found in a typical Deadline local install at:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Linux / macOS: <code class="docutils literal notranslate"><span class="pre">$DEADLINE_SYSTEM_PATH/deadline[VERSION]/deadline.ini</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="create-config-files">
+<span id="deploy-client-create-config-files-ref-label"></span><h2>Create Config Files<a class="headerlink" href="#create-config-files" title="Permalink to this headline">¶</a></h2>
+<p>In Deadline 9 onwards, the shell scripts responsible for launching the Deadline client applications on Linux and macOS will source optional <code class="docutils literal notranslate"><span class="pre">deadline.config</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;appname&gt;.config</span></code> files within the <code class="docutils literal notranslate"><span class="pre">bin</span></code> (Linux) or <code class="docutils literal notranslate"><span class="pre">Resources</span></code> (macOS) directory on startup, if present. The <code class="docutils literal notranslate"><span class="pre">&lt;appname&gt;</span></code> would be named as follows for Worker: <code class="docutils literal notranslate"><span class="pre">deadlineworker.config</span></code>. Taking into account the environment variables described above, users can create one or more of these config files to control client software pathing.</p>
+<div class="section" id="linux">
+<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h3>
+<p>Here’s an example <code class="docutils literal notranslate"><span class="pre">deadline.config</span></code> to configure ALL apps, created in <code class="docutils literal notranslate"><span class="pre">/mnt/nfs/sw/thinkbox/deadline/linux/[VERSION]/bin/</span></code> on CentOS 6 with a user running the default bash shell. We will also highlight the recommended NFS storage configuration for each of the Deadline path variables:</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Linux ‘deadline.config’ or ‘appname.config’</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">##########################################################</span>
+<span class="c1"># This is read by root to run Deadline Launcher</span>
+<span class="c1"># [deadline.config] file is sourced to set the</span>
+<span class="c1"># root environment to find Deadline central install</span>
+<span class="c1">##########################################################</span>
+
+<span class="c1"># bash as login shell will load /etc/profile, ~/.bash_profile, ~/.bash_login, ~/.profile in that order</span>
+<span class="c1"># bash as non-login interactive shell will load ~/.bashrc</span>
+<span class="c1"># bash as non-login non-interactive shell will load the configuration specified in environment variable $BASH_ENV</span>
+
+<span class="nv">DEADLINE_VERSION</span><span class="o">=</span><span class="s2">&quot;9.0.0.0&quot;</span>
+<span class="nv">DEADLINE_MAJOR_VERSION</span><span class="o">=</span><span class="s2">&quot;9&quot;</span>
+<span class="nv">DEADLINE_INSTALL_PATH</span><span class="o">=</span><span class="s2">&quot;/nfs/sw/thinkbox/deadline/linux&quot;</span>
+
+<span class="c1"># [NFS] /nfs/sw/ - static mount, software repository, read-only</span>
+<span class="nb">export</span> <span class="nv">DEADLINE_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">DEADLINE_INSTALL_PATH</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">DEADLINE_VERSION</span><span class="si">}</span><span class="s2">/bin&quot;</span>
+<span class="nb">export</span> <span class="nv">DEADLINE_CONFIG_FILE</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">DEADLINE_INSTALL_PATH</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">DEADLINE_MAJOR_VERSION</span><span class="si">}</span><span class="s2">/deadline.ini&quot;</span>
+
+<span class="c1"># [NFS] /nfs - auto-mount, user directory, read-write access</span>
+<span class="nb">export</span> <span class="nv">DEADLINE_ROAMING_USER_PATH</span><span class="o">=</span><span class="s2">&quot;/usr/people/</span><span class="si">${</span><span class="nv">USER</span><span class="si">}</span><span class="s2">/.config/thinkbox/deadline/</span><span class="si">${</span><span class="nv">DEADLINE_MAJOR_VERSION</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="c1"># [LOCAL] /mnt/local/disk - local caching disk (could be network located), read-write access</span>
+<span class="nb">export</span> <span class="nv">DEADLINE_SYSTEM_PATH</span><span class="o">=</span><span class="s2">&quot;/mnt/local/disk/sw/thinkbox/deadline/</span><span class="si">${</span><span class="nv">DEADLINE_MAJOR_VERSION</span><span class="si">}</span><span class="s2">/var/lib&quot;</span>
+<span class="nb">export</span> <span class="nv">DEADLINE_LOCAL_USER_PATH</span><span class="o">=</span><span class="s2">&quot;/mnt/local/disk/sw/thinkbox/deadline/</span><span class="si">${</span><span class="nv">DEADLINE_MAJOR_VERSION</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">USER</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="nb">export</span> <span class="nv">DEADLINE_LOG_PATH</span><span class="o">=</span><span class="s2">&quot;/mnt/local/disk/sw/thinkbox/deadline/</span><span class="si">${</span><span class="nv">DEADLINE_MAJOR_VERSION</span><span class="si">}</span><span class="s2">/var/log&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="macos">
+<h3>macOS<a class="headerlink" href="#macos" title="Permalink to this headline">¶</a></h3>
+<p>Here’s an example <code class="docutils literal notranslate"><span class="pre">deadline.config</span></code> to configure ALL apps, created in <code class="docutils literal notranslate"><span class="pre">/Volumes/nfs/sw/thinkbox/deadline/macOS/[VERSION]/Resources/</span></code> on macOS. We will also highlight the recommended NFS storage configuration for each of the Deadline path variables:</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">macOS ‘deadline.config’ or ‘appname.config’</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">##########################################################</span>
+<span class="c1"># This is read by root to run Deadline Launcher</span>
+<span class="c1"># [deadline.config] file is sourced to set the</span>
+<span class="c1"># root environment to find Deadline central install</span>
+<span class="c1">##########################################################</span>
+
+<span class="nv">DEADLINE_VERSION</span><span class="o">=</span><span class="s2">&quot;9.0.0.0&quot;</span>
+<span class="nv">DEADLINE_MAJOR_VERSION</span><span class="o">=</span><span class="s2">&quot;9&quot;</span>
+<span class="nv">DEADLINE_INSTALL_PATH</span><span class="o">=</span><span class="s2">&quot;/nfs/sw/thinkbox/deadline/macOS&quot;</span>
+
+<span class="c1"># [NFS] /nfs/sw/ - static mount, software repository, read-only</span>
+<span class="nb">export</span> <span class="nv">DEADLINE_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">DEADLINE_INSTALL_PATH</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">DEADLINE_VERSION</span><span class="si">}</span><span class="s2">/Resources&quot;</span>
+<span class="nb">export</span> <span class="nv">DEADLINE_CONFIG_FILE</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">DEADLINE_INSTALL_PATH</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">DEADLINE_MAJOR_VERSION</span><span class="si">}</span><span class="s2">/deadline.ini&quot;</span>
+
+<span class="c1"># [NFS] /nfs - auto-mount, user directory, read-write access</span>
+<span class="nb">export</span> <span class="nv">DEADLINE_ROAMING_USER_PATH</span><span class="o">=</span><span class="s2">&quot;/usr/people/</span><span class="si">${</span><span class="nv">USER</span><span class="si">}</span><span class="s2">/.config/thinkbox/deadline/</span><span class="si">${</span><span class="nv">DEADLINE_MAJOR_VERSION</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="c1"># [LOCAL] /Volumes/local/disk - local caching disk (could be network located), read-write access</span>
+<span class="nb">export</span> <span class="nv">DEADLINE_SYSTEM_PATH</span><span class="o">=</span><span class="s2">&quot;/Volumes/local/disk/sw/thinkbox/deadline/</span><span class="si">${</span><span class="nv">DEADLINE_MAJOR_VERSION</span><span class="si">}</span><span class="s2">/Users/Shared/Thinkbox&quot;</span>
+<span class="nb">export</span> <span class="nv">DEADLINE_LOCAL_USER_PATH</span><span class="o">=</span><span class="s2">&quot;/Volumes/local/disk/sw/thinkbox/deadline/</span><span class="si">${</span><span class="nv">DEADLINE_MAJOR_VERSION</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">USER</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="nb">export</span> <span class="nv">DEADLINE_LOG_PATH</span><span class="o">=</span><span class="s2">&quot;/Volumes/local/disk/sw/thinkbox/deadline/</span><span class="si">${</span><span class="nv">DEADLINE_MAJOR_VERSION</span><span class="si">}</span><span class="s2">/Library/Logs/Thinkbox&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="update-deadline-ini-file">
+<span id="deploy-client-deadline-ini-file-ref-label"></span><h2>Update ‘deadline.ini’ File<a class="headerlink" href="#update-deadline-ini-file" title="Permalink to this headline">¶</a></h2>
+<p>Make sure you update the declared <code class="docutils literal notranslate"><span class="pre">deadline.ini</span></code> file (in the example above, this would be: <code class="docutils literal notranslate"><span class="pre">&quot;$DEADLINE_INSTALL_PATH/$DEADLINE_MAJOR_VERSION/deadline.ini&quot;</span></code>) so that it is pointing to the correct Deadline Repository path that you wish the applications to connect to.</p>
+</div>
+<div class="section" id="create-aliases">
+<span id="deploy-client-create-aliases-ref-label"></span><h2>Create Aliases<a class="headerlink" href="#create-aliases" title="Permalink to this headline">¶</a></h2>
+<p>As a final step, you may wish to define aliases to the various common Deadline client applications in your local or studio wide SHELL configuration. You could reuse your configuration from earlier to define the location of the client application executables. Here’s a snippet for each platform (missing the environment variables from above which would need to be declared).</p>
+<div class="section" id="id1">
+<h3>Linux<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">alias</span> dlm <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DEADLINE_INSTALL_PATH</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">DEADLINE_VERSION</span><span class="si">}</span><span class="s2">/bin/deadlinemonitor&quot;</span>
+<span class="nb">alias</span> dlw <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DEADLINE_INSTALL_PATH</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">DEADLINE_VERSION</span><span class="si">}</span><span class="s2">/bin/deadlineworker&quot;</span>
+<span class="nb">alias</span> dlc <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DEADLINE_INSTALL_PATH</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">DEADLINE_VERSION</span><span class="si">}</span><span class="s2">/bin/deadlinecommand&quot;</span>
+<span class="nb">alias</span> dll <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DEADLINE_INSTALL_PATH</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">DEADLINE_VERSION</span><span class="si">}</span><span class="s2">/bin/deadlinelauncher&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>macOS<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">alias</span> dlm <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DEADLINE_INSTALL_PATH</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">DEADLINE_VERSION</span><span class="si">}</span><span class="s2">/Resources/deadlinemonitor&quot;</span>
+<span class="nb">alias</span> dlw <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DEADLINE_INSTALL_PATH</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">DEADLINE_VERSION</span><span class="si">}</span><span class="s2">/Resources/deadlineworker&quot;</span>
+<span class="nb">alias</span> dlc <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DEADLINE_INSTALL_PATH</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">DEADLINE_VERSION</span><span class="si">}</span><span class="s2">/Resources/deadlinecommand&quot;</span>
+<span class="nb">alias</span> dll <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DEADLINE_INSTALL_PATH</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">DEADLINE_VERSION</span><span class="si">}</span><span class="s2">/Resources/deadlinelauncher&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="client-upgrades">
+<span id="deploy-client-run-software-ref-label"></span><h2>Client Upgrades<a class="headerlink" href="#client-upgrades" title="Permalink to this headline">¶</a></h2>
+<p>In the future, as Deadline’s Automatic Upgrades / Downgrades is not supported, you will download and run the client installer to install the updated client software (reaplce X.X.X.X with the new version) to a new location on your NFS share as configured by your directory structure such as:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Linux</span>
+&gt;&gt;&gt; ./DeadlineClient-X.X.X.X-linux-x64-installer.run --mode unattended --prefix <span class="s2">&quot;/mnt/nfs/sw/linux/thinkbox/deadline/X.X.X.X&quot;</span> --binariesonly <span class="nb">true</span>
+<span class="c1"># macOS</span>
+&gt;&gt;&gt; ./DeadlineClient-X.X.X.X-osx-installer.app/Contents/MacOS/installbuilder.sh --mode unattended --prefix <span class="s2">&quot;/Volumes/nfs/sw/macOS/thinkbox/deadline/X.X.X.X&quot;</span> --binariesonly <span class="nb">true</span>
+</pre></div>
+</div>
+<p>To assist in updating the local init.d (Linux) or plist (macOS) startup scripts on the local client machines, we will take advantage of another new client installer option in Deadline 9.0 to NOT extract any of the client files but rather reconfigure the existing init.d/plist script file to point to the new client software version.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--nobinaries</span> <span class="pre">&lt;nobinaries&gt;</span></code>: If enabled, the installer will not install any binaries. The installation directory should be pointed to a directory that already contains a Deadline client installation. Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
+</ul>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Client Deployment - Centrally Managed</a><ul>
+<li><a class="reference internal" href="#network-install">Network Install</a></li>
+<li><a class="reference internal" href="#create-nfs-shares">Create NFS Shares</a></li>
+<li><a class="reference internal" href="#run-the-client-installer">Run the Client Installer</a><ul>
+<li><a class="reference internal" href="#rsync-files-to-nfs">Rsync Files to NFS</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#control-environment-variables">Control Environment Variables</a></li>
+<li><a class="reference internal" href="#environment-variables">Environment Variables</a></li>
+<li><a class="reference internal" href="#create-config-files">Create Config Files</a><ul>
+<li><a class="reference internal" href="#linux">Linux</a></li>
+<li><a class="reference internal" href="#macos">macOS</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#update-deadline-ini-file">Update ‘deadline.ini’ File</a></li>
+<li><a class="reference internal" href="#create-aliases">Create Aliases</a><ul>
+<li><a class="reference internal" href="#id1">Linux</a></li>
+<li><a class="reference internal" href="#id2">macOS</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#client-upgrades">Client Upgrades</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="deploy-client-windows.html"
+                        title="previous chapter">Client Deployment - Windows</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="changing-repository.html"
+                        title="next chapter">Change Repository</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="changing-repository.html" title="Change Repository"
+             >next</a></li>
+        <li class="right" >
+          <a href="deploy-client-windows.html" title="Client Deployment - Windows"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" >Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Client Deployment - Centrally Managed</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

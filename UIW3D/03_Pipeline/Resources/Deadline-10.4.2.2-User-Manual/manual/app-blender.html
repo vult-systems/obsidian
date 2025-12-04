@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blender &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Cinebench" href="app-cinebench.html" />
+    <link rel="prev" title="Autopano Video" href="app-autopanovideo.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-cinebench.html" title="Cinebench"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-autopanovideo.html" title="Autopano Video"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Blender</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="blender">
+<span id="app-blender-ref-label"></span><h1>Blender<a class="headerlink" href="#blender" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs from within Blender by installing the <a class="reference internal" href="#app-blender-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a>, or you can submit them from the Monitor. The instructions for installing the <a class="reference internal" href="#app-blender-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<p>To submit from within Blender 2.5 and later, select Render -&gt; Submit To Deadline. For previous versions of Blender, you must submit from the Monitor.</p>
+<a class="reference internal image-reference" href="../_images/sub_blender.png"><img alt="../_images/sub_blender.png" src="../_images/sub_blender.png" style="height: 500px;" /></a>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.
+The Blender specific options are:</p>
+<ul class="simple">
+<li><p><strong>Threads</strong>: The number of threads to use for rendering.</p></li>
+<li><p><strong>Build To Force</strong>: You can force 32 bit or 64 bit rendering.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Blender plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Blender plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_blender.png"><img alt="../_images/cp_blender.png" src="../_images/cp_blender.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Blender Executable</strong>: The path to the Blender executable file used for rendering. Enter alternative paths on separate lines.</p></li>
+</ul>
+<p><strong>Output</strong></p>
+<ul class="simple">
+<li><p><strong>Suppress Verbose Progress Output To Log</strong>: When enabled, this will prevent excessive progress logging to the Worker and task logs.</p></li>
+</ul>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-blender-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to install the integrated Blender submission script. This script allows for submitting Blender render jobs to Deadline directly from within the Blender editing GUI. Note that this script
+only works with Blender 2.6 and later. You can submit to older versions of Blender from the Monitor.</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="submitter-installer-blender-version-2-79-and-earlier">
+<h3>Submitter Installer (Blender version 2.79 and earlier)<a class="headerlink" href="#submitter-installer-blender-version-2-79-and-earlier" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/Blender/Installers</span></code>.</p></li>
+<li><p>In Blender, select File -&gt; User Preferences…, and then select the Add-Ons tab.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/blender_preferences.png"><img alt="../_images/blender_preferences.png" src="../_images/blender_preferences.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Click on the Render filter on the left, and check the box next to the Render: Submit Blender To Deadline add-on.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/blender_preferences_render.png"><img alt="../_images/blender_preferences_render.png" src="../_images/blender_preferences_render.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="manual-installation-blender-version-2-79-and-earlier">
+<h3>Manual Installation (Blender version 2.79 and earlier)<a class="headerlink" href="#manual-installation-blender-version-2-79-and-earlier" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>In Blender, select File -&gt; User Preferences…, and then select the Add-Ons tab.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/blender_preferences.png"><img alt="../_images/blender_preferences.png" src="../_images/blender_preferences.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Click the Install Add-On from File… button at the bottom, browse to <code class="docutils literal notranslate"><span class="pre">[Repository]\submission\Blender\Client</span></code>, and select the DeadlineBlenderClient.py script. Then press the Install Add-On from File… button to install it.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/blender_preferences_addon.png"><img alt="../_images/blender_preferences_addon.png" src="../_images/blender_preferences_addon.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Then click on the Render filter on the left, and check the box next to the Render: Submit Blender To Deadline add-on.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/blender_preferences_render.png"><img alt="../_images/blender_preferences_render.png" src="../_images/blender_preferences_render.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>After closing the User Preferences window, the Submit To Deadline option should now be in your Render menu.</p></li>
+</ul>
+</div>
+<div class="section" id="submitter-installer-blender-version-2-80-onward">
+<h3>Submitter Installer (Blender version 2.80 onward)<a class="headerlink" href="#submitter-installer-blender-version-2-80-onward" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/Blender/Installers</span></code>.</p></li>
+<li><p>In Blender, select Edit -&gt; Preferences…, and then select the Add-Ons tab on the left.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/blender_280_preferences.png"><img alt="../_images/blender_280_preferences.png" src="../_images/blender_280_preferences.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Click on the Render filter in the dropdown along the top, and check the box next to the Render: Submit Blender To Deadline add-on.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/blender_280_preferences_render.png"><img alt="../_images/blender_280_preferences_render.png" src="../_images/blender_280_preferences_render.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="manual-installation-blender-version-2-80-onward">
+<h3>Manual Installation (Blender version 2.80 onward)<a class="headerlink" href="#manual-installation-blender-version-2-80-onward" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>In Blender, select Edit -&gt; Preferences…, and then select the Add-Ons tab on the left.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/blender_280_preferences.png"><img alt="../_images/blender_280_preferences.png" src="../_images/blender_280_preferences.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Click the Install… button in the top right corner, browse to <code class="docutils literal notranslate"><span class="pre">[Repository]\submission\Blender\Client</span></code>, and select the DeadlineBlenderClient.py script. Then press the Install Add-on from File… button to install it.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/blender_280_preferences_addon.png"><img alt="../_images/blender_280_preferences_addon.png" src="../_images/blender_280_preferences_addon.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Then click on the Render filter in the dropdown along the top, and check the box next to the Render: Submit Blender To Deadline add-on.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/blender_280_preferences_render.png"><img alt="../_images/blender_280_preferences_render.png" src="../_images/blender_280_preferences_render.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>After closing the Preferences window, the Submit To Deadline option should now be in your Render menu.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-blender-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Blender are supported?</strong></p>
+<blockquote>
+<div><p>Blender versions 2.60 through 2.80 are currently supported.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages And Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Blender error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><strong>Warning: This script was written Blender version 2.80.0 and might not function (correctly), though it is enabled</strong></p>
+<blockquote>
+<div><p>You may encounter this warning when enabling the Submission Script in pre-2.80.0 versions of Blender. Our latest version of the script is targeted to Blender 2.80.0, however, it remains fully compatible with versions as far back as 2.60.0.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Blender</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer-blender-version-2-79-and-earlier">Submitter Installer (Blender version 2.79 and earlier)</a></li>
+<li><a class="reference internal" href="#manual-installation-blender-version-2-79-and-earlier">Manual Installation (Blender version 2.79 and earlier)</a></li>
+<li><a class="reference internal" href="#submitter-installer-blender-version-2-80-onward">Submitter Installer (Blender version 2.80 onward)</a></li>
+<li><a class="reference internal" href="#manual-installation-blender-version-2-80-onward">Manual Installation (Blender version 2.80 onward)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages And Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-autopanovideo.html"
+                        title="previous chapter">Autopano Video</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-cinebench.html"
+                        title="next chapter">Cinebench</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-cinebench.html" title="Cinebench"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-autopanovideo.html" title="Autopano Video"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Blender</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

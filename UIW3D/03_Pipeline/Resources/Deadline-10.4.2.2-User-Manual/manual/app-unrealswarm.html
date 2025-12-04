@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unreal Swarm &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="V-Ray Standalone" href="app-vray.html" />
+    <link rel="prev" title="Unreal Engine 5" href="app-unreal-engine-5.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-vray.html" title="V-Ray Standalone"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-unreal-engine-5.html" title="Unreal Engine 5"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Unreal Swarm</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="unreal-swarm">
+<span id="app-unreal-swarm-ref-label"></span><h1>Unreal Swarm<a class="headerlink" href="#unreal-swarm" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit Unreal Swarm jobs from the Monitor, which can be used to reserve Deadline Workers for distributed light calculations.</p>
+<a class="reference internal image-reference" href="../_images/sub_unrealswarm.png"><img alt="../_images/sub_unrealswarm.png" src="../_images/sub_unrealswarm.png" style="height: 500px;" /></a>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. The Unreal Swarm specific options are:</p>
+<ul class="simple">
+<li><p><strong>Unreal Engine Version</strong>: The version of Unreal Engine to use.</p></li>
+<li><p><strong>Agent Group Name</strong>: The name of the agent group that the machine will belong to.</p></li>
+<li><p><strong>Allowed Remote Agent Names</strong>: The remote machine filter string ( ‘ ‘, ‘,’ or ‘;’ delimited ).</p></li>
+<li><p><strong>Allowed Remote Agent Group</strong>: The name of the agent group jobs can be distributed to.</p></li>
+<li><p><strong>Coordinator Remoting Host</strong>: The name of the machine hosting the coordinator. This can be either a host-name or IP address.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="rendering">
+<h2>Rendering<a class="headerlink" href="#rendering" title="Permalink to this headline">¶</a></h2>
+<p>In order to render using Unreal Swarm you must have the Swarm Coordinator started on one of the computers. This can be found in: <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\Epic</span> <span class="pre">Games\&lt;version&gt;\Engine\Binaries\DotNET</span></code>, where <code class="docutils literal notranslate"><span class="pre">&lt;version&gt;</span></code> could be something like: <code class="docutils literal notranslate"><span class="pre">4.9</span></code>.</p>
+<p>On your rendering machine, open the Swarm Agent. In the settings tab of the swarm agent, set the AgentGroupName and AllowedRemoteAgentGroup to the same value. Set the Allowed Remote Agent Names to either the hostnames of the computers that are going to be participating if you know what they will be, otherwise you can set it to * which means that all computers are welcome. Finally, set the CoordinatorRemotingHost to the hostname of the computer that the Swarm Coordinator is being run on.</p>
+<p>From within the Deadline Monitor open the UnrealSwarm Submitter found in <em>Submit</em> &gt; <em>3D</em> &gt; <em>UnrealSwarm Submission</em>. Set the Swarm count to be the number of computers you that want to participate. Set the AgentGroupName, AllowedRemoteAgentGroup, AllowedRemoteAgentNames, CoordinatorRemotingHost to the same settings set in the Swarm Agent, then submit your job.</p>
+<p>Once all of the tasks have been picked up by Deadline Workers, open the Unreal Engine 4 scene you want to build the lighting for. Select Build &gt; Build Lighting Only and the Deadline Workers will begin to calculate the lighting.</p>
+<p>After the building is done, you will need to suspend or complete the Unreal Swarm job in Deadline in order to release the Workers.</p>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Unreal Swarm plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the UnrealSwarm plugin from the list on the left.</p>
+<p>Note, if the executable supports a MAJOR.MINOR.REVISION (9.0.123) numbering system in its path, then you will need to configure the explicit exe path to the particular revision that you have installed on your machines. Deadline does not track every possible revision available or indeed where it might be custom installed to, so a studio should verify their exe paths are correct for each application version they choose to use with Deadline. Multiple exe paths can still be declared and the first one that is found on a particular Worker on a particular platform will be used from the exe list.</p>
+<a class="reference internal image-reference" href="../_images/cp_unrealswarm.png"><img alt="../_images/cp_unrealswarm.png" src="../_images/cp_unrealswarm.png" style="height: 400px;" /></a>
+<p><strong>Swarm Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Unreal Engine 4.9 Swarm Executable</strong>: The path to Unreal Engine 4.9’s swarm agent used for rendering. Enter alternative paths on separate lines.</p></li>
+</ul>
+<p><strong>Options</strong></p>
+<ul class="simple">
+<li><p><strong>Sleep Time (Seconds)</strong>: The amount of time (in seconds) that the Unreal Swarm plugin will sleep before checking to see if it can close.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-unreal-swarm-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><em>Currently, there are no FAQs for this plugin.</em></p>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Unreal Swarm error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Unreal Swarm</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rendering">Rendering</a></li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-unreal-engine-5.html"
+                        title="previous chapter">Unreal Engine 5</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-vray.html"
+                        title="next chapter">V-Ray Standalone</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-vray.html" title="V-Ray Standalone"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-unreal-engine-5.html" title="Unreal Engine 5"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Unreal Swarm</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EnergyPlus &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Episode" href="app-episode.html" />
+    <link rel="prev" title="Draft Tile Assembler" href="app-draft-tile-assembler.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-episode.html" title="Episode"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-draft-tile-assembler.html" title="Draft Tile Assembler"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">EnergyPlus</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="energyplus">
+<span id="app-energyplus-ref-label"></span><h1>EnergyPlus<a class="headerlink" href="#energyplus" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit EnergyPlus jobs from the Monitor.</p>
+<p><a class="reference internal" href="../_images/sub_energyplus.png"><img alt="submitter" src="../_images/sub_energyplus.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_energyplus_adv_options.png"><img alt="advOptions" src="../_images/sub_energyplus_adv_options.png" style="height: 400px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. The EnergyPlus specific options are:</p>
+<ul class="simple">
+<li><p><strong>EnergyPlus IDF File(s)</strong>: The EnergyPlus IDF file(s) to be processed.</p></li>
+<li><p><strong>Weather EPW File(s)</strong>: The Weather EPW File(s) to be referenced (Optional).</p></li>
+<li><p><strong>Override Output Directory</strong>: If this option is enabled, an output directory can be used to re-direct all processed files to.</p></li>
+<li><p><strong>Build To Force</strong>: You can force 32 or 64 bit processing with this option.</p></li>
+<li><p><strong>Submit File(s) With The Job</strong>: If this option is enabled, the data file(s) will be submitted with the job, and then copied locally to the Worker machine during processing.</p></li>
+</ul>
+<p>EnergyPlus Post-Process Options are:</p>
+<ul class="simple">
+<li><p><strong>../ReadVarsESO.exe Max.Columns</strong>: Limit the maximum number of columns used when calling readVarsESO.exe.</p></li>
+<li><p><strong>Execute ../convertESOMTR.exe</strong>: Execute the convertESOMTR.exe application as a post-process.</p></li>
+<li><p><strong>Execute ../CSVproc.exe</strong>: Execute the csvProc.exe application as a post-process.</p></li>
+</ul>
+<p>EnergyPlus Processing Options are:</p>
+<ul class="simple">
+<li><p><strong>Multithreading</strong>: If enabled, EnergyPlus simulations will use multithreading. Ignored if Concurrent Tasks &gt; 1.</p></li>
+<li><p><strong>Pause Mode (DEBUG only)</strong>: Only for Debug purposes. Will PAUSE the program execution at key steps.</p></li>
+</ul>
+<p>EnergyPlus Other Options are:</p>
+<ul class="simple">
+<li><p><strong>Include Data File</strong>: If enabled, the output zip file will contain the data file OR if outputting to a directory path, the data file will be included.</p></li>
+<li><p><strong>Compress (ZIP) Output</strong>: Automatically compress the EP output to a single zip file.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the EnergyPlus plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the EnergyPlus plugin from the list on the left.</p>
+<p>Note, if the executable supports a MAJOR.MINOR.REVISION (9.0.123) numbering system in its path, then you will need to configure the explicit exe path to the particular revision that you have installed on your machines. Deadline does not track every possible revision available or indeed where it might be custom installed to, so a studio should verify their exe paths are correct for each application version they choose to use with Deadline. Multiple exe paths can still be declared and the first one that is found on a particular Worker on a particular platform will be used from the exe list.</p>
+<a class="reference internal image-reference" href="../_images/cp_energyplus.png"><img alt="../_images/cp_energyplus.png" src="../_images/cp_energyplus.png" style="height: 400px;" /></a>
+<p><strong>Executables</strong></p>
+<ul class="simple">
+<li><p>EnergyPlus Executable: The path to the EnergyPlus executable file used for simulating. Enter alternative paths on separate lines.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-energyplus-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><em>Currently, there are no FAQs for this plugin.</em></p>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known EnergyPlus error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">EnergyPlus</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-draft-tile-assembler.html"
+                        title="previous chapter">Draft Tile Assembler</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-episode.html"
+                        title="next chapter">Episode</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-episode.html" title="Episode"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-draft-tile-assembler.html" title="Draft Tile Assembler"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">EnergyPlus</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

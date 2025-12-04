@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Katana &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="KeyShot" href="app-keyshot.html" />
+    <link rel="prev" title="Karma Standalone" href="app-karma.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-keyshot.html" title="KeyShot"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-karma.html" title="Karma Standalone"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Katana</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="katana">
+<span id="app-katana-ref-label"></span><h1>Katana<a class="headerlink" href="#katana" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs from within Katana by installing the <a class="reference internal" href="#app-katana-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a>, or you can submit them from the Monitor. The instructions for installing the <a class="reference internal" href="#app-katana-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<p><a class="reference internal" href="../_images/integrated_katana.png"><img alt="int" src="../_images/integrated_katana.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_katana.png"><img alt="monitor" src="../_images/sub_katana.png" style="height: 400px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation.</p>
+<p>The Katana specific options are:</p>
+<ul class="simple">
+<li><p><strong>Katana File</strong>: The file path to the .katana file to use.</p></li>
+<li><p><strong>Frame List</strong>: A comma-separated collection of single frames or frame ranges. ex: 1-2,3,4-6.</p></li>
+<li><p><strong>Submit Katana Scene File</strong>: If this option is enabled, the scene file will be submitted with the job, and then copied locally to the Worker machine during rendering.</p></li>
+<li><p><strong>Use Working Directory/Working Dir (Optional)</strong>: If enabled/field entered, the current working directory will be used during rendering. This is required if your Katana project file contains relative paths.</p></li>
+<li><p><strong>Frames Per Task</strong>: This is the number of frames that will be rendered at a time for each job task.</p></li>
+<li><p><strong>Version</strong>: The version of Katana being used for this render job.</p></li>
+<li><p><strong>Render Node (optional)</strong>: Enter the node in the Katana scene to render, or leave blank to render with the default render node.</p></li>
+</ul>
+</div>
+<div class="section" id="pipeline-tools">
+<h3>Pipeline Tools<a class="headerlink" href="#pipeline-tools" title="Permalink to this headline">¶</a></h3>
+<p>When using the integrated submitter to submit through Katana you have the ability to use any of the event plugins that you have enabled through the Deadline Monitor. This is done by opening the Pipeline Tools window via the Pipeline Tools button. This window is explained further in the <a class="reference internal" href="event-pipeline-tools.html#event-pipeline-tools-ref-label"><span class="std std-ref">Pipeline Tools</span></a> documentation.</p>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Katana plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Katana plugin from the list on the left.</p>
+<p>Note, if the executable supports a MAJOR.MINOR.REVISION (9.0.123) numbering system in its path, then you will need to configure the explicit exe path to the particular revision that you have installed on your machines. Deadline does not track every possible revision available or indeed where it might be custom installed to, so a studio should verify their exe paths are correct for each application version they choose to use with Deadline. Multiple exe paths can still be declared and the first one that is found on a particular Worker on a particular platform will be used from the exe list.</p>
+<a class="reference internal image-reference" href="../_images/cp_katana.png"><img alt="../_images/cp_katana.png" src="../_images/cp_katana.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p>Katana Version 2 Render Executable: The path to the Katana 2 executable used for rendering. Enter alternative paths on separate lines.</p></li>
+<li><p>Katana Version 3 Render Executable: The path to the Katana 3 executable used for rendering. Enter alternative paths on separate lines.</p></li>
+</ul>
+</div>
+<div class="section" id="katana-render-node-submission-types">
+<span id="katana-render-node-label"></span><h2>Katana Render Node Submission Types<a class="headerlink" href="#katana-render-node-submission-types" title="Permalink to this headline">¶</a></h2>
+<p>When using Katana you can submit individual render nodes as separate jobs to Deadline from the Integrated Submitter, or you can choose to select a single render node to Deadline.</p>
+<a class="reference internal image-reference" href="../_images/katana_submission_select.png"><img alt="../_images/katana_submission_select.png" src="../_images/katana_submission_select.png" style="height: 150px;" /></a>
+<p>If you select “Select Render Node”, you will be able to choose which render node you would like to submit to Deadline.</p>
+<a class="reference internal image-reference" href="../_images/katana_node_select.png"><img alt="../_images/katana_node_select.png" src="../_images/katana_node_select.png" style="height: 150px;" /></a>
+<p>Note this is only an option in the Integrated Submitter in Katana.</p>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-katana-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to install the integrated Katana submission script. This script allows for submitting Katana render jobs to Deadline directly from within the Katana editing GUI.</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/Katana/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<p><strong>Windows</strong></p>
+<ul class="simple">
+<li><p>Create a folder named “Tabs” in any directory on your local machine.</p></li>
+<li><p>Copy <code class="docutils literal notranslate"><span class="pre">[Repository]\submission\Katana\Client\DeadlineKatanaClient.py</span></code> to the “Tabs” folder on your local machine.</p></li>
+<li><p>Set the system environment variable <strong>KATANA_RESOURCES</strong> to the directory containing the “Tabs” folder you created.</p></li>
+<li><p>Example: add DeadlineKatanaClient.py to <code class="docutils literal notranslate"><span class="pre">C:\KatanaSubmitter\Tabs</span></code>, then set <strong>KATANA_RESOURCES</strong> to <code class="docutils literal notranslate"><span class="pre">C:\KatanaSubmitter</span></code>.</p></li>
+</ul>
+<p>The next time you launch Katana, there should be a Thinkbox option under “Tabs” which will allow you to select “Submit To Deadline”.</p>
+<p>Note that the Katana Submitter opens at a small size. The Katana submitter can be easily resized to fit your needs. A Katana Submitter window can also be integrated directly into Katana’s customizable tab view using click-and-drag.</p>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-katana-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>What versions of Katana are supported?</strong></p>
+<blockquote>
+<div><p>Deadline supports version 2 and upwards.</p>
+</div></blockquote>
+<p><strong>How do I capture my Katana environment at job submission time?</strong></p>
+<blockquote>
+<div><p>By default, we do NOT capture the submitting machine/user’s environment, but this is possible by adding a few extra KVP’s (Key=Value pairs) to the Katana submission script. This is explained further in our manual job submission documentation in the <a class="reference internal" href="manual-submission.html#manual-submission-enviro-ref-label"><span class="std std-ref">Environment</span></a> section.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Katana error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Katana</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#pipeline-tools">Pipeline Tools</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#katana-render-node-submission-types">Katana Render Node Submission Types</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-karma.html"
+                        title="previous chapter">Karma Standalone</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-keyshot.html"
+                        title="next chapter">KeyShot</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-keyshot.html" title="KeyShot"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-karma.html" title="Karma Standalone"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Katana</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

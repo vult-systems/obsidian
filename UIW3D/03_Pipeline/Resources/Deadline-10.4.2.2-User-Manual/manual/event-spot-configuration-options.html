@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spot Event Plugin - Configuration Options &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Spot Event Configuration Utility" href="event-spot-config-utility.html" />
+    <link rel="prev" title="Spot Event Plugins - Spot Fleet Configuration" href="event-spot-fleet-configurations.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-spot-config-utility.html" title="Spot Event Configuration Utility"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="event-spot-fleet-configurations.html" title="Spot Event Plugins - Spot Fleet Configuration"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" accesskey="U">Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Spot Event Plugin - Configuration Options</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="spot-event-plugin-configuration-options">
+<span id="event-spot-configure-event-plugin-dialog-ref-label"></span><h1>Spot Event Plugin - Configuration Options<a class="headerlink" href="#spot-event-plugin-configuration-options" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 22%" />
+<col style="width: 18%" />
+<col style="width: 19%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="event-spot.html#event-spot-ref-label"><span class="std std-ref">Spot Event Plugin</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-permissions.html#event-spot-iam-policies-ref-label"><span class="std std-ref">AWS Permissions Setup</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-ami.html#event-spot-ami-ref-label"><span class="std std-ref">Amazon Machine Images</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-fleet-request.html#event-spot-fleet-requests-ref-label"><span class="std std-ref">Spot Fleet Requests</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-config-credentials.html#event-spot-config-credentials-ref-label"><span class="std std-ref">Security Credentials Configuration</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="event-spot-fleet-configurations.html#event-spot-fleet-configurations-ref-label"><span class="std std-ref">Spot Fleet Configuration</span></a></p></td>
+<td><p><a class="reference internal" href="#event-spot-configure-event-plugin-dialog-ref-label"><span class="std std-ref">Spot Event Configuration Options</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-config-utility.html#event-spot-config-utility-ref-label"><span class="std std-ref">Spot Event Configuration Utility</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-deadline-connect.html#event-spot-deadline-connect-ref-label"><span class="std std-ref">Deadline Connectivity Configuration</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-vpc-endpoints.html#event-spot-vpc-endpoints-ref-label"><span class="std std-ref">VPC Endpoints Configuration</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="event-spot-multi-region.html#event-spot-fleet-multi-region-ref-label"><span class="std std-ref">Multiple Region Support</span></a></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>To access the <strong>Spot Event Plugin</strong> configuration settings,</p>
+<ul class="simple">
+<li><p>Enable <strong>Tools &gt; Power User</strong> mode in the Monitor’s menu.</p></li>
+<li><p>Select <strong>Tools &gt; Configure Events</strong> from the Monitor’s menu.</p></li>
+<li><p>Select the <strong>Spot</strong> entry from the list on the left.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/cep_spot.png"><img alt="../_images/cep_spot.png" src="../_images/cep_spot.png" style="height: 700px;" /></a>
+</div>
+<div class="section" id="spot-event-plugin-settings">
+<h2>Spot Event Plugin Settings<a class="headerlink" href="#spot-event-plugin-settings" title="Permalink to this headline">¶</a></h2>
+<p>The Spot Event Plugin settings are:</p>
+<div class="section" id="options">
+<h3>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p><strong>State</strong>: How this Event Plugin should respond to Events. If Global, all Jobs and Workers will trigger the Events for this Plugin. If Disabled, no Events are triggered for this Plugin. Default: Disabled.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To complete a clean shutdown of an already running Spot Event Plugin environment; disable the Spot Event Plugin via Deadline Monitor, ensure you shutdown all Pulse instances and then terminate any Spot Fleet Requests in the AWS EC2 Mgmt Console.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p><strong>Enable Resource Tracker</strong>: (Only disable for AMIs with Deadline 10.0.26 or earlier). Use of the Deadline Resource Tracker requires that your custom AMIs have Deadline Client 10.0.27 or later installed on them. If enabled, the Deadline Resource Tracker will help optimize your resources by terminating instances and Spot Fleet Requests that don’t appear to be behaving as expected. We recommend upgrading your AMIs and enabling the Deadline Resource Tracker. Default: True.</p></li>
+<li><p><strong>Use Local Credentials</strong>: Whether or not you wish to use your local AWS credentials (found in <code class="docutils literal notranslate"><span class="pre">~/.aws/credentials</span></code> (Linux &amp; Mac) or <code class="docutils literal notranslate"><span class="pre">%USERPROFILE%\.aws\credentials</span></code> (Windows)). If you are using local credentials, you may leave the Access Key ID and Secret Access Key fields blank. We recommend using local credentials.</p></li>
+<li><dl class="simple">
+<dt><strong>AWS Named Profile</strong>: The AWS Named Profile that contains your <a class="reference internal" href="event-spot-permissions.html#event-spot-credentials-ref-label"><span class="std std-ref">Spot Credentials</span></a>.</dt><dd><ul class="simple">
+<li><p>Note: The credential and config files (<code class="docutils literal notranslate"><span class="pre">~/.aws/credentials</span></code> and <code class="docutils literal notranslate"><span class="pre">~/.aws/config</span></code> (Linux &amp; Mac) or <code class="docutils literal notranslate"><span class="pre">%USERPROFILE%\.aws\credentials</span></code> and <code class="docutils literal notranslate"><span class="pre">%USERPROFILE%\.aws\config</span></code> (Windows)) <em>must</em> be on the machine that performs house cleaning (which is usually the machine running Pulse).</p></li>
+<li><p>For more information on AWS Named Profiles and how to create them, visit: <a class="reference external" href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html">https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Access Key ID</strong>: The AWS Access Key ID for your <a class="reference internal" href="event-spot-permissions.html#event-spot-credentials-ref-label"><span class="std std-ref">Spot Credentials</span></a>.</dt><dd><ul class="simple">
+<li><p>More information here: <a class="reference external" href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>Secret Access Key</strong>: The AWS Secret Access Key for your <a class="reference internal" href="event-spot-permissions.html#event-spot-credentials-ref-label"><span class="std std-ref">Spot Credentials</span></a>. If using the <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-ref-label"><span class="std std-ref">Deadline Secrets Management</span></a> feature, this parameter will be saved and retrieved based on the <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-secret-namespace-ref-label"><span class="std std-ref">Event Plugin Secrets Access Level</span></a>.</p></li>
+</ul>
+</div>
+<div class="section" id="configuration">
+<h3>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p><strong>Logging Level</strong>: Different logging levels. Select <code class="docutils literal notranslate"><span class="pre">Verbose</span></code> for detailed logging about the inner workings of the Spot Event Plugin. Select <code class="docutils literal notranslate"><span class="pre">Debug</span></code> for all <code class="docutils literal notranslate"><span class="pre">Verbose</span></code> logs plus additional information on AWS API calls that are used. Default: Standard.</p></li>
+<li><p><strong>Region</strong>: The AWS region in which to start the Spot Fleet Requests. In <strong>Deadline v10.2.1 and higher</strong> there is a <strong>Multi-Region</strong> option to configure the Spot Event Plugin to work in multiple AWS Regions. Default: us-west-2.</p>
+<blockquote>
+<div><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Running the Spot Event Plugin with Multi-Region selected requires a specific format for the Spot Fleet Request Configurations JSON. Please read through the <a class="reference internal" href="event-spot-multi-region.html#event-spot-fleet-multi-region-ref-label"><span class="std std-ref">Multiple Region Support</span></a> documentation before using Multi-Region mode.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p><strong>Spot Fleet Request Group Pools</strong>: A mapping between your Groups and Pools. See <a class="reference internal" href="event-spot-fleet-configurations.html#spot-fleet-request-group-pools"><span class="std std-ref">here</span></a> for an example on formatting multiple pools per group.</p></li>
+<li><p><strong>Spot Fleet Request Configurations</strong>: A mapping between your Groups and Spot Fleet Requests (SFRs). See <a class="reference internal" href="event-spot-fleet-configurations.html#example-spot-fleet-request-configurations"><span class="std std-ref">here</span></a> for an example. Spot Fleet Requests (SFRs) are JSON formatted and can be downloaded from the AWS console.  Default: <code class="docutils literal notranslate"><span class="pre">{}</span></code>.</p>
+<blockquote>
+<div><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you modify your JSON configuration after deployment, then ensure any active SFRs are terminated in the AWS console and Pulse is restarted. It is best to only modify the JSON configuration when you are not actively rendering on AWS.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p><strong>Idle Shutdown</strong>: Number of minutes that a AWS Worker will wait in a non-rendering state before it is shutdown. Default: 10.</p></li>
+<li><p><strong>Delete SEP Terminated Workers</strong>: If enabled, Deadline Spot Event Plugin terminated AWS Workers will be deleted from the Workers Panel on the next House Cleaning cycle. Warning: The terminated Worker’s reports will also be deleted for each Worker, which may be undesired for future debugging a render Job issue. Default: False.</p></li>
+<li><p><strong>Delete EC2 Spot Interrupted Workers</strong>: If enabled, EC2 Spot interrupted AWS Workers will be deleted from the Workers Panel on the next House Cleaning cycle. Warning: The terminated Worker’s reports will also be deleted for each Worker, which may be undesired for future debugging a render Job issue. Default: False.</p></li>
+<li><p><strong>Strict Hard Cap</strong>: If enabled, any active instances greater than the target capacity for each group will be terminated. Workers may be terminated even while rendering. Default: False.</p></li>
+<li><p><strong>Maximum Instances Started Per Cycle</strong>: The Spot Plugin will request this maximum number of instances per House Cleaning cycle. Default: 50.</p></li>
+<li><p><strong>Pre Job Task Mode</strong>: How the Spot Event Plugin handles Pre Job Tasks. <strong>Conservative</strong> will only start 1 Spot instance for the Pre Job Task and ignore any other Tasks for that Job until the Pre Job Task is completed. <strong>Ignore</strong> will not take the Pre Job Task into account when calculating target capacity. <strong>Normal</strong> will treat the Pre Job Task like a regular Job Queued Task. Default: Conservative.</p></li>
+<li><p><strong>AWS Instance Status</strong>: If enabled, the Worker Extra Info X column will be used to display AWS Instance Status if the instance has been marked to be stopped or terminated by EC2 or Spot Event Plugin. All timestamps are displayed in UTC format. Default: Disabled.</p>
+<blockquote>
+<div><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>All SEP components: Workers, RCS, or Pulse instances <strong>MUST</strong> be configured with <strong>UTC</strong> time format.</p>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Spot Event Plugin - Configuration Options</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#spot-event-plugin-settings">Spot Event Plugin Settings</a><ul>
+<li><a class="reference internal" href="#options">Options</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="event-spot-fleet-configurations.html"
+                        title="previous chapter">Spot Event Plugins - Spot Fleet Configuration</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="event-spot-config-utility.html"
+                        title="next chapter">Spot Event Configuration Utility</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-spot-config-utility.html" title="Spot Event Configuration Utility"
+             >next</a></li>
+        <li class="right" >
+          <a href="event-spot-fleet-configurations.html" title="Spot Event Plugins - Spot Fleet Configuration"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" >Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Spot Event Plugin - Configuration Options</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

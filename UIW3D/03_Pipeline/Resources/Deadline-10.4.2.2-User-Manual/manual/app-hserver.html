@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HServer &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Karma Standalone" href="app-karma.html" />
+    <link rel="prev" title="Houdini Karma" href="app-houdini-karma.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-karma.html" title="Karma Standalone"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-houdini-karma.html" title="Houdini Karma"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">HServer</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="hserver">
+<span id="app-hserver-ref-label"></span><h1>HServer<a class="headerlink" href="#hserver" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit interactive HServer jobs from within Houdini by installing the <a class="reference internal" href="#app-hserver-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a>, or you can submit HServer “Reserve” jobs from the Monitor. The instructions for installing the <a class="reference internal" href="#app-hserver-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<p>To submit from within Houdini, select ‘Render’ -&gt; ‘Submit HServer To Deadline’.</p>
+<p><a class="reference internal" href="../_images/hserver_integrated.png"><img alt="integrated" src="../_images/hserver_integrated.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_hserver.png"><img alt="monitor" src="../_images/sub_hserver.png" style="height: 400px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation.
+The HServer specific options are:</p>
+<ul class="simple">
+<li><p><strong>HServer Count</strong>: The number of machines to reserve for HServer rendering.</p></li>
+<li><p><strong>Use IP Address</strong>: If checked, the Active Servers list will show the server IP addresses instead of host names.</p></li>
+<li><p><strong>Render Node</strong>: Select the render node to render. Note that if the selected node depends on other nodes, those other nodes will be rendered as well.</p></li>
+</ul>
+</div>
+<div class="section" id="rendering">
+<h3>Rendering<a class="headerlink" href="#rendering" title="Permalink to this headline">¶</a></h3>
+<p>After you’ve configured your submission options, press the Reserve Servers button to submit the HServer Reserve job. After the job has been submitted, you can press the Update Servers button to update the job’s ID and Status in the submitter. As nodes pick up the job, pressing the Update Servers button will also show them in the Active Servers list. Once you are happy with the server list, press Start Render to start rendering.</p>
+<p>After the render is finished, or if you choose to interrupt the render, you can then press Release Servers or close the submitter to mark the HServer Reserve job as complete so that the render nodes can move on to another job.</p>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the HServer plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the HServer plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_hserver.png"><img alt="../_images/cp_hserver.png" src="../_images/cp_hserver.png" style="height: 400px;" /></a>
+<p><strong>Options</strong></p>
+<ul class="simple">
+<li><p><strong>Sleep Time</strong>: The HServer plugin doesn’t actually do anything but check to see if the HServer Reserve job has changed state. This is the amount of seconds between these checks.</p></li>
+</ul>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-hserver-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to setup the integrated HServer submission script for Deadline. This script has been tested with Houdini 9 and later.</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/hserver/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<p>On <strong>Windows</strong> or <strong>Linux</strong>, copy the client script to the Houdini install directory.</p>
+<blockquote>
+<div><ul>
+<li><p>If the folder <code class="docutils literal notranslate"><span class="pre">[Houdini</span> <span class="pre">Install</span> <span class="pre">Directory]\houdini\scripts\deadline\</span></code> doesn’t exist, create it.</p></li>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="n">HServer</span>\<span class="n">Client</span>\<span class="n">DeadlineHServerClient</span><span class="o">.</span><span class="n">py</span> <span class="n">to</span> <span class="p">[</span><span class="n">Houdini</span> <span class="n">Install</span> <span class="n">Directory</span><span class="p">]</span>\<span class="n">houdini</span>\<span class="n">scripts</span>\<span class="n">deadline</span>\<span class="n">DeadlineHServerClient</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div></blockquote>
+<p>On <strong>macOS</strong>, copy the client script to the Houdini Framework folder:</p>
+<blockquote>
+<div><ul>
+<li><p>If the folder <code class="docutils literal notranslate"><span class="pre">[Houdini</span> <span class="pre">Framework]/Versions/Current/Resources/houdini/scripts/deadline/</span></code> doesn’t exist, create it.</p></li>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="n">HServer</span>\<span class="n">Client</span>\<span class="n">DeadlineHServerClient</span><span class="o">.</span><span class="n">py</span> <span class="n">to</span> <span class="p">[</span><span class="n">Houdini</span> <span class="n">Framework</span><span class="p">]</span><span class="o">/</span><span class="n">Versions</span><span class="o">/</span><span class="n">Current</span><span class="o">/</span><span class="n">Resources</span><span class="o">/</span><span class="n">houdini</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">deadline</span><span class="o">/</span><span class="n">DeadlineHServerClient</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</li>
+<li><p>The [Houdini Framework] folder can typically be found in <code class="docutils literal notranslate"><span class="pre">/Library/Frameworks/Houdini.Framework</span></code> or in Houdini 16 and onwards in <code class="docutils literal notranslate"><span class="pre">/Applications/Houdini/Houdini[VERSION]/Frameworks/Houdini.framework</span></code>, where [VERSION] might typically be “16.0.000”.</p></li>
+</ul>
+</div></blockquote>
+<p>Add a menu item to execute the script:</p>
+<blockquote>
+<div><ul>
+<li><p>Open the file <code class="docutils literal notranslate"><span class="pre">[Houdini</span> <span class="pre">Install</span> <span class="pre">Directory]/houdini/MainMenuCommon</span></code> in a text editor.</p></li>
+<li><p>Add the following in between the &lt;mainMenu&gt; and &lt;/mainMenu&gt; tags, and make sure it is added after the &lt;/menuBar&gt; closing tag.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;addScriptItem id=&quot;h.deadlineHserver&quot;&gt;
+&lt;parent&gt;render_menu&lt;/parent&gt;
+&lt;label&gt;Submit HServer To Deadline&lt;/label&gt;
+&lt;scriptPath&gt;$HFS/hserver/scripts/deadline/DeadlineHServerClient.py&lt;/scriptPath&gt;
+&lt;scriptArgs&gt;&lt;/scriptArgs&gt;
+&lt;insertAfter/&gt;
+&lt;/addScriptItem&gt;
+</pre></div>
+</div>
+</li>
+<li><p>For example, this is what the last few lines of your MainMenuCommon file might look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;/menuBar&gt;
+
+&lt;addScriptItem id=&quot;h.deadlineHserver&quot;&gt;
+&lt;parent&gt;render_menu&lt;/parent&gt;
+&lt;label&gt;Submit HServer To Deadline&lt;/label&gt;
+&lt;scriptPath&gt;$HFS/hserver/scripts/deadline/DeadlineHServerClient.py&lt;/scriptPath&gt;
+&lt;scriptArgs&gt;&lt;/scriptArgs&gt;
+&lt;insertAfter/&gt;
+&lt;/addScriptItem&gt;
+
+&lt;/mainMenu&gt;
+</pre></div>
+</div>
+</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-hserver-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Houdini are supported by Deadline’s HServer plugin?</strong></p>
+<blockquote>
+<div><p>Houdini 9 and later are supported.</p>
+</div></blockquote>
+<p><strong>A Worker is rendering the HServer Reserve job, but HServer isn’t running on the machine.</strong></p>
+<blockquote>
+<div><p>The HServer application must already be running on all machines (it should have been installed and configured as part of the Houdini installation). The HServer Reserve job itself doesn’t start up any applications, it just reserves the Worker so that the machine is free to do interactive HServer rendering.</p>
+</div></blockquote>
+<p><strong>Does the HServer process do the actual rendering?</strong></p>
+<blockquote>
+<div><p>No. Houdini will talk to HServer and tell it to start the Mantra processes for the actual rendering.</p>
+</div></blockquote>
+<p><strong>Can I run 2 or more Workers on a machine for HServer rendering?</strong></p>
+<blockquote>
+<div><p>Yes, providing that you enable the Use IP Address option in the integrated HServer submitter. When multiple Workers pick up the Reserve job, you will see duplicate IP address entries for each Worker. This is normal, and a separate Mantra process will be started for each Worker when the render begins.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known HServer error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">HServer</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#rendering">Rendering</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-houdini-karma.html"
+                        title="previous chapter">Houdini Karma</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-karma.html"
+                        title="next chapter">Karma Standalone</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-karma.html" title="Karma Standalone"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-houdini-karma.html" title="Houdini Karma"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">HServer</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creating a Replica Set &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Creating a Shard Cluster" href="db-mongo-shard-cluster.html" />
+    <link rel="prev" title="Database Authentication" href="db-authentication.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="db-mongo-shard-cluster.html" title="Creating a Shard Cluster"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="db-authentication.html" title="Database Authentication"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" accesskey="U">Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Creating a Replica Set</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="creating-a-replica-set">
+<span id="db-replica-set-ref-label"></span><h1>Creating a Replica Set<a class="headerlink" href="#creating-a-replica-set" title="Permalink to this headline">¶</a></h1>
+<img alt="../_images/mongodb-replica-set-diagram.png" src="../_images/mongodb-replica-set-diagram.png" />
+<div class="section" id="a-brief-introduction">
+<h2>A Brief Introduction<a class="headerlink" href="#a-brief-introduction" title="Permalink to this headline">¶</a></h2>
+<p>This tutorial will describe how to setup a MongoDB replica set with three members. While it is possible to have more members in a replica set, it is recommended to always have an odd number of members. An odd number of members ensures that the election of a “<em>PRIMARY</em>” member goes smoothly. More can be read about replica sets from the MongoDB documentation at <a class="reference external" href="https://docs.mongodb.com/manual/tutorial/deploy-replica-set/">https://docs.mongodb.com/manual/tutorial/deploy-replica-set/</a> and <a class="reference external" href="https://docs.mongodb.com/manual/replication/">https://docs.mongodb.com/manual/replication/</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Remember to backup any files that are modified, such as the MongoDB configuration, in case something goes wrong.</p>
+</div>
+</div>
+<div class="section" id="the-mongodb-binaries">
+<h2>The MongoDB Binaries<a class="headerlink" href="#the-mongodb-binaries" title="Permalink to this headline">¶</a></h2>
+<p>You will need to download the MongoDB binaries. Even if you’re setting up a replica set from an existing Deadline database installation, the other members of the replica set will need have clean MongoDB installations. The MongoDB binaries can be downloaded from <a class="reference external" href="https://www.mongodb.com/download-center#community">https://www.mongodb.com/download-center#community</a>. You will need to select the platform and click “<em>All Version Binaries</em>” to download the appropriate binary package. For maximum compatibility with Deadline, we recommend you use MongoDB version <strong>5.0.0</strong> through <strong>6.0.16</strong>. However, for security, you may need to use a later patch version for <strong>6.0.16</strong> if <strong>6.0.16</strong> has any security issues that might affect you.</p>
+<p>For the purposes of this tutorial, the following file structure will be assumed for all MongoDB installations. To be ready for the next few steps it may be best to install the MongoDB binaries on all replica set members, with the following structure. If you’re creating a replica set from an existing Deadline database, the installed database already has the MongoDB binaries installed with this structure.</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;databaseDirectory&gt;/
+
+  mongo/
+
+    application/
+
+      &lt;downloadedBinaries&gt;
+
+    data/
+
+      config.conf
+
+      logs/
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;databaseDirectory&gt;</span></code> is an arbitrary installation directory. This can be specified when installing the Deadline database, or chosen individually when downloading the MongoDB binaries.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;downloadedBinaries&gt;</span></code> represents all files downloaded with the binary package. The Deadline database installer downloads these for you.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">config.conf</span></code> is a configuration file. The Deadline database installer creates this for you.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">logs/</span></code> directory stores log files, and will need to be created manually. The Deadline database installer creates this for you.</p>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="the-mongodb-configuration">
+<h2>The MongoDB Configuration<a class="headerlink" href="#the-mongodb-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The MongoDB configuration is a file that specifies options for running an instance of MongoDB. Depending on what you’re creating a replica set for, the configuration may vary. If you’re using an existing Deadline database, you can start from the provided configuration located at <code class="docutils literal notranslate"><span class="pre">&lt;databaseDirectory&gt;/mongo/data/config.conf</span></code>. Otherwise, you’ll need to create a configuration from scratch. Information on MongoDB configuration options can be found at <a class="reference external" href="https://docs.mongodb.com/v3.2/reference/configuration-options/">https://docs.mongodb.com/v3.2/reference/configuration-options/</a>. The indentation style in the configuration file matters. To be safe, use two spaces for each level of indentation. The provided examples follow this standard.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Your configuration should be saved as <code class="docutils literal notranslate"><span class="pre">config.conf</span></code> in the <code class="docutils literal notranslate"><span class="pre">data/</span></code> directory (as shown in <a class="reference internal" href="#the-mongodb-binaries">The MongoDB Binaries</a>).</p>
+</div>
+<p>It is assumed that all MongoDB instances are listening on Mongo DB port <code class="docutils literal notranslate"><span class="pre">27100</span></code> which will be referred to as &lt;DB_PORT&gt;. This requires the following in your configuration. The Deadline MongoDB configuration already includes this.</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>net:
+  port: &lt;DB_PORT&gt;
+</pre></div>
+</div>
+</div></blockquote>
+<p>The MongoDB configuration should also specify a storage directory. This requires the following in your configuration. The Deadline MongoDB configuration already includes this.</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>storage:
+  dbPath: &lt;databaseDirectory&gt;/mongo/data
+</pre></div>
+</div>
+</div></blockquote>
+<p>For any MongoDB <strong>replica set</strong>, you need to specify the following.</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>replication:
+  replSetName: &lt;replicaSetName&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;replicaSetName&gt;</span></code> is the name of your replica set.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>For <em>shard</em> replica sets, use something like <code class="docutils literal notranslate"><span class="pre">dlshard0</span></code> or <code class="docutils literal notranslate"><span class="pre">dlshard1</span></code>.</p></li>
+<li><p>For a <em>shard config</em> replica set, use something like <code class="docutils literal notranslate"><span class="pre">dlconfig</span></code>.</p></li>
+<li><p>For a simple <em>standalone</em> replica set, use something like <code class="docutils literal notranslate"><span class="pre">dlreplica</span></code>.</p></li>
+</ul>
+</div></blockquote>
+</div>
+</div></blockquote>
+<p>If you’re creating a <em>shard cluster</em>, you’ll need several shard replica sets and a single shard config replica set.</p>
+<blockquote>
+<div><p>For <strong>shard replica sets</strong>, use the following.</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sharding:
+  clusterRole: shardsvr
+</pre></div>
+</div>
+</div></blockquote>
+<p>For a <strong>shard config replica set</strong>, use the following instead.</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sharding:
+  clusterRole: configsvr
+</pre></div>
+</div>
+</div></blockquote>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The MongoDB configuration you create or modify is going to be used across all members of your replica set. Copy the configuration to the <code class="docutils literal notranslate"><span class="pre">data/</span></code> directory for all replica set members.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you’re creating a shard cluster, the same MongoDB configuration will be used for all shard replica sets in the shard cluster. A different configuration file is needed for the shard config replica set than for the shard replica sets.</p>
+</div>
+</div>
+<div class="section" id="start-the-mongodb-instances">
+<h2>Start the MongoDB Instances<a class="headerlink" href="#start-the-mongodb-instances" title="Permalink to this headline">¶</a></h2>
+<p>At this point you should have MongoDB installed with a configuration file on all replica set members. The next step is going to be starting your MongoDB instances with your configuration.</p>
+<p>If you’re creating a replica set from an existing Deadline database, you’ll need to restart the Deadline database service. When the service is restarted, the modified configuration will be used.</p>
+<blockquote>
+<div><p>On <strong>Linux</strong>, the Deadline MongoDB service can be restarted by running <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">Deadline&lt;VERSION&gt;db</span> <span class="pre">restart</span></code>.</p>
+<p>On <strong>Windows</strong>, services can be stopped and started from the <em>Task Manager</em> or from the <em>Services</em> application. The service on Windows is named “<em>Deadline &lt;VERSION&gt; Database Service</em>”.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;VERSION&gt;</span></code> is the Deadline major version such as: <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p>
+</div>
+</div></blockquote>
+<p>Other replica set members using clean MongoDB installations will need to be started manually. Make sure that file paths in the MongoDB configuration are set correctly. More specifically, ensure that <code class="docutils literal notranslate"><span class="pre">&lt;databaseDirectory&gt;</span></code> is set correctly.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Navigate to <code class="docutils literal notranslate"><span class="pre">&lt;databaseDirectory&gt;/application/bin/</span></code>.</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">./mongod</span> <span class="pre">--config</span> <span class="pre">&lt;databaseDirectory&gt;/mongo/data/config.conf</span></code>.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To run MongoDB as a Windows service, use the <code class="docutils literal notranslate"><span class="pre">--install</span></code> flag when running <code class="docutils literal notranslate"><span class="pre">mongod</span></code>. More information at <a class="reference external" href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/#install-the-mongodb-service">https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/#install-the-mongodb-service</a>.</p>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="initiate-the-replica-set">
+<h2>Initiate the Replica Set<a class="headerlink" href="#initiate-the-replica-set" title="Permalink to this headline">¶</a></h2>
+<p>Now that you have your MongoDB instances running and properly configured, the next step is to initiate the replica set. This is done through the MongoDB shell application <code class="docutils literal notranslate"><span class="pre">mongo</span></code>.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Navigate to <code class="docutils literal notranslate"><span class="pre">&lt;databaseDirectory&gt;/mongo/application/bin/</span></code> on any replica set member.</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">./mongo</span> <span class="pre">--host</span> <span class="pre">localhost</span> <span class="pre">--port</span> <span class="pre">&lt;DB_PORT&gt;</span></code> to connect to the local MongoDB instance.</p></li>
+<li><p>In the MongoDB shell, use <code class="docutils literal notranslate"><span class="pre">rs.initiate()</span></code> to initiate a new replica set. Here’s an example of how the command may look:</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; rs.initiate(
+... {
+...  _id: &quot;&lt;replicaSetName&gt;&quot;,
+...  members: [
+...   { _id: 0, host: &quot;&lt;hostname1&gt;:&lt;DB_PORT&gt;&quot; },
+...   { _id: 1, host: &quot;&lt;hostname2&gt;:&lt;DB_PORT&gt;&quot; },
+...   { _id: 2, host: &quot;&lt;hostname3&gt;:&lt;DB_PORT&gt;&quot; }
+...  ]
+... }
+... )
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The command above was entered on multiple lines in the MongoDB shell. The shell will prefix each line with <code class="docutils literal notranslate"><span class="pre">...</span></code> if the command has not yet been closed (which happens here on the final <code class="docutils literal notranslate"><span class="pre">)</span></code>).</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;replicaSetName&gt;</span></code> is the name of your replica set, as specified in the configuration file used for all the <code class="docutils literal notranslate"><span class="pre">members</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;hostname1&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;hostname2&gt;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&lt;hostname3&gt;</span></code> should be names or IP addresses of the MongoDB instances in your replica set. Do not use <code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code> or <code class="docutils literal notranslate"><span class="pre">localhost</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;DB_PORT&gt;</span></code> is the Mongo DB port, such as: <code class="docutils literal notranslate"><span class="pre">27100</span></code>.</p>
+</div>
+</div></blockquote>
+<p>If you’re creating a <strong>shard config replica set</strong>, you will also need to add the <code class="docutils literal notranslate"><span class="pre">configsvr:</span> <span class="pre">true</span></code> property to the <code class="docutils literal notranslate"><span class="pre">rs.initiate()</span></code> command. The initiation of the config replica set may look something like:</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; rs.initiate(
+... {
+...  _id: &quot;dlconfig&quot;,
+...  configsvr: true,
+...  members: [
+...   { _id: 0, host: &quot;10.0.0.25:&lt;DB_PORT&gt;&quot; },
+...   { _id: 1, host: &quot;10.0.0.26:&lt;DB_PORT&gt;&quot; },
+...   { _id: 2, host: &quot;10.0.0.27:&lt;DB_PORT&gt;&quot; }
+...  ]
+... }
+... )
+</pre></div>
+</div>
+</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="your-replica-set-is-ready">
+<h2>Your Replica Set is Ready<a class="headerlink" href="#your-replica-set-is-ready" title="Permalink to this headline">¶</a></h2>
+<p>That’s all there is to it. The steps followed in this tutorial took you through installing MongoDB binaries, preparing a configuration file for MongoDB instances, running the MongoDB instances with that configuration, and finally initiating a replica set from the running MongoDB instances. The final result is a running MongoDB replica set.</p>
+<p>If you created a replica set from an existing Deadline database, and aren’t creating a shard cluster, you may need to update the database connection information in your repository to communicate with the replica set (as opposed to a standalone MongoDB instance). This can be done from a machine that has access to the repository and installed Deadline client applications, specifically <a class="reference external" href="https://docs.thinkboxsoftware.com/products/deadline/10.3/1_User%20Manual/manual/command.html">Deadline Command</a>.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Navigate to the <code class="docutils literal notranslate"><span class="pre">bin/</span></code> directory in your Deadline client installation directory.</p></li>
+<li><p>Run the following command to update your connection settings.</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deadlinecommand UpdateDatabaseSettings &lt;repositoryPath&gt; MongoDB &lt;databaseHostname&gt; deadline&lt;VERSION&gt;db &lt;DB_PORT&gt; -1 False False &quot;&quot; &quot;&quot; &lt;replicaSetName&gt; False
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;repositoryPath&gt;</span></code> is the path to the root directory of your repository.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;databaseHostname&gt;</span></code> is the hostname or IP address of any member of your replica set.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;VERSION&gt;</span></code> is the Deadline major version such as: <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;DB_PORT&gt;</span></code> is the Mongo DB port, such as: <code class="docutils literal notranslate"><span class="pre">27100</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;replicaSetName&gt;</span></code> is the name of your replica set, as specified in <code class="docutils literal notranslate"><span class="pre">rs.initiate()</span></code> and the replica set member configuration file.</p>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><p>Your Deadline applications will now take advantage of MongoDB replica sets.</p></li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="application-read-preference">
+<span id="db-replica-set-application-read-preference-ref-label"></span><h2>Application Read Preference<a class="headerlink" href="#application-read-preference" title="Permalink to this headline">¶</a></h2>
+<p>In a direct connection setup, by default, all Deadline applications read from the primary member in the replica set. You can change this setting to allow certain Deadline applications to read from secondary members first. For example, Monitor is the best Deadline application that can benefit from this setting given that Monitors generates lots of read operations and Monitor can tolerate delayed read updates. To do that, you can add the following configuration into the database connection configuration file.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ClientsThatPreferSecondaryReplicas=Monitor
+</pre></div>
+</div>
+<p>You can also specify multiple Deadline applications by separating the names by comma as shown below.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ClientsThatPreferSecondaryReplicas=Monitor, Launcher
+</pre></div>
+</div>
+<p>Valid values are <code class="docutils literal notranslate"><span class="pre">Monitor</span></code>, <code class="docutils literal notranslate"><span class="pre">Launcher</span></code>, <code class="docutils literal notranslate"><span class="pre">Worker</span></code> and <code class="docutils literal notranslate"><span class="pre">Pulse</span></code>. In most of the cases, <code class="docutils literal notranslate"><span class="pre">Monitor</span></code> will be the most useful option given that Monitor generates lots of read operations.</p>
+<p>The database connection file can be found in the repository directory as shown below.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;repositoryDirectory&gt;/settings/connection.ini
+</pre></div>
+</div>
+<p>To confirm the actual option is applied to the Deadline application, you can find logs similar to the following ones in the log of the application.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>2021-09-20 16:27:42:  Checking if `monitor` is in list (Monitor)
+2021-09-20 16:27:42:  Replica Set Read Preference={ Mode : SecondaryPreferred }
+</pre></div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Creating a Replica Set</a><ul>
+<li><a class="reference internal" href="#a-brief-introduction">A Brief Introduction</a></li>
+<li><a class="reference internal" href="#the-mongodb-binaries">The MongoDB Binaries</a></li>
+<li><a class="reference internal" href="#the-mongodb-configuration">The MongoDB Configuration</a></li>
+<li><a class="reference internal" href="#start-the-mongodb-instances">Start the MongoDB Instances</a></li>
+<li><a class="reference internal" href="#initiate-the-replica-set">Initiate the Replica Set</a></li>
+<li><a class="reference internal" href="#your-replica-set-is-ready">Your Replica Set is Ready</a></li>
+<li><a class="reference internal" href="#application-read-preference">Application Read Preference</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="db-authentication.html"
+                        title="previous chapter">Database Authentication</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="db-mongo-shard-cluster.html"
+                        title="next chapter">Creating a Shard Cluster</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="db-mongo-shard-cluster.html" title="Creating a Shard Cluster"
+             >next</a></li>
+        <li class="right" >
+          <a href="db-authentication.html" title="Database Authentication"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" >Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Creating a Replica Set</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

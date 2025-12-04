@@ -1,0 +1,494 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>After Effects &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Altus" href="app-altus.html" />
+    <link rel="prev" title="3ds Command" href="app-3ds-command.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-altus.html" title="Altus"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-3ds-command.html" title="3ds Command"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">After Effects</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="after-effects">
+<span id="app-after-effects-ref-label"></span><h1>After Effects<a class="headerlink" href="#after-effects" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Running After Effects as a service can be randomly unreliable. We recommend not running your renderfarm as a service if you depend on AE rendering.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It has come to our attention that After Effects GPU acceleration has been the source of some problems for our clients recently. When using GPU acceleration, ensure that any Worker that can pick up the job has OpenCL or CUDA compliant hardware and drivers installed. Unfortunately, due to the limitations of After Effects, we are unable to modify this setting before rendering and can only warn you/change it on submission.</p>
+<p>In the case of headless machines with no GPU capabilities, ensure you select to use <strong>Mercury Software Only</strong> option in your Project Settings in After Effects before job submission to remove the Deadline printed warning message. GPU rendering while running as a service is <strong>NOT</strong> supported, so <strong>Mercury Software Only</strong> option should be used. However, this is dependent on whether the latest graphics drivers or 3rd party GPU accelerated AE plugins are being used as well. After Effects will typically revert to using the CPU for rendering if it is unable to locate any GPU devices.</p>
+</div>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs from within After Effects by installing the <a class="reference internal" href="#app-after-effects-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a>, or you can submit them from the Monitor. The instructions for installing the <a class="reference internal" href="#app-after-effects-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<p>To submit from within After Effects, select File -&gt; Run Script -&gt; DeadlineAfterEffectsClient.jsx.</p>
+<p><a class="reference internal" href="../_images/integrated_after_effects_general.png"><img alt="general" src="../_images/integrated_after_effects_general.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/integrated_after_effects_advanced.png"><img alt="advanced" src="../_images/integrated_after_effects_advanced.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_after_effects.png"><img alt="monitor" src="../_images/sub_after_effects.png" style="height: 400px;" /></a></p>
+<div class="section" id="project-configuration">
+<h3>Project Configuration<a class="headerlink" href="#project-configuration" title="Permalink to this headline">¶</a></h3>
+<p>In After Effects, place the comps you want to render in the Render Queue (CTRL+ALT+0). Due to an issue with the Render Queue, if you have more than one comp with the same name, only the settings from the first one will be used
+(whether they are checked or not). It is important that all comps in the Render Queue have unique names, and our submission script will notify you if they do not. Each comp that is in the Render Queue and that has a check mark next
+to it will be submitted as separate job to Deadline.</p>
+<a class="reference internal image-reference" href="../_images/ae_render_queue.png"><img alt="../_images/ae_render_queue.png" src="../_images/ae_render_queue.png" style="width: 500px;" /></a>
+<p>Note that under the comp’s Output Module settings, the Use Comp Frame Number check box must be checked. If this is not done, every frame in the submitted comp will try to write to the same file.</p>
+<a class="reference internal image-reference" href="../_images/ae_module_settings.png"><img alt="../_images/ae_module_settings.png" src="../_images/ae_module_settings.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.
+Note that the Draft/Integration options are only available in After Effects CS4 and later.</p>
+<p>The After Effects specific options are:</p>
+<ul>
+<li><p><strong>Comp Submission</strong>: Use this dropdown to specify what type of submission you would prefer.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Select One Comp: Use the <em>Comp Selection</em> dropdown to choose which comp from your queue you would like to submit.</p></li>
+<li><p>Use Render Queue Selection: This selection will submit all comps from the render queue that are in the <em>queued</em> state.</p></li>
+<li><p>Submit Entire Render Queue: This selection will submit all comps from the render queue, regardless of their state.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Use Comp Name As Job Name</strong>: If enabled, the job’s name will be the Comp name.</p></li>
+<li><p><strong>Use Frame List From The Comp</strong>: Check this option to use the frame range defined for the comp.</p></li>
+<li><p><strong>Comps Are Dependent On Previous Comps</strong>: If enabled, the job for each comp in the render queue will be dependent on the job for the comp ahead of it. This is useful if a comp in the render queue uses footage rendered by a comp ahead of it.</p></li>
+<li><p><strong>Render The First And Last Frames Of The First</strong>: Enable this option to render the first and last frames first, followed by the the remaining frames in the comp’s frame list. Note that this ignores the Frame List setting in the submission dialog.</p></li>
+<li><p><strong>Submit The Entire Render Queue As One Job With A Single Task</strong>: Use this option when the entire render queue needs to be rendered all at once because some queue items are dependent on others or use proxies. Note though that only one machine will be able to work on this job.</p></li>
+<li><p><strong>Multi-Process Rendering</strong>: Enable multi-process rendering.</p></li>
+<li><p><strong>Submit Project File With Job</strong>: If enabled, the After Effects Project File will be submitted with the job.</p></li>
+<li><p><strong>Ignore Missing Layer Dependencies</strong>: If enabled, Deadline will ignore errors due to missing layer dependencies.</p></li>
+<li><p><strong>Fail On Warning Messages</strong>: If enabled, Deadline will fail the job whenever After Effects prints out a warning message.</p></li>
+<li><p><strong>Export XML Project File</strong>: Enable to export the project file as an XML file for Deadline to render (After Effects CS4 and later). The original project file will be restored after submission. If the current project file is already an XML file, this will do nothing.</p></li>
+<li><p><strong>Delete XML File After Export</strong>: If enabled, the exported aepx project file will be automatically deleted after job submission (After Effects CS4 and later). If the current project file is already an XML file, this will do nothing. “Submit Project File With Job” must be enabled for this feature.</p></li>
+<li><p><strong>Ignore Missing Effects References</strong>: If enabled, Deadline will ignore errors due to missing effect references.</p></li>
+<li><p><strong>Continue On Missing Footage</strong>: If enabled, rendering will not stop when missing footage is detected.</p></li>
+<li><p><strong>Enable Local Rendering</strong>: If enabled, Deadline will render the frames locally before copying them over to the final network location.</p></li>
+<li><p><strong>Override Fail On Existing AE Process</strong>: If enabled, the global repository setting “Fail on Existing AE Process” will be overridden.</p></li>
+<li><p><strong>Fail on Existing AE Process</strong>: If enabled, the job will be failed if any After Effects instances are currently running on the Worker. Existing After Effects instances can sometimes cause 3rd party AE plugins to malfunction during network rendering.</p></li>
+<li><p><strong>Include Output File Path</strong>: If enabled, the output path will be included with the job so that it can be changed after the job has been submitted. Note that if your Comp has multiple output modules, you should leave this option disabled.</p></li>
+</ul>
+<p>The following After Effects specific options are only available in After Effects CS4 and later:</p>
+<ul>
+<li><p><strong>Multi-Machine Rendering</strong>: This mode submits a special job where each task represents the full frame range. The Workers will all work on the same frame range, but if “Skip existing frames” is enabled for the comps, they will skip frames that other Workers are already rendering.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>This mode requires “Skip existing frames” to be enabled for each comp in the Render Queue.</p></li>
+<li><p>Set the number of tasks to be the number of Workers you want working simultaneously on the render.</p></li>
+<li><p>This mode ignores the Frame List, Machine Limit, and Frames Per Task settings.</p></li>
+<li><p>This mode does not support Local Rendering or Output File Checking.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Minimum Output File Size</strong>: If an output image’s file size is less than what’s specified in kilobytes (KB), the task is requeued (specify 0 for no limit).</p></li>
+<li><p><strong>Delete Files Under Minimum File Size</strong>: If enabled and the output file size is less than the minimum file size in kilobytes (KB), then the file will be deleted.</p></li>
+<li><p><strong>Fail On Missing Output</strong>: If a job completes and does not produce any output, an error will be produced. This option defaults to <em>on</em>, and is the equivalent to setting the <em>Minimum Output File Size</em> to 1.</p></li>
+<li><p><strong>Enable Memory Management</strong>: Whether or not to use the memory management options.</p></li>
+<li><p><strong>Image Cache %</strong>: The maximum amount of memory after effects will use to cache frames.</p></li>
+<li><p><strong>Max Memory %</strong>: The maximum amount of memory After Effects can use overall.</p></li>
+</ul>
+</div>
+<div class="section" id="pipeline-tools">
+<h3>Pipeline Tools<a class="headerlink" href="#pipeline-tools" title="Permalink to this headline">¶</a></h3>
+<p>When using the integrated submitter to submit through After Effects you have the ability to use any of the event plugins that you have enabled through the Deadline Monitor. This is done by opening the Pipeline Tools window via the Pipeline Tools button. This window is explained further in the <a class="reference internal" href="event-pipeline-tools.html#event-pipeline-tools-ref-label"><span class="std std-ref">Pipeline Tools</span></a> documentation.</p>
+</div>
+<div class="section" id="layer-submission">
+<h3>Layer Submission<a class="headerlink" href="#layer-submission" title="Permalink to this headline">¶</a></h3>
+<p>In addition to normal job submission, you also have the option to submit layers in your After Effects project as separate jobs. To do so, first select the layers you want to submit. Then run the submission script, set the
+submission options mentioned above as usual, and press the Submit Selected Layers button. This will bring up the layers window.</p>
+<a class="reference internal image-reference" href="../_images/ae_submit_layers.png"><img alt="../_images/ae_submit_layers.png" src="../_images/ae_submit_layers.png" style="height: 500px;" /></a>
+<p>The layer submission options are:</p>
+<ul class="simple">
+<li><p><strong>Render With Unselected Layers</strong>: Specify the unselected layers that will render with each of the selected layers.</p></li>
+<li><p><strong>Layer Name Parsing</strong>: Allows you to specify how the layer names should be formatted. You can then grab parts of the formatting and stick them in either the output name or the subfolder format box with square brackets. So, for example, if you’re naming your layers something like <code class="docutils literal notranslate"><span class="pre">ops024_a_diff</span></code>, you could put <code class="docutils literal notranslate"><span class="pre">&lt;graphic&gt;_&lt;layer&gt;_&lt;pass&gt;</span></code> in this box. Then in the subfolder box, you could put <code class="docutils literal notranslate"><span class="pre">[graphic]\\[layer]\\v001\\[pass]</span></code>, which would give you <code class="docutils literal notranslate"><span class="pre">ops024\\a\\v001\\diff</span></code> as the subfolder structure.</p></li>
+<li><p><strong>Render Settings</strong>: Which render settings to use.</p></li>
+<li><p><strong>Output Module</strong>: Which output module to use.</p></li>
+<li><p><strong>Output Format</strong>: How the output file name should be formatted.</p></li>
+<li><p><strong>Output Folder</strong>: Where the output files should be rendered to.</p></li>
+<li><p><strong>Use Subfolders</strong>: Enable this to render each layer to its own subfolder. If this is enabled, you must also specify the subfolder format.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="cross-platform-rendering-considerations">
+<h2>Cross-Platform Rendering Considerations<a class="headerlink" href="#cross-platform-rendering-considerations" title="Permalink to this headline">¶</a></h2>
+<p>In order to perform cross-platform rendering with After Effects, you must setup Mapped Paths so that Deadline can swap out the Project and Output file paths where appropriate. You can access the Mapped Paths Setup in the Monitor
+while in power user mode by selecting Tools -&gt; Configure Repository. You’ll find the Mapped Paths Setup in the list on the left.</p>
+<p>You then have two options on how to set up your After Effects project file. The traditional way is to ensure that your After Effects project file is on a network shared location, and that any footage or assets that the project
+uses is in the same folder or in sub-folders. Then when you submit the job, you must make sure that the option to submit the project file with the job is disabled. If you leave it enabled, the project file will be copied to and
+loaded from the Worker’s local machine, and thus won’t be able to find the footage.</p>
+<p>You also have the option to save your After Effects project as an AEPX file, which is just an XML file. Deadline will automatically detect that an AEPX file has been submitted, and will swap out paths within the file itself
+(because it is just plain text). This way, you don’t have to worry about setting up the project structure described in the first option. Note though that all the asset paths still need to be network accessible.</p>
+</div>
+<div class="section" id="plugin-configuration">
+<span id="app-after-effects-plugin-config-ref-label"></span><h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the After Effects plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the After Effects plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_ae.png"><img alt="../_images/cp_ae.png" src="../_images/cp_ae.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>After Effects Executable</strong>: The path to the After Effects aerender executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+<p id="app-after-effects-non-royalty-bearing-ref-label"><strong>Render Options</strong></p>
+<ul>
+<li><p><strong>Fail On Existing After Effects Process</strong>: Prevent Deadline from rendering when After Effects is already open. [Default: False]</p></li>
+<li><p><strong>Force Rendering In English</strong>: You can configure the After Effects plugin to force After Effects to render in English. This is useful if you are rendering with a non-English version of After Effects, because it ensures that Deadline’s progress gathering and error checking function properly (since they are currently based on English output from the After Effects renderer). [Default: False]</p></li>
+<li><p><strong>Enable Render Engine Mode</strong>: If this option is set to true, the Workers will render in Render Engine mode; meaning the Deadline After Effects plugin will automatically create and copy over the required <code class="docutils literal notranslate"><span class="pre">ae_render_only_node.txt</span></code> file which will force After Effects to run in a “non-royalty bearing mode”. Note, this mode disables a few features of AE because of licensing issues. [Default: True]. See this blog post explaining <a class="reference external" href="https://helpx.adobe.com/after-effects/user-guide.html/after-effects/using/automated-rendering-network-rendering.ug.html">“non-royalty-bearing”</a> mode. Limitations include:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Decoding and encoding of MPEG-2 video, including formats based on that: XDCAM EX, XDCAM HD and other formats in MXF OP1a containers, and HDV.</p></li>
+<li><p>Decoding of AC3 / Dolby Digital audio, which is used in AVHCD media.</p></li>
+<li><p>You may encounter issues if you are generating a movie file with the above codecs; try a different codec or render to an image sequence. If you are not generating movies, it is likely that you are using a movie with one of these codecs as an input source layer. Consider changing the input movie codec or rendering out to an image sequence and then using this as the input source layer. Note, After Effects loads and renders image sequences faster than it does movie files, so this is the preferred route, assuming you can afford the additional disk space on your file server.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Delete Render Engine File</strong>: If this option is set to true, the Workers will remove the Force Engine before rendering and after it is done rendering in Force Engine Mode. [Default: True]</p></li>
+<li><p><strong>Fail Without Finished Message</strong>: If this option is set to true, the Workers will fail any task that does not print the message “Finished composition”.  This setting must be set to False to successfully render movie files. [Default: False]</p></li>
+</ul>
+<p><strong>Font Folder Synchronization</strong></p>
+<p>The new FontSync event plugin that ships with Deadline v7.1 can be used to synchronize fonts on macOS and Windows before the Worker application starts rendering any job, or when the Worker first starts up. This general <a class="reference internal" href="event-fontsync.html#event-font-sync-ref-label"><span class="std std-ref">FontSync</span></a> Python based event plugin replaces the font synchronization options here in the After Effects plugin and now works for ALL plugin types in Deadline. This FontSync event plugin is located at &lt;Repository&gt;/events/FontSync</p>
+<p><strong>Path Mapping For aepx Project Files (For Mixed Farms)</strong></p>
+<ul class="simple">
+<li><p><strong>Enable Path Mapping For aepx Files</strong>: If enabled, a temporary aepx file will be created locally on the Worker for rendering and Deadline will do path mapping directly in the aepx file. [Default: True]</p></li>
+</ul>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-after-effects-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to install the integrated After Effects submission script. This script allows for submitting After Effects render jobs to Deadline directly from within the After Effects editing GUI.
+The script and the following installation procedure has been tested with with After Effects CS3 and later.</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/AfterEffects/Installers</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Copy the file on <strong>Windows</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="n">AfterEffects</span>\<span class="n">Client</span>\<span class="n">DeadlineAfterEffectsClient</span><span class="o">.</span><span class="n">jsx</span> <span class="n">to</span> <span class="p">[</span><span class="n">After</span> <span class="n">Effects</span> <span class="n">Install</span> <span class="n">Directory</span><span class="p">]</span>\<span class="n">Support</span> <span class="n">Files</span>\<span class="n">Scripts</span>
+</pre></div>
+</div>
+</li>
+<li><p>Alternatively, copy the file on <strong>macOS</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="n">AfterEffects</span>\<span class="n">Client</span>\<span class="n">DeadlineAfterEffectsClient</span><span class="o">.</span><span class="n">jsx</span> <span class="n">to</span> <span class="p">[</span><span class="n">After</span> <span class="n">Effects</span> <span class="n">Install</span> <span class="n">Directory</span><span class="p">]</span>\<span class="n">Scripts</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Ensure you copy the above <code class="docutils literal notranslate"><span class="pre">DeadlineAfterEffectsClient.jsx</span></code> file to the <strong>Scripts</strong> directory . Do <strong>NOT</strong> use the <strong>Plugins</strong> directory.</p>
+</div>
+<ul>
+<li><p>For After Effects CC 2019 and later, start the application and make sure that under Edit -&gt; Preferences -&gt; Scripting &amp; Expressions panel, <strong>Allow Scripts to Write Files and Access Network</strong> option is enabled. This is necessary so that the submission script can create the necessary files to submit to Deadline.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/ae_allow_scripts_2019onwards.png"><img alt="../_images/ae_allow_scripts_2019onwards.png" src="../_images/ae_allow_scripts_2019onwards.png" style="height: 500px;" /></a>
+</div></blockquote>
+</li>
+<li><p>For After Effects CC 2018 and earlier, you can find that option under Edit -&gt; Preferences -&gt; General -&gt; <strong>Allow Scripts to Write Files and Access Network</strong>.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/ae_allow_scripts.png"><img alt="../_images/ae_allow_scripts.png" src="../_images/ae_allow_scripts.png" style="height: 500px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="custom-sanity-check">
+<h3>Custom Sanity Check<a class="headerlink" href="#custom-sanity-check" title="Permalink to this headline">¶</a></h3>
+<p>A CustomSanityChecks.jsx file can be created alongside the main SubmitAEToDeadline.jsx submission script (in [Repository]\submission\AfterEffects\Main), and will be evaluated if it exists. This script will let you set any of the
+initial properties in the submission script prior to displaying the submission window. You can also use it to run your own checks and display errors or warnings to the user. Here is a very simple example of what this script
+could look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">initDepartment</span> <span class="o">=</span> <span class="s2">&quot;The Best Department&quot;</span><span class="p">;</span>
+    <span class="n">initPriority</span> <span class="o">=</span> <span class="mi">33</span><span class="p">;</span>
+    <span class="n">initConcurrentTasks</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="n">alert</span><span class="p">(</span> <span class="s2">&quot;You are in a custom sanity check!&quot;</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="troubleshooting">
+<span id="app-after-effects-troubleshooting"></span><h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="diagnosing-integrated-submitter-problems">
+<h3>Diagnosing Integrated Submitter Problems<a class="headerlink" href="#diagnosing-integrated-submitter-problems" title="Permalink to this headline">¶</a></h3>
+<p>Occasionally you may be faced with an issue during job submission. It may be that the submission dialog won’t display or that pressing the “submit” button may not create a job. If you believe you’ve properly installed the integrated submitter as outlined above, it may be time to enable the JavaScript debugger. You’ll find it under Edit -&gt; Preferences:</p>
+<a class="reference internal image-reference" href="../_images/ae_js_debugger.png"><img alt="../_images/ae_js_debugger.png" src="../_images/ae_js_debugger.png" style="height: 400px;" /></a>
+<img alt="../_images/ae_js_debugger_error_example.png" src="../_images/ae_js_debugger_error_example.png" />
+<p>After enabling that feature, save your project and restart After Effects. Reload the project and try the submission again to check for an error message. If the problem is not immediately obvious from the error dialog, please reach out to the Thinkbox support team with the contents of the dialog and a test project file if the problem is project specific.</p>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-after-effects-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of After Effects are supported?</strong></p>
+<blockquote>
+<div><p>After Effects CS3 and later are supported.</p>
+</div></blockquote>
+<p><strong>Why is there no Advanced tab in the integrated submission script for After Effects CS3?</strong></p>
+<blockquote>
+<div><p>Tabs are only supported in CS4 and later, so the Advanced tab and its options are not available in CS3 and earlier.</p>
+</div></blockquote>
+<p><strong>When rendering an h264 QuickTime on Windows, After Effects exits without rendering any frames</strong></p>
+<blockquote>
+<div><p>This seems to be an issue with how QuickTime handles many cores (seen with 12). Rendering via the user interface will present the user with “Error: Rendering error while writing to file “&lt;file path&gt;”. Incompatible video compressor. (-1610153448)”. The suggested workaround from Adobe is to use Adobe Media Encoder, but unfortunately AEP(X) files cannot be rendered via the communication method Deadline must use. The best option within Deadline would be to use QuickDraft to automatically generate a video file from the output frames, but as of this writing this method does not support audio.</p>
+</div></blockquote>
+<p><strong>Does network rendering with After Effects require a full After Effects license?</strong></p>
+<blockquote>
+<div><p>In After Effects CS5.0 and earlier, a license is not required.</p>
+<p>In After Effects CS5.5, a full license is required.</p>
+<p>In After Effects CS6.0 and later, a license isn’t required if you <a class="reference external" href="https://helpx.adobe.com/after-effects/user-guide.html/after-effects/using/automated-rendering-network-rendering.ug.html">enable “non-royalty-bearing” mode</a>. The After Effects <a class="reference internal" href="#app-after-effects-plugin-config-ref-label"><span class="std std-ref">plugin configuration</span></a> section has the option <strong>Enable Render Engine Mode</strong> to automate this mode on your rendernodes for Windows and macOS machines. Please note the <a class="reference internal" href="#app-after-effects-non-royalty-bearing-ref-label"><span class="std std-ref">limitations</span></a> of non-royalty-bearing mode with particular codecs.</p>
+</div></blockquote>
+<p><strong>Why does After Effects sometimes hang at render completion of a QuickTime mov file?</strong></p>
+<blockquote>
+<div><p>Due to the requirement to use the “non-royalty-bearing” mode to network render After Effects without requiring an AE license from Adobe, certain codecs are not authorised:</p>
+<ul class="simple">
+<li><p>Decoding and encoding of MPEG-2 video, including formats based on that: XDCAM EX, XDCAM HD and other formats in MXF OP1a containers, and HDV.</p></li>
+<li><p>Decoding of AC3 / Dolby Digital audio, which is used in AVHCD media.</p></li>
+<li><p>You may encounter issues if you are generating a movie file with the above codecs; try a different codec or render to an image sequence. If you are not generating movies, it is likely that you are using a movie with one of these codecs as an input source layer. Consider changing the input movie codec or rendering out to an image sequence and then using this as the input source layer. Note, After Effects loads and renders image sequences faster than it does movie files, so this is the preferred route, assuming you can afford the additional disk space on your file server.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Rendering through Deadline seems to take longer than rendering through After Effects locally.</strong></p>
+<blockquote>
+<div><p>After Effects needs to be restarted at the beginning of each frame, and this loading time results in the render taking longer than expected. If you know ahead of time that your frames will render quickly, it is recommended
+to submit your frames in groups of 5 or 10. This way, After Effects will only load at the beginning of each group of frames, instead of at the beginning of every frame.</p>
+</div></blockquote>
+<p><strong>When rendering a job, only the images from the first task are saved, and subsequent tasks just seem to overwrite those initial image files.</strong></p>
+<blockquote>
+<div><p>In the comp’s Output Module Settings, make sure that the “Use Comp Frame Number” checkbox is checked. Check out step 1 here for complete details.</p>
+</div></blockquote>
+<p><strong>I get the error that the specified comp cannot be found when rendering, but it is in the render queue.</strong></p>
+<blockquote>
+<div><p>This can occur for a number of reasons, most of which are related to the name of the comp. Examples are names with two spaces next to each other, or names with apostrophes in them. Try using only alphanumeric characters and
+underscores in comp names and output paths to see if that resolves the issue.</p>
+</div></blockquote>
+<p><strong>Why do the comps in the After Effects Render Queue require unique names?</strong></p>
+<blockquote>
+<div><p>Due to an issue with the Render Queue, if you have more than one comp with the same name, only the settings from the first one will be used (whether they are checked or not). It is important that all comps in the Render Queue have unique names, and our submission script will notify you if they do not.</p>
+</div></blockquote>
+<p><strong>Understanding the different After Effects command line flags.</strong></p>
+<blockquote>
+<div><p>Adobe have a web page, <a class="reference external" href="https://helpx.adobe.com/after-effects/using/automated-rendering-network-rendering.html">Automated Rendering</a> which explains the different network render command line options and how they work. Deadline currently supports as many of these options as possible.</p>
+</div></blockquote>
+<p><strong>How can I optimize After Effects for high performance?</strong></p>
+<blockquote>
+<div><p>Adobe provide an excellent web page, <a class="reference external" href="https://helpx.adobe.com/after-effects/using/memory-storage1.html">Memory and Storage</a> documenting different areas of After Effects and what can be done by users to improve performance, particularly in the areas of disk storage/caching &amp; RAM.</p>
+</div></blockquote>
+<p><strong>I tell Deadline to render still images, but sometimes it renders videos of the still instead.</strong></p>
+<blockquote>
+<div><p>Unfortunately we have noticed a bug in AE where we see the message “Adding specified comp to Render Queue” and the format is different than was indicated in the command. We are working to add in a way to catch this as an error in a future build, and reaching out to Adobe.</p>
+</div></blockquote>
+<p><strong>“Use Multi-Process Rendering” is checked as a rendering option but does not work for CC 2015 or later?</strong></p>
+<blockquote>
+<div><p>As of After Effects CC 2015 some features that were available in previous versions have been removed or disabled by Adobe. One of those features include Rendering Multiple Frames Simultaneously (Multi-Processing). If you want to Render Multiple Frames Simultaneously, you can still do so by using After Effects CC 2014. Adobe explains in this <a class="reference external" href="https://blogs.adobe.com/creativecloud/features-not-available-in-after-effects-cc-2015-13-5">online article</a> the reason behind this behavioral change.</p>
+</div></blockquote>
+<p><strong>I have expressions in my After Effects project file. Can I use force English mode?</strong></p>
+<blockquote>
+<div><p>Most expressions written in a non-English project file will not translate over to when rendering in English mode therefore it is not recommended to use English mode when your project contains expressions.</p>
+</div></blockquote>
+<p><strong>I rendered a job using force English mode and now my After Effects is always using English. How do I disable this mode?</strong></p>
+<blockquote>
+<div><p>In order to disable the force English mode for after effects you have to remove the text file <code class="docutils literal notranslate"><span class="pre">ae_force_english.txt</span></code> this file can be found in your user documents directory.</p>
+</div></blockquote>
+<p><strong>I rendered a job using force render engine mode and now my After Effects is not opening any more. How do I disable this mode?</strong></p>
+<blockquote>
+<div><p>In order to disable the force render engine mode for after effects you can remove the text file <code class="docutils literal notranslate"><span class="pre">ae_render_only_node.txt</span></code>. This file can be found in your user documents directory.</p>
+</div></blockquote>
+<p><strong>How can I disable Adobe Automatic Updates?</strong></p>
+<blockquote>
+<div><p>Adobe provide instructions <a class="reference external" href="https://helpx.adobe.com/creative-suite/kb/disable-auto-updates-application-manager.html">here</a> to allow users to create an <code class="docutils literal notranslate"><span class="pre">AdobeUpdaterAdminPrefs.dat</span></code> file to disable Adobe auto-updates from occuring at either a machine wide or user account level. We always recommend that all your machines should be running exactly the same version of After Effects for consistency for network rendering.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known After Effects error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><strong>Exception during render: Renderer returned non-zero error code, -1073741819</strong></p>
+<blockquote>
+<div><p>The error code -1073741819 is equivalent to 0xC0000005, which represents a Memory Access Violation error. So After Effects is either running out of memory, or memory has become corrupt. If you find that your frames are still
+being rendered, you can modify the After Effects plugin to ignore this error.
+Just add the following function to the AfterEffectsPlugin class in AfterEffects.py, which can be found in [Repository]/plugins/AfterEffects.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">CheckExitCode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exitCode</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">FailWithoutFinishedMessage</span><span class="p">:</span> <span class="c1"># job marked to fail if no render success message found</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">RenderSuccess</span><span class="p">:</span> <span class="c1"># no render success message found</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">FailRender</span><span class="p">(</span><span class="s2">&quot;After Effects did not report successful render; exit code: </span><span class="si">%s</span><span class="s2">. Check the render log.&quot;</span> <span class="o">%</span> <span class="n">exitCode</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">exitCode</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1073741819</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">LogInfo</span><span class="p">(</span><span class="s2">&quot;Ignoring exit code -1073741819&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">exitCode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># if exit code non-zero, then fail the job</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">FailRender</span><span class="p">(</span><span class="s2">&quot;After Effects returned non-zero error code: </span><span class="si">%s</span><span class="s2">. Check the render log.&quot;</span> <span class="o">%</span> <span class="n">exitCode</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can find another example of the CheckExitCode function in MayaCmd.py, which can be found in [Repository]/plugins/MayaCmd.</p>
+</div></blockquote>
+<p><strong>aerender ERROR: No comp was found with the given name.</strong></p>
+<blockquote>
+<div><p>This can occur for a number of reasons, most of which are related to the name of the comp. Examples are names with two spaces next to each other, or names with apostrophes in them. Try using only alphanumeric characters and
+underscores in comp names and output paths to see if that resolves the issue. Ensure no trailing whitespace characters in each of your comp names.</p>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><strong>Exception during render: Renderer returned non-zero error code, 1</strong></div>
+<div class="line"><strong>aerender ERROR: An existing connection was forcibly closed by the remote host. Unable to receive at line 287</strong></div>
+<div class="line"><strong>aerender ERROR: After Effects can not render for aerender. Another instance of aerender, or another script, may be running; or, AE may be waiting for response from a modal dialog, or for a render to complete.
+Try running aerender without the -reuse flag to invoke a separate instance of After Effects.</strong></div>
+</div>
+<blockquote>
+<div><p>It is unknown what the exact cause of this error is, but it is likely that After Effects is simply crashing or running out of memory. If you are rendering with Concurrent Tasks set to a value greater than 1, try reducing
+the number and see if that helps.</p>
+<p>The Knoll Light Factory plugin has also been known to cause this error message when it can’t get a license.</p>
+</div></blockquote>
+<p><strong>CUDA NVAPI Error</strong></p>
+<blockquote>
+<div><p>Errors like below can occur when After Effects tries to take advantage of GPU acceleration (CUDA specifically), but the Worker doesn’t have a compliant CUDA graphics card installed.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">STDOUT</span><span class="p">:</span> <span class="n">Using</span> <span class="n">DXGI</span><span class="p">:</span> <span class="n">Device</span><span class="p">:</span> <span class="s2">&quot;Microsoft Basic Render Driver&quot;</span> <span class="n">has</span> <span class="n">dedicated</span> <span class="n">video</span> <span class="n">RAM</span> <span class="p">(</span><span class="n">MB</span><span class="p">):</span> <span class="mi">0</span>
+<span class="n">STDOUT</span><span class="p">:</span>  <span class="n">has</span> <span class="n">video</span> <span class="n">RAM</span><span class="p">(</span><span class="n">MB</span><span class="p">):</span> <span class="mi">16</span>
+<span class="n">STDOUT</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="n">mOptiX</span> <span class="n">has</span> <span class="mi">1</span> <span class="n">devices</span> <span class="n">available</span> <span class="k">for</span> <span class="n">use</span><span class="o">.</span>
+<span class="n">STDOUT</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="n">m</span><span class="p">[</span><span class="mi">31</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="n">m</span><span class="p">[</span><span class="n">ERROR</span><span class="p">]</span> <span class="p">[</span><span class="mi">0</span><span class="n">mNVAPI</span> <span class="n">error</span> <span class="p">(</span><span class="n">C</span><span class="p">:</span>\<span class="n">code</span>\<span class="n">rtsdk</span>\<span class="n">adobe</span><span class="o">-</span><span class="n">ae</span>\<span class="n">cc13</span><span class="o">.</span><span class="mi">1</span>\<span class="n">src</span>\<span class="n">Util</span>\<span class="n">DriverInfo</span><span class="o">.</span><span class="n">cpp</span><span class="p">:</span><span class="mi">309</span><span class="p">):</span>
+<span class="n">STDOUT</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="n">mNon</span><span class="o">-</span><span class="n">default</span> <span class="n">knobs</span><span class="p">:</span>
+<span class="n">STDOUT</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="n">m</span>
+<span class="n">STDOUT</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="n">m</span><span class="p">[</span><span class="mi">31</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="n">m</span><span class="p">[</span><span class="n">ERROR</span><span class="p">]</span> <span class="p">[</span><span class="mi">0</span><span class="n">mNVAPI</span> <span class="n">error</span> <span class="p">(</span><span class="n">C</span><span class="p">:</span>\<span class="n">code</span>\<span class="n">rtsdk</span>\<span class="n">adobe</span><span class="o">-</span><span class="n">ae</span>\<span class="n">cc13</span><span class="o">.</span><span class="mi">1</span>\<span class="n">src</span>\<span class="n">Util</span>\<span class="n">DriverInfo</span><span class="o">.</span><span class="n">cpp</span><span class="p">:</span><span class="mi">78</span><span class="p">):</span>
+<span class="n">STDOUT</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="n">m</span><span class="p">[</span><span class="mi">32</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="n">m</span><span class="p">[</span><span class="n">LOG</span> <span class="mi">4</span><span class="p">]</span> <span class="p">[</span><span class="mi">0</span><span class="n">mCPU</span> <span class="n">fallback</span> <span class="n">enabled</span>
+<span class="n">STDOUT</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="n">mNon</span><span class="o">-</span><span class="n">default</span> <span class="n">knobs</span><span class="p">:</span>
+<span class="n">STDOUT</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="n">m</span>
+<span class="n">STDOUT</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="n">m</span><span class="p">[</span><span class="mi">31</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="n">m</span><span class="p">[</span><span class="n">ERROR</span><span class="p">]</span> <span class="p">[</span><span class="mi">0</span><span class="n">mNVAPI</span> <span class="n">error</span> <span class="p">(</span><span class="n">C</span><span class="p">:</span>\<span class="n">code</span>\<span class="n">rtsdk</span>\<span class="n">adobe</span><span class="o">-</span><span class="n">ae</span>\<span class="n">cc13</span><span class="o">.</span><span class="mi">1</span>\<span class="n">src</span>\<span class="n">Util</span>\<span class="n">DriverInfo</span><span class="o">.</span><span class="n">cpp</span><span class="p">:</span><span class="mi">78</span><span class="p">):</span>
+</pre></div>
+</div>
+<p>If you receive this error message; to remove it, ensure that all Workers that can render the project have the compliant GPU or change GPU Acceleration Type in the After Effects Project file to use <strong>Mercury Software Only</strong>. The setting is under: “File” -&gt; “Project Settings…” -&gt; “Video Rendering and Effects” -&gt; “Use:” -&gt; “Mercury Software Only”. A bug report has been logged with Adobe to remove the above exception message from After Effects when network rendering.</p>
+<p>GPU rendering while running Deadline Worker as a service is <strong>NOT</strong> supported, so <strong>Mercury Software Only</strong> option should be used. However, this is dependent on whether the latest NVIDIA graphics drivers (<em>may</em> support running as a service) or 3rd party GPU accelerated AE plugins (may not work when run as a service due to GUI interaction requirements) are being used as well. After Effects will typically revert to using the CPU for rendering if it is unable to locate any GPU devices, as per the above StdOut line: <strong>CPU fallback enabled</strong>. Don’t forget you can always use Deadline <em>Groups</em> to categorize the type of CPU or GPU hardware per machine type to control which After Effects jobs render on a particular group of machines.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">After Effects</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#project-configuration">Project Configuration</a></li>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#pipeline-tools">Pipeline Tools</a></li>
+<li><a class="reference internal" href="#layer-submission">Layer Submission</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cross-platform-rendering-considerations">Cross-Platform Rendering Considerations</a></li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+<li><a class="reference internal" href="#custom-sanity-check">Custom Sanity Check</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li><a class="reference internal" href="#diagnosing-integrated-submitter-problems">Diagnosing Integrated Submitter Problems</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-3ds-command.html"
+                        title="previous chapter">3ds Command</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-altus.html"
+                        title="next chapter">Altus</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-altus.html" title="Altus"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-3ds-command.html" title="3ds Command"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">After Effects</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

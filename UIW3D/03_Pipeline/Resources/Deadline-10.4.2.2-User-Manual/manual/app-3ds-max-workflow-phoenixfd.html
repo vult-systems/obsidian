@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3ds Max - Integrated Submitter Workflow - Phoenix FD Simulation &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3ds Max - Integrated Submitter Workflow - V-Ray Standalone" href="app-3ds-max-workflow-vrayexport.html" />
+    <link rel="prev" title="3ds Max - Integrated Submitter Workflow - FumeFX Simulation" href="app-3ds-max-workflow-fumefx.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-3ds-max-workflow-vrayexport.html" title="3ds Max - Integrated Submitter Workflow - V-Ray Standalone"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-3ds-max-workflow-fumefx.html" title="3ds Max - Integrated Submitter Workflow - FumeFX Simulation"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Max - Integrated Submitter Workflow - Phoenix FD Simulation</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ds-max-integrated-submitter-workflow-phoenix-fd-simulation">
+<span id="app-3ds-max-workflow-phoenixfd-ref-label"></span><h1>3ds Max - Integrated Submitter Workflow - Phoenix FD Simulation<a class="headerlink" href="#ds-max-integrated-submitter-workflow-phoenix-fd-simulation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="phoenix-fd-simulation-workflow-overview">
+<h2>Phoenix FD Simulation Workflow Overview<a class="headerlink" href="#phoenix-fd-simulation-workflow-overview" title="Permalink to this headline">¶</a></h2>
+<img alt="../_images/max_workflow_phoenixfd.png" class="align-right" src="../_images/max_workflow_phoenixfd.png" />
+<p>The Phoenix FD Simulation workflow lets you submit one or more Phoenix FD grids for simulation on Deadline.</p>
+</div>
+<div class="section" id="accessing-the-workflow">
+<h2>Accessing The Workflow<a class="headerlink" href="#accessing-the-workflow" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>This workflow will only be accessible in SMTD if the Chaos Group Phoenix FD plugin has been installed on the workstation.</p></li>
+<li><p>To use the workflow, select the <strong>Submit PHOENIX FD SIMULATIONS To Deadline</strong> entry from the <strong>Workflow:</strong> drop-down list on top of the SMTD UI.</p></li>
+</ul>
+<p><strong>User Interface</strong></p>
+<ul class="simple">
+<li><p>The Phoenix FD Simulation workflow adds a <strong>Phoenix FD Job</strong> tab</p>
+<ul>
+<li><p>It contains a custom <strong>Phoenix FD Simulations</strong> rollout</p></li>
+<li><p>It features a custom <strong>Phoenix FD Job Options</strong> rollout with a reduced number of controls compared to the standard Job Options rollout.</p></li>
+<li><p>It also features the standard <strong>Job Failure Detection</strong> rollout with no changes.</p></li>
+</ul>
+</li>
+<li><p>The standard <strong>Assets</strong>, <strong>Render</strong>, <strong>Options</strong> and <strong>Limits</strong> tabs will also be available with most of their default content.</p>
+<ul>
+<li><p>The <strong>Render</strong> tab only features the relevant <strong>Scene Tweaks</strong> and <strong>3ds Max Startup</strong> rollouts.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Submit Button Behavior</strong></p>
+<ul class="simple">
+<li><p>The SUBMIT button of SMTD will be disabled if</p>
+<ul>
+<li><p>No Phoenix FD objects have been found in the scene</p></li>
+<li><p>Phoenix FD objects have been found, but none of them has been checked in the list.</p></li>
+<li><p>At least one of the Phoenix FD simulators has a path rooted at C:\ and the <strong>Use Cache Output Directory Override</strong> checkbox is unchecked.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="custom-user-interface-controls">
+<h2>Custom User Interface Controls<a class="headerlink" href="#custom-user-interface-controls" title="Permalink to this headline">¶</a></h2>
+<p><strong>Check All</strong> button</p>
+<ul class="simple">
+<li><p>Pressing this button will check all Phoenix FD simulators on the list.</p></li>
+</ul>
+<p><strong>Invert</strong> button</p>
+<ul class="simple">
+<li><p>Pressing this button will check the unchecked and uncheck the checked Phoenix FD simulators on the list.</p></li>
+</ul>
+<p><strong>Update FumeFX Objects From The Scene…</strong> button</p>
+<ul class="simple">
+<li><p>Pressing this button will refresh the content of the list.</p></li>
+</ul>
+<p><strong>Phoenix FD Object</strong> listView</p>
+<ul class="simple">
+<li><p>Shows a list of all Phoenix FD simulators in the current scene.</p></li>
+<li><p>Each object will have a corresponding checkbox to control whether it will be included in the submission or not.</p></li>
+<li><p>The second column will show the simulation type of the object, which also controls the color coding of the list</p>
+<ul>
+<li><p><strong>FireSmokeSim</strong> - red color</p></li>
+<li><p><strong>LiquidSim</strong> - blue color</p></li>
+<li><p><strong>PHXSimulator</strong> - green color</p></li>
+</ul>
+</li>
+<li><p>A third column shows the Output path of each Phoenix FD simulator</p></li>
+</ul>
+<p><strong>Simulation Cache Output Directory Override</strong> text field and button</p>
+<ul class="simple">
+<li><p>The text field provides an optional cache path override.</p></li>
+<li><p>Press the […] button to the right of the field to open a directory browser.</p></li>
+<li><p>You can also paste or type and enter a valid path directly into the text field.</p></li>
+</ul>
+<p><strong>Use Cache Output Directory Override</strong></p>
+<ul class="simple">
+<li><p>Default is unchecked.</p></li>
+<li><p>When checked, and if the override path is valid, the simulation paths of all Phoenix FD simulators will be repathed to the override path folder.</p></li>
+<li><p>This is useful when the original paths are pointing at a local storage not accessible to the Deadline Workers.</p></li>
+</ul>
+<p><strong>Make Directory Override Changes Permanent</strong></p>
+<ul class="simple">
+<li><p>Default is unchecked.</p></li>
+<li><p>When checked, and only if <strong>Use Cache Output Directory Override</strong> is checked and a job is submitted, the simulation paths will not be restored after submission.</p>
+<ul>
+<li><p>This would allow the current 3ds Max scene to access the simulation data from the location where Deadline will write it to.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="simulation-details">
+<h2>Simulation Details<a class="headerlink" href="#simulation-details" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>The 3ds Max scene will always be saved and submitted with the job, regardless of the relevant SMTD control.</p></li>
+<li><p>Each Task in the Phoenix FD Simulation job will process one Phoenix FD simulator.</p></li>
+<li><p>In other words, the number of Tasks will be equal to the number of Phoenix FD objects checked for submission on the list.</p></li>
+</ul>
+</div>
+<div class="section" id="workflow-script-files">
+<h2>Workflow Script Files<a class="headerlink" href="#workflow-script-files" title="Permalink to this headline">¶</a></h2>
+<p>This workflow consists of two script files:</p>
+<ul class="simple">
+<li><p><strong>SMTDWorkflow_PhoenixFD.ms</strong> - the workflow definition</p></li>
+<li><p><strong>MAXScriptJob_SimulatePhoenixFD.ms</strong> - the MAXScript Job file to be run by the Workers to perform the actual simulation.</p></li>
+</ul>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3ds Max - Integrated Submitter Workflow - Phoenix FD Simulation</a><ul>
+<li><a class="reference internal" href="#phoenix-fd-simulation-workflow-overview">Phoenix FD Simulation Workflow Overview</a></li>
+<li><a class="reference internal" href="#accessing-the-workflow">Accessing The Workflow</a></li>
+<li><a class="reference internal" href="#custom-user-interface-controls">Custom User Interface Controls</a></li>
+<li><a class="reference internal" href="#simulation-details">Simulation Details</a></li>
+<li><a class="reference internal" href="#workflow-script-files">Workflow Script Files</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-3ds-max-workflow-fumefx.html"
+                        title="previous chapter">3ds Max - Integrated Submitter Workflow - FumeFX Simulation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-3ds-max-workflow-vrayexport.html"
+                        title="next chapter">3ds Max - Integrated Submitter Workflow - V-Ray Standalone</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-3ds-max-workflow-vrayexport.html" title="3ds Max - Integrated Submitter Workflow - V-Ray Standalone"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-3ds-max-workflow-fumefx.html" title="3ds Max - Integrated Submitter Workflow - FumeFX Simulation"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Max - Integrated Submitter Workflow - Phoenix FD Simulation</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

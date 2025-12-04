@@ -1,0 +1,1605 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3ds Max - Integrated Submitter &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3ds Max - Integrated Submitter - Sanity Check" href="app-3ds-max-sanitycheck.html" />
+    <link rel="prev" title="3ds Max - Monitor Submitter" href="app-3ds-max-monitor.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-3ds-max-sanitycheck.html" title="3ds Max - Integrated Submitter - Sanity Check"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-3ds-max-monitor.html" title="3ds Max - Monitor Submitter"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Max - Integrated Submitter</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ds-max-integrated-submitter">
+<span id="app-3ds-max-smtd-ref-label"></span><h1>3ds Max - Integrated Submitter<a class="headerlink" href="#ds-max-integrated-submitter" title="Permalink to this headline">¶</a></h1>
+<img alt="../_images/integrated_3dsmax.png" src="../_images/integrated_3dsmax.png" />
+<div class="section" id="submission-options">
+<span id="dsmax-submission-options-ref-label"></span><h2>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h2>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission documentation</span></a>, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.</p>
+<p><strong>Job Name</strong> text field and options button</p>
+<ul class="simple">
+<li><p>Defines the name of the job; used to easily recognize its content and purpose.</p></li>
+<li><p>When SMTD is opened, it will default to the name of the currently opened 3ds Max scene, or “Untitled 3ds Max Job” if the scene is Untitled.</p></li>
+<li><p>The name can be freely edited before submission.</p></li>
+<li><p>The name can be updated automatically if the name of the current 3ds Max scene changes due to a File &gt; Save As…, File &gt; Load, File &gt; New or File &gt; Reset operation. See <a class="reference internal" href="#dsmax-options-tab-ref-label"><span class="std std-ref">Options tab &gt; User Options &gt; Automatically Update Job Name When Scene File Name Changes</span></a>.</p></li>
+<li><p>The name can be alternatively set to a mixture of tokens and custom text to build the Job Name at submission time, for example “My $scene Job” or “3ds Max Rendering $outputfilename” will replace the $ tokens with the 3ds Max scene name, and the output filename, respectively.</p></li>
+<li><p>Press the options button to the right of the text field to quickly access the available tokens.</p></li>
+</ul>
+<p><strong>Comment</strong> text field and options button</p>
+<ul class="simple">
+<li><p>Defines the content of the comment property of the job.</p></li>
+<li><p>The Comment property does not affect the processing of the job, but can be very useful to communicate additional information about the job to all users.</p></li>
+<li><p>For example, the Comment could contain additional info about the job’s purpose, its content, expected/possible issues, etc.</p></li>
+<li><p>The default value is the token $default, which will be replaced with a text generated internally by SMTD.</p></li>
+<li><p>Examples of $default Comments are:</p>
+<ul>
+<li><p>“3ds Max 2017 Scene Submission” - from a regular submission</p></li>
+<li><p>“State Set: State01” - from a State Set submission</p></li>
+</ul>
+</li>
+<li><p>The options button to the right of the text field offers a menu with several options:</p>
+<ul>
+<li><p><strong>CLEAR Comment</strong> - clears the content of the Command text field.</p></li>
+<li><p><strong>RESET to $default</strong> - resets the Comment text field to the $default token.</p></li>
+<li><p><strong>+$token</strong> - a number of useful tokens defined in the Repository file “SubmitMaxToDeadline_CommentFormats.ini” located under the <code class="docutils literal notranslate"><span class="pre">\Submission\3dsMax\Main\</span></code> folder.</p></li>
+</ul>
+</li>
+<li><p>Note that selecting any of the <strong>+$token</strong> items will ADD the token to the current comment and will not replace (hence the <strong>+</strong> in front of them).</p>
+<ul>
+<li><p>This lets you quickly build a sophisticated comment like “$default $scene $date $camera” with just a few clicks.</p></li>
+<li><p>If you want to replace the Comment with a token, first use the <strong>CLEAR Comment option</strong> , then the <strong>+$token</strong> item from the menu.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>User Name</strong> text field</p>
+<ul class="simple">
+<li><p>Provides the name of the Deadline user submitting and thus owning the job.</p></li>
+<li><p>The name will be set automatically to the login name of the current system user.</p></li>
+<li><p>However, you can type in any user name that does or does not exist in the Deadline repository to submit a Job as somebody else.</p></li>
+<li><p>This setting is permanently non-sticky - restarting SMTD will always reset the field to the logged user’s name.</p></li>
+</ul>
+<p><strong>Department</strong> text field</p>
+<ul class="simple">
+<li><p>The Department text field has no effect on the processing of the job, but can be useful for sorting and filtering purposes.</p></li>
+<li><p>It is sticky by default, so you can enter it once and leave it for all future SMTD sessions until you change departments.</p></li>
+<li><p>Its default value is empty string “”.</p></li>
+</ul>
+<p><strong>Pool</strong> drop-down list</p>
+<ul class="simple">
+<li><p>Contains a list of all Pools defined in the current Repository, plus the value “none” on top of the list.</p></li>
+<li><p>The list of available Pools is updated each time SMTD is launched.</p></li>
+<li><p>When a specific named Pool is selected from the list, only Workers that are explicitly added to that Pool will be eligible to dequeue the Job.</p></li>
+<li><p>When the “none” option is selected, any Worker will be eligible to dequeue the Job regardless of its Pools assignments.</p></li>
+</ul>
+<p><strong>Secondary</strong> drop-down list</p>
+<ul class="simple">
+<li><p>Contains a same list of all Pools plus “none” as the Pool drop-down list, plus the value “” (empty string) on top of the list.</p></li>
+<li><p>The Secondary Pool is used when no Workers from the Pool list were available to process the job.</p></li>
+<li><p>When a specific named Pool is selected from the list, Workers that are explicitly added to that Pool will be eligible to dequeue the Job.</p></li>
+<li><p>When the “none” option is selected, any Worker will be eligible to dequeue the Job regardless of its Pools assignments.</p></li>
+<li><p>When the “” option is selected, the Secondary Pool option will not ignored and will not be used.</p></li>
+</ul>
+<p><strong>Group</strong> drop-down list</p>
+<ul class="simple">
+<li><p>Contains the list of all Groups defined in the current Repository, plus the value “none” on top of the list.</p></li>
+<li><p>Groups are used as binary yes/no filters to determine which Workers are eligible to dequeue a Job.</p></li>
+<li><p>When set to a specific Group name, only Workers assigned to that Group will be considered for processing the Job.</p></li>
+<li><p>When set to “none”, all Workers will be considered.</p></li>
+</ul>
+<p><strong>Priority</strong> slider and value spinner</p>
+<ul class="simple">
+<li><p>Defines the numeric Priority value of the job.</p></li>
+<li><p>The value range depends on the current Repository settings.</p></li>
+<li><p>The default Maximum Priority value is 100, but it can be modified via the Deadline Monitor in Power User Mode under Configure Repository Options &gt; Job Settings section &gt; Job Scheduling tab &gt; Submission Limitations group &gt; Maximum Job Priority.</p></li>
+</ul>
+</div>
+<div class="section" id="lower-controls-section">
+<h2>Lower Controls Section<a class="headerlink" href="#lower-controls-section" title="Permalink to this headline">¶</a></h2>
+<p><strong>LOAD PRESET</strong> drop-down list and button</p>
+<ul class="simple">
+<li><p>These controls can be used as a shortcut to quickly load an SMTD preset from disk without going through the complete Load Preset comparison dialog.</p></li>
+<li><p>Simply select a previously saved Preset name from the list, and press the button to restore all its settings to the current UI.</p></li>
+</ul>
+<p><strong>Run Sanity Check Automatically Before Submission</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, SMTD will perform a Sanity Check before submitting the job.</p></li>
+<li><p>The Sanity Check is implemented as a separate set of scripted functions which can be enhanced by 3rd parties to meet specific studio needs.</p></li>
+<li><p>For more information, please refer to the <a class="reference internal" href="app-3ds-max-sanitycheck.html#dsmax-sanity-check-ref-label"><span class="std std-ref">Sanity Check</span></a> section.</p></li>
+</ul>
+<p><strong>Run Sanity Check Now!</strong> button</p>
+<ul class="simple">
+<li><p>Pressing this button performs a Sanity Check without submitting a Job.</p></li>
+<li><p>Any potential problems will be reported and can be fixed before actually submitting the job.</p></li>
+</ul>
+<p><strong>Render Dialog…</strong> button</p>
+<ul class="simple">
+<li><p>Opens the 3ds Max Render Setup dialog.</p></li>
+</ul>
+<p><strong>Monitor…</strong> button</p>
+<ul class="simple">
+<li><p>Launches the Deadline Monitor application.</p></li>
+</ul>
+<p><strong>Pipeline Tools…</strong> button</p>
+<ul class="simple">
+<li><p>Opens the Pipeline Tools dialog which offers 3ds Max integration with Draft, Shotgun, ftack etc.</p></li>
+</ul>
+<p><strong>SUBMIT</strong> checkbutton</p>
+<ul class="simple">
+<li><p>Pressing this checkbutton performs the actual submission of the 3ds Max scene to Deadline.</p></li>
+<li><p>Pressing the checkbutton again while the submission is running will cancel it prematurely.</p></li>
+</ul>
+<p><strong>Last Submission</strong> status indicator</p>
+<ul class="simple">
+<li><p>The status indicator represents the progress of the current submission process, and the result of the last submission:</p>
+<ul>
+<li><p><strong>Blue</strong> - no submission has been performed yet</p></li>
+<li><p><strong>Green</strong> - last submission was successful.</p></li>
+<li><p><strong>Red</strong> - last submission failed.</p></li>
+<li><p><strong>Yellow</strong> - the process is still running.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="smtd-log">
+<h2>SMTD Log<a class="headerlink" href="#smtd-log" title="Permalink to this headline">¶</a></h2>
+<p><strong>Log: ALL</strong> button</p>
+<ul class="simple">
+<li><p>Left or right click opens a context menu with the following options:</p>
+<ul>
+<li><p><strong>Show ALL Messages</strong>  - resets the filter to show all log lines regardless of type.</p></li>
+<li><p><strong>Show Only INFO, &gt;PROGRESS and +SUCCESS Messages</strong> - shows only info (no prefix), progress and success messages, hides errors and warnings.</p></li>
+<li><p><strong>Show Only INFO Messages</strong> - shows only info (no prefix) messages, hides all othersother messages.</p></li>
+<li><p><strong>Show Only &gt;PROGRESS Messages</strong> - shows only progress messages, hides all other messages.</p></li>
+<li><p><strong>Show Only +SUCCESS Messages</strong> - shows only success messages, hides all other messages.</p></li>
+<li><p><strong>Show Only –ERROR and !!WARNING Messages</strong> - shows both errors and warnings, hides all other messages.</p></li>
+<li><p><strong>Show Only –ERROR Messages</strong> - - shows only error messages, hides all other messages.</p></li>
+<li><p><strong>Copy Selected Lines To Windows CLIPBOARD</strong> - copies the highlighted lines to the clipboard. Use Click, CTRL+Click, SHIFT+Click to select.</p></li>
+<li><p><strong>TIMESTAMP display in the Log Window</strong> - a toggle to turn on and off the display of the timestamp in front of the message. Turning it off allows longer lines to be shown.</p></li>
+<li><p><strong>OPEN the Current Log in the Default Editor for .LOG files…</strong> - tries to open the current log file in whatever editor has been associated with the .LOG file extension, or opens the Windows dialog to pick an appropriate editor.</p></li>
+<li><p><strong>OPEN the Current Log in Windows NOTEPAD…</strong> - opens the current log file in Notepad.</p></li>
+<li><p><strong>EXPLORE the SMTD Logs folder…</strong> - Reveals the location of the Log files folder in a Windows Explorer.</p></li>
+<li><p><strong>CLEAR Log Window - Changing Filters will restore</strong> - Clears the Log Windows’s display without clearing the internal history of the current session. Any changes to filters will restore the content.</p></li>
+<li><p><strong>RESET Log History - Only Log File will persist</strong> - Clears the Log’s internal history. Any previous messages will be retained in the log file on disk, but cannot be restored in the session’s Log Window.</p></li>
+</ul>
+</li>
+<li><p>The same menu is also accessible through a right-click in the Log Window itself.</p></li>
+</ul>
+<p><strong>Log Filter</strong> text field</p>
+<ul class="simple">
+<li><p>Performs a case-insensitive sub-string search and displays only the lines containing the specified token.</p></li>
+<li><p>The Timestamp will <strong>not</strong> be included in the search.</p></li>
+<li><p>Implicit * wildcards will be added before and after the filter token to facilitate the sub-string search.</p></li>
+<li><p>Explicit ? wildcard can be used to match a single character.</p></li>
+<li><p>Explicit * wildcard can be used to match any number of characters.</p></li>
+<li><p>When set to no text, all lines allowed by the message type filter will be displayed.</p></li>
+</ul>
+<p><strong>Log Window</strong> listView</p>
+<ul class="simple">
+<li><p>Displays the current session’s Log messages.</p></li>
+<li><p>Messages are color-coded based on their type, and prefixed with a character representing the type (see the Menu above).</p></li>
+<li><p>Double-clicking any Log Window message line will toggle the filter for that message type on.</p></li>
+<li><p>Double-clicking any message line again will toggle all filters off to display all messages of all types.</p></li>
+<li><p>Right-clicking on any message will open the context menu (see above).</p></li>
+</ul>
+</div>
+<div class="section" id="job-tab">
+<span id="dsmax-job-tab-ref-label"></span><h2>Job Tab<a class="headerlink" href="#job-tab" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="job-submission-rollout">
+<h3>Job Submission rollout<a class="headerlink" href="#job-submission-rollout" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/max_job_submission.png" src="../_images/max_job_submission.png" />
+<p>This rollout was added in Deadline 10. It hosts previously available controls related to the creation of multiple jobs from a single submission, including Stereo Cameras, and Preview Job submission.</p>
+<p><strong>Stereo Camera Jobs</strong> drop-down list</p>
+<ul class="simple">
+<li><p>Controls what Jobs to submit when the Viewport is set to a component of a Stereo Camera rig:</p>
+<ul>
+<li><p><strong>LEFT/RIGHT/CENTER Camera Only</strong> - submits only the respective eye regardless of which of the 3 Cameras is active.</p></li>
+<li><p><strong>LEFT and RIGHT Cameras</strong> - submits both eyes regardless of which of the 3 Cameras is active.</p></li>
+<li><p><strong>LEFT, RIGHT and CENTER</strong> - submits all 3 Cameras regardless of which of them is active.</p></li>
+</ul>
+</li>
+<li><p>If the Viewport is not set to a Stereo Camera component, the current view will be submitted regardless of this mode.</p></li>
+</ul>
+<p><strong>Stereo Camera Job Priorities</strong> drop-down list</p>
+<ul class="simple">
+<li><p>Modifies the Job Priorities of Stereo Camera jobs, allowing one eye to be processed with higher priority than the others.</p>
+<ul>
+<li><p>The first Camera listed will be submitted with unmodified Priority.</p></li>
+<li><p>The second Camera listed will have (Priority-1).</p></li>
+<li><p>The third Camera listed will have (Priority-2).</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Render Preview Job First</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, two jobs will be submitted.</p>
+<ul>
+<li><p>The first job will have [PREVIEW FRAMES] added to its name, have a priority equal to the main job priority setting combined with the value of the Priority+ setting (see next setting), and will render only N frames based on the #Frames value.</p></li>
+<li><p>The second job will have [REST OF FRAMES] added to its name, can be dependent on the first job to start rendering once the preview frames job has finished, and/or can be suspended to require manual approval by the user. It will have the Priority specified by the Priority slider, and will render all frames not included in the preview job.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Dependent/Suspended</strong> drop-down list</p>
+<ul class="simple">
+<li><p>Controls the dependency and suspended state of the [REST OF FRAMES] Job.</p></li>
+<li><p>Possible values are:</p>
+<ul>
+<li><p><strong>Default</strong> - the [PREVIEW FRAMES] and [REST OF FRAMES] Jobs will have the same dependencies (none, or custom) set up in the Job Dependencies rollout.</p></li>
+<li><p><strong>Dependent</strong> - the [REST OF FRAMES] Job will be made dependent on the [PREVIEW FRAMES] Job.</p></li>
+<li><p><strong>Suspended</strong> - the [REST OF FRAMES] Job will be submitted in Suspended state, allowing the user to look at the Preview frames before manually resuming the rest of the rendering if everything looks good.</p></li>
+<li><p><strong>Depend and Susp.</strong> - the [REST OF FRAMES] Job will be made both dependent on the [PREVIEW FRAMES] Job, and will be submitted in Suspended state.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Priority+</strong> value spinner</p>
+<ul class="simple">
+<li><p>Defines the Priority Increase for the [PREVIEW FRAMES] job.</p></li>
+<li><p>For example, if the Priority slider is set to 50 and the Priority+ value is 5, the [PREVIEW FRAMES] Job will be submitted with Priority of 55, and the [REST OF FRAMES] Job with 50.</p></li>
+</ul>
+<p><strong>#Frames</strong> value spinner</p>
+<ul class="simple">
+<li><p>Defines the number of frames to be submitted as a [PREVIEW FRAMES] job.</p></li>
+<li><p>The frames will be taken at equal intervals, for example a value of 2 will send the first and last frames, a value of 3 will send the first, middle and last frames, and so on.</p></li>
+</ul>
+</div>
+<div class="section" id="job-options-rollout">
+<h3>Job Options rollout<a class="headerlink" href="#job-options-rollout" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/max_job_options.png" src="../_images/max_job_options.png" />
+<p><strong>Task Chunk Size (Frames Per Task)</strong> value spinner</p>
+<ul class="simple">
+<li><p>Defines the number of Frames to be processed at once in a single Task by a Worker.</p></li>
+<li><p>By default, the value is set to 1 and maps one Frame to one Task.</p></li>
+<li><p>It is advisable to increase this value when</p>
+<ul>
+<li><p>The individual Frames take a very short time - this way, 3ds Max can process multiple Frames in a row without the need from the Worker to communicate with the Repository and make scheduling decisions.</p></li>
+<li><p>The total number of Frames is higher than the Maximum Task number specified in the Repository settings (default limit is 5000). For example, rendering 10000 frames with a limit of 5000 would be possible without changing the Repository settings if the Task Chunk Size is set to 2.</p></li>
+</ul>
+</li>
+<li><p>The main drawback of increasing this value is that should any of the Frames in the Task fail for any reason, the whole Task including any previous Frames included in it will be re-processed.</p></li>
+</ul>
+<p><strong>Limit Number of Machines Rendering Concurrently</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, only the number of Workers specified by the [Machines] value (see below) will be allowed to dequeue the Job.</p></li>
+<li><p>When unchecked, any number of Workers can work on the Job, up to the number of Tasks in the Job.</p></li>
+</ul>
+<p><strong>Machines</strong> value spinner</p>
+<ul class="simple">
+<li><p>Defines the number of Workers that will be allowed to dequeue the Job at the same time.</p></li>
+<li><p>The control will be disabled when the <strong>Limit Number of Machines Rendering Concurrently</strong> checkbox is unchecked.</p></li>
+</ul>
+<p><strong>Out-Of-Order Rendering</strong> drop-down list</p>
+<ul class="simple">
+<li><p>In the default Fist To Last (Forward) mode, all frames are submitted sequentially.</p></li>
+<li><p>Some of the other options can be very useful when rendering long test animations.</p></li>
+<li><p>For example, you can render a rough animation containing every Nth frame early enough to detect any major issues before all frames have been rendered, or in cases where the major action happens in the end of the sequence, reverse the rendering order.</p></li>
+<li><p>Possible values are (examples based on 10 frames range from 0 to 10 and Every Nth Step of 5):</p></li>
+</ul>
+<table class="docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 34%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Mode</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Frame Sequence Step 2</p></th>
+<th class="head"><p>Frame Sequence Step 3</p></th>
+<th class="head"><p>Frame Sequence Step 5</p></th>
+<th class="head"><p>Frame Sequence Step 6</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>First To Last (Forward)</strong></p></td>
+<td><p>Submits all frames in ascending sequential order.</p></td>
+<td><p>0,1,2,3,4,5,6,7,8,9,10</p></td>
+<td><p>same, step not used</p></td>
+<td><p>same, step not used</p></td>
+<td><p>same, step not used</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Every Nth, Then Forward</strong></p></td>
+<td><p>Uses the <strong>Out Of Order Step</strong> value to process every Nth Frame,
+then renders the rest in ascending sequential order.</p></td>
+<td><p>0,2,4,6,8,10,1,3,5,7,9</p></td>
+<td><p>0,3,6,9,1,2,4,5,7,8,10</p></td>
+<td><p>0,5,10,1,2,3,4,6,7,8,9</p></td>
+<td><p>0,6,1,2,3,4,5,7,8,8,10</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Every Nth, Block Fill</strong></p></td>
+<td><p>Creates N blocks based on the <strong>Out Of Order Step</strong> value,
+then fills all blocks sequentially in ascending order.</p></td>
+<td><dl class="simple">
+<dt>0,5,1,6,2,7,3,8,4,9,10</dt><dd><p>five frames/block</p>
+</dd>
+</dl>
+</td>
+<td><p>0,3,6,1,4,7,2,5,8,9,10
+three frames/block, +1</p></td>
+<td><dl class="simple">
+<dt>0,2,4,6,8,1,3,5,7,9,10</dt><dd><p>two frames/block</p>
+</dd>
+</dl>
+</td>
+<td><dl class="simple">
+<dt>0,1,2,3,4,5,6,7,8,9,10</dt><dd><p>one frame/block, +5</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>Every Nth, Half Raster Refine</strong></p></td>
+<td><p>Every Nth frame using the <strong>Out Of Order Step</strong> value,
+then renders the frame in the middle of rach remaining segments.</p></td>
+<td><p>0,2,4,6,8,10,1,3,5,7,9</p></td>
+<td><p>0,3,6,9,1,2,4,5,7,8,10</p></td>
+<td><p>0,5,10,2,4,6,8,1,3,7,9</p></td>
+<td><p>0,6,3,9,1,2,4,5,7,8,10</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Last To First (Reverse)</strong></p></td>
+<td><p>Submits all frames in descending sequential order.</p></td>
+<td><p>10,9,8,7,6,5,4,3,2,1,0</p></td>
+<td><p>same, step not used</p></td>
+<td><p>same, step not used</p></td>
+<td><p>same, step not used</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>First And Last Frames First</strong></p></td>
+<td><p>Submits the two edge frames, then all frames between them.</p></td>
+<td><p>0,10,1,2,3,4,5,6,7,8,9</p></td>
+<td><p>same, step not used</p></td>
+<td><p>same, step not used</p></td>
+<td><p>same, step not used</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>From Both Ends</strong></p></td>
+<td><p>Interlaced Forward abd Reverse sequences</p></td>
+<td><p>0,10,1,9,2,8,3,7,4,6,5</p></td>
+<td><p>same, step not used</p></td>
+<td><p>same, step not used</p></td>
+<td><p>same, step not used</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>From Center</strong></p></td>
+<td><p>Renders frames from the middle towards the start and end frames</p></td>
+<td><p>4,6,3,7,2,8,1,9,0,10,5</p></td>
+<td><p>same, step not used</p></td>
+<td><p>same, step not used</p></td>
+<td><p>same, step not used</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>From Both Ends And From Center</strong></p></td>
+<td><p>Combines the previous two modes</p></td>
+<td><p>0,10,4,5,1,9,3,6,2,7,8</p></td>
+<td><p>same, step not used</p></td>
+<td><p>same, step not used</p></td>
+<td><p>same, step not used</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Random</strong></p></td>
+<td><p>Fully random order (no seed used) - Some possible examples shown:</p></td>
+<td><p>3,6,1,8,10,2,5,7,4,0,9</p></td>
+<td><p>10,2,0,1,8,5,7,3,9,6,4</p></td>
+<td><p>3,7,1,5,0,9,10,2,8,6,4</p></td>
+<td><p>7,2,3,9,5,4,8,0,6,10,1</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>|&gt;|&gt; Copy Sequence</strong> button</p>
+<ul class="simple">
+<li><p>Opens a context menu with two options:</p>
+<ul>
+<li><p><strong>Copy the Frame Sequence to the Windows CLIPBOARD</strong> - this can be useful for pasting into the Monitor &gt; Job’s Frame Range dialog’s field.</p></li>
+<li><p><strong>Print the Frame Sequence to the LOG Windo/File</strong> - this can be useful to preview to actual frame range before submitting, or to include the frames list in the Log for future reference.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Out Of Order Step</strong> value spinner</p>
+<ul class="simple">
+<li><p>Enabled when one of the Nth frame based rendering orders is selected in the Out-Of-Order Rendering drop-down list</p></li>
+<li><p>This value defines the Nth step to use.</p></li>
+<li><p>Note that Preview Jobs respect this setting too!</p></li>
+</ul>
+<p><strong>Task Timeout</strong> checkbox and value spinners</p>
+<ul class="simple">
+<li><p>When checked, a Task will be requeued if it runs longer than the time specified by the Hours, Minutes and Seconds value spinners.</p></li>
+<li><p>This is useful to prevent stalling when the typical rendering time of the job is known from previous submissions.</p></li>
+</ul>
+<p><strong>Enable Auto Task Timeout</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, the Task will be requeued if it runs much longer than the Tasks that have already finished for this Job.</p></li>
+<li><p>It should only be used if the Tasks are expected to have more or less consistent times.</p></li>
+</ul>
+<p><strong>Restart 3ds Max Between Tasks</strong> checkbox</p>
+<ul class="simple">
+<li><p>When unchecked (default), 3ds Max will be kept in memory for the duration of the give job’s processing. This can reduce render time significantly as multiple Tasks can be rendered in sequence without reloading 3ds Max.</p></li>
+<li><p>When checked, 3ds Max will be restarted between tasks, thus releasing all memory and resetting the scene settings at cost of startup time.</p></li>
+</ul>
+<p><strong>Render Threads Per Task</strong> value spinner</p>
+<ul class="simple">
+<li><p>Forces each task of the job to use the specific number of CPU’s/Threads (0=unlimited)</p></li>
+<li><p>This can be useful when doing single threaded renders and the Concurrent Tasks setting is greater than 1.</p></li>
+</ul>
+<p><strong>Job Is Interruptible</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, the Worker can cancel the Job’s Task before finishing it if a higher priority Job is submitted to the Queue and the Worker is eligible to process it.</p></li>
+<li><p>When unchecked, once a Task has been</p></li>
+</ul>
+<p><strong>Force Workstation Mode</strong> checkbox</p>
+<ul class="simple">
+<li><p>When unchecked, 3ds Max will be started in Worker mode without the User Interface, which does not require a 3ds Max license.</p></li>
+<li><p>When checked, 3ds Max will be launched in full Interactive mode and will require a license.</p></li>
+<li><p>Used mainly for testing and debugging purposes and should be left unchecked.</p></li>
+</ul>
+<p><strong>Enable Silent Mode</strong> checkbox</p>
+<ul class="simple">
+<li><p>This option is only available when Force Workstation Mode is checked.</p></li>
+<li><p>This is a SDK function we execute which can help suppress some popups that 3ds Max displays (although some non-native popups like to ignore this setting such as VRay). However, we also explicitly support the VRay Silent Mode setting in this case. For further automatic handling via our Deadline Plugin API, please see our sections on <a class="reference internal" href="application-plugins.html#app-plugins-std-handlers-ref-label"><span class="std std-ref">Stdout Handling</span></a> and <a class="reference internal" href="application-plugins.html#app-plugins-popup-handlers-ref-label"><span class="std std-ref">Popup Ignorers / Handlers</span></a> in our Scripting API documentation.</p></li>
+</ul>
+<p><strong>Concurrent Tasks</strong> drop-down list</p>
+<ul class="simple">
+<li><p>Defines the number of Tasks a single Worker can pick up at once (by launching multiple instances of 3ds Max on the same machine).</p></li>
+<li><p>This is useful to maximize performance when the tasks don’t saturate all CPUs at 100% and don’t use up all available memory.</p></li>
+<li><p>Typically, as a rule of thumb, this feature is NOT required for rendering as 3ds Max uses 100% of CPU’s during rendering, but can be useful for running single-threaded tasks like particle or geometry caching, MAXScript jobs etc.</p></li>
+</ul>
+<p><strong>Limit Tasks To Worker’s Task Limit</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, the number of Concurrent Tasks will be limited by the Worker’s Task Limit which is typically set to the number of available CPUs.</p></li>
+<li><p>For example, if ‘Concurrent Tasks’ is set to 16 but a Worker has 8 cores, only 8 concurrent tasks will be processed.</p></li>
+</ul>
+<p><strong>On Job Completion</strong> drop-down list</p>
+<ul class="simple">
+<li><p>Defines the action to perform when the Job has completed successfully.</p></li>
+<li><p>Possible values are:</p>
+<ul>
+<li><p><strong>Nothing</strong> - the Job is left in the Queue in Completed state, and can be manually modified, requeued, deleted etc. .</p></li>
+<li><p><strong>Archive</strong> - the Job is archived and removed from the Queue, but can be de-archived at any time using the <strong>File &gt; Import Archived Jobs…</strong> menu option.</p></li>
+<li><p><strong>Delete</strong> - the Job will be automatically deleted from the Repository and cannot be restored.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Submit Job As Suspended</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, the Job will be submitted to the Repository in Suspended initial state and it will require manual user intervention before becoming Active.</p></li>
+<li><p>When unchecked, the Job will become Active and can be dequeued by Workers immediately after a successful submission.</p></li>
+</ul>
+<p><strong>Force 3ds Max Build</strong> drop-down list</p>
+<ul class="simple">
+<li><p>Allows you to specify which build of 3ds Max (32 bit vs. 64 bit) to launch when processing the Job.</p></li>
+<li><p>The value will be set automatically based on the version of 3ds Max running SMTD.</p></li>
+<li><p>However, it can be overridden to force a different build of 3ds Max, for example a 32 bit version of 3ds Max could force a Job to render on 64 bit versions of 3ds Max on the network.</p></li>
+<li><p>Possible values are:</p>
+<ul>
+<li><p><strong>None</strong> - the Worker will launch the first build of the required 3ds Max version it finds, regardless of its bitness.</p></li>
+<li><p><strong>32bit</strong> - the Worker will launch the first 32 bit build of 3ds Max it finds in the specified paths. It will ignore 64 bit builds.</p></li>
+<li><p><strong>64bit</strong> - the Worker will launch the first 64 bit build of 3ds Max it finds in the specified paths. It will ignore 32 bit builds.</p></li>
+</ul>
+</li>
+<li><p>Note that the actual version of 3ds Max (e.g. 2016, 2017, 2018 etc.) performing the submission will determine the version of 3ds Max to render the scene - this control affects only the 32/64 bit flavour selection.</p></li>
+</ul>
+<p><strong>Enforce Sequential Rendering</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, the Tasks will be processed in ascending order in order to reduce the performance hit from History-Dependent calculations, for example from particle systems.</p></li>
+<li><p>When unchecked, Tasks can be picked up by Workers in any order.</p></li>
+</ul>
+<p><strong>Submit Visible Objects Only</strong> checkbox</p>
+<ul class="simple">
+<li><p>This option should be used at your own risk, as it is heavily dependent on the content of your scene.</p></li>
+<li><p>In most cases, it can be used to submit only a subset of the current scene to Deadline, skipping all hidden objects that would not render anyway.</p></li>
+<li><p>This feature will be automatically disabled if the current scene contains any Scene XRefs.</p></li>
+<li><p>The feature will create an incorrect file if any of the scene objects depend INDIRECTLY on hidden objects.</p></li>
+</ul>
+</div>
+<div class="section" id="job-dependencies-rollout">
+<h3>Job Dependencies rollout<a class="headerlink" href="#job-dependencies-rollout" title="Permalink to this headline">¶</a></h3>
+<p>When the checkbox is checked and one or more jobs have been selected from the multi-list box, the job will be set to Pending state and will start rendering when all jobs it depends on have finished rendering. Use the Get Jobs
+List button to populate the Job List and the Filter options with job data from the Repository.</p>
+<img alt="../_images/max_job_dependencies.png" src="../_images/max_job_dependencies.png" />
+</div>
+<div class="section" id="rpm-pass-dependencies-global-setup-rollout">
+<h3>RPM Pass Dependencies - Global Setup rollout<a class="headerlink" href="#rpm-pass-dependencies-global-setup-rollout" title="Permalink to this headline">¶</a></h3>
+<p>This option is ONLY available when submitting jobs from RPManager. If enabled, all passes that are submitted will be dependent on the passes selected in this rollout.</p>
+<img alt="../_images/max_rpm_pass_dependencies.png" src="../_images/max_rpm_pass_dependencies.png" />
+</div>
+<div class="section" id="job-scheduling-rollout">
+<h3>Job Scheduling rollout<a class="headerlink" href="#job-scheduling-rollout" title="Permalink to this headline">¶</a></h3>
+<p>Enable job scheduling. See the Scheduling section of the <a class="reference internal" href="job-controlling.html#job-controlling-ref-label"><span class="std std-ref">Modifying Job Properties</span></a> documentation for more information on the available options.</p>
+<img alt="../_images/max_job_scheduling.png" src="../_images/max_job_scheduling.png" />
+</div>
+<div class="section" id="job-failure-detection-rollout">
+<h3>Job Failure Detection rollout<a class="headerlink" href="#job-failure-detection-rollout" title="Permalink to this headline">¶</a></h3>
+<p>Override the job failure detection settings. See the Scheduling section of the <a class="reference internal" href="job-controlling.html#job-controlling-ref-label"><span class="std std-ref">Modifying Job Properties</span></a> documentation for more information on the available options.</p>
+<img alt="../_images/max_job_failure_detection.png" src="../_images/max_job_failure_detection.png" />
+</div>
+</div>
+<div class="section" id="assets-tab">
+<h2>Assets Tab<a class="headerlink" href="#assets-tab" title="Permalink to this headline">¶</a></h2>
+<p>This tab was introduced in Deadline 10.</p>
+<div class="section" id="scene-and-asset-files-rollout">
+<h3>Scene And Asset Files rollout<a class="headerlink" href="#scene-and-asset-files-rollout" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/max_scene_and_asset_files.png" src="../_images/max_scene_and_asset_files.png" />
+<p><strong>Scene File Submission Options</strong> drop-down list</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>SAVE and Submit Current Scene File with the Job to the REPOSITORY</strong> - The current scene will be saved to a temporary file which will be sent with the job and will be stored in the Job’s folder in the Repository.</p></li>
+<li><p><strong>SAVE And Use Current Scene’s ORIGINAL NETWORK PATH</strong> - The current scene will be saved to the original file it was opened from, and that file will be referenced by the job.</p></li>
+<li><p><strong>SAVE and Submit Current Scene File to GLOBAL NETWORK PATH</strong> - The current scene will be saved to a temporary file which will be copied to a Globally-Defined Alternative Network Location (e.g. dedicated file server). It is specified in <code class="docutils literal notranslate"><span class="pre">[Repository]\submission\3dsmax\Main\SubmitMaxToDeadline_Defaults.ini</span></code> under [UserOptions] as the SubmitSceneGlobalBasePath key. It will be referenced by the Job via its path only. This will reduce the load on the Repository server.</p></li>
+<li><p><strong>SAVE and Submit Current Scene File to USER-DEFINED NETWORK PATH</strong> - The current scene will be saved to a temporary file which will be copied to a User-Defined Alternative Network Location (e.g. dedicated file server) stored as a local setting. It will be referenced by the Job via its path only. This will reduce the load on the Repository server.</p></li>
+<li><p><strong>DO NOT SAVE And Use Current Scene’s ORIGINAL NETWORK PATH</strong> - The current scene will NOT be saved, but the original file it was opened from will be referenced by the job. Assuming the file resides on a dedicated file server, this will speed up submission and rendering significantly, but current changes to the scene objects will be ignored.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Submit External Files With Scene</strong> drop-down list</p>
+<ul class="simple">
+<li><p>Controls whether the external files (bitmaps, xrefs etc.) will be submitted with the scene or not.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="render-tab">
+<h2>Render Tab<a class="headerlink" href="#render-tab" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="scene-tweaks-rollout">
+<h3>Scene Tweaks rollout<a class="headerlink" href="#scene-tweaks-rollout" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/max_scene_tweaks.png" src="../_images/max_scene_tweaks.png" />
+<p><strong>Merge Object XRefs</strong> checkbox</p>
+<ul class="simple">
+<li><p>If object XRefs will be merged during submission.</p></li>
+</ul>
+<p><strong>Merge Scene XRefs</strong> checkbox</p>
+<ul class="simple">
+<li><p>If scene XRefs will be merged during submission.</p></li>
+</ul>
+<p><strong>Clear Material Editor In The Submitted File</strong> checkbox</p>
+<ul class="simple">
+<li><p>Clears the material editor in the submitted file during submission.</p></li>
+</ul>
+<p><strong>Unlock Material Editor Renderer</strong> checkbox</p>
+<ul class="simple">
+<li><p>If checked, the Material Editor’s Renderer will be unlocked to use the Default Scanline Renderer to avoid problems with some old versions of V-Ray.</p></li>
+</ul>
+<p><strong>Apply Custom Material To Scene</strong> checkbox</p>
+<ul class="simple">
+<li><p>If checked, all geometry objects in the scene will be assigned one of the user-defined materials available in the drop down box.</p></li>
+</ul>
+<p><strong>Delete Empty State Sets In The Submitted File</strong> checkbox</p>
+<ul class="simple">
+<li><p>Deletes any empty State Sets in the submitted file during submission and the State Sets dialog/UI will be reset.</p></li>
+<li><p>This fixes an ADSK bug when running 3dsMax as a service.</p></li>
+</ul>
+<p><strong>Override Renderer’s Low Priority Thread Option (Brazil r/s, V-Ray)</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, the Low Priority Thread option of the renderers supporting this feature will be forced to false during the submission.</p></li>
+<li><p>Both Brazil r/s and V-Ray provide the feature to launch the renderer in a low priority thread mode.</p></li>
+<li><p>This is useful when working with multiple applications on a workstation and the rendering should continue in the background without eating all CPU resources.</p></li>
+<li><p>When submitting a job though, this should be generally disabled since we want all Workers to work at 100% CPU load.</p></li>
+</ul>
+</div>
+<div class="section" id="ds-max-startup-rollout">
+<h3>3ds Max Startup rollout<a class="headerlink" href="#ds-max-startup-rollout" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/max_3ds_max_startup.png" src="../_images/max_3ds_max_startup.png" />
+<p><strong>Use Alternate Plugin.ini file</strong> checkbox</p>
+<ul class="simple">
+<li><p>By default, 3ds Max will launch using the default plugin.ini file in the local installation.</p></li>
+<li><p>You can use this option to select an alternative plugin.ini file to use instead.</p></li>
+<li><p>Alternative plugin.ini files can be added to <code class="docutils literal notranslate"><span class="pre">[Repository]\plugins\3dsmax</span></code>, and then they will appear in the drop down box in the submitter (see the Custom Plugin.ini File Creation section for more information). If you have the [Default] option selected, it’s the equivalent to having this feature disabled.</p></li>
+</ul>
+<p><strong>Ignore Missing External File Errors</strong> checkbox</p>
+<ul class="simple">
+<li><p>Missing external files could mean that the 3ds Max scene will render incorrectly (with textures missing etc).</p></li>
+<li><p>In some cases though, missing external files could be ignored - for example if the job is meant for test rendering only.</p></li>
+<li><p>If you want the job to fail if a missing external resource is detected, uncheck this checkbox.</p></li>
+</ul>
+<p><strong>Ignore Missing UVW Errors</strong> checkbox</p>
+<ul class="simple">
+<li><p>Missing UVWs could mean that some 3ds Max object would render incorrectly (with wrong texture mapping etc).</p></li>
+<li><p>In some cases though, missing UVWs could be ignored (for example if the job is meant for test rendering).</p></li>
+</ul>
+<p><strong>Ignore Missing XREF Errors</strong> checkbox</p>
+<ul class="simple">
+<li><p>Missing XFEFs could mean that the 3ds Max scene cannot be loaded correctly.</p></li>
+<li><p>In some cases though, missing XFEFs could be ignored.</p></li>
+<li><p>If you want the job to fail if a missing XFEF message is detected at startup, keep this checkbox unchecked.</p></li>
+</ul>
+<p><strong>Ignore Missing DLL Errors</strong> checkbox</p>
+<ul class="simple">
+<li><p>Missing DLLs could mean that the 3ds Max scene cannot be loaded or rendered correctly.</p></li>
+<li><p>In some cases though, missing DLLs could be ignored.</p></li>
+<li><p>If you want the job to fail if a missing DLL message is detected at startup, keep this checkbox unchecked.</p></li>
+</ul>
+<p><strong>Override Bitmap Pager Setting While Rendering</strong> checkbox</p>
+<ul class="simple">
+<li><p>When this option is unchecked, the 3ds Max Bitmap Pager will use the current settings on the specific computer.</p></li>
+<li><p>When checked, you can force the 3ds Max Bitmap Pager setting to be enabled or disabled using the <strong>Enable Bitmap Pager</strong> checkbox.</p></li>
+</ul>
+</div>
+<div class="section" id="ds-max-rendering-rollout">
+<span id="dsmax-rendering-options-ref-label"></span><h3>3ds Max Rendering rollout<a class="headerlink" href="#ds-max-rendering-rollout" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/max_rendering.png" src="../_images/max_rendering.png" />
+<p><strong>Fail On Black Frames</strong> checkbox</p>
+<ul class="simple">
+<li><p>This option can be used to fail the render if a certain portion of the output image or its render elements is black.</p></li>
+<li><p>The Black Pixel % defines the minimum percentage of the image’s pixels that must be black in order for the image to be considered black. If each of RGB are all less than or equal to the Threshold, and the alpha is not between the Threshold and (1.0 - threshold), then the pixel is considered black.</p></li>
+<li><p>If the Threshold is greater than or equal to 0.5, then the alpha value has no effect.</p></li>
+</ul>
+<p><strong>Do Not Save Render Element Files</strong> checkbox</p>
+<ul class="simple">
+<li><p>Enable this option to have Deadline skip the saving of Render Element image files during rendering (the elements themselves are still rendered).</p></li>
+</ul>
+<p><strong>Show Virtual Frame Buffer</strong> checkbox</p>
+<ul class="simple">
+<li><p>If checked, the 3ds Max frame buffer will be displayed on the Worker during rendering.</p></li>
+</ul>
+<p><strong>Override Renderer Frame Buffer Visibility</strong> checkbox</p>
+<ul class="simple">
+<li><p>If checked, the current renderers frame buffer visibility will be overridden by the next setting (Show Renderer Frame Buffer).</p></li>
+</ul>
+<p><strong>Show Renderer Frame Buffer</strong> checkbox</p>
+<ul class="simple">
+<li><p>If checked, the current renderers frame buffer will be made visible during rendering (V-Ray and Corona Frame Buffers currently supported).</p></li>
+</ul>
+<p><strong>Disable Progress Update Timeout</strong> checkbox</p>
+<ul class="simple">
+<li><p>Enable this option to disable progress update checking.</p></li>
+<li><p>This is useful for renders like Fume FX sims that don’t constantly supply progress to 3dsmax.</p></li>
+</ul>
+<p><strong>Disable Frame Rendering</strong> checkbox</p>
+<ul class="simple">
+<li><p>Enable this option to skip the rendering process.</p></li>
+<li><p>This is useful for renders like Fume FX sims that don’t actually require any rendering.</p></li>
+</ul>
+<p><strong>Restart Renderer Between Frames</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, Deadline will restart the renderer after each frame to avoid some potential problems with specific renderers.</p>
+<ul>
+<li><p>The C++ Lightning plugin (unique to Deadline) will unload the renderer plugin and then reload it instantly.</p></li>
+<li><p>This has the effect of forcing a memory purge and helps to improve renderer stability, as well as ensure the lowest possible memory footprint.</p></li>
+<li><p>This can be helpful when rendering close to the physical memory limit of a machine.</p></li>
+<li><p>Enabling this option has little to no impact on the actual render times.</p></li>
+</ul>
+</li>
+<li><p>This feature should be ENABLED to resolve V-Ray renders where typically the beauty pass renders correctly but the Render Element’s are all black or perhaps seem to be swapped around.</p></li>
+<li><p>Ensure this feature is DISABLED if you are sending FG/LC/IM caching map type jobs to the farm, as the renderer will get reset for each frame and the FG/LC/IM file(s) won’t get incrementally increased with the additional data per frame.</p></li>
+<li><p>This option should be DISABLED for FumeFX simulation jobs as well.</p></li>
+</ul>
+<p><strong>Disable Multipass Effects</strong> checkbox</p>
+<ul class="simple">
+<li><p>Enable this option to skip over multipass effects if they are enabled for the camera to be rendered.</p></li>
+</ul>
+</div>
+<div class="section" id="v-ray-mental-ray-corona-dbr-options-rollout">
+<span id="dsmax-vray-mentalray-dbr-options-ref-label"></span><h3>V-Ray/Mental Ray/Corona DBR Options rollout<a class="headerlink" href="#v-ray-mental-ray-corona-dbr-options-rollout" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/max_vray_mentalray_dbr.png" src="../_images/max_vray_mentalray_dbr.png" />
+<p><strong>V-Ray/Mental Ray/Corona DBR (off-load)</strong> checkbox</p>
+<ul class="simple">
+<li><p>Enable this option to offload a V-Ray or Mental Ray DBR render to Deadline. (Ensure the applicable renderer is selected first).</p></li>
+</ul>
+<p><strong>Workers</strong> value spinner</p>
+<ul class="simple">
+<li><p>Number of V-Ray Spawners/Corona Dr Servers via Deadline Worker to run (including the MASTER Worker).</p></li>
+</ul>
+<p><strong>Use 3dsCmd Plugin</strong> checkbox</p>
+<ul class="simple">
+<li><p>To save on using a 3dsMax workstation (GUI) license for the MASTER Worker, submit this job to the 3dsCmd plugin (<strong>NOT</strong> required for Corona).</p></li>
+</ul>
+<p><strong>Allow list/Deny list Worker(s) for Master</strong> list views</p>
+<ul class="simple">
+<li><p>Control which Worker(s) pickup the first TASK in the DBR job and essentially, always become the MASTER machine.</p></li>
+</ul>
+<div class="section" id="off-load-dbr">
+<span id="dsmax-vray-ref-label"></span><h4>Off-load DBR<a class="headerlink" href="#off-load-dbr" title="Permalink to this headline">¶</a></h4>
+<p>You can offload a V-Ray, Corona or Mental Ray DBR job to Deadline by enabling the Distributed Rendering option in your V-Ray, Corona or Mental Ray settings, and by enabling the V-Ray/Mental Ray/Corona DBR checkbox in the submission dialog.
+With this option enabled, a job will be submitted with its task count equal to the number of Workers you specify, and it will render the current frame in the scene file.</p>
+<p>The Worker that picks up task 0 will be the “master”, and will wait until all other tasks are picked up by other Workers (unless <strong>Dynamic Start</strong> has been enabled in plugin config). Once the other tasks have been picked up, the “master” will update its local V-Ray, Corona or Mental Ray config
+file with the names of the machines that are rendering the other tasks. It will then start the distributed render by connecting to the other machines.</p>
+<p>If you wish for your DBR jobs to start rendering immediately after task 0 is picked up by the master Worker, then <a class="reference internal" href="app-3ds-max.html#dsmax-off-load-vray-dbr-rendering-ref-label"><span class="std std-ref">Dynamic Start</span></a> for V-Ray or <a class="reference internal" href="app-3ds-max.html#dsmax-off-load-vray-rt-dbr-rendering-ref-label"><span class="std std-ref">Auto-start local Worker</span></a> for V-Ray RT needs to be enabled in the <em>Plugin Configuration</em> of the <a class="reference internal" href="app-3ds-max.html#dsmax-plugin-configuration-ref-label"><span class="std std-ref">3dsmax</span></a> or <a class="reference internal" href="app-3ds-command.html#dscmd-plugin-configuration-ref-label"><span class="std std-ref">3dsCmd</span></a> plugin depending on which render plugin you are submitting your off-load DBR jobs to.</p>
+<p>It is recommended to setup V-Ray DBR, Corona DR or Mental Ray DBR for 3ds Max and verify it is working correctly prior to submitting a DBR off-load job to Deadline. RTT (Render To Texture) is not supported with distributed bucket rendering.
+If running multiple Deadline Workers on one machine, having these 2 or more Workers both pick up a different DBR job concurrently as either master or Worker is not supported.</p>
+<p>Many of the common V-Ray/Mental Ray/Corona DR settings have been exposed in the Plugin Configuration in <a class="reference internal" href="app-3ds-command.html#dscmd-off-load-plugin-options-ref-label"><span class="std std-ref">3dsCmd</span></a> or <a class="reference internal" href="app-3ds-max.html#dsmax-off-load-plugin-options-ref-label"><span class="std std-ref">3dsMax</span></a>.</p>
+<p><strong>Notes for V-Ray DBR</strong>:</p>
+<blockquote>
+<div><img alt="../_images/dynamic_dbr.png" src="../_images/dynamic_dbr.png" />
+</div></blockquote>
+<ul class="simple">
+<li><p>Deadline 9.0 introduced support to dynamically add or remove Deadline Workers (V-Ray Spawner nodes) to the currently processing DBR render once started on the “master” Worker (min V-Ray v3.2 SP2 required). Ensure <strong>Dynamic Start</strong> is enabled in Plugin Configuration in <a class="reference internal" href="app-3ds-command.html#dscmd-off-load-plugin-options-ref-label"><span class="std std-ref">3dsCmd</span></a> or <a class="reference internal" href="app-3ds-max.html#dsmax-off-load-plugin-options-ref-label"><span class="std std-ref">3dsMax</span></a>. To add/remove machines, right-click on your DBR off-load job in Deadline Monitor -&gt; Scripts -&gt; DynamicDBR(.py).</p></li>
+<li><p>Deadline’s 3dsCmd plugin does NOT consume a 3ds Max workstation license compared to using Deadline’s 3dsMax plugin. If using SMTD, then you MUST have the Force Workstation Mode option enabled in the submission dialog (under the Render tab). This means that the “master” will use up a 3ds Max workstation license. If you don’t want to use a 3ds Max license, you can submit to the <a class="reference internal" href="app-3ds-command.html#app-3ds-command-ref-label"><span class="std std-ref">3ds Command</span></a> plugin instead by either enabling the <strong>Use 3dsCmd Plugin</strong> checkbox or by submitting using the <a class="reference internal" href="app-3ds-command.html#app-3ds-command-ref-label"><span class="std std-ref">3dsCmd in-app submitter</span></a>.</p></li>
+<li><p>Ensure V-Ray is the currently assigned renderer in the 3ds Max scene file prior to submission.</p></li>
+<li><p>You must have the Distributed Rendering option enabled in your V-Ray settings under the Settings tab.</p></li>
+<li><p>The Workers will launch the V-Ray Spawner executable found in the 3ds Max root directory. Do NOT install the V-Ray Spawner as a service on the master or Worker machines.</p></li>
+<li><p>The vray_dr.cfg / vrayrt_dr.cfg file in the 3ds Max’s plugcfg directory must be writeable so that the “master” machine can update it. This is typically located in the user profile directory, in which case it will be writeable already.</p></li>
+<li><p>Chaos Group recommend that each machine to be used for DBR has previously rendered at least one other 3ds Max job prior to trying DBR on the same machine.</p></li>
+<li><p>Ensure all Workers can correctly access any mapped drives or resolve all UNC paths to obtain any assets required by the 3ds Max scene file to render successfully. Use the Deadline <a class="reference internal" href="repository-config.html#mapped-drives-ref-label"><span class="std std-ref">Mapped Drives</span></a> feature to ensure the necessary drive mappings are in place.</p></li>
+<li><p>Default lights are not supported by Chaos Group in DBR mode and will not render.</p></li>
+<li><p>Ensure you have sufficient V-Ray DR licenses if processing multiple V-Ray DBR jobs through Deadline concurrently. Use the Deadline <a class="reference internal" href="limits.html#limits-ref-label"><span class="std std-ref">Limits</span></a> feature to limit the number of licenses being used at any time.</p></li>
+<li><p>Ensure the necessary V-Ray executables &amp; TCP/UDP ports have been allowed to pass-through the Windows Firewall. Please consult the V-Ray user manual or <a class="reference internal" href="app-vray-dbr.html#app-vray-dbr-port-config-ref-label"><span class="std std-ref">V-Ray Spawner Port Configuration</span></a> documentation for more information.</p></li>
+</ul>
+<p><strong>Notes for Mental Ray DBR</strong>:</p>
+<ul class="simple">
+<li><p>Ensure Mental Ray is the currently assigned renderer in the 3ds Max scene file prior to submission.</p></li>
+<li><p>You must have the Distributed Render option enabled in your Mental Ray settings under the Processing tab.</p></li>
+<li><p>The Mental Ray Satellite service must be running on your Worker machines. It is installed by default during the 3ds Max 2014 or earlier installation. Note that ADSK changed this default from 3dsMax 2015 onwards and the Mental Ray Satellite Service is installed as part of the install process but is NOT automatically started, so you will need to start it manually the very first time. See this <a class="reference external" href="https://area.autodesk.com/blogs/maxstation/n239-distributed-bucket-rendering-in-3ds-max-2015">AREA blog post about Distributed Bucket Rendering in 3ds Max 2015</a>.</p></li>
+<li><p>Ensure the “Use Placeholder Objects” checkbox is enabled in the “Translator Options” rollout of the “Processing” tab. When placeholder objects are enabled, geometry is sent to the renderer only on demand.</p></li>
+<li><p>Ensure “Bucket Order” is set to “Hilbert” in the “Options” section of the “Sampling Quality” rollout of the “Renderer” tab. With Hilbert order, the sequence of buckets to render uses the fewest number of data transfers.</p></li>
+<li><p>Contour shading is not supported with distributed bucket rendering.</p></li>
+<li><p>Autodesk Mental Ray licensing in 3ds Max is restricted. Autodesk says “Satellite processors allow any owner of a 3ds Max license to freely use up to four Worker machines (with up to four processors each and an unlimited number of cores) to render an image using distributed bucket rendering, not counting the one, two, or four processors on the master system that runs 3ds Max.” Mental Ray Standalone licensing can be used to go beyond this license limit. Use the Deadline <a class="reference internal" href="limits.html#limits-ref-label"><span class="std std-ref">Limits</span></a> feature to limit the number of licenses being used at any time if required.</p></li>
+<li><p>Ensure the necessary Mental Ray executables &amp; TCP/UDP ports have been allowed to pass-through the Windows Firewall. Please consult the Autodesk 3ds Max user manual for specific information.</p></li>
+</ul>
+<p><strong>Max Rayhosts File</strong>:</p>
+<ul>
+<li><p>The max.rayhosts file must be writeable so that the “master” machine can update it. It’s location is different for different versions of 3ds Max:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>2010 and earlier</strong>: It will be in the “mentalray” folder in the 3ds Max root directory.</p></li>
+<li><p><strong>2011 and 2012</strong>: It will be in the “mentalimages” folder in the 3ds Max root directory.</p></li>
+<li><p><strong>2013 and later</strong>: It will be in the “NVIDIA” folder in the 3ds Max root directory.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p><strong>Notes for Corona DR</strong>:</p>
+<ul class="simple">
+<li><p>Corona DR Offload Jobs are only supported in 3ds Max 2015 and beyond.</p></li>
+<li><p>Ensure Corona is the currently assigned renderer in the 3ds Max scene file prior to submission.</p></li>
+<li><p>Ensure all Workers can correctly access any mapped drives or resolve all UNC paths to obtain any assets required by the 3ds Max scene file to render successfully.</p></li>
+<li><p>Ensure the necessary Corona executables &amp; TCP/UDP ports have been allowed to pass-through the Windows Firewall. Please consult the Corona user manual for specific information.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="gpu-affinity-overrides-rollout">
+<span id="dsmax-gpu-affinity-ref-label"></span><h3>GPU Affinity Overrides rollout<a class="headerlink" href="#gpu-affinity-overrides-rollout" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/max_gpu_affinity_overrides.png" src="../_images/max_gpu_affinity_overrides.png" />
+<p><strong>GPUs Per Task</strong> value spinner</p>
+<ul class="simple">
+<li><p>Controls the number of GPUs to be used by a Task.</p></li>
+<li><p>Default is 0, meaning no limit.</p></li>
+<li><p>Useful when running Concurrent Tasks on a machine with multiple GPUs available.</p></li>
+</ul>
+<p><strong>Select GPU Devices</strong> text field</p>
+<ul class="simple">
+<li><p>Specifies the GPU Devices to use.</p></li>
+<li><p>Default is empty string.</p></li>
+</ul>
+</div>
+<div class="section" id="ds-max-gamma-options-rollout">
+<span id="dsmax-gamma-options-ref-label"></span><h3>3ds Max Gamma Options rollout<a class="headerlink" href="#ds-max-gamma-options-rollout" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/max_gamma.png" src="../_images/max_gamma.png" />
+<p><strong>Gamma Correction</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, the Input and Output Gamma correction values of 3ds Max will be forces to the ones specified in this rollout.</p></li>
+</ul>
+<p><strong>Input</strong> value spinner</p>
+<ul class="simple">
+<li><p>Defines the Input Gamma to enforce when the <strong>Gamma Correction</strong> control is checked.</p></li>
+<li><p>Default is 1.0.</p></li>
+</ul>
+<p><strong>Output</strong> value spinner</p>
+<ul class="simple">
+<li><p>Defines the Output Gamma to enforce when the <strong>Gamma Correction</strong> control is checked.</p></li>
+<li><p>Default is 1.0.</p></li>
+</ul>
+</div>
+<div class="section" id="ds-max-pathing-options-rollout">
+<span id="dsmax-pathing-options-ref-label"></span><h3>3ds Max Pathing Options rollout<a class="headerlink" href="#ds-max-pathing-options-rollout" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/max_pathing.png" src="../_images/max_pathing.png" />
+<p><strong>Enable Local Rendering</strong> checkbox</p>
+<ul class="simple">
+<li><p>If checked, Deadline will render the frames locally before copying them over to the final network location.</p></li>
+</ul>
+<p><strong>Remove Filename Padding</strong> checkbox</p>
+<ul class="simple">
+<li><p>If checked, the output filename will be (for example) “output.tga” instead of “output0000.tga”.</p></li>
+<li><p>This feature should only be used when rendering single frames.</p></li>
+<li><p>If you render a range of frames with this option checked, each frame will overwrite the previous existing frame.</p></li>
+</ul>
+<p><strong>Force Strict Output Naming</strong> checkbox</p>
+<ul class="simple">
+<li><p>If checked, the output image filename is automatically modified to include the scene’s name.</p></li>
+<li><p>For example, if the scene name was myScene.max and the output image path was <code class="docutils literal notranslate"><span class="pre">\\myServer\images\output.tga</span></code>, the output image path would be changed to <code class="docutils literal notranslate"><span class="pre">\\myServer\images\myScene\myScene.tga</span></code>.</p></li>
+<li><p>If the new output image path doesn’t exist, it is created by the 3dsmax plugin before rendering begins.</p></li>
+</ul>
+<p><strong>Purify Filenames</strong> checkbox</p>
+<ul class="simple">
+<li><p>If checked, all render output including Render Elements will be purged of any illegal characters as defined by “PurifyCharacterCodes” in “SubmitMaxToDeadline_Defaults.ini” file.</p></li>
+</ul>
+<p><strong>Force lower-case Filenames</strong> checkbox</p>
+<ul class="simple">
+<li><p>If checked, all render output including Render Elements will be forced to have a lowercase filename.</p></li>
+</ul>
+<p><strong>Open The PREVIEW OUTPUT PATHS Dialog…</strong>  button</p>
+<ul class="simple">
+<li><p>Pressing this button opens the a Preview floating dialog showing the output filenames that will be generated by the Job according to the current settings.</p></li>
+<li><p>The Preview info is created by actually generating a temporary .JOB file and reading its content.</p></li>
+</ul>
+<p><strong>UPDATE PREVIEW…</strong> button</p>
+<ul class="simple">
+<li><p>Pressing this button will update the Preview dialog if it is open.</p></li>
+<li><p>It is useful if you changed any settings outside of the SMTD, for example in the Render Scene or in the Render Elements dialogs.</p></li>
+<li><p>The same operation can also be performed by pressing the <strong>UPDATE!</strong> button inside the Preview dialog itself.</p></li>
+<li><p>Note that changing any of the settings in SMTD’s Pathing dialog (e.g. Include Render Element Name In Path, Force lower-case Filenames etc.) will update the dialog automatically.</p></li>
+</ul>
+<img alt="../_images/sub_3dsmax_pathpreview.png" src="../_images/sub_3dsmax_pathpreview.png" />
+<p><em>In the above screenshot, the Preview dialog was set to highlight in red paths longer than 150 characters (the default is 260 characters). The V-Ray VFB was disabled to allow the individual Render Elements to generate their own output. A single frame 0 was requested.</em></p>
+<img alt="../_images/sub_3dsmax_pathpreview2.png" src="../_images/sub_3dsmax_pathpreview2.png" />
+<p><em>In the above screenshot, the same paths have been set to force lower-case, and only include the Render Element name in the Filename part, but not in the Path. A frame range from 0 to 100 was requested, hence the #### token.</em></p>
+<p><strong>Update Render Elements’ Paths</strong> checkbox</p>
+<ul class="simple">
+<li><p>Each Render Element has its own output path which is independent from the render output path.</p></li>
+<li><p>When this option is unchecked, changing the output path will NOT update the Render Elements’ paths and the Elements could be written to the wrong path, possibly overwriting existing passes from a previous render.</p></li>
+<li><p>When checked, the paths will be updated to point at sub-folders of the current Render Output path with names based on the name and class of the Render Element.</p></li>
+<li><p>The actual file name will be left unchanged.</p></li>
+</ul>
+<p><strong>Also Update RE’s Filenames</strong> checkbox</p>
+<ul class="simple">
+<li><p>If enabled, the Render Element file names will also be updated along with their paths.</p></li>
+</ul>
+<p><strong>Include RE Name in Paths</strong> checkbox</p>
+<ul class="simple">
+<li><p>If enabled, the new Render Element files will be placed in a folder that contains the RE name.</p></li>
+</ul>
+<p><strong>Include RE Name in Filenames</strong> checkbox</p>
+<ul class="simple">
+<li><p>If enabled, the new Render Element files will contains the RE name in the file name.</p></li>
+</ul>
+<p><strong>Include RE Type in Paths</strong> checkbox</p>
+<ul class="simple">
+<li><p>If enabled, the new Render Element files will be placed in a folder that contains the RE type.</p></li>
+</ul>
+<p><strong>Include RE Type in Filenames</strong> checkbox</p>
+<ul class="simple">
+<li><p>If enabled, the new Render Element files will contains the RE type in the file name.</p></li>
+</ul>
+<p><strong>Permanent RE Path Changes</strong> checkbox</p>
+<ul class="simple">
+<li><p>When this checkbox is checked, changes to the Render Elements paths will be permanent (in other words after the submission, all paths will point at the new locations created for the job). When unchecked, the changes will be performed temporarily during the submission, but the old path names will be restored right after the submission.</p></li>
+</ul>
+<p><strong>Permanent RE Name Changes</strong> checkbox</p>
+<ul class="simple">
+<li><p>When this checkbox is checked, changes to the Render Elements file names will be permanent (in other words after the submission, all file names will point at the new locations created for the job). When unchecked, the changes will be performed temporarily during the submission, but the old file names will be restored right after the submission.</p></li>
+</ul>
+<p><strong>Rebuild Render Elements</strong> checkbox</p>
+<ul class="simple">
+<li><p>If checked, Render Elements will be automatically removed and rebuilt during submission to work around known 3dsMax issues: (1) RE manager in 3dsMax gets confused between the correct image file format to be used to write each of the RE image files, (2) A bug with the VrayExtraTex which resets its name after submission, so on a second submission the output is different for that element, and (3) RenderElementManager’s path handling can behave differently depending on the visible state of the RenderSceneDialog. Note, the RE file extension will be unified to match the main 3ds Max render scene output image file. If you wish to maintain a different image file format for individual RE’s, then ensure this option is disabled.</p></li>
+</ul>
+<p><strong>Include Local Paths With Job (not used)</strong> (Thinkbox internal use only) Currently not hooked up to any functionality.</p>
+<p><strong>Use Alternate Paths File</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, you can specify an alternate path file in the MXP format that the Workers can use to find external references that are not found on the primary map paths.</p></li>
+</ul>
+<p><strong>Merge Paths File</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, the Alternate Paths File will be merged with the existing search path definitions.</p></li>
+<li><p>When unchecked (default), the Alternate Path File will replace the search path definitions.</p></li>
+</ul>
+</div>
+<div class="section" id="render-output-autodesk-me-image-sequence-imsq-creation-rollout">
+<h3>Render Output Autodesk ME Image Sequence (IMSQ) Creation rollout<a class="headerlink" href="#render-output-autodesk-me-image-sequence-imsq-creation-rollout" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/max_imsq.png" src="../_images/max_imsq.png" />
+<p><strong>Save File</strong> checkbox</p>
+<ul class="simple">
+<li><p>Specify the render output.</p></li>
+<li><p>Note that this updates the 3ds Max Render Output dialog, and is meant as a convenience to update the output file.</p></li>
+</ul>
+<p><strong>Create Image Sequence (IMSQ) File</strong> checkbox</p>
+<ul class="simple">
+<li><p>If checked, an Autodesk IMSQ file will be created from the output files at the output location.</p></li>
+</ul>
+<p><strong>Copy IMSQ File On Completion</strong> checkbox</p>
+<ul class="simple">
+<li><p>If checked, the IMSQ file will be copied to the location specified in the text field.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="options-tab">
+<span id="dsmax-options-tab-ref-label"></span><h2>Options Tab<a class="headerlink" href="#options-tab" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="user-options-rollout">
+<h3>User Options rollout<a class="headerlink" href="#user-options-rollout" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/max_user_options.png" src="../_images/max_user_options.png" />
+<p><strong>Close SMTD Dialog After Submission</strong> checkbox</p>
+<p><strong>Automatically Update Job Name When Scene File Name Changes</strong> checkbox</p>
+<ul class="simple">
+<li><p>If checked, the Job Name setting in the submission dialog will automatically match the file name of the scene loaded. So if you load a new scene, the Job Name will change accordingly.</p></li>
+</ul>
+<p><strong>Dump Scene File Properties to Job Log Report</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, [customize.ms] will dump the current 3dsMax scene file’s properties to the job log report (for debugging purposes only).</p></li>
+</ul>
+<p><strong>Warn about Missing External Files on Submission</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, a warning will be issued if the scene being submitted contains any missing external files (bitmaps etc.).</p></li>
+<li><p>Depending on the state of the ‘Ignore Missing External File Errors checkbox under the Render tab, such files might not cause the job to fail but could cause the result to look wrong.</p></li>
+<li><p>When unchecked, scenes with missing external files will be submitted without any warnings.</p></li>
+</ul>
+<p><strong>Warn about Copying External Files with Job only if</strong> checkbox and value spinners.</p>
+<ul class="simple">
+<li><p>When checked, a waning will be issued if the external files count is greater than the specified number, or the size is greater than the specified value.</p></li>
+<li><p>Both values can be configured to a studio’s need.</p></li>
+<li><p>This option allows the user to cancel the submission and make changes to the scene if the numbers appear excessive and would result in a very long submission process.</p></li>
+</ul>
+<p><strong>Override 3ds Max Language</strong> checkbox and drop-down list</p>
+<ul class="simple">
+<li><p>If enabled, you can choose a language to force during rendering.</p></li>
+</ul>
+</div>
+<div class="section" id="export-renderer-specific-advanced-settings-rollout">
+<h3>Export Renderer-Specific Advanced Settings rollout<a class="headerlink" href="#export-renderer-specific-advanced-settings-rollout" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/max_renderer_export.png" src="../_images/max_renderer_export.png" />
+<p><strong>Export Renderer Caching Output Files</strong> checkbox</p>
+<ul class="simple">
+<li><p>If checked, any renderer specific caching output files which will be generated as part of this render job will be added as Deadline Monitor output paths which can be accessed via the right-click view output menu of the job.</p></li>
+<li><p>Mental Ray, Corona and VRay caching files are currently supported.</p></li>
+<li><p>Note, any caching file which is ONLY being ‘read’ by the renderer will NOT be included at submission time as it is NOT creating any output here but rather being referenced by the 3ds Max scene file.</p></li>
+</ul>
+<p><strong>Renderer Specific Setting</strong> checkbox</p>
+<ul class="simple">
+<li><p>If an export option is enabled for a specific renderer, you will be able to modify a variety of settings for that renderer after submission from the Monitor.</p></li>
+<li><p>To modify these settings from the Monitor, right-click on the job and select Modify Properties, then select the 3dsmax tab.</p></li>
+</ul>
+</div>
+<div class="section" id="submission-timeouts-rollout">
+<h3>Submission Timeouts rollout<a class="headerlink" href="#submission-timeouts-rollout" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/max_timeouts.png" src="../_images/max_timeouts.png" />
+<p><strong>Job Submission Timeout in seconds</strong> value spinner</p>
+<ul class="simple">
+<li><p>This value spinner defines how many seconds to wait for the external Submitter application to return from the Job submission before stopping the attempt with a timeout message.</p></li>
+</ul>
+<p><strong>Data Collection Timeout in seconds</strong></p>
+<ul class="simple">
+<li><p>This value spinner defines how many seconds to wait for the external Submitter application to return from data collecting before stopping the attempt with a timeout message.</p></li>
+<li><p>Data collecting includes collecting Pools, Categories, Limit Groups, Worker Lists, Worker Info, Jobs etc.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="limits-tab">
+<span id="dsmax-limits-tab-ref-label"></span><h2>Limits Tab<a class="headerlink" href="#limits-tab" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="deny-list-allow-list-workers-rollout">
+<h3>Deny list/Allow list Workers rollout<a class="headerlink" href="#deny-list-allow-list-workers-rollout" title="Permalink to this headline">¶</a></h3>
+<p>Set the allow list or deny list for the job. See the Scheduling section of the <a class="reference internal" href="job-controlling.html#job-properties-ref-label"><span class="std std-ref">Modifying Job Properties</span></a> documentation for more information on the available options.</p>
+<img alt="../_images/max_worker_list.png" src="../_images/max_worker_list.png" />
+<p><strong>Limits</strong></p>
+<img alt="../_images/max_limits.png" src="../_images/max_limits.png" />
+<p>Set the Limits that the job requires. See the Scheduling section of the <a class="reference internal" href="job-controlling.html#job-properties-ref-label"><span class="std std-ref">Modifying Job Properties</span></a> documentation for more information on the available options.</p>
+</div>
+</div>
+<div class="section" id="statesets-tab">
+<span id="dsmax-state-sets-ref-label"></span><h2>StateSets Tab<a class="headerlink" href="#statesets-tab" title="Permalink to this headline">¶</a></h2>
+<img alt="../_images/max_state_sets.png" src="../_images/max_state_sets.png" />
+<p>Note: This option is available in 3ds Max 2012 (Subscription Advantage Pack 1) and later.</p>
+<p><strong>Submit Checked State Sets</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, each state set that has a checkmark in front of it on the list will be submitted as a separate Job.</p></li>
+</ul>
+<p><strong>Add State Set Name to Output Filename</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, the name of the state set will be added to the output filename to avoid collisions between state sets writing to the same file.</p></li>
+<li><p>If the output filename was manually defined in each state set to avoid collisions, this option can be turned off.</p></li>
+</ul>
+</div>
+<div class="section" id="scripts-tab">
+<span id="dsmax-scripts-tab-ref-label"></span><h2>Scripts Tab<a class="headerlink" href="#scripts-tab" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="run-python-scripts-rollout">
+<h3>Run Python Scripts rollout<a class="headerlink" href="#run-python-scripts-rollout" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/max_python_scripts.png" src="../_images/max_python_scripts.png" />
+<p><strong>Run Pre-Job Script</strong> checkbox, text field and button</p>
+<ul class="simple">
+<li><p>When checked, the specified Python script will be executed when the job initially starts rendering.</p></li>
+<li><p>Click the <strong>Pick Pre-Job Script</strong> button to pick a Python script from disk.</p></li>
+</ul>
+<p><strong>Run Post-Job Script</strong> checkbox, text field and button</p>
+<ul class="simple">
+<li><p>When checked, the specified Python script will be executed when the job finishes rendering.</p></li>
+<li><p>Click the <strong>Pick Post-Job Script</strong> button to pick a Python script from disk.</p></li>
+</ul>
+<p><strong>Run Pre-Task Script</strong> checkbox, text field and button</p>
+<ul class="simple">
+<li><p>When checked, the specified Python script will be executed  before each task starts rendering.</p></li>
+<li><p>Click the <strong>Pick Pre-Task Script</strong> button to pick a Python script from disk.</p></li>
+</ul>
+<p><strong>Run Post-Task Script</strong> checkbox, text field and button</p>
+<ul class="simple">
+<li><p>When checked, the specified Python script will be executed  after each task finishes rendering.</p></li>
+<li><p>Click the <strong>Pick Post-Task Script</strong> button to pick a Python script from disk.</p></li>
+</ul>
+</div>
+<div class="section" id="run-maxscript-script-rollout">
+<span id="dsmax-maxscripts-ref-label"></span><h3>Run Maxscript Script rollout<a class="headerlink" href="#run-maxscript-script-rollout" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/max_maxscripts.png" src="../_images/max_maxscripts.png" />
+<p><strong>Submit Script Job</strong> checkbox</p>
+<ul class="simple">
+<li><p>This checkbox lets you turn the submission into a MAXScript job.</p></li>
+<li><p>When checked, the scene will NOT be rendered, instead the specified MAXScript code will be executed for the specified frames. Options that collide with the submission of a MAXScript Job like “Tile Rendering” and “Render Preview Job First” will be disabled or ignored.</p></li>
+</ul>
+<p><strong>Single Task</strong> checkbox</p>
+<ul class="simple">
+<li><p>This checkbox lets you run the MAXScript Job on one Worker only.</p></li>
+<li><p>When checked, the job will be submitted with a single task specified for frame 1.</p></li>
+<li><p>This is useful when the script itself will perform some operations on ALL frames in the scene, or when per-frame operations are not needed at all. When unchecked, the frame range specified in the Render Scene Dialog of 3ds Max will be used to create the corresponding number of Tasks.</p></li>
+<li><p>In this case, all related controls in the Job tab will also be taken into account.</p></li>
+</ul>
+<p><strong>Workstation Mode</strong> checkbox</p>
+<ul class="simple">
+<li><p>This checkbox is a duplicate of the one under the Job Options tab (checking one will affect the other).</p></li>
+<li><p>MAXScript Jobs that require file I/O (loading and saving of 3ds Max files) or commands that require the 3ds Max UI to be present, such as manipulating the modifier stack, HAVE TO be run in Workstation mode (using up a 3ds Max license on the Worker). MAXScript Jobs that do not require file I/O or 3ds Max UI functionality can be run in Worker mode on any number of machines without using up 3ds Max licenses.</p></li>
+</ul>
+<p><strong>Popup Handling</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, pop-up dialogs will be handled automatically according to the popup handling rules.</p></li>
+<li><p>When unchecked, no pop-up handling will be performed.</p></li>
+</ul>
+<p><strong>New Script From Template</strong> button</p>
+<ul class="simple">
+<li><p>This button creates a new MAXScript without any execution code, but with all the necessary template code to run a MAXScript Job on Deadline.</p></li>
+<li><p>The new script will open in the 3ds Max MAXScript Editor for further editing.</p></li>
+</ul>
+<p><strong>Pick Script…</strong>  button</p>
+<ul class="simple">
+<li><p>This button lets you select an existing script from disk to use for the MAXScript Job.</p></li>
+<li><p>It is advisable to use scripts created from the Template file using the “New Script From Template” button.</p></li>
+</ul>
+<p><strong>Edit MAXScript File</strong>  button</p>
+<ul class="simple">
+<li><p>This button lets you open the current script file (if any) for editing in the 3ds Max MAXScript Editor.</p></li>
+</ul>
+<p><strong>Run Pre-Load Script</strong>  checkbox, text field and button</p>
+<ul class="simple">
+<li><p>This checkbox lets you run a MAXScript specified in the text field below it BEFORE the 3ds Max scene is loaded for rendering by the Worker.</p></li>
+</ul>
+<p><strong>Run Post-Load Script</strong> checkbox, text field and button</p>
+<ul class="simple">
+<li><p>This checkbox lets you run a MAXScript specified in the text field below it AFTER the 3ds Max scene is loaded for rendering by the Worker.</p></li>
+</ul>
+<p><strong>Run Pre-Frame Script</strong> checkbox, text field and button</p>
+<ul class="simple">
+<li><p>This checkbox lets you run a MAXScript specified in the text field below it BEFORE the Worker renders a frame.</p></li>
+</ul>
+<p><strong>Run Post-Frame Script</strong> checkbox, text field and button</p>
+<ul class="simple">
+<li><p>This checkbox lets you run a MAXScript specified in the text field below it AFTER the Worker renders a frame.</p></li>
+</ul>
+<p><strong>Post-Submission Function Call</strong> text field</p>
+<ul class="simple">
+<li><p>This field can be used by TDs to enter an arbitrary user-defined MAXScript Expression (NOT a path to a script!) which will be executed after the submission has finished.</p></li>
+<li><p>This can be used to trigger the execution of user-defined functions or to press a button in a 3rd party script.</p></li>
+<li><p>In the screenshot, the expression presses a button in a globally defined rollout which is part of an in-house scene management script.</p></li>
+<li><p>If you want to execute a multi-line script after each submission, you could enter fileIn <code class="docutils literal notranslate"><span class="pre">c:\temp\somescript.ms</span></code> in this field and the content of the specified file will be evaluated.</p></li>
+<li><p>The content of this field is sticky and saved in the local INI file - it will persist between sessions until replaced or removed manually.</p></li>
+</ul>
+<p>The MAXScript Job Template file is located in the Repository under <code class="docutils literal notranslate"><span class="pre">\submission\3dsmax\Main\MAXScriptJobTemplate.ms</span></code>. When the <strong>New Script From Template</strong> button is pressed, a copy of the template file with a name pattern “MAXScriptJob_TheSceneName_XXXX.ms” will
+be created in the <code class="docutils literal notranslate"><span class="pre">\3dsmax#\scripts\SubmitMaxToDeadline</span></code> folder where XXXX is a random ID and 3dsmax# is the name of the 3ds Max root folder. The script file will open in 3ds Max for editing. You can add the code to be executed
+in the marked area and save to disk. The file name of the new template will be set as the current MAXScript Job file automatically. If a file name is already selected in the UI, you will be prompted about replacing it first. Your custom MAXScript file MUST be submitted with the 3dsMax job (so a snapshot of the code file is taken). Ensure, via SMTD, the <a class="reference internal" href="#dsmax-submission-options-ref-label"><span class="std std-ref">Submission Option</span></a> of SMTD is “orange” - “SAVE and Submit Current Scene File with the Job to the REPOSITORY” is selected or alternatively via pure MAXScript:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SMTDSettings</span><span class="o">.</span><span class="n">SubmitSceneMode</span> <span class="o">=</span> <span class="c1">#reposave --&gt; Force save and submit mode</span>
+<span class="n">local</span> <span class="n">maxFileToSubmit</span> <span class="o">=</span> <span class="n">SMTDPaths</span><span class="o">.</span><span class="n">tempdir</span> <span class="o">+</span> <span class="n">maxFileName</span>
+<span class="n">SMTDFunctions</span><span class="o">.</span><span class="n">SaveMaxFileCopy</span> <span class="n">maxFileToSubmit</span>
+</pre></div>
+</div>
+<p>Note, MAXScripts are required to return either <strong>false</strong> or <strong>true</strong> at the end of the script. As an absolute minimum your Pre-Load, Post-Load, Pre-Frame or Post-Frame MAXScript should look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">true</span>  <span class="o">--</span><span class="k">return</span> <span class="n">true</span> <span class="k">if</span> <span class="n">the</span> <span class="n">script</span> <span class="n">has</span> <span class="n">finished</span> <span class="n">successfully</span><span class="p">,</span> <span class="k">return</span> <span class="n">false</span> <span class="n">to</span> <span class="n">report</span> <span class="n">a</span> <span class="n">failure</span><span class="o">.</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Deadline exposes an interface to MAXScript, which allows you to gather information about the job being rendered. See the <a class="reference internal" href="app-3ds-max.html#maxscript-ref-label"><span class="std std-ref">Maxscript Interface</span></a> documentation for the available functions and properties.</p>
+</div>
+</div>
+<div class="section" id="tiles-jigsaw-tab">
+<span id="app-3ds-max-jigsaw-ref-label"></span><h2>Tiles / Jigsaw Tab<a class="headerlink" href="#tiles-jigsaw-tab" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tile-region-rendering-options-rollout">
+<h3>Tile &amp; Region Rendering Options rollout<a class="headerlink" href="#tile-region-rendering-options-rollout" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/max_region_options.png" src="../_images/max_region_options.png" />
+<p><strong>Region Rendering Mode</strong> drop-down list</p>
+<ul class="simple">
+<li><p>This drop-down list controls the various rendering modes:</p>
+<ul>
+<li><p><strong>FULL FRAME Rendering, All Region Options DISABLED</strong> - this is the default mode of the Submitter. No region rendering will be performed and the whole image will be rendered.</p></li>
+<li><p><strong>SINGLE FRAME, MULTI-REGION ‘Jigsaw’ Rendering</strong> - Single Job, Regions As Tasks - this mode allows one or more regions to be defined and rendered on one or more network machines. Each region can be optionally sub-divided to a grid of sub-regions to split between machines. The resulting fragments will then be combined to a new single image, or optionally composited over a previous version of the full image using DRAFT. This mode is recommended for large format single frame rendering. Note that the current frame specified by the 3ds Max TIME SLIDER will be rendered, regardless of the Render Dialog Time settings.</p></li>
+<li><p><strong>ANIMATION, MULTI-REGION ‘Jigsaw’ Rendering</strong> - One Job Per Region, Frames As Tasks - this mode allows one or more regions to be defined and rendered on one or more network machines. Each region can be optionally sub-divided to a grid of sub-regions to split between machines. Each region can be optionally animated over time by hand or by using the automatic tracking features. The resulting fragments from each frame will then be combined to a new single image, or optionally composited over a previous version of the full image using DRAFT. This mode is recommended for animated sequences where multiple small portions of the scene are changing relative to the previous render iteration.</p></li>
+<li><p><strong>SINGLE FRAME TILE Rendering</strong> - Single Job, Tiles As Tasks - this mode splits the final single image into multiple equally-sized regions (Tiles). Each Tile will be rendered by a different machine and the final image can be assembled using DRAFT. This mode is recommended when the whole image needs to be re-rendered, but you want to split it between multiple machines.</p></li>
+<li><p><strong>3DS MAX REGION Rendering</strong> - Single Job, Frames As Tasks - this mode allows for traditional 3ds Max REGION, BLOWUP and CROP render modes to be used via Deadline.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Cleanup Tiles After Assembly</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, the Tile image files will be removed after the final image has been assembled. Keep this unchecked if you intend to resubmit some of the tiles and expect them to re-assemble with the previous ones.</p></li>
+</ul>
+<p><strong>Pixel Padding</strong> value spinner.</p>
+<ul class="simple">
+<li><p>Default is 4 pixels.</p></li>
+<li><p>This is the number of pixels to be added on each side of the region or tile to ensure better stitching through some overlapping. Especially when rendering Global Illumination, it might be necessary to render tiles with significant overlapping to avoid artefacts.</p></li>
+</ul>
+<p><strong>Copy Config Files To Output Folder</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, the configuration files for Assembly jobs will be duplicated in the output folder(s) for archiving purposes.</p></li>
+<li><p>The actual assembling will be performed using the copies stored in the Job Auxiliary Files folder.</p></li>
+<li><p>Use this option if you want to preserve a copy next to the assembled frames even after the Jobs have been deleted from the Deadline Repository.</p></li>
+</ul>
+<p><strong>Assembly Job Error On Missing Tiles</strong> checkbox</p>
+<ul class="simple">
+<li><p>When unchecked, missing region or tile fragments will not cause errors and will simply be ignored, leaving either black background or the previous image’s pixels in the assembled image. When checked, the Assembly will only succeed if all requested input images have been found and actually put together.</p></li>
+</ul>
+<p><strong>Override Pool, Group, Priority for Assembly Job</strong> checkbox</p>
+<ul class="simple">
+<li><p>When enabled, the Assembly Pool, Secondary Pool, Group and Priority settings will be used for the Assembly Job instead of the main job’s settings.</p></li>
+</ul>
+<p>The output formats that are supported by the Draft Tile Assembler jobs are BMP, DDS, EXR, JPG, JPE, JPEG, PNG, RGB, RGBA, SGI, TGA, TIF, and TIFF.</p>
+</div>
+<div class="section" id="jigsaw-single-frame-animation-multi-region-rendering-rollout">
+<h3>Jigsaw [Single-Frame | Animation] Multi-Region Rendering rollout<a class="headerlink" href="#jigsaw-single-frame-animation-multi-region-rendering-rollout" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/max_multi_region.png" src="../_images/max_multi_region.png" />
+<p>This rollout contains all controls related to defining, managing and animating multiple regions for the’Jigsaw’ modes. The rollout title will change to include an ACTIVE: prefix and the
+“Single-Frame” or “Animation” token when the respective mode is selected in the Region Rendering Mode drop-down list (see above).</p>
+<p><strong>UPDATE List</strong> button</p>
+<ul class="simple">
+<li><p>Press this button to refresh the ListView.</p></li>
+</ul>
+<p><strong>LOAD/SAVE File…</strong> button</p>
+<ul class="simple">
+<li><p>Click to open a menu with the following options:</p>
+<ul>
+<li><p><strong>LOAD Regions From Disk Preset File…</strong>: Selecting this option will open a file open dialog and let you select a previously saved Regions Preset. Any existing regions will be replaced by the ones from the file.</p></li>
+<li><p><strong>MERGE Regions From Disk Preset File…</strong>: Selecting this option will open a file open dialog and let you select a previously saved Regions Preset. Any existing regions will be preserved, and the file regions will be appended to the end of the list.</p></li>
+<li><p><strong>SAVE Regions To Disk Preset File…</strong>: Only enabled if there are valid regions on the list. When selected, a file save dialog will open and let you save the current regions list to a disk preset for later loading or merging in the same or different projects.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>GET From Camera…</strong> button</p>
+<ul class="simple">
+<li><p>If the current view is a Camera, a list of region definitions stored in the current view’s Camera will be displayed, allowing you to replace the current region list with the stored one.</p></li>
+<li><p>If the current view is not a Camera view, a warning message will be shown asking you to select a Camera view.</p></li>
+<li><p>If the current view’s Camera does not have any regions stored in it, nothing will happen.</p></li>
+</ul>
+<p><strong>STORE In Camera…</strong> button</p>
+<ul class="simple">
+<li><p>If the current view is a Camera, a list of region definitions stored in the current view’s Camera will be displayed, with the added option to Save New Preset… in a new “slot”. Alternatively, you can select any of the previously stored “slots” to override or update.</p></li>
+<li><p>The Notes text specified in the Notes: field below will be used to describe the preset.</p></li>
+<li><p>Also, additional information including the number of regions, the user, machine name, date and time and the MAX scene name will be stored with the preset.</p></li>
+</ul>
+<p><strong>Notes</strong> text field</p>
+<ul class="simple">
+<li><p>Enter a description of the current Region set to be used when saving a Preset to disk or camera.</p></li>
+<li><p>When a preset is loaded, the field will display the notes stored with the preset.</p></li>
+</ul>
+<p><strong>ADD New Region</strong> button</p>
+<ul class="simple">
+<li><p>Creates a new region and appends it to the list.</p></li>
+<li><p>If objects are selected in the scene, the region will be automatically resized to frame the selection.</p></li>
+<li><p>If nothing is selected, the Region will be set to the full image size.</p></li>
+</ul>
+<p><strong>CREATE From…</strong> button</p>
+<ul class="simple">
+<li><p>Click to open a context menu with several multi-region creation options:</p>
+<ul>
+<li><p><strong>Create from SCENE SELECTION…</strong>: Select one or more objects in the scene and pick this option to create one region for each object in the selection. Note that regions might overlap or be completely redundant depending on the size and location of the selected objects - use the OPTIMIZE options below to reduce.</p></li>
+<li><p><strong>Create from TILES GRID…</strong>: Pick this option to create one region for each tile specified in the Tiles rollout. For example, if the Tiles in X is set to 4 and Tiles in Y is 3, 12 regions resembling the Tile Grid will be created. Note that once the regions are created, some of them can be merged together, others can be subdivided or split as needed to distribute regions with different content and size to different machines, providing more flexibility than the original Tiles mode.</p></li>
+<li><p><strong>Create from 3DS MAX REGION…</strong>: Create a region with the size specified by the 3ds Max Region gizmo.</p></li>
+<li><p><strong>OPTIMAL FILL Of Empty Areas</strong>: After the grid is created, two passes are performed: first a Horizontal Fill where regions are merged horizontally to produce wider regions, then a Vertical Fill merging regions with shared horizontal edges. The result is the least amount of tiles and equivalent to manually merging any neighbor tiles with shared edges in Maya Jigsaw. Thus, it is the top (recommended) option.</p></li>
+<li><p><strong>HORIZONTAL FILL Of Empty Areas</strong>: After creating the grid, a pass is performed over all regions to find neighbors sharing vertical edges. When two regions share an edge and the same top and bottom corner, they get merged. This is the equivalent to the Maya Jigsaw behavior, producing wider regions where possible, but leaving a lot of horizontal edges between tiles with the same width.</p></li>
+<li><p><strong>VERTICAL FILL Of Empty Areas</strong>: After creating the grid, a pass is performed to merge neighboring regions sharing a horizontal edge with the same left/right corners. The result is the opposite of the Horizontal Fill - a lot of tall regions.</p></li>
+<li><p><strong>GRID FILL Of Empty Areas</strong>: Takes the horizontal and vertical coordinates of all tiles and creates a grid that contains them all. No merging of regions will be performed.</p></li>
+<li><p><strong>OPTIMIZE Regions, Overlap Threshold &gt; 25%</strong>: Compare the overlapping of all highlighted regions and if the overlapping area is more than 25% of the size of the smaller one of the two, combine the two regions to a single region. Repeat for all regions until no overlapping can be detected.</p></li>
+<li><p><strong>OPTIMIZE Regions, Overlap Threshold &gt; 50%</strong>: Same as the previous option, but with a larger overlap threshold.</p></li>
+<li><p><strong>OPTIMIZE Regions, Overlap Threshold &gt; 75%</strong>: Same as the previous options, but with an even larger overlap threshold.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Clone LEFT|RIGHT</strong> button</p>
+<ul class="simple">
+<li><p>Select a single region in the list and click with the Left Mouse Button to clone the region to the left, or Right Mouse Button to clone to the right.</p></li>
+<li><p>The height will be retained.</p></li>
+<li><p>The width will be clamped automatically if the new copy is partially outside the screen.</p></li>
+</ul>
+<p><strong>Clone UP|DOWN</strong> button</p>
+<ul class="simple">
+<li><p>Select a single region in the list and click with the Left Mouse Button to clone the region up, or Right Mouse Button to clone down.</p></li>
+<li><p>The width will be retained.</p></li>
+<li><p>The height will be clamped automatically if the new copy is partially outside the screen.</p></li>
+</ul>
+<p><strong>FIT to N Objects / Fit Padding Value</strong> button</p>
+<ul class="simple">
+<li><p>Highlight exactly one region in the list and select one or more objects in the scene, then click with the Left Mouse Button to perform a precise vertex-based Fit to the selection, or click with the Right Mouse Button to perform a quick bounding-box based Fit to the selection.</p></li>
+<li><p>Click the small button with the number to the right to select the Padding Percentage to use when fitting in either modes.</p></li>
+</ul>
+<p><strong>TRACK Region…</strong> button</p>
+<ul class="simple">
+<li><p>Left-click to open the Track dialog in Vertex-based mode for the currently selected region and scene objects.</p></li>
+<li><p>Right-click for Bounding Box-based mode.</p></li>
+<li><p>While you can switch the mode in the dialog itself, both the radio buttons and the Padding % values will be adjusted for faster access according to the mouse button pressed.</p></li>
+</ul>
+<p><strong>SELECT | INVERT</strong> button</p>
+<ul class="simple">
+<li><p>Left-click to highlight all regions on the list.</p></li>
+<li><p>Right-click to invert the current selection.</p></li>
+</ul>
+<p><strong>DELETE Regions</strong> button</p>
+<ul class="simple">
+<li><p>Click to delete the highlighted regions on the list.</p></li>
+</ul>
+<p><strong>SET Keyframe</strong> button</p>
+<ul class="simple">
+<li><p>Highlight one or more regions and click this button to set a keyframe with the current region settings at the current time.</p></li>
+</ul>
+<p><strong>&lt;&lt; PREVIOUS Key</strong> button</p>
+<ul class="simple">
+<li><p>Click to change the time slider to the previous key of the highlighted region(s), if case there are such keys.</p></li>
+</ul>
+<p><strong>NEXT Key &gt;&gt;</strong> button</p>
+<ul class="simple">
+<li><p>Click to change the time slider to the next key of the highlighted region(s), if case there are such keys.</p></li>
+</ul>
+<p><strong>DELETE Keyframe</strong> button</p>
+<ul class="simple">
+<li><p>Click to delete the keys (if any) of the highlighted regions.</p></li>
+<li><p>If there is no key on the current frame, nothing will happen.</p></li>
+<li><p>Use in conjunction with Previous/Next Key navigation to delete actually existing keys.</p></li>
+</ul>
+<p><strong>Regions ListView</strong></p>
+<ul class="simple">
+<li><p>The list view is the main display of the current region settings.</p></li>
+<li><p>It provides several columns and a set of controls under each column for editing the values on the list:</p>
+<ul>
+<li><p><strong>On # column</strong>: Shows a checkbox to toggle a region on and off for rendering, and the index of the region.</p></li>
+<li><p><strong>X and Y columns</strong>: These two columns display the coordinates of the upper left corner of the Region. Note that internally the values are stored in relative screen coordinates, but in the list they are shown in current output resolution pixel coordinates for convenience. Changing the output resolution in the Render Setup dialog and pressing the UPDATE List button will recalculate the pixel coordinates accordingly.</p></li>
+<li><p><strong>Width and Height columns</strong>: These two columns display the width and height of the region in pixels. Like the upper left corner’s X and Y coordinates, they are stored internally as relative screen coordinates and are shown as pixels for convenience.</p></li>
+<li><p><strong>Tiles column</strong>: Each region can be subdivided additionally horizontally and vertically into a grid of sub-tiles, each to be rendered by a different network machine. This column shows the number of tiles of the region, default is 1x1.</p></li>
+<li><p><strong>Keys column</strong>: This column shows the number of animation keys recorded for the region. By default regions have no animation keys and will show – in the column unless animated manually or via the Tracking option.</p></li>
+<li><p><strong>Locked column</strong>: After Tracking, the region will be locked automatically to avoid accidental changes to its position and size. You can also lock the region manually if you want to prevent it from being moved accidentally.</p></li>
+<li><p><strong>Notes column</strong>: This column displays auto-generated or user-defined notes for each region. When a region is created, it might be given a name based on the object it was fitted to, the original region it was cloned or split from etc. You can enter descriptive notes to explain what every region was meant for.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>UNDO… / REDO…</strong> buttons</p>
+<ul class="simple">
+<li><p>Most operations performed in the Multi-Region rollout will create undo records automatically.</p></li>
+<li><p>The Undo buffer is saved to disk in a similar form as the presets, and you can undo or redo individual steps by left-clicking the button, or multiple steps at once by right-clicking and selecting from a list.</p></li>
+</ul>
+<p><strong>HOLD</strong> buttons</p>
+<ul class="simple">
+<li><p>Not all operations produce a valid undo record.</p></li>
+<li><p>If you feel that the next operation might be dangerous, you can press the HOLD button to force the creation of an Undo record at the current point to ensure you can return back to it in case the following operations don’t produce desirable results.</p></li>
+</ul>
+<p><strong>SPLIT To Tiles</strong> button</p>
+<ul class="simple">
+<li><p>Pressing this button will split the highlighted region to new regions according to the Tiles settings, assuming they are higher than 1x1 subdivisions.</p></li>
+<li><p>You can use this feature together with the Tiles controls to quickly produce a grid of independent regions from a single large region.</p></li>
+<li><p>For example, if you create a single region with no scene selection, it will have the size of the full screen.</p></li>
+<li><p>Enter Tile values like 4 and 3 and hit the SPLIT To Tiles to produce a grid of 12 regions.</p></li>
+</ul>
+<p><strong>MERGE Selected</strong> button</p>
+<ul class="simple">
+<li><p>Highlight two or more regions and press this button to merge them into a single region.</p></li>
+<li><p>The regions don’t have to necessarily touch or overlap - the minimum and maximum extents of all regions will be found and they will be replaced by a single region with that position and size.</p></li>
+</ul>
+<p><strong>Summary Field</strong></p>
+<ul class="simple">
+<li><p>This field displays information about the number of regions and sub-regions (tiles), the number of pixels to be rendered by these regions, and the percentage of pixels that would be rendered compared to the full image.</p></li>
+</ul>
+<p><strong>Assemble Over…</strong>  drop-down list</p>
+<ul class="simple">
+<li><p>This list provides the assembly compositing options:</p>
+<ul>
+<li><p><strong>Assemble Over EMPTY Background</strong>: The regions will be assembled into a new image using a black empty background with zero alpha.</p></li>
+<li><p><strong>Compose Over PREVIOUS OUTPUT Image</strong>: The regions will be assembled over the previously rendered (or assembled) image matching the current output filename (if it exists). If such an image does not exist, the regions will be assembled over an empty background.</p></li>
+<li><p><strong>Compose Over CUSTOM SINGLE Image</strong>: The regions will be assembled over a user-defined bitmap specified with the controls below. The same image will be used on all frames if an animation is rendered.</p></li>
+<li><p><strong>Compose Over CUSTOM Image SEQUENCE</strong>: The regions will be assembled over a user-defined image sequence specified with the controls below. Each frame will use the corresponding frame from the image sequence.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Pick Custom Background Image</strong> button</p>
+<ul class="simple">
+<li><p>Press this button to select the custom image or image sequence to be used in the last compositing modes above.</p></li>
+<li><p>Make sure you specify a network location that can be accessed by the Draft jobs on Deadline performing the Assembly!</p></li>
+</ul>
+</div>
+<div class="section" id="single-frame-animation-tile-rendering-rollout">
+<h3>[Single-Frame | Animation] Tile Rendering rollout<a class="headerlink" href="#single-frame-animation-tile-rendering-rollout" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/max_tiles.png" src="../_images/max_tiles.png" />
+<p><strong>Tiles In X / Tiles In Y</strong> value spinners</p>
+<ul class="simple">
+<li><p>These values specify the number of tiles horizontally and vertically.</p></li>
+<li><p>The total number of tiles (and jobs) to be rendered is calculated as X*Y and is displayed in the UI.</p></li>
+</ul>
+<p><strong>Show Tiles In Viewport</strong> checkbox</p>
+<ul class="simple">
+<li><p>Enables the tile display gizmo.</p></li>
+</ul>
+<p><strong>Re-Render User-Defined Tiles</strong></p>
+<ul class="simple">
+<li><p>When checked, only user-defined tiles will be submitted for re-rendering.</p></li>
+<li><p>Use the [Specify Tiles To Re-render…] check-button to open a dialog and select the tiles to be rendered.</p></li>
+</ul>
+<p><strong>Specify Tiles To Re-render</strong></p>
+<ul class="simple">
+<li><p>When checked, a dialog to select the tiles to be re-rendered will open.</p></li>
+<li><p>To close the dialog, either uncheck the button or press the [X] button on the dialog’s title bar.</p></li>
+</ul>
+<p><strong>Enable Blowup Mode</strong></p>
+<ul class="simple">
+<li><p>If enabled, tile rendering will work by zooming in on the region and rendering it at a smaller resolution.</p></li>
+<li><p>Then that region is blown up to bring it to the correct resolution.</p></li>
+<li><p>This has been known to help save memory when rendering large high resolution images.</p></li>
+</ul>
+<p><strong>Submit All Tiles As A Single Job</strong></p>
+<ul class="simple">
+<li><p>By default, a separate job is submitted for each tile (this allows for tile rendering of a sequence of frames).</p></li>
+<li><p>For easier management of single frame tile rendering, you can choose to submit all the tiles as a single job.</p></li>
+</ul>
+<p><strong>Submit Dependent Assembly Job</strong></p>
+<ul class="simple">
+<li><p>When rendering a single tile job, you can also submit a dependent assembly job to assemble the image when the main tile job completes.</p></li>
+</ul>
+</div>
+<div class="section" id="ds-max-region-rendering-rollout">
+<h3>3ds Max Region Rendering rollout<a class="headerlink" href="#ds-max-region-rendering-rollout" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/max_regions.png" src="../_images/max_regions.png" />
+<p>When enabled, only the specified region will be rendered and depending on the region type selected, it can be cropped or blown up as well. If the Enable Distributed Tiles Rendering checkbox is checked, it will be unchecked.
+This option REPLACES the “Crop” option in the Render mode drop-down list in the 3ds Max UI. In other words, the 3ds Max option does not have to be selected for Region Rendering to be performed on Deadline. The region can be
+specified either using the CornerX, CornerY, Width and Height spinners, or by getting the current region from the active viewport. To do so, set the Render mode drop-down list to either Region or Crop, press the Render icon and
+drag the region marker to specify the desired size. Then press ESC to cancel and press the Get Region From Active View to capture the new values.</p>
+</div>
+</div>
+<div class="section" id="misc-tab">
+<span id="dsmax-misc-tab-ref-label"></span><h2>Misc Tab<a class="headerlink" href="#misc-tab" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="batch-submission-rollout">
+<span id="dsmax-batch-submission-ref-label"></span><h3>Batch Submission rollout<a class="headerlink" href="#batch-submission-rollout" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/max_batch.png" src="../_images/max_batch.png" />
+<p><strong>WARNING</strong>: Batch Render can optionally work with the old “Scene State” system in 3dsMax but does NOT work in partnership with the newer “State Sets” system, which was introduced into 3dsMax after Batch Render. SMTD provides a separate interface if you wish to submit “State Sets” to Deadline.</p>
+<ul class="simple">
+<li><p><strong>Submit All Batch Jobs From The Local Workstation</strong>: All enabled Batch Render views will be submitted by your local workstation to the Deadline queue as normal 3dsmax plugin based render jobs. This may take some submission time, depending on the number of Batch Views to submit and if you currently have a large 3dsMax scene file, which you are also including with each job submission. (Alternatively; referencing the 3dsmax scene file from a network location will speed up job submission for you here). See scene file <a class="reference internal" href="#dsmax-submission-options-ref-label"><span class="std std-ref">Submission Options</span></a> for more details.</p></li>
+<li><p><strong>Submit Master Job In Workstation Mode, Spawn Batch Jobs On Deadline</strong>: A single MASTER job will be sent to Deadline which in turn will “spawn” all necessary BATCH jobs. This requires the Deadline Worker that picks up this job to run in Workstation Mode (requires 3dsMax GUI license) and a maxscript will execute spawning all the enabled Batch Render views as separate jobs back into the Deadline queue.</p></li>
+<li><p><strong>Use Data from 3ds Max Batch Render</strong>: This checkbox enables Batch Submission using the 3ds Max Batch Render dialog settings.</p></li>
+<li><p><strong>Open Dialog</strong>: This button opens the 3ds Max Batch Render dialog in Version 8 and higher.</p></li>
+<li><p><strong>Update Info</strong>: This button reads the 3ds Max Batch Render dialog settings and displays the number of enabled vs. defined Views. Ensure the number of enabled views correlates with your expected number of Batch views prior to job submission.</p></li>
+<li><p><strong>Cleanup Submission Folders After Each Batch Job</strong>: SMTD will purge any temporary local files created during the Batch Render job submission to Deadline. This ensures efficient use of disk space on your local machine.</p></li>
+</ul>
+<p><strong>Extra Info</strong></p>
+<p>These are some extra arbitrary properties that can be set for the job. Note that some of these are reserved when enabling the Shotgun, FTrack or Draft settings.</p>
+<img alt="../_images/max_extra_info.png" src="../_images/max_extra_info.png" />
+</div>
+</div>
+<div class="section" id="smtd-menu-options">
+<h2>SMTD Menu Options<a class="headerlink" href="#smtd-menu-options" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="presets-menu">
+<h3><strong>Presets</strong> menu<a class="headerlink" href="#presets-menu" title="Permalink to this headline">¶</a></h3>
+<p><strong>Save Preset…</strong></p>
+<ul class="simple">
+<li><p>Opens the “SAVE Preset” dialog.</p></li>
+<li><p>Lets you save all or a subset of the current SMTD settings to disk.</p></li>
+</ul>
+<p><strong>Load Preset…</strong></p>
+<ul class="simple">
+<li><p>Opens the “LOAD Preset” dialog.</p></li>
+<li><p>Lets you load all or a subset of previously saved SMTD settings from disk.</p></li>
+<li><p>The dialog lists both the current value and the new value to be loaded to make it easy to decide which settings to load and which to skip.</p></li>
+<li><p>Settings that are identical between the current setup and the preset file on disk will be unchecked and grayed out automatically.</p></li>
+</ul>
+<p><strong>Explore Presets Folder…</strong></p>
+<ul class="simple">
+<li><p>Opens a Windows Explorer at the current SMTD presets directory.</p></li>
+<li><p>This can be useful for cleaning up, creating backup copies, sending presets to other users, installing other users’ presets on your system etc.</p></li>
+</ul>
+<p><strong>Reload Settings From .MAX Scene File…</strong></p>
+<ul class="simple">
+<li><p>Opens the “LOAD Scene Settings” dialog.</p></li>
+<li><p>It lets you load all or a user-defined subset of SMTD settings from the 3ds Max Scene file.</p></li>
+<li><p>The dialog lists both the current value and the new value to be loaded to make it easy to decide which settings to load and which to skip.</p></li>
+<li><p>Settings that are identical between the current setup and the .MAX scene file will be unchecked and grayed out automatically.</p></li>
+<li><p>The MAX scene file settings are updated only on File IO operations, and when SMTD is closed.</p>
+<ul>
+<li><p>This means that if you load a MAX scene, open SMTD, modify some settings, and have not saved the MAX scene or closed SMTD, the settings in the MAX scene will be the same as in the beginning.</p></li>
+<li><p>Thus, using this menu item lets you easily revert to the initial SMTD settings when the MAX file was loaded.</p></li>
+<li><p>If you saved the MAX file, or closed and reopened SMTD, the scene settings would be overwritten with the new ones.</p></li>
+<li><p>Note that a submission can also cause the MAX file to be saved.</p></li>
+</ul>
+</li>
+</ul>
+<img alt="../_images/max_load_scene_settings.png" src="../_images/max_load_scene_settings.png" />
+<p><strong>Reset To Startup Defaults…</strong></p>
+<ul class="simple">
+<li><p>Resets all SMTD settings to the default values declared at startup of SMTD.</p></li>
+</ul>
+</div>
+<div class="section" id="tools-menu">
+<h3><strong>Tools</strong> menu<a class="headerlink" href="#tools-menu" title="Permalink to this headline">¶</a></h3>
+<p><strong>Defaults and Sticky Settings Browser…</strong></p>
+<ul class="simple">
+<li><p>A browser window to allow users to visualize the perceived and actual value of each SMTD property, according to the logic of our ‘defaults’ and ‘sticky’ <a class="reference internal" href="app-3ds-max-smtd-advanced.html#smtd-sticky-settings-ref-label"><span class="std std-ref">settings</span></a> system.</p></li>
+</ul>
+<p><strong>Explore Temporary Submission Folder…</strong></p>
+<ul class="simple">
+<li><p>Open Windows Explorer to the current directory storing temporary SMTD submission files.</p></li>
+</ul>
+<p><strong>Purge All Temporary Submission Folders On SMTD Startup - when unchecked, today’s folders will be kept</strong></p>
+<ul class="simple">
+<li><p>Enable to purge ALL SMTD temporary submission folders/files on SMTD startup.</p></li>
+<li><p>When disabled, only today’s submission folders/files will be kept - useful for debugging submissions content.</p></li>
+</ul>
+<p><strong>Explore SMTD Log Folder…</strong></p>
+<ul>
+<li><p>Open a Windows Explorer at the current Deadline log directory where SMTD submission logs are stored.</p></li>
+<li><p>The standard location is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">%</span><span class="n">USERNAME</span><span class="o">%</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Thinkbox</span>\<span class="n">Deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span>\<span class="n">logs</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>%USERNAME% is the current OS username</p></li>
+<li><p>[VERSION] is the MAJOR version of Deadline</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="help-menu">
+<h3><strong>Help</strong> menu<a class="headerlink" href="#help-menu" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><strong>SMTD Online Help…</strong>: URL link to Thinkbox Deadline’s online documentation website.</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3ds Max - Integrated Submitter</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#lower-controls-section">Lower Controls Section</a></li>
+<li><a class="reference internal" href="#smtd-log">SMTD Log</a></li>
+<li><a class="reference internal" href="#job-tab">Job Tab</a><ul>
+<li><a class="reference internal" href="#job-submission-rollout">Job Submission rollout</a></li>
+<li><a class="reference internal" href="#job-options-rollout">Job Options rollout</a></li>
+<li><a class="reference internal" href="#job-dependencies-rollout">Job Dependencies rollout</a></li>
+<li><a class="reference internal" href="#rpm-pass-dependencies-global-setup-rollout">RPM Pass Dependencies - Global Setup rollout</a></li>
+<li><a class="reference internal" href="#job-scheduling-rollout">Job Scheduling rollout</a></li>
+<li><a class="reference internal" href="#job-failure-detection-rollout">Job Failure Detection rollout</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#assets-tab">Assets Tab</a><ul>
+<li><a class="reference internal" href="#scene-and-asset-files-rollout">Scene And Asset Files rollout</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#render-tab">Render Tab</a><ul>
+<li><a class="reference internal" href="#scene-tweaks-rollout">Scene Tweaks rollout</a></li>
+<li><a class="reference internal" href="#ds-max-startup-rollout">3ds Max Startup rollout</a></li>
+<li><a class="reference internal" href="#ds-max-rendering-rollout">3ds Max Rendering rollout</a></li>
+<li><a class="reference internal" href="#v-ray-mental-ray-corona-dbr-options-rollout">V-Ray/Mental Ray/Corona DBR Options rollout</a><ul>
+<li><a class="reference internal" href="#off-load-dbr">Off-load DBR</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gpu-affinity-overrides-rollout">GPU Affinity Overrides rollout</a></li>
+<li><a class="reference internal" href="#ds-max-gamma-options-rollout">3ds Max Gamma Options rollout</a></li>
+<li><a class="reference internal" href="#ds-max-pathing-options-rollout">3ds Max Pathing Options rollout</a></li>
+<li><a class="reference internal" href="#render-output-autodesk-me-image-sequence-imsq-creation-rollout">Render Output Autodesk ME Image Sequence (IMSQ) Creation rollout</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#options-tab">Options Tab</a><ul>
+<li><a class="reference internal" href="#user-options-rollout">User Options rollout</a></li>
+<li><a class="reference internal" href="#export-renderer-specific-advanced-settings-rollout">Export Renderer-Specific Advanced Settings rollout</a></li>
+<li><a class="reference internal" href="#submission-timeouts-rollout">Submission Timeouts rollout</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#limits-tab">Limits Tab</a><ul>
+<li><a class="reference internal" href="#deny-list-allow-list-workers-rollout">Deny list/Allow list Workers rollout</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#statesets-tab">StateSets Tab</a></li>
+<li><a class="reference internal" href="#scripts-tab">Scripts Tab</a><ul>
+<li><a class="reference internal" href="#run-python-scripts-rollout">Run Python Scripts rollout</a></li>
+<li><a class="reference internal" href="#run-maxscript-script-rollout">Run Maxscript Script rollout</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tiles-jigsaw-tab">Tiles / Jigsaw Tab</a><ul>
+<li><a class="reference internal" href="#tile-region-rendering-options-rollout">Tile &amp; Region Rendering Options rollout</a></li>
+<li><a class="reference internal" href="#jigsaw-single-frame-animation-multi-region-rendering-rollout">Jigsaw [Single-Frame | Animation] Multi-Region Rendering rollout</a></li>
+<li><a class="reference internal" href="#single-frame-animation-tile-rendering-rollout">[Single-Frame | Animation] Tile Rendering rollout</a></li>
+<li><a class="reference internal" href="#ds-max-region-rendering-rollout">3ds Max Region Rendering rollout</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#misc-tab">Misc Tab</a><ul>
+<li><a class="reference internal" href="#batch-submission-rollout">Batch Submission rollout</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#smtd-menu-options">SMTD Menu Options</a><ul>
+<li><a class="reference internal" href="#presets-menu"><strong>Presets</strong> menu</a></li>
+<li><a class="reference internal" href="#tools-menu"><strong>Tools</strong> menu</a></li>
+<li><a class="reference internal" href="#help-menu"><strong>Help</strong> menu</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-3ds-max-monitor.html"
+                        title="previous chapter">3ds Max - Monitor Submitter</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-3ds-max-sanitycheck.html"
+                        title="next chapter">3ds Max - Integrated Submitter - Sanity Check</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-3ds-max-sanitycheck.html" title="3ds Max - Integrated Submitter - Sanity Check"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-3ds-max-monitor.html" title="3ds Max - Monitor Submitter"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Max - Integrated Submitter</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

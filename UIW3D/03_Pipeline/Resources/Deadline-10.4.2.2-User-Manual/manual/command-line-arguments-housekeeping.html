@@ -1,0 +1,987 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scans, History, and Reports - Command Arguments &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Version and Help - Command Arguments" href="command-line-arguments-version.html" />
+    <link rel="prev" title="System Functions and Dialogs - Command Arguments" href="command-line-arguments-system.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command-line-arguments-version.html" title="Version and Help - Command Arguments"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="command-line-arguments-system.html" title="System Functions and Dialogs - Command Arguments"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" accesskey="U">Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Scans, History, and Reports - Command Arguments</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="scans-history-and-reports-command-arguments">
+<span id="command-arguments-housekeeping"></span><h1>Scans, History, and Reports - Command Arguments<a class="headerlink" href="#scans-history-and-reports-command-arguments" title="Permalink to this headline">¶</a></h1>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td colspan="2"><p><a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">Command Overview</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-repo.html#command-arguments-repo"><span class="std std-ref">Database and Repository</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-clients.html#command-arguments-clients"><span class="std std-ref">Clients and Logs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-workers.html#command-arguments-workers"><span class="std std-ref">Workers</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="command-line-arguments-jobs.html#command-arguments-jobs"><span class="std std-ref">Jobs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-tasks.html#command-arguments-tasks"><span class="std std-ref">Tasks</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-pools-groups.html#command-arguments-pools"><span class="std std-ref">Pools, Groups, and Limits</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-users.html#command-arguments-users"><span class="std std-ref">Users and User Groups</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-pathmapping.html#command-arguments-pathmapping"><span class="std std-ref">Path and Drive Mapping</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="command-line-arguments-cloud.html#command-arguments-cloud"><span class="std std-ref">AWS Portal and Cloud</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-scripting.html#command-arguments-scripting"><span class="std std-ref">Scripting</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-system.html#command-arguments-system"><span class="std std-ref">System Functions and Dialogs</span></a></p></td>
+<td><p><a class="reference internal" href="#command-arguments-housekeeping"><span class="std std-ref">Scans, History, and Reports</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-version.html#command-arguments-version"><span class="std std-ref">Version and Help</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#house-cleaning-pending-jobs-scan-repository-repair" id="id1">House Cleaning, Pending Jobs Scan, Repository Repair</a></p>
+<ul>
+<li><p><a class="reference internal" href="#dohousecleaning" id="id2">DoHouseCleaning</a></p></li>
+<li><p><a class="reference internal" href="#dopendingjobscan" id="id3">DoPendingJobScan</a></p></li>
+<li><p><a class="reference internal" href="#dorepositoryrepair" id="id4">DoRepositoryRepair</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#history" id="id5">History</a></p>
+<ul>
+<li><p><a class="reference internal" href="#addjobhistoryentry" id="id6">AddJobHistoryEntry</a></p></li>
+<li><p><a class="reference internal" href="#addrepositoryhistoryentry" id="id7">AddRepositoryHistoryEntry</a></p></li>
+<li><p><a class="reference internal" href="#addslavehistoryentry" id="id8">AddSlaveHistoryEntry</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#reports-and-statistics" id="id9">Reports and Statistics</a></p>
+<ul>
+<li><p><a class="reference internal" href="#farmreports" id="id10">FarmReports</a></p></li>
+<li><p><a class="reference internal" href="#getfarmstatistics" id="id11">GetFarmStatistics</a></p></li>
+<li><p><a class="reference internal" href="#getfarmstatisticsex" id="id12">GetFarmStatisticsEx</a></p></li>
+<li><p><a class="reference internal" href="#getjobstatistics" id="id13">GetJobStatistics</a></p></li>
+<li><p><a class="reference internal" href="#getslavestatistics" id="id14">GetSlaveStatistics</a></p></li>
+<li><p><a class="reference internal" href="#jobstatistics" id="id15">JobStatistics</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="house-cleaning-pending-jobs-scan-repository-repair">
+<h2><a class="toc-backref" href="#contents">House Cleaning, Pending Jobs Scan, Repository Repair</a><a class="headerlink" href="#house-cleaning-pending-jobs-scan-repository-repair" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="dohousecleaning">
+<span id="dohousecleaning-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">DoHouseCleaning</a><a class="headerlink" href="#dohousecleaning" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Performs house cleaning operations.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -DoHouseCleaning</strong> [&lt;Check Last Time&gt;] [&lt;Verbose&gt;] [&lt;Log Repo History&gt;] [&lt;Mode&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Check Last Time&gt;</p></td>
+<td><p>Optional. If <code class="docutils literal notranslate"><span class="pre">True</span></code>, House Cleaning will only be performed if the appropriate amount of time has passed since the last check. This is always <code class="docutils literal notranslate"><span class="pre">True</span></code> if a mode is specified.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Verbose&gt;</p></td>
+<td><p>Optional. If <code class="docutils literal notranslate"><span class="pre">True</span></code> or not specified, the Profiling section will be included.</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Log Repo History&gt;</p></td>
+<td><p>Optional. If <code class="docutils literal notranslate"><span class="pre">True</span></code> or not specified, a Repository History entry will be logged. This is ignored if a mode other than <code class="docutils literal notranslate"><span class="pre">All</span></code> is specified.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Mode&gt;</p></td>
+<td><div class="line-block">
+<div class="line">Optional. If set to <code class="docutils literal notranslate"><span class="pre">All</span></code> or not specified, all House Cleaning operations will be performed. Available modes are:</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">All</span></code>, <code class="docutils literal notranslate"><span class="pre">CleanupCompletedJobs</span></code>, <code class="docutils literal notranslate"><span class="pre">DeleteUnsubmittedJobs</span></code>, <code class="docutils literal notranslate"><span class="pre">PurgeDeletedJobs</span></code>, <code class="docutils literal notranslate"><span class="pre">CleanupObsoleteSlaves</span></code>, <code class="docutils literal notranslate"><span class="pre">PurgeOldSlaveReports</span></code>, <code class="docutils literal notranslate"><span class="pre">CleanupRepoValidations</span></code>, <code class="docutils literal notranslate"><span class="pre">PurgeOldStatistics</span></code>, <code class="docutils literal notranslate"><span class="pre">CleanupDatabase</span></code>, <code class="docutils literal notranslate"><span class="pre">PurgeObsoleteAWSPortalSlaves</span></code></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Running with default settings skips the House Cleaning because not enough time has elapsed since the last run:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -DoHouseCleaning
+    Skipping house cleaning because it is not required at this time
+    Profiling Section:
+    Group                Name                                     Count        Average Time Total Time
+
+    ConsoleCommandInvoke Collect Types                            1            0.125        0.125
+    ConsoleCommandInvoke Find Type                                1            0            0
+    ConsoleCommandInvoke Create Type                              1            0            0
+    ------------------   ---------------------------------------- ------------ ------------ ------------
+    GROUP TOTAL                                                   3            0.0416667    0.125
+</pre></div>
+</div>
+<p>Forcing House Cleaning by skipping the Last Time Check via the first argument supplied as <code class="docutils literal notranslate"><span class="pre">False</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -DoHouseCleaning False
+    Performing house cleaning
+    Performing Job Cleanup Scan...
+        Job Cleanup Scan - Loading completed jobs
+        Job Cleanup Scan - Loaded 202 completed and 15 active/pending jobs in 261.689 ms
+        Job Cleanup Scan - Scanning completed jobs
+        Job Cleanup Scan - Deleted 0 and archived 0 completed jobs in 11.496 ms
+        Job Cleanup Scan - Done.
+    Purging Unsubmitted Jobs
+        Unsubmitted Job Scan - Loading unsubmitted jobs
+        Unsubmitted Job Scan - Loaded 0 unsubmitted jobs in 1.541 ms
+        Unsubmitted Job Scan - Done.
+    Purging Deleted Jobs
+        Deleted Job Scan - Loading deleted jobs
+        Deleted Job Scan - Loaded 0 deleted jobs in 1.796 ms
+
+        Deleted Job Scan - Done.
+    Purging Obsolete Workers
+        Obsolete Worker Scan - Skipping because it is disabled in the Repository Options
+    Purging Obsolete AWS Portal Workers
+        Obsolete AWS Portal Worker Scan - Loading Worker states
+        Obsolete AWS Portal Worker Scan - Loading 1 Worker states in 30.940 ms
+        Obsolete AWS Portal Worker Scan - Purging offline/stalled Workers older than 5 days, 0 hours
+        Obsolete AWS Portal Worker Scan - Purged 0 obsolete AWS Portal Workers in 82.200 µs
+        Obsolete AWS Portal Worker Scan - Done.
+    Purging Old Worker Reports
+        Worker Report Scan - Loading Worker report collections
+        Worker Report Scan - Found 1 report collections and 0 job state objects in 13.224 ms
+        Worker Report Scan - Loading Worker IDs
+        Worker Report Scan - Loaded 1 Worker IDs in 2.943 ms
+        Worker Report Scan - Purged 0 report collections, 0 job state objects, and 0 licensed Worker stubs in 0
+        Worker Report Scan - Done.
+    Purging Timed Out Workers in Throttle Queue
+    Purging Old Statistics
+        Old Statistics - Skipping job statistics because the option to purge them is disabled in the Repository Options
+        Old Statistics - Purging Worker statistics that are older than Feb 22/20  10:29:57
+        Old Statistics - Purged old Worker statistics in 1.728 ms
+        Old Statistics - Purging repository statistics that are older than Feb 22/20  10:29:57
+        Old Statistics - Purged old repository statistics in 1.100 ms
+    Purging expired Remote Command Tokens
+    Purging Deleted Document Stubs From Database
+        Deleted Document Stubs - Deleting stubs that are older than 3 days
+        Deleted Document Stubs - Deleted 0 stubs in 886.300 µs
+    Triggering house cleaning events...
+    Profiling Section:
+    Group                Name                                     Count        Average Time Total Time
+
+    ConsoleCommandInvoke Collect Types                            1            0.109        0.109
+    ConsoleCommandInvoke Find Type                                1            0            0
+    ConsoleCommandInvoke Create Type                              1            0            0
+    ------------------   ---------------------------------------- ------------ ------------ ------------
+    GROUP TOTAL                                                   3            0.0363333    0.109
+
+    House Cleaning       Job Cleanup Scan                         1            0.282        0.282
+    House Cleaning       Purge Obsolete AWS Portal Workers        1            0.047        0.047
+    House Cleaning       Purge Old Worker Reports                 1            0.031        0.031
+    House Cleaning       Purge Timed Out Workers In Throttle Queu 1            0.015        0.015
+    House Cleaning       Delete Unsubmitted Jobs                  1            0            0
+    House Cleaning       Purge Deleted Jobs                       1            0            0
+    House Cleaning       Purge Obsolete Workers                   1            0            0
+    House Cleaning       Purge Old Statistics                     1            0            0
+    House Cleaning       Purge Expired Remote Commands            1            0            0
+    House Cleaning       Purge Database                           1            0            0
+    ------------------   ---------------------------------------- ------------ ------------ ------------
+    GROUP TOTAL                                                   10           0.0375       0.375
+</pre></div>
+</div>
+</div>
+<div class="section" id="dopendingjobscan">
+<span id="dopendingjobscan-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">DoPendingJobScan</a><a class="headerlink" href="#dopendingjobscan" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Scans for pending jobs to be released and pending job events to be processed.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -DoPendingJobScan</strong> [&lt;Check Last Time&gt;] [&lt;Verbose&gt;] [&lt;Log Repo History&gt;] [&lt;Region&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Check Last Time&gt;</p></td>
+<td><p>Optional. If <code class="docutils literal notranslate"><span class="pre">True</span></code> or not specified, the pending job scan will only be performed if the appropriate amount of time has passed since the last check. If <code class="docutils literal notranslate"><span class="pre">False</span></code>, the scan will be performed regardless of the elapsed time.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Verbose&gt;</p></td>
+<td><p>Optional. If <code class="docutils literal notranslate"><span class="pre">True</span></code> or not specified, detailed logging listing every Job checked will be enabled. When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>, only a short summary report will be printed.</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Log Repo History&gt;</p></td>
+<td><p>Optional. If <code class="docutils literal notranslate"><span class="pre">True</span></code> or not specified, a Repository History entry will be logged. When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>, no History entry will be created for the scan.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Region&gt;</p></td>
+<td><p>Optional. The region to be used for path mapping.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Force Pending Jobs Scan by skipping the Last Time Check, and disabling the detailed report by setting the second argument (Verbose) to False.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -DoPendingJobScan False False
+    Performing pending job scan
+        Pending Job Scan - Loading pending and active jobs
+        Pending Job Scan - Loaded 15 pending and active jobs in 183.060 ms
+        Pending Job Scan - Scanning pending and active jobs
+        Pending Job Scan - Released 0 pending jobs and 0 pending tasks in 70.287 ms
+        Pending Job Scan - Done.
+    Processing Pending Job Events
+        Pending Job Events - Checking for pending job events...
+        Pending Job Events - Processing 0 job events
+        Pending Job Events - No more job events to process
+        Pending Job Events - Done.
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="dorepositoryrepair">
+<span id="dorepositoryrepair-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">DoRepositoryRepair</a><a class="headerlink" href="#dorepositoryrepair" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Performs Repository Repair operations.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -DoRepositoryRepair</strong> [&lt;Check Last Time&gt;] [&lt;Verbose&gt;] [&lt;Log Repo History&gt;] [&lt;Mode&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Check Last Time&gt;</p></td>
+<td><p>Optional. If <code class="docutils literal notranslate"><span class="pre">True</span></code> or not specified, a Repository Repair will only be performed if the appropriate amount of time has passed since the last check. This is always <code class="docutils literal notranslate"><span class="pre">True</span></code> if a mode is specified.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Verbose&gt;</p></td>
+<td><p>Optional. If <code class="docutils literal notranslate"><span class="pre">True</span></code> or not specified, detailed logging will be enabled.</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Log Repo History&gt;</p></td>
+<td><p>Optional. If <code class="docutils literal notranslate"><span class="pre">True</span></code> or not specified, a Repository History entry will be logged. This is ignored if a mode other than ‘All’ is specified.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Mode&gt;</p></td>
+<td><div class="line-block">
+<div class="line">Optional. If <code class="docutils literal notranslate"><span class="pre">All</span></code> or not specified, all repair operations will be performed. Available modes are:</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">All</span></code>, <code class="docutils literal notranslate"><span class="pre">FindOrphanedTasks</span></code>, <code class="docutils literal notranslate"><span class="pre">FindOrphanedLimitStubs</span></code>, <code class="docutils literal notranslate"><span class="pre">FindStalledSlaves</span></code>, <code class="docutils literal notranslate"><span class="pre">FindStalledPulses</span></code>, <code class="docutils literal notranslate"><span class="pre">FindStalledBalancers</span></code></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Force Repository Repair, skipping the Last Time Check by setting the first argument to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -DoRepositoryRepair False
+    Performing repository repair
+    Performing Orphaned Task Scan...
+        Orphaned Task Scan - Loading rendering jobs
+        Orphaned Task Scan - Loaded 0 rendering jobs in 129.396 ms
+        Orphaned Task Scan - Done.
+    Performing Orphaned Limit Stub Scan...
+        Orphaned Limit Stub Scan - Loading limits
+        Orphaned Limit Stub Scan - Loaded 350 limits in 44.552 ms
+        Orphaned Limit Stub Scan - Loading Worker states
+        Orphaned Limit Stub Scan - Loaded 1 Worker states in 34.413 ms
+        Orphaned Limit Stub Scan - Returned 0 orphaned limit stubs in 94.640 ms
+        Orphaned Limit Stub Scan - Done.
+    Checking Available Database Connections
+        Available Database Connections - Skipping because there are no Low Database Connection notification email addresses set in the Repository Options
+    Performing Stalled Worker Scan...
+        Stalled Worker Scan - Loading Worker states
+        Stalled Worker Scan - Loaded 1 Worker states in 1.502 ms
+        Stalled Worker Scan - Scanning Worker states
+        Stalled Worker Scan - Cleaned up 0 stalled Worker in 6.775 ms
+        Stalled Worker Scan - Done.
+    Performing Stalled Pulse Scan...
+        Stalled Pulse Scan - Loading pulse states
+        Stalled Pulse Scan - Loaded 14 pulse states in 8.772 ms
+        Stalled Pulse Scan - Scanning pulse states
+        Stalled Pulse Scan - Cleaned up 0 stalled pulses in 6.384 ms
+        Stalled Pulse Scan - Done.
+    Performing Stalled Balancer Scan...
+        Stalled Balancer Scan - Loading balancer states
+        Stalled Balancer Scan - Loaded 0 balancer states in 5.894 ms
+        Stalled Balancer Scan - Done.
+    Performing Stalled License Forwarder Scan...
+        Stalled License Forwarder Scan - Loading forwarder states
+        Stalled License Forwarder Scan - Loaded 1 forwarder states in 9.798 ms
+        Stalled License Forwarder Scan - Scanning forwarder states
+        Stalled License Forwarder Scan - Cleaned up 0 stalled forwarders in 2.840 ms
+        Stalled License Forwarder Scan - Done.
+    Performing Stalled Connection Server Scan...
+        Stalled Connection Server Scan - Loading Connection Server states
+        Stalled Connection Server Scan - Loaded 1 Connection Server states in 7.481 ms
+        Stalled Connection Server Scan - Scanning Connection Server states
+        Stalled Connection Server Scan - Cleaned up 0 stalled Connection Servers in 3.163 ms
+        Stalled Connection Server Scan - Done.
+    Triggering repository repair events...
+    Profiling Section:
+    Group                Name                                     Count        Average Time Total Time
+
+    ConsoleCommandInvoke Collect Types                            1            0.109        0.109
+    ConsoleCommandInvoke Find Type                                1            0            0
+    ConsoleCommandInvoke Create Type                              1            0            0
+    ------------------   ---------------------------------------- ------------ ------------ ------------
+    GROUP TOTAL                                                   3            0.0363333    0.109
+
+    Repository Repair    Return Orphaned Limit Group Stubs        1            0.188        0.188
+    Repository Repair    Orphaned Task Scan                       1            0.141        0.141
+    Repository Repair    Check Stalled Pulses                     1            0.016        0.016
+    Repository Repair    Check Stalled License Forwarders         1            0.016        0.016
+    Repository Repair    Check Stalled Connection Servers         1            0.016        0.016
+    Repository Repair    Check Stalled Workers                    1            0.015        0.015
+    Repository Repair    Check Stalled Balances                   1            0.015        0.015
+    Repository Repair    Check Available Database Connections     1            0            0
+    ------------------   ---------------------------------------- ------------ ------------ ------------
+    GROUP TOTAL                                                   8            0.050875     0.407
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="history">
+<h2><a class="toc-backref" href="#contents">History</a><a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="addjobhistoryentry">
+<span id="addjobhistoryentry-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">AddJobHistoryEntry</a><a class="headerlink" href="#addjobhistoryentry" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Adds a Job History Entry for the Job.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -AddJobHistoryEntry</strong> &lt;Job ID&gt;  &lt;History Entry&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID&gt;</p></td>
+<td><p>The Job’s ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;History Entry&gt;</p></td>
+<td><p>The Job History entry to add.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -AddJobHistoryEntry 5e2c823c277cbb05a46831b6 &quot;Just Testing Command Line Access&quot;
+
+C:\&gt;
+</pre></div>
+</div>
+<img alt="../_images/command-addjobhistoryentry-dialog.png" src="../_images/command-addjobhistoryentry-dialog.png" />
+</div>
+<div class="section" id="addrepositoryhistoryentry">
+<span id="addrepositoryhistoryentry-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">AddRepositoryHistoryEntry</a><a class="headerlink" href="#addrepositoryhistoryentry" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Adds a Repository History Entry.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -AddRepositoryHistoryEntry</strong>  &lt;History Entry&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;History Entry&gt;</p></td>
+<td><p>The Repository History entry to add.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Add a History entry - no result is printed, but the <strong>Tools &gt; View Repository History</strong> dialog in the Deadline Monitor will show the entry.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -AddRepositoryHistoryEntry &quot;I came, I saw, I ... wrote History&quot;
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="addslavehistoryentry">
+<span id="addslavehistoryentry-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">AddSlaveHistoryEntry</a><a class="headerlink" href="#addslavehistoryentry" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Adds a Worker History Entry for the Worker.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -AddRepositoryHistoryEntry</strong> &lt;Worker Name&gt; &lt;History Entry&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Worker Name&gt;</p></td>
+<td><p>The Worker name</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;History Entry&gt;</p></td>
+<td><p>The history entry to add.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -AddSlaveHistoryEntry RN-001 &quot;This is just a test&quot;
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="reports-and-statistics">
+<h2><a class="toc-backref" href="#contents">Reports and Statistics</a><a class="headerlink" href="#reports-and-statistics" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="farmreports">
+<span id="farmreports-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">FarmReports</a><a class="headerlink" href="#farmreports" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Allows you to view farm reports. If a report name is specified, that report will instead be automatically be exported to the given file.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -FarmReports</strong> &lt;Report Name&gt; &lt;Start Date&gt; &lt;End Date&gt; &lt;Export Mode&gt; &lt;Export File Name&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Report Name&gt;</p></td>
+<td><p>The name of an existing report</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Start Date&gt;</p></td>
+<td><p>The start date, in yyyy-MM-dd format</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;End Date&gt;</p></td>
+<td><p>The end date, in yyyy-MM-dd format</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Export Mode&gt;</p></td>
+<td><p>CSV or TSV</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Export File Name&gt;</p></td>
+<td><p>The file to export to</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="getfarmstatistics">
+<span id="getfarmstatistics-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetFarmStatistics</a><a class="headerlink" href="#getfarmstatistics" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays quick summary information of Jobs and Workers.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetFarmStatistics</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetFarmStatistics
+    Queued Jobs= 2
+    Rendering Jobs= 0
+    Suspended Jobs= 122
+    Pending Jobs= 13
+    Completed Jobs= 202
+    Failed Jobs= 4
+
+    Machines Starting Jobs: 0
+    Rendering Machines: 0
+    Idle Machines: 0
+    Stalled Machines: 1
+    OfflineMachines: 0
+    Disabled Machines: 0
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="getfarmstatisticsex">
+<span id="getfarmstatisticsex-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetFarmStatisticsEx</a><a class="headerlink" href="#getfarmstatisticsex" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays quick summary information of Jobs and Workers, including Errored and Corrupt Jobs.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetFarmStatisticsEx</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetFarmStatisticsEx
+    Queued Jobs: 2
+    Rendering Jobs: 0
+    Errored Jobs: 0
+    Suspended Jobs: 122
+    Pending Jobs: 13
+    Completed Jobs: 202
+    FailedJobs: 3
+    Corrupt Jobs: 0
+    Machines Starting Jobs: 0
+    Rendering Machines: 0
+    Idle Machines: 0
+    Stalled Machines: 1
+    OfflineMachines: 0
+    Disabled Machines: 0
+</pre></div>
+</div>
+</div>
+<div class="section" id="getjobstatistics">
+<span id="getjobstatistics-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetJobStatistics</a><a class="headerlink" href="#getjobstatistics" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays quick summary information of Jobs.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetJobStatistics</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetJobStatistics
+    Queued Jobs= 2
+    Rendering Jobs= 0
+    Suspended Jobs= 122
+    Pending Jobs= 13
+    Completed Jobs= 202
+    Failed Jobs= 4
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="getslavestatistics">
+<span id="getslavestatistics-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetSlaveStatistics</a><a class="headerlink" href="#getslavestatistics" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays quick summary information of Workers.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetSlaveStatistics</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetSlaveStatistics
+    Machines Starting Jobs: 0
+    Rendering Machines: 0
+    Idle Machines: 0
+    Stalled Machines: 1
+    OfflineMachines: 0
+    Disabled Machines: 0
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="jobstatistics">
+<span id="jobstatistics-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">JobStatistics</a><a class="headerlink" href="#jobstatistics" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Shows statistics for jobs that have completed between the specified dates, inclusive.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -JobStatistics</strong> &lt;Start Date&gt; &lt;End Date&gt; &lt;Pool Filter&gt; &lt;Group Filter&gt; &lt;Plugin Filter&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Start Date&gt;</p></td>
+<td><p>The start date in the form yyyy-MM (ie: 2010-01)</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;End Date&gt;</p></td>
+<td><p>The end date in the form yyyy-MM (ie: 2010-12)</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Pool Filter&gt;</p></td>
+<td><p>A comma-separated list of pools (or an empty string for no filter)</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Group Filter&gt;</p></td>
+<td><p>A comma-separated list of groups (or an empty string for no filter)</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Plugin Filter&gt;</p></td>
+<td><p>A comma-separated list of plugins (or an empty string for no filter)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>All 5 arguments are mandatory. The last 3 can be “”, but cannot be unsupplied.</p>
+</div>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -JobStatistics 2020-01 2020-02 &quot;&quot; &quot;&quot; &quot;&quot;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">The output will list every job from the specified time period in INI format with the Job ID used as [Section].</div>
+<div class="line">Each Job’s statistics block will look like this:</div>
+</div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[5e2c823c277cbb05a46831b6]
+JobName=VRay Next Benchmark
+JobId=5e2c823c277cbb05a46831b6
+User=SomeUser
+Comment=
+Department=
+SubmitDateTime=2020/01/25 10:00:28
+StartDateTime=2020/01/25 10:00:28
+FinishDateTime=2020/01/25 10:29:59
+Pool=none
+Group=none
+Priority=50
+FrameList=1-22
+TaskCount=22
+FrameCount=22
+Plugin=Vraybench
+PluginDataFileName=
+PluginDataFileSize=0
+MachineLimit=0
+ErrorCount=0
+AverageConcurrentTasks=2
+ClockRenderTime=00d 00h 29m 31s
+TotalTaskTime=00d 00h 58m 19s
+AverageTaskTime=00d 00h 02m 39s
+MedianTaskTime=00d 00h 02m 36s
+TotalTaskStartupTime=00d 00h 00m 23s
+AverageTaskStartupTime=00d 00h 00m 01s
+MedianTaskStartupTime=00d 00h 00m 01s
+TotalTaskRenderTime=00d 00h 57m 47s
+AverageTaskRenderTime=00d 00h 02m 37s
+MedianTaskRenderTime=00d 00h 02m 35s
+TotalNormalizedTaskRenderTime=00d 00h 57m 47s
+AverageNormalizedTaskRenderTime=00d 00h 02m 37s
+MedianNormalizedTaskRenderTime=00d 00h 02m 35s
+AverageFrameTime=00d 00h 02m 39s
+MedianFrameTime=00d 00h 02m 37s
+AverageFrameStartupTime=00d 00h 00m 01s
+MedianFrameStartupTime=00d 00h 00m 02s
+AverageFrameRenderTime=00d 00h 02m 37s
+MedianFrameRenderTime=00d 00h 02m 36s
+AverageNormalizedFrameRenderTime=00d 00h 02m 37s
+MedianNormalizedFrameRenderTime=00d 00h 02m 36s
+WastedErrorTime=00d 00h 00m 00s
+WastedRequeueTime=00d 00h 00m 00s
+TotalImageFileSize=0 Bytes
+AverageImageFileSize=0 Bytes
+MedianImageFileSize=0 Bytes
+PeakRamUsage=2.435 GB
+AverageRamUsage=1.314 GB
+MedianRamUsage=1.320 GB
+PeakSwapUsage=1.178 MB
+AverageSwapUsage=1.028 MB
+MedianSwapUsage=1.033 MB
+PeakCpuUsage=101%
+AverageCpuUsage=62%
+MedianCpuUsage=63%
+UsedCpuClocks=73.100 MB
+TotalCpuClocks=116.577 MB
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Scans, History, and Reports - Command Arguments</a><ul>
+<li><a class="reference internal" href="#house-cleaning-pending-jobs-scan-repository-repair">House Cleaning, Pending Jobs Scan, Repository Repair</a><ul>
+<li><a class="reference internal" href="#dohousecleaning">DoHouseCleaning</a></li>
+<li><a class="reference internal" href="#dopendingjobscan">DoPendingJobScan</a></li>
+<li><a class="reference internal" href="#dorepositoryrepair">DoRepositoryRepair</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#history">History</a><ul>
+<li><a class="reference internal" href="#addjobhistoryentry">AddJobHistoryEntry</a></li>
+<li><a class="reference internal" href="#addrepositoryhistoryentry">AddRepositoryHistoryEntry</a></li>
+<li><a class="reference internal" href="#addslavehistoryentry">AddSlaveHistoryEntry</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#reports-and-statistics">Reports and Statistics</a><ul>
+<li><a class="reference internal" href="#farmreports">FarmReports</a></li>
+<li><a class="reference internal" href="#getfarmstatistics">GetFarmStatistics</a></li>
+<li><a class="reference internal" href="#getfarmstatisticsex">GetFarmStatisticsEx</a></li>
+<li><a class="reference internal" href="#getjobstatistics">GetJobStatistics</a></li>
+<li><a class="reference internal" href="#getslavestatistics">GetSlaveStatistics</a></li>
+<li><a class="reference internal" href="#jobstatistics">JobStatistics</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="command-line-arguments-system.html"
+                        title="previous chapter">System Functions and Dialogs - Command Arguments</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="command-line-arguments-version.html"
+                        title="next chapter">Version and Help - Command Arguments</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command-line-arguments-version.html" title="Version and Help - Command Arguments"
+             >next</a></li>
+        <li class="right" >
+          <a href="command-line-arguments-system.html" title="System Functions and Dialogs - Command Arguments"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" >Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Scans, History, and Reports - Command Arguments</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

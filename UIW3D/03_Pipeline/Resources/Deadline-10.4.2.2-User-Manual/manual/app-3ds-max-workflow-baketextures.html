@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3ds Max - Integrated Submitter Workflow - Bake Textures &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3ds Max - Integrated Submitter Workflow - FumeFX Simulation" href="app-3ds-max-workflow-fumefx.html" />
+    <link rel="prev" title="3ds Max - Integrated Submitter - Workflows" href="app-3ds-max-workflows.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-3ds-max-workflow-fumefx.html" title="3ds Max - Integrated Submitter Workflow - FumeFX Simulation"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-3ds-max-workflows.html" title="3ds Max - Integrated Submitter - Workflows"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Max - Integrated Submitter Workflow - Bake Textures</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ds-max-integrated-submitter-workflow-bake-textures">
+<span id="app-3ds-max-workflow-baketextures-ref-label"></span><h1>3ds Max - Integrated Submitter Workflow - Bake Textures<a class="headerlink" href="#ds-max-integrated-submitter-workflow-bake-textures" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="bake-textures-workflow-overview">
+<h2>Bake Textures Workflow Overview<a class="headerlink" href="#bake-textures-workflow-overview" title="Permalink to this headline">¶</a></h2>
+<img alt="../_images/max_workflow_baketextures.png" class="align-right" src="../_images/max_workflow_baketextures.png" />
+<p>The Bake Textures workflow implements the same functionality previously available in SMTD via the Misc. tab, but in the form or a custom workflow mode with a more user-friendly UI.</p>
+<p>It lets you submit a Deadline job to bake textures using BakeElements set up via the standard 3ds Max Render To Texture dialog.</p>
+</div>
+<div class="section" id="accessing-the-workflow">
+<h2>Accessing The Workflow<a class="headerlink" href="#accessing-the-workflow" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>To use the workflow, select the <strong>Submit BAKE TEXTURES Job To Deadline</strong> entry from the <strong>Workflow:</strong> drop-down list on top of the SMTD UI.</p></li>
+<li><p>This workflow is always available.</p></li>
+</ul>
+<p><strong>User Interface</strong></p>
+<ul class="simple">
+<li><p>The Bake Textures workflow adds a <strong>Bake Job</strong> tab</p>
+<ul>
+<li><p>It contains a custom <strong>Render To Texture</strong> rollout</p></li>
+<li><p>It features the standard <strong>Job Options</strong> rollout of SMTD, but with several controls disabled.</p></li>
+<li><p>It also features the standard <strong>Job Failure Detection</strong> rollout with no changes.</p></li>
+</ul>
+</li>
+<li><p>The standard <strong>Assets</strong>, <strong>Render</strong>, <strong>Options</strong> and <strong>Limits</strong> tabs will also be available with most of their default content.</p>
+<ul>
+<li><p>The <strong>Render</strong> tab will only feature the rollouts relevant to Texture Baking, and does not contain the <strong>Pathing</strong>, <strong>DBR</strong> etc. rollouts.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Submit Button Behavior</strong></p>
+<ul class="simple">
+<li><p>The SUBMIT button of SMTD will be disabled if</p>
+<ul>
+<li><p>The current renderer does not support texture baking (e.g. Krakatoa)</p></li>
+<li><p>There are scene objects set up for texture baking, but their baking is disabled via the Render To Texture dialog.</p></li>
+<li><p>The scene objects set up for baking have no valid Bake Elements.</p></li>
+<li><p>None of the available scene objects have been checked in the <strong>Render To Texture</strong> rollout’s list.</p></li>
+<li><p>No objects have been set up for baking via the 3ds Max Render To Textures dialog.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="custom-user-interface-controls">
+<h2>Custom User Interface Controls<a class="headerlink" href="#custom-user-interface-controls" title="Permalink to this headline">¶</a></h2>
+<p><strong>UPDATE List With Scene Objects Containing Valid And Enabled Texture Bake Elements</strong> button</p>
+<ul class="simple">
+<li><p>Pressing this button will refresh the Objects To Bake list from the scene to reflect any recent changes.</p></li>
+</ul>
+<p><strong>Objects To Bake</strong> listView</p>
+<ul class="simple">
+<li><p>Shows the scene objects that have been set up for baking via the Render To Texture dialog of 3ds Max.</p></li>
+<li><p>Offers a checkbox in front of each valid object to quickly toggle the processing of objects without using the Render To Texture dialog.</p></li>
+<li><p>Shows the Bake Elements assigned to each object for reference.</p></li>
+</ul>
+<p><strong>One Object Per Task</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, each object will be baked by a separate task in the job.</p></li>
+<li><p>When unchecked, the baking of all objects will be performed within a single task.</p></li>
+</ul>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3ds Max - Integrated Submitter Workflow - Bake Textures</a><ul>
+<li><a class="reference internal" href="#bake-textures-workflow-overview">Bake Textures Workflow Overview</a></li>
+<li><a class="reference internal" href="#accessing-the-workflow">Accessing The Workflow</a></li>
+<li><a class="reference internal" href="#custom-user-interface-controls">Custom User Interface Controls</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-3ds-max-workflows.html"
+                        title="previous chapter">3ds Max - Integrated Submitter - Workflows</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-3ds-max-workflow-fumefx.html"
+                        title="next chapter">3ds Max - Integrated Submitter Workflow - FumeFX Simulation</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-3ds-max-workflow-fumefx.html" title="3ds Max - Integrated Submitter Workflow - FumeFX Simulation"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-3ds-max-workflows.html" title="3ds Max - Integrated Submitter - Workflows"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Max - Integrated Submitter Workflow - Bake Textures</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

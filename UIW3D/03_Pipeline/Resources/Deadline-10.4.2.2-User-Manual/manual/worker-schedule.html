@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Worker Scheduling &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Multiple Workers On One Machine" href="multiple-workers.html" />
+    <link rel="prev" title="Job Transferring" href="job-transferring.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="multiple-workers.html" title="Multiple Workers On One Machine"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="job-transferring.html" title="Job Transferring"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" accesskey="U">Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Worker Scheduling</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="worker-scheduling">
+<span id="worker-schedule-ref-label"></span><h1>Worker Scheduling<a class="headerlink" href="#worker-scheduling" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>You can use the Worker Scheduling feature to configure when Workers applications should be launched and shut down. Worker Scheduling is controlled by the <a class="reference internal" href="launcher.html#launcher-ref-label"><span class="std std-ref">Launcher</span></a>, so the Launcher must be running on the machines for Worker Scheduling to work.</p>
+<p>If a Worker is scheduled to start on a machine, a notification message will pop up for 30 seconds indicating that the Worker is scheduled to start. If someone is still using the machine, they can choose to delay the start of the Worker for a certain amount of time.</p>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>Worker Scheduling can be configured from the Monitor by selecting ‘Tools’ -&gt; ‘Configure Worker Scheduling’. You will need to be in Power User mode for this, if you are not part of a User Group that has access to this feature.</p>
+<a class="reference internal image-reference" href="../_images/worker_scheduling.png"><img alt="../_images/worker_scheduling.png" src="../_images/worker_scheduling.png" style="height: 500px;" /></a>
+<p>Machine Groups are used by Worker Scheduling to organize Worker machines on the farm, and each group can have different scheduling settings. To add a new Machine Group, simply click the Add button in the Machine Group section.</p>
+<a class="reference internal image-reference" href="../_images/add_worker_scheduling.png"><img alt="../_images/add_worker_scheduling.png" src="../_images/add_worker_scheduling.png" style="height: 350px;" /></a>
+<p>Worker Scheduling Group Settings:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Group Name</strong>: The name with which the Worker Scheduling Group will be identified.</p></li>
+<li><p><strong>Group Mode</strong>: Whether this particular Group is enabled or disabled.</p></li>
+<li><p><strong>Include All Workers in this Group</strong>: If enabled, all Workers will be included in this group.</p></li>
+<li><p><strong>Unassigned Workers</strong>: The Workers that will not be part of this Group.</p></li>
+<li><p><strong>Workers In Group</strong>: Workers that will be part of this Group.</p></li>
+</ul>
+</div></blockquote>
+<p>To edit the scheduling settings within a group, simply click on the group in the Machine Groups list.</p>
+<div class="section" id="id1">
+<h3>Worker Scheduling<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>These settings are used to define the schedule for when Workers should start and stop.</p>
+<ul class="simple">
+<li><p><strong>Ensure Worker Is Running During Scheduled Hours</strong>: If enabled, Workers will be restarted if they are shut down during the scheduled hours.</p></li>
+<li><p><strong>Day of the Week</strong>: Configure which days of the week you want to set a schedule for.</p></li>
+<li><p><strong>Start Time</strong>: The time on the selected day that the Worker application should be launched if it is not already running.</p></li>
+<li><p><strong>Stop Time</strong>: The time on the selected day that the Worker application should be closed if it is running.</p></li>
+</ul>
+</div>
+<div class="section" id="idle-detection-ref-label">
+<span id="idle-detection"></span><h3>Idle Detection<a class="headerlink" href="#idle-detection-ref-label" title="Permalink to this headline">¶</a></h3>
+<p>These settings are used to launch the Worker if the machine has been idle for a certain amount of time (“idle” means no keyboard, mouse, tablet or spaceball input). There is also additional criteria that can be checked before launching the Worker, including the machine’s current memory and CPU usage, the current logged in user, and the processes currently running on the machine. Finally, this system can stop the Worker automatically when the machine is no longer idle.</p>
+<ul class="simple">
+<li><p><strong>Start Worker When Machine Is Idle For ___ Minutes</strong>: If enabled, the Worker will be started on the machine if it is idle. A machine is considered idle if there hasn’t been any keyboard or mouse activity for the specified amount of time.</p></li>
+<li><p><strong>Stop Worker When Machine Is No Longer Idle</strong>: If enabled, the Worker will be stopped when the machine is no longer idle. A machine is considered idle if there hasn’t been any keyboard or mouse activity for the specified amount of time.</p></li>
+<li><p><strong>Only Stop Worker If Started By Idle Detection</strong>: If enabled, the Worker will only be stopped when the machine is no longer idle if that Worker was originally started by Idle Detection. If the Worker was originally started manually, it will not be stopped.</p></li>
+</ul>
+<p>There are some limitations with Idle Detection depending on the operating system:</p>
+<ul class="simple">
+<li><p>On Windows, Idle Detection will NOT work if the Launcher is running as a service. This is because the service runs in an environment that is separate from the Desktop, and has no knowledge of any mouse or keyboard activity.</p></li>
+<li><p>On Linux, the Launcher uses <a class="reference internal" href="install-client.html#linux-install-ref-label"><span class="std std-ref">X11</span></a> to determine if there has been any mouse or keyboard activity. If <a class="reference internal" href="install-client.html#linux-install-ref-label"><span class="std std-ref">X11</span></a> is not available, Idle Detection will NOT work. One such situation is when the launcher is run as a daemon.</p></li>
+</ul>
+<p>Note that Idle Detection can be overridden in the <a class="reference internal" href="local-worker.html#local-worker-ref-label"><span class="std std-ref">Local Worker Controls</span></a> so that users can configure if their local Worker should launch when the machine becomes idle.</p>
+</div>
+<div class="section" id="miscellaneous-options">
+<h3>Miscellaneous Options<a class="headerlink" href="#miscellaneous-options" title="Permalink to this headline">¶</a></h3>
+<p>These settings are applied to both Worker Scheduling and Idle Detection.</p>
+<ul class="simple">
+<li><p><strong>Only Start Worker If CPU Usage Less Than ___%</strong>: If enabled, the Worker will only be launched if the machine’s CPU usage is less than the specified value.</p></li>
+<li><p><strong>Only Start Worker If Free Memory More Than ___ MB</strong>: If enabled, the Worker will only be launched if the machine has more free memory than the specified value (in Megabytes).</p></li>
+<li><p><strong>Only Start Worker If These Processes Are Not Running</strong>: If enabled, the Worker will only be launched if the specified processes are not running on the machine.</p></li>
+<li><p><strong>Only Start If Launcher Is Not Running As These Users</strong>: If enabled, the Worker will only be launched if the launcher is not running as one of the specified users.</p></li>
+<li><p><strong>Allow Workers to Finish Their Current Task When Stopping</strong>: If enabled, the Worker application will not be closed until it finishes its current Task.</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Worker Scheduling</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li><a class="reference internal" href="#id1">Worker Scheduling</a></li>
+<li><a class="reference internal" href="#idle-detection-ref-label">Idle Detection</a></li>
+<li><a class="reference internal" href="#miscellaneous-options">Miscellaneous Options</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="job-transferring.html"
+                        title="previous chapter">Job Transferring</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="multiple-workers.html"
+                        title="next chapter">Multiple Workers On One Machine</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="multiple-workers.html" title="Multiple Workers On One Machine"
+             >next</a></li>
+        <li class="right" >
+          <a href="job-transferring.html" title="Job Transferring"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" >Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Worker Scheduling</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Integrated Submitter Installation (Advanced) &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Client Deployment - Windows" href="deploy-client-windows.html" />
+    <link rel="prev" title="Client Installation (Advanced)" href="install-client.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="deploy-client-windows.html" title="Client Deployment - Windows"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="install-client.html" title="Client Installation (Advanced)"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" accesskey="U">Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Integrated Submitter Installation (Advanced)</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="integrated-submitter-installation-advanced">
+<span id="install-submitters-ref-label"></span><h1>Integrated Submitter Installation (Advanced)<a class="headerlink" href="#integrated-submitter-installation-advanced" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This guide will walk you through the installation of the integrated submitters, which can be used to submit jobs from within your application (3ds Max, Maya, Nuke, etc). These should be installed on any machines you wish to submit jobs from. Note that jobs can also be submitted from the Submit menu in the Monitor. See the <a class="reference internal" href="job-submitting.html#job-submitting-ref-label"><span class="std std-ref">Submitting Jobs</span></a> documentation for more information.</p>
+<p>At this point, you should already have the Database and Repository installed, and the Client software installed. If you do not, please see the <a class="reference internal" href="install-db-repo.html#install-db-repo-ref-label"><span class="std std-ref">Database and Repository Installation (Advanced)</span></a> and <a class="reference internal" href="install-client.html#install-client-ref-label"><span class="std std-ref">Client Installation (Advanced)</span></a> documentation for installation instructions. You also need to have the software that you will be submitting from installed as well (3ds Max, Maya, Nuke, etc).</p>
+</div>
+<div class="section" id="installing-the-submitters">
+<h2>Installing The Submitters<a class="headerlink" href="#installing-the-submitters" title="Permalink to this headline">¶</a></h2>
+<p>The submitter installers can be found in the <em>submission</em> folder in the Deadline Repository. Open the folder for the application you want to install the submitter for (3dsmax, Maya, Nuke, etc), and then open the <em>Installers</em> folder. There will be an installer for each operating system that the current application runs on.</p>
+<p>Simply run the appropriate installer then follow the step as follows. Note that these steps are similar for each application and each operating system.</p>
+<p><a class="reference internal" href="../_images/windows_submitter_client_dir.png"><img alt="windows_client_dir" src="../_images/windows_submitter_client_dir.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/windows_submitter_repo_dir.png"><img alt="windows_repo_dir" src="../_images/windows_submitter_repo_dir.png" style="height: 300px;" /></a></p>
+<p>The Deadline Client Bin Directory page shows what DEADLINE_PATH is currently set to. This value is originally set by the Client installer, and is used by the submission scripts to find the Client’s bin directory so that it can find the Repository and submit jobs. You can change the DEADLINE_PATH value here if it’s incorrect or if it doesn’t exist, and the submitter installer will give you the option to make the change permanent.</p>
+<p>The next page will show the Repository directory that the Client is currently connected to, which is where the submission scripts are installed from. If this path is incorrect, you can change it here.</p>
+<p><a class="reference internal" href="../_images/windows_submitter_components.png"><img alt="windows_components" src="../_images/windows_submitter_components.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/windows_submitter_install_dir.png"><img alt="windows_install_dir" src="../_images/windows_submitter_install_dir.png" style="height: 300px;" /></a></p>
+<p>Select the components you wish to install (the installer will try to auto select the versions it detects), and then verify the install location for each one.</p>
+<p>After configuring these, press Next to continue with the installation.</p>
+</div>
+<div class="section" id="silent-installation">
+<h2>Silent Installation<a class="headerlink" href="#silent-installation" title="Permalink to this headline">¶</a></h2>
+<p>The Submitter installers can be run in command line mode or unattended mode on each operating system. Note though that on macOS, you must run the installbuilder.sh script that can be found in the Contents/MacOS folder,
+which is inside the Mac Submitter Installer package.</p>
+<p>To run in command line mode, pass the “–mode text” command line option to the installer. For example, on Linux:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">Nuke</span><span class="o">-</span><span class="n">submitter</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">installer</span><span class="o">.</span><span class="n">run</span> <span class="o">--</span><span class="n">mode</span> <span class="n">text</span>
+</pre></div>
+</div>
+<p>To run in silent mode, pass the “–mode unattended” command line option to the installer. For example, on Windows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Maya</span><span class="o">-</span><span class="n">submitter</span><span class="o">-</span><span class="n">windows</span><span class="o">-</span><span class="n">installer</span><span class="o">.</span><span class="n">exe</span> <span class="o">--</span><span class="n">mode</span> <span class="n">unattended</span>
+</pre></div>
+</div>
+<p>To get a list of all available command line options, pass the “–help” command line option to the installer. For example, on macOS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">Maya</span><span class="o">-</span><span class="n">submitter</span><span class="o">-</span><span class="n">osx</span><span class="o">-</span><span class="n">installer</span><span class="o">.</span><span class="n">app</span><span class="o">/</span><span class="n">Contents</span><span class="o">/</span><span class="n">MacOS</span><span class="o">/</span><span class="n">installbuilder</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">help</span>
+</pre></div>
+</div>
+<p>Note that there are quite a few Submitter installer options that are only available from the command line, which you can view when running the –help command. These options include:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--enable-components</span></code>: Select the components which you would like to enable (programs installed in default locations will be auto selected)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--disable-components</span></code>: Select the components which you would like to disable (programs installed in default locations will be auto selected)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--destDir###</span></code>: The destination directories for the components (will be defaulted to if installed in default locations)</p></li>
+</ul>
+</div></blockquote>
+<p>An example batch script that puts these all together:</p>
+<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span><span class="p">@</span><span class="k">echo</span> off
+.\Maya-submitter-windows-installer.exe --mode unattended --disable-components Maya2014
+.\3dsMax-submitter-windows-installer.exe --mode unattended
+    --enable-components 3dsMax2011,3dsMax2015
+    --disable-components 3dsMax2012,3dsMax2013,3dsMax2014
+    --destDir2011 <span class="s2">&quot;C:\3dsMax2011_64&quot;</span>
+.\Nuke-submitter-windows-installer.exe --mode unattended
+</pre></div>
+</div>
+<p>This script installs the submitters for Maya (ignoring Maya 2014), 3ds Max(2011 and 2015 only, with 2011 in an unusual directory) and Nuke (default settings)</p>
+</div>
+<div class="section" id="change-the-deadline-path-value">
+<span id="submitter-installer-deadline-path-ref-label"></span><h2>Change the DEADLINE_PATH Value<a class="headerlink" href="#change-the-deadline-path-value" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>DEADLINE_PATH</strong> value is a system setting that the Integrated Submission scripts use to determine where the Deadline Client is installed to, and what the Repository path is. This value is set by the Client installer, and if you’ve installed more than one version of Deadline on your machine, it’s possible that this value could be incorrect.</p>
+<p>You can use a Submitter installer to change the <strong>DEADLINE_PATH</strong> value without installing anything by following these steps:</p>
+<ul class="simple">
+<li><p>Run any submitter installer and set the <strong>DEADLINE_PATH</strong> value on the Deadline Client Bin Directory page.</p></li>
+<li><p>Skip past the Repository Directory page.</p></li>
+<li><p>Uncheck all options on the Components page.</p></li>
+<li><p>Click Next on the Ready to Install page.</p></li>
+</ul>
+<p>The installer will then update the <strong>DEADLINE_PATH</strong> variable without actually installing anything.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Integrated Submitter Installation (Advanced)</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#installing-the-submitters">Installing The Submitters</a></li>
+<li><a class="reference internal" href="#silent-installation">Silent Installation</a></li>
+<li><a class="reference internal" href="#change-the-deadline-path-value">Change the DEADLINE_PATH Value</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="install-client.html"
+                        title="previous chapter">Client Installation (Advanced)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="deploy-client-windows.html"
+                        title="next chapter">Client Deployment - Windows</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="deploy-client-windows.html" title="Client Deployment - Windows"
+             >next</a></li>
+        <li class="right" >
+          <a href="install-client.html" title="Client Installation (Advanced)"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" >Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Integrated Submitter Installation (Advanced)</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

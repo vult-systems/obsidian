@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NGINX Web Server &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="RCS Load Balancing in the Cloud" href="rcs-load-balancing-in-the-cloud.html" />
+    <link rel="prev" title="SSL Certificate Generation" href="proxy-sslgen.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="rcs-load-balancing-in-the-cloud.html" title="RCS Load Balancing in the Cloud"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="proxy-sslgen.html" title="SSL Certificate Generation"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" accesskey="U">Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">NGINX Web Server</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="nginx-web-server">
+<span id="nginx-ref-label"></span><h1>NGINX Web Server<a class="headerlink" href="#nginx-web-server" title="Permalink to this headline">¶</a></h1>
+<a class="reference external image-reference" href="https://www.nginx.com"><img alt="../_images/proxy_nginx.png" src="../_images/proxy_nginx.png" style="height: 50px;" /></a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Topics covered in this page require you to have administrator/root access to your machine(s) to install/deploy software.</p>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>NGINX is a free, open-source, high-performance HTTP server and reverse proxy. NGINX is known for its high performance, stability, rich feature set, simple configuration, and low resource consumption.</p>
+<p>All the information in this page can be found at the <a class="reference external" href="https://www.nginx.com/resources/wiki/">NGINX Official Wiki</a>.</p>
+<p>This is just a simple digest of what we have found the most relevant information. It is recommended to consult the full NGINX documentation before continuing configuration.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>NGINX has both Windows and Linux binaries. Currently Windows is NOT fully featured and is NOT recommended for production by NGINX.</p>
+<div class="section" id="debian-distro">
+<h3>Debian Distro<a class="headerlink" href="#debian-distro" title="Permalink to this headline">¶</a></h3>
+<p>In the terminal run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">nginx</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="red-hat-distro">
+<h3>Red Hat Distro<a class="headerlink" href="#red-hat-distro" title="Permalink to this headline">¶</a></h3>
+<p>In the terminal run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="n">nginx</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>Note, this section gives some background information about NGINX. To learn more go to the <a class="reference external" href="https://www.nginx.com/resources/wiki/">NGINX Official Wiki</a>.</p>
+<p>NGINX modules are created in configuration files. By default, the configuration file is called <code class="docutils literal notranslate"><span class="pre">nginx.conf</span></code>.</p>
+<p>The config files are usually located in:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span>
+</pre></div>
+</div>
+<p>In the main <code class="docutils literal notranslate"><span class="pre">nginx.conf</span></code> file make sure you have the following in the http declarative:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">include</span> <span class="n">deadline</span><span class="o">.</span><span class="n">conf</span>
+</pre></div>
+</div>
+<p>Create a file next to your <code class="docutils literal notranslate"><span class="pre">nginx.conf</span></code> called <code class="docutils literal notranslate"><span class="pre">deadline.conf</span></code>.</p>
+<div class="section" id="config-file-structure">
+<h3>Config File Structure<a class="headerlink" href="#config-file-structure" title="Permalink to this headline">¶</a></h3>
+<p>NGINX conf files consist of modules called declaratives. Declaratives are divided into simple declaratives and block declaratives.</p>
+<p>A simple declarative has a name and a parameter and is separated by a semi-colon character, eg: <code class="docutils literal notranslate"><span class="pre">root</span> <span class="pre">/data/www;</span></code></p>
+<p>A block declarative has a name and surrounding braces <code class="docutils literal notranslate"><span class="pre">({})</span></code> which contain a set of simple declaratives. eg: <code class="docutils literal notranslate"><span class="pre">http</span> <span class="pre">{</span> <span class="pre">server</span> <span class="pre">{}</span> <span class="pre">}</span></code></p>
+</div>
+<div class="section" id="common-commands">
+<h3>Common Commands<a class="headerlink" href="#common-commands" title="Permalink to this headline">¶</a></h3>
+<p>To start NGINX:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nginx</span> <span class="o">-</span><span class="n">s</span> <span class="n">start</span>
+</pre></div>
+</div>
+<p>To stop NGINX:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nginx</span> <span class="o">-</span><span class="n">s</span> <span class="n">stop</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nginx</span> <span class="o">-</span><span class="n">s</span> <span class="n">quit</span>
+</pre></div>
+</div>
+<p>To reload a config file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nginx</span> <span class="o">-</span><span class="n">s</span> <span class="n">reload</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="setup-your-nginx">
+<h2>Setup your NGINX<a class="headerlink" href="#setup-your-nginx" title="Permalink to this headline">¶</a></h2>
+<p>These are our recommended NGINX configurations.</p>
+<div class="section" id="logging">
+<h3>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h3>
+<p>To enable NGINX logging, add the following to the http declarative in your <code class="docutils literal notranslate"><span class="pre">nginx.conf</span></code> file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span> <span class="p">{</span>
+    <span class="c1">#.......</span>
+    <span class="n">access_log</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">access</span><span class="o">.</span><span class="n">log</span><span class="p">;</span>
+    <span class="n">error_log</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">error</span><span class="o">.</span><span class="n">log</span><span class="p">;</span>
+    <span class="c1">#.......</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="http-load-balancing">
+<h3>HTTP Load Balancing<a class="headerlink" href="#http-load-balancing" title="Permalink to this headline">¶</a></h3>
+<p>Add the following to your <code class="docutils literal notranslate"><span class="pre">deadline.conf</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>map $request_uri $upstreamserver {
+default         deadline;
+~transactionID.*    deadline2;
+}
+
+upstream deadline2 {
+    hash $binary_remote_addr$request_uri$args;
+
+    server &lt;SERVER IP&gt;:&lt;PORT&gt;;
+    #...
+    #...
+}
+upstream deadline {
+    server &lt;SERVER IP&gt;:&lt;PORT&gt;;
+    #...
+    #...
+}
+
+server {
+    listen 80;
+
+    location / {
+        proxy_pass http://$upstreamserver;
+    }
+}
+</pre></div>
+</div>
+<p>In the Deadline upstream declarative, add your list of Deadline Remote Connection Servers in the format: <code class="docutils literal notranslate"><span class="pre">server</span> <span class="pre">&lt;IP</span> <span class="pre">Address&gt;:&lt;PORT&gt;;</span></code></p>
+<p>You can add as many as you need to this list.</p>
+</div>
+<div class="section" id="https-load-balancing">
+<h3>HTTPS Load Balancing<a class="headerlink" href="#https-load-balancing" title="Permalink to this headline">¶</a></h3>
+<p>To generate server and client certificates yourself, please see the <a class="reference internal" href="proxy-sslgen.html#ssl-cert-gen-ref-label"><span class="std std-ref">SSL Certificate Generation</span></a> documentation.</p>
+<p>Add the following to your <strong>deadline.conf</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>map $request_uri $upstreamserver {
+default         deadline;
+~transactionID.*    deadline2;
+}
+
+upstream deadline2 {
+    hash $binary_remote_addr$request_uri$args;
+
+    server &lt;SERVER IP&gt;:&lt;PORT&gt;;
+    #...
+    #...
+}
+
+upstream deadline {
+    server &lt;SERVER IP&gt;:&lt;PORT&gt;;
+    #...
+    #...
+}
+
+server {
+    listen 80;
+    return 301 https://$host$request_uri;
+}
+
+server {
+        listen 443 ssl;
+        server_name &lt;HOSTNAME OR IP&gt;;
+
+        ssl_certificate           &lt;PATH TO THE SERVER .CRT FILE&gt;;
+        ssl_certificate_key       &lt;PATH TO THE SERVER .KEY FILE&gt;;
+
+        ssl_client_certificate    &lt;PATH TO THE CLIENT .CRT FILE&gt;;
+        ssl_verify_client         on;
+
+        ssl on;
+        ssl_session_cache builtin:1000 shared:SSL:10m;
+        ssl_protocols  TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers HIGH:!aNULL:!eNULL:!EXPORT:!CAMELLIA:!DES:!MD5:!PSK:!RC4;
+        ssl_prefer_server_ciphers on;
+
+        location / {
+            proxy_set_header        Host $host;
+            proxy_set_header        X-Real-IP $remote_addr;
+            proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header        X-Forwarded-Proto $scheme;
+
+            # Fix the &quot;It appears that your reverse proxy set up is broken&quot; error.
+            proxy_pass          http://$upstreamserver;
+            proxy_read_timeout  90;
+
+            proxy_redirect      http://deadline https://&lt;HOST NAME&gt;;
+        }
+}
+</pre></div>
+</div>
+<p>In the Deadline upstream declarative, add your list of Deadline Remote Connection Servers in the format: <code class="docutils literal notranslate"><span class="pre">server</span> <span class="pre">&lt;IP</span> <span class="pre">Address&gt;:&lt;PORT&gt;;</span></code></p>
+<p>Replace <strong>&lt;HOST NAME&gt;</strong> with the name of the machine your NGINX is running on as well as applicable paths for <strong>&lt;PATH TO THE SERVER .CRT FILE&gt;</strong>, <strong>&lt;PATH TO THE SERVER .KEY FILE&gt;</strong>, and <strong>&lt;PATH TO THE CLIENT .CRT FILE&gt;</strong>.</p>
+</div>
+<div class="section" id="redundancy-and-failover">
+<h3>Redundancy and Failover<a class="headerlink" href="#redundancy-and-failover" title="Permalink to this headline">¶</a></h3>
+<p>Let’s say you are using NGINX and load balancing between 3 servers, and one of them goes down unexpectedly. What behaviour will the Client see?</p>
+<p>The answer is nothing. NGINX handles redundancy out of the box. When NGINX considers a server to be unavailable, it will temporarily stop sending requests to it until it is active again.</p>
+<p>You can tune this behaviour by changing the <cite>max_fails</cite> or <cite>fail_timeout</cite> flag. By default <cite>max_fails</cite> is set to 1 and <cite>fail_timeout</cite> is set to 10 seconds.</p>
+<p>In general it is not necessary to play with these variables. But if you need to, here is an example of how you would set these parameters:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">upstream</span> <span class="n">deadline</span> <span class="p">{</span>
+    <span class="n">server</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.1</span><span class="p">;</span>
+    <span class="n">server</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.2</span> <span class="n">max_fails</span><span class="o">=</span><span class="mi">3</span> <span class="n">fail_timeout</span><span class="o">=</span><span class="mi">30</span><span class="n">s</span><span class="p">;</span>
+    <span class="n">server</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.3</span> <span class="n">max_fails</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">NGINX Web Server</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#debian-distro">Debian Distro</a></li>
+<li><a class="reference internal" href="#red-hat-distro">Red Hat Distro</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li><a class="reference internal" href="#config-file-structure">Config File Structure</a></li>
+<li><a class="reference internal" href="#common-commands">Common Commands</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#setup-your-nginx">Setup your NGINX</a><ul>
+<li><a class="reference internal" href="#logging">Logging</a></li>
+<li><a class="reference internal" href="#http-load-balancing">HTTP Load Balancing</a></li>
+<li><a class="reference internal" href="#https-load-balancing">HTTPS Load Balancing</a></li>
+<li><a class="reference internal" href="#redundancy-and-failover">Redundancy and Failover</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="proxy-sslgen.html"
+                        title="previous chapter">SSL Certificate Generation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="rcs-load-balancing-in-the-cloud.html"
+                        title="next chapter">RCS Load Balancing in the Cloud</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="rcs-load-balancing-in-the-cloud.html" title="RCS Load Balancing in the Cloud"
+             >next</a></li>
+        <li class="right" >
+          <a href="proxy-sslgen.html" title="SSL Certificate Generation"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" >Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">NGINX Web Server</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

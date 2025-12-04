@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Database Maintenance &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Database Authentication" href="db-authentication.html" />
+    <link rel="prev" title="Manual Database Installation" href="install-db-repo-manual-db-install.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="db-authentication.html" title="Database Authentication"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="install-db-repo-manual-db-install.html" title="Manual Database Installation"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" accesskey="U">Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Database Maintenance</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="database-maintenance">
+<span id="db-maintenance-ref-label"></span><h1>Database Maintenance<a class="headerlink" href="#database-maintenance" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some of the topics covered in this page require you to have administrator/root access to your database machine. Please consult your local IT staff if in doubt.</p>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Deadline uses <a class="reference external" href="https://www.mongodb.org">MongoDB</a> for the database. MongoDB  is a highly performant, <a class="reference external" href="https://www.mongodb.com/nosql-explained">NoSQL</a> based database system. No formal training or qualification is required to setup, run and maintain a MongoDB infrastructure for Deadline. It really is that simple! However, it’s always good to understand some fundamentals and recommended tools and procedures for any required maintenance such as in the case of an unscheduled power outage or disaster recovery/data recovery situation. MongoDB is installed automatically by the <a class="reference internal" href="install-db-repo.html#install-db-repo-ref-label"><span class="std std-ref">Repository Installer</span></a> or via a <a class="reference internal" href="install-db-repo-manual-db-install.html#install-manual-db-ref-label"><span class="std std-ref">Manual Database Installation</span></a>. <a class="reference internal" href="install-db-repo-manual-db-install.html#database-config-file-ref-label"><span class="std std-ref">Additional DB configuration</span></a> can be made via a simple <code class="docutils literal notranslate"><span class="pre">config.conf</span></code> file, such as enabling the <code class="docutils literal notranslate"><span class="pre">RESTInterfaceEnabled</span></code> seen below.</p>
+<a class="reference internal image-reference" href="../_images/db_restful_interface.png"><img alt="../_images/db_restful_interface.png" src="../_images/db_restful_interface.png" style="height: 400px;" /></a>
+</div>
+<div class="section" id="mongodb-logs">
+<h2>MongoDB Logs<a class="headerlink" href="#mongodb-logs" title="Permalink to this headline">¶</a></h2>
+<p>MongoDB’s log files can be helpful if there are issues with the MongoDB service/daemon not starting, or frequently crashing on you. These issues are most often presented in the form of frequent database connection errors appearing on machines when you try to use the client applications such as Monitor, Worker or Pulse. Whenever MongoDB is restarted, a new log file will be created. In the case of sending these log files to <a class="reference external" href="https://support.thinkboxsoftware.com/">Thinkbox Support</a>, ensure you grab all the logs from a particular day so that any reoccurring issue can be identified.</p>
+<p>All MongoDB logs will be found in their default location on each of the three supported platforms, though if the install was to a different location, you would look there. These defaults are:</p>
+<ul class="simple">
+<li><p><strong>Windows</strong>: <code class="docutils literal notranslate"><span class="pre">C:\DeadlineDatabase[VERSION]\mongo\data\logs</span></code></p></li>
+<li><p><strong>macOS</strong>: <code class="docutils literal notranslate"><span class="pre">/Applications/Thinkbox/DeadlineDatabase[VERSION]/mongo/data/logs</span></code></p></li>
+<li><p><strong>Linux</strong>: <code class="docutils literal notranslate"><span class="pre">/opt/Thinkbox/DeadlineDatabase[VERSION]/mongo/data/logs</span></code></p></li>
+</ul>
+<p>where [VERSION] is the MAJOR version number of Deadline. When contacting <a class="reference external" href="https://support.thinkboxsoftware.com/">Thinkbox Support</a>, ensure you compress these log files as a single zip file.</p>
+</div>
+<div class="section" id="mongodb-gui-tools">
+<h2>MongoDB GUI Tools<a class="headerlink" href="#mongodb-gui-tools" title="Permalink to this headline">¶</a></h2>
+<p>MongoDB does not include a GUI-style administrative interface. Instead most administration is carried out from command line tools such as the <a class="reference internal" href="#mongodb-shell-ref-label"><span class="std std-ref">Mongo Shell</span></a>. However some UI’s are available as separate community projects and are listed on the official <a class="reference external" href="https://docs.mongodb.org/ecosystem/tools/administration-interfaces/">MongoDB website</a>. Some are focused on administration, while some focus on data viewing.</p>
+</div>
+<div class="section" id="mongodb-migration">
+<h2>MongoDB Migration<a class="headerlink" href="#mongodb-migration" title="Permalink to this headline">¶</a></h2>
+<p>The Deadline Repository and/or the MongoDB database can be moved to a new location or machine. Please see our <a class="reference internal" href="relocating.html#relocating-ref-label"><span class="std std-ref">Relocating</span></a> instructions for further information.</p>
+</div>
+<div class="section" id="database-repair">
+<span id="database-repair-ref-label"></span><h2>Database Repair<a class="headerlink" href="#database-repair" title="Permalink to this headline">¶</a></h2>
+<p>On an odd occasion such as a power outage affecting your database server, you may need to carry out a small amount of maintenance on the database machine to recover and repair any problems which may have occurred. Luckily the procedure is very straight-forward and requires you as administrator/root to stop the DB service/daemon, execute the <code class="docutils literal notranslate"><span class="pre">--repair</span></code> command on the MongoDB and then simply, restart the DB service/daemon again. For each OS specific example below, you may wish to copy the commands into a local script file on the DB machine and ensure it has permissions to be executed correctly.</p>
+<ul>
+<li><p><strong>Windows</strong>: Create a local batch script file such as <code class="docutils literal notranslate"><span class="pre">DBRepairWin.bat</span></code> containing the following commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sc</span> <span class="n">stop</span> <span class="n">Deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="n">DatabaseService</span>
+<span class="n">C</span><span class="p">:</span>\<span class="n">DeadlineDatabase</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span>\<span class="n">mongo</span>\<span class="n">application</span>\<span class="nb">bin</span>\<span class="n">mongod</span> <span class="o">--</span><span class="n">repair</span> <span class="o">--</span><span class="n">logpath</span> <span class="n">C</span><span class="p">:</span>\<span class="n">DeadlineDatabase</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span>\<span class="n">mongo</span>\<span class="n">data</span>\<span class="n">logs</span>\<span class="n">repairlog</span><span class="o">.</span><span class="n">txt</span> <span class="o">--</span><span class="n">dbpath</span> <span class="n">C</span><span class="p">:</span>\<span class="n">DeadlineDatabase</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span>\<span class="n">mongo</span>\<span class="n">data</span>
+<span class="n">sc</span> <span class="n">start</span> <span class="n">Deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="n">DatabaseService</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Linux</strong>: Create a local bash script file such as <code class="docutils literal notranslate"><span class="pre">DBRepairLinux.sh</span></code> containing the following commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">service</span> <span class="n">deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="n">db</span> <span class="n">stop</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Thinkbox</span><span class="o">/</span><span class="n">DeadlineDatabase</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="o">/</span><span class="n">mongo</span><span class="o">/</span><span class="n">application</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mongod</span> <span class="o">--</span><span class="n">repair</span> <span class="o">--</span><span class="n">config</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Thinkbox</span><span class="o">/</span><span class="n">DeadlineDatabase</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="o">/</span><span class="n">mongo</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">config</span><span class="o">.</span><span class="n">conf</span>
+<span class="n">sudo</span> <span class="n">service</span> <span class="n">deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="n">db</span> <span class="n">start</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>macOS</strong>: Create a local Mac Command script file such as <code class="docutils literal notranslate"><span class="pre">DBRepairMac.command</span></code> containing the following commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>echo “Stopping database”
+sudo launchctl unload /Library/LaunchDaemons/org.mongodb.mongod_Deadline[VERSION]DatabaseService.plist
+
+echo “Repairing database”
+sudo /Applications/Thinkbox/DeadlineDatabase[VERSION]/mongo/application/bin/mongod --repair --logpath /Applications/Thinkbox/DeadlineDatabase[VERSION]/mongo/data/logs/log.txt --dbpath /Applications/Thinkbox/DeadlineDatabase[VERSION]/mongo/data
+
+echo “Restarting database
+sudo launchctl load /Library/LaunchDaemons/org.mongodb.mongod_Deadline[VERSION]DatabaseService.plist
+
+echo “Done”
+</pre></div>
+</div>
+</li>
+</ul>
+<p>where [VERSION] is the MAJOR version number of Deadline, such as: <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p>
+</div>
+<div class="section" id="mongodb-shell">
+<span id="mongodb-shell-ref-label"></span><h2>MongoDB Shell<a class="headerlink" href="#mongodb-shell" title="Permalink to this headline">¶</a></h2>
+<p>Included in the MongoDB installation via Manual Install or Deadline’s Repository Installer, is an interactive JavaScript shell interface to MongoDB, named: <strong>mongo</strong> in your <code class="docutils literal notranslate"><span class="pre">bin</span></code> directory which provides a powerful interface for systems administrators as well as a way for developers to test queries and operations directly with the database. The official MongoDB <strong>mongo</strong> document addresses the basic invocation of the <a class="reference external" href="https://docs.mongodb.org/manual/reference/program/mongo/#bin.mongo">mongo shell</a> and an overview of its usage. Here is an example which <a class="reference external" href="https://support.thinkboxsoftware.com/">Thinkbox Support</a> might ask you to execute to gather all the current farm’s <strong>Limits</strong> and <strong>LimitStubs</strong> in Deadline.</p>
+<ul>
+<li><p>Dump Limit Info on Linux Example: Create a bash script file names such as <code class="docutils literal notranslate"><span class="pre">DumpLimitInfo.sh</span></code> containing the following commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
+
+<span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Thinkbox</span><span class="o">/</span><span class="n">DeadlineDatabase</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="o">/</span><span class="n">mongo</span><span class="o">/</span><span class="n">application</span><span class="o">/</span><span class="nb">bin</span>
+
+<span class="n">echo</span> <span class="o">===================================</span>
+<span class="n">echo</span> <span class="n">Limit</span> <span class="n">Stubs</span><span class="p">:</span>
+<span class="o">./</span><span class="n">mongoexport</span> <span class="o">--</span><span class="n">port</span> <span class="p">[</span><span class="n">DB_PORT</span><span class="p">]</span> <span class="o">-</span><span class="n">d</span> <span class="n">deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="n">db_LimitStubs</span> <span class="o">-</span><span class="n">c</span> <span class="n">LimitStubs</span> <span class="o">|</span> <span class="n">gzip</span> <span class="o">-</span><span class="mi">9</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">LimitStubs</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">echo</span> <span class="o">===================================</span>
+<span class="n">echo</span> <span class="n">Limits</span><span class="p">:</span>
+<span class="o">./</span><span class="n">mongoexport</span> <span class="o">--</span><span class="n">port</span> <span class="p">[</span><span class="n">DB_PORT</span><span class="p">]</span> <span class="o">-</span><span class="n">d</span> <span class="n">deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="n">db_Limits</span> <span class="o">-</span><span class="n">c</span> <span class="n">LimitGroups</span> <span class="o">|</span> <span class="n">gzip</span> <span class="o">-</span><span class="mi">9</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">LimitGroups</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">echo</span> <span class="o">===================================</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>where [VERSION] is the MAJOR version number of Deadline, such as: <code class="docutils literal notranslate"><span class="pre">10</span></code> and [DB_PORT] is the MongoDB port, such as: <code class="docutils literal notranslate"><span class="pre">27100</span></code>.</p>
+<p>There are a number of other useful <a class="reference external" href="https://github.com/mongodb/mongo-tools">MongoDB tools</a> included in a standard MongoDB distribution, which may prove useful such as mongoexport, mongoimport, mongodump and mongotop.</p>
+</div>
+<div class="section" id="mongodb-backup">
+<span id="mongodb-backup-ref-label"></span><h2>MongoDB Backup<a class="headerlink" href="#mongodb-backup" title="Permalink to this headline">¶</a></h2>
+<p>The official MongoDB documentation provides the best information regarding various <a class="reference external" href="https://docs.mongodb.org/manual/core/backups/">DB Backup</a> and <a class="reference external" href="https://docs.mongodb.org/manual/tutorial/backup-and-restore-tools/">DB Restore</a> options you may wish to consider deploying to protect your Mongo database.</p>
+</div>
+<div class="section" id="mongodb-clearing-metadata">
+<span id="mongodb-clear-metadata-ref-label"></span><h2>MongoDB Clearing Metadata<a class="headerlink" href="#mongodb-clearing-metadata" title="Permalink to this headline">¶</a></h2>
+<p>If you are running Deadline 10.1.4.1 or earlier on AWS EC2 you can experience performance issues due to instance metadata getting left behind in the database by AWS Portal Link. The following commands can be used to clear that uneccessary metadata and give you a performance boost. It is recommended to do this after upgrading to version 10.1.5.0 or later, where the issue has been fixed.</p>
+<p>Connect to the database.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Windows</span><span class="p">:</span> <span class="n">C</span><span class="p">:</span>\<span class="n">DeadlineDatabase10</span>\<span class="n">mongo</span>\<span class="n">application</span>\<span class="nb">bin</span>\<span class="n">deadline_mongo</span>
+<span class="n">Linux</span><span class="p">:</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Thinkbox</span><span class="o">/</span><span class="n">DeadlineDatabase10</span><span class="o">/</span><span class="n">mongo</span><span class="o">/</span><span class="n">application</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">deadline_mongo</span>
+<span class="n">Mac</span><span class="p">:</span> <span class="o">/</span><span class="n">Applications</span><span class="o">/</span><span class="n">Thinkbox</span><span class="o">/</span><span class="n">DeadlineDatabase10</span><span class="o">/</span><span class="n">mongo</span><span class="o">/</span><span class="n">application</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">deadline_mongo</span>
+</pre></div>
+</div>
+<p>Clear the metadata.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>metaData=db.EventPluginSettingsCollection.findOne({&quot;Name&quot;:&quot;AWSPortal&quot;}).Meta;
+keys = Object.keys(metaData);
+keys.forEach(function(key) { if (key.startsWith(&quot;i-&quot;, 0)) { delete metaData[key] }});
+db.EventPluginSettingsCollection.findAndModify({
+    query: {&quot;Name&quot;:&quot;AWSPortal&quot;},
+    update: { $set: {&quot;Meta&quot;: metaData} } })
+</pre></div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Database Maintenance</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#mongodb-logs">MongoDB Logs</a></li>
+<li><a class="reference internal" href="#mongodb-gui-tools">MongoDB GUI Tools</a></li>
+<li><a class="reference internal" href="#mongodb-migration">MongoDB Migration</a></li>
+<li><a class="reference internal" href="#database-repair">Database Repair</a></li>
+<li><a class="reference internal" href="#mongodb-shell">MongoDB Shell</a></li>
+<li><a class="reference internal" href="#mongodb-backup">MongoDB Backup</a></li>
+<li><a class="reference internal" href="#mongodb-clearing-metadata">MongoDB Clearing Metadata</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="install-db-repo-manual-db-install.html"
+                        title="previous chapter">Manual Database Installation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="db-authentication.html"
+                        title="next chapter">Database Authentication</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="db-authentication.html" title="Database Authentication"
+             >next</a></li>
+        <li class="right" >
+          <a href="install-db-repo-manual-db-install.html" title="Manual Database Installation"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" >Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Database Maintenance</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

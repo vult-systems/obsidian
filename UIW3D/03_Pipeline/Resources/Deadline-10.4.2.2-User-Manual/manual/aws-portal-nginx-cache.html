@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AWS Portal NGINX Cache &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="AWSPortal Admin IAM Managed Policy" href="aws-portal-setup-awsthinkboxawsportaladminpolicy-readme.html" />
+    <link rel="prev" title="Switching AWS Accounts" href="aws-portal-switching-accounts.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-setup-awsthinkboxawsportaladminpolicy-readme.html" title="AWSPortal Admin IAM Managed Policy"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="aws-portal-switching-accounts.html" title="Switching AWS Accounts"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWS Portal NGINX Cache</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="aws-portal-nginx-cache">
+<span id="aws-portal-nginx-cache-ref-label"></span><h1>AWS Portal NGINX Cache<a class="headerlink" href="#aws-portal-nginx-cache" title="Permalink to this headline">¶</a></h1>
+<img alt="../_images/aws_portal_nginx.png" src="../_images/aws_portal_nginx.png" />
+<p>The NGINX cache is created automatically by the AWS Portal and resides on AWS infrastructure. This
+allows cached data to be available to cloud render nodes without having to communicate over the internet.</p>
+<p>The NGINX cache is currently intended to only cache file resources, such as plugin scripts or job
+assets that are submitted to the repository. This is because these types of resources are often the
+most expensive in terms of the amount of data that would need to be transferred and the time it takes
+to transfer them (over the internet). By caching them, they only need to be transferred to AWS infrastructure
+a single time; from there they can be accessed through the cache in significantly less time (less expensively).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If job assets are not submitted to the repository when the job is submitted, they will not be
+cached. These types of submissions use a different process for retrieving job assets. Plugin scripts
+and similar files are always cached.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The point of this information is to provide you with knowledge for setting up your own caching system.
+The AWS infrastructure that Deadline launches already incorporates this cache, and does not require any
+additional procedure.</p>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>The NGINX configuration used by the AWS Portal infrastructure looks like this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>upstream backend {
+        server 10.128.2.4:8889;
+        keepalive 256;
+}
+
+proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=cache:10m max_size=16g;
+proxy_cache_key $proxy_host$request_uri$http_position$http_chunk;
+
+error_log /var/log/nginx/error.log warn;
+
+log_format cform &#39;$remote_addr - $upstream_cache_status [$time_local] &quot;$request&quot; $status $body_bytes_sent &quot;$http_referer&quot; &quot;$http_user_agent&quot;&#39;;
+access_log /var/log/nginx/access.log cform;
+
+server {
+        listen 8888;
+        server_name localhost;
+
+        keepalive_timeout 30s;
+
+        location / {
+                proxy_pass http://backend;
+                proxy_redirect off;
+                proxy_http_version 1.1;
+                proxy_set_header Connection &quot;&quot;;
+        }
+
+        location /fs/ {
+                proxy_pass http://backend;
+                proxy_redirect off;
+                proxy_http_version 1.1;
+                proxy_set_header Connection &quot;&quot;;
+
+                # Cache specifications.
+                proxy_cache cache;
+                proxy_cache_lock on;
+                proxy_cache_lock_timeout 1h;
+                proxy_cache_lock_age 1h;
+                proxy_cache_valid 200 1h;
+        }
+}
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The above NGINX cache configuration forwards requests using the HTTP protocol, which is not secure.
+The AWS Portal achieves secure communication by using an SSH tunnel that is setup through the
+AWS Portal Link service.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>More information on NGINX directives can be found <a class="reference external" href="https://nginx.org/en/docs/">here</a>. The directives
+that correspond to the NGINX caching mechanism can be found
+<a class="reference external" href="https://nginx.org/en/docs/http/ngx_http_proxy_module.html">here</a>.</p>
+</div>
+</div>
+<div class="section" id="customization">
+<h2>Customization<a class="headerlink" href="#customization" title="Permalink to this headline">¶</a></h2>
+<p>If you want to use a similar solution for your own purposes, the above configuration likely won’t be
+a copy-and-paste solution. There are some details that may differ for your own setup, namely the
+<strong>listen 8888</strong> and <strong>server 10.128.2.4:8889</strong> directives.</p>
+<blockquote>
+<div><dl>
+<dt><strong>listen 8888</strong></dt><dd><p>This specifies the port that the NGINX cache server is listening on. Render nodes should be connected
+directly to the NGINX cache on this port. For example, if the IP address of the NGINX cache is
+<code class="docutils literal notranslate"><span class="pre">192.168.1.150</span></code>, render nodes need to have a <strong>Remote</strong> connection to <code class="docutils literal notranslate"><span class="pre">192.168.1.150:8888</span></code>.</p>
+</dd>
+<dt><strong>server 10.128.2.4:8889</strong></dt><dd><p>This directive specifies how we are going to communicate with the backend Remote Connection Server.
+In this example, the NGINX cache will forward a request that misses the cache to <code class="docutils literal notranslate"><span class="pre">10.128.2.4:8889</span></code>.
+The backend Remote Connection Server’s IP address would be <code class="docutils literal notranslate"><span class="pre">10.128.2.4</span></code> and it should listen on
+port <code class="docutils literal notranslate"><span class="pre">8889</span></code>. The default listening port for the RCS is <code class="docutils literal notranslate"><span class="pre">8080</span></code>.</p>
+</dd>
+<dt><strong>max_size=16g</strong></dt><dd><p>This is an option of the <code class="docutils literal notranslate"><span class="pre">proxy_cache_path</span></code> directive, but is worth mentioning here. This option
+specifies the maximum size of the cache on disk. The current value <code class="docutils literal notranslate"><span class="pre">16g</span></code> indicates that the size
+limit should be 16 gigabytes. If the cache becomes full, the least recently used cache resources
+will be deleted to make room for new cached resources. More information can be found in the NGINX
+documentation here:</p>
+<p><a class="reference external" href="https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_cache_path">https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_cache_path</a></p>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">AWS Portal NGINX Cache</a><ul>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#customization">Customization</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aws-portal-switching-accounts.html"
+                        title="previous chapter">Switching AWS Accounts</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="aws-portal-setup-awsthinkboxawsportaladminpolicy-readme.html"
+                        title="next chapter">AWSPortal Admin IAM Managed Policy</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-setup-awsthinkboxawsportaladminpolicy-readme.html" title="AWSPortal Admin IAM Managed Policy"
+             >next</a></li>
+        <li class="right" >
+          <a href="aws-portal-switching-accounts.html" title="Switching AWS Accounts"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWS Portal NGINX Cache</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unreal Engine 5 &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Unreal Swarm" href="app-unrealswarm.html" />
+    <link rel="prev" title="Unreal Engine" href="app-unreal-engine.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-unrealswarm.html" title="Unreal Swarm"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-unreal-engine.html" title="Unreal Engine"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Unreal Engine 5</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="unreal-engine-5">
+<span id="app-unreal-engine-5-ref-label"></span><h1>Unreal Engine 5<a class="headerlink" href="#unreal-engine-5" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>The Unreal engine 5 plugin supports job submission from within the Unreal Editor.
+This guide describes the plugin’s expectations and how to submit jobs.</p>
+<p>The following section outlines the available options for the plugin:</p>
+<ul id="executable">
+<li><p><strong>Executable</strong>:
+This option specifies the full path to the Editor executable, typically named <strong>UnrealEditor-Cmd</strong>.  The <em>Cmd</em> executable allows attaching and piping
+the log outputs to the current spawned process. The plugin resolves any Deadline Path Mappings and a custom key <code class="docutils literal notranslate"><span class="pre">{ProjectRoot}</span></code> in the executable path.
+<code class="docutils literal notranslate"><span class="pre">{ProjectRoot}</span></code> allows users to specify implicit project root locations provided in an environment variable.
+This option enables a preprocessing step like a source control sync/build system to specify the current project root for the executable.
+This plugin option is required.</p></li>
+<li><dl class="simple">
+<dt><strong>ProjectFile</strong>:</dt><dd><p>This option specifies the full path to the Unreal <em>.uproject</em> file. The <em>.uproject</em> file specifies the project to load when the editor is launched.
+Similar to the executable option, the plugin resolves any <code class="docutils literal notranslate"><span class="pre">{ProjectRoot}</span></code> and Deadline Path Mappings in the <em>.uproject</em> path.
+This plugin option is required.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt><strong>CommandLineArguments</strong>:</dt><dd><p>This option specifies the startup/launch command-line arguments, which determine the automated job/task that the editor is expected to execute.
+The plugin appends the following arguments to the supplied arguments:</p>
+<blockquote>
+<div><blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-log</span></code>: Outputs the editor logs in the current process.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-unattended</span></code>: Disables anything requiring user feedback.</p></li>
+</ul>
+</div></blockquote>
+<p>This plugin option is optional.</p>
+</div></blockquote>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://docs.unrealengine.com/5.1/en-US/command-line-arguments-in-unreal-engine/">Unreal Engine Command-Line Arguments</a></p>
+</div>
+<ul class="simple" id="commandline-mode">
+<li><dl class="simple">
+<dt><strong>CommandLineMode</strong>:</dt><dd><p>This option determines whether a new session of the Editor should be launched for every task or if one editor session should be used for all tasks.
+The former behaves similarly to a classical command-line process where the Editor’s exit error code determines the success of the task.
+The latter relies on an internal Editor process to communicate the task success via an <a class="reference external" href="https://docs.python.org/3/library/xmlrpc.html">RPC</a> protocol.
+The default option is set to <code class="docutils literal notranslate"><span class="pre">true</span></code>.
+This plugin option is optional.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>StartupDirectory</strong>:</dt><dd><p>This option controls what directory to start the command line in.
+This plugin option is optional.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>These options can be set when defining your DeadlineJobPreset <a class="reference internal" href="#create-deadline-asset-ref-label"><span class="std std-ref">described below</span></a>.</p>
+<p>The following is an example snippet of the plugin options, which launches the editor and executes a custom Python script:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;Executable&quot;</span><span class="p">:</span> <span class="s2">&quot;{ProjectRoot}/Engine/Binaries/Win64/UnrealEditor-Cmd.exe&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ProjectFile&quot;</span><span class="p">:</span> <span class="s2">&quot;{ProjectRoot}/MyCustomProject/MyCustomProject.uproject&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CommandLineArguments&quot;</span><span class="p">:</span> <span class="s1">&#39;-execcmds=&quot;py mycustomscript.py arg0 arg1 --key=value&quot;&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;CommandLineMode&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Deadline Unreal Engine 5 plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Unreal Engine 5 plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/plugin_config_ue5.png"><img alt="../_images/plugin_config_ue5.png" src="../_images/plugin_config_ue5.png" style="height: 400px;" /></a>
+</div>
+<div class="section" id="unreal-engine-plugin">
+<h2>Unreal Engine plugin<a class="headerlink" href="#unreal-engine-plugin" title="Permalink to this headline">¶</a></h2>
+<p>With this Unreal Engine plugin, you can submit Deadline jobs to a Deadline repository.
+This documentation describes the plugin’s functionality and how to use it to submit <em>any</em> arbitrary Deadline job.</p>
+<p>The Deadline plugin provides a custom Unreal <strong>Data Asset</strong> type that you can use to configure and store part or all of the data required for a Deadline job submission.
+You can then use this asset to submit a job using a background process called the <strong>Deadline Service</strong>.</p>
+<div class="section" id="setup">
+<h3>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h3>
+<p>This setup guide demonstrates how to enable and set up the Deadline plugin in your Unreal project.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Unreal Engine 5 setup needs Visual Studio 2022 installed on the machine to build the Deadline submitter plugin project. Follow this documentation from Unreal Engine on <a class="reference external" href="https://docs.unrealengine.com/5.2/en-US/setting-up-visual-studio-development-environment-for-cplusplus-projects-in-unreal-engine/">Setting Up Visual Studio.</a></p>
+</div>
+<div class="section" id="installing-the-unreal-deadline-service-and-the-movie-pipeline-deadline-unreal-plugins">
+<h4>Installing the Unreal Deadline Service and the Movie Pipeline Deadline Unreal plugins<a class="headerlink" href="#installing-the-unreal-deadline-service-and-the-movie-pipeline-deadline-unreal-plugins" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic simple">
+<li><p>Go to your Deadline repository installation, and navigate to <strong>&lt;Deadline Repository&gt;\plugins\UnrealEngine5\UnrealEnginePlugins</strong></p></li>
+<li><p>Copy the <cite>UnrealDeadlineService</cite>, and the <cite>MoviePipelineDeadline</cite> directories to the <cite>Plugins</cite> directory located in your Unreal Project’s directory. If no <cite>Plugins</cite> directory is there, create one.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Deadline service has a mode that supports submission to the Deadline web service. This mode can be enabled via the project settings and disabling the <cite>Deadline Command</cite> check bock and inputting your webservice host URL.
+The webservice mode depends on the python <strong>urllib3</strong> library; this library is not packaged with the plugin by default.
+If the python interpreter running in the Editor has this library installed, then no further configuration is needed. Otherwise, you will need
+to download <em>urllib3</em> via an external source and copy the site packages into the <strong>Content/Python/Lib/&lt;Platform&gt;/</strong> directory in the <strong>UnrealDeadlineService</strong> plugin.
+(“Platform” on a windows operating system is <strong>Win64</strong>). The Editor will automatically load any python libraries in the specified path.</p>
+</div>
+</div>
+<div class="section" id="enabling-the-deadline-plugins">
+<h4>Enabling the Deadline Plugins<a class="headerlink" href="#enabling-the-deadline-plugins" title="Permalink to this headline">¶</a></h4>
+<p>To enable the plugin:</p>
+<ol class="arabic simple">
+<li><p>Open the plugin browser in the Unreal Editor by selecting <strong>Edit &gt; Plugins</strong> from the main menu.</p></li>
+<li><p>Search for <strong>Unreal Deadline Service</strong> in the search dialog.</p></li>
+<li><p>Enable the plugin and restart the Editor.</p></li>
+<li><p>Repeat for <strong>Movie Pipeline Deadline</strong> if it is not also enabled.</p></li>
+</ol>
+</div>
+<div class="section" id="create-deadline-data-asset">
+<span id="create-deadline-asset-ref-label"></span><h4>Create Deadline Data Asset<a class="headerlink" href="#create-deadline-data-asset" title="Permalink to this headline">¶</a></h4>
+<p>This plugin creates a custom <strong>Data Asset</strong> type called <strong>DeadlineJobPreset</strong>, designed to be a collection of job submission data.
+The Preset is a collection of Deadline job data in the form of key-value pairs. Each key represents the job preset name, and its corresponding value is the job data.
+The job data consists of a Deadline <a class="reference internal" href="manual-submission.html#job-info-ref-label"><span class="std std-ref">Job Info File</span></a> and Deadline <a class="reference internal" href="manual-submission.html#plugin-info-ref-label"><span class="std std-ref">Plugin Info</span></a>.</p>
+<p>To create a data asset:</p>
+<ol class="arabic">
+<li><p>Right-click in the content browser and look for <strong>Data Asset</strong>. This asset type is usually located under <strong>Miscellaneous</strong>.</p></li>
+<li><p>In the Classes search box, type <strong>DeadlineJobPreset</strong>.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/unreal_dataasset.png"><img alt="../_images/unreal_dataasset.png" src="../_images/unreal_dataasset.png" style="width: 500px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="../_images/unreal_deadline_presetlib.png"><img alt="../_images/unreal_deadline_presetlib.png" src="../_images/unreal_deadline_presetlib.png" style="width: 500px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Give your data asset a name representative of its use.</p></li>
+<li><p>Open the data asset, and confirm the preset settings.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/ue5_options.png"><img alt="../_images/ue5_options.png" class="align-center" src="../_images/ue5_options.png" style="width: 1000px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+</li>
+<li id="job-info-preset"><p>Expand the <strong>Job Options Preset</strong> section and fill in the necessary details for the Deadline job. See <a class="reference internal" href="manual-submission.html#job-info-ref-label"><span class="std std-ref">Job Info</span></a> for the available options and their definition.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To add additional job options in the interface, you can add the key-value pairs of the option to a custom mapping <strong>Extra Job Options</strong> in the <strong>Advanced Job Options Preset</strong>.</p>
+</div>
+</div></blockquote>
+</li>
+<li id="plugin-info-preset"><p>Expand the <strong>Plugin Info Preset</strong> section and input the parameters of your Deadline plugin as key-value pairs.
+See <a class="reference internal" href="#executable"><span class="std std-ref">Plugin Info</span></a> for examples of parameters for this Deadline plugins.
+It is important to know that the <cite>Executable</cite> and <cite>ProjectFile</cite> parameters are required.</p></li>
+<li><p>Save the Data Asset.</p></li>
+</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="update-project-settings">
+<h2>Update Project Settings<a class="headerlink" href="#update-project-settings" title="Permalink to this headline">¶</a></h2>
+<p>We need to update the <cite>Movie Render Queue</cite> project settings to use
+executors defined by the Movie Pipeline Deadline plugin.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure that the <strong>Movie Render Queue</strong> plugin is enabled on the project.</p>
+</div>
+<p>To update the project settings for <strong>Movie Render Queue</strong>:</p>
+<ol class="arabic">
+<li><p>From the main menu, select <strong>Edit &gt; Project Settings</strong> to open the project settings browser.</p></li>
+<li><p>Search for <strong>Movie Render Pipeline</strong> in the search browser.</p></li>
+<li><p>In the <strong>Default Remote Executor</strong> option, search for <em>MoviePipelineDeadlineRemoteExecutor</em> and set the option. This setting determines how a job is submitted when the <strong>Render Remote</strong> button clicked.</p></li>
+<li><dl>
+<dt>In the <strong>Default Executor Job</strong> option, search for <em>MoviePipelineDeadlineExecutorJob</em> and set the option. This setting augments the details panel in the Movie Render Queue UI with our custom Deadline job definition.</dt><dd><a class="reference internal image-reference" href="../_images/unreal_deadline_project_settings.png"><img alt="../_images/unreal_deadline_project_settings.png" src="../_images/unreal_deadline_project_settings.png" style="width: 1000px;" /></a>
+</dd>
+</dl>
+</li>
+</ol>
+</div>
+<div class="section" id="submit-deadline-job">
+<h2>Submit Deadline Job<a class="headerlink" href="#submit-deadline-job" title="Permalink to this headline">¶</a></h2>
+<p>To submit a Deadline job:</p>
+<ol class="arabic">
+<li><p>In Unreal Editor’s main menu bar, click the <strong>Deadline</strong> menu and select <strong>Submit Deadline Job</strong>.</p></li>
+<li><p>Select your data asset from the <strong>Job Preset</strong> drop-down list.</p></li>
+<li><p>Click <cite>Render (Remote)</cite>.</p>
+<blockquote>
+<div><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If a job could not be submitted, make sure to check the output logs for details. Logs will be viewable in the ‘Output Log’ panel accessable from the bottom bar of the Unreal Editor.</p>
+</div>
+<a class="reference internal image-reference" href="../_images/unreal_deadline_remote_submission.png"><img alt="../_images/unreal_deadline_remote_submission.png" src="../_images/unreal_deadline_remote_submission.png" style="width: 1000px;" /></a>
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="faq">
+<h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Unreal Engine are supported by Deadline Unreal Engine 5 plugin?</strong></p>
+<blockquote>
+<div><p>Unreal Engine versions greater than or equal to 5.0 are supported. Unreal engine versions less than 5.2 may need to be built from source to be compatable with the Unreal Deadline Service and the Movie Pipeline Deadline Unreal plugins.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages And Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Unreal Engine 5 error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Unreal Engine 5</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a></li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#unreal-engine-plugin">Unreal Engine plugin</a><ul>
+<li><a class="reference internal" href="#setup">Setup</a><ul>
+<li><a class="reference internal" href="#installing-the-unreal-deadline-service-and-the-movie-pipeline-deadline-unreal-plugins">Installing the Unreal Deadline Service and the Movie Pipeline Deadline Unreal plugins</a></li>
+<li><a class="reference internal" href="#enabling-the-deadline-plugins">Enabling the Deadline Plugins</a></li>
+<li><a class="reference internal" href="#create-deadline-data-asset">Create Deadline Data Asset</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#update-project-settings">Update Project Settings</a></li>
+<li><a class="reference internal" href="#submit-deadline-job">Submit Deadline Job</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages And Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-unreal-engine.html"
+                        title="previous chapter">Unreal Engine</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-unrealswarm.html"
+                        title="next chapter">Unreal Swarm</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-unrealswarm.html" title="Unreal Swarm"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-unreal-engine.html" title="Unreal Engine"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Unreal Engine 5</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,678 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monitor &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Worker" href="worker.html" />
+    <link rel="prev" title="Launcher" href="launcher.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="worker.html" title="Worker"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="launcher.html" title="Launcher"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" accesskey="U">Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Monitor</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="monitor">
+<span id="monitor-ref-label"></span><h1>Monitor<a class="headerlink" href="#monitor" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The Monitor application offers detailed information and control options for each job and Worker in your farm.
+It provides normal users a means of monitoring and controlling their jobs, and it gives administrators options for configuring and controlling the entire render farm.</p>
+<a class="reference internal image-reference" href="../_images/monitor_preview.png"><img alt="../_images/monitor_preview.png" src="../_images/monitor_preview.png" style="height: 600px;" /></a>
+<p>If you’re launching the Monitor for the first time on your machine, you will be prompted with a Login dialog. Simply choose your user name or create a new one before continuing.
+Once the Monitor is running, you’ll see your user name in the bottom right corner. If this is the wrong user, you can log in as another user by selecting File -&gt; Change User.
+Note that if your administrator set up Deadline to lock the user to the system’s login account, you will have to log off of your system and log back in as the correct user.</p>
+<img alt="../_images/monitor_login.png" src="../_images/monitor_login.png" />
+</div>
+<div class="section" id="running-the-monitor">
+<h2>Running the Monitor<a class="headerlink" href="#running-the-monitor" title="Permalink to this headline">¶</a></h2>
+<p>To start the Monitor:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>On Windows, you can start the Monitor from the Start Menu under Thinkbox\Deadline, or from the Launcher’s right-click menu.</p></li>
+<li><p>On Linux, you can start the Monitor from a terminal window by running the deadlinemonitor script in the bin folder, or from the Launcher’s right-click menu.</p></li>
+<li><p>On macOS, you can start the Monitor from Finder by running the DeadlineMonitor application in Applications/Thinkbox/Deadline, or from the Launcher’s right-click menu.</p></li>
+</ul>
+</div></blockquote>
+<p>The Monitor can also be started from a command prompt or terminal window. For more information, see the <a class="reference internal" href="#monitor-command-line-label"><span class="std std-ref">Monitor Command Line</span></a> documentation.</p>
+</div>
+<div class="section" id="panel-features">
+<span id="monitor-panel-features-ref-label"></span><h2>Panel Features<a class="headerlink" href="#panel-features" title="Permalink to this headline">¶</a></h2>
+<p>Information in the Monitor is broken up into different panels, which are described further down. These panels have many features in common, which are explained here.</p>
+<div class="section" id="customization">
+<h3>Customization<a class="headerlink" href="#customization" title="Permalink to this headline">¶</a></h3>
+<p>Monitor panels can be created from the View menu, or from the main toolbar. They can be re-sized, docked, or floated as desired.
+This allows for a highly customized viewing experience which is adaptable to the needs of different users.</p>
+<a class="reference internal image-reference" href="../_images/spawn_panel.png"><img alt="../_images/spawn_panel.png" src="../_images/spawn_panel.png" style="height: 400px;" /></a>
+<p>The current layout can be pinned to the Pinned Layouts menu so that it can be restored at a later time.
+This can be done from the View menu, or from the main toolbar. The current layout can also be saved to a file from the View menu, and then loaded from that file later.</p>
+<a class="reference internal image-reference" href="../_images/monitor_layouts.png"><img alt="../_images/monitor_layouts.png" src="../_images/monitor_layouts.png" style="height: 400px;" /></a>
+<p>When you pin a layout you can chose to save the location and size of the Monitor by checking the “Save Location and Size” box when pinning the layout.</p>
+<img alt="../_images/monitor_new_layout.png" src="../_images/monitor_new_layout.png" />
+<p>To prevent accidental modifications to the current layout, you can lock the layout from the View menu, by pressing “Alt-`&quot;, or from the main toolbar. When locked, panels cannot be moved, but they can still be docked and undocked.
+To dock a floating panel while the layout is locked, simply double-click on the panels title. It will be docked to the same location it was originally undocked from.</p>
+<a class="reference internal image-reference" href="../_images/monitor_lock.png"><img alt="../_images/monitor_lock.png" src="../_images/monitor_lock.png" style="height: 250px;" /></a>
+<p>The columns in Monitor panels are customizable. The columns can be resized by simply clicking on the separator column line and moving it and can be reordered by clicking on a column and moving it. Right clicking on the column headers in a panel allows you to toggle
+the visibility of each column.</p>
+<a class="reference internal image-reference" href="../_images/monitor_job_columns_click.png"><img alt="../_images/monitor_job_columns_click.png" src="../_images/monitor_job_columns_click.png" style="height: 400px;" /></a>
+<p>In this menu you can modify the visibility and ordering of the columns by clicking the “Customize..” menu item. Moving columns to the left side list hides them, and the order that columns are listed in the right list corresponds to
+the order they will appear in the panel (top-&gt;bottom corresponds to left-&gt;right). You move the columns around by clicking the arrow buttons.</p>
+<img alt="../_images/monitor_customize_columns.png" src="../_images/monitor_customize_columns.png" />
+<p>Once you have configured your column layout you can pin it.</p>
+<p><a class="reference internal" href="../_images/monitor_pin_list_layout.png"><img alt="pinlayout" src="../_images/monitor_pin_list_layout.png" style="height: 250px;" /></a> <img alt="layoutname" src="../_images/monitor_pin_list_name.png" /></p>
+<p>You can also set the current list layout as the list layout to load by default, when opening new panels of the same type, by clicking “Save Current List Layout As Default”. If you want to restore the original list layout default
+click the “Reset Default List Layout”.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In Deadline version 10.4 and higher, the layout file format changed. If upgrading from Deadline versions prior to 10.4, the local layout file (saved in <code class="docutils literal notranslate"><span class="pre">%APPDATA%\Thinkbox\</span></code> on Windows and <code class="docutils literal notranslate"><span class="pre">~/.config/Thinkbox/</span></code> on Linux and macOS) will automatically be converted to the new format. Old versions of Deadline will not work with the new layout file format, however a backup of the layout file will be created in the same directory with “Legacy Backup” appended to the name.</p>
+</div>
+</div>
+<div class="section" id="data-filtering">
+<h3>Data Filtering<a class="headerlink" href="#data-filtering" title="Permalink to this headline">¶</a></h3>
+<p>Almost every panel has a search box that you can use to filter the information you’re interested in. You can simply type in the word(s) you are looking for, or use regular expressions for more advanced searching.</p>
+<a class="reference internal image-reference" href="../_images/job_search.png"><img alt="../_images/job_search.png" src="../_images/job_search.png" style="height: 200px;" /></a>
+<p>In addition, every panel that has a search box also supports a more advanced filtering system. To add a filter to a panel, select the Edit Filter
+option in the panel’s drop down menu, which can be found in the upper-right corner of the panel. A window will appear allowing you to specify the name the
+filter being created. You can select to match all of the filters added or any of the filters added. If all must match, only records where all data matches each filter will
+be shown, while if any can match, if a record contains one or more matches it will be shown.</p>
+<p><a class="reference internal" href="../_images/job_edit_filter_menu.png"><img alt="job_edit_filter_menu" src="../_images/job_edit_filter_menu.png" style="height: 350px;" /></a> <a class="reference internal" href="../_images/job_edit_filter.png"><img alt="job_edit_filter" src="../_images/job_edit_filter.png" style="height: 350px;" /></a></p>
+<p>Clicking the add filter button generates a new filter. The filter requires a column to be selected, an operation to perform, and a value to use in the operation.
+Filters can also be removed by clicking the minus button to the right of each filter. After all filters are are entered, press OK to apply the filter to the current panel.</p>
+<p>A filter can be cloned and opened in a new tab within the panel through the Clone Filter option in the panel drop down menu. The Clear Filter option can be used to clear all filters from the current panel.</p>
+<p>Finally, you can pin the current filters so that they can be restored at a later time using the Pinned Filters sub menu in the panel drop down menu. Note that the Pin Current Filter option is only available if a
+filter is currently being applied. If there are no filters, the Pin Current Filter option will be hidden.</p>
+</div>
+<div class="section" id="automatic-sorting-and-filtering">
+<h3>Automatic Sorting and Filtering<a class="headerlink" href="#automatic-sorting-and-filtering" title="Permalink to this headline">¶</a></h3>
+<p>Almost every panel has an option to do automatic sorting and filtering when data changes in the panel. When this option is disabled, sorting and filters must
+manually be re-applied to ensure that the data is sorted and filtered properly.</p>
+<p>Note that automatic sorting and filtering can affect the Monitor’s performance if there are lots of jobs (10,000+) or lots of Workers (1000+) in the farm.
+To improve Monitor performance in this case, it is recommended to disable automatic sorting and filtering. There is an option in the Monitor Settings in the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Configuration</span></a> to automatically disable it by default.</p>
+</div>
+<div class="section" id="saving-and-loading-panel-layouts">
+<h3>Saving and Loading Panel Layouts<a class="headerlink" href="#saving-and-loading-panel-layouts" title="Permalink to this headline">¶</a></h3>
+<p>Every list-based panel (Jobs, Workers, Tasks, etc) has an option to save and load the list layout, which you can find in the panel’s drop down menu.
+This allows you to save out a list’s filters, column order and visibility, etc, and load them again later or share them with another user.</p>
+<p>Note that when loading a list layout, you must choose a layout that was saved from the same type of list. For example, you cannot save a layout from the Job list and then load it into the Worker list.</p>
+</div>
+<div class="section" id="graph-views">
+<h3>Graph Views<a class="headerlink" href="#graph-views" title="Permalink to this headline">¶</a></h3>
+<p>Almost every panel supports showing a graphical representation of the data. The graph can be shown by selecting the Graph View option in the panel’s drop down menu, which can be found in the upper-left corner of the panel. The graph view can be saved as an image file by right-clicking anywhere in view and selecting Save Graph As Image.</p>
+<a class="reference internal image-reference" href="../_images/save_task_graph.png"><img alt="../_images/save_task_graph.png" src="../_images/save_task_graph.png" style="height: 300px;" /></a>
+<a class="reference internal image-reference" href="../_images/monitor_graph_example.png"><img alt="../_images/monitor_graph_example.png" src="../_images/monitor_graph_example.png" style="height: 300px;" /></a>
+<p>If the graph is a line graph, the following operations are available:</p>
+<ul class="simple">
+<li><p><strong>Zoom In</strong>: Use the mouse wheel or the UP arrow key to zoom in. You can also click and hold the left mouse button and drag to select a sub-area of the graph to zoom in.</p></li>
+<li><p><strong>Zoom Out</strong>: Use the mouse wheel or the DOWN arrow key to zoom out.</p></li>
+<li><p><strong>Reset Zoom</strong>: Use the right-click menu to reset the zoom level.</p></li>
+<li><p><strong>Pan</strong>: Use the middle mouse button or the LEFT and RIGHT arrow keys to pan the graph.</p></li>
+<li><p><strong>Show/Hide Series</strong>: If the line graph has a legend, you can use the right-click menu to customize which series are shown or hidden.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/monitor_graph_zoom.png"><img alt="../_images/monitor_graph_zoom.png" src="../_images/monitor_graph_zoom.png" style="height: 300px;" /></a>
+<p>If the graph is a pie chart, you can filter the data from the graph view by holding down the SHIFT key and clicking on one of the pie slices. The data will be filtered to only show records that are represented by the pie slice that was clicked on.</p>
+<a class="reference internal image-reference" href="../_images/graph_shift_filter.png"><img alt="../_images/graph_shift_filter.png" src="../_images/graph_shift_filter.png" style="height: 300px;" /></a>
+</div>
+<div class="section" id="scripts">
+<h3>Scripts<a class="headerlink" href="#scripts" title="Permalink to this headline">¶</a></h3>
+<p>Almost every panel has the option to run custom scripts from the panel’s right-click menu. Many scripts are already shipped with Deadline, and additional custom scripts can be written. See the <a class="reference internal" href="monitor-scripts.html#monitor-scripts-ref-label"><span class="std std-ref">Monitor Scripts</span></a>
+documentation for more information.</p>
+<p>These script menus can also be customized from the <a class="reference internal" href="script-menus.html#configure-script-menus-ref-label"><span class="std std-ref">Repository Options</span></a>.</p>
+</div>
+</div>
+<div class="section" id="information-panels">
+<span id="info-panels-ref-label"></span><h2>Information Panels<a class="headerlink" href="#information-panels" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned earlier, information in the Monitor is broken up into different panels. These panels can be created from the View menu, or from the main toolbar.
+They can be re-sized, docked, or floated as desired. This allows for a highly customized viewing experience which is adaptable to the needs of different users.</p>
+<div class="section" id="jobs">
+<h3>Jobs<a class="headerlink" href="#jobs" title="Permalink to this headline">¶</a></h3>
+<p>The Jobs panel contains a list that shows all jobs in the farm. It also displays useful information about each job such as it’s name, user, status, error count, plugin, etc.
+As jobs change states, their colors will change. Active jobs will appear as green, and will remain green as they continue to render without errors. But if it starts to accumulate errors,
+it will turn brown and then eventually red. This allows you to see at a glance which jobs are having problems. For more information on job monitoring, see the <a class="reference internal" href="job-monitoring.html#job-monitoring-ref-label"><span class="std std-ref">Monitoring Jobs</span></a> documentation.</p>
+<a class="reference internal image-reference" href="../_images/monitor_job_panel.png"><img alt="../_images/monitor_job_panel.png" src="../_images/monitor_job_panel.png" style="height: 450px;" /></a>
+<p>The Jobs panel supports standard filtering, but it also has a Quick Filter option in the panel’s drop down menu to make it easier to filter out unwanted jobs. By toggling the options within the Status, User, Pool, Group, and Plugin sections, you can quickly drill down to the jobs you are interested in. There is also an Ego-Centric Sorting optino in the panel’s drop down menu which can be used to keep all of your jobs at the top of the job list.</p>
+<a class="reference internal image-reference" href="../_images/filtering.png"><img alt="../_images/filtering.png" src="../_images/filtering.png" style="height: 450px;" /></a>
+<p>The Jobs panel also supports the ability to group jobs together based on their Batch Name property. All of the job submitters that are included with Deadline will automatically set the Batch Name if they are submitting multiple jobs that are related to each other. The Batch Name for a job can be modified in the <a class="reference internal" href="job-controlling.html#job-properties-ref-label"><span class="std std-ref">Job Properties</span></a>. If you prefer to not have the jobs grouped together in the job list, you can disable the Group Jobs By Batch Name option in the <a class="reference internal" href="user-settings.html#user-settings-ref-label"><span class="std std-ref">Monitor and User Settings</span></a>.</p>
+<a class="reference internal image-reference" href="../_images/job_batch_example.png"><img alt="../_images/job_batch_example.png" src="../_images/job_batch_example.png" style="height: 350px;" /></a>
+<p>Finally, the Jobs panel allows jobs to be controlled and modified using the right-click menu. You can also bring up the Job Properties window by double clicking on a job. See the <a class="reference internal" href="job-controlling.html#job-controlling-ref-label"><span class="std std-ref">Controlling Jobs</span></a> documentation for more information.</p>
+</div>
+<div class="section" id="tasks">
+<h3>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h3>
+<p>The Task panel shows all the tasks for the job that is currently selected. It displays useful information about each task such as its frame list, status, and if applicable, the Worker that is rendering it.</p>
+<a class="reference internal image-reference" href="../_images/monitor_task_panel.png"><img alt="../_images/monitor_task_panel.png" src="../_images/monitor_task_panel.png" style="height: 450px;" /></a>
+<p>The Task panel also allows you to control tasks from the right-click menu. See the <a class="reference internal" href="job-controlling.html#job-controlling-ref-label"><span class="std std-ref">Controlling Jobs</span></a> documentation for more information. In addition, the double-click behavior in the Task panel can be set in
+the <a class="reference internal" href="user-settings.html#user-settings-ref-label"><span class="std std-ref">Monitor and User Settings</span></a>, which can be accessed from the main toolbar.</p>
+</div>
+<div class="section" id="job-details">
+<span id="monitor-job-details-ref-label"></span><h3>Job Details<a class="headerlink" href="#job-details" title="Permalink to this headline">¶</a></h3>
+<p>The Job Details panel shows all available information about the job that is currently selected. The information is split up into different sections that can be expanded or collapsed as desired. Job statistical information can be found by expanding the <strong>Statistics</strong> section as shown below.</p>
+<p><a class="reference internal" href="../_images/monitor_job_details_panel.png"><img alt="details" src="../_images/monitor_job_details_panel.png" style="height: 600px;" /></a> <a class="reference internal" href="../_images/monitor_job_details_panel_stats.png"><img alt="stats" src="../_images/monitor_job_details_panel_stats.png" style="height: 600px;" /></a></p>
+</div>
+<div class="section" id="job-dependency-view">
+<h3>Job Dependency View<a class="headerlink" href="#job-dependency-view" title="Permalink to this headline">¶</a></h3>
+<p>This panel allows you to view and modify a job’s dependency tree in a node-based view. You can lock the view to the currently selected job, which allows you to drag &amp; drop other jobs into the view to hook
+up new dependencies. In addition, you can drag &amp; drop Python scripts or asset files directly into the view and hook them up as dependencies. See the <a class="reference internal" href="job-controlling.html#job-controlling-ref-label"><span class="std std-ref">Controlling Jobs</span></a> documentation for more information.</p>
+<a class="reference internal image-reference" href="../_images/monitor_job_dependency_panel.png"><img alt="../_images/monitor_job_dependency_panel.png" src="../_images/monitor_job_dependency_panel.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="job-report">
+<h3>Job Report<a class="headerlink" href="#job-report" title="Permalink to this headline">¶</a></h3>
+<p>All reports for a job can be viewed in the Job Reports panel. This includes error reports, logs, and task requeue reports. This panel can also be opened by right-clicking on a job in the Job List and
+selecting View Job Reports. More information can be found in the <a class="reference internal" href="job-controlling.html#job-controlling-ref-label"><span class="std std-ref">Controlling Jobs</span></a> documentation.</p>
+<a class="reference internal image-reference" href="../_images/monitor_job_report_panel.png"><img alt="../_images/monitor_job_report_panel.png" src="../_images/monitor_job_report_panel.png" style="height: 450px;" /></a>
+</div>
+<div class="section" id="workers">
+<span id="monitor-worker-panel-ref-label"></span><h3>Workers<a class="headerlink" href="#workers" title="Permalink to this headline">¶</a></h3>
+<p>The Worker panel shows all the Workers that are in your farm. It shows system information about each Worker, as well as information about the job the Worker is currently rendering.</p>
+<a class="reference internal image-reference" href="../_images/monitor_worker_panel.png"><img alt="../_images/monitor_worker_panel.png" src="../_images/monitor_worker_panel.png" style="height: 250px;" /></a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Starting with Deadline 10.1.23, Deadline and its components do not require a license. For older versions, if you see a Worker that is colored orange in the list, this means that the Worker is unable to get a license or that the license is about to expire. When the Worker cannot get a license, it could be because there is a network issue, the license has expired, or the license limit has been reached.</p>
+</div>
+<p>If a Worker isn’t rendering a job that you think it should be, you can use the <a class="reference internal" href="job-controlling.html#job-render-candidates-ref-label"><span class="std std-ref">Job Render Candidates</span></a> feature in the Jobs panel to try and figure out why.</p>
+<p>The Worker panel’s right-click menu allows you to modify Worker settings and control the Workers remotely. See the <a class="reference internal" href="worker-config.html#worker-config-ref-label"><span class="std std-ref">Worker Configuration</span></a> documentation for more information.</p>
+</div>
+<div class="section" id="worker-reports">
+<h3>Worker Reports<a class="headerlink" href="#worker-reports" title="Permalink to this headline">¶</a></h3>
+<p>All log and error reports for a Worker can be viewed in the Worker Reports panel. This panel can also be opened by right-clicking on a Worker in the Worker List and selecting View Worker Reports.</p>
+<a class="reference internal image-reference" href="../_images/monitor_worker_report_panel.png"><img alt="../_images/monitor_worker_report_panel.png" src="../_images/monitor_worker_report_panel.png" style="height: 450px;" /></a>
+</div>
+<div class="section" id="pulses">
+<h3>Pulses<a class="headerlink" href="#pulses" title="Permalink to this headline">¶</a></h3>
+<p>The Pulse panel shows which machine Pulse is running on, as well as previous machines that Pulse has run on. It also shows system information about each machine.</p>
+<a class="reference internal image-reference" href="../_images/monitor_pulse_panel.png"><img alt="../_images/monitor_pulse_panel.png" src="../_images/monitor_pulse_panel.png" style="height: 150px;" /></a>
+</div>
+<div class="section" id="limits">
+<span id="monitor-limits-ref-label"></span><h3>Limits<a class="headerlink" href="#limits" title="Permalink to this headline">¶</a></h3>
+<p>The Limit panel shows all the Limits that are in your farm. You can access many options for the Limits by right-clicking on them. See the <a class="reference internal" href="limits.html#limits-ref-label"><span class="std std-ref">Limits and Machine Limits</span></a> documentation for more information.</p>
+<a class="reference internal image-reference" href="../_images/monitor_limit_panel.png"><img alt="../_images/monitor_limit_panel.png" src="../_images/monitor_limit_panel.png" style="height: 250px;" /></a>
+</div>
+<div class="section" id="connection-servers">
+<h3>Connection Servers<a class="headerlink" href="#connection-servers" title="Permalink to this headline">¶</a></h3>
+<p>The Connection Servers panel shows which machine the Connection Server is running on, as well as previous machines that the Connection Server has run on. It also shows system information about each machine.</p>
+<a class="reference internal image-reference" href="../_images/connection_servers_panel.png"><img alt="../_images/connection_servers_panel.png" src="../_images/connection_servers_panel.png" style="height: 200px;" /></a>
+</div>
+<div class="section" id="license-forwarders">
+<h3>License Forwarders<a class="headerlink" href="#license-forwarders" title="Permalink to this headline">¶</a></h3>
+<p>The License Forwarder panel shows which machine the License Forwarder is running on, as well as previous machines that the License Forwarder has run on. It also shows system information about each machine.</p>
+<a class="reference internal image-reference" href="../_images/license_forwarder_panel.png"><img alt="../_images/license_forwarder_panel.png" src="../_images/license_forwarder_panel.png" style="height: 200px;" /></a>
+<p>The License Forwarder panel’s right-click menu allows you to control the License Forwarder remotely.</p>
+</div>
+<div class="section" id="console">
+<span id="console-panel-ref-label"></span><h3>Console<a class="headerlink" href="#console" title="Permalink to this headline">¶</a></h3>
+<p>The Console panel shows all lines of text (Stdout/StdErr) that is written to the Monitor’s log. A right-click menu for copying and pasting the log is available as well as “Clear Log”, “Clear Selection” and a “Find” dialog. Note, “Clear Log” only clears the current view and the information still exists in the actual log files.</p>
+<a class="reference internal image-reference" href="../_images/monitor_console_panel.png"><img alt="../_images/monitor_console_panel.png" src="../_images/monitor_console_panel.png" style="height: 350px;" /></a>
+</div>
+<div class="section" id="remote-commands">
+<span id="remote-commands-panel-ref-label"></span><h3>Remote Commands<a class="headerlink" href="#remote-commands" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By default, <strong>Remote Administration</strong> is disabled in <a class="reference internal" href="repository-config.html#repo-config-remote-control-settings-ref-label"><span class="std std-ref">Repository Configuration</span></a>. Enabling <strong>Remote Administration</strong> allows the Deadline Clients to be controlled remotely from the Monitor running on another machine. Note that this can be a security risk if you are <strong>not</strong> behind a firewall.</p>
+</div>
+<p>The Remote Command panel shows all pending and completed remote commands that were sent from the Monitor. When sending a remote command, if this panel is not already displayed, it will be displayed automatically
+(assuming you have permissions to see the Remote Command panel). See the <a class="reference internal" href="remote-control.html#remote-control-ref-label"><span class="std std-ref">Remote Control</span></a> documentation for more information.</p>
+<a class="reference internal image-reference" href="../_images/monitor_remote_panel.png"><img alt="../_images/monitor_remote_panel.png" src="../_images/monitor_remote_panel.png" style="height: 250px;" /></a>
+</div>
+<div class="section" id="background-operations">
+<h3>Background Operations<a class="headerlink" href="#background-operations" title="Permalink to this headline">¶</a></h3>
+<p>Most operations that can be called from the Monitor now execute in the background. This allows the Monitor’s User Interface to continue to be used while the operations execute.
+The Background Operations panel shows operations that are in the process of executing. You can pause and resume operations and also cancel them.</p>
+<a class="reference internal image-reference" href="../_images/monitor_background_panel.png"><img alt="../_images/monitor_background_panel.png" src="../_images/monitor_background_panel.png" style="height: 500px;" /></a>
+</div>
+</div>
+<div class="section" id="monitor-menu-options">
+<h2>Monitor Menu Options<a class="headerlink" href="#monitor-menu-options" title="Permalink to this headline">¶</a></h2>
+<p>The available options are listed below. They are available in the Monitor’s main menu, and some are also available in the main toolbar. Note that the availability of these options can vary depending on the context
+in which they are used, as well as the UI filters that are defined for the current user.</p>
+<div class="section" id="file-menu">
+<h3>File Menu<a class="headerlink" href="#file-menu" title="Permalink to this headline">¶</a></h3>
+<p><strong>Launch Monitor For Repository…</strong></p>
+<blockquote>
+<div><p>Launch another Monitor for a repository. There is also a toolbar button for this option.</p>
+</div></blockquote>
+<p><strong>Change Repository…</strong></p>
+<blockquote>
+<div><p>Connect to a different repository, or reconnect to the current repository if the Monitor becomes disconnected. There is also a toolbar button for this option. See <a class="reference internal" href="changing-repository.html#change-repository-ref-label"><span class="std std-ref">Changing your Repository</span></a> for more information.</p>
+</div></blockquote>
+<p><strong>Change User…</strong></p>
+<blockquote>
+<div><p>Change the current user. You have the choice to select a different user or create a new one. There is also a toolbar button for this option.</p>
+</div></blockquote>
+<p><strong>Import Archived Jobs…</strong></p>
+<blockquote>
+<div><p>Opens a file dialog which allows you to select a zip file containing an archived job which you would like to add back to the monitor. See the <a class="reference internal" href="job-archiving.html#job-archiving-ref-label"><span class="std std-ref">Archiving Jobs</span></a> documentation for more information.</p>
+</div></blockquote>
+</div>
+<div class="section" id="view-menu">
+<h3>View Menu<a class="headerlink" href="#view-menu" title="Permalink to this headline">¶</a></h3>
+<p><strong>Manual Refresh</strong></p>
+<blockquote>
+<div><p>Forces an immediate refresh of all the data in the Monitor. Manual refreshing is disabled by default, and can only be enabled in the Monitor Settings in the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Configuration</span></a>.</p>
+</div></blockquote>
+<p><strong>New Panel</strong></p>
+<blockquote>
+<div><p>Spawn a new information panel. See the <a class="reference internal" href="#info-panels-ref-label"><span class="std std-ref">Information Panels</span></a> section above for more information. There is also a toolbar button for this option.</p>
+</div></blockquote>
+<p><strong>Lock Panels</strong></p>
+<blockquote>
+<div><p>Prevents the panels from being moved. Panels can still be floated, docked, and closed. To dock a floating panel, double-click on the panel’s title. There is also a toolbar button for this option.</p>
+</div></blockquote>
+<p><strong>Main Toolbar</strong></p>
+<blockquote>
+<div><p>Whether or not to display the main icon toolbar across the top of the Monitor. Useful to hide this toolbar if Monitor is being displayed on a large TV screen with pie-charts visible only.</p>
+</div></blockquote>
+<p><strong>Pinned Layouts</strong></p>
+<blockquote>
+<div><p>You are able to save different Monitor layout for quick use. By selecting Pin Current Layout, your current layout will be added to your pinned layouts.
+Selecting a pinned layout will restore the monitors panels to the pinned layouts state. There is also a toolbar button for this option.</p>
+</div></blockquote>
+<p><strong>Open Layout…</strong></p>
+<blockquote>
+<div><p>Load a previously saved layout from file.</p>
+<p>Deadline 10.4 uses a new format for layout files. If you load a layout file that was created by an earlier version, it will be converted into the new format, and it will no longer work with earlier versions of Deadline. A backup of the layout file will be created alongside it with “Legacy Backup” appended to the layout file name, which can be used with prior Deadline versions.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Only open layout files from trusted sources.</p>
+</div>
+</div></blockquote>
+<p><strong>Save Layout…</strong></p>
+<blockquote>
+<div><p>Saves the current layout to file.</p>
+</div></blockquote>
+<p><strong>Save All Pinned Layouts…</strong></p>
+<blockquote>
+<div><p>Save all the pinned Monitor layouts to a zip file.</p>
+</div></blockquote>
+<p><strong>Reset Layout</strong></p>
+<blockquote>
+<div><p>Reset the current layout to the Monitor’s default layout.</p>
+</div></blockquote>
+</div>
+<div class="section" id="submit-and-script-menus">
+<h3>Submit and Script Menus<a class="headerlink" href="#submit-and-script-menus" title="Permalink to this headline">¶</a></h3>
+<p>Submission scripts can be found under the Submit menu, and general scripts can be found under the Scripts menu. Many scripts are already shipped with Deadline, and additional custom scripts can be written.
+Check out the <a class="reference internal" href="monitor-scripts.html#monitor-scripts-ref-label"><span class="std std-ref">Monitor Scripts</span></a> documentation for more information.</p>
+</div>
+<div class="section" id="tools-menu">
+<h3>Tools Menu<a class="headerlink" href="#tools-menu" title="Permalink to this headline">¶</a></h3>
+<p><strong>Power User</strong></p>
+<blockquote>
+<div><p>Enter Power User mode, which allows you to access the administrative Monitor options. Power User mode can be password protected simply by specifying a password in the User Settings section of the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Configuration</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to Deadline 10.3.1, this was previously referred to as “Super User mode”.</p>
+</div>
+</div></blockquote>
+<p><strong>View Repository History…</strong></p>
+<blockquote>
+<div><p>View all repository history entries generated on the farm.</p>
+</div></blockquote>
+<p><strong>View Power Management History…</strong></p>
+<blockquote>
+<div><p>View all power management history entries on the farm. See the <a class="reference internal" href="power-management.html#power-management-ref-label"><span class="std std-ref">Power Management</span></a> documentation for more information.</p>
+</div></blockquote>
+<p><strong>View Farm Reports…</strong></p>
+<blockquote>
+<div><p>View various repository statistical information. See the <a class="reference internal" href="statistics.html#statistics-ref-label"><span class="std std-ref">Farm Statistics</span></a> documentation for more information.</p>
+</div></blockquote>
+<p><strong>Manage Pools…</strong></p>
+<blockquote>
+<div><p>Add or remove Pools, and configure which Pools are assigned to the Workers. See the <a class="reference internal" href="pools-and-groups.html#pools-and-groups-ref-label"><span class="std std-ref">Pools and Groups</span></a> documentation for more information.</p>
+</div></blockquote>
+<p><strong>Manage Groups…</strong></p>
+<blockquote>
+<div><p>Add or remove Groups, and configure which Groups are assigned to the Workers. See the <a class="reference internal" href="pools-and-groups.html#pools-and-groups-ref-label"><span class="std std-ref">Pools and Groups</span></a> documentation for more information.</p>
+</div></blockquote>
+<p><strong>Manage Identities…</strong></p>
+<blockquote>
+<div><p>Control the Registration Status and Assigned Roles of <a class="reference internal" href="secrets-management/deadline-secrets-management.html#identity-management-ref-label"><span class="std std-ref">Identities</span></a>. See <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-ref-label"><span class="std std-ref">Deadline Secrets Management</span></a> documentation for more information. Note that administrator credentials are required to access this dialog and it can only be accessed through Remote Connection over TLS.</p>
+</div></blockquote>
+<p><strong>Manage Users…</strong></p>
+<blockquote>
+<div><p>Add or remove users, and set user information. See the <a class="reference internal" href="user-management.html#user-management-ref-label"><span class="std std-ref">User Management</span></a> documentation for more information.</p>
+</div></blockquote>
+<p><strong>Manage User Groups…</strong></p>
+<blockquote>
+<div><p>Add or remove a user group, and set options to control which features are available. See the <a class="reference internal" href="user-management.html#user-management-ref-label"><span class="std std-ref">User Management</span></a> documentation for more information</p>
+</div></blockquote>
+<p><strong>Configure Repository Options…</strong></p>
+<blockquote>
+<div><p>Configure a wide range of global options. See the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Configuration</span></a> documentation for more information. If using <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-ref-label"><span class="std std-ref">Deadline Secrets Management</span></a>, administrator credentials will be required to save any <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-managed-secrets-ref-label"><span class="std std-ref">Managed Secrets</span></a>.</p>
+</div></blockquote>
+<p><strong>Configure Worker Scheduling…</strong></p>
+<blockquote>
+<div><p>Configure the Worker scheduling options. See the <a class="reference internal" href="worker-schedule.html#worker-schedule-ref-label"><span class="std std-ref">Worker Scheduling</span></a> documentation for more information.</p>
+</div></blockquote>
+<p><strong>Configure Power Management…</strong></p>
+<blockquote>
+<div><p>Configure the Power Management settings. See the <a class="reference internal" href="power-management.html#power-management-ref-label"><span class="std std-ref">Power Management</span></a> documentation for more information.</p>
+</div></blockquote>
+<p><strong>Configure Asset Server…</strong></p>
+<blockquote>
+<div><p>Configure the AWS Portal Asset Server settings. See the <a class="reference internal" href="aws-asset-server.html#asset-server-ref-label"><span class="std std-ref">Asset Server Options</span></a> documentation for more information.</p>
+</div></blockquote>
+<p><strong>Configure Plugins…</strong></p>
+<blockquote>
+<div><p>Configure the available render plugins, such as 3ds Max, After Effects, Maya, and Nuke. See the plugin documentation for more information on the configurable settings for each plugin. Each plugin also has various <a class="reference internal" href="plugin-config.html#generic-plugin-options-ref-label"><span class="std std-ref">generic options</span></a> that can be configured globally. If using <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-ref-label"><span class="std std-ref">Deadline Secrets Management</span></a>, administrator credentials will be required to save any <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-managed-secrets-ref-label"><span class="std std-ref">Managed Secrets</span></a>.</p>
+</div></blockquote>
+<p><strong>Configure Events…</strong></p>
+<blockquote>
+<div><p>Configure the available event plugins such as Draft, Shotgun, FTrack and NIM. See the event plugin documentation for more information on the configurable settings for each plugin. If using <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-ref-label"><span class="std std-ref">Deadline Secrets Management</span></a>, administrator credentials will be required to save any <a class="reference internal" href="secrets-management/deadline-secrets-management.html#deadline-secrets-management-managed-secrets-ref-label"><span class="std std-ref">Managed Secrets</span></a>.</p>
+</div></blockquote>
+<p><strong>Perform Pending Job Scan</strong></p>
+<blockquote>
+<div><p><a class="reference internal" href="repository-config.html#pending-job-scan-settings-label"><span class="std std-ref">Pending Job Scan</span></a> determines if any pending jobs should be released, or if any pending job events should be processed. If Pulse is running, it will perform the Pending Job Scan every interval. If Pulse is not running, the Workers will perform the Pending Job Scan between tasks if the interval has passed. This operation is normally performed automatically, but you can force an immediate clean up with this option if desired.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This feature is not supported when the Monitor is connected to the <a class="reference internal" href="remote-connection-server.html#remote-connection-server-ref-label"><span class="std std-ref">Remote Connection Server</span></a>. See the <a class="reference internal" href="repository-config.html#repository-config-house-cleaning-ref-label"><span class="std std-ref">House Cleaning</span></a> docs for more information.</p>
+</div>
+</div></blockquote>
+<p><strong>Perform House Cleaning</strong></p>
+<blockquote>
+<div><p><a class="reference internal" href="repository-config.html#house-cleaning-settings-label"><span class="std std-ref">House Cleaning</span></a> is responsible for purging old jobs, Workers, and reports, and for regular maintenance of the repository and database. If Pulse is running, it will perform House Cleaning every interval. If Pulse is not running, the Workers will perform House Cleaning between tasks if the interval has passed. This operation is normally performed automatically, but you can force an immediate clean up with this option if desired.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This feature is not supported when the Monitor is connected to the <a class="reference internal" href="remote-connection-server.html#remote-connection-server-ref-label"><span class="std std-ref">Remote Connection Server</span></a>. See the <a class="reference internal" href="repository-config.html#repository-config-house-cleaning-ref-label"><span class="std std-ref">House Cleaning</span></a> docs for more information.</p>
+</div>
+</div></blockquote>
+<p><strong>Perform Repository Repair</strong></p>
+<blockquote>
+<div><p><a class="reference internal" href="repository-config.html#repository-repair-settings-label"><span class="std std-ref">Repository Repair</span></a> is responsible for finding orphaned tasks and limit stubs, and checking for stalled Workers. If Pulse is running, it will perform a Repository Repair every interval. If Pulse is not running, the Workers will perform the Repository Repair between tasks if the interval has passed. This operation is normally performed automatically, but you can force an immediate clean up with this option if desired.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This feature is not supported when the Monitor is connected to the <a class="reference internal" href="remote-connection-server.html#remote-connection-server-ref-label"><span class="std std-ref">Remote Connection Server</span></a>. See the <a class="reference internal" href="repository-config.html#repository-config-house-cleaning-ref-label"><span class="std std-ref">House Cleaning</span></a> docs for more information.</p>
+</div>
+</div></blockquote>
+<p><strong>Undelete Jobs</strong></p>
+<blockquote>
+<div><p>Use this to recover any deleted jobs that haven’t been purged from the database yet. You can right-click on the jobs in the Undelete Jobs list to view their history, including how the job was deleted.</p>
+</div></blockquote>
+<p><strong>Explore Repository Root</strong></p>
+<blockquote>
+<div><p>View the root directory of the current Repository.</p>
+</div></blockquote>
+<p><strong>Import Settings…</strong></p>
+<blockquote>
+<div><p>Import settings from another Repository. See the <a class="reference internal" href="importing.html#importing-ref-label"><span class="std std-ref">Importing Repository Settings</span></a> documentation for more information.</p>
+</div></blockquote>
+<p><strong>Download Integrated Submission Scripts…</strong></p>
+<blockquote>
+<div><p>View available integrated submission scripts and download the client files for them. Useful if connecting to a Repository via a Connection Server.</p>
+</div></blockquote>
+<p><strong>Synchronize Monitor Scripts and Plugins</strong></p>
+<blockquote>
+<div><p>Rebuilds the script-specific menus, updates event plugin scripts and the local icon cache to the icon configurations in the Configure Plugins menu. Note that if any new icons are changed in the Configure Plugins menu, you will have to re-sync these plugins before the jobs in list show the new icons. This only synchronizes the scripts and plugins for the Monitor.</p>
+</div></blockquote>
+<p><strong>Local Worker Controls…</strong></p>
+<blockquote>
+<div><p>Opens the <a class="reference internal" href="local-worker.html#local-worker-ref-label"><span class="std std-ref">Local Worker Controls</span></a> window, which allows you to control and configure the Worker that runs on your machine.</p>
+</div></blockquote>
+<p><strong>Options</strong></p>
+<blockquote>
+<div><p>Modify the <a class="reference internal" href="user-settings.html#user-settings-ref-label"><span class="std std-ref">Monitor and User Settings</span></a>. There is also a toolbar button for this option.</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="command-line-options">
+<span id="monitor-command-line-label"></span><h2>Command Line Options<a class="headerlink" href="#command-line-options" title="Permalink to this headline">¶</a></h2>
+<p>To run the Monitor from a command prompt or terminal window, navigate to the Deadline bin folder (Windows or Linux) or the Resources folder (macOS) and run the ‘deadlinemonitor’
+application. To view all available command line arguments, you can run the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinemonitor</span> <span class="o">-</span><span class="n">help</span>
+</pre></div>
+</div>
+<div class="section" id="available-options">
+<h3>Available Options<a class="headerlink" href="#available-options" title="Permalink to this headline">¶</a></h3>
+<p>To start a new Monitor if there already another Monitor running, use the -new option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinemonitor</span> <span class="o">-</span><span class="n">new</span>
+</pre></div>
+</div>
+<p>To start the Monitor connected to a different repository, use the -repository option. You can combine this with the -new option to have different Monitors connected to different repositories:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinemonitor</span> <span class="o">-</span><span class="n">repository</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">repository\path&quot;</span>
+<span class="n">deadlinemonitor</span> <span class="o">-</span><span class="n">new</span> <span class="o">-</span><span class="n">repository</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">repository\path&quot;</span>
+</pre></div>
+</div>
+<p>To start the Monitor without the splash screen, use the -nosplash option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinemonitor</span> <span class="o">-</span><span class="n">nosplash</span>
+</pre></div>
+</div>
+<p>To shutdown the Monitor if it’s already running, use the -shutdown option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinemonitor</span> <span class="o">-</span><span class="n">shutdown</span>
+</pre></div>
+</div>
+<p>You can also set all of the Monitor Options using command line options. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinemonitor</span> <span class="o">-</span><span class="n">draganddropdep</span> <span class="kc">True</span> <span class="o">-</span><span class="n">groupjobbatches</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="command-line-monitor">
+<span id="monitor-command-line-monitor-label"></span><h2>Command Line Monitor<a class="headerlink" href="#command-line-monitor" title="Permalink to this headline">¶</a></h2>
+<p>You can run the Monitor within a command prompt or terminal window. This is useful if you’d like to quickly <cite>ssh</cite> into a worker or server to see the status of your farm.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This feature is an experimental preview. If you like it and would like to see us add more features to it, let us know! Currently this mode only supports displaying and filtering the lists of Jobs, Workers and Tasks.</p>
+</div>
+<p>To start the Monitor in command line mode, use the -nogui option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinemonitor</span> <span class="o">-</span><span class="n">nogui</span>
+</pre></div>
+</div>
+<p>Upon start up, you’ll be in the help screen that outlines the keyboard shortcuts. Here are some of the important ones:</p>
+<table class="colwidths-given docutils align-left">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Keyboard Shortcut</p></th>
+<th class="head"><p>Action</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Q</p></td>
+<td><p>Quits the application</p></td>
+</tr>
+<tr class="row-odd"><td><p>R</p></td>
+<td><p>Redraws the screen. Useful if the terminal window mixes-in other application output.</p></td>
+</tr>
+<tr class="row-even"><td><p>N or P</p></td>
+<td><p>Use these to cycle through the ‘tabs’ at the top of the screen.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Tab or shift-Tab</p></td>
+<td><p>Used to cycle between the widgets within a tab. Use this to get into the lists of each tab, for example.</p></td>
+</tr>
+<tr class="row-even"><td><p>Up Arrow, Down Arrow, or Enter</p></td>
+<td><p>Within a list, use the arrow keys to select rows. Pressing enter will activate that row, which for a Job, will open a new tab showing its Tasks.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Left Arrow or Right Arrow</p></td>
+<td><p>Within a list, use the left and right arrows to browse other columns in the table.</p></td>
+</tr>
+<tr class="row-even"><td><p>F</p></td>
+<td><p>Toggles the filter view for the current list.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The filter panel allows you to apply filters to the current list, just like in the full Monitor. Press <cite>F</cite> to open the filter panel, and then <cite>Tab</cite> to access it.
+Use <cite>Tab</cite> and <cite>shift-Tab</cite> to navigate to the various components and <cite>Enter</cite> to activate check boxes, drop down lists, edit boxes and buttons.
+Make sure to press <cite>Enter</cite> over the <cite>[Apply]</cite> button to activate the selected filters.</p>
+<p>Here’s a screenshot demonstrating the Job tab with an open filter view. The filter is limiting the job list to only those jobs whose name contains the given string.</p>
+<a class="reference internal image-reference" href="../_images/climonitor_jobs_screen.png"><img alt="Screenshot of the jobs tab" src="../_images/climonitor_jobs_screen.png" style="height: 300px;" /></a>
+<p>If you press <cite>Enter</cite> on a Job, you’ll be taken to a new Task tab enumerating all of that Job’s tasks. For example:</p>
+<a class="reference internal image-reference" href="../_images/climonitor_tasks_screen.png"><img alt="Screenshot of the tasks tab" src="../_images/climonitor_tasks_screen.png" style="height: 300px;" /></a>
+<p>You can use <cite>N</cite> or <cite>Escape</cite> to return to the first tab.</p>
+</div>
+<div class="section" id="faq">
+<span id="monitor-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>I’m unable to move panels in the Monitor, or dock floating panels.</strong></p>
+<blockquote>
+<div><p>You need to unlock the Monitor layout. This can be done from the View menu or from the toolbar.</p>
+</div></blockquote>
+<p><strong>Can I dock a floating panel when the Monitor layout is locked?</strong></p>
+<blockquote>
+<div><p>Yes, you can dock the floating panel by double-clicking on its title bar. It will be docked to its previous location, or to the bottom of the Monitor if it wasn’t docked previously.</p>
+</div></blockquote>
+<p><strong>What does it mean when a Worker is orange in the Worker list?</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Starting with Deadline 10.1.23, Deadline and its components do not require a license. This section is left for operators of older versions of Deadline.</p>
+<p>This means that the Worker is currently unable to get a license.</p>
+</div>
+<p><strong>How is the “Estimated Remaining Render Time” column calculated in Monitor?</strong></p>
+<blockquote>
+<div><p>It’s calculated by finding the average render time of the tasks that have been completed and multiplying that value by the number of tasks that are active (rendering or queued):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">average</span> <span class="n">render</span> <span class="n">time</span> <span class="n">per</span> <span class="n">frame</span> <span class="o">*</span> <span class="n">frames</span> <span class="n">remaining</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Monitor</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#running-the-monitor">Running the Monitor</a></li>
+<li><a class="reference internal" href="#panel-features">Panel Features</a><ul>
+<li><a class="reference internal" href="#customization">Customization</a></li>
+<li><a class="reference internal" href="#data-filtering">Data Filtering</a></li>
+<li><a class="reference internal" href="#automatic-sorting-and-filtering">Automatic Sorting and Filtering</a></li>
+<li><a class="reference internal" href="#saving-and-loading-panel-layouts">Saving and Loading Panel Layouts</a></li>
+<li><a class="reference internal" href="#graph-views">Graph Views</a></li>
+<li><a class="reference internal" href="#scripts">Scripts</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#information-panels">Information Panels</a><ul>
+<li><a class="reference internal" href="#jobs">Jobs</a></li>
+<li><a class="reference internal" href="#tasks">Tasks</a></li>
+<li><a class="reference internal" href="#job-details">Job Details</a></li>
+<li><a class="reference internal" href="#job-dependency-view">Job Dependency View</a></li>
+<li><a class="reference internal" href="#job-report">Job Report</a></li>
+<li><a class="reference internal" href="#workers">Workers</a></li>
+<li><a class="reference internal" href="#worker-reports">Worker Reports</a></li>
+<li><a class="reference internal" href="#pulses">Pulses</a></li>
+<li><a class="reference internal" href="#limits">Limits</a></li>
+<li><a class="reference internal" href="#connection-servers">Connection Servers</a></li>
+<li><a class="reference internal" href="#license-forwarders">License Forwarders</a></li>
+<li><a class="reference internal" href="#console">Console</a></li>
+<li><a class="reference internal" href="#remote-commands">Remote Commands</a></li>
+<li><a class="reference internal" href="#background-operations">Background Operations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#monitor-menu-options">Monitor Menu Options</a><ul>
+<li><a class="reference internal" href="#file-menu">File Menu</a></li>
+<li><a class="reference internal" href="#view-menu">View Menu</a></li>
+<li><a class="reference internal" href="#submit-and-script-menus">Submit and Script Menus</a></li>
+<li><a class="reference internal" href="#tools-menu">Tools Menu</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#command-line-options">Command Line Options</a><ul>
+<li><a class="reference internal" href="#available-options">Available Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#command-line-monitor">Command Line Monitor</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="launcher.html"
+                        title="previous chapter">Launcher</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="worker.html"
+                        title="next chapter">Worker</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="worker.html" title="Worker"
+             >next</a></li>
+        <li class="right" >
+          <a href="launcher.html" title="Launcher"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" >Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Monitor</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

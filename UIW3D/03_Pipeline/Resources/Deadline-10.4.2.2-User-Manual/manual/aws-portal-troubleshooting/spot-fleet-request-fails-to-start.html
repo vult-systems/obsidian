@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spot Fleet Request Fails to Start &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thinkbox.css" />
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Connecting to the Infrastructure" href="aws-connect-to-infrastructure.html" />
+    <link rel="prev" title="Verifying Connectivity Between AWS Portal Infrastructure and Your Remote Connection Server" href="verify-connection-to-rcs.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-connect-to-infrastructure.html" title="Connecting to the Infrastructure"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="verify-connection-to-rcs.html" title="Verifying Connectivity Between AWS Portal Infrastructure and Your Remote Connection Server"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Spot Fleet Request Fails to Start</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="../aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<span class="target" id="troubleshooting-spot-fleet-request-fails-label"></span><div class="section" id="spot-fleet-request-fails-to-start">
+<h1>Spot Fleet Request Fails to Start<a class="headerlink" href="#spot-fleet-request-fails-to-start" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-went-wrong">
+<h2>What Went Wrong<a class="headerlink" href="#what-went-wrong" title="Permalink to this headline">¶</a></h2>
+<p>A Spot Fleet Request’s Status is error.</p>
+</div>
+<div class="section" id="figuring-out-what-went-wrong">
+<h2>Figuring Out What Went Wrong<a class="headerlink" href="#figuring-out-what-went-wrong" title="Permalink to this headline">¶</a></h2>
+<p>In the Spot Fleets portion of the AWS Portal Panel in the Deadline Monitor, right click the Spot Fleet Request that’s in the errored state and select <code class="docutils literal notranslate"><span class="pre">View</span> <span class="pre">Spot</span> <span class="pre">Fleet</span> <span class="pre">Information</span></code>. Click on
+the row with the <code class="docutils literal notranslate"><span class="pre">fleetProgressHalted</span></code> status to determine what has gone wrong.</p>
+</div>
+<div class="section" id="solutions">
+<h2>Solutions<a class="headerlink" href="#solutions" title="Permalink to this headline">¶</a></h2>
+<p>Here are solutions to some common problems.</p>
+<div class="section" id="spot-limit-reached">
+<h3>Spot Limit Reached<a class="headerlink" href="#spot-limit-reached" title="Permalink to this headline">¶</a></h3>
+<p>This can happen when you try to start more Spot Fleet Instances in a region than are allowed in your account. <a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-spot-limits.html">Further reading on Spot Instance Limits</a></p>
+</div>
+<div class="section" id="maximum-price-is-too-low">
+<h3>Maximum Price is Too Low<a class="headerlink" href="#maximum-price-is-too-low" title="Permalink to this headline">¶</a></h3>
+<p>This can happen if the maximum price you provided when you created your Spot Fleet Request is lower than the Spot price of the cheapest instance type you selected. You can fix this by
+either increasing your maximum price or choosing cheaper instances. The <code class="docutils literal notranslate"><span class="pre">Instance</span> <span class="pre">Types</span></code> tab in the Spot Fleet Configuration dialog has the current Spot price for both Linux and Windows
+listed beside each Instance Type.</p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Spot Fleet Request Fails to Start</a><ul>
+<li><a class="reference internal" href="#what-went-wrong">What Went Wrong</a></li>
+<li><a class="reference internal" href="#figuring-out-what-went-wrong">Figuring Out What Went Wrong</a></li>
+<li><a class="reference internal" href="#solutions">Solutions</a><ul>
+<li><a class="reference internal" href="#spot-limit-reached">Spot Limit Reached</a></li>
+<li><a class="reference internal" href="#maximum-price-is-too-low">Maximum Price is Too Low</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="verify-connection-to-rcs.html"
+                        title="previous chapter">Verifying Connectivity Between AWS Portal Infrastructure and Your Remote Connection Server</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="aws-connect-to-infrastructure.html"
+                        title="next chapter">Connecting to the Infrastructure</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-connect-to-infrastructure.html" title="Connecting to the Infrastructure"
+             >next</a></li>
+        <li class="right" >
+          <a href="verify-connection-to-rcs.html" title="Verifying Connectivity Between AWS Portal Infrastructure and Your Remote Connection Server"
+             >previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Spot Fleet Request Fails to Start</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

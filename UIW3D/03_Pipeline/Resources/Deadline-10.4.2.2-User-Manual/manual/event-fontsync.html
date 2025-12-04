@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FontSync &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="FTrack" href="event-ftrack.html" />
+    <link rel="prev" title="Draft / Quick Draft" href="event-draft.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-ftrack.html" title="FTrack"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="event-draft.html" title="Draft / Quick Draft"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" accesskey="U">Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">FontSync</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="fontsync">
+<span id="event-font-sync-ref-label"></span><h1>FontSync<a class="headerlink" href="#fontsync" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The FontSync event plugin can be used to synchronize fonts from a central server to Windows and macOS render nodes. It can be configured to synchronize the fonts when the Worker application is launched on the render node, or before each job the Worker renders.</p>
+<p>The font folder on the central server must be accessible by the render nodes, and it is recommended to use separate folders for Windows and macOS fonts.</p>
+</div>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>Some configuration is needed to use the FontSync event plugin. To access these settings, simply enter Power User mode and select Tools -&gt; Configure Events form the Monitor’s menu. From there, select the FontSync entry from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cep_fontsync.png"><img alt="../_images/cep_fontsync.png" src="../_images/cep_fontsync.png" style="height: 400px;" /></a>
+<p><strong>Options</strong></p>
+<p>This section contains general high-level options that control the behaviour of the Deadline’s FontSync integration.</p>
+<ul class="simple">
+<li><p><strong>State</strong>: There are three different states that an Event Plugin can be in: Global Enabled, Opt-In, and Disabled. In order for this feature to function properly, the State must be set to either Global Enabled or Opt-In. Note that if this plugin is in the Opt-In state, the jobs that want to run this plugin must opt into FontSync.</p></li>
+<li><p><strong>Perform Font Synchronization</strong>: If the event plugin should synchronize fonts when a Worker starts up, or before each job it renders.</p></li>
+</ul>
+<p><strong>macOS Font Synchronization Options</strong></p>
+<ul class="simple">
+<li><p><strong>Network macOS Font Folder</strong>: The network macOS font folder used for synchronization.</p></li>
+<li><p><strong>Local macOS Font Folder</strong>: The local macOS font folder to synchronize with the network font folder. Enter alternative paths on separate lines.</p></li>
+</ul>
+<p><strong>Windows Font Synchronization Options</strong></p>
+<ul class="simple">
+<li><p><strong>Network Windows Font Folder</strong>: The network Windows font folder used for synchronization.</p></li>
+<li><p><strong>Use User’s Temp Folder as Font Folder</strong>: If enabled, the fonts will be copied to a DeadlineFonts folder in the current user’s TEMP folder. Using this option avoids having to create a font folder on each machine, and avoids permission issues.</p></li>
+<li><p><strong>Local Windows Font Folder</strong>: The local Windows font folder to synchronize with the network font folder. Enter alternative paths on separate lines. This is ignored if Use User’s Temp Folder as Font Folder is enabled.</p></li>
+<li><p><strong>Timeout For Font Registration (ms)</strong>: The amount of milliseconds the event plugin will wait before timing out per font when registering fonts.</p></li>
+<li><p><strong>Skip Existing Fonts</strong>: If enabled, only fonts that do not exist on the machine are copied over. This can improve performance, but if an existing font is modified in the network folder, it will not by synchronized to the machine.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Is font synchronization supported in Deadline?</strong></p>
+<blockquote>
+<div><p>Yes.</p>
+</div></blockquote>
+<p><strong>Are older Type-1/Postscript font files supported by the FontSync plugin?</strong></p>
+<blockquote>
+<div><p>No. <a class="reference external" href="https://en.wikipedia.org/wiki/PostScript_fonts#Type_1">Type 1</a> fonts (also known as PostScript, PostScript Type 1, PS1, T1 or Adobe Type 1) require both a machine reboot and registry entry on Windows 2008 R2/Windows 7 (and onwards) to install correctly. A possible workaround is documented <a class="reference external" href="https://andrewmorgan.ie/2012/08/batch-installing-type-1-fonts-in-server-2008-r2-windows-7">here</a> online.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known FontSync error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here, please contact
+<a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this event plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">FontSync</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="event-draft.html"
+                        title="previous chapter">Draft / Quick Draft</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="event-ftrack.html"
+                        title="next chapter">FTrack</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-ftrack.html" title="FTrack"
+             >next</a></li>
+        <li class="right" >
+          <a href="event-draft.html" title="Draft / Quick Draft"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" >Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">FontSync</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

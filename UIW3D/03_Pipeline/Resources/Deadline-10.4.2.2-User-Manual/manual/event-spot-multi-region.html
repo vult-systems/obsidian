@@ -1,0 +1,775 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spot Event Plugin - Multiple Region Support &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Release History" href="release-notes.html" />
+    <link rel="prev" title="Spot Event Plugins - VPC Endpoints" href="event-spot-vpc-endpoints.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="release-notes.html" title="Release History"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="event-spot-vpc-endpoints.html" title="Spot Event Plugins - VPC Endpoints"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" accesskey="U">Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Spot Event Plugin - Multiple Region Support</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="spot-event-plugin-multiple-region-support">
+<span id="event-spot-fleet-multi-region-ref-label"></span><h1>Spot Event Plugin - Multiple Region Support<a class="headerlink" href="#spot-event-plugin-multiple-region-support" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 22%" />
+<col style="width: 18%" />
+<col style="width: 19%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="event-spot.html#event-spot-ref-label"><span class="std std-ref">Spot Event Plugin</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-permissions.html#event-spot-iam-policies-ref-label"><span class="std std-ref">AWS Permissions Setup</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-ami.html#event-spot-ami-ref-label"><span class="std std-ref">Amazon Machine Images</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-fleet-request.html#event-spot-fleet-requests-ref-label"><span class="std std-ref">Spot Fleet Requests</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-config-credentials.html#event-spot-config-credentials-ref-label"><span class="std std-ref">Security Credentials Configuration</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="event-spot-fleet-configurations.html#event-spot-fleet-configurations-ref-label"><span class="std std-ref">Spot Fleet Configuration</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-configuration-options.html#event-spot-configure-event-plugin-dialog-ref-label"><span class="std std-ref">Spot Event Configuration Options</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-config-utility.html#event-spot-config-utility-ref-label"><span class="std std-ref">Spot Event Configuration Utility</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-deadline-connect.html#event-spot-deadline-connect-ref-label"><span class="std std-ref">Deadline Connectivity Configuration</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-vpc-endpoints.html#event-spot-vpc-endpoints-ref-label"><span class="std std-ref">VPC Endpoints Configuration</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#event-spot-fleet-multi-region-ref-label"><span class="std std-ref">Multiple Region Support</span></a></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Originally, the Spot Event Plugin only allowed Spot Fleets to be launched and managed in one AWS Region.</p>
+<p>In <strong>Deadline v10.2.1 and higher</strong> an option has been added to launch and manage Spot Fleets in multiple AWS Regions from the same Spot Event Plugin.</p>
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>You may need to increase the <strong>House Cleaning Interval</strong> in <a class="reference internal" href="repository-config.html#house-cleaning-settings-label"><span class="std std-ref">Configure Repository Options</span></a> to be longer than the default 60 seconds to ensure that there is enough time for the Spot Event Plugin to manage all configured AWS regions before the next iteration of OnHouseCleaning.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Depending on the setup of your render farm there may be additional costs for cross AWS Region data transfers and communications when using Multi-Region mode.</p>
+</div>
+</div>
+<div class="section" id="configuring-multi-region-mode">
+<h2>Configuring Multi-Region Mode<a class="headerlink" href="#configuring-multi-region-mode" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Before switching to Multi-Region mode ensure any active Spot Fleet Requests are terminated in the AWS console. You should ensure that there are no Spot Fleet Requests or Spot Event Plugin managed EC2 Instances running before switching to Multi-Region mode.</p>
+</div>
+<p>To switch the Spot Event Plugin to run in Multi-Region mode you need to do the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Enable <strong>Tools &gt; Power User</strong> mode in the Monitor’s menu.</p></li>
+<li><p>Select <strong>Tools &gt; Configure Events</strong> from the Monitor’s menu.</p></li>
+<li><p>Select the <strong>Spot</strong> entry from the list on the left.</p></li>
+<li><p>Change the <strong>Region</strong> setting to <strong>Multi-Region</strong></p></li>
+</ul>
+<img alt="../_images/spot_multi_region_config.png" src="../_images/spot_multi_region_config.png" />
+</div></blockquote>
+<div class="section" id="ec2-instance-and-worker-naming">
+<h3>EC2 Instance and Worker Naming<a class="headerlink" href="#ec2-instance-and-worker-naming" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Deadline Workers should always have unique names. The name applied to a Worker launched by the Spot Event Plugin will by default be the hostname of the EC2 instance (defaults to the EC2 instance’s private IP address). We highly recommend that you use <strong>one</strong> of the following options to ensure that all launched Deadline Workers have unique names.</p>
+</div>
+<p><strong>Option 1</strong>: Set <strong>unique/non-overlapping CIDR blocks</strong> across AWS Regions for all <strong>subnets</strong> that the Spot Event Plugin will launch EC2 instances in. Setting unique CIDR blocks will ensure that the private IP addresses/hostnames of all launched EC2 instances will be unique across AWS Regions and therefore, all Deadline Worker names. Please note by default, CIDR blocks are identical in the default VPC wizard in each AWS region; which will cause a clash in Deadline Worker names if ignored.</p>
+<p><strong>OR</strong></p>
+<p><strong>Option 2</strong>: Use Launch Templates in your Spot Fleet Request configuration and set the <strong>Hostname type</strong> to <strong>Resource name</strong>. This will make it so that all EC2 instances launched with the Launch Template use the resource name of the EC2 instance as the hostname instead of the private IP address. EC2 instance resource names are unique across AWS Regions.</p>
+<blockquote>
+<div><img alt="../_images/spot_launch_template_hostname_setting.png" src="../_images/spot_launch_template_hostname_setting.png" />
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If using Launch Templates <strong>you must add</strong> the following key/value pair as a <strong>Tag</strong> in the <strong>Launch Template</strong>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">DeadlineTrackedAWSResource</span> <span class="pre">:</span> <span class="pre">SpotEventPlugin</span></code></p>
+<p>Failure to add this <strong>Tag</strong> will result in <strong>EC2 Instances</strong> being launched that won’t <strong>be managed/monitored by the Resource Tracker</strong> if it’s enabled.</p>
+<p>It’s possible that if this <strong>Tag</strong> is not included, <strong>EC2 Instances</strong> that can’t connect to the repository may become stuck and <strong>won’t shut themselves down</strong>.</p>
+<p>It’s crucial that this <strong>Tag</strong> is added to prevent <strong>large overspends</strong> in your AWS Account that could otherwise be prevented by the <strong>Resource Tracker</strong> and other mechanisms.</p>
+<a class="reference internal image-reference" href="../_images/spot_launch_template_tracking_tag.png"><img alt="../_images/spot_launch_template_tracking_tag.png" src="../_images/spot_launch_template_tracking_tag.png" style="height: 280px;" /></a>
+</div>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>See <a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-naming.html">here</a> for more information on EC2 instance hostnames.</p>
+</div>
+</div>
+</div>
+<div class="section" id="multi-region-spot-fleet-configuration">
+<h2>Multi Region Spot Fleet Configuration<a class="headerlink" href="#multi-region-spot-fleet-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Using Multi-Region mode requires that the Spot Fleet Request configuration JSON is in a different format than what is used for Single-Region mode. See <a class="reference internal" href="event-spot-fleet-configurations.html#event-spot-fleet-configurations-ref-label"><span class="std std-ref">here</span></a> for Spot Fleet Request configuration examples when using Single-Region mode.</p>
+<p>The Spot Fleet Request configuration for Multi-Region mode is still a JSON dictionary that is similar to the format for Single-Region mode, but with additional JSON keys.</p>
+<p>In Multi-Region mode the Spot Fleet configuration is still a <strong>one-to-one mapping</strong> between Deadline <strong>Groups</strong> and <strong>Spot Fleet Request Configuration</strong>, with the additional requirement that a Deadline <strong>Group</strong> can only be used in <strong>one AWS Region</strong>.</p>
+<p>To create a Multi-Region Spot Fleet configuration, you will need one or more previously created <a class="reference internal" href="event-spot-fleet-request.html#event-spot-fleet-requests-ref-label"><span class="std std-ref">Spot Fleet Requests</span></a>.</p>
+<p>A Multi-Region Spot Fleet configuration has the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;region&quot;</span><span class="p">:</span> <span class="s2">&quot;AWS_REGION_NAME&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;group_configs&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;DEADLINE_GROUP_NAME&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">Replace</span> <span class="k">with</span> <span class="n">Spot</span> <span class="n">Fleet</span> <span class="n">Request</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="s2">&quot;DEADLINE_GROUP_NAME_2&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">Replace</span> <span class="k">with</span> <span class="n">Spot</span> <span class="n">Fleet</span> <span class="n">Request</span> <span class="mi">2</span><span class="o">&gt;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;region&quot;</span><span class="p">:</span> <span class="s2">&quot;AWS_REGION_NAME_2&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;group_configs&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;DEADLINE_GROUP_NAME_3&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">Replace</span> <span class="k">with</span> <span class="n">Spot</span> <span class="n">Fleet</span> <span class="n">Request</span> <span class="mi">3</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="s2">&quot;DEADLINE_GROUP_NAME_4&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">Replace</span> <span class="k">with</span> <span class="n">Spot</span> <span class="n">Fleet</span> <span class="n">Request</span> <span class="mi">4</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="s2">&quot;DEADLINE_GROUP_NAME_5&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">Replace</span> <span class="k">with</span> <span class="n">Spot</span> <span class="n">Fleet</span> <span class="n">Request</span> <span class="mi">5</span><span class="o">&gt;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The order of the AWS regions in the Spot Fleet Request configuration JSON is the order in which they will be managed by the Spot Event Plugin. This means that Workers in the AWS regions will have access to resources like License Limits with priority based on the order that the AWS region appears in the JSON configuration.</p>
+</div>
+<div class="section" id="example-multi-region-spot-fleet-configurations">
+<h3>Example Multi Region Spot Fleet Configurations<a class="headerlink" href="#example-multi-region-spot-fleet-configurations" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="example-multi-region-configuration">
+<h4>Example Multi-Region Configuration<a class="headerlink" href="#example-multi-region-configuration" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;region&quot;</span><span class="p">:</span> <span class="s2">&quot;us-west-2&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;group_configs&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;sep_group_1_us_west_2&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;IamFleetRole&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::385970627561:role/aws-ec2-spot-fleet-tagging-role&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;AllocationStrategy&quot;</span><span class="p">:</span> <span class="s2">&quot;capacityOptimized&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;TargetCapacity&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;ValidFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2023-02-09T23:26:23.000Z&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ValidUntil&quot;</span><span class="p">:</span> <span class="s2">&quot;2024-02-09T23:26:23.000Z&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;TerminateInstancesWithExpiration&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="s2">&quot;maintain&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;SpotPrice&quot;</span><span class="p">:</span> <span class="s2">&quot;0.1591&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;LaunchSpecifications&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;ImageId&quot;</span><span class="p">:</span> <span class="s2">&quot;ami-0143f8d6&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;KeyName&quot;</span><span class="p">:</span> <span class="s2">&quot;key_pair&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;BlockDeviceMappings&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;DeviceName&quot;</span><span class="p">:</span> <span class="s2">&quot;/dev/xvda&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;Ebs&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;DeleteOnTermination&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                                    <span class="s2">&quot;SnapshotId&quot;</span><span class="p">:</span> <span class="s2">&quot;snap-0269d441&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;VolumeSize&quot;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span>
+                                    <span class="s2">&quot;VolumeType&quot;</span><span class="p">:</span> <span class="s2">&quot;gp2&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;Encrypted&quot;</span><span class="p">:</span> <span class="n">false</span>
+                                <span class="p">}</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                        <span class="s2">&quot;IamInstanceProfile&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;Arn&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::357432474442:instance-profile/DeadlineSpotWorker&quot;</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;NetworkInterfaces&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;DeviceIndex&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                                <span class="s2">&quot;SubnetId&quot;</span><span class="p">:</span> <span class="s2">&quot;subnet-025fbc72&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;DeleteOnTermination&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                                <span class="s2">&quot;Groups&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                    <span class="s2">&quot;sg-051250fc&quot;</span>
+                                <span class="p">],</span>
+                                <span class="s2">&quot;AssociatePublicIpAddress&quot;</span><span class="p">:</span> <span class="n">true</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                        <span class="s2">&quot;InstanceType&quot;</span><span class="p">:</span> <span class="s2">&quot;c5.4xlarge&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;SpotPrice&quot;</span><span class="p">:</span> <span class="s2">&quot;0.105&quot;</span>
+                    <span class="p">},</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;ImageId&quot;</span><span class="p">:</span> <span class="s2">&quot;ami-0143f8d6&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;KeyName&quot;</span><span class="p">:</span> <span class="s2">&quot;key_pair&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;BlockDeviceMappings&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;DeviceName&quot;</span><span class="p">:</span> <span class="s2">&quot;/dev/xvda&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;Ebs&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;DeleteOnTermination&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                                    <span class="s2">&quot;SnapshotId&quot;</span><span class="p">:</span> <span class="s2">&quot;snap-0269d441&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;VolumeSize&quot;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span>
+                                    <span class="s2">&quot;VolumeType&quot;</span><span class="p">:</span> <span class="s2">&quot;gp2&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;Encrypted&quot;</span><span class="p">:</span> <span class="n">false</span>
+                                <span class="p">}</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                        <span class="s2">&quot;IamInstanceProfile&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;Arn&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::357432474442:instance-profile/DeadlineSpotWorker&quot;</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;NetworkInterfaces&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;DeviceIndex&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                                <span class="s2">&quot;SubnetId&quot;</span><span class="p">:</span> <span class="s2">&quot;subnet-025fbc72&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;DeleteOnTermination&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                                <span class="s2">&quot;Groups&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                    <span class="s2">&quot;sg-051250fc&quot;</span>
+                                <span class="p">],</span>
+                                <span class="s2">&quot;AssociatePublicIpAddress&quot;</span><span class="p">:</span> <span class="n">true</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                        <span class="s2">&quot;InstanceType&quot;</span><span class="p">:</span> <span class="s2">&quot;m5.4xlarge&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;SpotPrice&quot;</span><span class="p">:</span> <span class="s2">&quot;0.096&quot;</span>
+                    <span class="p">},</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;ImageId&quot;</span><span class="p">:</span> <span class="s2">&quot;ami-0143f8d6&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;KeyName&quot;</span><span class="p">:</span> <span class="s2">&quot;key_pair&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;BlockDeviceMappings&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;DeviceName&quot;</span><span class="p">:</span> <span class="s2">&quot;/dev/xvda&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;Ebs&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;DeleteOnTermination&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                                    <span class="s2">&quot;SnapshotId&quot;</span><span class="p">:</span> <span class="s2">&quot;snap-0269d441&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;VolumeSize&quot;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span>
+                                    <span class="s2">&quot;VolumeType&quot;</span><span class="p">:</span> <span class="s2">&quot;gp2&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;Encrypted&quot;</span><span class="p">:</span> <span class="n">false</span>
+                                <span class="p">}</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                        <span class="s2">&quot;IamInstanceProfile&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;Arn&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::357432474442:instance-profile/DeadlineSpotWorker&quot;</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;NetworkInterfaces&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;DeviceIndex&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                                <span class="s2">&quot;SubnetId&quot;</span><span class="p">:</span> <span class="s2">&quot;subnet-025fbc72&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;DeleteOnTermination&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                                <span class="s2">&quot;Groups&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                    <span class="s2">&quot;sg-051250fc&quot;</span>
+                                <span class="p">],</span>
+                                <span class="s2">&quot;AssociatePublicIpAddress&quot;</span><span class="p">:</span> <span class="n">true</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                        <span class="s2">&quot;InstanceType&quot;</span><span class="p">:</span> <span class="s2">&quot;r5.4xlarge&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;SpotPrice&quot;</span><span class="p">:</span> <span class="s2">&quot;0.096&quot;</span>
+                    <span class="p">}</span>
+                <span class="p">]</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;sep_group_2_us_west_2&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;IamFleetRole&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::357432474442:role/aws-ec2-spot-fleet-tagging-role&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;AllocationStrategy&quot;</span><span class="p">:</span> <span class="s2">&quot;capacityOptimized&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;TargetCapacity&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;ValidFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2023-02-09T23:26:23.000Z&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ValidUntil&quot;</span><span class="p">:</span> <span class="s2">&quot;2024-02-09T23:26:23.000Z&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;TerminateInstancesWithExpiration&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="s2">&quot;maintain&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;SpotPrice&quot;</span><span class="p">:</span> <span class="s2">&quot;0.1591&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;LaunchSpecifications&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;ImageId&quot;</span><span class="p">:</span> <span class="s2">&quot;ami-0143f8d6&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;KeyName&quot;</span><span class="p">:</span> <span class="s2">&quot;key_pair&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;BlockDeviceMappings&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;DeviceName&quot;</span><span class="p">:</span> <span class="s2">&quot;/dev/xvda&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;Ebs&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;DeleteOnTermination&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                                    <span class="s2">&quot;SnapshotId&quot;</span><span class="p">:</span> <span class="s2">&quot;snap-0269d441&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;VolumeSize&quot;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span>
+                                    <span class="s2">&quot;VolumeType&quot;</span><span class="p">:</span> <span class="s2">&quot;gp2&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;Encrypted&quot;</span><span class="p">:</span> <span class="n">false</span>
+                                <span class="p">}</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                        <span class="s2">&quot;IamInstanceProfile&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;Arn&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::357432474442:instance-profile/DeadlineSpotWorker&quot;</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;NetworkInterfaces&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;DeviceIndex&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                                <span class="s2">&quot;SubnetId&quot;</span><span class="p">:</span> <span class="s2">&quot;subnet-025fbc72&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;DeleteOnTermination&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                                <span class="s2">&quot;Groups&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                    <span class="s2">&quot;sg-051250fc&quot;</span>
+                                <span class="p">],</span>
+                                <span class="s2">&quot;AssociatePublicIpAddress&quot;</span><span class="p">:</span> <span class="n">true</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                        <span class="s2">&quot;InstanceType&quot;</span><span class="p">:</span> <span class="s2">&quot;c5.4xlarge&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;SpotPrice&quot;</span><span class="p">:</span> <span class="s2">&quot;0.105&quot;</span>
+                    <span class="p">},</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;ImageId&quot;</span><span class="p">:</span> <span class="s2">&quot;ami-0143f8d6&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;KeyName&quot;</span><span class="p">:</span> <span class="s2">&quot;key_pair&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;BlockDeviceMappings&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;DeviceName&quot;</span><span class="p">:</span> <span class="s2">&quot;/dev/xvda&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;Ebs&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;DeleteOnTermination&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                                    <span class="s2">&quot;SnapshotId&quot;</span><span class="p">:</span> <span class="s2">&quot;snap-0269d441&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;VolumeSize&quot;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span>
+                                    <span class="s2">&quot;VolumeType&quot;</span><span class="p">:</span> <span class="s2">&quot;gp2&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;Encrypted&quot;</span><span class="p">:</span> <span class="n">false</span>
+                                <span class="p">}</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                        <span class="s2">&quot;IamInstanceProfile&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;Arn&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::357432474442:instance-profile/DeadlineSpotWorker&quot;</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;NetworkInterfaces&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;DeviceIndex&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                                <span class="s2">&quot;SubnetId&quot;</span><span class="p">:</span> <span class="s2">&quot;subnet-025fbc72&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;DeleteOnTermination&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                                <span class="s2">&quot;Groups&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                    <span class="s2">&quot;sg-051250fc&quot;</span>
+                                <span class="p">],</span>
+                                <span class="s2">&quot;AssociatePublicIpAddress&quot;</span><span class="p">:</span> <span class="n">true</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                        <span class="s2">&quot;InstanceType&quot;</span><span class="p">:</span> <span class="s2">&quot;m5.4xlarge&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;SpotPrice&quot;</span><span class="p">:</span> <span class="s2">&quot;0.096&quot;</span>
+                    <span class="p">},</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;ImageId&quot;</span><span class="p">:</span> <span class="s2">&quot;ami-0143f8d6&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;KeyName&quot;</span><span class="p">:</span> <span class="s2">&quot;key_pair&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;BlockDeviceMappings&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;DeviceName&quot;</span><span class="p">:</span> <span class="s2">&quot;/dev/xvda&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;Ebs&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;DeleteOnTermination&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                                    <span class="s2">&quot;SnapshotId&quot;</span><span class="p">:</span> <span class="s2">&quot;snap-0269d441&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;VolumeSize&quot;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span>
+                                    <span class="s2">&quot;VolumeType&quot;</span><span class="p">:</span> <span class="s2">&quot;gp2&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;Encrypted&quot;</span><span class="p">:</span> <span class="n">false</span>
+                                <span class="p">}</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                        <span class="s2">&quot;IamInstanceProfile&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;Arn&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::357432474442:instance-profile/DeadlineSpotWorker&quot;</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;NetworkInterfaces&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;DeviceIndex&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                                <span class="s2">&quot;SubnetId&quot;</span><span class="p">:</span> <span class="s2">&quot;subnet-025fbc72&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;DeleteOnTermination&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                                <span class="s2">&quot;Groups&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                    <span class="s2">&quot;sg-051250fc&quot;</span>
+                                <span class="p">],</span>
+                                <span class="s2">&quot;AssociatePublicIpAddress&quot;</span><span class="p">:</span> <span class="n">true</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                        <span class="s2">&quot;InstanceType&quot;</span><span class="p">:</span> <span class="s2">&quot;r5.4xlarge&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;SpotPrice&quot;</span><span class="p">:</span> <span class="s2">&quot;0.096&quot;</span>
+                    <span class="p">}</span>
+                <span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;region&quot;</span><span class="p">:</span> <span class="s2">&quot;us-east-1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;group_configs&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;sep_group_1_us_east_1&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;IamFleetRole&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::357432474442:role/aws-ec2-spot-fleet-tagging-role&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;AllocationStrategy&quot;</span><span class="p">:</span> <span class="s2">&quot;capacityOptimized&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;TargetCapacity&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;ValidFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2023-02-10T00:18:59.000Z&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ValidUntil&quot;</span><span class="p">:</span> <span class="s2">&quot;2024-02-10T00:18:59.000Z&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;TerminateInstancesWithExpiration&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="s2">&quot;maintain&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;SpotPrice&quot;</span><span class="p">:</span> <span class="s2">&quot;0.166&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;LaunchSpecifications&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;ImageId&quot;</span><span class="p">:</span> <span class="s2">&quot;ami-05bb48a63a3cd2b9d&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;KeyName&quot;</span><span class="p">:</span> <span class="s2">&quot;SEP_Testing_US_EAST_1&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;BlockDeviceMappings&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;DeviceName&quot;</span><span class="p">:</span> <span class="s2">&quot;/dev/xvda&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;Ebs&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;DeleteOnTermination&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                                    <span class="s2">&quot;SnapshotId&quot;</span><span class="p">:</span> <span class="s2">&quot;snap-02ca95518f592b256&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;VolumeSize&quot;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span>
+                                    <span class="s2">&quot;VolumeType&quot;</span><span class="p">:</span> <span class="s2">&quot;gp2&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;Encrypted&quot;</span><span class="p">:</span> <span class="n">false</span>
+                                <span class="p">}</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                        <span class="s2">&quot;TagSpecifications&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;ResourceType&quot;</span><span class="p">:</span> <span class="s2">&quot;instance&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;Tags&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                    <span class="p">{</span>
+                                        <span class="s2">&quot;Key&quot;</span><span class="p">:</span> <span class="s2">&quot;DeadlineAWSTrackedResource&quot;</span><span class="p">,</span>
+                                        <span class="s2">&quot;Value&quot;</span><span class="p">:</span> <span class="s2">&quot;SpotEventPlugin&quot;</span>
+                                    <span class="p">}</span>
+                                <span class="p">]</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                        <span class="s2">&quot;IamInstanceProfile&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;Arn&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::357432474442:instance-profile/DeadlineSpotWorker&quot;</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;NetworkInterfaces&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;DeviceIndex&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                                <span class="s2">&quot;SubnetId&quot;</span><span class="p">:</span> <span class="s2">&quot;subnet-071c65ca18cc3d951&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;DeleteOnTermination&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                                <span class="s2">&quot;Groups&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                    <span class="s2">&quot;sg-0a226f1a98d5f8a6d&quot;</span>
+                                <span class="p">],</span>
+                                <span class="s2">&quot;AssociatePublicIpAddress&quot;</span><span class="p">:</span> <span class="n">true</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                        <span class="s2">&quot;InstanceType&quot;</span><span class="p">:</span> <span class="s2">&quot;c5.4xlarge&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;SpotPrice&quot;</span><span class="p">:</span> <span class="s2">&quot;0.105&quot;</span>
+                    <span class="p">},</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;ImageId&quot;</span><span class="p">:</span> <span class="s2">&quot;ami-05bb48a63a3cd2b9d&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;KeyName&quot;</span><span class="p">:</span> <span class="s2">&quot;SEP_Testing_US_EAST_1&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;BlockDeviceMappings&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;DeviceName&quot;</span><span class="p">:</span> <span class="s2">&quot;/dev/xvda&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;Ebs&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;DeleteOnTermination&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                                    <span class="s2">&quot;SnapshotId&quot;</span><span class="p">:</span> <span class="s2">&quot;snap-02ca95518f592b256&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;VolumeSize&quot;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span>
+                                    <span class="s2">&quot;VolumeType&quot;</span><span class="p">:</span> <span class="s2">&quot;gp2&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;Encrypted&quot;</span><span class="p">:</span> <span class="n">false</span>
+                                <span class="p">}</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                        <span class="s2">&quot;TagSpecifications&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;ResourceType&quot;</span><span class="p">:</span> <span class="s2">&quot;instance&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;Tags&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                    <span class="p">{</span>
+                                        <span class="s2">&quot;Key&quot;</span><span class="p">:</span> <span class="s2">&quot;DeadlineAWSTrackedResource&quot;</span><span class="p">,</span>
+                                        <span class="s2">&quot;Value&quot;</span><span class="p">:</span> <span class="s2">&quot;SpotEventPlugin&quot;</span>
+                                    <span class="p">}</span>
+                                <span class="p">]</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                        <span class="s2">&quot;IamInstanceProfile&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;Arn&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::357432474442:instance-profile/DeadlineSpotWorker&quot;</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;NetworkInterfaces&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;DeviceIndex&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                                <span class="s2">&quot;SubnetId&quot;</span><span class="p">:</span> <span class="s2">&quot;subnet-071c65ca18cc3d951&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;DeleteOnTermination&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                                <span class="s2">&quot;Groups&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                    <span class="s2">&quot;sg-0a226f1a98d5f8a6d&quot;</span>
+                                <span class="p">],</span>
+                                <span class="s2">&quot;AssociatePublicIpAddress&quot;</span><span class="p">:</span> <span class="n">true</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                        <span class="s2">&quot;InstanceType&quot;</span><span class="p">:</span> <span class="s2">&quot;m5.4xlarge&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;SpotPrice&quot;</span><span class="p">:</span> <span class="s2">&quot;0.085&quot;</span>
+                    <span class="p">},</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;ImageId&quot;</span><span class="p">:</span> <span class="s2">&quot;ami-05bb48a63a3cd2b9d&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;KeyName&quot;</span><span class="p">:</span> <span class="s2">&quot;SEP_Testing_US_EAST_1&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;BlockDeviceMappings&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;DeviceName&quot;</span><span class="p">:</span> <span class="s2">&quot;/dev/xvda&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;Ebs&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;DeleteOnTermination&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                                    <span class="s2">&quot;SnapshotId&quot;</span><span class="p">:</span> <span class="s2">&quot;snap-02ca95518f592b256&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;VolumeSize&quot;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span>
+                                    <span class="s2">&quot;VolumeType&quot;</span><span class="p">:</span> <span class="s2">&quot;gp2&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;Encrypted&quot;</span><span class="p">:</span> <span class="n">false</span>
+                                <span class="p">}</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                        <span class="s2">&quot;TagSpecifications&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;ResourceType&quot;</span><span class="p">:</span> <span class="s2">&quot;instance&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;Tags&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                    <span class="p">{</span>
+                                        <span class="s2">&quot;Key&quot;</span><span class="p">:</span> <span class="s2">&quot;DeadlineAWSTrackedResource&quot;</span><span class="p">,</span>
+                                        <span class="s2">&quot;Value&quot;</span><span class="p">:</span> <span class="s2">&quot;SpotEventPlugin&quot;</span>
+                                    <span class="p">}</span>
+                                <span class="p">]</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                        <span class="s2">&quot;IamInstanceProfile&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;Arn&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::357432474442:instance-profile/DeadlineSpotWorker&quot;</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;NetworkInterfaces&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;DeviceIndex&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                                <span class="s2">&quot;SubnetId&quot;</span><span class="p">:</span> <span class="s2">&quot;subnet-071c65ca18cc3d951&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;DeleteOnTermination&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                                <span class="s2">&quot;Groups&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                    <span class="s2">&quot;sg-0a226f1a98d5f8a6d&quot;</span>
+                                <span class="p">],</span>
+                                <span class="s2">&quot;AssociatePublicIpAddress&quot;</span><span class="p">:</span> <span class="n">true</span>
+                            <span class="p">}</span>
+                        <span class="p">],</span>
+                        <span class="s2">&quot;InstanceType&quot;</span><span class="p">:</span> <span class="s2">&quot;r5.4xlarge&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;SpotPrice&quot;</span><span class="p">:</span> <span class="s2">&quot;0.096&quot;</span>
+                    <span class="p">}</span>
+                <span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-multi-region-configuration-using-launch-templates">
+<h4>Example Multi-Region Configuration Using Launch Templates<a class="headerlink" href="#example-multi-region-configuration-using-launch-templates" title="Permalink to this headline">¶</a></h4>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If using Launch Templates <strong>you must add</strong> the following key/value pair as a <strong>Tag</strong> in the <strong>Launch Template</strong>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">DeadlineTrackedAWSResource</span> <span class="pre">:</span> <span class="pre">SpotEventPlugin</span></code></p>
+<p>Failure to add this <strong>Tag</strong> will result in <strong>EC2 Instances</strong> being launched that won’t <strong>be managed/monitored by the Resource Tracker</strong> if it’s enabled.</p>
+<p>It’s possible that if this <strong>Tag</strong> is not included, <strong>EC2 Instances</strong> that can’t connect to the repository may become stuck and <strong>won’t shut themselves down</strong>.</p>
+<p>It’s crucial that this <strong>Tag</strong> is added to prevent <strong>large overspends</strong> in your AWS Account that could otherwise be prevented by the <strong>Resource Tracker</strong> and other mechanisms.</p>
+<a class="reference internal image-reference" href="../_images/spot_launch_template_tracking_tag.png"><img alt="../_images/spot_launch_template_tracking_tag.png" src="../_images/spot_launch_template_tracking_tag.png" style="height: 280px;" /></a>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;region&quot;</span><span class="p">:</span> <span class="s2">&quot;us-west-2&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;group_configs&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;group_name_1&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;IamFleetRole&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::357432474442:role/aws-ec2-spot-fleet-tagging-role&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;AllocationStrategy&quot;</span><span class="p">:</span> <span class="s2">&quot;capacityOptimized&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;TargetCapacity&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;ValidFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2023-02-08T22:48:24.000Z&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ValidUntil&quot;</span><span class="p">:</span> <span class="s2">&quot;2024-02-08T22:48:24.000Z&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;TerminateInstancesWithExpiration&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="s2">&quot;maintain&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;OnDemandAllocationStrategy&quot;</span><span class="p">:</span> <span class="s2">&quot;lowestPrice&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;LaunchSpecifications&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="s2">&quot;LaunchTemplateConfigs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;LaunchTemplateSpecification&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;LaunchTemplateId&quot;</span><span class="p">:</span> <span class="s2">&quot;lt-0d4626a3&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;$Latest&quot;</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;Overrides&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;InstanceType&quot;</span><span class="p">:</span> <span class="s2">&quot;m5.4xlarge&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;WeightedCapacity&quot;</span><span class="p">:</span> <span class="mi">1</span>
+                            <span class="p">},</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;InstanceType&quot;</span><span class="p">:</span> <span class="s2">&quot;c5.4xlarge&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;WeightedCapacity&quot;</span><span class="p">:</span> <span class="mi">1</span>
+                            <span class="p">},</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;InstanceType&quot;</span><span class="p">:</span> <span class="s2">&quot;r5.4xlarge&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;WeightedCapacity&quot;</span><span class="p">:</span> <span class="mi">1</span>
+                            <span class="p">}</span>
+                        <span class="p">]</span>
+                    <span class="p">}</span>
+                <span class="p">]</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;group_name_2&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;IamFleetRole&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::357432474442:role/aws-ec2-spot-fleet-tagging-role&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;AllocationStrategy&quot;</span><span class="p">:</span> <span class="s2">&quot;capacityOptimized&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;TargetCapacity&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;ValidFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2023-02-08T22:48:24.000Z&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ValidUntil&quot;</span><span class="p">:</span> <span class="s2">&quot;2024-02-08T22:48:24.000Z&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;TerminateInstancesWithExpiration&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="s2">&quot;maintain&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;OnDemandAllocationStrategy&quot;</span><span class="p">:</span> <span class="s2">&quot;lowestPrice&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;LaunchSpecifications&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="s2">&quot;LaunchTemplateConfigs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;LaunchTemplateSpecification&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;LaunchTemplateId&quot;</span><span class="p">:</span> <span class="s2">&quot;lt-0d4626a3&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;$Latest&quot;</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;Overrides&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;InstanceType&quot;</span><span class="p">:</span> <span class="s2">&quot;m5.4xlarge&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;WeightedCapacity&quot;</span><span class="p">:</span> <span class="mi">1</span>
+                            <span class="p">},</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;InstanceType&quot;</span><span class="p">:</span> <span class="s2">&quot;c5.4xlarge&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;WeightedCapacity&quot;</span><span class="p">:</span> <span class="mi">1</span>
+                            <span class="p">},</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;InstanceType&quot;</span><span class="p">:</span> <span class="s2">&quot;r5.4xlarge&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;WeightedCapacity&quot;</span><span class="p">:</span> <span class="mi">1</span>
+                            <span class="p">}</span>
+                        <span class="p">]</span>
+                    <span class="p">}</span>
+                <span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;region&quot;</span><span class="p">:</span> <span class="s2">&quot;us-east-1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;group_configs&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;group_name_3&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;IamFleetRole&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:iam::357432474442:role/aws-ec2-spot-fleet-tagging-role&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;AllocationStrategy&quot;</span><span class="p">:</span> <span class="s2">&quot;capacityOptimized&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;TargetCapacity&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;ValidFrom&quot;</span><span class="p">:</span> <span class="s2">&quot;2023-02-08T22:47:02.000Z&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ValidUntil&quot;</span><span class="p">:</span> <span class="s2">&quot;2024-02-08T22:47:02.000Z&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;TerminateInstancesWithExpiration&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+                <span class="s2">&quot;Type&quot;</span><span class="p">:</span> <span class="s2">&quot;maintain&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;OnDemandAllocationStrategy&quot;</span><span class="p">:</span> <span class="s2">&quot;lowestPrice&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;LaunchSpecifications&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="s2">&quot;LaunchTemplateConfigs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;LaunchTemplateSpecification&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;LaunchTemplateId&quot;</span><span class="p">:</span> <span class="s2">&quot;lt-074b5b3d&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;$Latest&quot;</span>
+                        <span class="p">},</span>
+                        <span class="s2">&quot;Overrides&quot;</span><span class="p">:</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;InstanceType&quot;</span><span class="p">:</span> <span class="s2">&quot;m5.4xlarge&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;WeightedCapacity&quot;</span><span class="p">:</span> <span class="mi">1</span>
+                            <span class="p">},</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;InstanceType&quot;</span><span class="p">:</span> <span class="s2">&quot;c5.4xlarge&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;WeightedCapacity&quot;</span><span class="p">:</span> <span class="mi">1</span>
+                            <span class="p">},</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;InstanceType&quot;</span><span class="p">:</span> <span class="s2">&quot;r5.4xlarge&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;WeightedCapacity&quot;</span><span class="p">:</span> <span class="mi">1</span>
+                            <span class="p">}</span>
+                        <span class="p">]</span>
+                    <span class="p">}</span>
+                <span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="event-spot-fleet-multi-region-faq-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Can all AWS Regions be used with Multi-Region mode?</strong></p>
+<p>No. At this time the AWS regions that can be used with Multi-Region mode are the same as in the dropdown for the Region setting. See <a class="reference internal" href="event-spot-configuration-options.html#event-spot-configure-event-plugin-dialog-ref-label"><span class="std std-ref">here</span></a> for how to access the Spot Event Plugin configuration where the Region setting is available.</p>
+<p><strong>Can Wildcards be used in Group Names with Multi-Region mode?</strong></p>
+<p>Yes. Wildcards can be used with Multi-Region mode the same as with Single-Region mode. See <a class="reference internal" href="event-spot-fleet-configurations.html#event-spot-fleet-configurations-wildcards-label"><span class="std std-ref">Wildcards In Group Names</span></a> for more details.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Deadline Groups can’t be configured to be used for more than one AWS region in Multi-Region mode. Ensure that any Wildcards will not result in duplicate Deadline Groups being used across AWS regions.</p>
+</div>
+<p><strong>Can Deadline Pools be used with Multi-Region mode?</strong></p>
+<p>Yes. Deadline Pools can be used in Multi-Region mode the same as in Single-Region mode. See <a class="reference internal" href="event-spot-fleet-configurations.html#spot-fleet-request-group-pools"><span class="std std-ref">Spot Fleet Request Group Pools</span></a> for details.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Spot Event Plugin - Multiple Region Support</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#configuring-multi-region-mode">Configuring Multi-Region Mode</a><ul>
+<li><a class="reference internal" href="#ec2-instance-and-worker-naming">EC2 Instance and Worker Naming</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#multi-region-spot-fleet-configuration">Multi Region Spot Fleet Configuration</a><ul>
+<li><a class="reference internal" href="#example-multi-region-spot-fleet-configurations">Example Multi Region Spot Fleet Configurations</a><ul>
+<li><a class="reference internal" href="#example-multi-region-configuration">Example Multi-Region Configuration</a></li>
+<li><a class="reference internal" href="#example-multi-region-configuration-using-launch-templates">Example Multi-Region Configuration Using Launch Templates</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="event-spot-vpc-endpoints.html"
+                        title="previous chapter">Spot Event Plugins - VPC Endpoints</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="release-notes.html"
+                        title="next chapter">Release History</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="release-notes.html" title="Release History"
+             >next</a></li>
+        <li class="right" >
+          <a href="event-spot-vpc-endpoints.html" title="Spot Event Plugins - VPC Endpoints"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" >Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Spot Event Plugin - Multiple Region Support</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

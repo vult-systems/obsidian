@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>V-Ray Benchmark &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="V-Ray Distributed Rendering" href="app-vray-dbr.html" />
+    <link rel="prev" title="V-Ray Standalone" href="app-vray.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-vray-dbr.html" title="V-Ray Distributed Rendering"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-vray.html" title="V-Ray Standalone"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">V-Ray Benchmark</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <span class="target" id="app-vraybench-ref-label"></span><div class="section" id="v-ray-benchmark">
+<h1>V-Ray Benchmark<a class="headerlink" href="#v-ray-benchmark" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>To make the best use of your available compute resources for rendering, it can be beneficial to determine which render nodes perform the best and, if any, perform below expectations. V-Ray Benchmark can be used to approximate the performance of individual render nodes across your farm!</p>
+<p>There are two different ways that you can run V-Ray Benchmark on the render nodes in your farm, a ‘Normal’ job and a ‘Maintenance’ job. Please refer to the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> for information on general submission options.</p>
+<p>A ‘Normal’ job is best used when you only wish to benchmark a few render nodes. You specify a frame range equal to the number of render nodes you wish to benchmark, and combine that with Groups or a Machine List to specify which ones to check.</p>
+<img alt="../_images/vraybench_normal_job.png" src="../_images/vraybench_normal_job.png" />
+<p>A ‘Maintenance’ job differs in that it’s a special job type that creates a task for each render node in your farm. A render node will also only render one task from this job and leave the job alone afterwards.
+Using this, you don’t need to specify a frame range or worry about a render node doing the benchmark more than once, or not at all.</p>
+<img alt="../_images/vraybench_maintenance_job.png" src="../_images/vraybench_maintenance_job.png" />
+<p>Please refer to the <a class="reference internal" href="manual-submission.html#maintenance-jobs-ref-label"><span class="std std-ref">Maintenance Jobs</span></a> documentation for more information.</p>
+</div>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit V-Ray Benchmark jobs from the Monitor.</p>
+<p><a class="reference internal" href="../_images/sub_vraybench.png"><img alt="monitor" src="../_images/sub_vraybench.png" style="height: 600px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation.</p>
+<p><strong>V-Ray Benchmark Options</strong></p>
+<ul class="simple">
+<li><p><strong>Version</strong>: The version of V-Ray Benchmark to run.</p></li>
+<li><dl class="simple">
+<dt><strong>Job Type</strong>:</dt><dd><ul>
+<li><p><strong>Maintenance Job</strong>: Best used when you want each Worker connected to the repository to run V-Ray Benchmark exactly once. Will create number of tasks equal to the number of connected Workers, where each Worker only renders one task and drops the job.</p></li>
+<li><p><strong>Normal Job</strong>: Best used when testing only a few Workers. Use in conjunction the Pools, Groups, Machine List, and frame list to hone in on the Workers you wish to test.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>Frame List</strong>: Only usable when submitting a “Normal” job, this is used to specify how many tasks to create for the Workers.</p></li>
+</ul>
+<p><strong>V-Ray Benchmark Tests</strong></p>
+<ul class="simple">
+<li><p><strong>Run CPU Test</strong>: If checked, a CPU render test will be run. At least one Test must be selected for the job to render successfully.</p></li>
+<li><p><strong>Run GPU Test</strong>: If checked, a GPU render test will be run. At least one Test must be selected for the job to render successfully.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the V-Ray Benchmark plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the VrayBench plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_vraybench.png" id="app-vraybench-cp-ref-label"><img alt="../_images/cp_vraybench.png" id="app-vraybench-cp-ref-label" src="../_images/cp_vraybench.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>V-Ray Benchmark Executable</strong>: The path to the V-Ray Benchmark executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-vraybench-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of V-Ray Benchmark are supported?</strong></p>
+<blockquote>
+<div><p>V-Ray Benchmark Version 4 is currently supported.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages And Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known V-Ray Benchmark error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">V-Ray Benchmark</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages And Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-vray.html"
+                        title="previous chapter">V-Ray Standalone</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-vray-dbr.html"
+                        title="next chapter">V-Ray Distributed Rendering</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-vray-dbr.html" title="V-Ray Distributed Rendering"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-vray.html" title="V-Ray Standalone"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">V-Ray Benchmark</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

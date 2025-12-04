@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Application Configuration &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Submitting Jobs" href="job-submitting.html" />
+    <link rel="prev" title="Getting Started With Deadline" href="index-getting-started.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="job-submitting.html" title="Submitting Jobs"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="index-getting-started.html" title="Getting Started With Deadline"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-getting-started.html" accesskey="U">Getting Started With Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Application Configuration</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="application-configuration">
+<span id="app-config-ref-label"></span><h1>Application Configuration<a class="headerlink" href="#application-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Deadline needs to know the executable file path to your installed application before being able to process jobs across your farm. Many applications ship with a default install path, the binary executable file, path for each operating system, and the version is included in the “Configure Plugins…” dialog. You can access this via Deadline Monitor –&gt; Tools –&gt; Power User Mode –&gt; “Configure Plugins…”.</p>
+<p>Below are examples of default application paths for the <a class="reference internal" href="app-maya.html#app-maya-ref-label"><span class="std std-ref">MayaBatch</span></a> and <a class="reference internal" href="app-nuke.html#app-nuke-ref-label"><span class="std std-ref">Nuke</span></a> plugins.</p>
+<p><a class="reference internal" href="../_images/cp_maya_batch.png"><img alt="MayaBatch" src="../_images/cp_maya_batch.png" style="height: 350px;" /></a> <a class="reference internal" href="../_images/cp_nuke.png"><img alt="Nuke" src="../_images/cp_nuke.png" style="height: 350px;" /></a></p>
+</div>
+<div class="section" id="application-paths">
+<h2>Application Paths<a class="headerlink" href="#application-paths" title="Permalink to this headline">¶</a></h2>
+<p>Looking at the <a class="reference internal" href="app-maya.html#app-maya-cp-ref-label"><span class="std std-ref">MayaBatch</span></a> plugin configuration section as an example, there are multiple render executable paths defined.</p>
+<p>When a Deadline Worker dequeues (starts) a MayaBatch job, amongst many other functions in the <em>../&lt;DeadlineRepository&gt;/plugins/MayaBatch/MayaBatch.py</em> plugin file, the Worker attempts to retrieve the bitness build (None, 32bit, 64bit), across all operating systems.</p>
+<p>In the example of MayaBatch below we also have separate versions for Maya (2016) and Maya’s Extension (2016_5). Which are defined in the required <em>../&lt;DeadlineRepository&gt;/plugins/MayaBatch/MayaBatch.param</em> configuration file, as a semicolon separated list:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RenderExecutable2016_0</span><span class="o">=</span><span class="n">C</span><span class="p">:</span>\\<span class="n">Program</span> <span class="n">Files</span>\\<span class="n">Autodesk</span>\\<span class="n">Maya2016</span>\\<span class="nb">bin</span>\\<span class="n">MayaBatch</span><span class="o">.</span><span class="n">exe</span><span class="p">;</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">autodesk</span><span class="o">/</span><span class="n">maya2016</span><span class="o">-</span><span class="n">x64</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">maya</span><span class="p">;</span><span class="o">/</span><span class="n">Applications</span><span class="o">/</span><span class="n">Autodesk</span><span class="o">/</span><span class="n">maya2016</span><span class="o">/</span><span class="n">Maya</span><span class="o">.</span><span class="n">app</span><span class="o">/</span><span class="n">Contents</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">maya</span>
+<span class="n">RenderExecutable2016_5</span><span class="o">=</span><span class="n">C</span><span class="p">:</span>\\<span class="n">Program</span> <span class="n">Files</span>\\<span class="n">Autodesk</span>\\<span class="n">Maya2016</span><span class="o">.</span><span class="mi">5</span>\\<span class="nb">bin</span>\\<span class="n">MayaBatch</span><span class="o">.</span><span class="n">exe</span><span class="p">;</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">autodesk</span><span class="o">/</span><span class="n">maya2016</span><span class="o">.</span><span class="mi">5</span><span class="o">-</span><span class="n">x64</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">maya</span><span class="p">;</span><span class="o">/</span><span class="n">Applications</span><span class="o">/</span><span class="n">Autodesk</span><span class="o">/</span><span class="n">maya2016</span><span class="o">.</span><span class="mi">5</span><span class="o">/</span><span class="n">Maya</span><span class="o">.</span><span class="n">app</span><span class="o">/</span><span class="n">Contents</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">maya</span>
+</pre></div>
+</div>
+<p>The MayaBatch.param file settings are stored in the Mongo database and this file serves as the location where the default values are modified and also allow a user interface to be declared per property to provide a more user friendly way to modify these settings for your plugin via “Monitor” -&gt; “Configure Plugins…”. When you save changes to this file programmatically or via the declared UI, this information is then written to the database.</p>
+</div>
+<div class="section" id="application-build">
+<h2>Application Build<a class="headerlink" href="#application-build" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="../_images/app_config_build_option.png"><img alt="../_images/app_config_build_option.png" src="../_images/app_config_build_option.png" style="height: 200px;" /></a>
+<p>Typically, there are three functions in our scripting API, which help us identify the correct application executable to return as the “Render Executable” to be used. Depending on which <strong>Build</strong> option is selected in your in-app or Monitor submission UI (see image above for an example) to be used - <strong>None</strong> (default), <strong>32bit</strong> or <strong>64bit</strong>. These functions check the actual <em>bitness</em> of the application binary executable to ensure we use a 32bit or 64bit application if applicable:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>FileUtils. <strong>SearchFileList</strong> ( <em>string</em> fileList )</dt><dd><p>Searches a semicolon separated list of files (fileList) for the first one that exists. For relative file paths in the list, the current directory and the PATH environment variable will be searched. Returns the first file that exists, or “” if no file is found.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>FileUtils. <strong>SearchFileListFor32Bit</strong> ( <em>string</em> fileList )</dt><dd><p>Searches a semicolon separated list of files (fileList) for the first 32bit file that exists. For relative file paths in the list, the current directory and the PATH environment variable will be searched. Returns the first file that exists, or “” if no file is found.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>FileUtils. <strong>SearchFileListFor64Bit</strong> ( <em>string</em> fileList )</dt><dd><p>Searches a semicolon separated list of files (fileList) for the first 64bit file that exists. For relative file paths in the list, the current directory and the PATH environment variable will be searched. Returns the first file that exists, or “” if no file is found.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="network-installed-applications">
+<span id="app-config-network-installed-ref-label"></span><h2>Network Installed Applications<a class="headerlink" href="#network-installed-applications" title="Permalink to this headline">¶</a></h2>
+<p>If the application in question supports running across a network, you can add network application install paths to the Plugin Configuration dialog in Monitor as well. Read/Write permissions should be correctly configured for the user account(s) that Deadline Worker runs under, to have the correct access.</p>
+<p>Alternatively, you may wish to create desktop shortcuts/symlinks instead, and configure these paths in the Plugin Configuration dialog.</p>
+<p>Beyond the scope of this documentation, please note that although many Windows based applications can be installed to a network location, they still require the presence of many c++/c#/.NET re-distribution packages to be installed.</p>
+<div class="section" id="application-wrapper-scripts">
+<h3>Application Wrapper Scripts<a class="headerlink" href="#application-wrapper-scripts" title="Permalink to this headline">¶</a></h3>
+<p>Typically, CGI/VFX studios use a bat/cmd/bash/python ‘wrapper’ script which is called to startup an application. This allows the studio to execute other commands, configure environment variables accordingly, before the actual launching of an application such as Maya. As the bat/cmd/bash/python script file is not a binary executable directly, our 2 x functions which check the actual <em>bitness</em> of your script file will cause a failure, which can be skipped by simply ensuring <strong>None</strong> as the build option is used. This can be better explained by showing a working example if we inspect the actual Python code in the MayaBatch plugin. Note, we NO longer check the <em>bitness</em> on Linux/macOS:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">RenderExecutable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Called by Deadline to get the render executable&quot;&quot;&quot;</span>
+    <span class="n">versionString</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+
+    <span class="n">mayaExecutable</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">mayaExeList</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">GetConfigEntry</span><span class="p">(</span><span class="s2">&quot;RenderExecutable&quot;</span> <span class="o">+</span> <span class="n">versionString</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">SystemUtils</span><span class="o">.</span><span class="n">IsRunningOnWindows</span><span class="p">():</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Build</span> <span class="o">==</span> <span class="s2">&quot;32bit&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">LogInfo</span><span class="p">(</span><span class="s2">&quot;Enforcing 32 bit build of Maya&quot;</span><span class="p">)</span>
+            <span class="n">mayaExecutable</span> <span class="o">=</span> <span class="n">FileUtils</span><span class="o">.</span><span class="n">SearchFileListFor32Bit</span><span class="p">(</span><span class="n">mayaExeList</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">mayaExecutable</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">LogWarning</span><span class="p">(</span><span class="s2">&quot;32 bit Maya &quot;</span> <span class="o">+</span> <span class="n">versionString</span> <span class="o">+</span> <span class="s2">&quot; render executable was not found in the semicolon separated list </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">mayaExeList</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">. Checking for any executable that exists instead.&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">Build</span> <span class="o">==</span> <span class="s2">&quot;64bit&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">LogInfo</span><span class="p">(</span><span class="s2">&quot;Enforcing 64 bit build of Maya&quot;</span><span class="p">)</span>
+            <span class="n">mayaExecutable</span> <span class="o">=</span> <span class="n">FileUtils</span><span class="o">.</span><span class="n">SearchFileListFor64Bit</span><span class="p">(</span><span class="n">mayaExeList</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">mayaExecutable</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">LogWarning</span><span class="p">(</span><span class="s2">&quot;64 bit Maya &quot;</span> <span class="o">+</span> <span class="n">versionString</span> <span class="o">+</span> <span class="s2">&quot; render executable was not found in the semicolon separated list </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">mayaExeList</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">. Checking for any executable that exists instead.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">mayaExecutable</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">LogInfo</span><span class="p">(</span><span class="s2">&quot;Not enforcing a build of Maya&quot;</span><span class="p">)</span>
+        <span class="n">mayaExecutable</span> <span class="o">=</span> <span class="n">FileUtils</span><span class="o">.</span><span class="n">SearchFileList</span><span class="p">(</span><span class="n">mayaExeList</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mayaExecutable</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">FailRender</span><span class="p">(</span><span class="s2">&quot;Maya &quot;</span> <span class="o">+</span> <span class="n">versionString</span> <span class="o">+</span> <span class="s2">&quot; render executable was not found in the semicolon separated list </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">mayaExeList</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">. The path to the render executable can be configured from the Plugin Configuration in the Deadline Monitor.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">mayaExecutable</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Application Configuration</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#application-paths">Application Paths</a></li>
+<li><a class="reference internal" href="#application-build">Application Build</a></li>
+<li><a class="reference internal" href="#network-installed-applications">Network Installed Applications</a><ul>
+<li><a class="reference internal" href="#application-wrapper-scripts">Application Wrapper Scripts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index-getting-started.html"
+                        title="previous chapter">Getting Started With Deadline</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="job-submitting.html"
+                        title="next chapter">Submitting Jobs</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="job-submitting.html" title="Submitting Jobs"
+             >next</a></li>
+        <li class="right" >
+          <a href="index-getting-started.html" title="Getting Started With Deadline"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-getting-started.html" >Getting Started With Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Application Configuration</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

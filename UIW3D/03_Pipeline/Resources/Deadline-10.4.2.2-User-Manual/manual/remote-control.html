@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Remote Control &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Network Performance" href="performance.html" />
+    <link rel="prev" title="Notifications" href="notifications.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="performance.html" title="Network Performance"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="notifications.html" title="Notifications"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" accesskey="U">Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Remote Control</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="remote-control">
+<span id="remote-control-ref-label"></span><h1>Remote Control<a class="headerlink" href="#remote-control" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By default, <strong>Remote Administration</strong> is disabled in <a class="reference internal" href="repository-config.html#repo-config-remote-control-settings-ref-label"><span class="std std-ref">Repository Configuration</span></a>. Enabling <strong>Remote Administration</strong> allows the Deadline Clients to be controlled remotely from the Monitor running on another machine. Note that this can be a security risk if you are <strong>not</strong> behind a firewall.</p>
+</div>
+<p>Remote control features are built into the Monitor to make farm administration easier. These features allow you to connect to and control the Worker application on your render nodes, and also run remote commands on them.
+They also allow you to control Pulse as well (if you’re running it on your farm).</p>
+<p>If the Workers or Pulse panels are not visible, see the <a class="reference internal" href="monitor.html#monitor-panel-features-ref-label"><span class="std std-ref">Panel Features</span></a> documentation for instructions on how to create new panels in the Monitor.</p>
+</div>
+<div class="section" id="connecting-to-the-application-logs">
+<h2>Connecting to the Application Logs<a class="headerlink" href="#connecting-to-the-application-logs" title="Permalink to this headline">¶</a></h2>
+<p>You can remotely connect to the Worker or Pulse log from the Monitor.</p>
+<div class="section" id="connecting-to-the-worker-log">
+<span id="remote-connect-worker-log-ref-label"></span><h3>Connecting to the Worker Log<a class="headerlink" href="#connecting-to-the-worker-log" title="Permalink to this headline">¶</a></h3>
+<p>You can remotely connect to a Worker by double-clicking on it in the Worker panel, or by right-clicking on it and selecting Connect To Worker Log. This will bring up the Worker Log window, allowing you to see what the Worker is currently doing.</p>
+<a class="reference internal image-reference" href="../_images/worker_log.png"><img alt="../_images/worker_log.png" src="../_images/worker_log.png" style="height: 400px;" /></a>
+<p>There are a few places in the Monitor you can find the option to connect to the Worker log:</p>
+<ul class="simple">
+<li><p>The Worker panel right-click menu.</p></li>
+<li><p>The Task panel right-click menu. Note that it will only appear for rendering or completed tasks.</p></li>
+<li><p>The Job Report panel right-click menu.</p></li>
+<li><p>The Worker Report panel right-click menu.</p></li>
+</ul>
+</div>
+<div class="section" id="connecting-to-the-pulse-log">
+<span id="remote-connect-pulse-log-ref-label"></span><h3>Connecting to the Pulse Log<a class="headerlink" href="#connecting-to-the-pulse-log" title="Permalink to this headline">¶</a></h3>
+<p>You can remotely connect to a Pulse by double-clicking on it in the Pulse panel, or by right-clicking on it and selecting Connect To Pulse Log. This will bring up the Pulse Log window, allowing you to see what the Pulse is currently doing.</p>
+<a class="reference internal image-reference" href="../_images/pulse_log.png"><img alt="../_images/pulse_log.png" src="../_images/pulse_log.png" style="height: 400px;" /></a>
+</div>
+</div>
+<div class="section" id="remote-controlling-workers-and-pulses">
+<span id="remote-control-commands-ref-label"></span><h2>Remote Controlling Workers and Pulses<a class="headerlink" href="#remote-controlling-workers-and-pulses" title="Permalink to this headline">¶</a></h2>
+<p>The Remote Control menu can be found in the Worker and Pulse panel’s right-click menu. Note that the availability of these options can vary depending on the context in which they are used, as well as the filters that are applied for the current user. Remote Administration must also be enabled on the farm, and can be enabled in the <a class="reference internal" href="repository-config.html#repo-config-remote-control-settings-ref-label"><span class="std std-ref">Repository Configuration</span></a>.</p>
+<p>These are the options that are available in the Worker and Pulse Remote Control menus:</p>
+<ul class="simple">
+<li><p><strong>Start Machine</strong>: Starts the machine using Wake On Lan. Ensure <a class="reference internal" href="power-management.html#wol-config-ref-label"><span class="std std-ref">WOL</span></a> is configured and consult the <a class="reference internal" href="power-management.html#wol-troubleshooting-ref-label"><span class="std std-ref">WOL Troubleshooting</span></a> section for further help if required.</p></li>
+<li><p><strong>Shutdown Machine</strong>: Turns off the machine.</p></li>
+<li><p><strong>Restart Machine</strong>: Restarts the machine.</p></li>
+<li><p><strong>Suspend Machine</strong>: Sets the machines state as suspended (Windows Only).</p></li>
+<li><p><strong>Execute Command</strong>: Executes an arbitrary command on the machine.</p></li>
+</ul>
+<p>When executing an arbitrary command, if you want to execute a DOS command on a Windows machine, the command must be preceded with “cmd /C”. This opens the DOS prompt, executes the command, and closes the prompt. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cmd</span> <span class="o">/</span><span class="n">C</span> <span class="n">echo</span> <span class="s2">&quot;foo&quot;</span> <span class="o">&gt;</span> <span class="n">c</span><span class="p">:</span>\<span class="n">test</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>These remote commands do not allow for user input for any command requiring a prompt. An example where this might cause confusion is with Microsoft’s xcopy command. Here, if the destination is uncertain to be a file or
+folder, xcopy will immediately exit as though successful instead of asking what should be done.</p>
+<p>Please note that specific configuration should be done for Linux machines to allow them to be shut down or restarted. See <a class="reference internal" href="considerations.html#considerations-reboot-ref-label"><span class="std std-ref">Rebooting Linux Nodes</span></a> for more details.</p>
+<p>If a command returns a non-zero exit code, the command will be interpreted as having failed.</p>
+<div class="section" id="worker-remote-control-options">
+<span id="remote-worker-controls-ref-label"></span><h3>Worker Remote Control Options<a class="headerlink" href="#worker-remote-control-options" title="Permalink to this headline">¶</a></h3>
+<p>These options are only available in the Worker Remote Control menu:</p>
+<ul class="simple">
+<li><p><strong>Search For Jobs</strong>: Forces the Worker to search the Repository for a job to do.</p></li>
+<li><p><strong>Cancel Current Tasks</strong>: Forces the Worker to cancel its current tasks.</p></li>
+<li><p><strong>Start Worker</strong>: Starts the Worker instance.</p></li>
+<li><p><strong>Stop Worker</strong>: Stops the Worker instance.</p></li>
+<li><p><strong>Restart Worker</strong>: Restarts the Worker instance.</p></li>
+<li><p><strong>Continue Running After Current Task Completion</strong>: The Worker will continue to run after it finishes its current task.</p></li>
+<li><p><strong>Stop Worker After Current Task Completion</strong>: The Worker will stop after the current task is completed.</p></li>
+<li><p><strong>Restart Worker After Current Task Completion</strong>: The Worker will restart after the current task is completed.</p></li>
+<li><p><strong>Shutdown Machine After Current Task Completion</strong>: The Machine running the Worker will stop after the current task is completed.</p></li>
+<li><p><strong>Restart Machine After Current Task Completion</strong>: The machine running the Worker will restart after the current task is completed.</p></li>
+<li><p><strong>Start All Worker Instances</strong>: Starts all the Worker instances on the selected machines.</p></li>
+<li><p><strong>Start New Worker Instance</strong>: Starts a new Worker instance with the specified name on the selected machine.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/worker_remote.png"><img alt="../_images/worker_remote.png" src="../_images/worker_remote.png" style="height: 350px;" /></a>
+</div>
+<div class="section" id="pulse-remote-control-options">
+<h3>Pulse Remote Control Options<a class="headerlink" href="#pulse-remote-control-options" title="Permalink to this headline">¶</a></h3>
+<p>These options are only available in the Pulse Remote Control menu:</p>
+<ul class="simple">
+<li><p><strong>Perform Pending Job Scan</strong>: Forces Pulse to perform the Pending Job Scan operation.</p></li>
+<li><p><strong>Perform House Cleaning</strong>: Forces Pulse to perform the House Cleaning operation.</p></li>
+<li><p><strong>Perform Repository Repair</strong>: Forces Pulse to perform the Repository Repair operation.</p></li>
+<li><p><strong>Perform Power Management Check</strong>: Forces Pulse to perform the Power Management check.</p></li>
+<li><p><strong>Start Pulse</strong>: Starts the Pulse instance.</p></li>
+<li><p><strong>Stop Pulse</strong>: Stops the Pulse instance.</p></li>
+<li><p><strong>Restart Pulse</strong>: Restarts the Pulse instance.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/pulse_remote.png"><img alt="../_images/pulse_remote.png" src="../_images/pulse_remote.png" style="height: 200px;" /></a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In Deadline 10.0.21 and later, the <strong>Perform Pending Job Scan</strong>, <strong>Perform House Cleaning</strong>, and <strong>Perform Repository Repair</strong> features are only supported if the target Pulse is connected directly to the Deadline repository and database. Pulse will not perform these operations if it is connected to a Remote Connection Server, but will still respond to these remote commands with “Success”. See the <a class="reference internal" href="repository-config.html#repository-config-house-cleaning-ref-label"><span class="std std-ref">House Cleaning</span></a> docs for more information.</p>
+</div>
+</div>
+</div>
+<div class="section" id="remote-commands-panel">
+<span id="remote-control-commands-panel-ref-label"></span><h2>Remote Commands Panel<a class="headerlink" href="#remote-commands-panel" title="Permalink to this headline">¶</a></h2>
+<p>The Remote Commands panel shows all pending and completed remote commands that were sent from the Monitor. When sending a remote command, if this panel is not already displayed, it will be displayed automatically
+(assuming you have permissions to see the Remote Commands panel).</p>
+<a class="reference internal image-reference" href="../_images/monitor_remote_panel.png"><img alt="../_images/monitor_remote_panel.png" src="../_images/monitor_remote_panel.png" style="height: 300px;" /></a>
+<p>You can view the results of a remote command by clicking on the command in the list. The full results will be shown in the log window below. All successful commands will start with “Connection Accepted.”</p>
+</div>
+<div class="section" id="remote-desktop-software">
+<h2>Remote Desktop Software<a class="headerlink" href="#remote-desktop-software" title="Permalink to this headline">¶</a></h2>
+<p>There are many applications which allows you to remotely control another computer. The following applications are supported by Deadline out of the box via Monitor scripts. The scripts can be run from the Scripts menu in the Monitor, or by right-clicking on a Worker or Pulse in their respective panels. Right-click scripts can also be found in the Task and Report panels.</p>
+<a class="reference internal image-reference" href="../_images/remote_software_workers.png"><img alt="../_images/remote_software_workers.png" src="../_images/remote_software_workers.png" style="height: 350px;" /></a>
+<div class="section" id="apple-remote-desktop-ard">
+<span id="apple-remote-desktop-ref-label"></span><h3>Apple Remote Desktop (ARD)<a class="headerlink" href="#apple-remote-desktop-ard" title="Permalink to this headline">¶</a></h3>
+<p>With <a class="reference external" href="https://support.apple.com/guide/remote-desktop/welcome">Apple Remote Desktop</a> (ARD), you can observe and obtain access to the computers on your network. Note that in order to connect to a machine from the Monitor, that machine must already be in the ARD list of computers because Deadline can’t create new computer entries and add them to the list. An error message is displayed if the machine can’t be found in the ARD list.</p>
+<a class="reference internal image-reference" href="../_images/remote_software_ard.png"><img alt="../_images/remote_software_ard.png" src="../_images/remote_software_ard.png" style="height: 150px;" /></a>
+<p>The following options are available in the ARD window in the Monitor:</p>
+<ul class="simple">
+<li><p><strong>Machine IP Address(s)</strong>: Specify which machines to connect to. Use a comma to separate multiple machine names.</p></li>
+<li><p><strong>Hide this window if running from a right-click Scripts menu</strong>: If enabled, this window will be hidden if run from a right-click menu in the Monitor. You can always run it from the main Scripts menu to see this window.</p></li>
+</ul>
+</div>
+<div class="section" id="radmin">
+<span id="radmin-ref-label"></span><h3>Radmin<a class="headerlink" href="#radmin" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://www.radmin.com/">Radmin</a> is fast, secure and affordable remote-control software that enables you to work on a remote computer in real time as if you were sitting in front of it.</p>
+<a class="reference internal image-reference" href="../_images/remote_software_radmin.png"><img alt="../_images/remote_software_radmin.png" src="../_images/remote_software_radmin.png" style="height: 200px;" /></a>
+<p>The following options are available in the Radmin window in the Monitor:</p>
+<ul class="simple">
+<li><p><strong>Machine Name(s)</strong>: Specify which machines to connect to. Use a comma to separate multiple machine names.</p></li>
+<li><p><strong>Radmin Viewer</strong>: The Radmin viewer executable to use.</p></li>
+<li><p><strong>Radmin Port</strong>: The Radmin port.</p></li>
+<li><p><strong>Hide this window if running from a right-click Scripts menu</strong>: If enabled, this window will be hidden if run from a right-click menu in the Monitor. You can always run it from the main Scripts menu to see this window.</p></li>
+</ul>
+</div>
+<div class="section" id="remote-desktop-connection-rdc">
+<span id="rdc-ref-label"></span><h3>Remote Desktop Connection (RDC)<a class="headerlink" href="#remote-desktop-connection-rdc" title="Permalink to this headline">¶</a></h3>
+<p>With Remote Desktop Connection (RDC), you can easily connect to a terminal server or to another computer running Windows. All you need is network access and permissions to connect to the other computer.</p>
+<a class="reference internal image-reference" href="../_images/remote_software_rdc.png"><img alt="../_images/remote_software_rdc.png" src="../_images/remote_software_rdc.png" style="height: 200px;" /></a>
+<p>The following options are available in the RDC window in the Monitor:</p>
+<ul class="simple">
+<li><p><strong>Machine Name(s)</strong>: Specify which machines to connect to. Use a comma to separate multiple machine names.</p></li>
+<li><dl class="simple">
+<dt><strong>Settings</strong>:</dt><dd><ul>
+<li><p><strong>No Settings</strong>: When this option is chosen, no existing RDP settings are used to connect.</p></li>
+<li><p><strong>Settings File</strong>: When this option is chosen, the specified RDP config file is used to connect.</p></li>
+<li><p><strong>Settings Folder</strong>: When this option is enabled, existing RDP config files in this folder are used to connect. If the machine does not have an RDP config file, you’ll have the option to save one before connecting.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>Hide this window if running from a right-click Scripts menu</strong>: If enabled, this window will be hidden if run from a right-click menu in the Monitor. You can always run it from the main Scripts menu to see this window.</p></li>
+</ul>
+</div>
+<div class="section" id="vnc">
+<span id="vnc-ref-label"></span><h3>VNC<a class="headerlink" href="#vnc" title="Permalink to this headline">¶</a></h3>
+<p>Virtual Network Computing (VNC) is a desktop protocol to remotely control another computer. It transmits the keyboard presses and mouse clicks from one computer to another relaying the screen updates back in the other direction, over a network. There are many options available for VNC software. <a class="reference external" href="https://www.tightvnc.com/">TightVNC</a>, <a class="reference external" href="https://www.realvnc.com/">RealVNC</a>, <a class="reference external" href="https://www.uvnc.com/">UltraVNC</a>, and <a class="reference external" href="https://sourceforge.net/projects/chicken/">Chicken</a> have all been used successfully with Deadline.</p>
+<a class="reference internal image-reference" href="../_images/remote_software_vnc.png"><img alt="../_images/remote_software_vnc.png" src="../_images/remote_software_vnc.png" style="height: 200px;" /></a>
+<p>The following options are available in the VNC window in the Monitor:</p>
+<ul class="simple">
+<li><p><strong>Machine Name(s)</strong>: Specify which machines to connect to. Use a comma to separate multiple machine names.</p></li>
+<li><p><strong>VNC Viewer</strong>: The VNC viewer executable to use.</p></li>
+<li><p><strong>Password</strong>: The VNC password.</p></li>
+<li><p><strong>VNC Port</strong>: The VNC port.</p></li>
+<li><p><strong>Remember Password</strong>: Enable to remember your password between sessions.</p></li>
+<li><p><strong>Hide this window if running from a right-click Scripts menu</strong>: If enabled, this window will be hidden if run from a right-click menu in the Monitor. You can always run it from the main Scripts menu to see this window.</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Remote Control</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#connecting-to-the-application-logs">Connecting to the Application Logs</a><ul>
+<li><a class="reference internal" href="#connecting-to-the-worker-log">Connecting to the Worker Log</a></li>
+<li><a class="reference internal" href="#connecting-to-the-pulse-log">Connecting to the Pulse Log</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#remote-controlling-workers-and-pulses">Remote Controlling Workers and Pulses</a><ul>
+<li><a class="reference internal" href="#worker-remote-control-options">Worker Remote Control Options</a></li>
+<li><a class="reference internal" href="#pulse-remote-control-options">Pulse Remote Control Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#remote-commands-panel">Remote Commands Panel</a></li>
+<li><a class="reference internal" href="#remote-desktop-software">Remote Desktop Software</a><ul>
+<li><a class="reference internal" href="#apple-remote-desktop-ard">Apple Remote Desktop (ARD)</a></li>
+<li><a class="reference internal" href="#radmin">Radmin</a></li>
+<li><a class="reference internal" href="#remote-desktop-connection-rdc">Remote Desktop Connection (RDC)</a></li>
+<li><a class="reference internal" href="#vnc">VNC</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="notifications.html"
+                        title="previous chapter">Notifications</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="performance.html"
+                        title="next chapter">Network Performance</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="performance.html" title="Network Performance"
+             >next</a></li>
+        <li class="right" >
+          <a href="notifications.html" title="Notifications"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" >Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Remote Control</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

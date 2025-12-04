@@ -1,0 +1,493 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>(Unsupported) Cloud License Server Proxy &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="(Unsupported) Web Forwarding" href="licensing-web-forwarding.html" />
+    <link rel="prev" title="(Unsupported) Legacy Usage-Based Licensing" href="licensing-usage-based-legacy.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="licensing-web-forwarding.html" title="(Unsupported) Web Forwarding"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="licensing-usage-based-legacy.html" title="(Unsupported) Legacy Usage-Based Licensing"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installing-deadline.html" accesskey="U">Installing Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">(Unsupported) Cloud License Server Proxy</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="unsupported-cloud-license-server-proxy">
+<span id="licensing-usage-based-proxy-ref-label"></span><h1>(Unsupported) Cloud License Server Proxy<a class="headerlink" href="#unsupported-cloud-license-server-proxy" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Topics covered in this page require you to have administrator/root access to your machine(s) to install/deploy software.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Topics covered in this page refer to legacy Thinkbox usage-based licensing (UBL), which is no longer available as of September 30, 2025. The UBL feature in Deadline 10 is now available through <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> UBL. For detailed setup instructions, please see the <a class="reference internal" href="licensing-usage-based.html#licensing-usage-based-ref-label"><span class="std std-ref">Deadline Cloud UBL Documentation</span></a>.</p>
+<p>For more details, please refer to <a class="reference external" href="https://marketplace.thinkboxsoftware.com/">the marketplace website</a>.</p>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>When using <a class="reference internal" href="licensing-usage-based-legacy.html#licensing-usage-based-legacy-ref-label"><span class="std std-ref">Legacy Usage-Based Licensing</span></a> with a Cloud License Server, it is normally required that all Deadline Worker machines have access to the internet. However, this is not always possible due to security reasons. The recommended alternative is to set up a Cloud License Server Proxy on a single machine that does have internet access, and have the Deadline Workers point to it instead.</p>
+<p>This documentation will go through the steps of installing and configuring a Cloud License Server Proxy using HAProxy on an Ubuntu machine. Note that this can be a physical or virtual machine. While there are probably many ways to set up a Cloud License Server Proxy, this is the solution we have tested and we can confirm it works.</p>
+<p>Please contact <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Support</a> if you need help setting up the Cloud License Server Proxy.</p>
+</div>
+<div class="section" id="installing-haproxy">
+<h2>Installing HAProxy<a class="headerlink" href="#installing-haproxy" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ubuntu">
+<h3>Ubuntu<a class="headerlink" href="#ubuntu" title="Permalink to this headline">¶</a></h3>
+<p>On Ubuntu to ensure you are using the latest version of HAProxy, you need to download and build before installing.</p>
+<p>You must first install the required packages on your Ubuntu machine:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="o">-</span><span class="n">s</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span> <span class="n">libopenssl</span><span class="o">-</span><span class="n">dev</span>
+</pre></div>
+</div>
+<p>After those packages have finished installing, download <a class="reference external" href="https://www.haproxy.org/#down">HAProxy</a> and extract the HAProxy tarball to a temporary location. Then open a Terminal, change directories to the extracted HAProxy folder, and compile HAProxy:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">make</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">linux2628</span> <span class="n">USE_OPENSSL</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>After compiling HAProxy, you can install it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">make</span> <span class="n">install</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="centos-redhat">
+<h3>CentOS/RedHat<a class="headerlink" href="#centos-redhat" title="Permalink to this headline">¶</a></h3>
+<p>On RHEL/CentOS 7, we can use the EPEL repository RPM:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="o">-</span><span class="n">s</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">dl</span><span class="o">.</span><span class="n">fedoraproject</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">epel</span><span class="o">/</span><span class="n">epel</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">latest</span><span class="o">-</span><span class="mf">7.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rpm</span> <span class="o">-</span><span class="n">ivh</span> <span class="n">epel</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">latest</span><span class="o">-</span><span class="mf">7.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yum</span> <span class="n">install</span> <span class="n">haproxy</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="ssl-certificate">
+<h2>SSL Certificate<a class="headerlink" href="#ssl-certificate" title="Permalink to this headline">¶</a></h2>
+<p>Before you can start using HAProxy, you need to generate an SSL certificate for HAProxy’s internal listener. This can either be signed by a trusted certificate authority, or it can be self-signed. To generate a self-signed CA and certificate, you can follow these instructions.</p>
+<p>For the commands below, note that the ‘-days’ field configures the expiry date for the certificate. These can be customized as needed, keeping in mind that certificates will need to be re-generated and replaced before their expiry dates to avoid connectivity issues. The example below is set to 10 years (3650 days) for the CA certificate, and 1 year (365 days) for the server certificate.</p>
+<p>First, ensure that you have <a class="reference external" href="https://www.openssl.org/">OpenSSL</a> installed. Then open a terminal, change to a directory where you want to create the certificates, and run the following commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate a self-signed certificate authority, entering the requested organization information when prompted, with &quot;CA&quot; as the &quot;Common Name&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">openssl</span> <span class="n">genpkey</span> <span class="o">-</span><span class="n">algorithm</span> <span class="n">RSA</span> <span class="o">-</span><span class="n">out</span> <span class="n">ca</span><span class="o">.</span><span class="n">key</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">openssl</span> <span class="n">req</span> <span class="o">-</span><span class="n">new</span> <span class="o">-</span><span class="n">x509</span> <span class="o">-</span><span class="n">key</span> <span class="n">ca</span><span class="o">.</span><span class="n">key</span> <span class="o">-</span><span class="n">out</span> <span class="n">ca</span><span class="o">.</span><span class="n">crt</span> <span class="o">-</span><span class="n">days</span> <span class="mi">3650</span>
+<span class="c1"># Generate a private key and certificate signing request, entering the requested organization information, with &quot;haproxy-01&quot; as the &quot;Common Name&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">openssl</span> <span class="n">req</span> <span class="o">-</span><span class="n">new</span> <span class="o">-</span><span class="n">nodes</span> <span class="o">-</span><span class="n">keyout</span> <span class="n">haproxy</span><span class="o">-</span><span class="mf">01.</span><span class="n">key</span> <span class="o">-</span><span class="n">out</span> <span class="n">haproxy</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="n">req</span><span class="o">.</span><span class="n">pem</span>
+<span class="c1"># Sign the key to create the certificate file</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">openssl</span> <span class="n">x509</span> <span class="o">-</span><span class="n">req</span> <span class="o">-</span><span class="n">days</span> <span class="mi">365</span> <span class="o">-</span><span class="ow">in</span> <span class="n">haproxy</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="n">req</span><span class="o">.</span><span class="n">pem</span> <span class="o">-</span><span class="n">out</span> <span class="n">haproxy</span><span class="o">-</span><span class="mf">01.</span><span class="n">crt</span> <span class="o">-</span><span class="n">CA</span> <span class="n">ca</span><span class="o">.</span><span class="n">crt</span> <span class="o">-</span><span class="n">CAkey</span> <span class="n">ca</span><span class="o">.</span><span class="n">key</span>
+<span class="c1"># Concatenate the server key and certificate into one pem file</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">cat</span> <span class="n">haproxy</span><span class="o">-</span><span class="mf">01.</span><span class="n">crt</span> <span class="n">haproxy</span><span class="o">-</span><span class="mf">01.</span><span class="n">key</span> <span class="o">&gt;</span> <span class="n">haproxy</span><span class="o">-</span><span class="mf">01.</span><span class="n">pem</span>
+</pre></div>
+</div>
+<p>The resulting ‘haproxy.pem’ file will be referenced in the HAProxy configuration file below.</p>
+</div>
+<div class="section" id="configuring-haproxy">
+<h2>Configuring HAProxy<a class="headerlink" href="#configuring-haproxy" title="Permalink to this headline">¶</a></h2>
+<p>The next step is to configure HAProxy to use your SSL certificate and redirect traffic to the Cloud License Server. First, create a folder named /etc/haproxy, and then copy the <em>keys</em> folder that you created above to /etc/haproxy/keys.</p>
+<p>Now create an HAProxy configuration file at /etc/haproxy/haproxy.cfg with the following contents. Note that the following lines in the <strong>frontend incoming_https</strong> section below need to be updated:</p>
+<ul class="simple">
+<li><p>In the <strong>bind</strong> line, change the <em>haproxy01.pem</em> certificate name to reference the certificate you created avobe.</p></li>
+<li><p>In the <strong>reqrep</strong> line, replace the <em>haproxy-01</em> host name with the DNS name or IP address of the HAProxy server (the same host that you created the certificate for).</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">global</span>
+        <span class="n">log</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">log</span>    <span class="n">local0</span>
+        <span class="n">log</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">log</span>    <span class="n">local1</span> <span class="n">notice</span>
+        <span class="n">chroot</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">haproxy</span>
+        <span class="n">user</span> <span class="n">haproxy</span>
+        <span class="n">group</span> <span class="n">haproxy</span>
+        <span class="n">daemon</span>
+        <span class="n">ca</span><span class="o">-</span><span class="n">base</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span><span class="n">keys</span>
+        <span class="n">crt</span><span class="o">-</span><span class="n">base</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span><span class="n">keys</span>
+        <span class="n">tune</span><span class="o">.</span><span class="n">ssl</span><span class="o">.</span><span class="n">default</span><span class="o">-</span><span class="n">dh</span><span class="o">-</span><span class="n">param</span> <span class="mi">1024</span>
+
+<span class="n">defaults</span>
+        <span class="n">log</span>     <span class="k">global</span>
+        <span class="n">mode</span>    <span class="n">tcp</span>
+        <span class="n">option</span>  <span class="n">tcplog</span>
+        <span class="n">option</span>  <span class="n">dontlognull</span>
+        <span class="n">timeout</span> <span class="n">connect</span> <span class="mi">5000</span>
+        <span class="n">timeout</span> <span class="n">client</span> <span class="mi">3600000</span>
+        <span class="n">timeout</span> <span class="n">server</span> <span class="mi">3600000</span>
+        <span class="n">errorfile</span> <span class="mi">400</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span><span class="n">errors</span><span class="o">/</span><span class="mf">400.</span><span class="n">http</span>
+        <span class="n">errorfile</span> <span class="mi">403</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span><span class="n">errors</span><span class="o">/</span><span class="mf">403.</span><span class="n">http</span>
+        <span class="n">errorfile</span> <span class="mi">408</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span><span class="n">errors</span><span class="o">/</span><span class="mf">408.</span><span class="n">http</span>
+        <span class="n">errorfile</span> <span class="mi">500</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span><span class="n">errors</span><span class="o">/</span><span class="mf">500.</span><span class="n">http</span>
+        <span class="n">errorfile</span> <span class="mi">502</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span><span class="n">errors</span><span class="o">/</span><span class="mf">502.</span><span class="n">http</span>
+        <span class="n">errorfile</span> <span class="mi">503</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span><span class="n">errors</span><span class="o">/</span><span class="mf">503.</span><span class="n">http</span>
+        <span class="n">errorfile</span> <span class="mi">504</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span><span class="n">errors</span><span class="o">/</span><span class="mf">504.</span><span class="n">http</span>
+
+<span class="n">frontend</span> <span class="n">incoming_https</span>
+        <span class="n">bind</span> \<span class="o">*</span><span class="p">:</span><span class="mi">443</span> <span class="n">ssl</span> <span class="n">crt</span> <span class="n">haproxy</span><span class="o">-</span><span class="mf">01.</span><span class="n">pem</span> <span class="n">ca</span><span class="o">-</span><span class="n">file</span> <span class="n">ca</span><span class="o">.</span><span class="n">crt</span>
+        <span class="n">reqrep</span> <span class="s2">&quot;Host: haproxy-01&quot;</span> <span class="s2">&quot;Host: thinkbox.compliance.flexnetoperations.com&quot;</span>
+        <span class="n">option</span> <span class="n">tcplog</span>
+        <span class="n">mode</span> <span class="n">tcp</span>
+        <span class="n">default_backend</span> <span class="n">fno</span>
+
+<span class="n">backend</span> <span class="n">fno</span>
+        <span class="n">mode</span> <span class="n">tcp</span>
+        <span class="n">option</span> <span class="n">ssl</span><span class="o">-</span><span class="n">hello</span><span class="o">-</span><span class="n">chk</span>
+        <span class="n">server</span> <span class="n">fno</span> <span class="n">thinkbox</span><span class="o">.</span><span class="n">compliance</span><span class="o">.</span><span class="n">flexnetoperations</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="mi">443</span> <span class="n">ssl</span> <span class="n">verify</span> <span class="n">none</span>
+</pre></div>
+</div>
+<p>Now create an init script at /etc/init.d/haproxy with the following contents:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          haproxy
+# Required-Start:    $local_fs $network $remote_fs
+# Required-Stop:     $local_fs $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: fast and reliable load balancing reverse proxy
+# Description:       This file should be used to start and stop haproxy.
+### END INIT INFO
+
+# Author: Arnaud Cornet &lt;acornet@debian.org&gt;
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+PIDFILE=/var/run/haproxy.pid
+CONFIG=/etc/haproxy/haproxy.cfg
+HAPROXY=/usr/local/sbin/haproxy
+EXTRAOPTS=
+ENABLED=0
+
+test -x $HAPROXY || exit 0
+
+if [ -e /etc/default/haproxy ]; then
+        . /etc/default/haproxy
+fi
+
+test -f &quot;$CONFIG&quot; || exit 0
+test &quot;$ENABLED&quot; != &quot;0&quot; || exit 0
+
+[ -f /etc/default/rcS ] &amp;&amp; . /etc/default/rcS
+. /lib/lsb/init-functions
+
+clean()
+{
+    if [ -e &quot;$tmp&quot; ];then
+        rm -f &quot;$tmp&quot;
+    fi
+}
+
+trap clean EXIT
+
+check_haproxy_config()
+{
+        $HAPROXY -c -f &quot;$CONFIG&quot; &gt;/dev/null
+        if [ $? -eq 1 ]; then
+                log_end_msg 1
+                exit 1
+        fi
+}
+
+haproxy_start()
+{
+        check_haproxy_config
+
+        start-stop-daemon --quiet --oknodo --start --pidfile &quot;$PIDFILE&quot; \
+                --exec $HAPROXY -- -f &quot;$CONFIG&quot; -D -p &quot;$PIDFILE&quot; \
+                $EXTRAOPTS || return 2
+        return 0
+}
+
+haproxy_stop()
+{
+        tmp=$(tempfile -s .haproxy.init)
+
+        if [ ! -f $PIDFILE ] ; then
+                # This is a success according to LSB
+                return 0
+        fi
+
+        ret=0
+        for pid in $(cat $PIDFILE); do
+                echo $pid &gt; &quot;$tmp&quot;
+                start-stop-daemon --quiet --oknodo --stop \
+                        --retry 5 --pidfile &quot;$tmp&quot; --exec $HAPROXY || ret=$?
+        done
+
+        [ $ret -eq 0 ] &amp;&amp; rm -f $PIDFILE
+
+        return $ret
+}
+
+haproxy_reload()
+{
+        check_haproxy_config
+
+        $HAPROXY -f &quot;$CONFIG&quot; -p $PIDFILE -D $EXTRAOPTS -sf $(cat $PIDFILE) \
+                || return 2
+        return 0
+}
+
+haproxy_status()
+{
+        if [ ! -f $PIDFILE ] ; then
+                # program not running
+                return 3
+        fi
+
+        for pid in $(cat $PIDFILE) ; do
+                if ! ps --no-headers p &quot;$pid&quot; | grep haproxy &gt; /dev/null ; then
+                        # program running, bogus pidfile
+                        return 1
+                fi
+        done
+
+        return 0
+}
+
+
+case &quot;$1&quot; in
+start)
+        log_daemon_msg &quot;Starting haproxy&quot; &quot;haproxy&quot;
+        haproxy_start
+        ret=$?
+        case &quot;$ret&quot; in
+        0)
+                log_end_msg 0
+                ;;
+        1)
+                log_end_msg 1
+                echo &quot;pid file &#39;$PIDFILE&#39; found, haproxy not started.&quot;
+                ;;
+        2)
+                log_end_msg 1
+                ;;
+        esac
+        exit $ret
+        ;;
+stop)
+        log_daemon_msg &quot;Stopping haproxy&quot; &quot;haproxy&quot;
+        haproxy_stop
+        ret=$?
+        case &quot;$ret&quot; in
+        0|1)
+                log_end_msg 0
+                ;;
+        2)
+                log_end_msg 1
+                ;;
+        esac
+        exit $ret
+        ;;
+reload|force-reload)
+        log_daemon_msg &quot;Reloading haproxy&quot; &quot;haproxy&quot;
+        haproxy_reload
+        ret=$?
+        case &quot;$ret&quot; in
+        0|1)
+                log_end_msg 0
+                ;;
+        2)
+                log_end_msg 1
+                ;;
+        esac
+        exit $ret
+        ;;
+restart)
+        log_daemon_msg &quot;Restarting haproxy&quot; &quot;haproxy&quot;
+        haproxy_stop
+        haproxy_start
+        ret=$?
+        case &quot;$ret&quot; in
+        0)
+                log_end_msg 0
+                ;;
+        1)
+                log_end_msg 1
+                ;;
+        2)
+                log_end_msg 1
+                ;;
+        esac
+        exit $ret
+        ;;
+status)
+        haproxy_status
+        ret=$?
+        case &quot;$ret&quot; in
+        0)
+                echo &quot;haproxy is running.&quot;
+                ;;
+        1)
+                echo &quot;haproxy dead, but $PIDFILE exists.&quot;
+                ;;
+        *)
+                echo &quot;haproxy not running.&quot;
+                ;;
+        esac
+        exit $ret
+        ;;
+*)
+        echo &quot;Usage: /etc/init.d/haproxy {start|stop|reload|restart|status}&quot;
+        exit 2
+        ;;
+esac
+
+:
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-haproxy">
+<h2>Running HAProxy<a class="headerlink" href="#running-haproxy" title="Permalink to this headline">¶</a></h2>
+<p>Now that HAProxy is configured, it’s almost ready to run. First, you need to restart rsyslog:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">service</span> <span class="n">rsyslog</span> <span class="n">restart</span>
+</pre></div>
+</div>
+<p>Next, add HAProxy to the default runlevels:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">update</span><span class="o">-</span><span class="n">rc</span><span class="o">.</span><span class="n">d</span> <span class="n">haproxy</span> <span class="n">defaults</span>
+</pre></div>
+</div>
+<p>or on CentOS/RedHat:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chkconfig</span> <span class="n">haproxy</span> <span class="n">on</span>
+</pre></div>
+</div>
+<p>Finally, you can start HAProxy:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">service</span> <span class="n">haproxy</span> <span class="n">start</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="network-access-requirements">
+<span id="licensing-usage-based-proxy-configure-ref-label"></span><h2>Network Access Requirements<a class="headerlink" href="#network-access-requirements" title="Permalink to this headline">¶</a></h2>
+<p>There are a couple network access requirements to allow the Deadline Workers to connect to the Proxy, and to allow the Proxy to connect to the Cloud License Server.</p>
+<p>First, you must ensure that the render nodes that the Deadline Workers are running on can reach the Proxy on TCP port 443.</p>
+<p>Second, you must ensure that the Proxy can reach thinkbox.compliance.flexnetoperations.com on TCP Port 443. If you need help determining the IP address for thinkbox.compliance.flexnetoperations.com, you can do so by running the following command in a command prompt or terminal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nslookup</span> <span class="n">thinkbox</span><span class="o">.</span><span class="n">compliance</span><span class="o">.</span><span class="n">flexnetoperations</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+<p>Simply look in the “Address” field of the output. Note that the nslookup command is generally available on Windows, macOS or Linux.</p>
+</div>
+<div class="section" id="configuring-deadline">
+<h2>Configuring Deadline<a class="headerlink" href="#configuring-deadline" title="Permalink to this headline">¶</a></h2>
+<p>Now that the Cloud License Server Proxy is running, you need to configure the Deadline Workers to point to it. The process is almost the same as if you were pointing to the Cloud License Server directly. The only difference is that instead of entering the URL to the Cloud License Server, you’ll be entering the URL to the Cloud License Server Proxy server. Note that you still enter an Activation Code as usual.</p>
+<p>For example, let’s assume that the original URL was this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">thinkboxuat</span><span class="o">.</span><span class="n">compliance</span><span class="o">.</span><span class="n">flexnetoperations</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">instances</span><span class="o">/</span><span class="n">A1B2C3D4E5F6</span><span class="o">/</span><span class="n">request</span>
+</pre></div>
+</div>
+<p>If your Cloud License Server Proxy machine is called haproxy-01, you’ll enter in the following URL instead:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">haproxy</span><span class="o">-</span><span class="mi">01</span><span class="o">/</span><span class="n">instances</span><span class="o">/</span><span class="n">A1B2C3D4E5F6</span><span class="o">/</span><span class="n">request</span>
+</pre></div>
+</div>
+<p>Finally, if you used a self-signed CA certificate, you’ll need to import /etc/haproxy/keys/ca.crt as a trusted root certificate on any Deadline Worker machines that will be pulling licenses through the Cloud License Server Proxy. Once this is done, the Deadline Workers should be able to check out render time as if they were connected directly to the Cloud License Server.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">(Unsupported) Cloud License Server Proxy</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#installing-haproxy">Installing HAProxy</a><ul>
+<li><a class="reference internal" href="#ubuntu">Ubuntu</a></li>
+<li><a class="reference internal" href="#centos-redhat">CentOS/RedHat</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ssl-certificate">SSL Certificate</a></li>
+<li><a class="reference internal" href="#configuring-haproxy">Configuring HAProxy</a></li>
+<li><a class="reference internal" href="#running-haproxy">Running HAProxy</a></li>
+<li><a class="reference internal" href="#network-access-requirements">Network Access Requirements</a></li>
+<li><a class="reference internal" href="#configuring-deadline">Configuring Deadline</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="licensing-usage-based-legacy.html"
+                        title="previous chapter">(Unsupported) Legacy Usage-Based Licensing</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="licensing-web-forwarding.html"
+                        title="next chapter">(Unsupported) Web Forwarding</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="licensing-web-forwarding.html" title="(Unsupported) Web Forwarding"
+             >next</a></li>
+        <li class="right" >
+          <a href="licensing-usage-based-legacy.html" title="(Unsupported) Legacy Usage-Based Licensing"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installing-deadline.html" >Installing Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">(Unsupported) Cloud License Server Proxy</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

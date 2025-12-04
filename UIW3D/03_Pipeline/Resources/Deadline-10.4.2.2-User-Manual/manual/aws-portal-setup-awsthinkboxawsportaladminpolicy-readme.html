@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AWSPortal Admin IAM Managed Policy &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Deprecated AWSPortal IAM Policy (For Deadline 10.1.7 and Earlier)" href="aws-portal-setup-deprecated-policy-text.html" />
+    <link rel="prev" title="AWS Portal NGINX Cache" href="aws-portal-nginx-cache.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-setup-deprecated-policy-text.html" title="Deprecated AWSPortal IAM Policy (For Deadline 10.1.7 and Earlier)"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="aws-portal-nginx-cache.html" title="AWS Portal NGINX Cache"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWSPortal Admin IAM Managed Policy</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<div class="section" id="awsportal-admin-iam-managed-policy">
+<span id="aws-portal-setup-awsthinkboxawsportaladminpolicy-readme-ref-label"></span><h1>AWSPortal Admin IAM Managed Policy<a class="headerlink" href="#awsportal-admin-iam-managed-policy" title="Permalink to this headline">¶</a></h1>
+<p>This Identity and Access Management (IAM) Managed Policy is meant to be used by the on-prem Deadline software via <a class="reference internal" href="aws-portal-setup-creating-awsportal-user.html#aws-portal-setup-account-awsportal-user-setup-ref-label"><span class="std std-ref">AWSPortal IAM user</span></a>. It contains permissions that allow administration
+of various AWS resources:</p>
+<ul class="simple">
+<li><p>Launch/Terminate Gateway and Worker EC2 resources</p></li>
+<li><p>Read IAM permissions created during one-time setup.</p></li>
+<li><p>Create/Modify Deadline owned S3 buckets</p></li>
+<li><p>Read DynamoDB table to fetch application health statuses</p></li>
+<li><p>Deploy permissions for Cloudformation to manage resources needed by Deadline</p></li>
+<li><p>Read/Write Cloudwatch logs for operational purposes</p></li>
+<li><p>Encrypt/Decrypt user certificates using KMS managed CMKs</p></li>
+<li><p>Create/Modify user credentials using Secrets Manager secrets</p></li>
+<li><p>Tagging permissions for the above resources</p></li>
+</ul>
+<p>AWS Thinkbox makes this available as an <a class="reference external" href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html#aws-managed-policies">AWS Managed Policy</a> and maintains it on behalf of Deadline customers.</p>
+<div class="section" id="permission-breakdown">
+<h2>Permission Breakdown<a class="headerlink" href="#permission-breakdown" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="aws-portal-cloudwatch-logs">
+<h3>AWS Portal CloudWatch Logs<a class="headerlink" href="#aws-portal-cloudwatch-logs" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="permissions">
+<h4>Permissions<a class="headerlink" href="#permissions" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">logs:GetLogEvents</span></code>, <code class="docutils literal notranslate"><span class="pre">logs:DescribeLogGroups</span></code>, <code class="docutils literal notranslate"><span class="pre">logs:PutRetentionPolicy</span></code>, <code class="docutils literal notranslate"><span class="pre">logs:DeleteRetentionPolicy</span></code>, <code class="docutils literal notranslate"><span class="pre">logs:CreateLogGroup</span></code>, <code class="docutils literal notranslate"><span class="pre">logs:DescribeLogStreams</span></code></p>
+</div>
+<div class="section" id="restrictions">
+<h4>Restrictions<a class="headerlink" href="#restrictions" title="Permalink to this headline">¶</a></h4>
+<p>These permissions are restricted to doing actions on Log Groups prefixed with the name <code class="docutils literal notranslate"><span class="pre">Thinkbox</span></code>. It should be noted
+that <code class="docutils literal notranslate"><span class="pre">logs:CreateLogGroup</span></code> and <code class="docutils literal notranslate"><span class="pre">logs:DescribeLogGroups</span></code> don’t have any restrictions on it.</p>
+</div>
+<div class="section" id="purpose">
+<h4>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h4>
+<p>These permissions are needed so that on-prem software can access Thinkbox created logs from CloudWatch.
+Additionally there are permissions to create the necessary log groups/streams if they don’t already exist.</p>
+</div>
+</div>
+<div class="section" id="aws-portal-gateway-and-worker-ec2-instances">
+<h3>AWS Portal Gateway and Worker EC2 instances<a class="headerlink" href="#aws-portal-gateway-and-worker-ec2-instances" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id1">
+<h4>Permissions<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">ec2:RunInstances</span></code>, <code class="docutils literal notranslate"><span class="pre">ec2:TerminateInstances</span></code>, <code class="docutils literal notranslate"><span class="pre">ec2:CreateTags</span></code>, <code class="docutils literal notranslate"><span class="pre">ec2:RequestSpotFleet</span></code>, <code class="docutils literal notranslate"><span class="pre">ec2:AttachInternetGateway</span></code>, <code class="docutils literal notranslate"><span class="pre">ec2:DeleteVpc</span></code>, and several other EC2 read/modify permissions</p>
+</div>
+<div class="section" id="id2">
+<h4>Restrictions<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ec2:RunInstances</span></code></p>
+<ul>
+<li><p>These permissions are restricted such that we only allow launching instances with instance profiles names prefixed with <code class="docutils literal notranslate"><span class="pre">AWSPortal</span></code>.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ec2:CreateTags</span></code></p>
+<ul>
+<li><p>For instances, only allow tagging if launched in a <code class="docutils literal notranslate"><span class="pre">Placement</span> <span class="pre">Group</span></code> with prefix <code class="docutils literal notranslate"><span class="pre">DeadlinePlacementGroup</span></code> or at instance creation time through <code class="docutils literal notranslate"><span class="pre">RunInstances</span></code>. For Subnet,Security-Group,Internet-Gateway,Route,Volume and VPC, allow tags on all resources. For all other EC2 resources, don’t allow tagging.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ec2:TerminateInstances</span></code></p>
+<ul>
+<li><p>Allow termination of instances which contain tag pair <code class="docutils literal notranslate"><span class="pre">{&quot;aws:cloudformation:logical-id&quot;:</span> <span class="pre">&quot;ReverseForwarder&quot;}</span></code>, or if launched in a Placement Group with prefix <code class="docutils literal notranslate"><span class="pre">DeadlinePlacementGroup</span></code>, or if it contains tag key “ec2:ResourceTag/aws:ec2spot:fleet-request-id”.</p></li>
+</ul>
+</li>
+</ul>
+<p>All other permissions are unrestricted.</p>
+</div>
+<div class="section" id="id3">
+<h4>Purpose<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<p>These permissions are needed so that Gateway and Worker EC2 instances(and other related EC2 resources) can be created and managed.</p>
+</div>
+</div>
+<div class="section" id="aws-portal-iam-entities">
+<h3>AWS Portal IAM entities<a class="headerlink" href="#aws-portal-iam-entities" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h4>Permissions<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">iam:GetUser</span></code>, <code class="docutils literal notranslate"><span class="pre">iam:GetInstanceProfile</span></code>, <code class="docutils literal notranslate"><span class="pre">iam:GetPolicy</span></code>, <code class="docutils literal notranslate"><span class="pre">iam:ListEntitiesForPolicy</span></code>, <code class="docutils literal notranslate"><span class="pre">iam:ListPolicyVersions</span></code>, <code class="docutils literal notranslate"><span class="pre">iam:GetRole</span></code>, <code class="docutils literal notranslate"><span class="pre">iam:GetRolePolicy</span></code>, <code class="docutils literal notranslate"><span class="pre">iam:PassRole</span></code>, <code class="docutils literal notranslate"><span class="pre">iam:CreateServiceLinkedRole</span></code></p>
+</div>
+<div class="section" id="id5">
+<h4>Restrictions<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<p>These permissions are restricted to doing actions on IAM user/role/policy prefixed with the name <code class="docutils literal notranslate"><span class="pre">AWSPortal</span></code>. There are a few exceptions though:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">iam:GetUser</span></code> doesn’t have any resource or condition restrictions on it. This is by design in case you, either by choice or by mistake, don’t use the suggested name(<code class="docutils literal notranslate"><span class="pre">AWSPortal</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">iam:CreateServiceLinkedRole</span></code> is caller restricted such that it can only be invoked via AWS services Deadline actually interacts with.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">iam:PassRole</span></code> also allows access to passing a role prefixed with <code class="docutils literal notranslate"><span class="pre">DeadlineSpot</span></code> and restricts the services where the roles can be passed to <code class="docutils literal notranslate"><span class="pre">EC2</span></code>,<code class="docutils literal notranslate"><span class="pre">Spot</span></code>,<code class="docutils literal notranslate"><span class="pre">EC2fleet</span></code>,<code class="docutils literal notranslate"><span class="pre">Spotfleet</span></code> and <code class="docutils literal notranslate"><span class="pre">Cloudformation</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h4>Purpose<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<p>These permissions are required by Deadline software running on-prem to access IAM entities for the purpose of presenting errors and record keeping.</p>
+</div>
+</div>
+<div class="section" id="aws-portal-s3-buckets">
+<h3>AWS Portal S3 Buckets<a class="headerlink" href="#aws-portal-s3-buckets" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id7">
+<h4>Permissions<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">s3:CreateBucket</span></code>, <code class="docutils literal notranslate"><span class="pre">s3:PutObject</span></code>, <code class="docutils literal notranslate"><span class="pre">s3:ListBucket</span></code>, <code class="docutils literal notranslate"><span class="pre">s3:PutEncryptionConfiguration</span></code>, <code class="docutils literal notranslate"><span class="pre">s3:ListAllMyBuckets</span></code>, and several other S3 read/modify permissions</p>
+</div>
+<div class="section" id="id8">
+<h4>Restrictions<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<p>These permission can only operate on buckets prefixed with either of the following names: <code class="docutils literal notranslate"><span class="pre">aws-portal-cache</span></code>,<code class="docutils literal notranslate"><span class="pre">logs-for-aws~portal-cache</span></code>,<code class="docutils literal notranslate"><span class="pre">stack</span></code>,<code class="docutils literal notranslate"><span class="pre">logs-for-stack</span></code> or <code class="docutils literal notranslate"><span class="pre">awsportal</span></code>.
+It should be noted that <code class="docutils literal notranslate"><span class="pre">s3:ListAllMyBuckets</span></code> doesn’t have any restrictions on it.</p>
+</div>
+<div class="section" id="id9">
+<h4>Purpose<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<p>These permissions are needed to create S3 buckets for asset transfer and AWS-Portal Cloudformation stack. These contain user data like certificates and assets. Also, there are
+corresponding logging buckets which contain the generated Cloudwatch logs. There is permission to access the AWSportal bucket which contains Deadline specific dynamic configuration.</p>
+</div>
+</div>
+<div class="section" id="resource-tracker-dynamodb-fleet-health-reading">
+<h3>Resource Tracker DynamoDB Fleet Health Reading<a class="headerlink" href="#resource-tracker-dynamodb-fleet-health-reading" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id10">
+<h4>Permissions<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">dynamodb:Scan</span></code></p>
+</div>
+<div class="section" id="id11">
+<h4>Restrictions<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<p>This permission can only operate on DynamoDB tables prefixed with the name <code class="docutils literal notranslate"><span class="pre">DeadlineFleetHealth</span></code>.</p>
+</div>
+<div class="section" id="id12">
+<h4>Purpose<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
+<p>This is needed so that the Deadline Monitor can read Resource Tracker’s <code class="docutils literal notranslate"><span class="pre">DeadlineFleetHealth</span></code> DynamoDB table.</p>
+</div>
+</div>
+<div class="section" id="aws-portal-cloudformation-deployment">
+<h3>AWS Portal Cloudformation Deployment<a class="headerlink" href="#aws-portal-cloudformation-deployment" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id13">
+<h4>Permissions<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">cloudformation:CreateStack</span></code>, <code class="docutils literal notranslate"><span class="pre">cloudformation:DescribeStackEvents</span></code>, <code class="docutils literal notranslate"><span class="pre">cloudformation:DeleteStack</span></code>, and several other read/modify permissions</p>
+</div>
+<div class="section" id="id14">
+<h4>Restrictions<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
+<p>These permissions can only operate on Cloudformation stacks prefixed with the name <code class="docutils literal notranslate"><span class="pre">stack</span></code> or <code class="docutils literal notranslate"><span class="pre">deadline</span></code>. However, there are some permissions (<code class="docutils literal notranslate"><span class="pre">ListStacks</span></code>, <code class="docutils literal notranslate"><span class="pre">EstimateTemplateCost</span></code>, and <code class="docutils literal notranslate"><span class="pre">DescribeStacks</span></code>) which don’t have any restrictions.</p>
+</div>
+<div class="section" id="id15">
+<h4>Purpose<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<p>This is needed so that the on-prem software can launch and manage the resources which are created as part of a single logical stack.</p>
+</div>
+</div>
+<div class="section" id="aws-portal-kms-key-encryption">
+<h3>AWS Portal KMS Key Encryption<a class="headerlink" href="#aws-portal-kms-key-encryption" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id16">
+<h4>Permissions<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">kms:Encrypt</span></code>, <code class="docutils literal notranslate"><span class="pre">kms:GenerateDataKey</span></code>, <code class="docutils literal notranslate"><span class="pre">kms:Decrypt</span></code></p>
+</div>
+<div class="section" id="id17">
+<h4>Restrictions<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
+<p>These permission are caller restricted such that it can only be invoked via <code class="docutils literal notranslate"><span class="pre">Secrets</span> <span class="pre">Manager</span></code> or <code class="docutils literal notranslate"><span class="pre">S3</span></code> AWS services</p>
+</div>
+<div class="section" id="id18">
+<h4>Purpose<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
+<p>This is needed so that S3 buckets and Secrets Manager secrets can be encrypted/decrypted.</p>
+</div>
+</div>
+<div class="section" id="aws-portal-secrets-manager-rcs-password-administration">
+<h3>AWS portal Secrets Manager RCS Password Administration<a class="headerlink" href="#aws-portal-secrets-manager-rcs-password-administration" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id19">
+<h4>Permissions<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">secretsmanager:CreateSecret</span></code>, <code class="docutils literal notranslate"><span class="pre">secretsmanager:DeleteSecret</span></code>, <code class="docutils literal notranslate"><span class="pre">secretsmanager:UpdateSecret</span></code>, <code class="docutils literal notranslate"><span class="pre">secretsmanager:DescribeSecret</span></code>, <code class="docutils literal notranslate"><span class="pre">secretsmanager:TagResource</span></code></p>
+</div>
+<div class="section" id="id20">
+<h4>Restrictions<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
+<p>These permissions can only operate on secrets in AWS Secrets Manager prefixed with the name <code class="docutils literal notranslate"><span class="pre">rcs-tls-pw-stack</span></code>.</p>
+</div>
+<div class="section" id="id21">
+<h4>Purpose<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
+<p>This is needed so that the on-prem software can safely store/read/delete the secured password for the RCS TLS certificate, if it has one.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">AWSPortal Admin IAM Managed Policy</a><ul>
+<li><a class="reference internal" href="#permission-breakdown">Permission Breakdown</a><ul>
+<li><a class="reference internal" href="#aws-portal-cloudwatch-logs">AWS Portal CloudWatch Logs</a><ul>
+<li><a class="reference internal" href="#permissions">Permissions</a></li>
+<li><a class="reference internal" href="#restrictions">Restrictions</a></li>
+<li><a class="reference internal" href="#purpose">Purpose</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#aws-portal-gateway-and-worker-ec2-instances">AWS Portal Gateway and Worker EC2 instances</a><ul>
+<li><a class="reference internal" href="#id1">Permissions</a></li>
+<li><a class="reference internal" href="#id2">Restrictions</a></li>
+<li><a class="reference internal" href="#id3">Purpose</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#aws-portal-iam-entities">AWS Portal IAM entities</a><ul>
+<li><a class="reference internal" href="#id4">Permissions</a></li>
+<li><a class="reference internal" href="#id5">Restrictions</a></li>
+<li><a class="reference internal" href="#id6">Purpose</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#aws-portal-s3-buckets">AWS Portal S3 Buckets</a><ul>
+<li><a class="reference internal" href="#id7">Permissions</a></li>
+<li><a class="reference internal" href="#id8">Restrictions</a></li>
+<li><a class="reference internal" href="#id9">Purpose</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#resource-tracker-dynamodb-fleet-health-reading">Resource Tracker DynamoDB Fleet Health Reading</a><ul>
+<li><a class="reference internal" href="#id10">Permissions</a></li>
+<li><a class="reference internal" href="#id11">Restrictions</a></li>
+<li><a class="reference internal" href="#id12">Purpose</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#aws-portal-cloudformation-deployment">AWS Portal Cloudformation Deployment</a><ul>
+<li><a class="reference internal" href="#id13">Permissions</a></li>
+<li><a class="reference internal" href="#id14">Restrictions</a></li>
+<li><a class="reference internal" href="#id15">Purpose</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#aws-portal-kms-key-encryption">AWS Portal KMS Key Encryption</a><ul>
+<li><a class="reference internal" href="#id16">Permissions</a></li>
+<li><a class="reference internal" href="#id17">Restrictions</a></li>
+<li><a class="reference internal" href="#id18">Purpose</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#aws-portal-secrets-manager-rcs-password-administration">AWS portal Secrets Manager RCS Password Administration</a><ul>
+<li><a class="reference internal" href="#id19">Permissions</a></li>
+<li><a class="reference internal" href="#id20">Restrictions</a></li>
+<li><a class="reference internal" href="#id21">Purpose</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aws-portal-nginx-cache.html"
+                        title="previous chapter">AWS Portal NGINX Cache</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="aws-portal-setup-deprecated-policy-text.html"
+                        title="next chapter">Deprecated AWSPortal IAM Policy (For Deadline 10.1.7 and Earlier)</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-setup-deprecated-policy-text.html" title="Deprecated AWSPortal IAM Policy (For Deadline 10.1.7 and Earlier)"
+             >next</a></li>
+        <li class="right" >
+          <a href="aws-portal-nginx-cache.html" title="AWS Portal NGINX Cache"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWSPortal Admin IAM Managed Policy</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

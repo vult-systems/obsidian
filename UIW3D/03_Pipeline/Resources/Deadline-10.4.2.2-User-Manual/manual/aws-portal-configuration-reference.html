@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AWS Portal Configuration Reference &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Instructions for Updating Deadline when using AWS Portal" href="aws-portal-updating-deadline-when-using-aws-portal.html" />
+    <link rel="prev" title="Advanced AWS Portal Installation Topics" href="aws-portal-advanced-installation-topics.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-updating-deadline-when-using-aws-portal.html" title="Instructions for Updating Deadline when using AWS Portal"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="aws-portal-advanced-installation-topics.html" title="Advanced AWS Portal Installation Topics"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWS Portal Configuration Reference</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<div class="section" id="aws-portal-configuration-reference">
+<span id="aws-portal-configuration-reference-ref-label"></span><h1>AWS Portal Configuration Reference<a class="headerlink" href="#aws-portal-configuration-reference" title="Permalink to this headline">¶</a></h1>
+<p>This section contains a reference for all of the configuration options for the AWS Portal.</p>
+<div class="section" id="configure-aws-portal-settings-dialog">
+<span id="configure-aws-portal-dialog-label"></span><h2>Configure AWS Portal Settings dialog<a class="headerlink" href="#configure-aws-portal-settings-dialog" title="Permalink to this headline">¶</a></h2>
+<p>The Configure AWS Portal Settings dialog allows you to control settings related to the AWS Portal.</p>
+<p>To access this dialog:</p>
+<ol class="arabic">
+<li><p>Open the Deadline Monitor.</p></li>
+<li><p>Enter Power User mode (‘Tools’ menu → ‘Power User Mode’).</p></li>
+<li><p>Open the AWS Portal panel (‘View’ menu → ‘New Panel’ →
+‘AWS Portal’).</p>
+<p>The first time you open the AWS Portal panel, it will show an AWS Login screen,
+which prompts you for your AWS Access Key and Secret Access Key.</p>
+<img alt="../_images/aws_portal_login.png" src="../_images/aws_portal_login.png" />
+<p>Enter the keys that you saved during the
+<a class="reference internal" href="aws-portal-setup-creating-awsportal-user.html#aws-portal-setup-account-awsportal-user-setup-ref-label"><span class="std std-ref">AWSPortal IAM User Setup</span></a> steps that you followed
+earlier(In the background, this will also also trigger Asset Transfer S3 bucket creation, if one doesn’t already exist in your account).</p>
+<p>The login controls also include a drop-down box to select your default AWS
+Region.  Note that you can choose any supported region when starting your
+infrastructure, regardless of your selection here.
+For more information on AWS regions, please see <a class="reference external" href="https://aws.amazon.com/about-aws/global-infrastructure/">AWS Global Infrastructure</a>.</p>
+<p>After you have entered your credentials, press the ‘Login’ button.</p>
+<p><strong>Important Note:</strong> The credentials entered into this login dialog are persisted between installations.
+If you are not prompted to enter credentials after reinstalling AWS Portal, logout and log back in to ensure
+you are signed in with the intended IAM user.</p>
+<img alt="../_images/aws_portal_logout.png" src="../_images/aws_portal_logout.png" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To illustrate the issue that can arise from not logging out and back in upon reinstallation, imagine the following scenario:</p>
+<ol class="arabic simple">
+<li><p>You install AWS Portal, and during the installation enter the credentials of IAM user A.</p></li>
+<li><p>You then open the AWS Portal panel for the first time, and are prompted for credentials. You enter the credentials of IAM user A, and select the “Remember credentials on this machine” checkbox.</p></li>
+<li><p>You uninstall AWS Portal.</p></li>
+<li><p>You reinstall AWS Portal, and during the installation enter the credentials of IAM user B.</p></li>
+<li><p>You open the AWS Portal panel, and are automatically logged in using the saved credentials of IAM user A.</p></li>
+</ol>
+</div>
+</li>
+</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ol class="arabic">
+<li><p>Click the Gear button in the AWS Portal dialog.  This button is adjacent to “Deadline Infrastructure”.</p>
+<blockquote>
+<div><img alt="../_images/aws-portal-gear-button-hilite.png" src="../_images/aws-portal-gear-button-hilite.png" />
+</div></blockquote>
+</li>
+</ol>
+<div class="section" id="basic-tab">
+<h3>Basic tab<a class="headerlink" href="#basic-tab" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><img alt="../_images/configure-aws-portal-settings-basic.png" src="../_images/configure-aws-portal-settings-basic.png" />
+</div></blockquote>
+<div class="section" id="connection-server">
+<h4>Connection Server<a class="headerlink" href="#connection-server" title="Permalink to this headline">¶</a></h4>
+<p>Choose the Remote Connection Server that AWS Portal will use to communicate with your Deadline Repository.</p>
+</div>
+<div class="section" id="override-local-aws-portal-link-hostname-ip-address">
+<h4>Override Local AWS Portal Link Hostname / IP Address<a class="headerlink" href="#override-local-aws-portal-link-hostname-ip-address" title="Permalink to this headline">¶</a></h4>
+<p>We attempt to automatically detect the local IP address of the machine that is running the AWS Portal Link.  If this automatic detection fails, you can override the IP address using this control.</p>
+<p>To determine the IP address, follow the instructions in
+<a class="reference internal" href="#aws-portal-how-to-find-your-local-ip-address-ref-label"><span class="std std-ref">“How to Find Your Local IP Address”</span></a>
+on the machine that is running the AWS Portal Portal Link.</p>
+</div>
+<div class="section" id="override-public-aws-portal-link-ip-address">
+<h4>Override Public AWS Portal Link IP Address<a class="headerlink" href="#override-public-aws-portal-link-ip-address" title="Permalink to this headline">¶</a></h4>
+<p>AWS will only allow incoming requests from a specific public IP address. Deadline will try to get your public IP automatically from checkip.amazonaws.com, however, that IP may not be correct. Here you can override that IP address.</p>
+<p>You should normally leave this empty.  If your IP address has changed, you can update AWS to allow access from your new IP address by doing the following:</p>
+<ol class="arabic simple">
+<li><p>Open the Deadline Monitor.</p></li>
+<li><p>Enter Power User mode (‘Tools’ menu → ‘Power User Mode’).</p></li>
+<li><p>Open the AWS Portal panel (‘View’ menu → ‘New Panel’ →
+‘AWS Portal’).</p></li>
+<li><p>Right-click on your infrastructure in the AWS Portal dialog.</p></li>
+<li><p>In the pop-up menu that appears, select “Refresh AWS Portal Services Connection”.</p></li>
+</ol>
+<p>One sign that your public IP address may be set incorrectly is if you have created a Deadline Infrastructure, but you cannot see its License Forwarder in the License Forwarders panel (Deadline Monitor → View menu → New Panel → License Forwarders).
+If no License Forwarder appears for your Infrastructure stack, or if it has stopped updating (as seen in the “Last Status Update” column), then you may need to change this setting.</p>
+<p>Before changing this setting, you should try to use the “Refresh AWS Portal Services Connection” option, described above.
+If that doesn’t resolve the problem, then you can get the IP address that you need for this setting by finding <code class="docutils literal notranslate"><span class="pre">My</span> <span class="pre">IP</span></code> while following the instructions in <a class="reference internal" href="aws-portal-troubleshooting/workers-not-connecting.html#wrong-public-ip-address-on-gateway-security-group"><span class="std std-ref">Wrong Public IP Address on Gateway Security Group</span></a>.</p>
+</div>
+</div>
+<div class="section" id="advanced-tab">
+<h3>Advanced tab<a class="headerlink" href="#advanced-tab" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><img alt="../_images/configure-aws-portal-settings-advanced.png" src="../_images/configure-aws-portal-settings-advanced.png" />
+</div></blockquote>
+<div class="section" id="usage-based-licensing-certificate-directory">
+<h4>Usage-Based Licensing Certificate Directory<a class="headerlink" href="#usage-based-licensing-certificate-directory" title="Permalink to this headline">¶</a></h4>
+<p>Specify a directory that contains pfx certificate files for <a class="reference internal" href="licensing-usage-based.html#licensing-usage-based-ref-label"><span class="std std-ref">Usage-Based Licensing</span></a>.</p>
+<p>These certificate files will be automatically copied to new Deadline Infrastructures.  To update the certificates on an existing infrastructure, open the AWS Portal panel in the Deadline Monitor, right-click on the infrastructure, and choose “Upload Certificates”.</p>
+<p><a class="reference internal" href="aws-portal/usage-based-licensing.html#aws-portal-usage-based-licensing-ref-label"><span class="std std-ref">Please see here for more information on Usage-Based Licensing</span></a>.</p>
+</div>
+<div class="section" id="servers">
+<h4>Servers<a class="headerlink" href="#servers" title="Permalink to this headline">¶</a></h4>
+<p>This enables you to specify ports that will be forwarded from the gateway instance in your AWS infrastructure to a server on your local network.</p>
+<p>Note that the gateway instance always has private IP address 10.128.2.4.</p>
+<p>This also allows you to use your own on-premesis license server for certain applications.  For more information, please see <a class="reference internal" href="aws-portal/byol-setup.html#aws-portal-configure-byol-ref-label"><span class="std std-ref">Bring Your Own License Setup</span></a>.</p>
+</div>
+<div class="section" id="environment-variables">
+<h4>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h4>
+<p>Here you can specify environment variables that will be set on your Deadline Workers that are running on AWS.</p>
+</div>
+<div class="section" id="management-settings">
+<h4>Management Settings<a class="headerlink" href="#management-settings" title="Permalink to this headline">¶</a></h4>
+<p><strong>AWS Portal Pulse Instances Can Be Primary</strong></p>
+<p>Enable this setting to allow the Deadline Pulse running on your AWS Infrastructure to act as the primary pulse.</p>
+<p><strong>AWS Portal Workers Can Perform House Cleaning Operations</strong></p>
+<p>Enable this setting to allow AWS Portal Deadline Workers to perform house cleaning.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In Deadline 10.0.21 and later, client applications (Pulse, Worker, etc.) that are connected to the <a class="reference internal" href="remote-connection-server.html#remote-connection-server-ref-label"><span class="std std-ref">Remote Connection Server</span></a> will not be able to perform house cleaning operations. Instead, the Remote Connection Server has adopted this responsibility and will perform <a class="reference internal" href="repository-config.html#house-cleaning-settings-label"><span class="std std-ref">House Cleaning</span></a>, <a class="reference internal" href="repository-config.html#repository-repair-settings-label"><span class="std std-ref">Repository Repair</span></a>, and <a class="reference internal" href="repository-config.html#pending-job-scan-settings-label"><span class="std std-ref">Pending Job Scan</span></a> periodically.</p>
+<p>Client applications that use a direct Repository connection can still perform house cleaning operations as normal.</p>
+<p>When running several applications in Direct connection mode it might be necessary to prevent some of them from running house cleaning tasks. This could be done by setting the following environment variables to <cite>true</cite>:</p>
+<p>DCONFIG_DISABLEHOUSECLEANING</p>
+<p>DCONFIG_DISABLEREPOSITORYJOBSSCAN</p>
+<p>DCONFIG_DISABLEREPOSITORYREPAIR</p>
+<p>The same effect could be achieved with configuration file settings: <a class="reference internal" href="client-config.html#client-config-housecleaning-overrides-ref-label"><span class="std std-ref">House Cleaning Override Settings</span></a>.</p>
+</div>
+</div>
+<div class="section" id="remove-orphaned-aws-entities">
+<h4>Remove Orphaned AWS Entities<a class="headerlink" href="#remove-orphaned-aws-entities" title="Permalink to this headline">¶</a></h4>
+<p>This is meant for use if you change to use a different AWS account.  This will remove any spot fleets, infrastructures, and S3 buckets not owned
+by the account you are currently signed in from the Deadline database. It <strong>will not stop or delete these entities in AWS itself</strong>.
+If any spot fleets, infrastructures, or S3 buckets are not deleted from the old AWS account
+<strong>charges will apply</strong>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="asset-server-settings-dialog">
+<span id="aws-portal-asset-server-settings-dialog-reference-ref-label"></span><h2>Asset Server Settings dialog<a class="headerlink" href="#asset-server-settings-dialog" title="Permalink to this headline">¶</a></h2>
+<p>The Asset Server Settings dialog allows you to control settings related to the AWS Portal Asset Server.</p>
+<p>To access the dialog:</p>
+<ol class="arabic">
+<li><p>Open the Deadline Monitor.</p></li>
+<li><p>Enter Power User mode (“Tools” menu &gt; “Power User Mode”).</p></li>
+<li><p>Choose the “Tools” menu → “Configure Asset Server…”</p>
+<blockquote>
+<div><img alt="../_images/asset-server-settings.png" src="../_images/asset-server-settings.png" />
+</div></blockquote>
+</li>
+</ol>
+<div class="section" id="asset-server-local-ip-address">
+<h3>Asset Server Local IP Address<a class="headerlink" href="#asset-server-local-ip-address" title="Permalink to this headline">¶</a></h3>
+<p>This must be set to the private IP address of the machine that is running the AWS Portal Asset Server.
+You should use an IP address that is accessible to all of your machines that are running the Deadline Client.
+This machine should be behind your firewall so that it is not accessible to the public Internet.
+This machine must have access to the “Root Directories” specified below.</p>
+<p>To determine the IP address, follow the instructions in
+<a class="reference internal" href="#aws-portal-how-to-find-your-local-ip-address-ref-label"><span class="std std-ref">“How to Find Your Local IP Address”</span></a>
+on the machine that is running the AWS Portal Asset Server.</p>
+<p>If you will only submit Deadline jobs from the same machine that is running the AWS Portal Asset Server, then you can use the IP address 127.0.0.1.</p>
+</div>
+<div class="section" id="asset-server-port">
+<h3>Asset Server Port<a class="headerlink" href="#asset-server-port" title="Permalink to this headline">¶</a></h3>
+<p>Should be left as the default 4000.</p>
+<div class="section" id="s3-bucket">
+<h4>S3 Bucket<a class="headerlink" href="#s3-bucket" title="Permalink to this headline">¶</a></h4>
+<p>This is the S3 bucket that your assets will be transferred to for AWS Portal.</p>
+<p><strong>Create New Bucket</strong></p>
+<p>When you login to AWS Portal the first time within the Deadline Monitor, a default bucket will automatically be created in your account. You can also create a new bucket using the “Create New Bucket” button.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The AWS Portal will not allow you to create/change the S3 bucket if there are running infrastructures.
+You should stop your infrastructure before performing this step.</p>
+</div>
+<p><strong>Clear Bucket</strong></p>
+<p>This will empty the bucket by deleting all its content. Please note that once deleted, the contents of the bucket cannot be restored.</p>
+</div>
+<div class="section" id="root-directories">
+<span id="aws-portal-asset-server-settings-dialog-root-directories-reference-ref-label"></span><h4>Root Directories<a class="headerlink" href="#root-directories" title="Permalink to this headline">¶</a></h4>
+<p>A list of filesystem directories that you want to share with the Deadline Workers running on AWS.</p>
+<p>This is a list of directories that the Asset Server can access files in.
+This includes sub-directories, and their sub-directories, and so on, so it
+is only necessary to specify the root directories of the directory structures where you
+store your assets.</p>
+<p>For instance, if you have a file server accessible from the UNC path
+<code class="docutils literal notranslate"><span class="pre">\\fs-01\assets\</span></code>, but you have assets located in <code class="docutils literal notranslate"><span class="pre">\\fs-01\assets\textures\</span></code> and <code class="docutils literal notranslate"><span class="pre">\\fs-01\assets\particles\</span></code>,
+you would only need to register <code class="docutils literal notranslate"><span class="pre">\\fs-01\assets\</span></code> as a file transfer directory.</p>
+<p>In the case that you store your assets in multiple locations, for instance, two different file servers,
+you can specify more than one directory. For example, if you have assets divided between two file servers
+<code class="docutils literal notranslate"><span class="pre">\\fs-team-a\assets\</span></code>, and <code class="docutils literal notranslate"><span class="pre">\\fs-team-b\assets\</span></code>, you would need to specify both as file transfer directories.</p>
+<p>The paths set for each file transfer directory should be paths that are accessible from the machine you
+are running Asset Server on, not necessarily the machine you’re configuring the File Transfer Directories from.
+For instance, if your asset server is installed on a machine running Linux with your file server mounted as <code class="docutils literal notranslate"><span class="pre">/mnt/assets/</span></code>
+and you’re configuring the Asset Server from a Windows machine with the file server mounted as <code class="docutils literal notranslate"><span class="pre">X:\</span></code>, you would specify only <code class="docutils literal notranslate"><span class="pre">/mnt/assets/</span></code>
+as a file transfer directory.</p>
+</div>
+<div class="section" id="output-file-extensions">
+<h4>Output File Extensions<a class="headerlink" href="#output-file-extensions" title="Permalink to this headline">¶</a></h4>
+<p>This setting controls which file types will be transferred from your AWS Worker instances back to your on-premesis filesystem.</p>
+<p>By default, AWS Portal attempts to detect which output files will be created by your job, and it will transfer them automatically.
+However, this may fail in some cases.  For example, the automatic detection does not work for jobs submitted through the Deadline Monitor.
+In such cases, you can have AWS Portal transfer your output files back to you by adding their filename extension here.</p>
+</div>
+</div>
+</div>
+<div class="section" id="how-to-find-your-local-ip-address">
+<span id="aws-portal-how-to-find-your-local-ip-address-ref-label"></span><h2>How to Find Your Local IP Address<a class="headerlink" href="#how-to-find-your-local-ip-address" title="Permalink to this headline">¶</a></h2>
+<p>Several controls in the AWS Portal configuration require a machine’s local IP address.  How you find this depends on your computer’s operating system.</p>
+<div class="section" id="windows">
+<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p>Open a Command Prompt window on the machine for which you need the local IP address.</p></li>
+<li><p>Run the <code class="docutils literal notranslate"><span class="pre">ipconfig</span></code> command, and look for your <code class="docutils literal notranslate"><span class="pre">IPv4</span> <span class="pre">Address</span></code>:</p>
+<blockquote>
+<div><img alt="../_images/windows_ipconfig_hilight_ipv4_address.png" src="../_images/windows_ipconfig_hilight_ipv4_address.png" />
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="linux">
+<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p>Open a command-line window on the machine for which you need the local IP address.</p></li>
+<li><p>Run the <code class="docutils literal notranslate"><span class="pre">ip</span> <span class="pre">address</span></code> command, and look for your <code class="docutils literal notranslate"><span class="pre">inet</span></code> address:</p>
+<blockquote>
+<div><img alt="../_images/linux_ip_address_hilight_inet.png" src="../_images/linux_ip_address_hilight_inet.png" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The output of <code class="docutils literal notranslate"><span class="pre">ip</span> <span class="pre">address</span></code> may include the address of multiple devices.
+Normally you will want the address from your first ethernet adapter, called <cite>eth0</cite>.</p>
+<p>You do not want the address from the <cite>lo</cite> device, <cite>127.0.0.1</cite>.</p>
+</div>
+</div></blockquote>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">AWS Portal Configuration Reference</a><ul>
+<li><a class="reference internal" href="#configure-aws-portal-settings-dialog">Configure AWS Portal Settings dialog</a><ul>
+<li><a class="reference internal" href="#basic-tab">Basic tab</a><ul>
+<li><a class="reference internal" href="#connection-server">Connection Server</a></li>
+<li><a class="reference internal" href="#override-local-aws-portal-link-hostname-ip-address">Override Local AWS Portal Link Hostname / IP Address</a></li>
+<li><a class="reference internal" href="#override-public-aws-portal-link-ip-address">Override Public AWS Portal Link IP Address</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#advanced-tab">Advanced tab</a><ul>
+<li><a class="reference internal" href="#usage-based-licensing-certificate-directory">Usage-Based Licensing Certificate Directory</a></li>
+<li><a class="reference internal" href="#servers">Servers</a></li>
+<li><a class="reference internal" href="#environment-variables">Environment Variables</a></li>
+<li><a class="reference internal" href="#management-settings">Management Settings</a></li>
+<li><a class="reference internal" href="#remove-orphaned-aws-entities">Remove Orphaned AWS Entities</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#asset-server-settings-dialog">Asset Server Settings dialog</a><ul>
+<li><a class="reference internal" href="#asset-server-local-ip-address">Asset Server Local IP Address</a></li>
+<li><a class="reference internal" href="#asset-server-port">Asset Server Port</a><ul>
+<li><a class="reference internal" href="#s3-bucket">S3 Bucket</a></li>
+<li><a class="reference internal" href="#root-directories">Root Directories</a></li>
+<li><a class="reference internal" href="#output-file-extensions">Output File Extensions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#how-to-find-your-local-ip-address">How to Find Your Local IP Address</a><ul>
+<li><a class="reference internal" href="#windows">Windows</a></li>
+<li><a class="reference internal" href="#linux">Linux</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aws-portal-advanced-installation-topics.html"
+                        title="previous chapter">Advanced AWS Portal Installation Topics</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="aws-portal-updating-deadline-when-using-aws-portal.html"
+                        title="next chapter">Instructions for Updating Deadline when using AWS Portal</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-updating-deadline-when-using-aws-portal.html" title="Instructions for Updating Deadline when using AWS Portal"
+             >next</a></li>
+        <li class="right" >
+          <a href="aws-portal-advanced-installation-topics.html" title="Advanced AWS Portal Installation Topics"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWS Portal Configuration Reference</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

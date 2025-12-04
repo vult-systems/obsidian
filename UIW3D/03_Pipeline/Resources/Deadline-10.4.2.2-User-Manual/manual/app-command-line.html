@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Command Line &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Command Script" href="app-command-script.html" />
+    <link rel="prev" title="Combustion" href="app-combustion.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-command-script.html" title="Command Script"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-combustion.html" title="Combustion"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Command Line</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="command-line">
+<span id="app-command-line-ref-label"></span><h1>Command Line<a class="headerlink" href="#command-line" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This plugin is deemed a potential security risk because it allows users to submit arbitrary Command Line applications to Deadline, which are then executed on the render nodes. Customers are encouraged to read the AWS Thinkbox Deadline <a class="reference internal" href="shared-security-model.html#shared-security-model-ref-label"><span class="std std-ref">Shared Responsibility Model</span></a> before using this plugin in their environment.</p>
+</div>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>Arbitrary command line jobs can be submitted to Deadline that will execute the same command line for each frame of the job.</p>
+<p>To submit arbitrary command line jobs, refer to the <a class="reference internal" href="manual-submission.html#arbitrary-command-line-jobs-ref-label"><span class="std std-ref">Manual Job Submission</span></a> documentation. To submit from the Monitor, refer to the documentation below.</p>
+<a class="reference internal image-reference" href="../_images/sub_cmdline.png"><img alt="../_images/sub_cmdline.png" src="../_images/sub_cmdline.png" style="height: 500px;" /></a>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. The Command Line specific options are:</p>
+<ul class="simple">
+<li><p><strong>Job Type</strong>: Choose a normal job or <a class="reference internal" href="manual-submission.html#maintenance-jobs-ref-label"><span class="std std-ref">maintenance job</span></a>. A normal job will let you specify an arbitrary frame list, but a maintenance job requires a start frame and an end frame.</p></li>
+<li><p><strong>Single Frames Only</strong>: If enabled, the plugin will only render one frame at a time even if a single task contains a chunk of frames.</p></li>
+<li><p><strong>Executable</strong>: The executable to use for rendering. Must be local to the render node.</p></li>
+<li><p><strong>Arguments (optional)</strong>: The arguments to pass to the executable. Use the Start Frame and End Frame buttons to add their corresponding tags to the end of the current arguments.</p></li>
+<li><p><strong>Argument Tags</strong>: See the <a class="reference internal" href="manual-submission.html#arbitrary-command-line-jobs-ref-label"><span class="std std-ref">Manual Job Submission</span></a> documentation for more information on these tags.</p></li>
+<li><p><strong>Frame Tag Padding</strong>: Determines the amount of frame padding to be added to the Start and End Frame tags.</p></li>
+<li><p><strong>Execute In Shell</strong>: If enabled, the specified argument(s) will be executed through the selected shell instead of an executable.</p></li>
+<li><p><strong>Shell to Use</strong>: Which shell to use if you are executing in a shell.</p></li>
+<li><p><strong>Start Up Folder (optional)</strong>: The folder that the executable will be started in. If left blank, the executable’s folder will be used instead.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<span id="app-command-line-plugin-config-ref-label"></span><h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the CommandLine plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the CommandLine plugin from the list on the left. To get a description of each setting,
+simply hover the mouse cursor over a setting and a tool tip will be displayed.</p>
+<a class="reference internal image-reference" href="../_images/cp_commandline.png"><img alt="../_images/cp_commandline.png" src="../_images/cp_commandline.png" style="height: 400px;" /></a>
+<p><strong>Shell Executables</strong></p>
+<p>Only applicable when using the <strong>Execute In Shell</strong> job submission option.</p>
+<ul class="simple">
+<li><p><strong>Bash Executable</strong>: The path to the Bash executable. Enter alternative paths on separate lines.</p></li>
+<li><p><strong>Csh Executable</strong>: The path to the Csh executable. Enter alternative paths on separate lines.</p></li>
+<li><p><strong>Ksh Executable</strong>: The path to the Ksh executable. Enter alternative paths on separate lines.</p></li>
+<li><p><strong>Sh Executable</strong>: The path to the Sh executable. Enter alternative paths on separate lines.</p></li>
+<li><p><strong>Tcsh Executable</strong>: The path to the Tcsh executable. Enter alternative paths on separate lines.</p></li>
+<li><p><strong>Zsh Executable</strong>: The path to the Zsh executable. Enter alternative paths on separate lines.</p></li>
+<li><p><strong>Cmd Executable</strong>: The path to the Windows CMD executable. Enter alternative paths on separate lines. Although not technically a true SHELL in Windows. This executable is available for those users wishing to execute a managed process via Windows <code class="docutils literal notranslate"><span class="pre">cmd.exe</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-command-line-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>How do I handle paths in the arguments with spaces in them?</strong></p>
+<blockquote>
+<div><p>Use double-quotes around the path. For example, “T:\projects\path with spaces\project.ext”.</p>
+</div></blockquote>
+<p><strong>Can I use my preferred SHELL on Linux / macOS?</strong></p>
+<blockquote>
+<div><p>Yes, either declare the absolute path to the shell in the command list such as: <code class="docutils literal notranslate"><span class="pre">/bin/sh</span> <span class="pre">args</span></code> or ensure the environment variable $SHELL is set correctly at execution time.</p>
+</div></blockquote>
+<p><strong>How can I report % progress of the task?</strong></p>
+<blockquote>
+<div><p>The CommandLine plugin ships with a basic StdOut handler to report progress based on StdOut from the executable you are using. You can customize this StdOut handler in the CommandLine.py plugin file to your needs or create additional ones. The default regular expression based handler expects to see StdOut with the syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Progress</span><span class="p">:</span> <span class="mi">10</span><span class="o">%</span>
+<span class="n">Progress</span><span class="p">:</span> <span class="mi">22</span><span class="o">%</span>
+<span class="n">Progress</span><span class="p">:</span> <span class="mi">33</span><span class="o">%</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Do I need to use the &lt;QUOTE&gt; tags?</strong></p>
+<blockquote>
+<div><p>These are only needed when submitting manually from the command line. When using the Monitor submitter, you can just type in the double-quote character in the Arguments field.</p>
+</div></blockquote>
+<p><strong>Can I execute (Load-Once) a bash/bat/cmd line once on each of my Deadline Workers?</strong></p>
+<blockquote>
+<div><p>Yes. Select <a class="reference internal" href="manual-submission.html#maintenance-jobs-ref-label"><span class="std std-ref">Maintenance</span></a> as the Job Type.</p>
+</div></blockquote>
+<p><strong>Is a file extension required for the executable in Windows OS based Command Line jobs?</strong></p>
+<blockquote>
+<div><p>Yes. Ensure you enter a full, valid file path to the executable you wish to use. For example; <code class="docutils literal notranslate"><span class="pre">c:\python310\python</span></code> will fail, but <code class="docutils literal notranslate"><span class="pre">c:\python310\python.exe</span></code> will work on Windows OS.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Command Line</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-combustion.html"
+                        title="previous chapter">Combustion</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-command-script.html"
+                        title="next chapter">Command Script</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-command-script.html" title="Command Script"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-combustion.html" title="Combustion"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Command Line</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

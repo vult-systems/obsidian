@@ -1,0 +1,976 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scripting - Command Arguments &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="System Functions and Dialogs - Command Arguments" href="command-line-arguments-system.html" />
+    <link rel="prev" title="Path and Drive Mapping - Command Arguments" href="command-line-arguments-pathmapping.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command-line-arguments-system.html" title="System Functions and Dialogs - Command Arguments"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="command-line-arguments-pathmapping.html" title="Path and Drive Mapping - Command Arguments"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" accesskey="U">Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Scripting - Command Arguments</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="scripting-command-arguments">
+<span id="command-arguments-scripting"></span><h1>Scripting - Command Arguments<a class="headerlink" href="#scripting-command-arguments" title="Permalink to this headline">¶</a></h1>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td colspan="2"><p><a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">Command Overview</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-repo.html#command-arguments-repo"><span class="std std-ref">Database and Repository</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-clients.html#command-arguments-clients"><span class="std std-ref">Clients and Logs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-workers.html#command-arguments-workers"><span class="std std-ref">Workers</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="command-line-arguments-jobs.html#command-arguments-jobs"><span class="std std-ref">Jobs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-tasks.html#command-arguments-tasks"><span class="std std-ref">Tasks</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-pools-groups.html#command-arguments-pools"><span class="std std-ref">Pools, Groups, and Limits</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-users.html#command-arguments-users"><span class="std std-ref">Users and User Groups</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-pathmapping.html#command-arguments-pathmapping"><span class="std std-ref">Path and Drive Mapping</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="command-line-arguments-cloud.html#command-arguments-cloud"><span class="std std-ref">AWS Portal and Cloud</span></a></p></td>
+<td><p><a class="reference internal" href="#command-arguments-scripting"><span class="std std-ref">Scripting</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-system.html#command-arguments-system"><span class="std std-ref">System Functions and Dialogs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-housekeeping.html#command-arguments-housekeeping"><span class="std std-ref">Scans, History, and Reports</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-version.html#command-arguments-version"><span class="std std-ref">Version and Help</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#interactive-mode" id="id2">Interactive Mode</a></p>
+<ul>
+<li><p><a class="reference internal" href="#prompt" id="id3">Prompt</a></p></li>
+<li><p><a class="reference internal" href="#setprompttimeout" id="id4">SetPromptTimeOut</a></p></li>
+<li><p><a class="reference internal" href="#exit" id="id5">Exit</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#execute-scripts" id="id6">Execute Scripts</a></p>
+<ul>
+<li><p><a class="reference internal" href="#executescript" id="id7">ExecuteScript</a></p></li>
+<li><p><a class="reference internal" href="#executescriptnogui" id="id8">ExecuteScriptNoGui</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#python" id="id9">Python</a></p>
+<ul>
+<li><p><a class="reference internal" href="#populatepythonsync" id="id10">PopulatePythonSync</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#json" id="id11">JSON</a></p>
+<ul>
+<li><p><a class="reference internal" href="#json-dlc-ref-label" id="id12">Json</a></p></li>
+<li><p><a class="reference internal" href="#prettyjson" id="id13">PrettyJson</a></p></li>
+<li><p><a class="reference internal" href="#nojson" id="id14">NoJson</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#run-commands" id="id15">Run Commands</a></p>
+<ul>
+<li><p><a class="reference internal" href="#runcommandforrepository" id="id16">RunCommandForRepository</a></p></li>
+<li><p><a class="reference internal" href="#sendemail" id="id17">SendEmail</a></p></li>
+<li><p><a class="reference internal" href="#sendpopupmessage" id="id18">SendPopupMessage</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#plugins" id="id19">Plugins</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getpluginnames" id="id20">GetPluginNames</a></p></li>
+<li><p><a class="reference internal" href="#initapplicationplugins" id="id21">InitApplicationPlugins</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#event-plugins" id="id22">Event Plugins</a></p>
+<ul>
+<li><p><a class="reference internal" href="#geteventpluginnames" id="id23">GetEventPluginNames</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#frame-ranges-and-lists" id="id24">Frame Ranges and Lists</a></p>
+<ul>
+<li><p><a class="reference internal" href="#appendjobframerange" id="id25">AppendJobFrameRange</a></p></li>
+<li><p><a class="reference internal" href="#parseframelist" id="id26">ParseFrameList</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="interactive-mode">
+<h2><a class="toc-backref" href="#contents">Interactive Mode</a><a class="headerlink" href="#interactive-mode" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="prompt">
+<span id="prompt-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">Prompt</a><a class="headerlink" href="#prompt" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Turns on the Interactive Deadline Command mode.</p>
+<p>After that, you can enter any commands interactively without invoking deadlinecommand on each line.</p>
+<p>To exit Interactive Mode, either</p>
+<ul class="simple">
+<li><p>Enter <code class="docutils literal notranslate"><span class="pre">Exit</span></code> or <code class="docutils literal notranslate"><span class="pre">Quit</span></code>,</p></li>
+<li><p>Press <strong>CTRL+C</strong>,</p></li>
+<li><p>Or if the Promt Time Out was set via <code class="docutils literal notranslate"><span class="pre">-SetPromptTimeOut</span></code>, wait for the Promt to time out.</p></li>
+</ul>
+<p>If a command is not recognized, the message “Not a valid command.” will be printed.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -Prompt</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -Prompt
+Pools
+    none
+    2d
+    3d
+    mayaarnold
+    mayars
+    projecta
+    projectb
+    test
+    vray
+Groups
+    none
+    3dsmax
+    ae
+    anothergroup
+    arnold
+    c3
+    c5test
+    draft
+    m5large
+    m5mid
+    m5small
+    maya
+    newgroup
+    redshift
+Exit
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="setprompttimeout">
+<span id="setprompttimeout-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetPromptTimeOut</a><a class="headerlink" href="#setprompttimeout" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>If set to a value other than -1, this is the number of milliseconds before Deadline Command will automatically exit while in interactive mode.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetPromptTimeOut</strong> &lt;value&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;value&gt;</p></td>
+<td><p>Prompt Timeout value in milliseconds, or -1 to disable.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="exit">
+<span id="exit-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">Exit</a><a class="headerlink" href="#exit" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Exits Deadline Interactive mode.</p>
+<p><strong>Aliases:</strong> <code class="docutils literal notranslate"><span class="pre">Exit</span></code>, <code class="docutils literal notranslate"><span class="pre">Quit</span></code></p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -Exit</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>deadlinecommand -Quit</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="execute-scripts">
+<h2><a class="toc-backref" href="#contents">Execute Scripts</a><a class="headerlink" href="#execute-scripts" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="executescript">
+<span id="executescript-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">ExecuteScript</a><a class="headerlink" href="#executescript" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Executes the Python script.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -ExecuteScript</strong> &lt;Filename&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Filename&gt;</p></td>
+<td><p>The path to a Python script file</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="executescriptnogui">
+<span id="executescriptnogui-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">ExecuteScriptNoGui</a><a class="headerlink" href="#executescriptnogui" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Executes the Python script without importing any GUI elements.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -ExecuteScriptNoGui</strong> &lt;Filename&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Filename&gt;</p></td>
+<td><p>The path to a Python script file</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="python">
+<h2><a class="toc-backref" href="#contents">Python</a><a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="populatepythonsync">
+<span id="populatepythonsync-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">PopulatePythonSync</a><a class="headerlink" href="#populatepythonsync" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Adds the PythonSync zip to the user folder in the appropriate place.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -PopulatePythonSync</strong> &lt;PopulatePythonSync&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;PopulatePythonSync&gt;</p></td>
+<td><p>The path to the PythonSync.zip.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="json">
+<h2><a class="toc-backref" href="#contents">JSON</a><a class="headerlink" href="#json" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="json-dlc-ref-label">
+<span id="id1"></span><h3><a class="toc-backref" href="#contents">Json</a><a class="headerlink" href="#json-dlc-ref-label" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Turn on output as JSON format.</p>
+<ul class="simple">
+<li><p>A following command in the same command line call will output in JSON format.</p></li>
+<li><p>If running in Interactive Mode using -Prompt, any following commands will format their output as JSON.</p></li>
+</ul>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -Json</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -Json -Pools
+{&quot;ok&quot;:true,&quot;result&quot;:[&quot;none&quot;,&quot;2d&quot;,&quot;3d&quot;,&quot;mayaarnold&quot;,&quot;mayars&quot;,&quot;projecta&quot;,&quot;projectb&quot;,&quot;test&quot;,&quot;vray&quot;]}
+</pre></div>
+</div>
+</div>
+<div class="section" id="prettyjson">
+<span id="prettyjson-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">PrettyJson</a><a class="headerlink" href="#prettyjson" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Turns on output as Pretty JSON with new lines and indentations.</p>
+<ul class="simple">
+<li><p>A following command in the same command line call will output in JSON format.</p></li>
+<li><p>If running in Interactive Mode using -Prompt, any following commands will format their output as JSON.</p></li>
+</ul>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -PrettyJson</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -PrettyJson -Pools
+{
+  &quot;ok&quot;: true,
+  &quot;result&quot;: [
+    &quot;none&quot;,
+    &quot;2d&quot;,
+    &quot;3d&quot;,
+    &quot;mayaarnold&quot;,
+    &quot;mayars&quot;,
+    &quot;projecta&quot;,
+    &quot;projectb&quot;,
+    &quot;test&quot;,
+    &quot;vray&quot;
+  ]
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="nojson">
+<span id="nojson-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">NoJson</a><a class="headerlink" href="#nojson" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Turns off output as JSON. Following commands will switch back to standard output format.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -NoJson</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -Prompt
+Pools
+    none
+    2d
+    3d
+    mayaarnold
+    mayars
+    projecta
+    projectb
+    test
+    vray
+Json
+Pools
+    {&quot;ok&quot;:true,&quot;result&quot;:[&quot;none&quot;,&quot;2d&quot;,&quot;3d&quot;,&quot;mayaarnold&quot;,&quot;mayars&quot;,&quot;projecta&quot;,&quot;projectb&quot;,&quot;test&quot;,&quot;vray&quot;]}
+NoJson
+Pools
+    none
+    2d
+    3d
+    mayaarnold
+    mayars
+    projecta
+    projectb
+    test
+    vray
+Exit
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="run-commands">
+<h2><a class="toc-backref" href="#contents">Run Commands</a><a class="headerlink" href="#run-commands" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="runcommandforrepository">
+<span id="runcommandforrepository-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">RunCommandForRepository</a><a class="headerlink" href="#runcommandforrepository" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Runs the given command on a given repository.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -RunCommandForRepository</strong>  &lt;Connection Type&gt; &lt;Connection String&gt; &lt;Command&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Connection Type&gt;</p></td>
+<td><p>The Connection type can be ‘Direct’ or ‘Proxy’</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Connection String&gt;</p></td>
+<td><p>Path to the repository root or the URL of a proxy repository.</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Command&gt;</p></td>
+<td><p>The command to execute followed by any additional arguments.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="sendemail">
+<span id="sendemail-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SendEmail</a><a class="headerlink" href="#sendemail" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Sends an email.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SendEmail</strong>  &lt;to &lt;Email&gt;&gt; &lt;subject &lt;Subject&gt;&gt; &lt;message &lt;Message&gt;&gt; [&lt;cc &lt;Email&gt;&gt;] [&lt;attach &lt;Attachment&gt;&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;to &lt;Email&gt;&gt;</p></td>
+<td><p>TO email address</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;subject &lt;Subject&gt;&gt;</p></td>
+<td><p>The subject</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;message &lt;Message&gt;&gt;</p></td>
+<td><p>The message, or the path to the file that contains the message</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;cc &lt;Email&gt;&gt;</p></td>
+<td><p>CC email address (optional)</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;attach &lt;Attachment&gt;&gt;</p></td>
+<td><p>Attachment file (optional)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="sendpopupmessage">
+<span id="sendpopupmessage-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SendPopupMessage</a><a class="headerlink" href="#sendpopupmessage" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Sends a popup message to the Deadline Launcher running on the specified machine(s).</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SendPopupMessage</strong>  &lt;Machine Name(s)&gt; &lt;Message&gt; [&lt;Delete Message File&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Machine Name(s)&gt;</p></td>
+<td><p>The machine name, or a list of machine names separated by commas.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Message&gt;</p></td>
+<td><p>The message to send. This can be a string, or a path to a file that contains a message.</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Delete Message File&gt;</p></td>
+<td><p>(optional) If the message is stored in a file, specify ‘true’ to delete the file after the window is closed.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SendPopupMessage hpz-1234567890 &quot;Hello Dolly!&quot;
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="command-line-arguments-system.html#popupmessage-dlc-ref-label"><span class="std std-ref">PopupMessage</span></a></p>
+</div>
+</div>
+</div>
+<div class="section" id="plugins">
+<h2><a class="toc-backref" href="#contents">Plugins</a><a class="headerlink" href="#plugins" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getpluginnames">
+<span id="getpluginnames-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetPluginNames</a><a class="headerlink" href="#getpluginnames" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays all plugin names.</p>
+<p><strong>Aliases:</strong> <code class="docutils literal notranslate"><span class="pre">GetPluginNames</span></code>, <code class="docutils literal notranslate"><span class="pre">Plugins</span></code></p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetPluginNames</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>deadlinecommand -Plugins</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="initapplicationplugins">
+<span id="initapplicationplugins-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">InitApplicationPlugins</a><a class="headerlink" href="#initapplicationplugins" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Initializes the specified application plugins. This will set their state to disabled if they do not already exist in the database.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -InitApplicationPlugins</strong> &lt;Plugin/s&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Plugin/s&gt;</p></td>
+<td><p>A list of one or more application plugins to initialize. This will not disable plugins that already have a valid setting for state.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="event-plugins">
+<h2><a class="toc-backref" href="#contents">Event Plugins</a><a class="headerlink" href="#event-plugins" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="geteventpluginnames">
+<span id="geteventpluginnames-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetEventPluginNames</a><a class="headerlink" href="#geteventpluginnames" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays all event plugin names.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetEventPluginNames</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="frame-ranges-and-lists">
+<h2><a class="toc-backref" href="#contents">Frame Ranges and Lists</a><a class="headerlink" href="#frame-ranges-and-lists" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="appendjobframerange">
+<span id="appendjobframerange-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">AppendJobFrameRange</a><a class="headerlink" href="#appendjobframerange" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Appends to the Job’s existing frame range.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -AppendJobFrameRange</strong> &lt;Job ID(s)&gt; &lt;Frame List&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Job ID(s)&gt;</p></td>
+<td><p>The Job ID, or a list of Job IDs separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Frame List&gt;</p></td>
+<td><p>The additional frames to append</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="parseframelist">
+<span id="parseframelist-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">ParseFrameList</a><a class="headerlink" href="#parseframelist" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Parses a frame list.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -ParseFrameList</strong> &lt;frame list&gt; [&lt;combine frames&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;frame list&gt;</p></td>
+<td><p>The list of frames to parse</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;combine frames&gt;</p></td>
+<td><p>If subsequent frames should be combined (optional, defaults to True)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -ParseFrameList
+    Error: no frame list specified
+
+C:\&gt;deadlinecommand -ParseFrameList 1,2,5,6,7,10
+    1-2,5-7,10
+
+C:\&gt;deadlinecommand -ParseFrameList 1-10 false
+    1,2,3,4,5,6,7,8,9,10
+
+C:\&gt;deadlinecommand -ParseFrameList 1-100x5
+    1,6,11,16,21,26,31,36,41,46,51,56,61,66,71,76,81,86,91,96
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Scripting - Command Arguments</a><ul>
+<li><a class="reference internal" href="#interactive-mode">Interactive Mode</a><ul>
+<li><a class="reference internal" href="#prompt">Prompt</a></li>
+<li><a class="reference internal" href="#setprompttimeout">SetPromptTimeOut</a></li>
+<li><a class="reference internal" href="#exit">Exit</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#execute-scripts">Execute Scripts</a><ul>
+<li><a class="reference internal" href="#executescript">ExecuteScript</a></li>
+<li><a class="reference internal" href="#executescriptnogui">ExecuteScriptNoGui</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#python">Python</a><ul>
+<li><a class="reference internal" href="#populatepythonsync">PopulatePythonSync</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#json">JSON</a><ul>
+<li><a class="reference internal" href="#json-dlc-ref-label">Json</a></li>
+<li><a class="reference internal" href="#prettyjson">PrettyJson</a></li>
+<li><a class="reference internal" href="#nojson">NoJson</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#run-commands">Run Commands</a><ul>
+<li><a class="reference internal" href="#runcommandforrepository">RunCommandForRepository</a></li>
+<li><a class="reference internal" href="#sendemail">SendEmail</a></li>
+<li><a class="reference internal" href="#sendpopupmessage">SendPopupMessage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugins">Plugins</a><ul>
+<li><a class="reference internal" href="#getpluginnames">GetPluginNames</a></li>
+<li><a class="reference internal" href="#initapplicationplugins">InitApplicationPlugins</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#event-plugins">Event Plugins</a><ul>
+<li><a class="reference internal" href="#geteventpluginnames">GetEventPluginNames</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#frame-ranges-and-lists">Frame Ranges and Lists</a><ul>
+<li><a class="reference internal" href="#appendjobframerange">AppendJobFrameRange</a></li>
+<li><a class="reference internal" href="#parseframelist">ParseFrameList</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="command-line-arguments-pathmapping.html"
+                        title="previous chapter">Path and Drive Mapping - Command Arguments</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="command-line-arguments-system.html"
+                        title="next chapter">System Functions and Dialogs - Command Arguments</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command-line-arguments-system.html" title="System Functions and Dialogs - Command Arguments"
+             >next</a></li>
+        <li class="right" >
+          <a href="command-line-arguments-pathmapping.html" title="Path and Drive Mapping - Command Arguments"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" >Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Scripting - Command Arguments</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

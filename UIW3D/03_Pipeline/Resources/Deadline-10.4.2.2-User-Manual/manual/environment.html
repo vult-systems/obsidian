@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Render Environment &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Plugin Sandboxing" href="plugin-sandboxing.html" />
+    <link rel="prev" title="Auto Configuration" href="auto-config.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="plugin-sandboxing.html" title="Plugin Sandboxing"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="auto-config.html" title="Auto Configuration"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" accesskey="U">Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Render Environment</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="render-environment">
+<span id="environment-ref-label"></span><h1>Render Environment<a class="headerlink" href="#render-environment" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-environment-variables">
+<h2>Job Environment Variables<a class="headerlink" href="#job-environment-variables" title="Permalink to this headline">¶</a></h2>
+<p>Environment variables can be set for a job, and these variables will be applied to the rendering process’ environment. These variables can be set in the <a class="reference internal" href="job-controlling.html#job-controlling-enviro-ref-label"><span class="std std-ref">Job Properties</span></a> in the Monitor, and they can be set during <a class="reference internal" href="manual-submission.html#manual-submission-enviro-ref-label"><span class="std std-ref">Manual Job Submission</span></a>.</p>
+<div class="section" id="manual-job-submission">
+<h3>Manual Job Submission<a class="headerlink" href="#manual-job-submission" title="Permalink to this headline">¶</a></h3>
+<p>For manual job submission, these variables can be specified in the job info file like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">EnvironmentKeyValue0</span><span class="o">=</span><span class="n">mykey</span><span class="o">=</span><span class="n">myvalue</span>
+<span class="n">EnvironmentKeyValue1</span><span class="o">=</span><span class="n">anotherkey</span><span class="o">=</span><span class="n">anothervalue</span>
+<span class="n">EnvironmentKeyValue2</span><span class="o">=</span><span class="n">athirdkey</span><span class="o">=</span><span class="n">athirdvalue</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>There is also an IncludeEnvironment option that takes either True or False (False is the default). When IncludeEnvironment is set to True, Deadline will automatically grab all the environment variables
+from the submitter’s environment and set them as the job’s environment variables.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IncludeEnvironment</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>This can be used in conjunction with the EnvironmentKeyValue# options above, but note that the EnvironmentKeyValue# options will take precedence over any current environment variables with the same name.</p>
+<p>Finally, there is a UseJobEnvironmentOnly option that takes either True or False (False is the default):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">UseJobEnvironmentOnly</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>The UseJobEnvironmentOnly setting controls how the job’s environment variables are applied to the rendering environment. If True, ONLY the job’s environment variables will be used. If False, the job’s
+environment variables will be merged with the Worker’s current environment, with the job’s variables overwriting any existing ones with the same name.</p>
+</div>
+<div class="section" id="job-rendering">
+<h3>Job Rendering<a class="headerlink" href="#job-rendering" title="Permalink to this headline">¶</a></h3>
+<p>At render time, the job’s environment variables are applied to the rendering process. As explained above, the job’s environment can either be merged with the Worker’s current environment, or the job’s environment
+can be used exclusively.</p>
+<p>Note though that if the job’s plugin defines any environment variables, those will take precedence over any job environment variables with the same name. In a job’s plugin, there are
+two functions that are available for the DeadlinePlugin object that can be used to set environment variables:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">SetProcessEnvironmentVariable(</span> <span class="pre">key,</span> <span class="pre">value</span> <span class="pre">)</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>This should be used in Advanced plugins only.</p></li>
+<li><p>Any variables set by this function are applied to all process launched through Deadline’s plugin API.</p></li>
+<li><p>Note that calling SetProcessEnvironmentVariable in Simple plugins or within ManagedProcess callbacks will not affect the current process’ environment.</p></li>
+<li><p>When using SetProcessEnvironmentVariable in an Advanced plugin, make sure to call it outside of the ManagedProcess callbacks.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SetEnvironmentVariable(</span> <span class="pre">key,</span> <span class="pre">value</span> <span class="pre">)</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>This is typically used in Simple plugins, or within ManagedProcess callbacks in Advanced plugins.</p></li>
+<li><p>Any variables set by this function are only applied to the process they are starting up, and they take precedence over any variables set by SetProcessEnvironmentVariable.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>See the <a class="reference internal" href="application-plugins.html#application-plugins-ref-label"><span class="std std-ref">Application Plugins</span></a> documentation for more information.</p>
+</div>
+<div class="section" id="path-mapping">
+<span id="environment-path-mapping-ref-label"></span><h3>Path Mapping<a class="headerlink" href="#path-mapping" title="Permalink to this headline">¶</a></h3>
+<p>Environment variables in Deadline are <strong>NOT</strong> automatically path mapped as it is normal for env vars to be platform specific. However, if this is desired behaviour, you can intercept the environment variable and path map using a <a class="reference internal" href="application-plugins.html#application-plugins-jobpreload-script-ref-label"><span class="std std-ref">JobPreLoad.py</span></a> script which executes in front of the app plugin script. Alternatively, it can be executed for ALL jobs (any app plugins) if you use a <a class="reference internal" href="application-plugins.html#application-plugins-globaljobpreload-script-ref-label"><span class="std std-ref">GlobalJobPreLoad.py</span></a> script. It is important to control any environment variables using these py script entry points as the app plugin might need to ‘see’ these environment variables prior to launching. Here is an example where we need to query an already existing machine based environment variable and path map this env var and set the result accordingly to the render process without affecting the original machine environment variable:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">Deadline.Scripting</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="k">def</span> <span class="nf">__main__</span><span class="p">(</span><span class="n">deadlinePlugin</span><span class="p">):</span>
+    <span class="n">incomingEnvVar</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;MY_ENV_VAR&quot;</span><span class="p">]</span>
+    <span class="n">convertedEnvVar</span> <span class="o">=</span> <span class="n">RepositoryUtils</span><span class="o">.</span><span class="n">CheckPathMapping</span><span class="p">(</span><span class="n">incomingEnvVar</span><span class="p">)</span>
+    <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">SetProcessEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;MY_ENV_VAR&quot;</span><span class="p">,</span> <span class="n">convertedEnvVar</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you are already including the env var within the submitted job in Deadline (instead of it being on the system already), then retrieve this env var using the job properties:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">Deadline.Scripting</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="k">def</span> <span class="nf">__main__</span><span class="p">(</span><span class="n">deadlinePlugin</span><span class="p">):</span>
+    <span class="n">job</span> <span class="o">=</span> <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">GetJob</span><span class="p">()</span>
+    <span class="n">incomingEnvVar</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">GetJobEnvironmentKeyValue</span><span class="p">(</span><span class="s2">&quot;MY_ENV_VAR&quot;</span><span class="p">)</span>
+    <span class="n">convertedEnvVar</span> <span class="o">=</span> <span class="n">RepositoryUtils</span><span class="o">.</span><span class="n">CheckPathMapping</span><span class="p">(</span><span class="n">incomingEnvVar</span><span class="p">)</span>
+    <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">SetProcessEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;MY_ENV_VAR&quot;</span><span class="p">,</span> <span class="n">convertedEnvVar</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="render-jobs-as-job-s-user">
+<span id="environment-render-as-user-ref-label"></span><h2>Render Jobs As Job’s User<a class="headerlink" href="#render-jobs-as-job-s-user" title="Permalink to this headline">¶</a></h2>
+<p>Deadline has some features that allow jobs to be rendered with the the job’s user account, rather than the user account that the Worker is running as.</p>
+<ul class="simple">
+<li><p>On Windows, this is done by using the job’s user account credentials to start the rendering process using that account.</p></li>
+<li><p>On Linux and macOS, the Worker must be running as root. It will then use “su” or sudo” to start the rendering process using the job’s user account, depending on your <a class="reference internal" href="repository-config.html#user-settings-repository-options-ref-label"><span class="std std-ref">Repository Options</span></a>. Additionally, there is an option “Preserve Environment On Linux and macOS” to preserve the current environment (ie: the Worker’s current environment). When it is disabled, su or sudo will start with a clean environment. This setting is ignored on Windows, and is ignored on macOS when using ‘su’ instead of ‘sudo’. Note that when this option is disabled, any environment variables that are set for the process by the render plugin are ignored because su or sudo will reset the environment.</p></li>
+</ul>
+<p>The following process environment variables will be present when a program or process is invoked as the job’s user account:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">DEADLINE_USER</span></code>: The job’s user name.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DEADLINE_BIN</span></code>: The directory of the executable.</p></li>
+</ul>
+<div class="section" id="enabling-render-jobs-as-user">
+<h3>Enabling Render Jobs As User<a class="headerlink" href="#enabling-render-jobs-as-user" title="Permalink to this headline">¶</a></h3>
+<p>To render jobs as the job’s user, you must enable Render Jobs As User in the User Settings section of the Repository Options <a class="reference internal" href="repository-config.html#user-settings-repository-options-ref-label"><span class="std std-ref">Repository Options</span></a>. Note that this setting affects all jobs, and requires users to ensure that their User Account Settings are configured properly (see below).</p>
+<a class="reference internal image-reference" href="../_images/cro_user_settings.png"><img alt="../_images/cro_user_settings.png" src="../_images/cro_user_settings.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="preserving-specific-environment-variables-with-sudo">
+<span id="environment-preservation"></span><h3>Preserving Specific Environment Variables with Sudo<a class="headerlink" href="#preserving-specific-environment-variables-with-sudo" title="Permalink to this headline">¶</a></h3>
+<p>Certain applications require preservation of specific environment variables to function properly. As an example, Deadline’s Draft requires three variables to persist at render time. The <cite>sudo</cite> command can preserve these variables when Deadline is running as a user once the ‘/etc/sudoers’ file as been configured correctly.</p>
+<p>Since a badly configured ‘sudoers’ file can lock you out of some systems permanently, edit the file with <cite>visudo</cite> on the command line. It should use the <cite>nano</cite> text editor on most modern distributions. This will do a sanity check before making changes to the actual ‘sudoers’ file so that a typo won’t disable administrative access.</p>
+<p>To add variables, list them one at a time as ‘Defaults’ directives in the file like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Defaults</span>        <span class="n">env_keep</span> <span class="o">+=</span> <span class="s2">&quot;PYTHONPATH&quot;</span>
+<span class="n">Defaults</span>        <span class="n">env_keep</span> <span class="o">+=</span> <span class="s2">&quot;MAGICK_CONFIGURE_PATH&quot;</span>
+<span class="n">Defaults</span>        <span class="n">env_keep</span> <span class="o">+=</span> <span class="s2">&quot;LD_LIBRARY_PATH&quot;</span>
+</pre></div>
+</div>
+<p>As many lines as are needed can be added here, so be sure to add as many variables as are needed. They should include everything across all the applications that will be used with Deadline.</p>
+</div>
+<div class="section" id="user-account-settings">
+<h3>User Account Settings<a class="headerlink" href="#user-account-settings" title="Permalink to this headline">¶</a></h3>
+<p>The user account settings used to start the rendering process are stored in the <a class="reference internal" href="user-settings.html#user-settings-us-ref-label"><span class="std std-ref">User Settings</span></a> for each user. For Linux and macOS, only the User Name is required. For Windows, the Domain and Password must also be provided for authentication.</p>
+<a class="reference internal image-reference" href="../_images/user_settings.png"><img alt="../_images/user_settings.png" src="../_images/user_settings.png" style="height: 500px;" /></a>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Render Environment</a><ul>
+<li><a class="reference internal" href="#job-environment-variables">Job Environment Variables</a><ul>
+<li><a class="reference internal" href="#manual-job-submission">Manual Job Submission</a></li>
+<li><a class="reference internal" href="#job-rendering">Job Rendering</a></li>
+<li><a class="reference internal" href="#path-mapping">Path Mapping</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#render-jobs-as-job-s-user">Render Jobs As Job’s User</a><ul>
+<li><a class="reference internal" href="#enabling-render-jobs-as-user">Enabling Render Jobs As User</a></li>
+<li><a class="reference internal" href="#preserving-specific-environment-variables-with-sudo">Preserving Specific Environment Variables with Sudo</a></li>
+<li><a class="reference internal" href="#user-account-settings">User Account Settings</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="auto-config.html"
+                        title="previous chapter">Auto Configuration</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="plugin-sandboxing.html"
+                        title="next chapter">Plugin Sandboxing</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="plugin-sandboxing.html" title="Plugin Sandboxing"
+             >next</a></li>
+        <li class="right" >
+          <a href="auto-config.html" title="Auto Configuration"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" >Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Render Environment</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

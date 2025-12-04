@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AWS Portal Component Overview &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="AWS Portal Setup Checklist" href="aws-portal-setup-checklist.html" />
+    <link rel="prev" title="Supported Software" href="aws-portal-supported-software.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-setup-checklist.html" title="AWS Portal Setup Checklist"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="aws-portal-supported-software.html" title="Supported Software"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWS Portal Component Overview</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<div class="section" id="aws-portal-component-overview">
+<span id="aws-portal-setup-components-overview-ref-label"></span><h1>AWS Portal Component Overview<a class="headerlink" href="#aws-portal-component-overview" title="Permalink to this headline">¶</a></h1>
+<p>AWS Portal has several components which must be set up and configured before using the service.
+This section will provide a brief overview of each of these.</p>
+<img alt="../_images/AssetTransferSystem.png" src="../_images/AssetTransferSystem.png" />
+<p><a class="reference external" href="https://www.youtube.com/watch?v=niaQ1OWimoI">See video of setting up AWS Portal here</a>.</p>
+<div class="section" id="asset-server">
+<span id="aws-portal-setup-components-overview-asset-server-ref-label"></span><h2>Asset Server<a class="headerlink" href="#asset-server" title="Permalink to this headline">¶</a></h2>
+<p>The AWS Portal Asset Server (or simply Asset Server) solves the problem of transferring asset files between your local file server and AWS.
+It is a piece of server software that must be run on your local network.
+When an asset file on your file server is needed by a Worker running in AWS,
+the Asset Server will upload that file to a cache in AWS so Workers running in AWS can then easily download it.
+When a Worker in AWS saves an output file, the Worker will upload it to the cache, and the Asset Server will download the output file to your local file server.
+This process happens automatically once you’ve installed the required software, so you will not need to transfer files to and from AWS manually.</p>
+</div>
+<div class="section" id="portal-link">
+<span id="aws-portal-setup-components-overview-portal-link-ref-label"></span><h2>Portal Link<a class="headerlink" href="#portal-link" title="Permalink to this headline">¶</a></h2>
+<p>AWS Portal Link is another piece of server software which runs on a machine in your own network.
+It allows secure communication between components of AWS Portal which run on your own network, and components which run in AWS.
+It does this by establishing secure SSH tunnels between the machine in your network that is running it,
+and an EC2 instance called a Gateway which is part of the AWS Portal Infrastructure.
+Typically an administrator would install it with the Asset Server on the same machine.</p>
+</div>
+<div class="section" id="remote-connection-server-rcs">
+<span id="aws-portal-setup-components-overview-rcs-ref-label"></span><h2>Remote Connection Server (RCS)<a class="headerlink" href="#remote-connection-server-rcs" title="Permalink to this headline">¶</a></h2>
+<p>The Deadline Remote Connection Server allows components of the Deadline Client (Monitor, Worker, etc.) to communicate with a Deadline repository
+that is not directly accessible by the machine running the client. This is required for components of AWS Portal that run in AWS to access the Deadline Repository on your network.
+The RCS is installed as part of the Deadline Client. The RCS does not start automatically by default, so it needs to be started before you can use AWS Portal.</p>
+<p>More information about the Deadline Remote Connection Server can be found <a class="reference internal" href="remote-connection-server.html#remote-connection-server-ref-label"><span class="std std-ref">here</span></a>.</p>
+</div>
+<div class="section" id="usage-based-licensing">
+<span id="aws-portal-setup-components-overview-ubl-ref-label"></span><h2>Usage-Based Licensing<a class="headerlink" href="#usage-based-licensing" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Topics covered in this section refer to legacy Thinkbox usage-based licensing (UBL), which is deprecated. The UBL feature in Deadline 10 is now available through <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> UBL. For detailed setup instructions, please see the <a class="reference internal" href="licensing-usage-based.html#licensing-usage-based-ref-label"><span class="std std-ref">Deadline Cloud UBL Documentation</span></a>.</p>
+<p>You can continue to use your existing purchases until September 30, 2025. For more details, please refer to <a class="reference external" href="https://marketplace.thinkboxsoftware.com/faq">this FAQ</a>. For any questions about existing UBL purchases, please reach out to: <a class="reference external" href="mailto:thinkbox-sales&#37;&#52;&#48;amazon&#46;com">thinkbox-sales<span>&#64;</span>amazon<span>&#46;</span>com</a>.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Topics covered in this page refer to legacy Thinkbox usage-based licensing (UBL), which is no longer available as of September 30, 2025. The UBL feature in Deadline 10 is now available via the new Deadline Cloud UBL. For detailed instructions, please see the <a class="reference internal" href="licensing-usage-based.html#licensing-usage-based-ref-label"><span class="std std-ref">Deadline Cloud UBL Documentation</span></a>.</p>
+<p>For more details, please refer to <a class="reference external" href="https://marketplace.thinkboxsoftware.com/">the marketplace website</a>.</p>
+</div>
+<p>Thinkbox has established a third-party licensing model with our partners that permits our customers to use their rendering software in AWS.
+The third-party licensing model is based on usage time.
+You can use the <a class="reference external" href="https://marketplace.thinkboxsoftware.com/">Thinkbox Marketplace</a> to purchase hourly credits for the various rendering software you use.
+The first time you purchase credits, a Cloud Licensing server will be created for you which you can connect to Deadline.
+Once properly configured in Deadline, AWS Portal Workers can use these licensing credits instead of floating licenses.</p>
+</div>
+<div class="section" id="bring-your-own-license">
+<span id="aws-portal-setup-components-overview-byol-ref-label"></span><h2>Bring Your Own License<a class="headerlink" href="#bring-your-own-license" title="Permalink to this headline">¶</a></h2>
+<p>You may already have all the licenses you need for the software you’d like to use. If this is the case, AWS Portal has a feature called Bring Your Own License (BYOL)
+which allows you to use your existing floating licenses from your existing license servers. AWS Portal also supports a dynamic licensing model which allows you to use
+some of your own licenses through BYOL and some usage-based licenses as well.</p>
+</div>
+<div class="section" id="infrastructures">
+<span id="aws-portal-setup-components-overview-infrastructures-ref-label"></span><h2>Infrastructures<a class="headerlink" href="#infrastructures" title="Permalink to this headline">¶</a></h2>
+<p>An Infrastructure is a set of components that must be launched in AWS through Deadline before any Worker instances can be started.
+An EC2 instance called a Gateway is the most significant part of the infrastructure.
+The Gateway supports the Worker instances by receiving and forwarding all communication between the Worker instances and on-premises components
+of AWS Portal like the Deadline Repository and the Asset Server.
+The Gateway also keeps track of which Asset Files have already been cached in AWS.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You will be billed for the time you leave your infrastructure running, even when you are not rendering.
+If you are not rendering with AWS Portal constantly, you should consider stopping your infrastructure while you are not using it.</p>
+</div>
+</div>
+<div class="section" id="spot-fleets">
+<span id="aws-portal-setup-components-overview-spot-fleets-ref-label"></span><h2>Spot Fleets<a class="headerlink" href="#spot-fleets" title="Permalink to this headline">¶</a></h2>
+<p>EC2 Spot is a cheaper way for users to buy compute time in AWS.
+Users can buy unused AWS compute capacity at a fraction of the cost you would otherwise be paying.
+One stipulation is that the unused capacity that you are using may later be claimed by other AWS users launching on-demand EC2 instances, and you will be booted off.
+While this can happen, it’s unlikely.</p>
+<p>AWS Portal uses EC2 Spot for all render nodes to take advantage of the work that has been done in Deadline to resume interrupted jobs and renders.
+When you want to render, you can create a Spot Fleet, which is a request for a specific number of spot instances of a given type,
+as well as the maximum price you would be willing to pay for an hour of time, per-instance. Once you’ve started an infrastructure,
+you can easily create spot fleets from within the Deadline Monitor.</p>
+<p>More information on EC2 Spot can be found <a class="reference external" href="https://aws.amazon.com/ec2/spot/">here</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You will be billed for spot fleets that you leave running, even if the Deadline Workers running on them are not rendering.</p>
+</div>
+<p><a class="reference internal" href="aws-portal-setup-checklist.html#aws-portal-setup-checklist-ref-label"><span class="std std-ref">Next: AWS Portal Setup Checklist &gt;&gt;</span></a></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">AWS Portal Component Overview</a><ul>
+<li><a class="reference internal" href="#asset-server">Asset Server</a></li>
+<li><a class="reference internal" href="#portal-link">Portal Link</a></li>
+<li><a class="reference internal" href="#remote-connection-server-rcs">Remote Connection Server (RCS)</a></li>
+<li><a class="reference internal" href="#usage-based-licensing">Usage-Based Licensing</a></li>
+<li><a class="reference internal" href="#bring-your-own-license">Bring Your Own License</a></li>
+<li><a class="reference internal" href="#infrastructures">Infrastructures</a></li>
+<li><a class="reference internal" href="#spot-fleets">Spot Fleets</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aws-portal-supported-software.html"
+                        title="previous chapter">Supported Software</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="aws-portal-setup-checklist.html"
+                        title="next chapter">AWS Portal Setup Checklist</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-portal-setup-checklist.html" title="AWS Portal Setup Checklist"
+             >next</a></li>
+        <li class="right" >
+          <a href="aws-portal-supported-software.html" title="Supported Software"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AWS Portal Component Overview</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

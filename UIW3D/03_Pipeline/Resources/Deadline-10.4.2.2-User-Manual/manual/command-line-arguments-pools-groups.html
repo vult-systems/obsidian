@@ -1,0 +1,1384 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pools, Groups, and Limits - Command Arguments &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Users and User Groups - Command Arguments" href="command-line-arguments-users.html" />
+    <link rel="prev" title="Tasks - Command Arguments" href="command-line-arguments-tasks.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command-line-arguments-users.html" title="Users and User Groups - Command Arguments"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="command-line-arguments-tasks.html" title="Tasks - Command Arguments"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" accesskey="U">Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Pools, Groups, and Limits - Command Arguments</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pools-groups-and-limits-command-arguments">
+<span id="command-arguments-pools"></span><h1>Pools, Groups, and Limits - Command Arguments<a class="headerlink" href="#pools-groups-and-limits-command-arguments" title="Permalink to this headline">¶</a></h1>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td colspan="2"><p><a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">Command Overview</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-repo.html#command-arguments-repo"><span class="std std-ref">Database and Repository</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-clients.html#command-arguments-clients"><span class="std std-ref">Clients and Logs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-workers.html#command-arguments-workers"><span class="std std-ref">Workers</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="command-line-arguments-jobs.html#command-arguments-jobs"><span class="std std-ref">Jobs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-tasks.html#command-arguments-tasks"><span class="std std-ref">Tasks</span></a></p></td>
+<td><p><a class="reference internal" href="#command-arguments-pools"><span class="std std-ref">Pools, Groups, and Limits</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-users.html#command-arguments-users"><span class="std std-ref">Users and User Groups</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-pathmapping.html#command-arguments-pathmapping"><span class="std std-ref">Path and Drive Mapping</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="command-line-arguments-cloud.html#command-arguments-cloud"><span class="std std-ref">AWS Portal and Cloud</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-scripting.html#command-arguments-scripting"><span class="std std-ref">Scripting</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-system.html#command-arguments-system"><span class="std std-ref">System Functions and Dialogs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-housekeeping.html#command-arguments-housekeeping"><span class="std std-ref">Scans, History, and Reports</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-version.html#command-arguments-version"><span class="std std-ref">Version and Help</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#pools" id="id1">Pools</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getpoolnames" id="id2">GetPoolNames</a></p></li>
+<li><p><a class="reference internal" href="#addpool" id="id3">AddPool</a></p></li>
+<li><p><a class="reference internal" href="#addpooltoslave" id="id4">AddPoolToSlave</a></p></li>
+<li><p><a class="reference internal" href="#getslavenamesinpool" id="id5">GetSlaveNamesInPool</a></p></li>
+<li><p><a class="reference internal" href="#setpoolsforslave" id="id6">SetPoolsForSlave</a></p></li>
+<li><p><a class="reference internal" href="#removepoolfromslave" id="id7">RemovePoolFromSlave</a></p></li>
+<li><p><a class="reference internal" href="#deletepool" id="id8">DeletePool</a></p></li>
+<li><p><a class="reference internal" href="#purgeobsoletepools" id="id9">PurgeObsoletePools</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#groups" id="id10">Groups</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getgroupnames" id="id11">GetGroupNames</a></p></li>
+<li><p><a class="reference internal" href="#addgroup" id="id12">AddGroup</a></p></li>
+<li><p><a class="reference internal" href="#addgrouptoslave" id="id13">AddGroupToSlave</a></p></li>
+<li><p><a class="reference internal" href="#setgroupsforslave" id="id14">SetGroupsForSlave</a></p></li>
+<li><p><a class="reference internal" href="#getslavenamesingroup" id="id15">GetSlaveNamesInGroup</a></p></li>
+<li><p><a class="reference internal" href="#removegroupfromslave" id="id16">RemoveGroupFromSlave</a></p></li>
+<li><p><a class="reference internal" href="#deletegroup" id="id17">DeleteGroup</a></p></li>
+<li><p><a class="reference internal" href="#purgeobsoletegroups" id="id18">PurgeObsoleteGroups</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#limits" id="id19">Limits</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getlimitgroupnames" id="id20">GetLimitGroupNames</a></p></li>
+<li><p><a class="reference internal" href="#getlimitgroup" id="id21">GetLimitGroup</a></p></li>
+<li><p><a class="reference internal" href="#setlimitgroup" id="id22">SetLimitGroup</a></p></li>
+<li><p><a class="reference internal" href="#getlimitgroups" id="id23">GetLimitGroups</a></p></li>
+<li><p><a class="reference internal" href="#getpluginlimitgroups" id="id24">GetPluginLimitGroups</a></p></li>
+<li><p><a class="reference internal" href="#setpluginlimitgroups" id="id25">SetPluginLimitGroups</a></p></li>
+<li><p><a class="reference internal" href="#setlimitgrouplistedslaves" id="id26">SetLimitGroupListedSlaves</a></p></li>
+<li><p><a class="reference internal" href="#setlimitgroupmaximum" id="id27">SetLimitGroupMaximum</a></p></li>
+<li><p><a class="reference internal" href="#setlimitgroupreleaseprogress" id="id28">SetLimitGroupReleaseProgress</a></p></li>
+<li><p><a class="reference internal" href="#setlimitgroupwhitelistflag" id="id29">SetLimitGroupWhiteListFlag</a></p></li>
+<li><p><a class="reference internal" href="#deletelimitgroup" id="id30">DeleteLimitGroup</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="pools">
+<h2><a class="toc-backref" href="#contents">Pools</a><a class="headerlink" href="#pools" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getpoolnames">
+<span id="getpoolnames-dlc-ref-label"></span><span id="pools-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetPoolNames</a><a class="headerlink" href="#getpoolnames" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays all Pool names.</p>
+<p><strong>Aliases:</strong> <code class="docutils literal notranslate"><span class="pre">GetPoolNames</span></code>, <code class="docutils literal notranslate"><span class="pre">Pools</span></code></p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetPoolNames</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>deadlinecommand -Pools</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span><span class="n">deadlinecommand</span> <span class="o">-</span><span class="n">GetPoolNames</span>
+    <span class="n">none</span>
+    <span class="mi">2</span><span class="n">d</span>
+    <span class="mi">3</span><span class="n">d</span>
+    <span class="n">arnold</span>
+    <span class="n">redshift</span>
+    <span class="n">vray</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="addpool">
+<span id="addpool-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">AddPool</a><a class="headerlink" href="#addpool" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Adds the Pool.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -AddPool</strong>  &lt;Pool Name(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Pool Name(s)&gt;</p></td>
+<td><p>The Pool name, or a list of Pool names separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span><span class="n">deadlinecommand</span> <span class="o">-</span><span class="n">AddPool</span> <span class="n">Krakatoa</span>
+    <span class="n">Pool</span> <span class="n">Krakatoa</span> <span class="n">added</span>
+    <span class="n">Successfully</span> <span class="n">added</span> <span class="n">pool</span><span class="p">:</span> <span class="n">Krakatoa</span>
+
+<span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span><span class="n">deadlinecommand</span> <span class="o">-</span><span class="n">GetPoolNames</span>
+    <span class="n">none</span>
+    <span class="mi">2</span><span class="n">d</span>
+    <span class="mi">3</span><span class="n">d</span>
+    <span class="n">arnold</span>
+    <span class="n">krakatoa</span>
+    <span class="n">redshift</span>
+    <span class="n">vray</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Pool names are forced to lowercase by Deadline.</p>
+</div>
+</div>
+<div class="section" id="addpooltoslave">
+<span id="addpooltoslave-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">AddPoolToSlave</a><a class="headerlink" href="#addpooltoslave" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Adds a Pool to the Worker.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -AddPoolToSlave</strong> &lt;Worker Name(s)&gt; &lt;Pool Name(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Worker Name(s)&gt;</p></td>
+<td><p>The Worker name, or a list of Worker names separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Pool Name(s)&gt;</p></td>
+<td><p>The Pool name, or a list of Pool names separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span><span class="n">deadlinecommand</span> <span class="o">-</span><span class="n">AddPoolToSlave</span> <span class="n">RenderNode</span><span class="o">-</span><span class="mi">042</span> <span class="n">Krakatoa</span><span class="p">,</span><span class="n">Renderman</span>
+    <span class="n">Added</span> <span class="n">pool</span> <span class="n">krakatoa</span><span class="p">,</span><span class="n">none</span>
+</pre></div>
+</div>
+<p>In the above example</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The Pool ‘renderman’ does not exist, so it is handled as the ‘none’ Pool.</p></li>
+<li><p>The lowercase ‘krakatoa’ Pool already exists, the capitalized name is accepted.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="getslavenamesinpool">
+<span id="getslavenamesinpool-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetSlaveNamesInPool</a><a class="headerlink" href="#getslavenamesinpool" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays the Worker names that have been assigned to the specified Pool.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetSlaveNamesInPool</strong> &lt;Pool Name(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Pool Name(s)&gt;</p></td>
+<td><p>The Pool name, or a list of Pool names separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetSlaveNamesInPool Krakatoa
+    RenderNode-042
+</pre></div>
+</div>
+<p>If the Pool does not exist, no error is thrown, and no output is generated:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetSlaveNamesInPool Renderman
+
+C:\&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="setpoolsforslave">
+<span id="setpoolsforslave-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetPoolsForSlave</a><a class="headerlink" href="#setpoolsforslave" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Sets the list of Pools for a Worker.</p>
+<p>If the Worker is in any Pools not listed in the second argument, it will be removed from them.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetPoolsForSlave</strong> &lt;Worker Name(s)&gt; &lt;Pool Name(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Worker Name(s)&gt;</p></td>
+<td><p>The Worker name, or a list of Worker names separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Pool Name(s)&gt;</p></td>
+<td><p>The Pool name, or a list of Pool names separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SetPoolsForSlave RenderNode-042,RenderNode-043 Krakatoa,Arnold
+    Set pools to krakatoa,none
+</pre></div>
+</div>
+<p>In the above example</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The Pool ‘renderman’ does not exist, so it is handled as the ‘none’ Pool.</p></li>
+<li><p>The lowercase ‘krakatoa’ Pool already exists, the capitalized name is accepted.</p></li>
+</ul>
+</div></blockquote>
+<p>The order of the Pools list matters - this will set the list to <code class="docutils literal notranslate"><span class="pre">projecta,projectb,none</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SetPoolsForSlave RenderNode-042 ProjectA,ProjectB
+    Set pools to projecta,projectb
+</pre></div>
+</div>
+<p>The order of the Pools list matters - this will set the list to <code class="docutils literal notranslate"><span class="pre">none,projectb,projecta</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SetPoolsForSlave RenderNode-042 None,ProjectB,ProjectA
+Set pools to none,projectb,projecta
+</pre></div>
+</div>
+</div>
+<div class="section" id="removepoolfromslave">
+<span id="removepoolfromslave-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">RemovePoolFromSlave</a><a class="headerlink" href="#removepoolfromslave" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Removes a Pool from the Worker.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -RemovePoolFromSlave</strong> &lt;Worker Name(s)&gt; &lt;Pool Name(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Worker Name(s)&gt;</p></td>
+<td><p>The Worker name, or a list of Worker names separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Pool Name(s)&gt;</p></td>
+<td><p>The Pool name, or a list of Pool names separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -RemovePoolFromSlave RenderNode-042 Krakatoa,Arnold
+    Removed pool Krakatoa,Arnold
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">No argument validation is performed - in the above example, the Worker was in neither Pool.</div>
+<div class="line">The result would be the same if the Worker did not exist.</div>
+</div>
+</div>
+</div>
+<div class="section" id="deletepool">
+<span id="deletepool-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">DeletePool</a><a class="headerlink" href="#deletepool" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Deletes the Pool.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -DeletePool</strong> &lt;Pool Name&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Pool Name&gt;</p></td>
+<td><p>The Pool name</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -DeletePool Krakatoa
+    Pool Krakatoa deleted
+    Successfully deleted pool: Krakatoa
+</pre></div>
+</div>
+<p>The Pool must exist, otherwise an error will be generated.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -DeletePool Krakatoa
+    Error: Pool &#39;Krakatoa&#39; does not exist (System.ArgumentException)
+</pre></div>
+</div>
+</div>
+<div class="section" id="purgeobsoletepools">
+<span id="purgeobsoletepools-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">PurgeObsoletePools</a><a class="headerlink" href="#purgeobsoletepools" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Purges Pools that are no longer in use.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -PurgeObsoletePools</strong> &lt;Pool Name&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Pool Name&gt;</p></td>
+<td><p>The replacement Pool for Jobs that are using obsolete Pools (optional)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="groups">
+<h2><a class="toc-backref" href="#contents">Groups</a><a class="headerlink" href="#groups" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getgroupnames">
+<span id="getgroupnames-dlc-ref-label"></span><span id="groups-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetGroupNames</a><a class="headerlink" href="#getgroupnames" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays all Groups.</p>
+<p><strong>Aliases:</strong> <code class="docutils literal notranslate"><span class="pre">GetGroupNames</span></code>, <code class="docutils literal notranslate"><span class="pre">Groups</span></code></p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetGroupNames</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>deadlinecommand -Groups</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="addgroup">
+<span id="addgroup-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">AddGroup</a><a class="headerlink" href="#addgroup" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Adds an empty Group with the specified name.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -AddGroup</strong> &lt;Group Name&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Group Name&gt;</p></td>
+<td><p>The Group name</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -AddGroup NewGroup
+    Group NewGroup added
+    Successfully added group: NewGroup
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">Quotes around the Group Name are allowed, but are stripped and are not necessary because spaces are not allowed.</div>
+<div class="line">If the Group exists, there will be no error and the message will report the Group was added successfully.</div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -AddGroup &quot;NewGroup&quot;
+    Group NewGroup added
+    Successfully added group: NewGroup
+</pre></div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The Group Name will be checked for validity and cannot contain spaces or spacial characters except for <code class="docutils literal notranslate"><span class="pre">-</span></code> and <code class="docutils literal notranslate"><span class="pre">_</span></code></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -AddGroup &quot;Test Spaces&quot;
+Error: Group name &#39;Test Spaces&#39; contains illegal characters. Valid characters are A-Z, a-z, 0-9, - and _ (System.Exception)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="addgrouptoslave">
+<span id="addgrouptoslave-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">AddGroupToSlave</a><a class="headerlink" href="#addgrouptoslave" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Adds a Group to the Worker.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -AddGroupToSlave</strong> &lt;Worker Name(s)&gt; &lt;Group Name(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Worker Name(s)&gt;</p></td>
+<td><p>The Worker name, or a list of Worker names separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Group Name(s)&gt;</p></td>
+<td><p>The Group name, or a list of Group names separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="setgroupsforslave">
+<span id="setgroupsforslave-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetGroupsForSlave</a><a class="headerlink" href="#setgroupsforslave" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Sets the Groups for a Worker.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetGroupsForSlave</strong> &lt;Worker Name(s)&gt; &lt;Group Name(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Worker Name(s)&gt;</p></td>
+<td><p>The Worker name, or a list of Worker names separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Group Name(s)&gt;</p></td>
+<td><p>The Group name, or a list of Group names separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="getslavenamesingroup">
+<span id="getslavenamesingroup-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetSlaveNamesInGroup</a><a class="headerlink" href="#getslavenamesingroup" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays the Worker names that have been assigned to the specified Group.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetSlaveNamesInGroup</strong> &lt;Group Name(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Group Name(s)&gt;</p></td>
+<td><p>The Group name, or a list of Group names separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="removegroupfromslave">
+<span id="removegroupfromslave-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">RemoveGroupFromSlave</a><a class="headerlink" href="#removegroupfromslave" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Removes a Group from the Worker.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -RemoveGroupFromSlave</strong> &lt;Worker Name(s)&gt; &lt;Group Name(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Worker Name(s)&gt;</p></td>
+<td><p>The Worker name, or a list of Worker names separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Group Name(s)&gt;</p></td>
+<td><p>The Group name, or a list of Group names separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="deletegroup">
+<span id="deletegroup-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">DeleteGroup</a><a class="headerlink" href="#deletegroup" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Deletes the Group.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -DeleteGroup</strong> &lt;Group Name&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Group Name&gt;</p></td>
+<td><p>The Group name</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="purgeobsoletegroups">
+<span id="purgeobsoletegroups-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">PurgeObsoleteGroups</a><a class="headerlink" href="#purgeobsoletegroups" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Purges Groups that are no longer in use.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -PurgeObsoleteGroups</strong> [&lt;Group Name&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Group Name&gt;</p></td>
+<td><p>The replacement Group for Jobs that are using obsolete Groups (optional)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="limits">
+<span id="limits-dlc-ref-label"></span><h2><a class="toc-backref" href="#contents">Limits</a><a class="headerlink" href="#limits" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">The original feature name of ‘Limits’ was ‘LimitGroups’ in earlier versions of Deadline.</div>
+<div class="line">Command arguments use the old name for compatibility.</div>
+</div>
+</div>
+<div class="section" id="getlimitgroupnames">
+<span id="getlimitgroupnames-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetLimitGroupNames</a><a class="headerlink" href="#getlimitgroupnames" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays all Limit names.</p>
+<p><strong>Aliases:</strong> <code class="docutils literal notranslate"><span class="pre">GetLimitGroupNames</span></code>, <code class="docutils literal notranslate"><span class="pre">LimitGroups</span></code></p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetLimitGroupNames</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>deadlinecommand -LimitGroups</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -LimitGroups
+    arnold
+    krakatoa
+    max
+    maya
+    nuke
+    redshift
+    vray
+</pre></div>
+</div>
+</div>
+<div class="section" id="getlimitgroup">
+<span id="getlimitgroup-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetLimitGroup</a><a class="headerlink" href="#getlimitgroup" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays information for the Limit.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetLimitGroup</strong> &lt;Limit  Name(s)&gt; [&lt;Use Ini Display&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Limit  Name(s)&gt;</p></td>
+<td><p>The Limit name, or a list of names separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Use Ini Display&gt;</p></td>
+<td><p>true/false (optional, default is false)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetLimitGroup maya,vray
+    ListedSlaves=RenderNode-42
+    InUse=0
+    Limit=0
+    Name=maya
+    ReleasePercentage=0
+    WhitelistFlag=False
+
+    ListedSlaves=
+    InUse=0
+    Limit=0
+    Name=vray
+    ReleasePercentage=0
+    WhitelistFlag=False
+</pre></div>
+</div>
+<p>Here is the same information, but displayed as INI:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\Users\bobo&gt;deadlinecommand -GetLimitGroup maya,vray true
+    [maya]
+    ListedSlaves=RenderNode-42
+    InUse=0
+    Limit=0
+    Name=maya
+    ReleasePercentage=0
+    WhitelistFlag=False
+
+    [vray]
+    ListedSlaves=
+    InUse=0
+    Limit=0
+    Name=vray
+    ReleasePercentage=0
+    WhitelistFlag=False
+</pre></div>
+</div>
+</div>
+<div class="section" id="setlimitgroup">
+<span id="setlimitgroup-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetLimitGroup</a><a class="headerlink" href="#setlimitgroup" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Modifies or creates the Limit.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetLimitGroup</strong> &lt;Limit Name&gt; &lt;Limit&gt; &lt;Listed Workers&gt; &lt;Allow List Flag&gt; [&lt;Limit Progress&gt;] [&lt;Excluded Workers&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Limit Name&gt;</p></td>
+<td><p>The Limit name</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Limit&gt;</p></td>
+<td><p>The new limit value</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Listed Workers&gt;</p></td>
+<td><p>The listed Workers</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Allow List Flag&gt;</p></td>
+<td><p>true/false</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Limit Progress&gt;</p></td>
+<td><p>The limit progress (optional)</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Excluded Workers&gt;</p></td>
+<td><p>The excluded Workers (optional)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>The following creates a “Yeti” Limit with a value of 12, no Workers on the Denylist.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SetLimitGroup yeti 12 &quot;&quot; False
+    Created limit &#39;yeti&#39;.
+</pre></div>
+</div>
+</div>
+<div class="section" id="getlimitgroups">
+<span id="getlimitgroups-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetLimitGroups</a><a class="headerlink" href="#getlimitgroups" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays information for all Limits.</p>
+<p>The results are similar to <a class="reference internal" href="#getlimitgroup-dlc-ref-label"><span class="std std-ref">GetLimitGroup</span></a></p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetLimitGroups</strong> [&lt;Use Ini Display&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Use Ini Display&gt;</p></td>
+<td><p>true/false (optional, default is false)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="getpluginlimitgroups">
+<span id="getpluginlimitgroups-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetPluginLimitGroups</a><a class="headerlink" href="#getpluginlimitgroups" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays all Limit group names assigned to a Plugin.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetPluginLimitGroups</strong> &lt;Plugin Name&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Plugin Name&gt;</p></td>
+<td><p>The name of the Plugin to retrieve Limits for.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="setpluginlimitgroups">
+<span id="setpluginlimitgroups-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetPluginLimitGroups</a><a class="headerlink" href="#setpluginlimitgroups" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Assign one or more Limits to a Plugin.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetPluginLimitGroups</strong> &lt;Plugin Name&gt; &lt;Limit Names&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Plugin Name&gt;</p></td>
+<td><p>The name of the Plugin we want to modify.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Limit Names&gt;</p></td>
+<td><p>A comma-separated list of Limit names to apply to the Plugin. If any Limits contain spaces, the list needs to be surrounded in double-quotes (“).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="setlimitgrouplistedslaves">
+<span id="setlimitgrouplistedslaves-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetLimitGroupListedSlaves</a><a class="headerlink" href="#setlimitgrouplistedslaves" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Sets the Limit’s listed Workers.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetLimitGroupListedSlaves</strong> &lt;Limit Name(s)&gt; &lt;Workers&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Limit Name(s)&gt;</p></td>
+<td><p>The Limit name, or a list of Limit names separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Workers&gt;</p></td>
+<td><p>The Workers, separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SetLimitGroupListedSlaves yeti RenderNode-042,RenderNode-043
+
+C:\&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">The above command does not produce any output.</div>
+<div class="line">The listed Workers will be added to the Deny/Allow (middle) list of the Limit.</div>
+</div>
+</div>
+</div>
+<div class="section" id="setlimitgroupmaximum">
+<span id="setlimitgroupmaximum-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetLimitGroupMaximum</a><a class="headerlink" href="#setlimitgroupmaximum" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Sets the Limit’s License Count value.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetLimitGroupMaximum</strong> &lt;Limit Name(s)&gt; &lt;Limit&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Limit Name(s)&gt;</p></td>
+<td><p>The Limit name, or a list of Limit names separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Limit&gt;</p></td>
+<td><p>The Limit’s value</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Set the Yeti Limit’s License Count value to 42:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SetLimitGroupMaximum yeti 42
+</pre></div>
+</div>
+</div>
+<div class="section" id="setlimitgroupreleaseprogress">
+<span id="setlimitgroupreleaseprogress-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetLimitGroupReleaseProgress</a><a class="headerlink" href="#setlimitgroupreleaseprogress" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Sets the Limit’s progress.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetLimitGroupReleaseProgress</strong> &lt;Limit Name(s)&gt; &lt;Limit Progress&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Limit Name(s)&gt;</p></td>
+<td><p>The Limit name, or a list of Limit names separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Limit Progress&gt;</p></td>
+<td><p>The Limit progress</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="setlimitgroupwhitelistflag">
+<span id="setlimitgroupwhitelistflag-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetLimitGroupWhiteListFlag</a><a class="headerlink" href="#setlimitgroupwhitelistflag" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Sets the Limit’s Allow List flag.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetLimitGroupWhiteListFlag</strong> &lt;Limit Name(s)&gt; &lt;Allow List&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Limit Name(s)&gt;</p></td>
+<td><p>The Limit name, or a list of Limit names separated by commas</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Allow List&gt;</p></td>
+<td><p>True for Allowlist, False for Denylist</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="deletelimitgroup">
+<span id="deletelimitgroup-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">DeleteLimitGroup</a><a class="headerlink" href="#deletelimitgroup" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Deletes one or more Limits.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -DeleteLimitGroup</strong> &lt;Limit Name(s)&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Limit Name(s)&gt;</p></td>
+<td><p>The Limit name, or a list of names separated by commas</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -DeleteLimitGroup yeti
+    Deleted limits: yeti
+
+C:\&gt;deadlinecommand -DeleteLimitGroup yeti
+    Deleted limits: yeti
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>No validation is performed on the arguments. No error is generated if the Limit does not exist.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Pools, Groups, and Limits - Command Arguments</a><ul>
+<li><a class="reference internal" href="#pools">Pools</a><ul>
+<li><a class="reference internal" href="#getpoolnames">GetPoolNames</a></li>
+<li><a class="reference internal" href="#addpool">AddPool</a></li>
+<li><a class="reference internal" href="#addpooltoslave">AddPoolToSlave</a></li>
+<li><a class="reference internal" href="#getslavenamesinpool">GetSlaveNamesInPool</a></li>
+<li><a class="reference internal" href="#setpoolsforslave">SetPoolsForSlave</a></li>
+<li><a class="reference internal" href="#removepoolfromslave">RemovePoolFromSlave</a></li>
+<li><a class="reference internal" href="#deletepool">DeletePool</a></li>
+<li><a class="reference internal" href="#purgeobsoletepools">PurgeObsoletePools</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#groups">Groups</a><ul>
+<li><a class="reference internal" href="#getgroupnames">GetGroupNames</a></li>
+<li><a class="reference internal" href="#addgroup">AddGroup</a></li>
+<li><a class="reference internal" href="#addgrouptoslave">AddGroupToSlave</a></li>
+<li><a class="reference internal" href="#setgroupsforslave">SetGroupsForSlave</a></li>
+<li><a class="reference internal" href="#getslavenamesingroup">GetSlaveNamesInGroup</a></li>
+<li><a class="reference internal" href="#removegroupfromslave">RemoveGroupFromSlave</a></li>
+<li><a class="reference internal" href="#deletegroup">DeleteGroup</a></li>
+<li><a class="reference internal" href="#purgeobsoletegroups">PurgeObsoleteGroups</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#limits">Limits</a><ul>
+<li><a class="reference internal" href="#getlimitgroupnames">GetLimitGroupNames</a></li>
+<li><a class="reference internal" href="#getlimitgroup">GetLimitGroup</a></li>
+<li><a class="reference internal" href="#setlimitgroup">SetLimitGroup</a></li>
+<li><a class="reference internal" href="#getlimitgroups">GetLimitGroups</a></li>
+<li><a class="reference internal" href="#getpluginlimitgroups">GetPluginLimitGroups</a></li>
+<li><a class="reference internal" href="#setpluginlimitgroups">SetPluginLimitGroups</a></li>
+<li><a class="reference internal" href="#setlimitgrouplistedslaves">SetLimitGroupListedSlaves</a></li>
+<li><a class="reference internal" href="#setlimitgroupmaximum">SetLimitGroupMaximum</a></li>
+<li><a class="reference internal" href="#setlimitgroupreleaseprogress">SetLimitGroupReleaseProgress</a></li>
+<li><a class="reference internal" href="#setlimitgroupwhitelistflag">SetLimitGroupWhiteListFlag</a></li>
+<li><a class="reference internal" href="#deletelimitgroup">DeleteLimitGroup</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="command-line-arguments-tasks.html"
+                        title="previous chapter">Tasks - Command Arguments</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="command-line-arguments-users.html"
+                        title="next chapter">Users and User Groups - Command Arguments</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command-line-arguments-users.html" title="Users and User Groups - Command Arguments"
+             >next</a></li>
+        <li class="right" >
+          <a href="command-line-arguments-tasks.html" title="Tasks - Command Arguments"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" >Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Pools, Groups, and Limits - Command Arguments</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

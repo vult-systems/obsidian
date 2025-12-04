@@ -1,0 +1,452 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Path Mapping (Cross-Platform Rendering) &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Script Menus" href="script-menus.html" />
+    <link rel="prev" title="Network Performance" href="performance.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="script-menus.html" title="Script Menus"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="performance.html" title="Network Performance"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" accesskey="U">Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Path Mapping (Cross-Platform Rendering)</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="path-mapping-cross-platform-rendering">
+<span id="cross-platform-ref-label"></span><h1>Path Mapping (Cross-Platform Rendering)<a class="headerlink" href="#path-mapping-cross-platform-rendering" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Many of the applications that Deadline supports are available for multiple operating systems.
+If you have a farm of mixed configurations, you will probably run into scenarios where the machines rendering your Jobs will need to access (or save) assets differently based on:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The OS at render time (Linux, macOS, or Windows)</p></li>
+<li><p>The current environment at render time</p></li>
+<li><p>Different properties within the Job being rendered (e.g., submitting user, group, custom value)</p></li>
+</ul>
+</div></blockquote>
+<p>All of these needs can be addressed with Deadline’s Path Mapping feature.
+While there may be other considerations to take into account, depending on the application you are rendering with, the Path Mapping feature will do most of the work for you.</p>
+<p>When using a mixed render farm, it is likely that asset paths will be different on each operating system.
+In many cases, Deadline is aware of the paths being passed to the rendering application, so you can configure Path Mapping rules to swap out these paths when appropriate based on the operating system.</p>
+</div>
+<div class="section" id="path-mapping-rule-types">
+<span id="mapped-path-rule-types-ref-label"></span><h2>Path Mapping Rule Types<a class="headerlink" href="#path-mapping-rule-types" title="Permalink to this headline">¶</a></h2>
+<p>There are three kinds of Path Mapping rules that can be configured in Deadline: Job-Specific, Global, and Submission-Time rules.
+In most cases, you will just need to use Global Rules.</p>
+<p><strong>Global rules</strong> will be applied to <em>any</em> known paths prior to rendering any job.
+Any paths that start with the value in <em>Path To Replace</em> will have that portion substituted with the replacement path for the current operating system.
+These rules can be created and updated from the Repository Options dialog under the ‘Mapped Paths’ section.</p>
+<p><strong>Job-Specific rules</strong> will be applied <em>only</em> to paths related to the job in which they are defined.
+Any such path that starts with the value <em>Path To Replace</em> will have that portion substituted with the replacement path for the current operating system.
+These rules can be created and updated after submission from the Job Properties dialog in the Monitor; there currently is no interface to do this manually at time of submission.
+If you wish to automatically create Job-Specific rules at submission time, please refer to the Submission-Time Rules section below.</p>
+<p><strong>Submission-Time rules</strong> are defined globally, but are tied to individual jobs as <em>Job-Specific Rules</em> at time of submission.
+Because they are stored in the job at submission time, changes to these rules in the Repository Settings will <em>not</em> retroactively alter the rules that were already copied to previously submitted jobs; only future submissions will be affected.
+These rules can be created and updated from the Repository Options dialog under the ‘Mapped Paths’ section.</p>
+<p>All rule types are configured similarly, and only differ in the ways mentioned above.
+Note that every path mapping rule set must have a unique <em>Path To Replace</em> value per Region.
+For example, a Global rule set and a Submission-Time rule set cannot have the same <em>Path To Replace</em> value if they are in the same Region.</p>
+</div>
+<div class="section" id="path-mapping-setup">
+<h2>Path Mapping Setup<a class="headerlink" href="#path-mapping-setup" title="Permalink to this headline">¶</a></h2>
+<p>Regardless of the rule type, the process of creating and manipulating rules is identical.
+For Global and Submission-Time rules, the configuration is done from the Repository Options dialog, under the ‘Mapped Paths’ section:</p>
+<a class="reference internal image-reference" href="../_images/cro_paths.png"><img alt="../_images/cro_paths.png" src="../_images/cro_paths.png" style="height: 550px;" /></a>
+<p>For Job-Specific rules, the configuration is done from the Job Properties dialog instead:</p>
+<a class="reference internal image-reference" href="../_images/job_pm_rules.png"><img alt="../_images/job_pm_rules.png" src="../_images/job_pm_rules.png" style="height: 500px;" /></a>
+<p>To add a new Path Mapping rule, just click the <code class="docutils literal notranslate"><span class="pre">Add</span></code> button. Then, you specify the path that needs to be swapped out, along with the paths that will be swapped in based on the operating system. You can also specify a region so you can have different mappings for the same path across different regions.
+For best results, make sure that all paths end with their appropriate path separator (<code class="docutils literal notranslate"><span class="pre">/</span></code> or <code class="docutils literal notranslate"><span class="pre">\</span></code>). This helps avoid mangled paths that are a result of one path with a trailing separator, and one without.</p>
+<img alt="../_images/add_mapped_path.png" src="../_images/add_mapped_path.png" />
+<p>Note that these swaps only work one-way, so if you are swapping from PC to Linux and vice-versa, you will need two separate entries. For example, let’s say the PC machines use the
+path <code class="docutils literal notranslate"><span class="pre">\\server\share\</span></code> for assets, while the Linux machines use the path <code class="docutils literal notranslate"><span class="pre">/mnt/share/</span></code>. Here are what your two entries should look like:</p>
+<ul>
+<li><p>Entry 1 (replaces the Linux path with the PC path on PCs):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Replace</span> <span class="n">Path</span><span class="p">:</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">share</span><span class="o">/</span>
+<span class="n">Windows</span> <span class="n">Path</span><span class="p">:</span> \\<span class="n">server</span>\<span class="n">share</span>\
+<span class="n">Linux</span> <span class="n">Path</span><span class="p">:</span>
+<span class="n">Mac</span> <span class="n">Path</span><span class="p">:</span>
+</pre></div>
+</div>
+</li>
+<li><p>Entry 2 (replaces the PC path with the Linux path on Linux):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Replace</span> <span class="n">Path</span><span class="p">:</span> \\<span class="n">server</span>\<span class="n">share</span>\
+<span class="n">Windows</span> <span class="n">Path</span><span class="p">:</span>
+<span class="n">Linux</span> <span class="n">Path</span><span class="p">:</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">share</span><span class="o">/</span>
+<span class="n">Mac</span> <span class="n">Path</span><span class="p">:</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>If you have Mac machines as well, you will need three entries. For example, if the Macs use <code class="docutils literal notranslate"><span class="pre">/Volumes/share/</span></code> to access the assets from the previous example, here are what your three entries should look like:</p>
+<ul>
+<li><p>Entry 1 (replaces the Linux path with the PC path on PCs and the Mac path on Macs):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Replace</span> <span class="n">Path</span><span class="p">:</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">share</span><span class="o">/</span>
+<span class="n">Windows</span> <span class="n">Path</span><span class="p">:</span> \\<span class="n">server</span>\<span class="n">share</span>\
+<span class="n">Linux</span> <span class="n">Path</span><span class="p">:</span>
+<span class="n">Mac</span> <span class="n">Path</span><span class="p">:</span> <span class="o">/</span><span class="n">Volumes</span><span class="o">/</span><span class="n">share</span><span class="o">/</span>
+</pre></div>
+</div>
+</li>
+<li><p>Entry 2 (replaces the PC path with the Linux path on Linux and the Mac path on Macs):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Replace</span> <span class="n">Path</span><span class="p">:</span> \\<span class="n">server</span>\<span class="n">share</span>\
+<span class="n">Windows</span> <span class="n">Path</span><span class="p">:</span>
+<span class="n">Linux</span> <span class="n">Path</span><span class="p">:</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">share</span><span class="o">/</span>
+<span class="n">Mac</span> <span class="n">Path</span><span class="p">:</span> <span class="o">/</span><span class="n">Volumes</span><span class="o">/</span><span class="n">share</span><span class="o">/</span>
+</pre></div>
+</div>
+</li>
+<li><p>Entry 3 (replaces the Mac path with the PC path on PCs and the Linux path on Linux):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Replace</span> <span class="n">Path</span><span class="p">:</span> <span class="o">/</span><span class="n">Volumes</span><span class="o">/</span><span class="n">share</span><span class="o">/</span>
+<span class="n">Windows</span> <span class="n">Path</span><span class="p">:</span> \\<span class="n">server</span>\<span class="n">share</span>\
+<span class="n">Linux</span> <span class="n">Path</span><span class="p">:</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">share</span><span class="o">/</span>
+<span class="n">Mac</span> <span class="n">Path</span><span class="p">:</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>By default, Deadline just uses regular string replacement to swap out the paths. When doing so, Deadline takes care of the path separators (<code class="docutils literal notranslate"><span class="pre">/</span></code> and <code class="docutils literal notranslate"><span class="pre">\</span></code>) automatically.
+If you want more flexibility, you can configure your path mapping rules to use regular expressions, but note that you will need to handle the path separators manually using <code class="docutils literal notranslate"><span class="pre">[/\\\\]</span></code> in your regular expressions.</p>
+</div>
+<div class="section" id="general-tips-and-recommendations">
+<h2>General Tips and Recommendations<a class="headerlink" href="#general-tips-and-recommendations" title="Permalink to this headline">¶</a></h2>
+<p>Here are a number of useful tips and recommendations to keep in mind when setting up your Path Mapping ruleset:</p>
+<ul class="simple">
+<li><p>Initially, create simple path mapping rules with <strong>Case Sensitive</strong> and <strong>Regular Expression</strong> both set to <em>False</em> and <strong>Region</strong> set to <em>All</em>. Once the mapped paths have proven to all be successful, then consider tightening up the configuration with these settings ONLY if necessary later.</p></li>
+<li><p>Create the minimal number of path mapping rules to cover your needs. De-duplicate paths and leverage recursive rule application to obtain the minimal ruleset required for your use-case.</p></li>
+<li><p>You do not have to enter replacement paths for all platforms; any empty replacement paths will be skipped when applying the rule. Note that the rule will not be applied at all if you do not enter at least one replacement paths.</p></li>
+<li><p>Create 2-way or 3-way path mapping rules only if you need multi-directional path mapping. A 1-way rule is perfectly valid if that is all that is required for your setup.</p></li>
+<li><p>Always ensure you have trailing path separators in each of your paths. This will help ensure you do not have partial matches on a folder of similar name.</p></li>
+<li><p>Do not specify an identical path in the replacement field for the platform. E.g., if you are looking to replace the path <code class="docutils literal notranslate"><span class="pre">T:\</span></code>, do not also enter <code class="docutils literal notranslate"><span class="pre">T:\</span></code> in the Windows Path field; simply leave it blank.</p></li>
+<li><p>On Windows, looking for the mapped drive: <code class="docutils literal notranslate"><span class="pre">Z:\</span></code> will not match <code class="docutils literal notranslate"><span class="pre">Z:/</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="application-specific-considerations">
+<h2>Application-Specific Considerations<a class="headerlink" href="#application-specific-considerations" title="Permalink to this headline">¶</a></h2>
+<p>For some applications, like <a class="reference internal" href="app-maya.html#app-maya-ref-label"><span class="std std-ref">Maya</span></a> and <a class="reference internal" href="app-nuke.html#app-nuke-ref-label"><span class="std std-ref">Nuke</span></a>, simply configuring Path Mapping rules is enough to allow for Deadline to apply them at render time.
+For other applications however, like <a class="reference internal" href="app-after-effects.html#app-after-effects-ref-label"><span class="std std-ref">After Effects</span></a> and <a class="reference internal" href="app-cinema-4d.html#app-cinema-4d-ref-label"><span class="std std-ref">Cinema 4D</span></a>, additional setup is required.
+You can find more information on how to render with these applications on mixed farms can be found in their Cross-Platform Rendering Considerations sections in the Plugins documentation.</p>
+</div>
+</div>
+<div class="section" id="advanced-setup">
+<h1>Advanced Setup<a class="headerlink" href="#advanced-setup" title="Permalink to this headline">¶</a></h1>
+<p>This section will cover advance configuration and use-cases of Path Mapping rules.
+While not needed in the general case, they can be quite useful to fine tune Path Mapping to help simplify your submission pipeline.</p>
+<div class="section" id="regions">
+<span id="cross-plat-region-label"></span><h2>Regions<a class="headerlink" href="#regions" title="Permalink to this headline">¶</a></h2>
+<p>Regions can be used to setup different mappings for the same path across your farm. For example, let’s say we have a local farm and a remote farm, and we want to map the path <code class="docutils literal notranslate"><span class="pre">/mnt/share/</span></code> in our remote farm but not in our local farm. All we have to do is set the region of our mapping to the same region our remote Workers are in. Workers in the region will replace <code class="docutils literal notranslate"><span class="pre">/mnt/share/</span></code> but all the other Workers will use <code class="docutils literal notranslate"><span class="pre">/mnt/share/</span></code> normally. We could also setup an alternate path for the Workers in our local farm.</p>
+<p>A mapping in the <code class="docutils literal notranslate"><span class="pre">All</span></code> region will apply to every region, even unrecognized ones. It should be noted that a region’s mapping is applied before the <code class="docutils literal notranslate"><span class="pre">All</span></code> region, and if you are configured to the region <code class="docutils literal notranslate"><span class="pre">none</span></code>, then the path mapping with the regions configured to <code class="docutils literal notranslate"><span class="pre">All</span></code> will apply.</p>
+<p>A mapping in the <code class="docutils literal notranslate"><span class="pre">unrecognized</span></code> region will only apply to the regions that are unrecognized.</p>
+</div>
+<div class="section" id="recursively-apply-path-mapping-rules">
+<h2>Recursively Apply Path Mapping Rules<a class="headerlink" href="#recursively-apply-path-mapping-rules" title="Permalink to this headline">¶</a></h2>
+<p>This is an option that is available in the Repository Options dialog’s ‘Mapped Paths’ section.
+When enabled, it will simulate recursive/repeated application of the current set of Path Mapping rules whenever they are applied.</p>
+<p>In practice, this allows you to ‘chain’ multiple simpler rules together.
+For example, if you had a rule mapping <code class="docutils literal notranslate"><span class="pre">F:\</span></code> to <code class="docutils literal notranslate"><span class="pre">\\fs-01</span></code>, and another rule mapping <code class="docutils literal notranslate"><span class="pre">U:\</span></code> to <code class="docutils literal notranslate"><span class="pre">F:\users\</span></code>, Deadline would automatically derive and apply the implicit <code class="docutils literal notranslate"><span class="pre">U:\</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">\\fs-01\users\</span></code> rule with this option on.</p>
+</div>
+<div class="section" id="token-substitution">
+<span id="token-substitution-ref-label"></span><h2>Token Substitution<a class="headerlink" href="#token-substitution" title="Permalink to this headline">¶</a></h2>
+<p>Token substitution allows for Replacement Paths to vary based on variables available in the current context, other than the OS and Region.</p>
+<p>This enables use-cases where, for example, the current user or job ID need to be included as part of the replacement path.
+In order to use these tokens, you simply need to include them within the replacement paths of your Path Mapping rules, and the value of the token will be determined dynamically when the rule is applied.</p>
+<p>Tokens are always of the following format: <code class="docutils literal notranslate"><span class="pre">${TOKEN_TYPE:TOKEN_NAME}</span></code></p>
+<ul class="simple">
+<li><p><strong>TOKEN_TYPE:</strong> The token type defines where the tokens will be pulling their values from. See <a class="reference internal" href="#types-of-tokens-ref-label"><span class="std std-ref">Types of Tokens</span></a> for more information.</p></li>
+<li><p><strong>TOKEN_NAME:</strong> The name of the token value we want to find and substitute.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While tokens can be used in all Path Mapping rule types, they behave slightly differently for Submission-Time rules.
+Tokens within Submission-Time rules will be swapped for their values <strong>at time of submission</strong>.
+This means that the value of the tokens at submission time will be persisted within the job-specific copy of the Path Mapping rule.</p>
+</div>
+<div class="section" id="types-of-tokens">
+<span id="types-of-tokens-ref-label"></span><h3>Types of Tokens<a class="headerlink" href="#types-of-tokens" title="Permalink to this headline">¶</a></h3>
+<p>The token type defines where the tokens will be pulling their values from. We currently support the following token types:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>env</strong></dt><dd><ul>
+<li><p>The value for these tokens will be pulled from the current process’s Environment Variables.</p></li>
+<li><p>You can use any environment variable as a token. Note however that if the environment variable does not exist, it will cause the path mapping process to fail.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>job</strong></dt><dd><ul>
+<li><p>The value for these tokens will be pulled from the <em>current Job</em>. What the ‘current’ Job is largely depends on context:
+- At render time, this would be the Job that is currently rendering.
+- In the Monitor, this will typically be the currently-selected Job.</p></li>
+<li><p>See the <a class="reference internal" href="#tokens-ref-label"><span class="std std-ref">Token List</span></a> for a list of currently supported job property tokens.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>sys</strong></dt><dd><ul>
+<li><p>This type of token will be pulled from the underlying OS by Deadline.</p></li>
+<li><p>While some of these may be retrievable from the environment, the idea is to simplify these by making the retrieval consistent across OSes.</p></li>
+<li><p>See the <a class="reference internal" href="#tokens-ref-label"><span class="std std-ref">Token List</span></a> for a list of currently supported system property tokens.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>The possible values for a token name will be specific to the token type above, and tell the substitution code how to retrieve the value in question.</p>
+<p>For example, <code class="docutils literal notranslate"><span class="pre">${job:name}</span></code> would be swapped with the current Job’s Name, and <code class="docutils literal notranslate"><span class="pre">${env:USER}</span></code> would be swapped with the current value for the <em>USER</em> environment variable.</p>
+</div>
+<div class="section" id="token-list">
+<h3>Token List<a class="headerlink" href="#token-list" title="Permalink to this headline">¶</a></h3>
+<table class="colwidths-given docutils align-left" id="tokens-ref-label">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Token</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>${job:name}</p></td>
+<td><p>The Job’s name. The <em>Name</em> Job Property.</p></td>
+</tr>
+<tr class="row-odd"><td><p>${job:batch}</p></td>
+<td><p>The name of the Batch that this Job belongs to. The <em>BatchName</em> Job Property.</p></td>
+</tr>
+<tr class="row-even"><td><p>${job:user}</p></td>
+<td><p>The owner of the job. The <em>UserName</em> Job Property.</p></td>
+</tr>
+<tr class="row-odd"><td><p>${job:region}</p></td>
+<td><p>The region the job was submitted from. The <em>RegionName</em> Job Property.</p></td>
+</tr>
+<tr class="row-even"><td><p>${job:department}</p></td>
+<td><p>The Department to which the Job belongs. The <em>Department</em> Job Property.</p></td>
+</tr>
+<tr class="row-odd"><td><p>${job:group}</p></td>
+<td><p>The Group to which this Job belongs. The <em>Group</em> Job Property.</p></td>
+</tr>
+<tr class="row-even"><td><p>${job:pool}</p></td>
+<td><p>The Pool to which this Job belongs. The <em>Pool</em> Job Property.</p></td>
+</tr>
+<tr class="row-odd"><td><p>${job:secondary_pool}</p></td>
+<td><p>The Secondary Pool in which this Job belongs. The <em>SecondaryPool</em> Job Property.</p></td>
+</tr>
+<tr class="row-even"><td><p>${job:submit_machine}</p></td>
+<td><p>The machine that submitted the job. The <em>SubmitMachineName</em> Job Property.</p></td>
+</tr>
+<tr class="row-odd"><td><p>${job:submit_date}</p></td>
+<td><p>The date/time at which the job was submitted. The <em>SubmitDateTimeString</em> Job Property.</p></td>
+</tr>
+<tr class="row-even"><td><p>${job:started_date}</p></td>
+<td><p>The date/time at which the job started rendering. The <em>StartedDateTimeString</em> Job Property.</p></td>
+</tr>
+<tr class="row-odd"><td><p>${job:plugin}</p></td>
+<td><p>The name of the Deadline plugin the job uses. The <em>PluginName</em> Job Property.</p></td>
+</tr>
+<tr class="row-even"><td><p>${job:id}</p></td>
+<td><p>The job’s ID. The <em>JobId</em> Job Property.</p></td>
+</tr>
+<tr class="row-odd"><td><p>${job:status}</p></td>
+<td><p>The job’s current state. The <em>JobStatus</em> Job Property.</p></td>
+</tr>
+<tr class="row-even"><td><p>${sys:user}</p></td>
+<td><p>The operating system user.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="example-1-using-tokens-with-global-rules">
+<span id="global-rules-setup-ref-label"></span><h3>Example 1: Using Tokens with Global Rules<a class="headerlink" href="#example-1-using-tokens-with-global-rules" title="Permalink to this headline">¶</a></h3>
+<p>As a first example, let us assume that users will be submitting jobs to Deadline that rely on assets in <strong>project-specific</strong> folders that are mounted to the network drive P:locally.</p>
+<p>In this case, a Global Rule could be used to map the network drive to actual project-specific folder, assuming the project is stored in a property that is exposed as a Path Mapping token.
+For the sake of example, we will assume the Job’s pool corresponds to the parent project.</p>
+<p><strong>Global Path Mapping Rule</strong> example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Path: P:/
+Windows Path: \\shared\public\projects\${job:pool}\
+Linux Path: /mnt/shared/public/projects/${job:pool}/
+macOS Path: /Volumes/public/projects/${job:pool}/
+Region: All
+</pre></div>
+</div>
+<p>When the path mapping is performed, the <code class="docutils literal notranslate"><span class="pre">${job:pool}</span></code> tag will be replaced with the associated job’s Pool name (named after the project).</p>
+</div>
+<div class="section" id="example-2-using-tokens-with-submission-time-rules">
+<span id="submission-time-rules-setup-ref-label"></span><h3>Example 2: Using Tokens with Submission-Time Rules<a class="headerlink" href="#example-2-using-tokens-with-submission-time-rules" title="Permalink to this headline">¶</a></h3>
+<p>As another example, let us instead assume that assets will live in <strong>user-specific</strong> network folders, that are mounted to the U:drive on user machines.
+In this case, a Submission Time Rule with a <code class="docutils literal notranslate"><span class="pre">${sys:user}</span></code> could be used to allow render nodes to find these assets relative to the canonical network location at render time.</p>
+<p>To do this, you would simply create a Submission-Time rule similar to the one below:</p>
+<p><strong>Submission Time Path Mapping Rule</strong> example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Path: S:/
+Windows Path: \\shared\public\users\${sys:user}\
+Linux Path: /mnt/shared/public/users/${sys:user}/
+macOS Path: /Volumes/public/users/${sys:user}/
+Region: All
+</pre></div>
+</div>
+<p>Because tokens in Submission Time rules are replace at submission time, the submitted job will have a copy of the above rules where all the tokens have already been swapped.
+For example, if ‘Job A’ is submitted by user ‘Bob’, ‘Job A’ would contain the following job-specific rule:</p>
+<blockquote>
+<div><p>Path: S:/
+Windows Path: \sharedpublicusersBobLinux Path: /mnt/shared/public/users/Bob/
+macOS Path: /Volumes/public/users/Bob/
+Region: All</p>
+</div></blockquote>
+</div>
+<div class="section" id="example-3-using-tokens-with-aws-portal">
+<h3>Example 3: Using Tokens with AWS Portal<a class="headerlink" href="#example-3-using-tokens-with-aws-portal" title="Permalink to this headline">¶</a></h3>
+<p>For tokens to be used in Path Mapping on your AWS Portal instances, you will be required to setup Mapped Paths with tokens explicitly for the AWS Portal instances.</p>
+<p>For the purpose of this example, we are assuming that you have setup the AWS Portal Asset Server configured with <code class="docutils literal notranslate"><span class="pre">\\shared\public\users\</span></code> as a root directory.</p>
+<p>The simplest way to set this up is to create a rule that swaps <code class="docutils literal notranslate"><span class="pre">S:\</span></code> to <code class="docutils literal notranslate"><span class="pre">//shared/public/users/${sys:user}/</span></code> and enable Recursive Rule Application.
+This would then automatically derive the above rule by leveraging the pre-defined rule that was generated for you when defining your Asset Roots.</p>
+<p>If instead you would rather leave Recursive Rule Application disabled, you can still create an explicit rule that has the same effect.
+First you will need to locate the existing Global Path Mapping Rule that corresponds to your Asset Server Root (which should have been created for you).
+It should look similar to the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Path</span><span class="p">:</span> <span class="o">//</span><span class="n">shared</span><span class="o">/</span><span class="n">public</span><span class="o">/</span><span class="n">users</span><span class="o">/</span>
+<span class="n">Windows</span> <span class="n">Path</span><span class="p">:</span> <span class="n">E</span><span class="p">:</span>\<span class="n">sharedpublicusersfabb8458bf6fd0d757f7010b1511eb61</span>\
+<span class="n">Linux</span> <span class="n">Path</span><span class="p">:</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">Data</span><span class="o">/</span><span class="n">sharedpublicusersfabb8458bf6fd0d757f7010b1511eb61</span><span class="o">/</span>
+<span class="n">Region</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">stack</span> <span class="nb">id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>You can then pull the Windows and Linux Paths from the above mapping to use in token specific mappings.
+In order to leverage a token in the way previously described in the <a class="reference internal" href="#submission-time-rules-setup-ref-label"><span class="std std-ref">Submission Time Path Mapping Rules</span></a> example, you would have to setup a separate mapping like so for each infrastructure stack’s region:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Path: S:/
+Windows Path: E:\sharedpublicusersfabb8458bf6fd0d757f7010b1511eb61\${sys:user}\
+Linux Path: /mnt/Data/sharedpublicusersfabb8458bf6fd0d757f7010b1511eb61/${sys:user}/
+Region: &lt;stack id&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Path Mapping (Cross-Platform Rendering)</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#path-mapping-rule-types">Path Mapping Rule Types</a></li>
+<li><a class="reference internal" href="#path-mapping-setup">Path Mapping Setup</a></li>
+<li><a class="reference internal" href="#general-tips-and-recommendations">General Tips and Recommendations</a></li>
+<li><a class="reference internal" href="#application-specific-considerations">Application-Specific Considerations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#advanced-setup">Advanced Setup</a><ul>
+<li><a class="reference internal" href="#regions">Regions</a></li>
+<li><a class="reference internal" href="#recursively-apply-path-mapping-rules">Recursively Apply Path Mapping Rules</a></li>
+<li><a class="reference internal" href="#token-substitution">Token Substitution</a><ul>
+<li><a class="reference internal" href="#types-of-tokens">Types of Tokens</a></li>
+<li><a class="reference internal" href="#token-list">Token List</a></li>
+<li><a class="reference internal" href="#example-1-using-tokens-with-global-rules">Example 1: Using Tokens with Global Rules</a></li>
+<li><a class="reference internal" href="#example-2-using-tokens-with-submission-time-rules">Example 2: Using Tokens with Submission-Time Rules</a></li>
+<li><a class="reference internal" href="#example-3-using-tokens-with-aws-portal">Example 3: Using Tokens with AWS Portal</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="performance.html"
+                        title="previous chapter">Network Performance</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="script-menus.html"
+                        title="next chapter">Script Menus</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="script-menus.html" title="Script Menus"
+             >next</a></li>
+        <li class="right" >
+          <a href="performance.html" title="Network Performance"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" >Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Path Mapping (Cross-Platform Rendering)</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

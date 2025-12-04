@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Service &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="(Unsupported) License Forwarder" href="license-forwarder.html" />
+    <link rel="prev" title="Remote Connection Server" href="remote-connection-server.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="license-forwarder.html" title="(Unsupported) License Forwarder"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="remote-connection-server.html" title="Remote Connection Server"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" accesskey="U">Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Web Service</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="web-service">
+<span id="web-service-ref-label"></span><h1>Web Service<a class="headerlink" href="#web-service" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The deadlinewebservice application is a command line application for the Deadline render farm management system. It allows you to query information from Deadline over an Internet connection. You can write custom <a class="reference internal" href="web-service-scripts.html#web-service-scripts-ref-label"><span class="std std-ref">Web Service Scripts</span></a> to display this information in a manner of your choice, such as a web page.</p>
+<p>You can find the deadlinewebservice application in the Deadline bin folder (Windows or Linux) or the Resources folder (macOS).</p>
+</div>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>Before you can use the web service, you need to configure it. Global settings can be configured from the <a class="reference internal" href="repository-config.html#repo-web-service-ref-label"><span class="std std-ref">Web Service Settings</span></a> in the Repository Options.</p>
+<a class="reference internal image-reference" href="../_images/cro_web_service.png"><img alt="../_images/cro_web_service.png" src="../_images/cro_web_service.png" style="height: 500px;" /></a>
+<p>Per-machine settings can be configured using the deadline.ini file on the machine that the web service is running on. See the Client Configuration <a class="reference internal" href="client-config.html#client-config-web-service-ref-label"><span class="std std-ref">WebService Settings</span></a>.</p>
+</div>
+<div class="section" id="restful-http-api">
+<h2>RESTful HTTP API<a class="headerlink" href="#restful-http-api" title="Permalink to this headline">¶</a></h2>
+<p>The RESTful API in the web service can be used to request information from the database, store new data, alter existing data or remove entries from the database.</p>
+<p>The RESTful API should only be used with authentication enabled. Users with access to the Deadline Web Service are able to create, read, and edit jobs and logs. Workers will execute jobs created by a user. Authentication prevents the web service from being used by unauthorized parties.</p>
+<p>See the <a class="reference internal" href="rest-overview.html#rest-overview-ref-label"><span class="std std-ref">REST Overview</span></a> documentation for more information.</p>
+</div>
+<div class="section" id="additional-web-service-functionality">
+<h2>Additional Web Service Functionality<a class="headerlink" href="#additional-web-service-functionality" title="Permalink to this headline">¶</a></h2>
+<p>This additional web service functionality is still supported, but is now deprecated in favor of the new RESTful HTTP API.</p>
+<div class="section" id="connecting-to-the-web-service">
+<h3>Connecting to the Web Service<a class="headerlink" href="#connecting-to-the-web-service" title="Permalink to this headline">¶</a></h3>
+<p>You can connect to the web service using a URL containing the host name or IP address of the machine that is hosting the web service application, as well as the port, which we will assume to be 8081 for now (this can be configured in the Web Service Settings). Note that if port 8081 is being blocked by a firewall, the web service will not be able to accept web requests. An example URL will look like the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>http://[myhost]:8081/[command]?[arguments]
+</pre></div>
+</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><em>myhost</em> is your web service server’s IP address or host name.</p></li>
+<li><p><em>command</em> is the script name you want to execute. This is explained in the following section.</p></li>
+<li><p><em>arguments</em> represents the arguments being passed to the command. This can be optional, and depends on the command.</p></li>
+</ul>
+<p>To confirm that you can at least connect to the web service, try the following URL.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="p">[</span><span class="n">myhost</span><span class="p">]:</span><span class="mi">8081</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>You should see the following if you connect to the web service successfully:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>This is the Deadline web service!
+</pre></div>
+</div>
+</div>
+<div class="section" id="calling-python-scripts">
+<h3>Calling Python Scripts<a class="headerlink" href="#calling-python-scripts" title="Permalink to this headline">¶</a></h3>
+<p>The commands are actually Python scripts that you can create in the Repository. These scripts use Pulse’s Python API to get data, and then return the data in a readable manner. So basically, you can create scripts to access any type of data and display it in any way you want. See the <a class="reference internal" href="web-service-scripts.html#web-service-scripts-ref-label"><span class="std std-ref">Web Service Scripts</span></a> documentation for more information on how to create these scripts.</p>
+<p>Once a script has been created, you can call it by using the name of the script, without the .py extension. For example, if you have a web service script called GetFarmStatistics.py, you would call it using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="p">[</span><span class="n">myhost</span><span class="p">]:</span><span class="mi">8081</span><span class="o">/</span><span class="n">GetFarmStatistics</span>
+</pre></div>
+</div>
+<p>Some scripts can take arguments. To include arguments, you need to place a ‘?’ between the command name and the first argument, and then a ‘&amp;’ between additional arguments. Here is an example of how you would pass arg1, arg2, and arg3 as separate arguments to the GetFarmStatistics.py script:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>http://[myhost]:8081/GetFarmStatistics?arg1&amp;arg2&amp;arg3
+</pre></div>
+</div>
+<p>The way the results are displayed depends on the format in which they are returned. Again, see the Web Service Scripting documentation for more information.</p>
+</div>
+<div class="section" id="windows-namespace-reservation">
+<h3>Windows Namespace Reservation<a class="headerlink" href="#windows-namespace-reservation" title="Permalink to this headline">¶</a></h3>
+<p>If the web service is running on Windows, you may also need to add a namespace reservation for the current user that the web service is running under, so that it can reserve namespaces for the URL connection. See the Configuring Namespace Reservations section in this <a class="reference external" href="https://msdn.microsoft.com/en-us/library/ms733768.aspx">MSDN Article</a> for more information. Note, Windows XP users require SP2 to be installed and XP 64bit does <strong>NOT</strong> support namespace reservation. It is recommended to use a server based Windows OS such as Windows 2003, 2008 R2, 2012 or newer.</p>
+<p>Note that by default, the web service listens on http://*:8081/, so make sure you set the port number correctly in the URL you use when reserving the namespace. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">netsh</span> <span class="n">http</span> <span class="n">add</span> <span class="n">urlacl</span> <span class="n">url</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//*</span><span class="p">:</span><span class="mi">8081</span><span class="o">/</span> <span class="n">user</span><span class="o">=</span><span class="n">DOMAIN</span>\<span class="n">username</span>
+</pre></div>
+</div>
+<p>Ensure you have correctly elevated Windows permissions when executing the above in a command prompt and replace <code class="docutils literal notranslate"><span class="pre">username</span></code> with the appropriate <code class="docutils literal notranslate"><span class="pre">%USERNAME%</span></code> that the web service is running under. For machines not on a domain, simply remove the <code class="docutils literal notranslate"><span class="pre">DOMAIN</span></code> prefix, but keep the backslash. Depending on your local security policy, the user account may need to have local administrator rights temporarily for you to initially reserve the namespace. The namespace reservation will also need updating if you ever modify the port number or user account used. Use the following command in a command prompt to help list what namespace reservations are currently present on your machine:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">netsh</span> <span class="n">http</span> <span class="n">show</span> <span class="n">urlacl</span>
+</pre></div>
+</div>
+<p>Note that this is <strong>NOT</strong> the same reservation that is required for the <a class="reference internal" href="remote-connection-server.html#remote-connection-server-ref-label"><span class="std std-ref">Remote Connection Server</span></a>.</p>
+</div>
+<div class="section" id="linux-open-file-limits">
+<h3>Linux Open File Limits<a class="headerlink" href="#linux-open-file-limits" title="Permalink to this headline">¶</a></h3>
+<p>If the web service is running on Linux, it is recommended that you increase the maximum number of open files for the web service process. Since socket connections are treated as open files on Linux it is very easy for the default maximum value (1024) to be reached in an active farm. We recommend setting it to at least 200000. You can set by running the following command before running the web service:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ulimit</span> <span class="o">-</span><span class="n">n</span> <span class="mi">200000</span>
+</pre></div>
+</div>
+<p>The web service will check the file limit on startup and print a warning to the beginning of the log if it is set to a value that is too low, but will run anyway.</p>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="web-service-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Is Pulse required for the Standalone WebService to work?</strong></p>
+<blockquote>
+<div><p>No.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Web Service</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+<li><a class="reference internal" href="#restful-http-api">RESTful HTTP API</a></li>
+<li><a class="reference internal" href="#additional-web-service-functionality">Additional Web Service Functionality</a><ul>
+<li><a class="reference internal" href="#connecting-to-the-web-service">Connecting to the Web Service</a></li>
+<li><a class="reference internal" href="#calling-python-scripts">Calling Python Scripts</a></li>
+<li><a class="reference internal" href="#windows-namespace-reservation">Windows Namespace Reservation</a></li>
+<li><a class="reference internal" href="#linux-open-file-limits">Linux Open File Limits</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="remote-connection-server.html"
+                        title="previous chapter">Remote Connection Server</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="license-forwarder.html"
+                        title="next chapter">(Unsupported) License Forwarder</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="license-forwarder.html" title="(Unsupported) License Forwarder"
+             >next</a></li>
+        <li class="right" >
+          <a href="remote-connection-server.html" title="Remote Connection Server"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" >Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Web Service</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

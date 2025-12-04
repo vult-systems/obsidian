@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monitoring Jobs &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Controlling Jobs" href="job-controlling.html" />
+    <link rel="prev" title="Submitting Jobs" href="job-submitting.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="job-controlling.html" title="Controlling Jobs"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="job-submitting.html" title="Submitting Jobs"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-getting-started.html" accesskey="U">Getting Started With Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Monitoring Jobs</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="monitoring-jobs">
+<span id="job-monitoring-ref-label"></span><h1>Monitoring Jobs<a class="headerlink" href="#monitoring-jobs" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The Monitor application lets you monitor and control your jobs after they have been submitted to the farm. This documentation only covers some of the basics regarding the Monitor application. For more in-depth information,
+see the <a class="reference internal" href="monitor.html#monitor-ref-label"><span class="std std-ref">Monitor documentation</span></a>.</p>
+<a class="reference internal image-reference" href="../_images/monitor_preview.png"><img alt="../_images/monitor_preview.png" src="../_images/monitor_preview.png" style="height: 700px;" /></a>
+<p>If you’re launching the Monitor for the first time on your machine, you will be prompted with a Login dialog. Simply choose your user name or create a new one before continuing. Once the Monitor is running,
+you’ll see your user name in the bottom right corner. If this is the wrong user, you can switch to another user by selecting File -&gt; Change User. Note that if your administrator set up Deadline to lock the
+user to the system’s login account, you will have to log off of your system and log back in as the correct user.</p>
+<img alt="../_images/monitor_login.png" src="../_images/monitor_login.png" />
+</div>
+<div class="section" id="finding-your-jobs">
+<h2>Finding Your Jobs<a class="headerlink" href="#finding-your-jobs" title="Permalink to this headline">¶</a></h2>
+<p>Information in the Monitor is broken up into different panels. When monitoring your jobs, you typically want to use the following panels:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Job Panel</strong>: This panel shows all the jobs in the farm.</p></li>
+<li><p><strong>Task Panel</strong>: When a job is selected, this will show all the tasks for the job.</p></li>
+<li><p><strong>Job Reports Panel</strong>: When a job is selected, this will show all reports (logs and errors) for the job.</p></li>
+</ul>
+</div></blockquote>
+<p>These panels, and others, can be created from the View menu, or from the main toolbar. They can be re-sized, docked, or floated as desired. This allows for a highly customized viewing experience which is
+adaptable to the needs of different users. See the <a class="reference internal" href="monitor.html#monitor-panel-features-ref-label"><span class="std std-ref">Panel Features</span></a> documentation for instructions on how to create new panels in the Monitor.</p>
+<a class="reference internal image-reference" href="../_images/spawn_panel.png"><img alt="../_images/spawn_panel.png" src="../_images/spawn_panel.png" style="height: 350px;" /></a>
+<p>The easiest way to find your jobs is to enable Ego-Centric Sorting in the job panel’s drop down menu, which can be found in the upper-right corner of the panel. This keeps all of your jobs at the top of the job list,
+regardless of which column the job list is sorted on. Then sort on the Submit Date/Time column to show your jobs in the order they were submitted.</p>
+<a class="reference internal image-reference" href="../_images/ego_centric.png"><img alt="../_images/ego_centric.png" src="../_images/ego_centric.png" style="height: 450px;" /></a>
+</div>
+<div class="section" id="filtering-the-job-list">
+<h2>Filtering the Job List<a class="headerlink" href="#filtering-the-job-list" title="Permalink to this headline">¶</a></h2>
+<p>Another way to find the jobs you are interested in is to use the filtering options in the job panel. The Quick Filter option in the job panel’s drop down menu will open a side panel that allows you to
+filter jobs using the Quick Filters, or using the advanced Filters. Quick filters can filter on job status, pool, group, secondary pool, plugin or user and are applied as they are toggled.</p>
+<a class="reference internal image-reference" href="../_images/filtering.png"><img alt="../_images/filtering.png" src="../_images/filtering.png" style="height: 350px;" /></a>
+<p>For more advanced filtering, use the Filters section of the panel. Any changes made in the Filters section will not be applied to the panel until the “Apply” button is pressed.</p>
+<a class="reference internal image-reference" href="../_images/monitor_filter_panel.png"><img alt="../_images/monitor_filter_panel.png" src="../_images/monitor_filter_panel.png" style="height: 350px;" /></a>
+<p>You can also use the Edit Filter option in the drop down menu to filter on any column in the job list. If you would like to save a filter for later use, use the Pinned Filters option in the drop down
+menu to pin your filter. You will then be able to select it later from the Pinned Filters sub menu.</p>
+<p><a class="reference internal" href="../_images/job_edit_filter_menu.png"><img alt="job_edit_filter_menu" src="../_images/job_edit_filter_menu.png" style="height: 350px;" /></a> <a class="reference internal" href="../_images/job_edit_filter.png"><img alt="job_edit_filter" src="../_images/job_edit_filter.png" style="height: 350px;" /></a></p>
+<p>Finally, you can use the search box above the job list to filter your results even further.</p>
+<a class="reference internal image-reference" href="../_images/job_search.png"><img alt="../_images/job_search.png" src="../_images/job_search.png" style="height: 200px;" /></a>
+</div>
+<div class="section" id="job-batches">
+<h2>Job Batches<a class="headerlink" href="#job-batches" title="Permalink to this headline">¶</a></h2>
+<p>Jobs that share the same Batch Name property will be grouped together in the job list. All of the job submitters that are included with Deadline will automatically set the Batch Name if they are submitting multiple jobs that are related to each other. The Batch Name for a job can be modified in the <a class="reference internal" href="job-controlling.html#job-properties-ref-label"><span class="std std-ref">Job Properties</span></a> in the Monitor.</p>
+<a class="reference internal image-reference" href="../_images/job_batch_example.png"><img alt="../_images/job_batch_example.png" src="../_images/job_batch_example.png" style="height: 350px;" /></a>
+<p>If you prefer to not have the jobs grouped together in the job list, you can disable the Job Batch Grouping option in the drop down menu.</p>
+<a class="reference internal image-reference" href="../_images/job_batch_menu.png"><img alt="../_images/job_batch_menu.png" src="../_images/job_batch_menu.png" style="height: 350px;" /></a>
+</div>
+<div class="section" id="controlling-your-jobs">
+<h2>Controlling Your Jobs<a class="headerlink" href="#controlling-your-jobs" title="Permalink to this headline">¶</a></h2>
+<p>If you need to pause your job, you can right-click on the job in the job list and select Suspend job. When you are ready to let the job continue, simply right-click on the job again and select Resume Job.
+See the <a class="reference internal" href="job-controlling.html#job-states-ref-label"><span class="std std-ref">Job States</span></a> documentation for more information.</p>
+<p><a class="reference internal" href="../_images/suspend_job.png"><img alt="suspend_job" src="../_images/suspend_job.png" style="height: 300px;" /></a> <a class="reference internal" href="../_images/resume_job.png"><img alt="resume_job" src="../_images/resume_job.png" style="height: 300px;" /></a></p>
+<p>To modify the properties of your job, you can double-click on the job, or right-click on it and select Modify Properties. Here you can change scheduling options such as priority and pool, as well as other general properties like the job name.</p>
+<p>If you wish to limit which render nodes your job runs on, as well as the number of nodes that can render it concurrently, you can do so on the Machine Limit page.</p>
+<p>Depending on the application you’re rendering with, you may see an extra page at the bottom of the properties list (with the name of the plugin). This page will allow you to modify properties which are specific to that application. More information on job properties can be found in the <a class="reference internal" href="job-controlling.html#job-properties-ref-label"><span class="std std-ref">Job Properties</span></a> documentation.</p>
+<a class="reference internal image-reference" href="../_images/jp_general.png"><img alt="../_images/jp_general.png" src="../_images/jp_general.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="how-can-i-view-job-statistics">
+<h2>How Can I View Job Statistics?<a class="headerlink" href="#how-can-i-view-job-statistics" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="monitor.html#monitor-job-details-ref-label"><span class="std std-ref">Job Details</span></a> panel shows all available information about the job that is currently selected. The information is split up into different sections that can be expanded or collapsed as desired. Job statistical information can be found by expanding the <strong>Statistics</strong> section as shown below.</p>
+<a class="reference internal image-reference" href="../_images/monitor_job_details_panel_stats.png"><img alt="../_images/monitor_job_details_panel_stats.png" src="../_images/monitor_job_details_panel_stats.png" style="height: 600px;" /></a>
+</div>
+<div class="section" id="why-is-my-job-not-rendering">
+<h2>Why Is My Job Not Rendering?<a class="headerlink" href="#why-is-my-job-not-rendering" title="Permalink to this headline">¶</a></h2>
+<p>If your job isn’t being rendered and you think it should be, you can use the <a class="reference internal" href="job-controlling.html#job-render-candidates-ref-label"><span class="std std-ref">Find Render Candidates..</span></a> feature in the the Job List right-click menu. This will help you determine which Workers can render the job and more importantly, the reason
+why a Worker cannot render the job.</p>
+<p>Alternatively you can use the Job Candidate Filter option in the panel’s drop down menu to see the Workers that can render the job. See the <a class="reference internal" href="worker-config.html#worker-job-candidate-ref-label"><span class="std std-ref">Job Candidate Filter</span></a> section in the Worker Configuration documentation for more information.</p>
+<p>The job could also be producing errors when rendering. See <a class="reference internal" href="#handerrors-ref-label"><span class="std std-ref">Handling Job Errors</span></a> below.</p>
+</div>
+<div class="section" id="why-is-my-pending-job-not-being-released">
+<h2>Why Is My Pending Job Not Being Released?<a class="headerlink" href="#why-is-my-pending-job-not-being-released" title="Permalink to this headline">¶</a></h2>
+<p>Pending job scans (to release a pending job as all its dependencies are now true) are carried out by IDLE Workers and <a class="reference internal" href="pulse.html#pulse-ref-label"><span class="std std-ref">Pulse</span></a> if it is running.</p>
+<p>Note you can stop Workers from executing the pending job scan via the <a class="reference internal" href="repository-config.html#pending-job-scan-settings-label"><span class="std std-ref">Pending Job Scan Settings</span></a> in your <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Config</span></a>. In this case, only Pulse will execute the pending job scan.</p>
+<p>To understand why a pending job is not being ‘released’ by the pending job scan, please consult the <a class="reference internal" href="job-controlling.html#job-dependency-options-ref-label"><span class="std std-ref">Job Dependency Options</span></a> via the job properties dialog. Additionally, the <strong>Test Dependencies</strong> (play symbol) button in the <a class="reference internal" href="job-controlling.html#dependency-view-ref-label"><span class="std std-ref">Dependency View</span></a> can be used to see what is stopping a pending job from being released. The Worker/Pulse log can also be considered for further information together with <strong>Verbose Logging</strong> enabled which is configured via <a class="reference internal" href="repository-config.html#application-logging-ref-label"><span class="std std-ref">Application Logging</span></a>.</p>
+<p>Finally, if ALL your Workers are busy rendering (i.e. never IDLE), then the release of jobs from the ‘pending’ state can seem to take a long time in your farm. Running Pulse solves this issue, as it carries out ‘regular’ pending job scans and therefore helps to ‘regulate’ your farm, providing consistency. Yet, if Pulse fails, the Workers will still execute the pending job scan, just not so frequently due to the reason outlined above. You can also run multiple Pulses to provide <a class="reference internal" href="pulse-config.html#pulse-config-redundancy-ref-label"><span class="std std-ref">Pulse Redundancy</span></a>.</p>
+</div>
+<div class="section" id="handling-job-errors">
+<span id="handerrors-ref-label"></span><h2>Handling Job Errors<a class="headerlink" href="#handling-job-errors" title="Permalink to this headline">¶</a></h2>
+<p>If your job starts producing errors, you’ll notice it will change from green to brown, then eventually to red (depending on the number of errors). These error reports can be viewed in the Job Reports panel.</p>
+<p>To open the Job Reports panel go to View menu, or right-click you job and select. Here you will find all the reports generated for a job including the error reports which will be red. You can filter and sort the reports to help find what you are looking for.</p>
+<p>Often, the error reports will clearly show what the cause of the error is, allowing you can take the appropriate steps to resolve the problem. If you’re ever unsure of what an error means, feel free to send the error report to <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> and we will happily do our best to assist you. See the <a class="reference internal" href="job-controlling.html#job-reports-history-ref-label"><span class="std std-ref">Job Reports and History</span></a> documentation for more information.</p>
+<a class="reference internal image-reference" href="../_images/monitor_job_report_panel.png"><img alt="../_images/monitor_job_report_panel.png" src="../_images/monitor_job_report_panel.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="completed-jobs">
+<h2>Completed Jobs<a class="headerlink" href="#completed-jobs" title="Permalink to this headline">¶</a></h2>
+<p>When your job is complete, you can view the output images by right-clicking on the individual tasks in the task list and selecting the output filename. The image will open in the image veiwer you have set for the file type.</p>
+<p>Note that this option isn’t always available for some applications. In most cases, you can view the output image folder by right-clicking on the job and selecting Explore Output. See the <a class="reference internal" href="job-controlling.html#job-output-ref-label"><span class="std std-ref">Job Output</span></a> documentation for more information.</p>
+<p>You can also view the logs for the job in the Job Reports panel, which can be opened from the View menu, or from the job’s right-click menu. Finally, once you are happy with the results and no longer need the job, you can delete it by right-clicking on the job and selecting Delete Job.</p>
+<a class="reference internal image-reference" href="../_images/completed_job_reports.png"><img alt="../_images/completed_job_reports.png" src="../_images/completed_job_reports.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="re-rendering-jobs">
+<h2>Re-rendering Jobs<a class="headerlink" href="#re-rendering-jobs" title="Permalink to this headline">¶</a></h2>
+<p>If you have a completed job that you need to re-render, you can do so by right-clicking on the job and selecting Requeue Job. If you only need to re-render a few bad frames, you can just requeue their corresponding tasks by right-clicking on one or more tasks in the task list, selecting Requeue Tasks.</p>
+<p>In some cases, the Monitor can try to detect bad frames for you. You can use this feature by right-clicking on the job and selecting Scan For Missing Output. The scan will check for missing frames or frames that don’t meet a size threshold. You will then have the option to requeue all the corresponding tasks automatically.</p>
+<p>Note that the Scan For Missing Output option isn’t available for all jobs. See the <a class="reference internal" href="job-controlling.html#job-output-ref-label"><span class="std std-ref">Job Output</span></a> documentation for more information.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Monitoring Jobs</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#finding-your-jobs">Finding Your Jobs</a></li>
+<li><a class="reference internal" href="#filtering-the-job-list">Filtering the Job List</a></li>
+<li><a class="reference internal" href="#job-batches">Job Batches</a></li>
+<li><a class="reference internal" href="#controlling-your-jobs">Controlling Your Jobs</a></li>
+<li><a class="reference internal" href="#how-can-i-view-job-statistics">How Can I View Job Statistics?</a></li>
+<li><a class="reference internal" href="#why-is-my-job-not-rendering">Why Is My Job Not Rendering?</a></li>
+<li><a class="reference internal" href="#why-is-my-pending-job-not-being-released">Why Is My Pending Job Not Being Released?</a></li>
+<li><a class="reference internal" href="#handling-job-errors">Handling Job Errors</a></li>
+<li><a class="reference internal" href="#completed-jobs">Completed Jobs</a></li>
+<li><a class="reference internal" href="#re-rendering-jobs">Re-rendering Jobs</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="job-submitting.html"
+                        title="previous chapter">Submitting Jobs</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="job-controlling.html"
+                        title="next chapter">Controlling Jobs</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="job-controlling.html" title="Controlling Jobs"
+             >next</a></li>
+        <li class="right" >
+          <a href="job-submitting.html" title="Submitting Jobs"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-getting-started.html" >Getting Started With Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Monitoring Jobs</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

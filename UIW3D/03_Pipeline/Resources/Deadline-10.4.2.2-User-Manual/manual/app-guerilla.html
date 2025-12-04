@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guerilla &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Harmony" href="app-harmony.html" />
+    <link rel="prev" title="Generation" href="app-generation.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-harmony.html" title="Harmony"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-generation.html" title="Generation"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Guerilla</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="guerilla">
+<span id="app-guerilla-ref-label"></span><h1>Guerilla<a class="headerlink" href="#guerilla" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs from within Guerilla by installing the <a class="reference internal" href="#app-guerilla-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a>, or you can submit them from the Monitor. The instructions for installing the <a class="reference internal" href="#app-guerilla-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<p>To submit from within Guerilla, make sure Deadline is set as the Active Farm (see the integrated submission script section below for more information). Then open the Render menu in Guerilla and select Farm Render.</p>
+<p><a class="reference internal" href="../_images/sub_guerilla.png"><img alt="integrated" src="../_images/sub_guerilla.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_guerilla_monitor.png"><img alt="monitor" src="../_images/sub_guerilla_monitor.png" style="height: 400px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.</p>
+<p><strong>Submitting from Guerilla</strong></p>
+<p>To submit from Guerilla, open the Render menu in Guerilla and select Farm Render. When submitting from within Guerilla, the Job Name, Jobs Directory, Additional Arguments, and Frame List are set automatically based on the settings in your Guerilla project. In addition, job dependencies will automatically be created if necessary when multiple jobs are being submitted. For example, if you have a pre-render pass to bake out an object, both the pre and frame jobs will be submitted, and the frame job will be dependent on the pre job.</p>
+<p>Distributed jobs are also supported when submitting from within Guerilla. To set up a distributed job, open the Preferences in Guerilla, expand Rendering, expand Render Farm Settings, and then set the Render Distributed setting to the number of distributed jobs to use.</p>
+<a class="reference internal image-reference" href="../_images/guerilla_distributed.png"><img alt="../_images/guerilla_distributed.png" src="../_images/guerilla_distributed.png" style="height: 400px;" /></a>
+<p>It is also possible to submit jobs to Deadline directly from the Guerilla plugin in Maya. From the Guerilla menu, select Export Cache, but make sure to click the mouse on the <em>square</em> on the right.</p>
+<a class="reference internal image-reference" href="../_images/guerilla_maya_export.png"><img alt="../_images/guerilla_maya_export.png" src="../_images/guerilla_maya_export.png" style="height: 100px;" /></a>
+<p>When the export dialog comes up, select <em>Submit To The Farm</em> as the action to take after export, and then press the Export button. After the export has finished, the submission dialog will be shown, just like as if you were submitting from within Guerilla.</p>
+<a class="reference internal image-reference" href="../_images/guerilla_maya_export_options.png"><img alt="../_images/guerilla_maya_export_options.png" src="../_images/guerilla_maya_export_options.png" style="height: 300px;" /></a>
+<p><strong>Submitting from the Monitor</strong></p>
+<p>When submitting from the Monitor, the necessary Lua files must already be exported from the Guerilla project you want to render. The Guerilla specific options are:</p>
+<ul class="simple">
+<li><p>LUA Files: The Lua files to render. The Frame List will automatically be set based on the selected Lua file.</p></li>
+<li><p>Additional Arguments: Additional command line arguments to pass to the Guerilla renderer.</p></li>
+</ul>
+<p>Note that submitting from the Monitor isn’t as flexible, and can’t do things like automatically set up Guerilla job dependencies. It is typically recommended to submit from within Guerilla or Maya.</p>
+</div>
+</div>
+<div class="section" id="cross-platform-rendering-considerations">
+<h2>Cross-Platform Rendering Considerations<a class="headerlink" href="#cross-platform-rendering-considerations" title="Permalink to this headline">¶</a></h2>
+<p>While Deadline does support path mapping for the path to the Lua file to be rendered, it does not support path mapping for the contents of any of the Guerilla documents, so it is recommended to follow the information below when rendering in a cross-platform environment.</p>
+<p><em>Note that this information is taken directly from Guerilla’s documentation for file name and render farm considerations.</em></p>
+<p>In order to perform cross-platform rendering with Guerilla, all the file names used in your documents (the .ghostdata file names, the texture file names, etc.) must be valid on all render nodes. One way to do this is to mount the same network drive on all the computers and store all the resources on the network.</p>
+<p>Guerilla for Linux is able to translate the Windows file names into Linux-friendly file names. For example, the file name “c:\file.ext” will be translated to “$(C_DRIVE)/file.ext”. In order for this file name to work under Linux, you will have to define the “C_DRIVE” environment variable with a valid path on all the Linux computers.</p>
+<p>In case of a heterogeneous render farm, always use the Windows style file names.</p>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Guerilla plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Guerilla plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_guerilla.png"><img alt="../_images/cp_guerilla.png" src="../_images/cp_guerilla.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p>Guerilla Lua Executable: The path to the Guerilla lua executable used for rendering. Enter alternative paths on separate lines.</p></li>
+</ul>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-guerilla-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to install the integrated Guerilla submission script. This script allows for submitting Guerilla render jobs to Deadline directly from within the Guerilla editing GUI.</p>
+<p>You can either run the submitter installer or manually install the submission script.</p>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/Guerilla/Installers</span></code>.</p>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="n">Guerilla</span>\<span class="n">Client</span>\<span class="n">deadline_renderfarm</span><span class="o">.</span><span class="n">lua</span> <span class="n">to</span> <span class="n">the</span> <span class="o">*</span><span class="n">plugins</span><span class="o">*</span> <span class="n">folder</span> <span class="ow">in</span> <span class="n">your</span> <span class="n">Guerilla</span> <span class="n">installation</span> <span class="n">folder</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="verify-installation">
+<h3>Verify Installation<a class="headerlink" href="#verify-installation" title="Permalink to this headline">¶</a></h3>
+<p>After installing the submission script, launch Guerilla and open the Preferences. Expand Local Settings, and then expand Render Farm, and select Deadline as the Active Farm.</p>
+<a class="reference internal image-reference" href="../_images/guerilla_preferences.png"><img alt="../_images/guerilla_preferences.png" src="../_images/guerilla_preferences.png" style="height: 400px;" /></a>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-guerilla-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Are Guerilla job dependencies supported?</strong></p>
+<blockquote>
+<div><p>Yes. All pre, post, and frame type jobs will be submitted to Deadline with the appropriate dependencies set up.</p>
+</div></blockquote>
+<p><strong>Are distributed jobs supported?</strong></p>
+<blockquote>
+<div><p>Yes. Distributed jobs can be submitted to Deadline, and the appropriate dependencies will be set up.</p>
+</div></blockquote>
+<p><strong>Can I submit to Deadline from the Guerilla plugin in Maya?</strong></p>
+<blockquote>
+<div><p>Yes.</p>
+</div></blockquote>
+<p><strong>When submitting from Guerilla on Windows, a bunch of command prompts appear and disappear during submission.</strong></p>
+<blockquote>
+<div><p>This is due to the way that Lua (Guerilla’s scripting language) launches processes on Windows. Unfortunately, there is no known workaround at this time.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages And Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Guerilla error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Guerilla</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cross-platform-rendering-considerations">Cross-Platform Rendering Considerations</a></li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+<li><a class="reference internal" href="#verify-installation">Verify Installation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages And Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-generation.html"
+                        title="previous chapter">Generation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-harmony.html"
+                        title="next chapter">Harmony</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-harmony.html" title="Harmony"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-generation.html" title="Generation"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Guerilla</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

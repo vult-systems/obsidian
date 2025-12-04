@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1. AWS Portal Infrastructure Overview &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thinkbox.css" />
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2. Creating a Deadline AWS Portal Infrastructure" href="usage-infrastructure-creation.html" />
+    <link rel="prev" title="Using AWS Portal" href="usage-overview.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="usage-infrastructure-creation.html" title="2. Creating a Deadline AWS Portal Infrastructure"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="usage-overview.html" title="Using AWS Portal"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="usage-overview.html" accesskey="U">Using AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">1. </span>AWS Portal Infrastructure Overview</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="../aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<div class="section" id="aws-portal-infrastructure-overview">
+<span id="aws-portal-usage-infrastructure-overview-ref-label"></span><h1><span class="section-number">1. </span>AWS Portal Infrastructure Overview<a class="headerlink" href="#aws-portal-infrastructure-overview" title="Permalink to this headline">¶</a></h1>
+<p>The AWS Portal infrastructure is your secure gateway between your on-premise repository and render assets and your cloud render nodes. It coordinates
+the communication of your cloud render Workers and your on-premise Repository. It also aids in the transfer of render assets to the correct Worker
+instance and return of any render output back to your on-premise network. It is an integral part of AWS Portal.</p>
+<p>Currently, only <strong>one</strong> infrastructure is supported per on-premise render farm. If you currently have an infrastructure running, you do not need to
+start one and can skip ahead to <a class="reference internal" href="usage-spot-fleet-configuration-dialog.html#aws-portal-usage-spot-fleet-configuration-dialog-ref-label"><span class="std std-ref">Spot Fleet Creation</span></a>.</p>
+<p>You can find more information about AWS Portal in general <a class="reference internal" href="../aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>AWS Portal infrastructures do incur a cost when running. Please make sure that you check the estimated cost for running an
+infrastructure before you launch one. You can learn more about AWS Portal costs <a class="reference internal" href="../aws-portal-costs.html#aws-portal-costs-ref-label"><span class="std std-ref">here</span></a>.</p>
+</div>
+<div class="section" id="configure-infrastructure-dialog-overview">
+<h2><span class="section-number">1.1. </span>Configure Infrastructure Dialog Overview<a class="headerlink" href="#configure-infrastructure-dialog-overview" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="settings-tab-overview">
+<h3><span class="section-number">1.1.1. </span>Settings Tab Overview<a class="headerlink" href="#settings-tab-overview" title="Permalink to this headline">¶</a></h3>
+<p>This is the dialog in which you will configure and launch your AWS Portal Infrastructure.</p>
+<img alt="../../_images/spot-fleet-infrastructure-dialog-main.png" src="../../_images/spot-fleet-infrastructure-dialog-main.png" />
+<p>This is the main tab you will use when configuring an infrastructure.</p>
+<ul class="simple">
+<li><p><strong>Infrastructure Name</strong>: This text field allows you to set the name of your infrastructure. The infrastructure name is just used for a more human readable way of identifying your infrastructure. All infrastructures created are given a unique ID that will be assigned at the time of creation.</p></li>
+<li><p><strong>Region</strong>: Drop down list of available AWS Regions you can start your infrastructure in. Generally, you will want to choose the region that is closest to you geographically. You can learn more about AWS Regions and selection the right one <a class="reference external" href="https://aws.amazon.com/about-aws/global-infrastructure/">here</a>.</p></li>
+<li><p><strong>Availability Zones</strong>: Drop down list of AWS Availability Zones based on the Region you selected. We recommend the default selection of <strong>No Preference</strong>.  You can learn more about AWS Availability Zones <a class="reference external" href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html">here</a>.</p></li>
+<li><p><strong>Estimate Monthly Infrastructure Cost</strong>: Opens a webpage that will help you estimate the monthly cost of running an infrastructure. You can learn more about costs and pricing <a class="reference internal" href="../aws-portal-costs.html#aws-portal-costs-ref-label"><span class="std std-ref">here</span></a>.</p></li>
+<li><p><strong>Client Certificate</strong>: The client TLS certificate required to connect to your Remote Connection Server. This would have been generated or chosen during installation the <a class="reference internal" href="../aws-portal-setup-installing-the-deadline-client.html#aws-portal-setup-installing-the-client-ref-label"><span class="std std-ref">Deadline Client installation</span></a> if you selected the “Enable TLS (HTTPS)” option. (For example, the default path for a windows installation is <code class="docutils literal notranslate"><span class="pre">C:/Program</span> <span class="pre">Files/Thinkbox/Deadline10/certs/Deadline10RemoteClient.pfx</span></code>)</p></li>
+<li><p><strong>Certificate Passphrase</strong>: The passphrase of the client TLS certificate.</p></li>
+<li><p><strong>Full RCS Hostname</strong>: The full hostname of the machine that is running the Remote Connection Server.</p></li>
+</ul>
+</div>
+<div class="section" id="tags-tab-overview">
+<h3><span class="section-number">1.1.2. </span>Tags Tab Overview<a class="headerlink" href="#tags-tab-overview" title="Permalink to this headline">¶</a></h3>
+<img alt="../../_images/spot-fleet-infrastructure-dialog-tags.png" src="../../_images/spot-fleet-infrastructure-dialog-tags.png" />
+<p>The <strong>Tags</strong> tab allows you to add your own meta data to the resources acquired by your infrastructure. This
+is used to aid in the management of your fleet/resources. Tags can be very useful for cost allocation in billing.
+You can learn more about tags <a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">here</a> and costs <a class="reference internal" href="../aws-account-considerations.html#aws-account-considerations-ref-label"><span class="std std-ref">here</span></a>.</p>
+<ul class="simple">
+<li><p><strong>Tag List</strong>: This is the list of tags that you currently have assigned to your infrastructure. You can select a row to <strong>Remove</strong> or <strong>Edit</strong> the entry.</p></li>
+<li><p><strong>Key and Value Fields</strong>: Enter in the key and value you want for a new tag in these text boxes.</p></li>
+<li><p><strong>Add</strong>: Adds the text that is currently in the <strong>Key</strong> and <strong>Value</strong> text fields when clicked.</p></li>
+<li><p><strong>Remove</strong>: Removes the currently selected tag key/value pair in the <strong>Tag List</strong>.</p></li>
+<li><p><strong>Edit</strong>: Opens a dialog that will allow you to edit the key and value fields of the currently selected key/value pair in the <strong>Tag List</strong>.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="next-steps">
+<h2><span class="section-number">1.2. </span>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<p>Now that you are familiar with the <strong>Configure Infrastructure</strong> dialog, we will go through the steps of opening it in the Deadline Monitor
+and <a class="reference internal" href="usage-infrastructure-creation.html#aws-portal-usage-infrastructure-creation-ref-label"><span class="std std-ref">Creating a Deadline AWS Portal Infrastructure</span></a>.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1. AWS Portal Infrastructure Overview</a><ul>
+<li><a class="reference internal" href="#configure-infrastructure-dialog-overview">1.1. Configure Infrastructure Dialog Overview</a><ul>
+<li><a class="reference internal" href="#settings-tab-overview">1.1.1. Settings Tab Overview</a></li>
+<li><a class="reference internal" href="#tags-tab-overview">1.1.2. Tags Tab Overview</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#next-steps">1.2. Next Steps</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="usage-overview.html"
+                        title="previous chapter">Using AWS Portal</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="usage-infrastructure-creation.html"
+                        title="next chapter"><span class="section-number">2. </span>Creating a Deadline AWS Portal Infrastructure</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="usage-infrastructure-creation.html" title="2. Creating a Deadline AWS Portal Infrastructure"
+             >next</a></li>
+        <li class="right" >
+          <a href="usage-overview.html" title="Using AWS Portal"
+             >previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="usage-overview.html" >Using AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">1. </span>AWS Portal Infrastructure Overview</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

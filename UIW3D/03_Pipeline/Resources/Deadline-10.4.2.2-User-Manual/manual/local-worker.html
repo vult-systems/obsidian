@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Local Worker Controls &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Logs" href="logs.html" />
+    <link rel="prev" title="Monitor and User Settings" href="user-settings.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="logs.html" title="Logs"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="user-settings.html" title="Monitor and User Settings"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-getting-started.html" accesskey="U">Getting Started With Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Local Worker Controls</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="local-worker-controls">
+<span id="local-worker-ref-label"></span><h1>Local Worker Controls<a class="headerlink" href="#local-worker-controls" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The Local Worker Controls allow you to control the Worker on your machine, as well as configure Idle Detection and the Job Dequeueing Mode. You can access the Local Worker Controls from the Launcher’s menu, or from the Tools menu in the Monitor.</p>
+<a class="reference internal image-reference" href="../_images/local_worker_controls.png"><img alt="../_images/local_worker_controls.png" src="../_images/local_worker_controls.png" style="width: 450px;" /></a>
+<p>Note that it is possible for Administrators to disable the Local Worker Controls. If that’s the case, you will see the following message when trying to open them.</p>
+<p><em>You are not part of a User Group that has access to this Feature at this time, please see your system administrator for more details.</em></p>
+</div>
+<div class="section" id="worker-controls">
+<h2>Worker Controls<a class="headerlink" href="#worker-controls" title="Permalink to this headline">¶</a></h2>
+<p>This section allows you to view the state of the Worker running on your machine. Also, if the Worker is rendering, you can see which job it is currently rendering in the list. Finally, you can control the Worker on you machine by right-clicking on them in the list.</p>
+<a class="reference internal image-reference" href="../_images/local_worker_controls_control.png"><img alt="../_images/local_worker_controls_control.png" src="../_images/local_worker_controls_control.png" style="width: 450px;" /></a>
+<p>More information about the available controls can be found in the <a class="reference internal" href="remote-control.html#remote-control-ref-label"><span class="std std-ref">Remote Control</span></a> documentation.</p>
+</div>
+<div class="section" id="override-idle-detection">
+<span id="override-idle-detection-ref-label"></span><h2>Override Idle Detection<a class="headerlink" href="#override-idle-detection" title="Permalink to this headline">¶</a></h2>
+<p>This section overrides the global Worker Scheduling settings for your machine (if there are any). It can be used to start the Worker when your machine becomes idle (based on keyboard and mouse activity), and stop the Worker when the machine is in use again. Note that Idle Detection is managed by the Launcher, so it must be running for this feature to work.</p>
+<a class="reference internal image-reference" href="../_images/local_worker_controls_idle.png"><img alt="../_images/local_worker_controls_idle.png" src="../_images/local_worker_controls_idle.png" style="width: 450px;" /></a>
+<p>The available Idle Detection settings are as follows:</p>
+<ul class="simple">
+<li><p><strong>Start Worker When Machine Is Idle For</strong>: This option enables Idle Detection, and you can specify the number of minutes without keyboard, mouse or tablet activity before the Worker should start.</p></li>
+<li><p><strong>Only Start Worker If CPU Usage Less Than</strong>: If enabled, the Worker will only start if the machine’s CPU usage is less then the given value.</p></li>
+<li><p><strong>Only Start Worker If Memory Usage Less Than</strong>: If enabled, this will override the global settings. The Worker will only start if the machine is using at least this much memory.</p></li>
+<li><p><strong>Only Start Worker If Free Memory More Than</strong>: If enabled, the Worker will only start if the machine has this much free memory available.</p></li>
+<li><p><strong>Only Start Worker If These Processes Are Not Running</strong>: If enabled, the Worker will not start if any of the listed processes are running.</p></li>
+<li><p><strong>Only Start Worker If Launcher Is Not Running As These Users</strong>: If enabled, the Worker will not start if the Launcher process is running as any of the listed users.</p></li>
+<li><p><strong>Stop Worker When Machine Is No Longer Idle</strong>: If enabled, the Worker will automatically stop when there is keyboard, mouse or tablet activity again.</p></li>
+<li><p><strong>Only Stop Worker If Started By Idle Detection</strong>: If enabled, the Worker will only be stopped when the machine is no longer idle if that Worker was originally started by Idle Detection. If the Worker was originally started manually, it will not be stopped.</p></li>
+<li><p><strong>Allow Worker To Finish Its Current Task When Stopping</strong>: If enabled, the Worker will finish its current task before stopping when the machine is no longer idle. If disabled, the Worker wil requeue its current task before stopping so that another Worker can render it.</p></li>
+</ul>
+<p>There are some limitations with Idle Detection depending on the operating system:</p>
+<ul class="simple">
+<li><p>On Windows, Idle Detection will NOT work if the Launcher is running as a service. This is because the service runs in an environment that is separate from the Desktop, and has no knowledge of any mouse or keyboard activity.</p></li>
+<li><p>On Linux, the Launcher uses <a class="reference internal" href="install-client.html#linux-install-ref-label"><span class="std std-ref">X11</span></a> to determine if there has been any mouse or keyboard activity. If <a class="reference internal" href="install-client.html#linux-install-ref-label"><span class="std std-ref">X11</span></a> is not available, Idle Detection will NOT work. One such situation is when the launcher is run as a daemon.</p></li>
+</ul>
+</div>
+<div class="section" id="job-dequeueing-mode">
+<span id="job-dequeuing-mode-ref-label"></span><h2>Job Dequeueing Mode<a class="headerlink" href="#job-dequeueing-mode" title="Permalink to this headline">¶</a></h2>
+<p>This section can be used to control how your Worker dequeues jobs.</p>
+<a class="reference internal image-reference" href="../_images/local_worker_controls_mode.png"><img alt="../_images/local_worker_controls_mode.png" src="../_images/local_worker_controls_mode.png" style="width: 450px;" /></a>
+<p>The available dequeueing modes are:</p>
+<ul class="simple">
+<li><p><strong>All Jobs</strong>: This is the default behavior. The Worker will dequeue any job that it can work on.</p></li>
+<li><p><strong>Only Jobs Submitted From This Worker’s Machine</strong>: This option will only allow the Worker to dequeue jobs submitted from the same machine. This is a useful way of ensuring that your Worker will only render your jobs.</p></li>
+<li><p><strong>Only Jobs Submitted From These Users</strong>: This option will only allow the Worker to dequeue jobs submitted by the specified users. This is another way of ensuring that your Worker will only render your jobs. However, it can also be used to make your Worker render jobs from other specific users, which is useful if you’re waiting on the results of those jobs.</p></li>
+</ul>
+</div>
+<div class="section" id="cpu-affinity">
+<h2>CPU Affinity<a class="headerlink" href="#cpu-affinity" title="Permalink to this headline">¶</a></h2>
+<p>This section can be used to control the CPU affinity of your Worker. See <a class="reference internal" href="worker-config.html#cpu-affinity-ref-label"><span class="std std-ref">Worker Configuration</span></a> for more information on Worker CPU affinity.</p>
+<a class="reference internal image-reference" href="../_images/local_worker_controls_cpu.png"><img alt="../_images/local_worker_controls_cpu.png" src="../_images/local_worker_controls_cpu.png" style="width: 450px;" /></a>
+</div>
+<div class="section" id="gpu-affinity">
+<h2>GPU Affinity<a class="headerlink" href="#gpu-affinity" title="Permalink to this headline">¶</a></h2>
+<p>This section can be used to control the GPU affinity of your Worker. See <a class="reference internal" href="worker-config.html#gpu-affinity-ref-label"><span class="std std-ref">Worker Configuration</span></a> for more information on Worker GPU affinity.</p>
+<a class="reference internal image-reference" href="../_images/local_worker_controls_gpu.png"><img alt="../_images/local_worker_controls_gpu.png" src="../_images/local_worker_controls_gpu.png" style="width: 450px;" /></a>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Local Worker Controls</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#worker-controls">Worker Controls</a></li>
+<li><a class="reference internal" href="#override-idle-detection">Override Idle Detection</a></li>
+<li><a class="reference internal" href="#job-dequeueing-mode">Job Dequeueing Mode</a></li>
+<li><a class="reference internal" href="#cpu-affinity">CPU Affinity</a></li>
+<li><a class="reference internal" href="#gpu-affinity">GPU Affinity</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="user-settings.html"
+                        title="previous chapter">Monitor and User Settings</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="logs.html"
+                        title="next chapter">Logs</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="logs.html" title="Logs"
+             >next</a></li>
+        <li class="right" >
+          <a href="user-settings.html" title="Monitor and User Settings"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-getting-started.html" >Getting Started With Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Local Worker Controls</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

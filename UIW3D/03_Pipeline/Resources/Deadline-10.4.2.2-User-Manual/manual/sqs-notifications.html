@@ -1,0 +1,561 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SQS Notifications &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="AWS Portal" href="index-aws-portal-reference.html" />
+    <link rel="prev" title="Power Management" href="power-management.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="index-aws-portal-reference.html" title="AWS Portal"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="power-management.html" title="Power Management"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" accesskey="U">Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">SQS Notifications</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sqs-notifications">
+<h1>SQS Notifications<a class="headerlink" href="#sqs-notifications" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This is a beta feature.</p>
+</div>
+<p>Deadline provides SQS notifications to help you monitor your Deadline events.
+This feature requires you to use Remote Connection Server to connect to your Deadline Repository.</p>
+<p>The notification is a message in JSON format containing information about a job or a task, such as id, frame range, worker that’s processing it etc.
+These messages are collected by AWS SQS where they await being processed.
+The Remote Connection Server sends notifications every minute about the following events:</p>
+<ol class="arabic simple">
+<li><p>A job is suspended.</p></li>
+<li><p>A job is completed.</p></li>
+<li><p>A job fails.</p></li>
+<li><p>An active job is deleted.</p></li>
+<li><p>A rendering task is suspended.</p></li>
+<li><p>A task is completed.</p></li>
+<li><p>A task fails.</p></li>
+<li><p>A task is automatically requeued.</p></li>
+</ol>
+<p>If a worker crashes, the notification about the job or task will be sent at the time the problem is detected,
+usually during the automatic repository repair, not at the moment the worker crashes.</p>
+</div>
+<div class="section" id="deadline-set-up">
+<h2>Deadline Set-up<a class="headerlink" href="#deadline-set-up" title="Permalink to this headline">¶</a></h2>
+<p>To receive SQS notifications, you need to <strong>connect to a Deadline repository through Remote Connection Server</strong>.
+If you haven’t installed Remote Connection Server with Deadline, you’ll need to re-install Deadline Client.</p>
+<ol class="arabic">
+<li><p>Set Deadline to connect to the repository through Remote Connection Server.</p></li>
+<li><p>Log in to the AWS Console, and select the Simple Queue Service (SQS).</p></li>
+<li><p>Create a Standard SQS queue. <a class="footnote-reference brackets" href="#f1" id="id1">1</a></p></li>
+<li><p>In the top menu bar in Deadline Monitor, select <code class="docutils literal notranslate"><span class="pre">Tools</span> <span class="pre">-&gt;</span> <span class="pre">Configure</span> <span class="pre">Repository</span> <span class="pre">Options</span> <span class="pre">-&gt;</span> <span class="pre">Notifications</span> <span class="pre">-&gt;</span> <span class="pre">SQS</span> <span class="pre">Notifications</span></code> and enter the URL of your queue:</p>
+<a class="reference internal image-reference" href="../_images/sqs_notifications_queue_url_dialog.png"><img alt="../_images/sqs_notifications_queue_url_dialog.png" src="../_images/sqs_notifications_queue_url_dialog.png" style="height: 600px;" /></a>
+</li>
+<li><p>The machine on which the Remote Connection Server is running needs to have access to the SQS. There are 3 ways to do this:</p></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><p>IAM role if your Remote Connection Server is running on an EC2 instance</p></li>
+<li><p><a class="reference external" href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html">Default credentials</a> in <code class="docutils literal notranslate"><span class="pre">~/.aws/credentials</span></code> and default region in <code class="docutils literal notranslate"><span class="pre">~/.aws/config</span></code></p></li>
+<li><p>Environment variables <code class="docutils literal notranslate"><span class="pre">AWS_ACCESS_KEY_ID</span></code>, <code class="docutils literal notranslate"><span class="pre">AWS_SECRET_ACCESS_KEY</span></code> and <code class="docutils literal notranslate"><span class="pre">AWS_DEFAULT_REGION</span></code></p></li>
+</ul>
+</div></blockquote>
+<p>You’ve just configured Deadline to send messages to your SQS queue.
+Now you can create your own workflow, or follow our example.</p>
+<p class="rubric">Notes</p>
+<dl class="footnote brackets">
+<dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>We recommend using Standard queue, because of its high throughput. However, messages can be duplicated and the order is not guaranteed. <a class="reference external" href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html">Learn more about other types of queues</a>.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="example-of-notification-processing">
+<h2>Example of Notification Processing<a class="headerlink" href="#example-of-notification-processing" title="Permalink to this headline">¶</a></h2>
+<p>We provide a simple example workflow, where an AWS Lambda function is triggered when notifications are received by the SQS.
+The standard queue can have duplicate messages, which the Lambda function filters out and stores the unique notifications in a Dynamo table.</p>
+<blockquote>
+<div><img alt="A scheme of the example workflow." src="../_images/sqs_example_workflow.png" />
+</div></blockquote>
+<ol class="arabic">
+<li><p>Set-up Deadline to use SQS.</p></li>
+<li><p>Create a DynamoDB table named <code class="docutils literal notranslate"><span class="pre">DeadlineJobNotifications</span></code> with <code class="docutils literal notranslate"><span class="pre">job_id</span></code> (String) as the Primary Partition Key:</p>
+<a class="reference internal image-reference" href="../_images/sqs-notifications-create-dynamo-db-job.png"><img alt="../_images/sqs-notifications-create-dynamo-db-job.png" src="../_images/sqs-notifications-create-dynamo-db-job.png" style="width: 1200px;" /></a>
+</li>
+<li><p>Create a DynamoDB table named <code class="docutils literal notranslate"><span class="pre">DeadlineTaskNotifications</span></code> with <code class="docutils literal notranslate"><span class="pre">job_id</span></code> (String) as the Primary Partition Key, and <code class="docutils literal notranslate"><span class="pre">task_id</span></code> (Number) as a sort key:</p>
+<a class="reference internal image-reference" href="../_images/sqs-notifications-create-dynamo-db.png"><img alt="../_images/sqs-notifications-create-dynamo-db.png" src="../_images/sqs-notifications-create-dynamo-db.png" style="width: 1200px;" /></a>
+</li>
+<li><p>Create an IAM policy with the SQS and Dynamo tables ARNs:</p>
+<blockquote>
+<div><div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2012-10-17&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;Statement&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;logs:CreateLogStream&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;logs:CreateLogGroup&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;logs:PutLogEvents&quot;</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:*:logs:*:*:log-group:/aws/lambda/*&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;sqs:DeleteMessage&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;dynamodb:BatchWriteItem&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sqs:ReceiveMessage&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sqs:GetQueueAttributes&quot;</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;&lt;ARN for SQS queue&gt;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;&lt;ARN for Dynamodb Task info table&gt;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;&lt;ARN for Dynamodb Job info table&gt;&quot;</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Create an IAM role for Lambda and attach the policy from the previous step to it.</p>
+<a class="reference internal image-reference" href="../_images/sqs-notifications-create-role.png"><img alt="../_images/sqs-notifications-create-role.png" src="../_images/sqs-notifications-create-role.png" style="width: 1200px;" /></a>
+</li>
+<li><p>Create a new Lambda function:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/sqs-notifications-create-lambda-step-1.png"><img alt="../_images/sqs-notifications-create-lambda-step-1.png" src="../_images/sqs-notifications-create-lambda-step-1.png" style="width: 1200px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Use the following code, making sure that the <code class="docutils literal notranslate"><span class="pre">DYNAMODB_JOB_INFO_TABLE</span></code> and <code class="docutils literal notranslate"><span class="pre">DYNAMODB_TASK_INFO_TABLE</span></code> are set to the names of your Dynamo tables:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+
+<span class="kn">import</span> <span class="nn">boto3</span>
+
+<span class="sd">&quot;&quot;&quot;Replace this string with the name of your table in dynamoDB&quot;&quot;&quot;</span>
+<span class="n">DYNAMODB_TASK_INFO_TABLE</span> <span class="o">=</span> <span class="s2">&quot;DeadlineTaskNotifications&quot;</span>
+
+<span class="sd">&quot;&quot;&quot;Replace this string with the name of your table in dynamoDB&quot;&quot;&quot;</span>
+<span class="n">DYNAMODB_JOB_INFO_TABLE</span> <span class="o">=</span> <span class="s2">&quot;DeadlineJobNotifications&quot;</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Compute node sends a SQS message to report its health this variable stores</span>
+<span class="sd">the mapping mapping of SQS message&#39;s attribute names to dynamoDB columns names</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">SQS_DYNAMODB_KEY_MAPPING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;TaskDetails&#39;</span><span class="p">:</span> <span class="s1">&#39;task_details&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;JobDetails&#39;</span><span class="p">:</span> <span class="s1">&#39;job_details&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;NotificationInfo&#39;</span><span class="p">:</span> <span class="s1">&#39;notification_info&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;WorkerInfo&#39;</span><span class="p">:</span> <span class="s1">&#39;worker_info&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;AWSInfo&#39;</span><span class="p">:</span> <span class="s1">&#39;aws_info&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;PROTOCOL&#39;</span><span class="p">:</span> <span class="s1">&#39;protocol_version&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Timestamp&#39;</span><span class="p">:</span> <span class="s1">&#39;timestamp&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Source&#39;</span><span class="p">:</span> <span class="s1">&#39;source&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">convert_number_to_dynamo_friendly_decimal</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Turning a float into a decimal is losslessly converted to its exact decimal equivalent.</span>
+<span class="sd">    For example, Decimal(1.1) converts to</span>
+<span class="sd">    Decimal(&#39;1.100000000000000088817841970012523233890533447265625&#39;).</span>
+<span class="sd">    This then gets the Decimal tagged as &quot;Inexact&quot; and DynamoDB will refuse to store it. However</span>
+<span class="sd">    converting a float to a string will give you a rounded value. If you then turn that string into a</span>
+<span class="sd">    Decimal it&#39;ll give you the exact string as a Decimal. For example if you pass the string &#39;1.1&#39; into Decimal is</span>
+<span class="sd">    converts exactly to Decimal(&#39;1.1&#39;).</span>
+<span class="sd">    In conclusion to work around this Dynamo limitation we convert the float or int to a string and</span>
+<span class="sd">    then turn that string into a Decimal.</span>
+
+<span class="sd">    :param value: An number value that needs to be converted to work with Dynamo</span>
+<span class="sd">    :return: A Decimal value that can be stored in DynamoDB</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s1">&#39;.16g&#39;</span><span class="p">)</span>  <span class="c1"># Round to 16 sig figs.</span>
+
+    <span class="k">return</span> <span class="n">Decimal</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">write_items_to_table</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Writes the given items into the table.</span>
+
+<span class="sd">    :param items: list of items to be added to the table.</span>
+<span class="sd">    :param table: boto table resource to write items to.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">table</span><span class="o">.</span><span class="n">batch_writer</span><span class="p">()</span> <span class="k">as</span> <span class="n">batch</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+            <span class="n">batch</span><span class="o">.</span><span class="n">put_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">recurse_nested_dicts</span><span class="p">(</span><span class="n">dictionary</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Recursive function to convert dictionaries of</span>
+<span class="sd">    dictionaries to a DynamoDB friendly format</span>
+
+<span class="sd">    :param dictionary: dictionary to operate on</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">sqsKey</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">SQS_DYNAMODB_KEY_MAPPING</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sqsKey</span><span class="p">,</span> <span class="n">sqsKey</span><span class="p">)</span>
+
+        <span class="c1"># Dynamo only accepts Decimals, so we need to convert floats and ints to Decimals,</span>
+        <span class="c1"># we also have to check for bool, because in Python they&#39;re a subclass of int</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+            <span class="n">item</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_number_to_dynamo_friendly_decimal</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="c1"># Dynamo doesn&#39;t allow empty strings, so we&#39;ll store them as None</span>
+        <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">item</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">item</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">recurse_nested_dicts</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">item</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">return</span> <span class="n">item</span>
+
+
+<span class="k">class</span> <span class="nc">TaskNotificationMessageHandler</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;AWS Lambda class that reads in SQS messages from a queue and</span>
+<span class="sd">    writes them to a DynamoDB table.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dynamo_resource</span><span class="p">,</span> <span class="n">logger</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor</span>
+
+<span class="sd">        :param dynamo_resource: The boto3 DynamoDB resource to be used.</span>
+<span class="sd">        :param logger: The Python Logging class to be used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TaskNotificationMessageHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dynamo_resource</span> <span class="o">=</span> <span class="n">dynamo_resource</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logger</span>
+
+    <span class="k">def</span> <span class="nf">_convert_messages_to_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Converts SQS messages coming in from the Lambda event data from JSON</span>
+<span class="sd">        to a DynamoDB Item.</span>
+
+<span class="sd">        :param event: Lambda event dict passed in when the Lambda function is triggered.</span>
+<span class="sd">        :returns: A list of Task and a list of Job DynamoDB Items to be written to a table.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">task_items</span><span class="p">,</span> <span class="n">job_items</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;About to process SQS Message: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="p">{}</span>
+
+            <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+            <span class="n">body_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">message</span><span class="p">[</span><span class="s1">&#39;body&#39;</span><span class="p">])</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">recurse_nested_dicts</span><span class="p">(</span><span class="n">body_json</span><span class="p">)</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;sent_timestamp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_number_to_dynamo_friendly_decimal</span><span class="p">(</span><span class="n">message</span><span class="p">[</span><span class="s1">&#39;attributes&#39;</span><span class="p">][</span><span class="s1">&#39;SentTimestamp&#39;</span><span class="p">])</span>
+            <span class="n">notification_name</span> <span class="o">=</span> <span class="n">body_json</span><span class="p">[</span><span class="s1">&#39;NotificationInfo&#39;</span><span class="p">][</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span>
+            <span class="n">details</span> <span class="o">=</span> <span class="s1">&#39;JobDetails&#39;</span> <span class="k">if</span> <span class="n">notification_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;Job&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;TaskDetails&#39;</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;job_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">body_json</span><span class="p">[</span><span class="n">details</span><span class="p">][</span><span class="s1">&#39;JobID&#39;</span><span class="p">]</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">&#39;task_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">notification_name</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">notification_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;Job&#39;</span><span class="p">):</span>
+                <span class="n">item</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">body_json</span><span class="p">[</span><span class="n">details</span><span class="p">][</span><span class="s1">&#39;TaskID&#39;</span><span class="p">]</span>
+                <span class="n">task_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">job_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">task_items</span><span class="p">,</span> <span class="n">job_items</span>
+
+    <span class="k">def</span> <span class="nf">_remove_duplicate_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks all the generated DynamoDB Items for ones with same &#39;instance_id&#39; primary key</span>
+<span class="sd">        and removes the older entry based on sent time stamp.</span>
+
+<span class="sd">        :param items: List of Items to be checked for duplicate entries.</span>
+<span class="sd">        :returns: List of Items without duplicates.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">keep_items</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;task_details&#39;</span><span class="p">][</span><span class="s1">&#39;JobID&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keep_items</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Found duplicate message with source: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+                <span class="n">keep_item</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">item</span><span class="p">,</span> <span class="n">keep_items</span><span class="p">[</span><span class="n">key</span><span class="p">]],</span>
+                                <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="s1">&#39;sent_timestamp&#39;</span><span class="p">])</span>
+                                <span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Keeping Item: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">keep_item</span><span class="p">)</span>
+                <span class="n">keep_items</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">keep_item</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">keep_items</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Adding Item with instance_id: </span><span class="si">%s</span><span class="s1"> to check for duplicates&#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+
+        <span class="n">items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">keep_items</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">items</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;sent_timestamp&#39;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">items</span>
+
+    <span class="k">def</span> <span class="nf">process_messages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Takes SQS messages passed in through the Lambda event dict</span>
+<span class="sd">        and writes them to the &#39;DeadlineTaskTracker&#39; table.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">task_items</span><span class="p">,</span> <span class="n">job_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_messages_to_items</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+        <span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_remove_duplicate_items</span><span class="p">,</span> <span class="p">(</span><span class="n">task_items</span><span class="p">,</span> <span class="n">job_items</span><span class="p">))</span>
+        <span class="n">task_tracker_table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamo_resource</span><span class="o">.</span><span class="n">Table</span><span class="p">(</span><span class="n">DYNAMODB_TASK_INFO_TABLE</span><span class="p">)</span>
+        <span class="n">job_tracker_table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamo_resource</span><span class="o">.</span><span class="n">Table</span><span class="p">(</span><span class="n">DYNAMODB_JOB_INFO_TABLE</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Writing Items to </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">DYNAMODB_TASK_INFO_TABLE</span><span class="p">)</span>
+        <span class="n">write_items_to_table</span><span class="p">(</span><span class="n">task_items</span><span class="p">,</span> <span class="n">task_tracker_table</span><span class="p">)</span>
+        <span class="n">write_items_to_table</span><span class="p">(</span><span class="n">job_items</span><span class="p">,</span> <span class="n">job_tracker_table</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="k">del</span> <span class="n">context</span>
+    <span class="n">dynamodb</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">resource</span><span class="p">(</span><span class="s2">&quot;dynamodb&quot;</span><span class="p">)</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Input event: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+
+    <span class="n">handler</span> <span class="o">=</span> <span class="n">TaskNotificationMessageHandler</span><span class="p">(</span><span class="n">dynamodb</span><span class="p">,</span> <span class="n">logger</span><span class="p">)</span>
+    <span class="n">handler</span><span class="o">.</span><span class="n">process_messages</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Add the SQS as a trigger to the function.</p></li>
+<li><p>Change the Handler to <code class="docutils literal notranslate"><span class="pre">lambda_function.main</span></code></p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/sqs-notifications-create-lambda-step-2.png"><img alt="../_images/sqs-notifications-create-lambda-step-2.png" src="../_images/sqs-notifications-create-lambda-step-2.png" style="width: 1200px;" /></a>
+</div></blockquote>
+</li>
+<li><p>When an event occurs, the notifications will now get stored in your Dynamo tables. This should take around a minute.</p></li>
+</ol>
+</div>
+<div class="section" id="examples-of-notification-messages">
+<h2>Examples of Notification messages<a class="headerlink" href="#examples-of-notification-messages" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="job-notification">
+<h3>Job Notification<a class="headerlink" href="#job-notification" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;JobDetails&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;JobID&quot;</span><span class="p">:</span> <span class="s2">&quot;5f2eec286ad75c0c9cca7fbc&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;JobName&quot;</span><span class="p">:</span> <span class="s2">&quot;maya-job-test&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;UserName&quot;</span><span class="p">:</span> <span class="s2">&quot;username&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;Department&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;BatchName&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;Group&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;Pool&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;NumberOfErrors&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;FrameRange&quot;</span><span class="p">:</span> <span class="s2">&quot;1-3&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;NumberOfTasks&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="nt">&quot;JobPriority&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="nt">&quot;JobConcurrentTasks&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nt">&quot;JobSubmitDateTime&quot;</span><span class="p">:</span> <span class="s2">&quot;2020-08-08T13:17:12.005-05:00&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;JobStartedDateTime&quot;</span><span class="p">:</span> <span class="s2">&quot;2020-08-10T19:59:39.447-05:00&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;JobCompletedDateTime&quot;</span><span class="p">:</span> <span class="s2">&quot;0001-01-01T00:00:00Z&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;JobStatus&quot;</span><span class="p">:</span> <span class="s2">&quot;Suspended&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;PluginName&quot;</span><span class="p">:</span> <span class="s2">&quot;MayaBatch&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;ExtraInfo&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;ExtraInfo0&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;ExtraInfo1&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;ExtraInfo2&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;ExtraInfo3&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;ExtraInfo4&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;ExtraInfo5&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;ExtraInfo6&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;ExtraInfo7&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;ExtraInfo8&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;ExtraInfo9&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;NotificationInfo&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;Name&quot;</span><span class="p">:</span> <span class="s2">&quot;JobStoppedNotification&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;StatusReason&quot;</span><span class="p">:</span> <span class="s2">&quot;Job was suspended&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;Timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;2020-08-11T00:59:40.1512266Z&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;PROTOCOL&quot;</span><span class="p">:</span> <span class="s2">&quot;1.1&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="task-notification">
+<h3>Task Notification<a class="headerlink" href="#task-notification" title="Permalink to this headline">¶</a></h3>
+<p>There are two types of task notifications, distinguished by the <code class="docutils literal notranslate"><span class="pre">Name</span></code> in the <code class="docutils literal notranslate"><span class="pre">NotificationInfo</span></code> field:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">StartedTaskNotification</span></code> sent when a task starts to render</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">StoppedTaskNotification</span></code> sent when a task stops rendering</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">StopReason</span></code> is included in <code class="docutils literal notranslate"><span class="pre">NotificationInfo</span></code> providing an explanation, e.g. task completed, failed, automatically requeued etc.</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;Source&quot;</span><span class="p">:</span> <span class="s2">&quot;Worker-9999999&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;TaskDetails&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;JobID&quot;</span><span class="p">:</span> <span class="s2">&quot;5f15e68eb8274818a0570167&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;TaskID&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;Name&quot;</span><span class="p">:</span> <span class="s2">&quot;0_1-1&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;FrameRange&quot;</span><span class="p">:</span> <span class="s2">&quot;1-1&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;Status&quot;</span><span class="p">:</span> <span class="s2">&quot;Completed&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;NumberOfErrors&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span>
+    <span class="nt">&quot;WorkerName&quot;</span><span class="p">:</span> <span class="s2">&quot;YWG-1800443371&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;Progress&quot;</span><span class="p">:</span> <span class="s2">&quot;100 %&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;RenderStatus&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;TaskStartDateTime&quot;</span><span class="p">:</span> <span class="s2">&quot;2020-08-13T15:44:07.377-05:00&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;RenderStartTime&quot;</span><span class="p">:</span> <span class="s2">&quot;2020-08-13T15:56:58.986-05:00&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;RenderTime&quot;</span><span class="p">:</span> <span class="s2">&quot;00:00:00&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;CompletedDateTime&quot;</span><span class="p">:</span> <span class="s2">&quot;2020-08-13T15:56:58.986-05:00&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;WaitingToStart&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;OutputFileSizeBytes&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;AverageRamUsageBytes&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;AverageRamUtilizationPercent&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;PeakRamUsageBytes&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;PeakRamUtilizationPercent&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;AverageCpuUtilizationPercent&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;PeakCPUUtilizationPercent&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;AverageSwapBytes&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;PeakSwapBytes&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;UsedCPUClocks&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;AvailableCPUClocks&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;Properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;Ex0&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;Ex1&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;Ex2&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;Ex3&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;Ex4&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;Ex5&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;Ex6&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;Ex7&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;Ex8&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;Ex9&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;ExDic&quot;</span><span class="p">:</span> <span class="p">{}</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;ExtraElements&quot;</span><span class="p">:</span> <span class="p">{}</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;NotificationInfo&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;Name&quot;</span><span class="p">:</span> <span class="s2">&quot;StoppedTaskNotification&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;StopReason&quot;</span><span class="p">:</span> <span class="s2">&quot;The Task &#39;5f15e68eb8274818a0570167_0&#39; was set to Completed.&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;WorkerInfo&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;AWSInfo&quot;</span><span class="p">:</span> <span class="p">{},</span>
+    <span class="nt">&quot;CPUs&quot;</span><span class="p">:</span> <span class="mi">12</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;Timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;2020-08-13T20:56:59.1013786Z&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;PROTOCOL&quot;</span><span class="p">:</span> <span class="s2">&quot;1.1&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">SQS Notifications</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#deadline-set-up">Deadline Set-up</a></li>
+<li><a class="reference internal" href="#example-of-notification-processing">Example of Notification Processing</a></li>
+<li><a class="reference internal" href="#examples-of-notification-messages">Examples of Notification messages</a><ul>
+<li><a class="reference internal" href="#job-notification">Job Notification</a></li>
+<li><a class="reference internal" href="#task-notification">Task Notification</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="power-management.html"
+                        title="previous chapter">Power Management</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="index-aws-portal-reference.html"
+                        title="next chapter">AWS Portal</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="index-aws-portal-reference.html" title="AWS Portal"
+             >next</a></li>
+        <li class="right" >
+          <a href="power-management.html" title="Power Management"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" >Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">SQS Notifications</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

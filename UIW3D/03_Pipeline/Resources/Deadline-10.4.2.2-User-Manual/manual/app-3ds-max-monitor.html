@@ -1,0 +1,493 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3ds Max - Monitor Submitter &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3ds Max - Integrated Submitter" href="app-3ds-max-smtd.html" />
+    <link rel="prev" title="3ds Max" href="app-3ds-max.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-3ds-max-smtd.html" title="3ds Max - Integrated Submitter"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-3ds-max.html" title="3ds Max"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Max - Monitor Submitter</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ds-max-monitor-submitter">
+<span id="app-3ds-max-monitor-ref-label"></span><h1>3ds Max - Monitor Submitter<a class="headerlink" href="#ds-max-monitor-submitter" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference internal" href="../_images/sub_3dsmax.png"><img alt="monitor1" src="../_images/sub_3dsmax.png" style="height: 744px;" /></a> <a class="reference internal" href="../_images/sub_3dsmax_adv_options.png"><img alt="monitor2" src="../_images/sub_3dsmax_adv_options.png" style="height: 744px;" /></a></p>
+<div class="section" id="top-level-controls">
+<h2>Top Level Controls<a class="headerlink" href="#top-level-controls" title="Permalink to this headline">¶</a></h2>
+<p><strong>Submit</strong></p>
+<ul class="simple">
+<li><p>Submits the selected scene file as a Deadline job.</p></li>
+</ul>
+<p><strong>Close</strong></p>
+<ul class="simple">
+<li><p>Closes the dialog.</p></li>
+</ul>
+</div>
+<div class="section" id="job-options-tab">
+<h2>Job Options tab<a class="headerlink" href="#job-options-tab" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="job-description-group">
+<h3>Job Description group<a class="headerlink" href="#job-description-group" title="Permalink to this headline">¶</a></h3>
+<p><strong>Job Name</strong> text field</p>
+<ul class="simple">
+<li><p>Defines the name of the job. Used to easily recognize the job’s content and purpose.</p></li>
+<li><p>Default is “Untitled”.</p></li>
+</ul>
+<p><strong>Comment</strong> text field</p>
+<ul class="simple">
+<li><p>Defines the content of the comment property of the job.</p></li>
+<li><p>The Comment property does not affect the processing of the job, but can be very useful to communicate additional information about the job to all users.</p></li>
+<li><p>Defaults to empty string.</p></li>
+</ul>
+<p><strong>Department</strong> text field</p>
+<ul class="simple">
+<li><p>Defines the optional Department property.</p></li>
+<li><p>The Department property does not affect the processing of the job, but can be very useful to sort and filter jobs based on their user’s Department.</p></li>
+<li><p>Defaults to empty string.</p></li>
+</ul>
+</div>
+<div class="section" id="job-options-group">
+<h3>Job Options group<a class="headerlink" href="#job-options-group" title="Permalink to this headline">¶</a></h3>
+<p><strong>Pool</strong> drop-down list</p>
+<ul class="simple">
+<li><p>Contains a list of all Pools defined in the current Repository, plus the value “none” on top of the list.</p></li>
+<li><p>The list of available Pools is updated each time the submitter is launched.</p></li>
+<li><p>When a specific named Pool is selected from the list, only Workers that are explicitly added to that Pool will be eligible to dequeue the Job.</p></li>
+<li><p>When the “none” option is selected, any Worker will be eligible to dequeue the Job regardless of its Pools assignments.</p></li>
+</ul>
+<p><strong>Secondary Pool</strong> drop-down list</p>
+<ul class="simple">
+<li><p>Contains a list of all Pools plus “none” and the value “” (empty string) on top of the list.</p></li>
+<li><p>The Secondary Pool is used when no Workers from the Pool list were available to process the job.</p>
+<ul>
+<li><p>When a specific named Pool is selected from the list, Workers that are explicitly added to that Pool will be eligible to dequeue the Job.</p></li>
+<li><p>When the “none” option is selected, any Worker will be eligible to dequeue the Job regardless of its Pools assignments.</p></li>
+<li><p>When the “” option is selected (default), the Secondary Pool option will not ignored and will not be used.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Group</strong> drop-down list</p>
+<ul class="simple">
+<li><p>Contains the list of all Groups defined in the current Repository, plus the value “none” on top of the list.</p></li>
+<li><p>Groups are used as binary yes/no filters to determine which Workers are eligible to dequeue a Job.</p></li>
+<li><p>When set to a specific Group name, only Workers assigned to that Group will be considered for processing the Job.</p></li>
+<li><p>When set to “none”, all Workers will be considered.</p></li>
+</ul>
+<p><strong>Priority</strong> value</p>
+<ul class="simple">
+<li><p>Defines the numeric Priority value of the job.</p></li>
+<li><p>The value range depends on the current Repository settings.</p></li>
+<li><p>The default Maximum Priority value is 100, but it can be modified via the Deadline Monitor in Power User Mode under Configure Repository Options &gt; Job Settings section &gt; Job Scheduling tab &gt; Submission Limitations group &gt; Maximum Job Priority.</p></li>
+</ul>
+<p><strong>Task Timeout</strong> value</p>
+<ul class="simple">
+<li><p>Defines the time in minutes a Worker may work on a Task before timing out and requeueing it.</p></li>
+<li><p>Set to 0 to disable.</p></li>
+</ul>
+<p><strong>Enable Auto Task Timeout</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, the Task Timeout will be calculated automatically from the Task times of previously rendered Tasks of the same Job.</p></li>
+<li><p>When unchecked, Auto Task Timeout will not be calculated and the Task Timeout value will be respected.</p></li>
+</ul>
+<p><strong>Concurrent Tasks</strong> value</p>
+<ul class="simple">
+<li><p>Defines the number of Tasks a single Worker can pick up at once (by launching multiple instances of 3ds Max on the same machine).</p></li>
+<li><p>This is useful to maximize performance when the tasks don’t saturate all CPUs at 100% and don’t use up all available memory.</p></li>
+<li><p>Typically, as a rule of thumb, this feature is NOT required for rendering as 3ds Max uses 100% of CPU’s during rendering, but can be useful for running single-threaded tasks like particle or geometry caching, MAXScript jobs etc.</p></li>
+</ul>
+<p><strong>Limit Tasks To Worker’s Task Limit</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, the number of Concurrent Tasks will be limited by the Worker’s Task Limit which is typically set to the number of available CPUs.</p></li>
+<li><p>For example, if ‘Concurrent Tasks’ is set to 16 but a Worker has 8 cores, only 8 concurrent tasks will be processed.</p></li>
+</ul>
+<p><strong>Machine Limit</strong> value</p>
+<ul class="simple">
+<li><p>Defines the number of Workers that will be allowed to dequeue the Job at the same time.</p></li>
+<li><p>When set to 0, no limit will be applied.</p></li>
+</ul>
+<p><strong>Machine List Is A Deny List</strong> checkbox</p>
+<ul class="simple">
+<li><p>When unchecked (default), the Machine List will be used as an Allow List, allowing only the listed machines to render the job.</p></li>
+<li><p>When checked, the Machine List will be used as a Deny List, preventing the specified machines from rendering the job.</p></li>
+</ul>
+<p><strong>Machine List</strong> textfield and pick button</p>
+<ul class="simple">
+<li><p>Defines the list of machines to be used as an Allow List or Deny List according to the <strong>Machine List Is A Deny List</strong> checkbox’ state.</p></li>
+</ul>
+<p><strong>Limits</strong> textfield and pick button</p>
+<p><strong>Dependencies</strong> textfield and pick button</p>
+<p><strong>On Job Complete</strong> drop-down list</p>
+<ul class="simple">
+<li><p>Specifies the action to perform on the Job upon completion.</p></li>
+<li><p>Possible values are:</p>
+<ul>
+<li><p><strong>Nothing</strong> - the Job will be left in Completed state in the Queue.</p></li>
+<li><p><strong>Archive</strong> - the Job will be archived automatically.</p></li>
+<li><p><strong>Delete</strong> - the Job will be deleted automatically.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Submit Job As Suspended</strong> checkbox</p>
+<ul class="simple">
+<li><p>When unchecked (default), the Job will be queued for processing immediately after submission.</p></li>
+<li><p>When checked, the Job will be placed in Suspended state and will not be processed unless resumed manually.</p></li>
+</ul>
+</div>
+<div class="section" id="dsmax-options">
+<h3>3dsmax Options<a class="headerlink" href="#dsmax-options" title="Permalink to this headline">¶</a></h3>
+<p><strong>3dsmax File</strong> textfield</p>
+<ul class="simple">
+<li><p>Specifies the 3ds Max .MAX scene file to be submitted.</p></li>
+</ul>
+<p><strong>Frame List</strong> textfield</p>
+<ul class="simple">
+<li><p>Specifies the frames to be rendered.</p></li>
+</ul>
+<p><strong>Submit Scene File With Job</strong> checkbox</p>
+<ul class="simple">
+<li><p>When unchecked, the specified 3ds Max file will be referenced from its network location and will not be made part of the job submission.</p>
+<ul>
+<li><p>This has the benefit of keeping the job lightweight and not overwhelming the Repository machine with large files.</p></li>
+<li><p>The drawback is that if the .MAX file referenced by the Job gets modified at its network location, this could affect an already running job.</p></li>
+<li><p>Also, archiving the job would not include the scene being rendered.</p></li>
+</ul>
+</li>
+<li><p>When checked, the 3ds Max file will be copied with the Job to the Repository.</p>
+<ul>
+<li><p>This has the benefit of including a snapshot of the MAX file at the time of submission - any changes to the original MAX scene will not affect the Job, and the MAX file will be part of an Archived job.</p></li>
+<li><p>The drawback is that large MAX files can overwhelm the Deadline Repository server.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Frames Per Task</strong> value</p>
+<ul class="simple">
+<li><p>Defines the number of frames in each Task.</p></li>
+<li><p>Default is 1.</p></li>
+<li><p>Increasing this value can speed up rendering of jobs where each frame takes a very short time to finish.</p>
+<ul>
+<li><p>The drawback is that if a later frame in the task fails, the complete task including any already finished frames will be reprocessed.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Show Virtual Frame Buffer</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, the Virtual Frame Buffer (also known as the “Rendered Frame Window”) of 3ds Max will be visible while rendering. This can be useful when connecting remotely to the Worker’s desktop to preview its progress.</p></li>
+<li><p>When unchecked, the Virtual Frame Buffer of 3ds Max will be suppressed.</p></li>
+</ul>
+<p><strong>Version</strong> drop-down list</p>
+<ul class="simple">
+<li><p>Specifies the 3ds Max version to use.</p></li>
+<li><p>It contains all 3ds Max versions supported by the current Deadline version.</p></li>
+<li><p>Note that newer versions of 3ds Max can open and render files saved with older versions, but older versions of 3ds Max cannot load and render files saved with newer versions unless the file was saved using the “Save As Version…” option of 3ds Max.</p></li>
+</ul>
+<p><strong>Use Design Edition</strong> drop-down list</p>
+<ul class="simple">
+<li><p>Disabled in 3ds Max 2016 and higher (there is no Design version of 3ds Max 2016 and higher!)</p></li>
+<li><p>When enabled and checked, the Design version of 3ds Max will be used, if found.</p></li>
+<li><p>When unchecked, the regular “Entertainment” version of 3ds Max will be used, if found.</p></li>
+</ul>
+<p><strong>Build To Force</strong> drop-down list</p>
+<ul class="simple">
+<li><p>Controls which build of 3ds Max (32 or 64 bit) will be launched by the Workers.</p></li>
+<li><p>Disabled when 3ds Max 2014 and higher is selected in the <strong>Version</strong> drop-down list (no 32 bit version available in 3ds Max 2014 and higher!)</p></li>
+<li><p>When enabled, possible values are:</p>
+<ul>
+<li><p><strong>None</strong> - does not enforce a build, the first 3ds Max version found (32 or 64 bit) will be used.</p></li>
+<li><p><strong>32 bit</strong> - forces the Worker to launch the first 32 bit build found of the specified 3ds Max version, if any.</p></li>
+<li><p><strong>64 bit</strong> - forces the Worker to launch the first 64 bit build found of the specified 3ds Max version, if any.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="advanced-options-tab">
+<h2>Advanced Options tab<a class="headerlink" href="#advanced-options-tab" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="options-group">
+<h3>Options group<a class="headerlink" href="#options-group" title="Permalink to this headline">¶</a></h3>
+<p><strong>Camera</strong> text field</p>
+<ul class="simple">
+<li><p>Can be used to specified a valid scene camera name to render.</p></li>
+<li><p>Note that the Submitter has no knowledge of the scene content, so the Job Properties &gt; 3ds Max tab in the Monitor will not contain a list of available Camera names.</p></li>
+</ul>
+<p><strong>Alternate Plugin.ini</strong> filename field</p>
+<ul class="simple">
+<li><p>Can be used to specify an optional 3ds Max Plugin.ini file to load a custom set of plugins.</p></li>
+</ul>
+<p><strong>Pre-Load Script</strong> filename field</p>
+<ul class="simple">
+<li><p>Can be used to specify an optional MAXScript file to be executed before the scene is loaded.</p></li>
+<li><p>The file will be included as an auxiliary file with the job.</p></li>
+</ul>
+<p><strong>Post-Load Script</strong> filename field</p>
+<ul class="simple">
+<li><p>Can be used to specify an optional MAXScript file to be executed after the scene is loaded.</p></li>
+<li><p>The file will be included as an auxiliary file with the job.</p></li>
+</ul>
+<p><strong>Pre-Frame Script</strong> filename field</p>
+<ul class="simple">
+<li><p>Can be used to specify an optional MAXScript file to be executed before a frame is rendered.</p></li>
+<li><p>The file will be included as an auxiliary file with the job.</p></li>
+</ul>
+<p><strong>Post-Frame Script</strong> filename field</p>
+<ul class="simple">
+<li><p>Can be used to specify an optional MAXScript file to be executed after a frame is rendered.</p></li>
+<li><p>The file will be included as an auxiliary file with the job.</p></li>
+</ul>
+<p><strong>Force Workstation Mode</strong> checkbox</p>
+<ul class="simple">
+<li><p>When unchecked (default), the Deadline Workers will launch 3ds Max in network rendering mode (no license, no UI will be created).</p></li>
+<li><p>When checked, 3ds Max will be launched by the Deadline Workers in fully licensed interactive workstation mode.</p></li>
+</ul>
+<p><strong>Enable Silent Mode</strong> checkbox</p>
+<ul class="simple">
+<li><p>Disabled when <strong>Force Workstation Mode</strong> is unchecked.</p></li>
+<li><p>When checked and <strong>Force Workstation Mode</strong> is also checked, 3ds Max will be run in “silent” mode which will help suppress some error popups.</p></li>
+</ul>
+<p><strong>Ignore Missing External File Errors</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, missing external file errors (e.g. missing textures) will be ignored and the scene will still be rendered, but the output will be possibly incorrect.</p></li>
+<li><p>When unchecked (default), missing external file errors will be considered fatal and the task will fail with an error.</p></li>
+</ul>
+<p><strong>Ignore Missing UVW Error</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, missing UVW errors (caused by objects requiring certain texture mapping coordinates but not providing them) will be ignored and the scene will still be rendered, but the output will be possibly incorrect.</p></li>
+<li><p>When unchecked (default), missing UVW errors will be considered fatal and the task will fail with an error.</p></li>
+</ul>
+<p><strong>Ignore Missing XREF Errors</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, missing UVW errors (caused by objects requiring certain texture mapping coordinates but not providing them) will be ignored and the scene will still be rendered, but the output will be possibly incorrect.</p></li>
+<li><p>When unchecked (default), missing UVW errors will be considered fatal and the task will fail with an error.</p></li>
+</ul>
+<p><strong>Ignore Missing DLL Errors</strong> checkbox</p>
+<ul class="simple">
+<li><p>Missing DLLs could mean that the 3ds Max scene cannot be loaded or rendered correctly.</p></li>
+<li><p>In some cases though, missing DLLs could be ignored.</p></li>
+<li><p>If you want the job to fail if a missing DLL message is detected at startup, keep this checkbox unchecked.</p></li>
+</ul>
+<p><strong>Enable Local Rendering</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, Deadline will save the frames to a local temporary folder before copying them over to the final network location.</p></li>
+<li><p>This is done to avoid image file saving issues over a network connection which can be conjected and result in data loss or failure.</p></li>
+<li><p>If the first copy attempt fails, multiple attempts will be made, increasing the chances .</p></li>
+</ul>
+<p><strong>Disable Multipass Effects</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, 3ds Max Camera Multipass Effects (Multipass DOF, Multipass Motion Blur) will not be rendered.</p></li>
+</ul>
+<p><strong>Restart Renderer Between Frames</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, Deadline will restart the renderer after each frame to avoid some potential problems with specific renderers.</p>
+<ul>
+<li><p>The C++ Lightning plugin (unique to Deadline) will unload the renderer plugin and then reload it instantly.</p></li>
+<li><p>This has the effect of forcing a memory purge and helps to improve renderer stability, as well as ensure the lowest possible memory footprint.</p></li>
+<li><p>This can be helpful when rendering close to the physical memory limit of a machine.</p></li>
+<li><p>Enabling this option has little to no impact on the actual render times.</p></li>
+</ul>
+</li>
+<li><p>This feature should be ENABLED to resolve V-Ray renders where typically the beauty pass renders correctly but the Render Element’s are all black or perhaps seem to be swapped around.</p></li>
+<li><p>Ensure this feature is DISABLED if you are sending FG/LC/IM caching map type jobs to the farm, as the renderer will get reset for each frame and the FG/LC/IM file(s) won’t get incrementally increased with the additional data per frame.</p></li>
+<li><p>This option should be DISABLED for FumeFX simulation jobs as well.</p></li>
+</ul>
+<p><strong>Remove Filename Padding</strong> checkbox</p>
+<ul class="simple">
+<li><p>If checked, the output filename will be (for example) “output.tga” instead of “output0000.tga”.</p></li>
+<li><p>This feature should only be used when rendering single frames.</p></li>
+<li><p>If you render a range of frames with this option checked, each frame will overwrite the previous existing frame.</p></li>
+</ul>
+<p><strong>Gamma Correction</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, the Input and Output Gamma correction values of 3ds Max will be forces to the ones specified in this rollout.</p></li>
+</ul>
+<p><strong>Input Gamma</strong> value</p>
+<ul class="simple">
+<li><p>Defines the Input Gamma to enforce when the <strong>Gamma Correction</strong> control is checked.</p></li>
+<li><p>Default is 1.0.</p></li>
+</ul>
+<p><strong>Output Gamma</strong> value</p>
+<ul class="simple">
+<li><p>Defines the Output Gamma to enforce when the <strong>Gamma Correction</strong> control is checked.</p></li>
+<li><p>Default is 1.0.</p></li>
+</ul>
+<p><strong>Override Language</strong> checkbox and dropdown list</p>
+<ul class="simple">
+<li><p>If enabled, you can choose a language to force during rendering.</p></li>
+</ul>
+<p><strong>One Cpu Per Task</strong> checkbox</p>
+<ul class="simple">
+<li><p>Forces each task of the job to only use a single CPU.</p></li>
+<li><p>This can be useful when doing single threaded renders and the Concurrent Tasks setting is greater than 1.</p></li>
+</ul>
+<p><strong>Alternate Path File</strong> filename field</p>
+<ul class="simple">
+<li><p>Allows you to specify an alternate path file in the MXP format that the Workers can use to find bitmaps that are not found on the primary map paths.</p></li>
+</ul>
+<p><strong>Merge Path File</strong> checkbox</p>
+<ul class="simple">
+<li><p>When checked, the Alternate paths file will be merged with the existing search path definitions.</p></li>
+<li><p>When unchecked (default), the Alternate Path File will replace the search path definitions.</p></li>
+</ul>
+</div>
+<div class="section" id="vray-dbr-and-mental-ray-satellite">
+<h3>VRay DBR and Mental Ray Satellite<a class="headerlink" href="#vray-dbr-and-mental-ray-satellite" title="Permalink to this headline">¶</a></h3>
+<p><strong>Mode</strong> drop-down list</p>
+<ul class="simple">
+<li><p>Possible values are:</p>
+<ul>
+<li><p><strong>Disabled</strong> - mo distributed rendering.</p></li>
+<li><p><strong>Mental Ray Satellite</strong>  - enable Mental Ray distributed rendering</p></li>
+<li><p><strong>VRay DBR</strong> - enable V-Ray distributed rendering</p></li>
+<li><p><strong>VRay RT DBR</strong> - enable V-Ray RT distributed rendering</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Number Of Workers</strong> value</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Specifies the number of Workers to use.</p></li>
+<li><p>Default is 5.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="gpu-options">
+<h3>GPU Options<a class="headerlink" href="#gpu-options" title="Permalink to this headline">¶</a></h3>
+<p><strong>GPUs Per Task</strong> value</p>
+<ul class="simple">
+<li><p>Controls the number of GPUs to be used by a Task.</p></li>
+<li><p>Default is 0, meaning no limit.</p></li>
+<li><p>Useful when running Concurrent Tasks on a machine with multiple GPUs available.</p></li>
+</ul>
+<p><strong>Select GPU Devices</strong> text field</p>
+<ul class="simple">
+<li><p>Specifies the GPU Devices to use.</p></li>
+<li><p>Default is empty string.</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3ds Max - Monitor Submitter</a><ul>
+<li><a class="reference internal" href="#top-level-controls">Top Level Controls</a></li>
+<li><a class="reference internal" href="#job-options-tab">Job Options tab</a><ul>
+<li><a class="reference internal" href="#job-description-group">Job Description group</a></li>
+<li><a class="reference internal" href="#job-options-group">Job Options group</a></li>
+<li><a class="reference internal" href="#dsmax-options">3dsmax Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#advanced-options-tab">Advanced Options tab</a><ul>
+<li><a class="reference internal" href="#options-group">Options group</a></li>
+<li><a class="reference internal" href="#vray-dbr-and-mental-ray-satellite">VRay DBR and Mental Ray Satellite</a></li>
+<li><a class="reference internal" href="#gpu-options">GPU Options</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-3ds-max.html"
+                        title="previous chapter">3ds Max</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-3ds-max-smtd.html"
+                        title="next chapter">3ds Max - Integrated Submitter</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-3ds-max-smtd.html" title="3ds Max - Integrated Submitter"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-3ds-max.html" title="3ds Max"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Max - Monitor Submitter</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

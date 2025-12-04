@@ -1,0 +1,388 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Worker Configuration &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Pulse Configuration" href="pulse-config.html" />
+    <link rel="prev" title="User Management" href="user-management.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="pulse-config.html" title="Pulse Configuration"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="user-management.html" title="User Management"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" accesskey="U">Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Worker Configuration</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="worker-configuration">
+<span id="worker-config-ref-label"></span><h1>Worker Configuration<a class="headerlink" href="#worker-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The Workers panel allows Workers to be controlled and modified using the right-click menu. Note that the availability of these options can vary depending on the context in which they are used, as well as the
+filters that are defined for the current user.</p>
+<p>If the Workers panel is not visible, see the <a class="reference internal" href="monitor.html#monitor-panel-features-ref-label"><span class="std std-ref">Panel Features</span></a> documentation for instructions on how to create new panels in the Monitor.</p>
+</div>
+<div class="section" id="worker-states">
+<span id="worker-config-states-ref-label"></span><h2>Worker States<a class="headerlink" href="#worker-states" title="Permalink to this headline">¶</a></h2>
+<p>These are the states that a Worker can be in. They are color coded to make it clear which state the Worker is in.</p>
+<ul class="simple">
+<li><p><strong>Offline (gray)</strong>: The Worker application is closed.</p></li>
+<li><p><strong>Idle (white)</strong>: The Worker application is running, but it is not currently rendering.</p></li>
+<li><p><strong>Rendering (green)</strong>: The Worker application is running, and is rendering a job.</p></li>
+<li><p><strong>Stalled (red)</strong>: A Worker becomes stalled if it hasn’t updated its state for a certain amount of time. This could be because the machine crashed, or the Worker simply didn’t shutdown cleanly.</p></li>
+<li><p><strong>Disabled (yellow)</strong>: The Worker has been disabled by an administrator. This prevents the Worker application from launching on the machine.</p></li>
+<li><p><strong>License Problems (orange)</strong> (DEPRECATED): Starting with Deadline 10.1.23, Deadline and its components do not require a license. For older versions, this means the Worker cannot acquire a license, or its temporary license is about to expire. You can check the License column in the Worker list to see what the problem is.</p></li>
+</ul>
+<p>If you see a red Worker, it means the Worker has been marked as stalled. This happens if the Worker hasn’t updated its state for a certain amount of time. You can configure this amount of time in the Wait Times section of the
+Worker Settings in the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Configuration</span></a>. When a Worker is marked as stalled, it usually means that the machine crashed, or that the Worker simply didn’t shutdown cleanly. In the latter case, you can simply mark the Worker
+as offline from the right-click menu.</p>
+<p>The Worker panel’s right-click menu also gives the option to delete or disable Workers. When disabled, the Worker application will not be allowed to launch on the machine. This is useful if you are doing maintenance on a machine
+and you don’t want the Worker accidentally starting up on it.</p>
+</div>
+<div class="section" id="job-candidate-filter">
+<span id="worker-job-candidate-ref-label"></span><h2>Job Candidate Filter<a class="headerlink" href="#job-candidate-filter" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Job Candidate Filter in the Workers panel can affect the performance of the Deadline Monitor if there are lots of Workers in the farm. We recommend using the new <a class="reference internal" href="job-controlling.html#job-render-candidates-ref-label"><span class="std std-ref">Job Render Candidates</span></a> feature in the Jobs panel instead.</p>
+</div>
+<p>If a Worker isn’t rendering a job that you think it should be, you can use the Job Candidate Filter option in the Worker Panel’s drop down menu to try and figure out why. When the option is enabled, simply click on a job in the Job Panel and the Worker Panel will be filtered to only show the Workers that can render the selected job based on the job’s settings. The filtering takes the following into account:</p>
+<ul class="simple">
+<li><p>The job’s pool and group (see the <a class="reference internal" href="pools-and-groups.html#pools-and-groups-ref-label"><span class="std std-ref">Pools and Groups</span></a> documentation for more information).</p></li>
+<li><p>The job’s allow list or deny list, and the allow list or deny list in the job’s assigned limits (see the <a class="reference internal" href="limits.html#limits-ref-label"><span class="std std-ref">Limits and Machine Limits</span></a> documentation for more information).</p></li>
+<li><p>If the Worker has been marked bad for the job (see the <a class="reference internal" href="failure-detection.html#failure-detection-ref-label"><span class="std std-ref">Job Failure Detection</span></a> documentation for more information).</p></li>
+</ul>
+</div>
+<div class="section" id="worker-settings">
+<span id="worker-config-settings-ref-label"></span><h2>Worker Settings<a class="headerlink" href="#worker-settings" title="Permalink to this headline">¶</a></h2>
+<p>Most of the Worker settings be configured from the Monitor while in Power User Mode (or with the proper user privileges) by right-clicking on one or more of them and selecting ‘Modify Worker Properties’. To configure Pools and Groups, you can use the Tools menu, or you can use the Worker panel’s right-click menu. See the <a class="reference internal" href="pools-and-groups.html#pools-and-groups-ref-label"><span class="std std-ref">Pools and Groups</span></a> documentation for more information.</p>
+<a class="reference internal image-reference" href="../_images/worker_menu.png"><img alt="../_images/worker_menu.png" src="../_images/worker_menu.png" style="height: 500px;" /></a>
+<p>Note that the only settings here that have an actual impact on rendering are the Concurrent Tasks and CPU Affinity settings. Furthermore, the CPU Affinity feature is only supported on Windows and Linux operating
+systems, since macOS does not support process affinity.</p>
+<div class="section" id="general">
+<span id="worker-config-general-ref-label"></span><h3>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h3>
+<p>These are some general Worker settings:</p>
+<ul class="simple">
+<li><p><strong>Worker Description</strong>: A description of the selected Worker. This can be used to provide some pertinent information about the Worker, such as certain system information.</p></li>
+<li><p><strong>Worker Comment</strong>: A short comment regarding the Worker. This can be used to inform other users why certain changes were made to that Worker’s settings, or of any known potential issues with that particular Worker.</p></li>
+<li><p><strong>Normalized Render Time Multiplier</strong>: This value is used to calculate the normalized render time of Tasks. For example, a Worker that normally takes twice as long to render a Task should be assigned a multiplier of 2.</p></li>
+<li><p><strong>Normalized Task Timeout Multiplier</strong>: This value is used to calculate the normalized render time of Task Timeouts. Typically, this should be the same value as above.</p></li>
+<li><p><strong>Concurrent Task Limit Override</strong>: The concurrent Task Limit for the Worker. If 0, the Worker’s CPU count is used as the limit.</p></li>
+<li><p><strong>Override Remote Command Port</strong>: If enabled, this port will be used by the Worker for remote commands instead of a random port.</p></li>
+<li><p><strong>Host Name/IP Address Override</strong>: Overrides the Host name/IP address for remote commands.</p></li>
+<li><p><strong>MAC Address Override</strong>: This is used to override the MAC Address associated with this Worker. This is useful in the event that the Worker defaults to a different MAC Address than the one needed for Wake On Lan.</p></li>
+<li><p><strong>Use ‘/tmp’ for Worker Data (Linux) (deprecated)</strong>: If enabled, Workers will write their job and plugin info in the /tmp folder instead of the user folder (Linux only).</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <em>Use ‘/tmp’ for Worker Data (Linux)</em> option will be ignored by workers upgraded to 10.1.11 and above. Please see <a class="reference internal" href="worker.html#worker-local-data-storage-ref-label"><span class="std std-ref">Worker Local Data Storage</span></a> if you wish to use a custom local data path.</p>
+</div>
+<a class="reference internal image-reference" href="../_images/worker_settings_general.png"><img alt="../_images/worker_settings_general.png" src="../_images/worker_settings_general.png" style="height: 450px;" /></a>
+</div>
+<div class="section" id="worker-config-idle-detection-ref-label">
+<span id="idle-detection"></span><h3>Idle Detection<a class="headerlink" href="#worker-config-idle-detection-ref-label" title="Permalink to this headline">¶</a></h3>
+<p>These settings can be used to override the global Worker Scheduling settings for the Worker (if there are any). It can be used to start the Worker when its machine becomes idle (based on keyboard and mouse activity), and stop the Worker when its machine is in use again. Note that Idle Detection is managed by the Launcher, so it must be running for this feature to work.</p>
+<ul class="simple">
+<li><p><strong>Start Worker When Machine Idle For</strong>: If enabled, the Worker will be started on the machine if it is idle. A machine is considered idle if there hasn’t been any keyboard, mouse or tablet activity for the specified amount of time.</p></li>
+<li><p><strong>Only Start Worker If CPU Usage Less Than</strong>: If enabled, the Worker will only be launched if the machine’s CPU usage is less than the specified value.</p></li>
+<li><p><strong>Only Start Worker If Memory Usage Less Than</strong>: If enabled, the Worker will only be launched if the machine’s memory usage is less than the specified value.</p></li>
+<li><p><strong>Only Start Worker If Free Memory More Than</strong>: If enabled, the Worker will only be launched if the machine has more free memory than the specified value (in Megabytes).</p></li>
+<li><p><strong>Only Start Worker If These Processes Are Not Running</strong>: If enabled, the Worker will only be launched if the specified processes are not running on the machine.</p></li>
+<li><p><strong>Only Start If Launcher Is Not Running As These Users</strong>: If enabled, the Worker will only be launched if the launcher is not running as one of the specified users.</p></li>
+<li><p><strong>Stop Worker When Machine Is No Longer Idle</strong>: If enabled, the Worker will be stopped when the machine is no longer idle. A machine is considered idle if there hasn’t been any keyboard, mouse or tablet activity for the specified amount of time.</p></li>
+<li><p><strong>Only Stop Worker If Started By Idle Detection</strong>: If enabled, the Worker will only be stopped when the machine is no longer idle if that Worker was originally started by Idle Detection. If the Worker was originally started manually, it will not be stopped.</p></li>
+<li><p><strong>Allow Worker To Finish Its Current Task When Stopping</strong>: If enabled, the Worker application will not be closed until it finishes its current Task.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/worker_settings_idle.png"><img alt="../_images/worker_settings_idle.png" src="../_images/worker_settings_idle.png" style="height: 450px;" /></a>
+<p>There are some limitations with Idle Detection depending on the operating system:</p>
+<ul class="simple">
+<li><p>On Windows, Idle Detection will NOT work if the Launcher is running as a service. This is because the service runs in an environment that is separate from the Desktop, and has no knowledge of any mouse or keyboard activity.</p></li>
+<li><p>On Linux, the Launcher uses <a class="reference internal" href="install-client.html#linux-install-ref-label"><span class="std std-ref">X11</span></a> to determine if there has been any mouse or keyboard activity. If <a class="reference internal" href="install-client.html#linux-install-ref-label"><span class="std std-ref">X11</span></a> is not available, Idle Detection will NOT work. One such situation is when the launcher is run as a daemon.</p></li>
+</ul>
+<p>Note that Idle Detection can be overridden in the <a class="reference internal" href="local-worker.html#local-worker-ref-label"><span class="std std-ref">Local Worker Controls</span></a> so that users can configure if their local Worker should launch when the machine becomes idle.</p>
+</div>
+<div class="section" id="job-dequeuing">
+<h3>Job Dequeuing<a class="headerlink" href="#job-dequeuing" title="Permalink to this headline">¶</a></h3>
+<p>These setting are used to determine when a Worker can dequeue Jobs:</p>
+<ul class="simple">
+<li><p><strong>All Jobs</strong>: In this mode, the Worker will dequeue any job.</p></li>
+<li><p><strong>Only Jobs Submitted From This Worker’s Machine</strong>: In this mode, the Worker will only dequeue job submitted from the machine it’s running on.</p></li>
+<li><p><strong>Only Jobs Submitted From These Users</strong>: In this mode, the Worker will only dequeue job submitted from the specified users.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/worker_settings_job.png"><img alt="../_images/worker_settings_job.png" src="../_images/worker_settings_job.png" style="height: 450px;" /></a>
+</div>
+<div class="section" id="cpu-affinity">
+<span id="cpu-affinity-ref-label"></span><h3>CPU Affinity<a class="headerlink" href="#cpu-affinity" title="Permalink to this headline">¶</a></h3>
+<p>These settings affect the number of CPUs the Worker renders with (Windows and Linux only):</p>
+<ul class="simple">
+<li><p><strong>Override CPU Affinity</strong>: Enable this option to override which CPUs the Worker and its child processes are limited to.</p></li>
+<li><p><strong>Specify Number of CPUs to Use</strong>: Use this spinbox if you just want to limit the number of CPUs used, and you aren’t concerned with which specific CPUs are used.</p></li>
+<li><dl class="simple">
+<dt><strong>Check Individual CPUs to Use</strong>: Use these buttons, as well as the checkboxes beside each CPU, if you want to explicitly pick which CPUs are used. This is useful if you are running multiple Workers on the same machine and you want to give each of them their own set of CPUs.</dt><dd><ul>
+<li><p><strong>Check All</strong>: Checks all the available CPUs.</p></li>
+<li><p><strong>Check None</strong>: Unchecks all the available CPUs.</p></li>
+<li><p><strong>Invert</strong>: Checks all unchecked CPUs and unchecks all checked CPUs.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<a class="reference internal image-reference" href="../_images/worker_settings_cpu.png"><img alt="../_images/worker_settings_cpu.png" src="../_images/worker_settings_cpu.png" style="height: 450px;" /></a>
+</div>
+<div class="section" id="gpu-affinity">
+<span id="gpu-affinity-ref-label"></span><h3>GPU Affinity<a class="headerlink" href="#gpu-affinity" title="Permalink to this headline">¶</a></h3>
+<p>These settings can affect the number of GPUs the Worker uses when rendering:</p>
+<ul class="simple">
+<li><p><strong>Override GPU Affinity</strong>: Enable this option to override which GPUs the rendering process is limited to. Note that not all renderers support this.</p></li>
+<li><p><strong>Specify Number of GPUs to Use</strong>: Use this spinbox if you just want to limit the number of GPUs used, and you aren’t concerned with which specific GPUs are used.</p></li>
+<li><dl class="simple">
+<dt><strong>Check Individual GPUs to Use</strong>: Use these buttons, as well as the checkboxes beside each GPU, if you want to explicitly pick which GPUs are used. This is useful if you are running multiple Workers on the same machine and you want to give each of them their own set of GPUs.</dt><dd><ul>
+<li><p><strong>Check All</strong>: Checks all the available GPUs.</p></li>
+<li><p><strong>Check None</strong>: Unchecks all the available GPUs.</p></li>
+<li><p><strong>Invert</strong>: Checks all unchecked GPUs and unchecks all checked GPUs.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Note that Deadline currently cannot detect the number of GPUs a system has. Instead, it just assumes that there are no more than 16 GPUs. Make sure to configure the GPU affinity settings based on the number of GPUs the machine actually has.</p>
+<a class="reference internal image-reference" href="../_images/worker_settings_gpu.png"><img alt="../_images/worker_settings_gpu.png" src="../_images/worker_settings_gpu.png" style="height: 450px;" /></a>
+<p>Note that unlike CPU affinity, GPU affinity isn’t automatically applied to all renders. It is up to the individual Deadline application plugins to pull this information from the Worker’s at render time and pass them to the renderer.</p>
+<p>If there is a certain Deadline plugin that you think the GPU affinity settings could be applied to, please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+</div>
+<div class="section" id="extra-info">
+<h3>Extra Info<a class="headerlink" href="#extra-info" title="Permalink to this headline">¶</a></h3>
+<p>Like jobs, extra arbitrary properties can also be set for Workers. If more extra arbitrary properties are needed, then new Extra Infos can be added with its own Key/Value Pair.</p>
+<a class="reference internal image-reference" href="../_images/worker_settings_extra.png"><img alt="../_images/worker_settings_extra.png" src="../_images/worker_settings_extra.png" style="height: 450px;" /></a>
+<p>Only the Extra Info 0-9 properties can be renamed from the Workers section of the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Configuration</span></a>, and have corresponding columns in the Worker list that can be sorted on. Any other Extra Infos added will have to be renamed from this panel.</p>
+</div>
+<div class="section" id="event-opt-ins">
+<h3>Event Opt-Ins<a class="headerlink" href="#event-opt-ins" title="Permalink to this headline">¶</a></h3>
+<p>Like jobs, Workers can choose to Opt into Event Plugins that are in the Opt-In state. Only Event Plugins in the Opt-In state will be visible to select in this panel and will only trigger for Workers that have Opted into them.</p>
+<a class="reference internal image-reference" href="../_images/worker_settings_event_opt_ins.png"><img alt="../_images/worker_settings_event_opt_ins.png" src="../_images/worker_settings_event_opt_ins.png" style="height: 450px;" /></a>
+</div>
+</div>
+<div class="section" id="worker-reports-and-history">
+<span id="worker-reports-history-ref-label"></span><h2>Worker Reports and History<a class="headerlink" href="#worker-reports-and-history" title="Permalink to this headline">¶</a></h2>
+<p>All error reports for a Worker can be viewed in the Worker Reports panel. This panel can be opened from the View menu or from the main toolbar in the Monitor. It can also be opened from the Worker panel’s right-click menu.</p>
+<a class="reference internal image-reference" href="../_images/monitor_worker_report_panel.png"><img alt="../_images/monitor_worker_report_panel.png" src="../_images/monitor_worker_report_panel.png" style="height: 500px;" /></a>
+<p>You can use the Worker Report panel’s right-click menu to save reports as files to send to <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a>. You can also delete reports from this menu as well.</p>
+<p>In addition to viewing Worker reports, you can also view the Worker’s history. The History window can be brought up from the Worker panel’s right-click menu by selecting the View Worker History option.</p>
+<a class="reference internal image-reference" href="../_images/worker_history.png"><img alt="../_images/worker_history.png" src="../_images/worker_history.png" style="height: 450px;" /></a>
+</div>
+<div class="section" id="remote-control">
+<h2>Remote Control<a class="headerlink" href="#remote-control" title="Permalink to this headline">¶</a></h2>
+<p>You can view the live log for Workers or control them remotely from the right-click menu. See the <a class="reference internal" href="remote-control.html#remote-control-ref-label"><span class="std std-ref">Remote Control</span></a> documentation for more information.</p>
+</div>
+<div class="section" id="aws-worker-tagging">
+<span id="worker-tagging-ref-label"></span><h2>AWS Worker Tagging<a class="headerlink" href="#aws-worker-tagging" title="Permalink to this headline">¶</a></h2>
+<p>To communicate your Deadline version to AWS, Deadline Worker software running on EC2 instances, outside of AWS Portal, Spot Event Plugin, or RFDK; will attempt to add a tag when the worker initializes. This tag will have key as <code class="docutils literal notranslate"><span class="pre">DeadlineAWSResource</span></code> and the Deadline version as the value.</p>
+<p>This will help AWS Thinkbox notify customers via the <a class="reference external" href="https://aws.amazon.com/premiumsupport/technology/aws-health-dashboard/">AWS Health Dashboard</a> who are running versions of Deadline that have known issues, relevant fixes, or are no longer supported.</p>
+<p>You can see if the Worker has successfully tagged itself by looking at the Worker panel in Deadline Monitor under the column <code class="docutils literal notranslate"><span class="pre">Worker</span> <span class="pre">Tagged</span></code>. It will be in one of the following states.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">unknown</span></code></p>
+<ul>
+<li><p>This is the status when the Worker boots and has yet to check if the EC2 instance has the appropriate tag.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">untagged</span></code></p>
+<ul>
+<li><p>This is the status when the Worker EC2 instance does not have the version tracking tag. See <a class="reference internal" href="#troubleshoot-worker-tagging-ref-label"><span class="std std-ref">Troubleshooting Untagged AWS Workers</span></a> for more information.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tagged</span></code></p>
+<ul>
+<li><p>This is the status when the Worker EC2 instance has the appropriate version tag.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tagging</span></code></p>
+<ul>
+<li><p>This is the status when the Worker EC2 instance is in the process of applying the version tag to the EC2 instance.</p></li>
+</ul>
+</li>
+</ul>
+<div class="section" id="troubleshooting-untagged-aws-workers">
+<span id="troubleshoot-worker-tagging-ref-label"></span><h3>Troubleshooting Untagged AWS Workers<a class="headerlink" href="#troubleshooting-untagged-aws-workers" title="Permalink to this headline">¶</a></h3>
+<p>If the Worker is in the <code class="docutils literal notranslate"><span class="pre">untagged</span></code> state and you would like to take advantage of this feature you can do the following.</p>
+<ol class="arabic">
+<li><p>Ensure that the VPC network your Workers are in have access to the EC2 endpoint.</p>
+<ol class="arabic simple">
+<li><p>Follow <a class="reference external" href="https://docs.aws.amazon.com/vpc/latest/privatelink/create-interface-endpoint.html#create-interface-endpoint-aws">https://docs.aws.amazon.com/vpc/latest/privatelink/create-interface-endpoint.html#create-interface-endpoint-aws</a> and add the <code class="docutils literal notranslate"><span class="pre">com.amazonaws.&lt;region&gt;.ec2</span></code> service where <code class="docutils literal notranslate"><span class="pre">&lt;region&gt;</span></code> is the AWS region the VPC is in. For example, if the VPC was in <code class="docutils literal notranslate"><span class="pre">us-west-2</span></code> the service would be <code class="docutils literal notranslate"><span class="pre">com.amazonaws.us-west-2.ec2</span></code>.</p></li>
+</ol>
+</li>
+<li><p>Check the <a class="reference internal" href="logs.html#worker-logs-ref-label"><span class="std std-ref">Worker logs</span></a> for any occurrences of <code class="docutils literal notranslate"><span class="pre">Got</span> <span class="pre">Access</span> <span class="pre">Denied</span> <span class="pre">when</span> <span class="pre">trying</span> <span class="pre">to</span> <span class="pre">DescribeTags</span></code> or <code class="docutils literal notranslate"><span class="pre">Got</span> <span class="pre">Access</span> <span class="pre">Denied</span> <span class="pre">when</span> <span class="pre">trying</span> <span class="pre">to</span> <span class="pre">CreateTags</span></code>. Ensure that the Worker EC2 instances have the correct IAM policy attached to them.</p>
+<ol class="arabic">
+<li><p>EC2 instances running the Worker need the following IAM policy attached so that Workers can determine if the EC2 instance that they are on have the version tag and so that Workers can tag the EC2 instance that they are on:</p>
+<blockquote>
+<div><div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+      <span class="p">{</span>
+          <span class="s2">&quot;Effect&quot;</span><span class="o">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;Action&quot;</span><span class="o">:</span> <span class="s2">&quot;ec2:DescribeTags&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;Resource&quot;</span><span class="o">:</span> <span class="s2">&quot;*&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+          <span class="s2">&quot;Effect&quot;</span><span class="o">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;Action&quot;</span><span class="o">:</span> <span class="s2">&quot;ec2:CreateTags&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;Resource&quot;</span><span class="o">:</span> <span class="s2">&quot;arn:aws:ec2:&lt;REGION&gt;:&lt;ACCOUNT&gt;:instance/*&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;Condition&quot;</span><span class="o">:</span> <span class="p">{</span>
+              <span class="s2">&quot;ForAllValues:StringLike&quot;</span><span class="o">:</span> <span class="p">{</span>
+                  <span class="s2">&quot;aws:RequestTag/DeadlineAWSResource&quot;</span><span class="o">:</span> <span class="p">[</span>
+                      <span class="s2">&quot;*&quot;</span>
+                  <span class="p">]</span>
+              <span class="p">}</span>
+          <span class="p">}</span>
+      <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+<div class="section" id="tagging-workers-on-start-up">
+<h3>Tagging Workers on Start Up<a class="headerlink" href="#tagging-workers-on-start-up" title="Permalink to this headline">¶</a></h3>
+<p>As an alternative to having the Deadline Worker software add the tag on start up you can apply the tag before launching the Deadline Worker Software.</p>
+<p>Do the following to add the version tag to your Worker EC2 instances:</p>
+<ol class="arabic simple">
+<li><p>Either create or modify the launch template that you will be using. See <a class="reference external" href="https://docs.aws.amazon.com/autoscaling/ec2/userguide/launch-templates.html">https://docs.aws.amazon.com/autoscaling/ec2/userguide/launch-templates.html</a>, for more information on launch templates.</p></li>
+<li><p>Go to the <code class="docutils literal notranslate"><span class="pre">Resource</span> <span class="pre">tags</span></code> section.</p></li>
+<li><p>Click <code class="docutils literal notranslate"><span class="pre">Add</span> <span class="pre">tag</span></code>.</p></li>
+<li><p>Under <code class="docutils literal notranslate"><span class="pre">Key</span></code> input <code class="docutils literal notranslate"><span class="pre">DeadlineAWSResource</span></code>.</p></li>
+<li><p>Under <code class="docutils literal notranslate"><span class="pre">Value</span></code> input <code class="docutils literal notranslate"><span class="pre">v&lt;version&gt;</span></code> where <code class="docutils literal notranslate"><span class="pre">&lt;version&gt;</span></code> is the version of the Deadline Worker that will run on the EC2 instance.</p></li>
+</ol>
+<p>Example:</p>
+<img alt="../_images/aws_worker_tag_launch_template_resource_tag_example.png" src="../_images/aws_worker_tag_launch_template_resource_tag_example.png" />
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Worker Configuration</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#worker-states">Worker States</a></li>
+<li><a class="reference internal" href="#job-candidate-filter">Job Candidate Filter</a></li>
+<li><a class="reference internal" href="#worker-settings">Worker Settings</a><ul>
+<li><a class="reference internal" href="#general">General</a></li>
+<li><a class="reference internal" href="#worker-config-idle-detection-ref-label">Idle Detection</a></li>
+<li><a class="reference internal" href="#job-dequeuing">Job Dequeuing</a></li>
+<li><a class="reference internal" href="#cpu-affinity">CPU Affinity</a></li>
+<li><a class="reference internal" href="#gpu-affinity">GPU Affinity</a></li>
+<li><a class="reference internal" href="#extra-info">Extra Info</a></li>
+<li><a class="reference internal" href="#event-opt-ins">Event Opt-Ins</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#worker-reports-and-history">Worker Reports and History</a></li>
+<li><a class="reference internal" href="#remote-control">Remote Control</a></li>
+<li><a class="reference internal" href="#aws-worker-tagging">AWS Worker Tagging</a><ul>
+<li><a class="reference internal" href="#troubleshooting-untagged-aws-workers">Troubleshooting Untagged AWS Workers</a></li>
+<li><a class="reference internal" href="#tagging-workers-on-start-up">Tagging Workers on Start Up</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="user-management.html"
+                        title="previous chapter">User Management</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pulse-config.html"
+                        title="next chapter">Pulse Configuration</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="pulse-config.html" title="Pulse Configuration"
+             >next</a></li>
+        <li class="right" >
+          <a href="user-management.html" title="User Management"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" >Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Worker Configuration</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

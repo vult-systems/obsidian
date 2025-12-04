@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Draft / Quick Draft &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="FontSync" href="event-fontsync.html" />
+    <link rel="prev" title="Event Plugins" href="index-event-plugins.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-fontsync.html" title="FontSync"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="index-event-plugins.html" title="Event Plugins"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" accesskey="U">Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Draft / Quick Draft</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="draft-quick-draft">
+<span id="event-draft-ref-label"></span><h1>Draft / Quick Draft<a class="headerlink" href="#draft-quick-draft" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Draft is a tool that provides simple and lightweight compositing and video processing functionality, designed to automate typical post-render tasks. It is implemented as a Python library (works across all platforms), which exposes functionality for use in Python scripts (which are referred to as Draft Templates). Draft is designed to be tightly integrated with Deadline, but it can also be used as a standalone tool.</p>
+<p>Using Deadline’s Draft plugin, artists can automatically perform simple compositing operations on rendered frames after a render job finishes. They can also convert them to a different image format, or generate Quicktimes for dailies.</p>
+<p>New Quick Draft options have been added to most of the job submitters that allow you to easily create movies from your rendered images or perform file conversions, without having to create a Draft template script. Instead, a generic Draft template that ships with Deadline is now used, and it lets you specify settings like Output Type, Codec, Resolution, and Frame Rate.</p>
+</div>
+<div class="section" id="licensing">
+<span id="event-draft-licensing-ref-label"></span><h2>Licensing<a class="headerlink" href="#licensing" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Starting with Deadline 10.1.23, Draft and Quick Draft do not require a license. The ONLY exception is that a Draft Pro license (FEATURE <strong>draft-pro-codec</strong>) is required if you are encoding to the 3rd party <strong>Avid DNxHD</strong> codec.</p>
+</div>
+</div>
+<div class="section" id="submitting-dependent-draft-jobs">
+<h2>Submitting Dependent Draft Jobs<a class="headerlink" href="#submitting-dependent-draft-jobs" title="Permalink to this headline">¶</a></h2>
+<p>When submitting jobs to Deadline through many of our submitters, you have the option to have Deadline create a dependent Draft Job once the submitted job has finished rendering. You can either use the Quick Draft settings, which use a general Draft Template script that ships with Deadline, or you can specify a custom Template script.</p>
+<a class="reference internal image-reference" href="../_images/draft_maya_pipeline_tools.png"><img alt="../_images/draft_maya_pipeline_tools.png" src="../_images/draft_maya_pipeline_tools.png" style="height: 300px;" /></a>
+<div class="section" id="quick-draft-options">
+<span id="quick-draft-options-ref-label"></span><h3>Quick Draft Options<a class="headerlink" href="#quick-draft-options" title="Permalink to this headline">¶</a></h3>
+<p>Note, the Draft EVENT plugin must be ENABLED for Quick Draft to work! Quick Draft jobs are submitted to Deadline as a job is completed.</p>
+<p>The following options are available when using Quick Draft:</p>
+<ul class="simple">
+<li><p><strong>Format</strong>: The file format to use. For example, choose MOV to create a Quicktime from the rendered images, or JPEG to automatically convert the rendered images into JPEG files.</p></li>
+<li><p><strong>Compression</strong>: The compression to use for the movie formats.</p></li>
+<li><p><strong>Resolution</strong>: The resolution to use when creating the movie or converting the images.</p></li>
+<li><p><strong>Quality</strong>: The quality to use for the movie formats.</p></li>
+<li><p><strong>Frame Rate</strong>: The frame rate to use for the movie formats.</p></li>
+<li><p><strong>Color Space In</strong>: The color space in to use.</p></li>
+<li><p><strong>Color Space Out</strong>: The color space out to use.</p></li>
+<li><p><strong>Add Annotations</strong>: If enabled, the annotations from the Draft Annotations window will be added.</p></li>
+<li><p><strong>Edit Annotations</strong>: Opens the Draft Annotations window.</p></li>
+</ul>
+<p>The Quick Draft options are controlled by a series of configuration text files:</p>
+<ul class="simple">
+<li><p><strong>Formats</strong>: <code class="docutils literal notranslate"><span class="pre">/&lt;DeadlineRepository&gt;/submission/Draft/Main/formats.txt</span></code></p></li>
+<li><p><strong>Codecs</strong>: <code class="docutils literal notranslate"><span class="pre">/&lt;DeadlineRepository&gt;/submission/Draft/Main/codecs.txt</span></code></p></li>
+<li><p><strong>Resolutions</strong>: <code class="docutils literal notranslate"><span class="pre">/&lt;DeadlineRepository&gt;/submission/Draft/Main/resolutions.txt</span></code></p></li>
+<li><p><strong>Frame Rate</strong>: <code class="docutils literal notranslate"><span class="pre">/&lt;DeadlineRepository&gt;/submission/Draft/Main/frameRates.txt</span></code></p></li>
+<li><p><strong>Restrictions</strong>: <code class="docutils literal notranslate"><span class="pre">/&lt;DeadlineRepository&gt;/submission/Draft/Main/restrictions.txt</span></code></p></li>
+</ul>
+<p>and some Python template files:</p>
+<ul class="simple">
+<li><p><strong>DraftCreateImages.py</strong>: <code class="docutils literal notranslate"><span class="pre">/&lt;DeadlineRepository&gt;/events/Draft/DraftQuickSubmission/DraftCreateImages.py</span></code></p></li>
+<li><p><strong>DraftCreateMovie.py</strong>: <code class="docutils literal notranslate"><span class="pre">/&lt;DeadlineRepository&gt;/events/Draft/DraftQuickSubmission/DraftCreateMovie.py</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="custom-draft-options">
+<span id="custom-draft-options-ref-label"></span><h3>Custom Draft Options<a class="headerlink" href="#custom-draft-options" title="Permalink to this headline">¶</a></h3>
+<p>The options available here are similar to those discussed in the <a class="reference internal" href="app-draft.html#app-draft-ref-label"><span class="std std-ref">Draft Application Plugin</span></a> section. Although it might appear as though there are less options here than in the Monitor submitter, all the same information will get passed to the Draft template. This approach just allows us to automatically pull a lot of the needed info directly from the scene file and from information filled in elsewhere in the submitter.</p>
+</div>
+<div class="section" id="draft-annotations">
+<h3>Draft Annotations<a class="headerlink" href="#draft-annotations" title="Permalink to this headline">¶</a></h3>
+<p>The Draft Annotations window can be used to create and modify annotations that are then added onto your Draft job.</p>
+<a class="reference internal image-reference" href="../_images/draft_annotations_window.png"><img alt="../_images/draft_annotations_window.png" src="../_images/draft_annotations_window.png" style="height: 500px;" /></a>
+<p>The viewport contains 6 annotation boxes that each correspond to an anchor (Northwest, NorthCenter, etc). The available options for modifying annotations are listed below:</p>
+<p><strong>General Options</strong></p>
+<p>These options make changes to the currently selected annotation.</p>
+<ul class="simple">
+<li><p><strong>Text</strong>: Changes the text for the current annotation.</p></li>
+<li><p><strong>Insert Token</strong>: When clicked a dropdown appears with the list of tokens that can be added. More information about each token is listed below.</p></li>
+<li><p><strong>Position</strong>: Selects the annotation to edit by it’s anchor. Different annotations can also be selected by clicking on an annotation box in the viewport. Annotations can be moved by clicking and dragging one annotation to another.</p></li>
+<li><p><strong>Update Annotations</strong>: Applies the changes in the Text box to the annotation which then updates the viewport. A shortcut for this is the Enter key.</p></li>
+<li><p><strong>Font Color</strong>: Changes the font color using the three spinner controls (each representing red, blue, and green respectively). A full color selector can be used by clicking the “…” button.</p></li>
+</ul>
+<p>When the Insert Token button is selected a list of tokens is displayed. The different tokens that can be added are:</p>
+<ul class="simple">
+<li><p><strong>Frame</strong>: The frame number of the current image. Represented with $frame.</p></li>
+<li><p><strong>Time</strong>: The date and time when the image was created. Represented with $time.</p></li>
+<li><p><strong>Logo</strong>: Opens a file browser when selected in order to choose an image. The image is then scaled down and the opacity is reduced when added to the image. Represented with $logo.</p></li>
+<li><p><strong>Dimensions</strong>: The dimensions of the image. Represented with $dimensions.</p></li>
+</ul>
+<p><strong>Background Options</strong></p>
+<p>These options are always available:</p>
+<ul class="simple">
+<li><p><strong>Use Blank Background</strong>: Changes the viewport background to a blank image.</p></li>
+<li><p><strong>Use Image From File</strong>: Opens a file browser in order to choose an image, which is then used as the viewport background.</p></li>
+</ul>
+<p>These options are only available when Use Blank Background is selected.</p>
+<ul class="simple">
+<li><p><strong>Resolution</strong>: Changes the resolution of the viewport background image. When the “custom” option is chosen the two spinners are enabled for choosing specific values.</p></li>
+<li><p><strong>Background Color</strong>: The color to use for the blank background of the viewport.</p></li>
+</ul>
+<p><strong>Zoom Options</strong></p>
+<ul class="simple">
+<li><p><strong>Zoom Slider</strong>: Use the slider to zoom the viewport in and out. You can also use the mouse wheel to zoom in and out. If the image does not fit in the viewpoint, click the mouse wheel down to pan the image.</p></li>
+<li><p><strong>Reset Zoom</strong>: Resets the zoom within the viewport.</p></li>
+<li><p><strong>Fit Viewport</strong>: Zoom to see everything in the viewport.</p></li>
+<li><p><strong>Keep Fit</strong>: Zoom to see everything in the viewport, and force the viewport to not change. This allows the viewport to scale when resizing the Draft Annotations window.</p></li>
+</ul>
+<p><strong>Save/Load Options</strong></p>
+<p>These options can be found in the File menu.</p>
+<ul class="simple">
+<li><p><strong>Save Annotations</strong>: Saves the current annotations into a text file.</p></li>
+<li><p><strong>Load Annotations</strong>: Opens a file browser to select a text file with annotation information, then loads that information into the viewport.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>Since Draft is being shipped alongside Deadline, there is not a whole lot of configuration that is needed for this event plugin to work (beyond simply changing the state of it). There are, however, options that allow you to select the priority,
+group and pool to which the Draft event plugin will submit Draft jobs.</p>
+<p>To access these settings, simply enter Power User mode and select Tools -&gt; Configure Events form the Monitor’s menu. From there, select the Draft entry from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cep_draft.png"><img alt="../_images/cep_draft.png" src="../_images/cep_draft.png" style="height: 400px;" /></a>
+<p>There are two different categories of settings you can configure; they are described in more detail below.</p>
+<p><strong>Options</strong></p>
+<p>This section contains general high-level options that control the behaviour of the Deadline’s Draft integration.</p>
+<ul class="simple">
+<li><p><strong>State</strong>: There are three different states that an Event Plugin can be in: Global Enabled, Opt-In, and Disabled. If it is global enabled or opted in, as a job ‘completes’, the Draft job will be submitted to Deadline. Note the job must opt into Draft if this plugin is in the Opt-In state.</p></li>
+<li><p><strong>Draft Pool</strong>: The Group to which the Draft jobs will be submitted. If blank, the original job’s Group will be re-used.</p></li>
+<li><p><strong>Draft Group</strong>: The Pool to which the Draft jobs will be submitted. If blank, the original job’s Pool will be re-used.</p></li>
+<li><p><strong>Draft Limit</strong>: The Limit to which the Draft jobs will be submitted. If blank, no Limit will be used.</p></li>
+<li><p><strong>Priority Offset</strong>: This offset will be added to the original job’s priority, in order to determine the Draft job’s priority.</p></li>
+<li><p><strong>Draft Output Folder</strong>: The folder in which to put the Draft output, relative to the Draft input folder.</p></li>
+</ul>
+<p><strong>Distributed Job</strong></p>
+<ul class="simple">
+<li><p><strong>Enable Distributed Job</strong>: Allow a Draft job to run on multiple machines.</p></li>
+<li><p><strong>Number Of Frames Per Task</strong>: The maximum number of frames allowed per Task of a Draft job.</p></li>
+<li><p><strong>Machine Limit</strong>: The maximum number of machines the job is allowed to run on if distributing jobs is allowed.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Does Draft/Quick Draft need a license to run?</strong></p>
+<blockquote>
+<div><p>Starting with Deadline 10.1.23, Draft and Quick Draft do not require a license. See the <a class="reference internal" href="#event-draft-licensing-ref-label"><span class="std std-ref">Licensing</span></a> section for an explanation.</p>
+</div></blockquote>
+<p><strong>Can I upgrade Deadline without upgrading the version of Draft I’m using?</strong></p>
+<blockquote>
+<div><p>Yes. See the <a class="reference internal" href="upgrading.html#upgrading-draft-ref-label"><span class="std std-ref">Upgrading or Downgrading Draft</span></a> section of the <em>Upgrading or Downgrading Deadline</em> documentation for more information.</p>
+</div></blockquote>
+<p><strong>Can I customize the Quick Draft UI/template script files?</strong></p>
+<blockquote>
+<div><p>Yes. However, Quick Draft is purposefully simple in it’s approach to create images and movies for very typical studio workflows. It is recommended to utilize the full-blown Draft Python API to achieve anything more complex than Quick Draft offers. Fundamentally, Quick Draft uses the same Python API under-the-hood compared to Draft.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Draft error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here, please contact
+<a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this event plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Draft / Quick Draft</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#licensing">Licensing</a></li>
+<li><a class="reference internal" href="#submitting-dependent-draft-jobs">Submitting Dependent Draft Jobs</a><ul>
+<li><a class="reference internal" href="#quick-draft-options">Quick Draft Options</a></li>
+<li><a class="reference internal" href="#custom-draft-options">Custom Draft Options</a></li>
+<li><a class="reference internal" href="#draft-annotations">Draft Annotations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index-event-plugins.html"
+                        title="previous chapter">Event Plugins</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="event-fontsync.html"
+                        title="next chapter">FontSync</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-fontsync.html" title="FontSync"
+             >next</a></li>
+        <li class="right" >
+          <a href="index-event-plugins.html" title="Event Plugins"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" >Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Draft / Quick Draft</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

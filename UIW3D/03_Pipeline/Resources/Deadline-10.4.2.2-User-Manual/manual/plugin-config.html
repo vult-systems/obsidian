@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plugin Configuration &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="User Management" href="user-management.html" />
+    <link rel="prev" title="Repository Configuration" href="repository-config.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="user-management.html" title="User Management"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="repository-config.html" title="Repository Configuration"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" accesskey="U">Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Plugin Configuration</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="plugin-configuration">
+<span id="plugin-config-ref-label"></span><h1>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>There are a wide variety of application specific options that can be configured globally. These options can be modified at any time from the Deadline Monitor while in <em>Power-User</em> Mode by selecting <em>Tools</em> -&gt; <em>Configure Plugins</em>. Any modified settings will take affect the next time a Worker dequeues a task to process.</p>
+<a class="reference internal image-reference" href="../_images/plugin_config.png"><img alt="../_images/plugin_config.png" src="../_images/plugin_config.png" style="height: 400px;" /></a>
+<p>By default, Deadline ships with best-guess out-of-the-box settings such as the default executable path for each version of an application. Customized <a class="reference internal" href="app-configuration.html#app-config-ref-label"><span class="std std-ref">Application Configuration</span></a> is possible as well as the use of ‘wrapper’ application scripts.</p>
+</div>
+<div class="section" id="generic-options">
+<span id="generic-plugin-options-ref-label"></span><h2>Generic Options<a class="headerlink" href="#generic-options" title="Permalink to this headline">¶</a></h2>
+<p>There are a number of generic options available for each application plugin in Deadline:</p>
+<ul>
+<li><p><strong>Plugin Icon</strong>: Click on the icon to browse for a new icon as displayed in the <a class="reference internal" href="monitor.html#info-panels-ref-label"><span class="std std-ref">Jobs panel</span></a> of Monitor.</p></li>
+<li><p><strong>Restore Default Icon</strong>: Clicking on this button will restore the plugin specific icon to its default *.ico file if present in its plugin directory in the repository.</p></li>
+<li><p><strong>Set Limits</strong>: One or more <a class="reference internal" href="limits.html#limits-ref-label"><span class="std std-ref">Limits</span></a> can be applied globally to a certain application plugin. This ensures that limit is applied to all jobs that process using that specific plugin in your farm. The limit must first be created via the <a class="reference internal" href="limits.html#global-limits-ref-label"><span class="std std-ref">Limits</span></a> panel.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/plugin_config_limits.png"><img alt="../_images/plugin_config_limits.png" src="../_images/plugin_config_limits.png" style="height: 300px;" /></a>
+</div></blockquote>
+</li>
+<li><p><strong>Enabled</strong>: Whether or not this plugin is enabled in your farm. This does not stop jobs being submitted for this plugin, but rather stops a Worker from running this plugin type. By default, all plugins are enabled in a new Deadline Repository installation with the exception of the CommandLine, CommandScript and Python plugins. These plugins are deemed a potential security risk as they allow users to submit arbitrary commands/scripts to Deadline, which are then executed on your render nodes.</p></li>
+<li><p><strong>Debug Logging</strong>: Whether or not debug logging is enabled for the Deadline plugin code execution. This does not increase the verbosity of logging for the plugin application. By default, this option is disabled for all plugins. The debug logging option should only be enabled if you are asked to by the Thinkbox support team.</p></li>
+</ul>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Plugin Configuration</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#generic-options">Generic Options</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="repository-config.html"
+                        title="previous chapter">Repository Configuration</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="user-management.html"
+                        title="next chapter">User Management</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="user-management.html" title="User Management"
+             >next</a></li>
+        <li class="right" >
+          <a href="repository-config.html" title="Repository Configuration"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" >Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Plugin Configuration</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

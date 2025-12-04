@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Combustion &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Command Line" href="app-command-line.html" />
+    <link rel="prev" title="Clarisse BUiLDER" href="app-clarisse-BUiLDER.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-command-line.html" title="Command Line"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-clarisse-BUiLDER.html" title="Clarisse BUiLDER"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Combustion</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="combustion">
+<span id="app-combustion-ref-label"></span><h1>Combustion<a class="headerlink" href="#combustion" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit Combustion jobs from the Monitor.</p>
+<a class="reference internal image-reference" href="../_images/sub_combustion.png"><img alt="../_images/sub_combustion.png" src="../_images/sub_combustion.png" style="height: 500px;" /></a>
+<div class="section" id="workspace-configuration">
+<h3>Workspace Configuration<a class="headerlink" href="#workspace-configuration" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>In Combustion, when you are ready to submit your workspace, open the Render Queue by selecting File -&gt; Render… (CTRL+R).</p></li>
+<li><p>Select which items you want to render in the box on the left.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/combustion_renderqueue-selectitems.png"><img alt="../_images/combustion_renderqueue-selectitems.png" src="../_images/combustion_renderqueue-selectitems.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Configure your output settings under the tab Output Settings.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/combustion_renderqueue-outputsettings.png"><img alt="../_images/combustion_renderqueue-outputsettings.png" src="../_images/combustion_renderqueue-outputsettings.png" style="height: 300px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Under the tab Global Settings, specify an Input Folder (a shared folder where all the footage for you workspace can be found) and an Output Folder (a shared folder where the output will be dumped). Note that Combustion
+will search any subfolders in you Input Folder for footage as well.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/combustion_renderqueue-globalsettings.png"><img alt="../_images/combustion_renderqueue-globalsettings.png" src="../_images/combustion_renderqueue-globalsettings.png" style="height: 120px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Close the Render Queue and save your workspace.</p></li>
+</ul>
+</div>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.
+The Combustion specific options are:</p>
+<ul class="simple">
+<li><p><strong>Workspace File</strong>: The Combustion workspace file to be rendered.</p></li>
+<li><p><strong>Output Operator</strong>: Select the output operator in the workspace file to render. The render will fail if the operator cannot be found.</p></li>
+<li><p><strong>Version</strong>: The version of Combustion to render with.</p></li>
+<li><p><strong>Skip Existing Frames</strong>: Skip over existing frames during rendering (version 4 and later only).</p></li>
+<li><p><strong>Use Only One CPU To Render</strong>: Limit rendering to one CPU (version 4 and later only).</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Combustion plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Combustion plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_combustion.png"><img alt="../_images/cp_combustion.png" src="../_images/cp_combustion.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Combustion Executable</strong>: The path to the ShellRender executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-combustion-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Combustion are supported?</strong></p>
+<blockquote>
+<div><p>Combustion 4 and later are supported.</p>
+</div></blockquote>
+<p><strong>All my input footage is spread out over the network, so how do I specify a single Input Folder during submission?</strong></p>
+<blockquote>
+<div><p>When Combustion is given an Input Folder, it will search all subfolders for the required footage until the footage is found. So if you have a root folder that all of your footage branches off from, you should
+specify that root as the Input Folder.</p>
+</div></blockquote>
+<p><strong>Are there any issues with referencing a file in the global input folder when one or more other files exist with the same name?</strong></p>
+<blockquote>
+<div><p>Yes. When there is a file in the scene that has the same name as a file in another subdirectory, the network renderer will reference the first file with that name that it finds. It ignores the direct path to the correct
+subdirectory.</p>
+</div></blockquote>
+<p><strong>Can Deadline render multiple outputs?</strong></p>
+<blockquote>
+<div><p>No. Only one output can be enabled in your Combustion workspace. If no outputs are enabled, or multiple outputs are enabled, the workspace cannot be submitted to Deadline.</p>
+</div></blockquote>
+<p><strong>When rendering, I receive a pop up error message. Since rendering is supposed to be silent, should I not be getting error messages like this in the first place?</strong></p>
+<blockquote>
+<div><img alt="../_images/combustion_workspace_error.png" src="../_images/combustion_workspace_error.png" />
+<p>Make sure that you’re using ShellRenderer.exe as the render executable, (combustion.exe starts up Combustion normally, while ShellRenderer.exe is the command line rendering appliation). You can make the switch in the Plugin Configuration (Tools -&gt; Configure Plugins in the Monitor while in power user mode).</p>
+</div></blockquote>
+<p><strong>Why isn’t path mapping working properly between Windows and Mac?</strong></p>
+<blockquote>
+<div><p>On the Mac, the Combustion workspace file saves network paths in the form share:\\folder\…, so you have to set up your Path Mapping settings in the Repository options accordingly.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages And Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Combustion error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Combustion</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#workspace-configuration">Workspace Configuration</a></li>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages And Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-clarisse-BUiLDER.html"
+                        title="previous chapter">Clarisse BUiLDER</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-command-line.html"
+                        title="next chapter">Command Line</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-command-line.html" title="Command Line"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-clarisse-BUiLDER.html" title="Clarisse BUiLDER"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Combustion</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

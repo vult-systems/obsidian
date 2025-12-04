@@ -95,7 +95,7 @@ Status
 #Good 
 
 Related
-[[../Render Farm/What Is Deadline|What Is Deadline]] [[../../02_Technical/PowerShell/What is PowerShell|What is PowerShell]]
+[[../Render Farm/Deadline/What Is Deadline|What Is Deadline]] [[../../02_Technical/PowerShell/What is PowerShell|What is PowerShell]]
 
 Tags
 [[../../05_Utility/Tags/Deadline|Deadline]] [[../../05_Utility/Tags/PowerShell|PowerShell]] 

@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spot Event Plugins - VPC Endpoints &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Spot Event Plugin - Multiple Region Support" href="event-spot-multi-region.html" />
+    <link rel="prev" title="Spot Event Plugins - Deadline Connectivity Configuration" href="event-spot-deadline-connect.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-spot-multi-region.html" title="Spot Event Plugin - Multiple Region Support"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="event-spot-deadline-connect.html" title="Spot Event Plugins - Deadline Connectivity Configuration"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" accesskey="U">Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Spot Event Plugins - VPC Endpoints</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="spot-event-plugins-vpc-endpoints">
+<span id="event-spot-vpc-endpoints-ref-label"></span><h1>Spot Event Plugins - VPC Endpoints<a class="headerlink" href="#spot-event-plugins-vpc-endpoints" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 22%" />
+<col style="width: 18%" />
+<col style="width: 19%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="event-spot.html#event-spot-ref-label"><span class="std std-ref">Spot Event Plugin</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-permissions.html#event-spot-iam-policies-ref-label"><span class="std std-ref">AWS Permissions Setup</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-ami.html#event-spot-ami-ref-label"><span class="std std-ref">Amazon Machine Images</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-fleet-request.html#event-spot-fleet-requests-ref-label"><span class="std std-ref">Spot Fleet Requests</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-config-credentials.html#event-spot-config-credentials-ref-label"><span class="std std-ref">Security Credentials Configuration</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="event-spot-fleet-configurations.html#event-spot-fleet-configurations-ref-label"><span class="std std-ref">Spot Fleet Configuration</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-configuration-options.html#event-spot-configure-event-plugin-dialog-ref-label"><span class="std std-ref">Spot Event Configuration Options</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-config-utility.html#event-spot-config-utility-ref-label"><span class="std std-ref">Spot Event Configuration Utility</span></a></p></td>
+<td><p><a class="reference internal" href="event-spot-deadline-connect.html#event-spot-deadline-connect-ref-label"><span class="std std-ref">Deadline Connectivity Configuration</span></a></p></td>
+<td><p><a class="reference internal" href="#event-spot-vpc-endpoints-ref-label"><span class="std std-ref">VPC Endpoints Configuration</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="event-spot-multi-region.html#event-spot-fleet-multi-region-ref-label"><span class="std std-ref">Multiple Region Support</span></a></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>If one or more of your EC2 instances are running inside a <em>private</em> subnet in your AWS VPC, you will need to provide a mechanism for the instances to access the AWS endpoints endabled in the IAM policies.</p>
+<p>A <a class="reference external" href="https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints.html">VPC endpoint</a> lets you connect privately your VPC to supported <strong>AWS services</strong> and <strong>VPC endpoint services</strong> powered by PrivateLink without requiring an internet gateway, NAT device, VPN connection, or AWS Direct Connect connection.</p>
+<p>Instances in your VPC <strong>do not require public IP addresses</strong> to communicate with resources in the service. Traffic between your VPC and the other service <strong>does not leave</strong> the Amazon network.</p>
+<p>AWS typically provides an <a class="reference external" href="https://docs.aws.amazon.com/general/latest/gr/rande.html">endpoint</a> per Service/Region.</p>
+<p>To create a VPC endpoint for an AWS service, use the <a class="reference external" href="https://docs.aws.amazon.com/vpc/latest/userguide/vpce-interface.html#create-interface-endpoint">Create an Interface Endpoint</a>  or <a class="reference external" href="https://docs.aws.amazon.com/vpc/latest/userguide/vpce-gateway.html">Create a Gateway Endpoint</a>  procedure.</p>
+</div>
+<div class="section" id="required-endpoints">
+<h2>Required Endpoints<a class="headerlink" href="#required-endpoints" title="Permalink to this headline">¶</a></h2>
+<p>The Spot Event Plugin requires the following endpoints:</p>
+<ul>
+<li><p><strong>HouseCleaningStatement</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">com</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">cloudformation</span> <span class="p">(</span><span class="n">interface</span><span class="p">)</span>
+<span class="n">com</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">dynamodb</span> <span class="p">(</span><span class="n">gateway</span><span class="p">)</span>
+<span class="n">com</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">ec2</span> <span class="p">(</span><span class="n">interface</span><span class="p">)</span>
+<span class="n">com</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">events</span> <span class="p">(</span><span class="n">interface</span><span class="p">)</span>
+<span class="n">com</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">s3</span> <span class="p">(</span><span class="n">gateway</span><span class="p">)</span>
+<span class="n">com</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">sqs</span> <span class="p">(</span><span class="n">interface</span><span class="p">)</span>
+<span class="n">com</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">sts</span> <span class="p">(</span><span class="n">interface</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>WorkerStatement</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">com</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">ec2</span> <span class="p">(</span><span class="n">interface</span><span class="p">)</span>
+<span class="n">com</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">sqs</span> <span class="p">(</span><span class="n">interface</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>where <code class="docutils literal notranslate"><span class="pre">&lt;region&gt;</span></code> represents the region identifier for an AWS region, such as <code class="docutils literal notranslate"><span class="pre">us-east-1</span></code> for N.Virginia, <code class="docutils literal notranslate"><span class="pre">eu-west-2</span></code> for the EU (London) Region, and so on.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The <strong>HouseCleaningStatement</strong>, which is run by the <strong>Deadline Remote Connection Server</strong> or the <strong>Deadline Pulse</strong>, also depends on access to the following public-facing AWS API endpoints:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">iam.amazonaws.com</span></code>, for which no VPC endpoint is available</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sts.amazonaws.com</span></code></p></li>
+</ul>
+<p>You can grant the required access by using a <a class="reference external" href="https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html">NAT gateway</a>.</p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Spot Event Plugins - VPC Endpoints</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#required-endpoints">Required Endpoints</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="event-spot-deadline-connect.html"
+                        title="previous chapter">Spot Event Plugins - Deadline Connectivity Configuration</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="event-spot-multi-region.html"
+                        title="next chapter">Spot Event Plugin - Multiple Region Support</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="event-spot-multi-region.html" title="Spot Event Plugin - Multiple Region Support"
+             >next</a></li>
+        <li class="right" >
+          <a href="event-spot-deadline-connect.html" title="Spot Event Plugins - Deadline Connectivity Configuration"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-event-plugins.html" >Event Plugins</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Spot Event Plugins - VPC Endpoints</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

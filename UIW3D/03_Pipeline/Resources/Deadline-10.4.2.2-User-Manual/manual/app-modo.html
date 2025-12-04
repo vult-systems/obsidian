@@ -1,0 +1,451 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>modo &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Moho (Anime Studio)" href="app-anime-studio.html" />
+    <link rel="prev" title="Mocha Pro" href="app-mocha.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-anime-studio.html" title="Moho (Anime Studio)"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-mocha.html" title="Mocha Pro"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">modo</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="modo">
+<span id="app-modo-ref-label"></span><h1>modo<a class="headerlink" href="#modo" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs from within modo by using the <a class="reference internal" href="#app-modo-integrated-submission-script-label"><span class="std std-ref">integrated submitter (7xx and up)</span></a>, running SubmitModoToDeadline.pl script, or you can submit them from the Monitor.</p>
+<p><a class="reference internal" href="../_images/modo_integrated.png"><img alt="integrated" src="../_images/modo_integrated.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_modo.png"><img alt="monitor" src="../_images/sub_modo.png" style="height: 400px;" /></a></p>
+<p>To run the integrated submitter within modo 7xx or later, after it’s been installed:</p>
+<ul class="simple">
+<li><p>Render -&gt; Submit To Deadline</p></li>
+</ul>
+<p>To run the integrated submitter within modo 6xx or earlier, after it’s been installed:</p>
+<ul>
+<li><p>Under the system menu, choose Run Script</p></li>
+<li><p>Choose the DeadlineModoClient.pl script from [Repository]\submission\Modo\Client</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Alternatively, you can also copy this script to your local machine and run it from there. You should do this if the path to your Deadline repository is a UNC path and you are running modo on Windows OS.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/modo_submission.png"><img alt="../_images/modo_submission.png" src="../_images/modo_submission.png" style="height: 250px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="setting-up-a-scene-for-rendering">
+<h2>Setting Up A Scene For Rendering<a class="headerlink" href="#setting-up-a-scene-for-rendering" title="Permalink to this headline">¶</a></h2>
+<p>In order to set up a Modo scene for rendering you must have at least one render output that is both enabled and has an output filename set. The render outputs can be found within the shader tree (Shading tab in the default Modo Layout).</p>
+<p><a class="reference internal" href="../_images/modo_shader.png"><img alt="shader" src="../_images/modo_shader.png" style="height: 250px;" /></a> <a class="reference internal" href="../_images/modo_render_output.png"><img alt="renderOutput" src="../_images/modo_render_output.png" style="height: 250px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.
+The modo specific options are:</p>
+<p><strong>Job Options</strong></p>
+<p>These are the general modo options:</p>
+<ul class="simple">
+<li><p><strong>Modo Project Folder</strong>: The project folder set for the scene.  This is used to map path’s that are relative to the project directory.</p></li>
+<li><p><strong>Render With V-Ray</strong>: Enable this option to use V-Ray’s renderer instead of modo’s renderer. This requires the V-Ray for modo plugin to be installed on your render nodes.</p></li>
+<li><p><strong>Pass Group</strong>: The pass group to render, or blank to not render a pass group.</p></li>
+<li><p><strong>Submit Each Pass Group As A Separate Job</strong>: If enabled, a separate job will be submitted for each Pass Group in the scene.</p></li>
+</ul>
+<p><strong>Override Output</strong></p>
+<p>You have the option to override where the rendered images will be saved. If this is disabled, Deadline will respect the output paths in the modo Output items in your scene file. If this is enabled, be sure to set the Output Pattern appropriately if your scene has multiple passes, output items, or left and right eye views.</p>
+<ul class="simple">
+<li><p><strong>Override Render Output</strong>: Enable to override where the rendered images are saved.</p></li>
+<li><p><strong>Output Folder</strong>: The folder where the rendered images will be saved.</p></li>
+<li><p><strong>Output File Prefix</strong>: The prefix for the image file names (extension is not required).</p></li>
+<li><p><strong>Output Pattern</strong>: The pattern for the image file names.</p></li>
+<li><p><strong>Output Format</strong>: The format of the rendered images. Note that you can choose the layered PSD or EXR formats here, and that Tile Rendering supports the layered EXR format.</p></li>
+</ul>
+<p id="modo-tile-rendering-ref-label"><strong>Tile Rendering Options</strong></p>
+<p>Enable Tile Rendering to split up a single frame into multiple tiles.</p>
+<ul class="simple">
+<li><p><strong>Enable Tile Rendering</strong>: If enabled, the frame will be split into multiple tiles that are rendered individually and can be assembled after.</p></li>
+<li><p><strong>Frame To Tile Render</strong>: The frame that will be split up.</p></li>
+<li><p><strong>Tiles In X</strong>: Number of horizontal tiles.</p></li>
+<li><p><strong>Tiles In Y</strong>: Number of vertical tiles.</p></li>
+<li><p><strong>Submit Dependent Assembly Job</strong>: Submit a job dependent on the tile job that will assemble the tiles.</p></li>
+<li><p><strong>Cleanup Tiles after Assembly</strong>: If selected the tiles will be deleted after assembly.</p></li>
+<li><p><strong>Error on Missing Tiles</strong>: If enabled, then if any of the tiles are missing the assembly job will fail.</p></li>
+<li><p><strong>Assemble Over</strong>: Determine what the Draft Tile Assembler should assemble over be it a blank image, previous output or a specified file.</p></li>
+<li><p><strong>Error on Missing Background</strong>: If enabled, then if the background file is missing the job will fail.</p></li>
+<li><p><strong>Use Jigsaw</strong>: Enable to use Jigsaw for tile rendering.</p></li>
+<li><p><strong>Open Jigsaw Panel</strong>: Opens the Jigsaw UI</p></li>
+<li><p><strong>Reset Jigsaw Background</strong>: Resets the background of the jigsaw regions</p></li>
+<li><p><strong>Save Jigsaw Regions</strong>: Saves the Jigsaw Regions to the scene File</p></li>
+<li><p><strong>Load Jigsaw Regions</strong>: Loads the save Jigsaw Regions and sends them to the open panel.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="interactive-distributed-rendering">
+<span id="app-modo-dbr-ref-label"></span><h2>Interactive Distributed Rendering<a class="headerlink" href="#interactive-distributed-rendering" title="Permalink to this headline">¶</a></h2>
+<p>You can submit interactive modo Distributed Rendering jobs to Deadline. The instructions for installing the integrated submission script can be found further down this page. The interactive submitter will submit a special
+modo server job to reserve render nodes.</p>
+<p>Note that this feature is only supported in modo 7xx and later.</p>
+<a class="reference internal image-reference" href="../_images/modo_dbr.png"><img alt="../_images/modo_dbr.png" src="../_images/modo_dbr.png" style="height: 400px;" /></a>
+<div class="section" id="id1">
+<h3>Submission Options<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. The modo Distributed Rendering specific options are:</p>
+<ul class="simple">
+<li><p><strong>Maximum Servers</strong>: The maximum number of modo Servers to reserve for distributed rendering.</p></li>
+<li><p><strong>Use Server IP Address instead of Host Name</strong>: If checked, the Active Servers list will show the server IP addresses instead of host names.</p></li>
+<li><dl class="simple">
+<dt><strong>Use V-Ray To Render</strong>: If checked, V-Ray’s distributed rendering will be used instead of Modo’s.</dt><dd><ul>
+<li><p>Note that this option requires V-Ray for Modo to be installed, and is only supported by Modo 701 SP5, Modo 801 SP2 or higher, and Modo 901 or higher.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="rendering">
+<h3>Rendering<a class="headerlink" href="#rendering" title="Permalink to this headline">¶</a></h3>
+<p>After you’ve configured your submission options, press the Reserve Servers button to submit the modo Server job. After the job has been submitted, you can press the Update Servers button to update the job’s ID and Status in the
+submitter. As nodes pick up the job, pressing the Update Servers button will also show them in the Active Servers list. Once you are happy with the server list, press Start Render to start distributed rendering.</p>
+<p>Note that the modo Server process can sometimes take a little while to initialize. This means that a server in the Active Server list could have started the modo Server, but it’s not fully initialized yet. If this is the case,
+it’s probably best to wait a minute or so after the last server has shown up before pressing Start Render.</p>
+<p>After the render is finished, you can press Release Servers or close the submitter to mark the modo Server job as complete so that the render nodes can move on to another job.</p>
+</div>
+</div>
+<div class="section" id="network-rendering-considerations">
+<h2>Network Rendering Considerations<a class="headerlink" href="#network-rendering-considerations" title="Permalink to this headline">¶</a></h2>
+<p>This <a class="reference external" href="https://www.modo.stenson.tv/articles/layredConfigSetup/">Article</a> provides some useful information for setting up modo for network rendering.</p>
+</div>
+<div class="section" id="cross-platform-rendering-considerations">
+<h2>Cross-Platform Rendering Considerations<a class="headerlink" href="#cross-platform-rendering-considerations" title="Permalink to this headline">¶</a></h2>
+<p>In order to perform cross-platform rendering with modo, you must setup Mapped Paths so that Deadline can swap out the Scene and Output file paths where appropriate. You can access the Mapped Paths Setup in the Monitor while in power user mode by selecting Tools -&gt; Configure Repository. You’ll find the Mapped Paths Setup in the list on the left.</p>
+<p>Note that Deadline supports path mapping for any texture paths within the modo scene file (see the Path Mapping setting in the modo Plugin Configuration section below). However, the modo scene file stores its paths a bit differently, for example:</p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 58%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Actual Path</p></td>
+<td><p>Path in Modo Scene</p></td>
+</tr>
+<tr class="row-even"><td><ul class="simple">
+<li><p>R:/share/</p></li>
+<li><p>//server/share/</p></li>
+<li><p>/Volumes/share/</p></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li><p>R:share/</p></li>
+<li><p>server:share/</p></li>
+<li><p>Volumes:share/</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>In Deadline 7.2.1 and later, you can enable the <strong>Massage modo Paths</strong> setting in the <a class="reference internal" href="#app-modo-plugin-config-ref-label"><span class="std std-ref">modo Plugin Configuration</span></a> and Deadline will automatically convert the internal scene path into a normal looking path before feeding it into the path mapping system.</p>
+<p>In Deadline 7.2 or earlier, you will have to add special Mapped Paths entries in the Repository Options for these paths to get replaced properly. For example, you might already have a Mapped Path entry like this to handle paths from macOS to Windows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Replace</span> <span class="n">Path</span><span class="p">:</span> <span class="o">/</span><span class="n">Volumes</span><span class="o">/</span><span class="n">share</span><span class="o">/</span>
+<span class="n">Windows</span> <span class="n">Path</span><span class="p">:</span> \\<span class="n">server</span>\<span class="n">share</span>\
+<span class="n">Linux</span> <span class="n">Path</span><span class="p">:</span>
+<span class="n">Mac</span> <span class="n">Path</span><span class="p">:</span>
+</pre></div>
+</div>
+<p>However, the modo scene file will probably be storing texture paths as “Volumes:share/” instead of “/Volumes/share/”. This means you’ll need another Mapped Path entry that looks like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Replace</span> <span class="n">Path</span><span class="p">:</span> <span class="n">Volumes</span><span class="p">:</span><span class="n">share</span><span class="o">/</span>
+<span class="n">Windows</span> <span class="n">Path</span><span class="p">:</span> \\<span class="n">server</span>\<span class="n">share</span>\
+<span class="n">Linux</span> <span class="n">Path</span><span class="p">:</span>
+<span class="n">Mac</span> <span class="n">Path</span><span class="p">:</span>
+</pre></div>
+</div>
+<p>To go from Windows to macOS, you’ll need a Mapped Path entry that looks like this. Note that “server:share/” represents the UNC path “//server/share/”:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Replace</span> <span class="n">Path</span><span class="p">:</span> <span class="n">server</span><span class="p">:</span><span class="n">share</span><span class="o">/</span>
+<span class="n">Windows</span> <span class="n">Path</span><span class="p">:</span>
+<span class="n">Linux</span> <span class="n">Path</span><span class="p">:</span>
+<span class="n">Mac</span> <span class="n">Path</span><span class="p">:</span> <span class="o">/</span><span class="n">Volumes</span><span class="o">/</span><span class="n">share</span>
+</pre></div>
+</div>
+<p>Finally, If you wish to disable the Path Mapping setting in the modo Plugin Configuration, but still wish to perform cross-platform rendering with modo, you must ensure that your modo scene file is on a network shared location, and that any footage or assets that the project uses is in the same folder. Then when you submit the job to Deadline, you must make sure that the option to submit the scene file with the job is disabled. If you leave it enabled, the scene file will be copied to and loaded from the Worker’s local machine, and thus won’t be able to find the footage.</p>
+</div>
+<div class="section" id="plugin-configuration">
+<span id="app-modo-plugin-config-ref-label"></span><h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the modo plugin settings from the Monitor. While in power user mode, select Tools -&gt; Plugins Configuration and select the modo plugin from the list on the left.</p>
+<p>Note, if the executable supports a MAJOR.MINOR.REVISION (9.0.123) numbering system in its path, then you will need to configure the explicit exe path to the particular revision that you have installed on your machines. Deadline does not track every possible revision available or indeed where it might be custom installed to, so a studio should verify their exe paths are correct for each application version they choose to use with Deadline. Multiple exe paths can still be declared and the first one that is found on a particular Worker on a particular platform will be used from the exe list.</p>
+<a class="reference internal image-reference" href="../_images/cp_modo.png"><img alt="../_images/cp_modo.png" src="../_images/cp_modo.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>modo Executable</strong>: The path to the modo executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+<p><strong>Geometry Cache</strong></p>
+<ul class="simple">
+<li><p><strong>Auto Set Geometry Cache</strong>: Enable this option to have Deadline automatically set the modo geometry cache before rendering (based on the geometry cache buffer below).</p></li>
+<li><p><strong>Geometry Cache Buffer (MB)</strong>: When auto-setting the geometry cache, Deadline subtracts this buffer amount from the system’s total memory to calculate what the geometry cache should be set to.</p></li>
+</ul>
+<p><strong>Path Mapping (For Mixed Farms)</strong></p>
+<ul class="simple">
+<li><p><strong>Enable Path Mapping</strong>: If enabled, a temporary modo file will be created locally on the Worker for rendering because Deadline does the path mapping directly in the modo file. This feature can be turned off if there are no Path Mapping entries defined in the Repository Options.</p></li>
+<li><p><strong>Resolve Path Aliases</strong>: If enabled, paths in the modo file will have their path aliases replaced with the path as defined on the submitting machine before pathmapping is applied.</p></li>
+<li><p><strong>Massage modo Paths</strong>: If enabled, paths in the modo file will be massaged to look like regular paths before being fed into Deadline’s path mapping system. For example, a path that starts with “server:share/” within the modo file will be massaged to start with “//server/share/” before path mapping is applied.</p></li>
+</ul>
+<p><strong>CPU Affinity</strong></p>
+<ul class="simple">
+<li><p><strong>Limit Threads To CPU Affinity</strong>: If enabled, the number of render threads will be limited to the CPU affinity of the rendering Worker.</p></li>
+</ul>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-modo-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>This section describes how to install the integrated submission scripts for modo.  The integrated submission scripts and the following installation procedures have been tested with modo 7xx and later.</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/Modo/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<p><strong>7xx or later</strong>:</p>
+<ul class="simple">
+<li><p>Open modo, and select System -&gt; Open User Scripts Folder.</p></li>
+<li><p>Copy the DeadlineModo folder from <code class="docutils literal notranslate"><span class="pre">[Repository]\submission\Modo\Client</span></code> to this User Scripts folder.</p></li>
+<li><p>Restart modo, and you should find the Submit To Deadline menu item in your Render menu.</p></li>
+</ul>
+<p><strong>6xx or earlier</strong>:</p>
+<ul class="simple">
+<li><p>Under the system menu, choose Run Script.</p></li>
+<li><p>Choose the DeadlineModoClient.pl script from <code class="docutils literal notranslate"><span class="pre">[Repository]\submission\Modo\Client</span></code></p></li>
+<li><p>Alternatively, you can also copy this script to your local machine and run it from there. You should do this if the path to your Deadline repository is a UNC path and you are running modo on Windows OS.</p></li>
+</ul>
+</div>
+<div class="section" id="custom-sanity-check">
+<h3>Custom Sanity Check<a class="headerlink" href="#custom-sanity-check" title="Permalink to this headline">¶</a></h3>
+<p>A CustomSanityChecks.py file can be created in <code class="docutils literal notranslate"><span class="pre">[Repository]\submission\Modo\Main</span></code>, and will be executed if it exists when the user clicks the Submit button in the integrated submitter. This script will let you override any of the properties in the submission script prior to submitting the job. You can also use it to run your own checks and display errors or warnings to the user. Finally, if the RunSanityCheck method returns False, the submission will be cancelled.</p>
+<p>Here is a very simple example of what this script could look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">lx</span>
+<span class="kn">import</span> <span class="nn">lxu</span>
+<span class="kn">import</span> <span class="nn">lxu.command</span>
+<span class="kn">import</span> <span class="nn">lxifc</span>
+
+<span class="k">def</span> <span class="nf">errordialog</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+    <span class="n">lx</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;dialog.setup error&#39;</span><span class="p">)</span>
+    <span class="n">lx</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;dialog.title {</span><span class="si">%s</span><span class="s1">}&#39;</span> <span class="o">%</span> <span class="n">title</span><span class="p">)</span>
+    <span class="n">lx</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;dialog.msg {</span><span class="si">%s</span><span class="s1">}&#39;</span> <span class="o">%</span> <span class="n">message</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">lx</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;+dialog.open&#39;</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">RunSanityCheck</span><span class="p">():</span>
+    <span class="n">lx</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;user.value deadlineDepartment {The Best Department!}&#39;</span><span class="p">)</span>
+    <span class="n">lx</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;user.value deadlinePriority 33&#39;</span><span class="p">)</span>
+    <span class="n">lx</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s1">&#39;user.value deadlineConcurrentTasks 2&#39;</span><span class="p">)</span>
+
+    <span class="n">errordialog</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">,</span> <span class="s1">&#39;This is a custom sanity check!&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>You can open the LoadDeadlineModoUI.py file from <code class="docutils literal notranslate"><span class="pre">[Repository]\submission\Modo\Client\DeadlineModo\pyscripts</span></code> to see the available Deadline modo values.</p>
+</div>
+</div>
+<div class="section" id="distributed-rendering-script-setup">
+<h2>Distributed Rendering Script Setup<a class="headerlink" href="#distributed-rendering-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>You can either run the DR Submitter installer or manually install the DR submission script.</p>
+<div class="section" id="id2">
+<h3>Submitter Installer<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/ModoDBR/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h3>Manual Installation<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p><strong>7xx or later only</strong>:</p>
+<ul class="simple">
+<li><p>Open modo, and select System -&gt; Open User Scripts Folder.</p></li>
+<li><p>Copy the DeadlineModoDBR folder from <code class="docutils literal notranslate"><span class="pre">[Repository]\submission\ModoDBR\Client</span></code> to this User Scripts folder.</p></li>
+</ul>
+</div>
+<div class="section" id="verify-installation">
+<h3>Verify Installation<a class="headerlink" href="#verify-installation" title="Permalink to this headline">¶</a></h3>
+<p>Restart modo, and you should find the Submit To Deadline: Modo DBR menu item in your Render menu.</p>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-modo-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of modo are supported?</strong></p>
+<blockquote>
+<div><p>Modo 3xx and later are supported.</p>
+</div></blockquote>
+<p><strong>Which versions of modo can I use for interactive distributed rendering?</strong></p>
+<blockquote>
+<div><p>Modo 7xx and later are supported.</p>
+</div></blockquote>
+<p><strong>When rendering with modo on Windows, it hangs after printing out “&#64;start modo_cl [48460] Luxology LLC”.</strong></p>
+<blockquote>
+<div><p>We’re not sure of the cause, but a known fix is to copy the ‘perl58.dll’ from the ‘extra’ folder into the main modo install directory (“C:Program FilesLuxologymodo601&quot;).</p>
+</div></blockquote>
+<p><strong>When rendering with modo on macOS, the Worker icon in the Dock changes to the modo icon, and the render gets stuck.</strong></p>
+<blockquote>
+<div><p>This is a known problem that can occur when the Worker application is launched by double-clicking it in Finder. There are a few known workarounds:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Start the Launcher application, and launch the Worker from the Launcher’s Launch menu.</p></li>
+<li><p>Launch the Worker from the terminal by simply running ‘DEADLINE_BIN/deadlineworker’ or ‘DEADLINE_BIN/deadlinelauncher -slave’, where DEADLINE_BIN is the Deadline bin folder.</p></li>
+<li><p>Use ‘modo’ as the render executable instead of ‘modo_cl’.</p></li>
+</ol>
+</div></blockquote>
+</div></blockquote>
+<p><strong>When tile rendering, each tile is rendered, but there is image data in the “unrendered” region of each tile.</strong></p>
+<blockquote>
+<div><p>This happens when there is a cached image in the modo frame buffer. Open up modo on the offending render node(s) and delete all cached images to fix the problem.</p>
+</div></blockquote>
+<p><strong>When rendering my Workers are ignoring the CPU Affinity.</strong></p>
+<blockquote>
+<div><p>Some renderers modify the CPU affinity when a render starts.  In these cases you can enable the Plugin Configuration option “Limit Threads To CPU Affinity” which will limit the number of threads the renderer can use.</p>
+</div></blockquote>
+</div>
+<div class="section" id="plugin-error-messages">
+<h2>Plugin Error Messages<a class="headerlink" href="#plugin-error-messages" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known modo error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">modo</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a></li>
+<li><a class="reference internal" href="#setting-up-a-scene-for-rendering">Setting Up A Scene For Rendering</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#interactive-distributed-rendering">Interactive Distributed Rendering</a><ul>
+<li><a class="reference internal" href="#id1">Submission Options</a></li>
+<li><a class="reference internal" href="#rendering">Rendering</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#network-rendering-considerations">Network Rendering Considerations</a></li>
+<li><a class="reference internal" href="#cross-platform-rendering-considerations">Cross-Platform Rendering Considerations</a></li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+<li><a class="reference internal" href="#custom-sanity-check">Custom Sanity Check</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#distributed-rendering-script-setup">Distributed Rendering Script Setup</a><ul>
+<li><a class="reference internal" href="#id2">Submitter Installer</a></li>
+<li><a class="reference internal" href="#id3">Manual Installation</a></li>
+<li><a class="reference internal" href="#verify-installation">Verify Installation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#plugin-error-messages">Plugin Error Messages</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-mocha.html"
+                        title="previous chapter">Mocha Pro</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-anime-studio.html"
+                        title="next chapter">Moho (Anime Studio)</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-anime-studio.html" title="Moho (Anime Studio)"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-mocha.html" title="Mocha Pro"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">modo</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

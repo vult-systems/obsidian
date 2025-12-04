@@ -1,0 +1,631 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manual Job Submission &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Job Transferring" href="job-transferring.html" />
+    <link rel="prev" title="Advanced Administration" href="index-advanced-admin.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="job-transferring.html" title="Job Transferring"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="index-advanced-admin.html" title="Advanced Administration"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" accesskey="U">Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Manual Job Submission</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="manual-job-submission">
+<span id="manual-submission-ref-label"></span><h1>Manual Job Submission<a class="headerlink" href="#manual-job-submission" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Manual job submission is useful if you want more control over the submission process. For example, if you’re writing a custom submission script, or you are integrating the submission process into an internal pipeline tool,
+you will probably want full control over which job settings are being set.</p>
+<p>If you are just looking to submit jobs from one of the many scripts that are shipped with Deadline, you should refer to the <a class="reference internal" href="job-submitting.html#job-submitting-ref-label"><span class="std std-ref">Submitting Jobs</span></a> documentation.</p>
+</div>
+<div class="section" id="arbitrary-command-line-jobs">
+<span id="arbitrary-command-line-jobs-ref-label"></span><h2>Arbitrary Command Line Jobs<a class="headerlink" href="#arbitrary-command-line-jobs" title="Permalink to this headline">¶</a></h2>
+<p>To manually submit arbitrary command line jobs, you can use the -SubmitCommandLineJob option with the <a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">Command</span></a> application. The key parameters that you need to specify are:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">-executable</span></code>: The executable we wish to use.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-arguments</span></code>: The arguments we wish to pass to the executable. In the arguments string, there are a few key words that will be replaced with the appropriate text when rendering the job:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;STARTFRAME&gt;</span></code> will be replaced with the current start frame for each task.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;ENDFRAME&gt;</span></code> will be replaced by the current end frame for each task.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;STARTFRAME%#&gt;</span></code> will be replaced with the current start frame for each task, and will be padded with 0’s to match the length specified for #. For example, &lt;STARTFRAME%4&gt; will ensure a start frame padding of 4.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;ENDFRAME%#&gt;</span></code> will be replaced by the current end frame for each task, and will be padded with 0’s to match the length specified for #. For example, &lt;ENDFRAME%6&gt; will ensure an end frame padding of 6.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;QUOTE&gt;</span></code> will be replaced with an actual quote character (“).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;AUXFILE#&gt;</span></code> will be replaced by the auxiliary file # submitted with the job. For example, &lt;AUXFILE0&gt; will add the file path to the first auxiliary file submitted with the job to the arguments string.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-frames</span></code>: The frames we wish to render.</p></li>
+</ul>
+<p>The following parameters can also be included, but are optional:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-startupdirectory</span></code>: The directory that the command line will start up in.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-chunksize</span></code>: The number of frames per task (defaults to 1).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-pool</span></code>: The pool we wish to submit to (defaults to none).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-group</span></code>: The group we wish to submit to (defaults to none).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-priority</span></code>: The job’s priority (defaults to 50).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-name</span></code>: The job’s name (defaults to “Untitled”).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-department</span></code>: The job’s department (defaults to “”).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-initialstatus</span></code>: Specify “Active” or “Suspended” (defaults to “Active”).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-prop</span></code>: Specify additional job properties in the form KEY=VALUE, where KEY is any of the property names that can be specified in the Job Info File. Multiple properties can be specified by prefixing each KEY=VALUE pair with <code class="docutils literal notranslate"><span class="pre">-prop</span></code>.</p></li>
+</ul>
+<p>For example, say we want to submit a job that uses 3dsmaxcmd.exe to render frames in the scene file “\\shared\path\scene.max”. We want to render frames 1 to 10, and we want an image resolution of 480x320.
+The command line to do this from a command prompt would look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span><span class="n">dsmaxcmd</span><span class="o">.</span><span class="n">exe</span>
+ <span class="o">-</span><span class="n">start</span><span class="p">:</span><span class="mi">1</span>
+ <span class="o">-</span><span class="n">end</span><span class="p">:</span><span class="mi">10</span>
+ <span class="o">-</span><span class="n">width</span><span class="p">:</span><span class="mi">480</span>
+ <span class="o">-</span><span class="n">height</span><span class="p">:</span><span class="mi">320</span>
+ <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">shared\path\scene.max&quot;</span>
+</pre></div>
+</div>
+<p>For the job, we want a task chunk size of 2, we want to submit to the 3dsmax group, we want a priority of 50, and we want a machine limit of 5. Finally, we want to call the job “3dsmax command line job”.
+The command line to submit this job would look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span><span class="o">.</span><span class="n">exe</span>
+ <span class="o">-</span><span class="n">SubmitCommandLineJob</span>
+ <span class="o">-</span><span class="n">executable</span> <span class="s2">&quot;c:\Program Files\Autodesk</span><span class="se">\3</span><span class="s2">dsmax8</span><span class="se">\3</span><span class="s2">dsmaxcmd.exe&quot;</span>
+ <span class="o">-</span><span class="n">arguments</span> <span class="s2">&quot;-start:&lt;STARTFRAME&gt; -end:&lt;ENDFRAME&gt;</span>
+    <span class="o">-</span><span class="n">width</span><span class="p">:</span><span class="mi">480</span> <span class="o">-</span><span class="n">height</span><span class="p">:</span><span class="mi">320</span> <span class="o">&lt;</span><span class="n">QUOTE</span><span class="o">&gt;</span>\\<span class="n">shared</span>\<span class="n">path</span>\<span class="n">scene</span><span class="o">.</span><span class="n">max</span><span class="o">&lt;</span><span class="n">QUOTE</span><span class="o">&gt;</span><span class="s2">&quot;</span>
+ <span class="o">-</span><span class="n">frames</span> <span class="mi">1</span><span class="o">-</span><span class="mi">10</span>
+ <span class="o">-</span><span class="n">chunksize</span> <span class="mi">2</span>
+ <span class="o">-</span><span class="n">group</span> <span class="mi">3</span><span class="n">dsmax</span>
+ <span class="o">-</span><span class="n">priority</span> <span class="mi">50</span>
+ <span class="o">-</span><span class="n">name</span> <span class="s2">&quot;3dsmax command line job&quot;</span>
+ <span class="o">-</span><span class="n">prop</span> <span class="n">MachineLimit</span><span class="o">=</span><span class="mi">5</span> <span class="o">-</span><span class="n">prop</span> <span class="n">EnvironmentKeyValue0</span><span class="o">=</span><span class="n">DEFAULT_RENDERER</span><span class="o">=</span><span class="n">arnold</span> <span class="o">-</span><span class="n">prop</span> <span class="n">EnvironmentKeyValue1</span><span class="o">=</span><span class="n">solidangle_LICENSE</span><span class="o">=</span><span class="mi">5056</span><span class="nd">@lic</span><span class="o">-</span><span class="n">server</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="maintenance-jobs">
+<span id="maintenance-jobs-ref-label"></span><h2>Maintenance Jobs<a class="headerlink" href="#maintenance-jobs" title="Permalink to this headline">¶</a></h2>
+<p>Maintenance jobs are special jobs where each task for the job will render on a different machine in your farm. This is useful for performing benchmark tests, installing new software, synchronizing files to each machine, etc. When a maintenance job is submitted, a task will automatically be created for each Worker, and once a Worker has finished a task, it will no longer pick up the job.</p>
+<p>One way to submit a Maintenance job is to manually submit a job to Deadline by creating the the necessary job submission files as documented below. In the job info file, you must set MaintenanceJob to True:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MaintenanceJob</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>By default, a Maintenance job will render frame 0 on every machine. To render a different frame, or a sequence of frames, you can specify the MaintenanceJobStartFrame and MaintenanceJobEndFrame options in the job info file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MaintenanceJob</span><span class="o">=</span><span class="kc">True</span>
+<span class="n">MaintenanceJobStartFrame</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">MaintenanceJobEndFrame</span><span class="o">=</span><span class="mi">5</span>
+</pre></div>
+</div>
+<p>Note that if you specify an allow list or deny list in the job info file, the number of tasks that are created for the Maintenance job will equal the number of valid Workers that the job could render on.</p>
+<p>Another way to submit a Maintenance job is to right-click on an existing job in the Monitor and choose the Resubmit Job option. See the Resubmitting Jobs section of the <a class="reference internal" href="job-controlling.html#job-controlling-ref-label"><span class="std std-ref">Controlling Jobs</span></a> documentation for more information.</p>
+</div>
+<div class="section" id="creating-job-submission-files">
+<h2>Creating Job Submission Files<a class="headerlink" href="#creating-job-submission-files" title="Permalink to this headline">¶</a></h2>
+<p>This is the method that our submission scripts use to submit jobs. This method is far more flexible, but requires more work to setup the job. It also uses the <a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">Command</span></a> application to submit the job.</p>
+<p>Before the job can be submitted though, a <a class="reference internal" href="#job-info-ref-label"><span class="std std-ref">Job Info File</span></a> and a <a class="reference internal" href="#plugin-info-ref-label"><span class="std std-ref">Plugin Info File</span></a> must be created. These are the first two files that should always be submitted with the job.</p>
+<p>You can also submit additional auxiliary files with the job, such as the scene file you want to render, or any other files the job will need. Any number of auxiliary files can be specified after the job info and
+plugin info file. These auxiliary file are copied to the Repository, and are then copied locally to each machine during rendering. Because these files will be copied to the same folder, it is necessary that every
+file name be unique.</p>
+<p>Once these files are ready to go, you can submit the job using the command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">deadlinecommand</span> <span class="p">[</span><span class="n">Job</span> <span class="n">Info</span> <span class="n">File</span><span class="p">]</span> <span class="p">[</span><span class="n">Plugin</span> <span class="n">Info</span> <span class="n">File</span><span class="p">]</span> <span class="p">[</span><span class="n">Auxiliary</span> <span class="n">File</span> <span class="mi">1</span><span class="p">]</span> <span class="p">[</span><span class="n">Auxiliary</span> <span class="n">File</span> <span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="section" id="job-info-file-options">
+<span id="job-info-ref-label"></span><h3>Job Info File Options<a class="headerlink" href="#job-info-file-options" title="Permalink to this headline">¶</a></h3>
+<p>The Job Info File is a plain text file that uses Key/Value pairs (key=value) to define all the generic job options used to render the job. A couple options are required, but most are optional.
+All jobs can use these options, regardless of the plugin that they use. Some examples have been provided further down.</p>
+<div class="section" id="required">
+<span id="manual-submission-required-ref-label"></span><h4>Required<a class="headerlink" href="#required" title="Permalink to this headline">¶</a></h4>
+<p>These options must be specified in the job info file, or the job will fail to submit. The rest of the options are optional.</p>
+<ul class="simple">
+<li><p><strong>Plugin=&lt;plugin name&gt;</strong> : Specifies the plugin to use. Must match an existing plugin in the repository.</p></li>
+</ul>
+</div>
+<div class="section" id="general">
+<span id="manual-submission-general-ref-label"></span><h4>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Frames=&lt;1,2,3-10,20&gt;</strong> : Specifies the frame range of the render job. See the <a class="reference internal" href="job-submitting.html#frame-list-ref-label"><span class="std std-ref">Frame List Formatting Options</span></a> in the Job Submission documentation for more information (default = 0).</p></li>
+<li><p><strong>Name=&lt;job name&gt;</strong> : Specifies the name of the job (default = Untitled).</p></li>
+<li><p><strong>Comment=&lt;comment&gt;</strong> : Specifies a comment for the job (default = blank).</p></li>
+<li><p><strong>Department=&lt;department name&gt;</strong> : Specifies the department that the job belongs to. This is simply a way to group jobs together, and does not affect rendering in any way (default = blank).</p></li>
+<li><p><strong>BatchName=&lt;batch name&gt;</strong> : Specifies an optional name to logically group jobs together (default = blank).</p></li>
+<li><p><strong>UserName=&lt;username&gt;</strong> : Specifies the job’s user (default = current user).</p></li>
+<li><p><strong>MachineName=&lt;machineName&gt;</strong> : Specifies the machine the job was submitted from (default = current machine).</p></li>
+<li><p><strong>Pool=&lt;poolName&gt;</strong> : Specifies the pool that the job is being submitted to (default = none).</p></li>
+<li><p><strong>SecondaryPool=&lt;poolName&gt;</strong> : Specifies the secondary pool that the job can spread to if machines are available. If not specified, the job will not use a secondary pool.</p></li>
+<li><p><strong>Group=&lt;groupName&gt;</strong> : Specifies the group that the job is being submitted to (default = none).</p></li>
+<li><p><strong>Priority=&lt;0 or greater&gt;</strong> : Specifies the priority of a job with 0 being the lowest (default = 50). The maximum priority can be configured in the Job Settings of the Repository Options, and defaults to 100.</p></li>
+<li><p><strong>ChunkSize=&lt;1 or greater&gt;</strong> : Specifies how many frames to render per task (default = 1).</p></li>
+<li><p><strong>ConcurrentTasks=&lt;1-16&gt;</strong> : Specifies the maximum number of tasks that a Worker can render at a time (default = 1). This is useful for script plugins that support multithreading.</p></li>
+<li><p><strong>LimitConcurrentTasksToNumberOfCpus=&lt;true/false&gt;</strong> : If ConcurrentTasks is greater than 1, setting this to true will ensure that a Worker will not dequeue more tasks than it has processors (default = true).</p></li>
+<li><p><strong>OnJobComplete=&lt;Nothing/Delete/Archive&gt;</strong> : Specifies what should happen to a job after it completes (default = Nothing).</p></li>
+<li><p><strong>SynchronizeAllAuxiliaryFiles=&lt;true/false&gt;</strong> : If enabled, all job files (as opposed to just the job info and plugin info files) will be synchronized by the Worker between tasks for this job (default = false). Note that this can add significant network overhead, and should only be used if you plan on manually editing any of the files that are being submitted with the job.</p></li>
+<li><p><strong>ForceReloadPlugin=&lt;true/false&gt;</strong> : Specifies whether or not to reload the plugin between subsequent frames of a job (default = false). This deals with memory leaks or applications that do not unload all job aspects properly.</p></li>
+<li><p><strong>Sequential=&lt;true/false&gt;</strong> : Sequential rendering forces a Worker to render the tasks of a job in order. If an earlier task is ever requeued, the Worker won’t go back to that task until it has finished the remaining tasks in order. Sequential rendering also forces the Worker to finish rendering tasks in order before switching to another job, even if that job has higher priority or this job is interruptible (default = false).</p></li>
+<li><p><strong>SuppressEvents=&lt;true/false&gt;</strong> : If true, the job will not trigger any event plugins while in the queue (default = false).</p></li>
+<li><p><strong>Protected=&lt;true/false&gt;</strong> : If enabled, only the job’s user, a power user, or a user that belongs to a user group that has permissions to handle uneditable jobs will see the options to delete or archive the job in the Monitor. The job will also not be cleaned up by Deadline’s automatic house cleaning.</p></li>
+<li><p><strong>InitialStatus=&lt;Active/Suspended&gt;</strong> : Specifies what status the job should be in immediately after submission (default = Active).</p></li>
+<li><p><strong>NetworkRoot=&lt;repositoryUNCPath&gt;</strong> : Specifies the repository that the job will be submitted to. This is required if you are using more than one repository (default = current default repository for the machine from which submission is occurring).</p></li>
+</ul>
+</div>
+<div class="section" id="timeouts">
+<span id="manual-submission-timeout-ref-label"></span><h4>Timeouts<a class="headerlink" href="#timeouts" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>MinRenderTimeSeconds=&lt;0 or greater&gt;</strong> : Specifies the minimum time, in seconds, a Worker should render a task for, otherwise an error will be reported (default = 0, which means no minimum). Note that if MinRenderTimeSeconds and MinRenderTimeMinutes are both specified, MinRenderTimeSeconds will be ignored.</p></li>
+<li><p><strong>MinRenderTimeMinutes=&lt;0 or greater&gt;</strong> : Specifies the minimum time, in minutes, a Worker should render a task for, otherwise an error will be reported (default = 0, which means no minimum). Note that if MinRenderTimeSeconds and MinRenderTimeMinutes are both specified, MinRenderTimeSeconds will be ignored.</p></li>
+<li><p><strong>TaskTimeoutSeconds=&lt;0 or greater&gt;</strong> : Specifies the time, in seconds, a Worker has to render a task before it times out (default = 0, which means unlimited). Note that if TaskTimeoutSeconds and TaskTimeoutMinutes are both specified, TaskTimeoutSeconds will be ignored.</p></li>
+<li><p><strong>TaskTimeoutMinutes=&lt;0 or greater&gt;</strong> : Specifies the time, in minutes, a Worker has to render a task before it times out (default = 0, which means unlimited). Note that if TaskTimeoutSeconds and TaskTimeoutMinutes are both specified, TaskTimeoutSeconds will be ignored.</p></li>
+<li><p><strong>StartJobTimeoutSeconds=&lt;0 or greater&gt;</strong> : Specifies the time, in seconds, a Worker has to start a render job before it times out (default = 0, which means unlimited). Note that if StartJobTimeoutSeconds and StartJobTimeoutMinutes are both specified, StartJobTimeoutSeconds will be ignored.</p></li>
+<li><p><strong>StartJobTimeoutMinutes=&lt;0 or greater&gt;</strong> : Specifies the time, in minutes, a Worker has to start a render job before it times out (default = 0, which means unlimited). Note that if StartJobTimeoutSeconds and StartJobTimeoutMinutes are both specified, StartJobTimeoutSeconds will be ignored.</p></li>
+<li><p><strong>InitializePluginTimeoutSeconds=&lt;0 or greater&gt;</strong>: Specifies the maximum time, in seconds, a Worker has to load the application plugin before it times out (default = 0, which means unlimited).</p></li>
+<li><p><strong>OnTaskTimeout=&lt;Error/Notify/ErrorAndNotify/Complete&gt;</strong> : Specifies what should occur if a task times out (default = Error).</p></li>
+<li><p><strong>EnableTimeoutsForScriptTasks=&lt;true/false&gt;</strong> : If true, then the timeouts for this job will also affect its pre/post job scripts, if any are defined (default = false).</p></li>
+<li><p><strong>EnableFrameTimeouts=&lt;true/false&gt;</strong> :If true, then the timeouts for this job are Frame based instead of Task based.</p></li>
+<li><p><strong>EnableAutoTimeout=&lt;true/false&gt;</strong> : If true, a Worker will automatically figure out if it has been rendering too long based on some Repository Configuration settings and the render times of previously completed tasks (default = false).</p></li>
+</ul>
+</div>
+<div class="section" id="interruptible">
+<span id="manual-submission-interruptible-ref-label"></span><h4>Interruptible<a class="headerlink" href="#interruptible" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Interruptible=&lt;true/false&gt;</strong> : Specifies if tasks for a job can be interrupted by a higher priority job during rendering (default = false).</p></li>
+<li><p><strong>InterruptiblePercentage=&lt;0 to 100&gt;</strong>: A task for this job will only be interrupted if the task progress is less than or equal to this value.</p></li>
+<li><p><strong>RemTimeThreshold=&lt;0 or greater&gt;</strong>: The remaining time (in seconds) that this Job must have left more than in order to be interruptible.</p></li>
+</ul>
+</div>
+<div class="section" id="notifications">
+<span id="manual-submission-notification-ref-label"></span><h4>Notifications<a class="headerlink" href="#notifications" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p><strong>NotificationTargets=&lt;username,username,username&gt;</strong> : A list of users, separated by commas, who should be notified when the job is completed (default = blank).</p></li>
+<li><p><strong>ClearNotificationTargets=&lt;true/false&gt;</strong> : If enabled, all of the job’s notification targets will be removed (default = false).</p></li>
+<li><p><strong>NotificationEmails=&lt;email,email,email&gt;</strong> : A list of additional email addresses, separated by commas, to send job notifications to (default = blank).</p></li>
+<li><p><strong>OverrideNotificationMethod=&lt;true/false&gt;</strong> : If the job user’s notification method should be ignored (default = false).</p></li>
+<li><p><strong>EmailNotification=&lt;true/false&gt;</strong> : If overriding the job user’s notification method, whether to use email notification (default = false).</p></li>
+<li><p><strong>PopupNotification=&lt;true/false&gt;</strong> : If overriding the job user’s notification method, whether to use popup notification (default = false).</p></li>
+<li><p><strong>NotificationNote=&lt;note&gt;</strong> : A note to append to the notification email sent out when the job is complete (default = blank). Separate multiple lines with [EOL], for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">line</span><span class="p">[</span><span class="n">EOL</span><span class="p">]</span><span class="n">This</span> <span class="ow">is</span> <span class="n">another</span> <span class="n">line</span><span class="p">[</span><span class="n">EOL</span><span class="p">]</span><span class="n">This</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">last</span> <span class="n">line</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="machine-limit">
+<span id="manual-submission-machine-limit-ref-label"></span><h4>Machine Limit<a class="headerlink" href="#machine-limit" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>MachineLimit=&lt;0 or greater&gt;</strong> : Specifies the maximum number of machines this job can be rendered on at the same time (default = 0, which means unlimited).</p></li>
+<li><p><strong>MachineLimitProgress=&lt;0.1 or greater&gt;</strong> : If set, the Worker rendering the job will give up its current machine limit lock when the current task reaches the specified progress. If negative, this feature is disabled (default = -1.0). The usefulness of this feature is directly related to the progress reporting capabilities of the individual plugins.</p></li>
+<li><p><strong>Allowlist=&lt;workerName,workerName,workerName&gt;</strong> : Specifies which Workers are on the job’s allow list(default = blank). If both an allow list and a deny list are specified, only the allow list is used.</p></li>
+<li><p><strong>Denylist=&lt;workerName,workerName,workerName&gt;</strong> : Specifies which Workers are on the job’s deny list(default = blank). If both an allow list and a deny list are specified, only the allow list is used.</p></li>
+</ul>
+</div>
+<div class="section" id="limits">
+<span id="manual-submission-limits-ref-label"></span><h4>Limits<a class="headerlink" href="#limits" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>LimitGroups=&lt;limitGroup,limitGroup,limitGroup&gt;</strong> : Specifies the limit groups that this job is a member of (default = blank).</p></li>
+</ul>
+</div>
+<div class="section" id="dependencies">
+<span id="manual-submission-dependencies-ref-label"></span><h4>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>JobDependencies=&lt;jobID,jobID,jobID&gt;</strong> : Specifies what jobs must finish before this job will resume (default = blank). These dependency jobs must be identified using their unique job ID, which is outputted after the job is submitted, and can be found in the Monitor in the “Job ID” column.</p></li>
+<li><p><strong>JobDependencyPercentage=&lt;-1, or 0 to 100&gt;</strong> : If between 0 and 100, this job will resume when all of its job dependencies have completed the specified percentage number of tasks. If -1, this feature will be disabled (default = -1).</p></li>
+<li><p><strong>IsFrameDependent=&lt;true/false&gt;</strong> : Specifies whether or not the job is frame dependent (default = false).</p></li>
+<li><p><strong>FrameDependencyOffsetStart=&lt;-100000 to 100000&gt;</strong> : If the job is frame dependent, this is the start frame offset (default = 0).</p></li>
+<li><p><strong>FrameDependencyOffsetEnd=&lt;-100000 to 100000&gt;</strong> : If the job is frame dependent, this is the end frame offset (default = 0).</p></li>
+<li><p><strong>ResumeOnCompleteDependencies=&lt;true/false&gt;</strong> : Specifies whether or not the dependent job should resume when its dependencies are complete (default = true).</p></li>
+<li><p><strong>ResumeOnDeletedDependencies=&lt;true/false&gt;</strong> : Specifies whether or not the dependent job should resume when its dependencies have been deleted (default = false).</p></li>
+<li><p><strong>ResumeOnFailedDependencies=&lt;true/false&gt;</strong> : Specifies whether or not the dependent job should resume when its dependencies have failed (default = false).</p></li>
+<li><p><strong>RequiredAssets=&lt;assetPath,assetPath,assetPath&gt;</strong> : Specifies what asset files must exist before this job will resume (default = blank). These asset paths must be identified using full paths, and multiple paths can be separated with commas. If using frame dependencies, you can replace padding in a sequence with the ‘#’ characters, and a task for the job will only be resumed when the required assets for the task’s frame exist.</p></li>
+<li><p><strong>ScriptDependencies=&lt;scriptPath,scriptPath,scriptPath&gt;</strong> : Specifies what Python script files will be executed to determine if a job can resume (default = blank). These script paths must be identified using full paths, and multiple paths can be separated with commas. See the <a class="reference internal" href="job-scripts.html#job-dependency-scripts-ref-label"><span class="std std-ref">dependency scripting section</span></a> of the documentation for more information.</p></li>
+</ul>
+</div>
+<div class="section" id="failure-detection">
+<span id="manual-submission-failure-detection-ref-label"></span><h4>Failure Detection<a class="headerlink" href="#failure-detection" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>OverrideJobFailureDetection=&lt;true/false&gt;</strong> : If true, the job will ignore the global Job Failure Detection settings and instead use its own (default = false).</p></li>
+<li><p><strong>FailureDetectionJobErrors=&lt;0 or greater&gt;</strong> : If OverrideJobFailureDetection is true, this sets the number of errors before the job fails. If set to 0, job failure detection will be disabled.</p></li>
+<li><p><strong>OverrideTaskFailureDetection=&lt;true/false&gt;</strong> : If true, the job will ignore the global Task Failure Detection settings and instead use its own (default = false).</p></li>
+<li><p><strong>FailureDetectionTaskErrors=&lt;0 or greater&gt;</strong> : If OverrideTaskFailureDetection is true, this sets the number of errors before a task for the job fails. If set to 0, task failure detection will be disabled.</p></li>
+<li><p><strong>IgnoreBadJobDetection=&lt;true/false&gt;</strong> : If true, Workers will never mark the job as bad for themselves. This means that they will continue to make attempts at jobs that often report errors until the job is complete, or until it fails (default = false).</p></li>
+<li><p><strong>SendJobErrorWarning=&lt;true/false&gt;</strong> : If the job should send warning notifications when it reaches a certain number of errors (default = false).</p></li>
+</ul>
+</div>
+<div class="section" id="cleanup">
+<span id="manual-submission-cleanup-ref-label"></span><h4>Cleanup<a class="headerlink" href="#cleanup" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>DeleteOnComplete=&lt;true/false&gt;</strong> : Specifies whether or not the job should be automatically deleted after it completes (default = false).</p></li>
+<li><p><strong>ArchiveOnComplete=&lt;true/false&gt;</strong> : Specifies whether or not the job should be automatically archived after it completes (default = false).</p></li>
+<li><p><strong>OverrideAutoJobCleanup=&lt;true/false&gt;</strong> : If true, the job will ignore the global Job Cleanup settings and instead use its own (default = false).</p></li>
+<li><p><strong>OverrideJobCleanup=&lt;true/false&gt;</strong> : If OverrideAutoJobCleanup is true, this will determine if the job should be automatically cleaned up or not.</p></li>
+<li><p><strong>JobCleanupDays=&lt;true/false&gt;</strong> : If OverrideAutoJobCleanup and OverrideJobCleanup are both true, this is the number of days to keep the job before cleaning it up.</p></li>
+<li><p><strong>OverrideJobCleanupType=&lt;ArchiveJobs/DeleteJobs&gt;</strong> : If OverrideAutoJobCleanup and OverrideJobCleanup are both true, this is the job cleanup mode.</p></li>
+</ul>
+</div>
+<div class="section" id="scheduling">
+<span id="manual-submission-scheduling-ref-label"></span><h4>Scheduling<a class="headerlink" href="#scheduling" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p><strong>ScheduledType=&lt;None/Once/Daily/Custom&gt;</strong> : Specifies whether or not you want to schedule the job (default = None).</p></li>
+<li><dl class="simple">
+<dt><strong>ScheduledStartDateTime=&lt;dd/MM/yyyy HH:mm&gt;</strong><span class="classifier">The date/time at which the job will run. The start date/time must match the specified format. Here’s an explanation:</span></dt><dd><ul class="simple">
+<li><p><strong>dd</strong>: The day of the month. Single-digit days must have a leading zero.</p></li>
+<li><p><strong>MM</strong>: The numeric month. Single-digit months must have a leading zero.</p></li>
+<li><p><strong>yyyy</strong>: The year in four digits, including the century.</p></li>
+<li><p><strong>HH</strong>: The hour in a 24-hour clock. Single-digit hours must have a leading zero.</p></li>
+<li><p><strong>mm</strong>: The minute. Single-digit minutes must have a leading zero.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>ScheduledDays=&lt;day interval&gt;</strong> : If scheduling a Daily job, this is the day interval for when the job runs (default = 1).</p></li>
+<li><p><strong>JobDelay=&lt;dd:hh:mm:ss&gt;</strong> : A start time delay. If there is no ScheduledStartDateTime this delay will be applied to the submission date. The delay value is represented by the number of days, hours, minutes, and seconds,
+all separated by colons.</p></li>
+<li><dl>
+<dt><strong>Scheduled&lt;Day of the Week&gt;&lt;Start/Stop&gt;Time=&lt;HH:mm:ss&gt;</strong> The start/stop time for each day of the week when creating a custom schedule.</dt><dd><ul class="simple">
+<li><p><strong>HH</strong>: The hour in a 24-hour clock. Single-digit hours must have a leading zero.</p></li>
+<li><p><strong>mm</strong>: The minute. Single-digit minutes must have a leading zero.</p></li>
+<li><p><strong>ss</strong>: The seconds. Single-digit seconds must have a leading zero.</p></li>
+</ul>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ScheduledType</span><span class="o">=</span><span class="n">Custom</span>
+<span class="n">ScheduledMondayStartTime</span><span class="o">=</span><span class="mi">03</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="n">ScheduledMondayStopTime</span><span class="o">=</span><span class="mi">07</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="n">ScheduledTuesdayStartTime</span><span class="o">=</span><span class="mi">03</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="n">ScheduledTuesdayStopTime</span><span class="o">=</span><span class="mi">07</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="n">ScheduledWednesdayStartTime</span><span class="o">=</span><span class="mi">03</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="n">ScheduledWednesdayStopTime</span><span class="o">=</span><span class="mi">07</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="n">ScheduledThursdayStartTime</span><span class="o">=</span><span class="mi">03</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="n">ScheduledThursdayStopTime</span><span class="o">=</span><span class="mi">07</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="n">ScheduledFridayStartTime</span><span class="o">=</span><span class="mi">03</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="n">ScheduledFridayStopTime</span><span class="o">=</span><span class="mi">07</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="n">ScheduledSaturdayStartTime</span><span class="o">=</span><span class="mi">01</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="n">ScheduledSaturdayStopTime</span><span class="o">=</span><span class="mi">23</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="n">ScheduledSundayStartTime</span><span class="o">=</span><span class="mi">01</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="n">ScheduledSundayStopTime</span><span class="o">=</span><span class="mi">23</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="scripts">
+<span id="manual-submission-scripts-ref-label"></span><h4>Scripts<a class="headerlink" href="#scripts" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>PreJobScript=&lt;path to script&gt;</strong> : Specifies a full path to a python script to execute when the job initially starts rendering (default = blank).</p></li>
+<li><p><strong>PostJobScript=&lt;path to script&gt;</strong> : Specifies a full path to a python script to execute when the job completes (default = blank).</p></li>
+<li><p><strong>PreTaskScript=&lt;path to script&gt;</strong> : Specifies a full path to a python script to execute before each task starts rendering (default = blank).</p></li>
+<li><p><strong>PostTaskScript=&lt;path to script&gt;</strong> : Specifies a full path to a python script to execute after each task completes (default = blank).</p></li>
+</ul>
+</div>
+<div class="section" id="event-opt-ins">
+<span id="manual-submission-event-opt-ins-ref-label"></span><h4>Event Opt-Ins<a class="headerlink" href="#event-opt-ins" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p><strong>EventOptIns=&lt;eventPlugin,eventPlugin,eventPlugin&gt;</strong> : Specifies which events will trigger for the job if the Event Plugins are configured per job. This is a comma-separated list of all events that you want to trigger for this job. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">EventOptIns</span><span class="o">=</span><span class="n">Shotgun</span><span class="p">,</span><span class="n">Puppet</span><span class="p">,</span><span class="n">FTrack</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="environment">
+<span id="manual-submission-enviro-ref-label"></span><h4>Environment<a class="headerlink" href="#environment" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p><strong>EnvironmentKeyValue#=&lt;key=value&gt;</strong> : Specifies environment variables to set when the job renders. This option is numbered, starting with 0 (EnvironmentKeyValue0), to handle multiple environment variables. For each additional variable, just increase the number (EnvironmentKeyValue1, EnvironmentKeyValue2, etc). Note that these variables are only applied to the rendering process, so they do not persist between jobs.</p></li>
+<li><p><strong>IncludeEnvironment=&lt;true/false&gt;</strong> : If true, the submission process will automatically grab all the environment variables from the submitter’s current environment and set them in the job’s environment variables (default = false). Note that these variables are only applied to the rendering process, so they do not persist between jobs.</p>
+<blockquote>
+<div><p>Note that if IncludeEnvironment is true, certain environment variables like USERNAME, USERPROFILE, LOCALAPPDATA, TEMP, and TMP can cause the render to fail if the rendering process is running as a different user. This is because the user profile that Deadline is running as doesn’t have permission to access the user’s folders that are defined in the environment. This problem can be avoided by excluding certain environment variables when IncludeEnvironment is true. This is done by specifying keys without values in the job info file. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">EnvironmentKeyValue0</span><span class="o">=</span><span class="n">USERNAME</span><span class="o">=</span>
+<span class="n">EnvironmentKeyValue1</span><span class="o">=</span><span class="n">USERPROFILE</span><span class="o">=</span>
+<span class="n">EnvironmentKeyValue2</span><span class="o">=</span><span class="n">LOCALAPPDATA</span><span class="o">=</span>
+<span class="n">EnvironmentKeyValue3</span><span class="o">=</span><span class="n">TEMP</span><span class="o">=</span>
+<span class="n">EnvironmentKeyValue4</span><span class="o">=</span><span class="n">TMP</span><span class="o">=</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p><strong>UseJobEnvironmentOnly=&lt;true/false&gt;</strong> : If true, only the job’s environment variables will be used at render time (default = false). If False, the job’s environment variables will be merged with the Worker’s current environment, with the job’s variables overwriting any existing ones with the same name.</p></li>
+<li><p><strong>CustomPluginDirectory=&lt;directoryName&gt;</strong> : If specified, the job will look for for the plugin it needs to render in this location. If it does not exist in this location, it will fall back on the Repository plugin directory. For example, if you are rendering with a plugin called MyPlugin, and it exists in \\server\development\plugins\MyPlugin, you would set CustomPluginDirectory=\\server\development\plugins.</p></li>
+</ul>
+</div>
+<div class="section" id="aws-portal">
+<span id="manual-submission-assets-ref-label"></span><h4>AWS Portal<a class="headerlink" href="#aws-portal" title="Permalink to this headline">¶</a></h4>
+<p>When using <a class="reference internal" href="aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">AWS Portal</span></a> specific options are available.</p>
+<ul class="simple">
+<li><p><strong>AWSAssetFile#=&lt;assetPath&gt;</strong> : Specifies which asset files will be pre-cached for this job. This requires the submitting machine to be capable of communicating with the <a class="reference internal" href="aws-portal-asset-transfer-system/overview.html#aws-portal-asset-transfer-system-overview-ref-label"><span class="std std-ref">AWS Portal Asset Server</span></a>. This option is numbered, starting with 0 (AWSAssetFile0). Each file requires its own entry as a full path. This option is independent of <a class="reference internal" href="#manual-submission-dependencies-ref-label"><span class="std std-ref">RequiredAssets</span></a>.</p></li>
+</ul>
+</div>
+<div class="section" id="job-extra-info">
+<span id="manual-submission-job-extra-info-ref-label"></span><h4>Job Extra Info<a class="headerlink" href="#job-extra-info" title="Permalink to this headline">¶</a></h4>
+<p>These are extra arbitrary properties that have corresponding columns in the Monitor that can be sorted on. There are a total of 10 Extra Info properties that can be specified.</p>
+<ul class="simple">
+<li><p><strong>ExtraInfo0=&lt;arbitrary value&gt;</strong></p></li>
+<li><p><strong>ExtraInfo1=&lt;arbitrary value&gt;</strong></p></li>
+<li><p><strong>ExtraInfo2=&lt;arbitrary value&gt;</strong></p></li>
+<li><p><strong>ExtraInfo3=&lt;arbitrary value&gt;</strong></p></li>
+<li><p><strong>ExtraInfo4=&lt;arbitrary value&gt;</strong></p></li>
+<li><p><strong>ExtraInfo5=&lt;arbitrary value&gt;</strong></p></li>
+<li><p><strong>ExtraInfo6=&lt;arbitrary value&gt;</strong></p></li>
+<li><p><strong>ExtraInfo7=&lt;arbitrary value&gt;</strong></p></li>
+<li><p><strong>ExtraInfo8=&lt;arbitrary value&gt;</strong></p></li>
+<li><p><strong>ExtraInfo9=&lt;arbitrary value&gt;</strong></p></li>
+</ul>
+<p>These are additional arbitrary properties. There is no limit on the number that are specified, but they do not have corresponding columns in the Monitor.</p>
+<ul class="simple">
+<li><p><strong>ExtraInfoKeyValue0=&lt;key=value&gt;</strong></p></li>
+<li><p><strong>ExtraInfoKeyValue1=&lt;key=value&gt;</strong></p></li>
+<li><p><strong>ExtraInfoKeyValue2=&lt;key=value&gt;</strong></p></li>
+<li><p><strong>ExtraInfoKeyValue3=&lt;key=value&gt;</strong></p></li>
+<li><p>…</p></li>
+</ul>
+</div>
+<div class="section" id="task-extra-info-names">
+<span id="manual-submission-task-extra-info-ref-label"></span><h4>Task Extra Info Names<a class="headerlink" href="#task-extra-info-names" title="Permalink to this headline">¶</a></h4>
+<p>The Task Extra Info 0-9 properties can be renamed from the Jobs section of the Repository Options, and have corresponding columns in the Job list that can be sorted on. Here you can modify the names of the Task Extra Info properties for this particular Job.</p>
+<ul class="simple">
+<li><p><strong>OverrideTaskExtraInfoNames=&lt;true/false&gt;</strong>: If true, the Task Extra Info column names will be overridden with the following entered values if not blank.</p></li>
+<li><p><strong>TaskExtraInfoName0=&lt;arbitrary value&gt;</strong></p></li>
+<li><p><strong>TaskExtraInfoName1=&lt;arbitrary value&gt;</strong></p></li>
+<li><p><strong>TaskExtraInfoName2=&lt;arbitrary value&gt;</strong></p></li>
+<li><p><strong>TaskExtraInfoName3=&lt;arbitrary value&gt;</strong></p></li>
+<li><p><strong>TaskExtraInfoName4=&lt;arbitrary value&gt;</strong></p></li>
+<li><p><strong>TaskExtraInfoName5=&lt;arbitrary value&gt;</strong></p></li>
+<li><p><strong>TaskExtraInfoName6=&lt;arbitrary value&gt;</strong></p></li>
+<li><p><strong>TaskExtraInfoName7=&lt;arbitrary value&gt;</strong></p></li>
+<li><p><strong>TaskExtraInfoName8=&lt;arbitrary value&gt;</strong></p></li>
+<li><p><strong>TaskExtraInfoName9=&lt;arbitrary value&gt;</strong></p></li>
+</ul>
+</div>
+<div class="section" id="output">
+<span id="manual-submission-output-ref-label"></span><h4>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h4>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Depending on your Deadline job type (normal/maintenance/tile), only use one of the following <code class="docutils literal notranslate"><span class="pre">OutputFilename...</span></code> KEY=VALUE pair types in your <code class="docutils literal notranslate"><span class="pre">JobInfo</span></code> file. Do <strong>NOT</strong> mix!</p>
+</div>
+<ul>
+<li><p><strong>OutputFilename#=&lt;fileName&gt;</strong> : Specifies the output image filenames for each frame (default = blank). This allows the Monitor to display the “View Output Image” context menu option in the task list. There is no minimum or maximum limit to padding length supported. A padding of 4 x #### is very common in many applications. If the filename is a full path, then the OutputDirectory# option is not needed. This option is numbered, starting with 0 (OutputFilename0), to handle multiple output file names per frame. For each additional file name, just increase the number (OutputFilename1, OutputFilename2, etc) (<strong>NORMAL</strong> or <strong>MAINTENANCE</strong> jobs only).</p></li>
+<li><p><strong>OutputFilename#Tile?=&lt;fileName&gt;</strong> : Specifies the output image filenames for each task of a Tile job (default = blank). This allows the Monitor to display the “View Output Image” context menu option in the task list for Tile jobs. The ‘#’ is used to support multiple outputs per frame (see OutputFilename# above), and the ‘?’ is used to specify the output for each task in the Tile job. For example, a Tile job with 2 outputs and 2 tiles would specify OutputFilename0Tile0, OutputFilename0Tile1, OutputFilename1Tile0, and OutputFilename1Tile1 (<strong>TILE</strong> jobs only).</p></li>
+<li><p><strong>OutputDirectory#=&lt;directoryName&gt;</strong> : Specifies the output image directory for the job (default = blank). This allows the Monitor to display the “Explore Output” context menu option in the job list. If the filename is a full path, then the OutputDirectory# option is not needed.
+This option is numbered, starting with 0 (OutputDirectory0), to handle multiple output directories per frame. For each additional directory, just increase the number (OutputDirectory1, OutputDirectory2, etc) (<strong>ANY</strong> job type).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">OutputDirectory0</span><span class="o">=</span>\\<span class="n">fileserver</span>\<span class="n">Project</span>\<span class="n">Renders</span>\<span class="n">OutputFolder</span>\
+<span class="n">OutputFilename0</span><span class="o">=</span><span class="n">o_HDP_010_BG_v01</span><span class="o">.</span><span class="c1">####.exr</span>
+<span class="n">OutputDirectory1</span><span class="o">=</span>\\<span class="n">fileserver</span>\<span class="n">Project</span>\<span class="n">Renders</span>\<span class="n">OutputFolder</span>\
+<span class="n">OutputFilename1</span><span class="o">=</span><span class="n">o_HDP_010_SPEC_v01</span><span class="c1">####.dpx</span>
+<span class="n">OutputDirectory2</span><span class="o">=</span>\\<span class="n">fileserver</span>\<span class="n">Project</span>\<span class="n">Renders</span>\<span class="n">OutputFolder</span>\
+<span class="n">OutputFilename2</span><span class="o">=</span><span class="n">o_HDP_010_RAW_v01_</span><span class="c1">####.png</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="tile-job">
+<span id="manual-submission-tile-job-ref-label"></span><h4>Tile Job<a class="headerlink" href="#tile-job" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>TileJob=&lt;true/false&gt;</strong> : If this job is a tile job (default = false).</p></li>
+<li><p><strong>TileJobFrame=&lt;frameNumber&gt;</strong> : The frame that the tile job is rendering (default = 0).</p></li>
+<li><p><strong>TileJobTilesInX=&lt;xCount&gt;</strong> : The number of tiles in X for a tile job (default = 0). This should be specified with the TileJobTilesInY option below.</p></li>
+<li><p><strong>TileJobTilesInY=&lt;yCount&gt;</strong> : The number of tiles in Y for a tile job (default = 0). This should be specified with the TileJobTilesInX option above.</p></li>
+<li><p><strong>TileJobTileCount=&lt;count&gt;</strong> : The number of tiles for a tile job (default = 0). This is an alternative to specifying the TileJobTilesInX and TileJobTilesInY options above.</p></li>
+</ul>
+</div>
+<div class="section" id="maintenance-job">
+<span id="manual-submission-maintenance-job-ref-label"></span><h4>Maintenance Job<a class="headerlink" href="#maintenance-job" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>MaintenanceJob=&lt;true/false&gt;</strong> : If this job is a maintenance job (default = false).</p></li>
+<li><p><strong>MaintenanceJobStartFrame=&lt;frameNumber&gt;</strong> : The first frame for the maintenance job (default = 0).</p></li>
+<li><p><strong>MaintenanceJobEndFrame=&lt;frameNumber&gt;</strong> : The last frame for the maintenance job (default = 0).</p></li>
+</ul>
+</div>
+<div class="section" id="job-info-file-examples">
+<span id="job-info-file-examples-ref-label"></span><h4>Job Info File Examples<a class="headerlink" href="#job-info-file-examples" title="Permalink to this headline">¶</a></h4>
+<p>3ds Max Job Info File:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Plugin</span><span class="o">=</span><span class="mi">3</span><span class="n">dsmax</span>
+<span class="n">ForceReloadPlugin</span><span class="o">=</span><span class="n">false</span>
+<span class="n">Frames</span><span class="o">=</span><span class="mi">0</span><span class="o">-</span><span class="mi">400</span>
+<span class="n">Priority</span><span class="o">=</span><span class="mi">50</span>
+<span class="n">Pool</span><span class="o">=</span><span class="mi">3</span><span class="n">dsmax</span>
+<span class="n">Name</span><span class="o">=</span><span class="n">IslandWaveScene_lighted01</span>
+<span class="n">Comment</span><span class="o">=</span><span class="n">Testing</span>
+<span class="n">OutputDirectory0</span><span class="o">=</span>\\<span class="n">fileserver</span>\<span class="n">Renders</span>\<span class="n">OutputFolder</span>\
+<span class="n">OutputFilename0</span><span class="o">=</span><span class="n">islandWaveBreak_Std</span><span class="c1">####.png</span>
+</pre></div>
+</div>
+<p>Lightwave Job Info File:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Plugin</span><span class="o">=</span><span class="n">Lightwave</span>
+<span class="n">Frames</span><span class="o">=</span><span class="mi">1</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">21</span><span class="o">-</span><span class="mi">30</span>
+<span class="n">ChunkSize</span><span class="o">=</span><span class="mi">10</span>
+<span class="n">Priority</span><span class="o">=</span><span class="mi">99</span>
+<span class="n">Pool</span><span class="o">=</span><span class="n">LightwavePool</span>
+<span class="n">Group</span><span class="o">=</span><span class="n">NiceShot</span>
+<span class="n">Name</span><span class="o">=</span><span class="n">Lightwave</span> <span class="n">Test</span>
+<span class="n">OutputFilename0</span><span class="o">=</span>\\<span class="n">fileserver</span>\<span class="n">Renders</span>\<span class="n">OutputFolder</span>\<span class="n">test</span><span class="c1">####.tif</span>
+<span class="n">DeleteOnComplete</span><span class="o">=</span><span class="n">true</span>
+<span class="n">MachineLimit</span><span class="o">=</span><span class="mi">5</span>
+<span class="n">SlaveTimeout</span><span class="o">=</span><span class="mi">3600</span>
+</pre></div>
+</div>
+<p>Fusion Job Info File:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Plugin</span><span class="o">=</span><span class="n">Fusion</span>
+<span class="n">Frames</span><span class="o">=</span><span class="mi">1</span><span class="o">-</span><span class="mi">100</span>
+<span class="n">Priority</span><span class="o">=</span><span class="mi">50</span>
+<span class="n">Group</span><span class="o">=</span><span class="n">Fusion</span>
+<span class="n">Name</span><span class="o">=</span><span class="n">Fusion</span> <span class="n">Dependency</span> <span class="n">Test</span>
+<span class="n">OutputFilename0</span><span class="o">=</span>\\<span class="n">fileserver</span>\<span class="n">Renders</span>\<span class="n">OutputFolder</span>\<span class="n">dfusion_test</span><span class="c1">####.tif</span>
+<span class="n">JobDependencies</span><span class="o">=</span><span class="mi">546</span><span class="n">cc87357dbb04344a5c6b5</span><span class="p">,</span><span class="mi">53</span><span class="n">d27c9257dbb027b8a4ccd2</span>
+<span class="n">InitialStatus</span><span class="o">=</span><span class="n">Suspended</span>
+<span class="n">LimitGroups</span><span class="o">=</span><span class="n">DFRNode</span>
+<span class="n">ExtraInfo0</span><span class="o">=</span><span class="n">Regression</span> <span class="n">Testing</span>
+<span class="n">ExtraInfoKeyValue0</span><span class="o">=</span><span class="n">TestID</span><span class="o">=</span><span class="mi">344</span>
+<span class="n">ExtraInfoKeyValue1</span><span class="o">=</span><span class="n">DeveloperID</span><span class="o">=</span><span class="mi">12</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="plugin-info-file">
+<span id="plugin-info-ref-label"></span><h3>Plugin Info File<a class="headerlink" href="#plugin-info-file" title="Permalink to this headline">¶</a></h3>
+<p>The Plugin Info File is a plain text file that uses Key/Value pairs (key=value) to define the plugin specific options that are used by the individual plugins to render the job. Often, these options are used to build
+up the command line arguments that are to be passed on to the rendering application.</p>
+<p>The plugins read in the settings from the Plugin Info File using the script functions GetPluginInfoEntry(…) and GetPluginInfoEntryWithDefault(…), which are discussed in more
+detail in the Plugin Scripting documentation (<a class="reference internal" href="application-plugins.html#application-plugins-ref-label"><span class="std std-ref">Application Plugins</span></a>).</p>
+</div>
+</div>
+<div class="section" id="batch-job-submission">
+<span id="batch-job-submission-ref-label"></span><h2>Batch Job Submission<a class="headerlink" href="#batch-job-submission" title="Permalink to this headline">¶</a></h2>
+<p>To submit a high-volume of jobs into Deadline with optimal performance via <a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">DeadlineCommand</span></a>, it’s best to carry out an additional step of creating the JobInfo/PluginInfo files for each submission (use unique filenames if they all reside in the same root directory) and then reference them all in one temporary file, and instantiate the <a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">DeadlineCommand</span></a> just once which will submit all these jobs in one session. Note, some operating systems have a limit on the number of characters that an individual command line can consist of, so this method is also recommended to resolve this issue. Here is an <a class="reference internal" href="command.html#long-command-lines-ref-label"><span class="std std-ref">example</span></a> demonstrating this approach, including some of the jobs requiring additional auxiliary files to be submitted with the job into the repository. Batch Job Submission by creating a temporary file called <code class="docutils literal notranslate"><span class="pre">args.txt</span></code> containing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">SubmitMultipleJobs</span>
+<span class="o">-</span><span class="n">job</span>
+\\<span class="n">path</span>\<span class="n">to</span>\<span class="n">job_1_info_file</span><span class="o">.</span><span class="n">txt</span>
+\\<span class="n">path</span>\<span class="n">to</span>\<span class="n">job_1_plugin_file</span><span class="o">.</span><span class="n">txt</span>
+<span class="o">-</span><span class="n">job</span>
+\\<span class="n">path</span>\<span class="n">to</span>\<span class="n">job_2_info_file</span><span class="o">.</span><span class="n">txt</span>
+\\<span class="n">path</span>\<span class="n">to</span>\<span class="n">job_2_plugin_file</span><span class="o">.</span><span class="n">txt</span>
+\\<span class="n">path</span>\<span class="n">to</span>\<span class="n">job_2_auxiliary_file</span><span class="o">.</span><span class="n">xxx</span>
+<span class="o">-</span><span class="n">job</span>
+\\<span class="n">path</span>\<span class="n">to</span>\<span class="n">job_3_info_file</span><span class="o">.</span><span class="n">txt</span>
+\\<span class="n">path</span>\<span class="n">to</span>\<span class="n">job_3_plugin_file</span><span class="o">.</span><span class="n">txt</span>
+\\<span class="n">path</span>\<span class="n">to</span>\<span class="n">job_3_auxiliary_file_1</span><span class="o">.</span><span class="n">xxx</span>
+\\<span class="n">path</span>\<span class="n">to</span>\<span class="n">job_3_auxiliary_file_2</span><span class="o">.</span><span class="n">xxx</span>
+</pre></div>
+</div>
+<p>You would then instantiate <a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">DeadlineCommand</span></a> just once and pass it the arguments like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">deadlinecommand</span> <span class="n">args</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Manual Job Submission</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#arbitrary-command-line-jobs">Arbitrary Command Line Jobs</a></li>
+<li><a class="reference internal" href="#maintenance-jobs">Maintenance Jobs</a></li>
+<li><a class="reference internal" href="#creating-job-submission-files">Creating Job Submission Files</a><ul>
+<li><a class="reference internal" href="#job-info-file-options">Job Info File Options</a><ul>
+<li><a class="reference internal" href="#required">Required</a></li>
+<li><a class="reference internal" href="#general">General</a></li>
+<li><a class="reference internal" href="#timeouts">Timeouts</a></li>
+<li><a class="reference internal" href="#interruptible">Interruptible</a></li>
+<li><a class="reference internal" href="#notifications">Notifications</a></li>
+<li><a class="reference internal" href="#machine-limit">Machine Limit</a></li>
+<li><a class="reference internal" href="#limits">Limits</a></li>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#failure-detection">Failure Detection</a></li>
+<li><a class="reference internal" href="#cleanup">Cleanup</a></li>
+<li><a class="reference internal" href="#scheduling">Scheduling</a></li>
+<li><a class="reference internal" href="#scripts">Scripts</a></li>
+<li><a class="reference internal" href="#event-opt-ins">Event Opt-Ins</a></li>
+<li><a class="reference internal" href="#environment">Environment</a></li>
+<li><a class="reference internal" href="#aws-portal">AWS Portal</a></li>
+<li><a class="reference internal" href="#job-extra-info">Job Extra Info</a></li>
+<li><a class="reference internal" href="#task-extra-info-names">Task Extra Info Names</a></li>
+<li><a class="reference internal" href="#output">Output</a></li>
+<li><a class="reference internal" href="#tile-job">Tile Job</a></li>
+<li><a class="reference internal" href="#maintenance-job">Maintenance Job</a></li>
+<li><a class="reference internal" href="#job-info-file-examples">Job Info File Examples</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-info-file">Plugin Info File</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#batch-job-submission">Batch Job Submission</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index-advanced-admin.html"
+                        title="previous chapter">Advanced Administration</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="job-transferring.html"
+                        title="next chapter">Job Transferring</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="job-transferring.html" title="Job Transferring"
+             >next</a></li>
+        <li class="right" >
+          <a href="index-advanced-admin.html" title="Advanced Administration"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" >Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Manual Job Submission</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

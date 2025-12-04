@@ -1,0 +1,424 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>System Requirements &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Deadline Licensing" href="licensing.html" />
+    <link rel="prev" title="Render Farm Considerations" href="considerations.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="licensing.html" title="Deadline Licensing"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="considerations.html" title="Render Farm Considerations"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installing-deadline.html" accesskey="U">Installing Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">System Requirements</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="system-requirements">
+<span id="system-requirements-ref-label"></span><h1>System Requirements<a class="headerlink" href="#system-requirements" title="Permalink to this headline">¶</a></h1>
+<p>This section covers the system requirements for all the Deadline components. It is also recommended to read through the <a class="reference internal" href="considerations.html#considerations-ref-label"><span class="std std-ref">Render Farm Considerations</span></a> documentation before proceeding with the installation.</p>
+<p>For a more complete description of the Deadline components listed below, see the <a class="reference internal" href="overview.html#overview-ref-label"><span class="std std-ref">Deadline Overview</span></a> documentation.</p>
+<div class="section" id="database">
+<span id="system-requirements-database-ref-label"></span><h2>Database<a class="headerlink" href="#database" title="Permalink to this headline">¶</a></h2>
+<p>Deadline uses <a class="reference external" href="https://www.mongodb.org/">MongoDB</a> for the Database. For maximum compatibility with Deadline, we recommend you use MongoDB version <strong>5.0.0</strong> through <strong>6.0.16</strong>. However, for security, you may need to use a later patch version for <strong>6.0.16</strong> if <strong>6.0.16</strong> has any security issues that might affect you. The Repository installer can install the MongoDB database for you, or you can use an existing MongoDB installation.</p>
+<p>The following operating systems are supported when installing MongoDB through the Repository installer:</p>
+<ul class="simple">
+<li><p>Windows Server 2016 and later (64-bit only)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please <strong>AVOID</strong> using <a class="reference internal" href="#system-requirements-windows-non-server-ref-label"><span class="std std-ref">non-server</span></a> based OS such as 8.1 or 10.</p>
+</div>
+<ul class="simple">
+<li><p>Linux (64-bit only)</p>
+<ul>
+<li><p>Ubuntu 20.04</p></li>
+<li><p>Debian 10</p></li>
+<li><p>CentOS 8, or 9</p></li>
+<li><p>RHEL 8, or 9</p></li>
+<li><p>Rocky Linux 8 or 9</p></li>
+<li><p>AlmaLinux 8 or 9</p></li>
+</ul>
+</li>
+<li><p>macOS 11 (Big Sur) and later (64-bit only)</p></li>
+</ul>
+<p>If you are <a class="reference internal" href="install-db-repo-manual-db-install.html#install-manual-db-ref-label"><span class="std std-ref">manually installing MongoDB</span></a>, please refer to the <a class="reference external" href="https://docs.mongodb.com/manual/installation/#supported-platforms">MongoDB Supported Platforms</a>.</p>
+<p>These are the minimum recommended hardware requirements for a production Database:</p>
+<ul class="simple">
+<li><p>64-bit Architecture</p></li>
+<li><p>8 GB RAM</p></li>
+<li><p>4 Cores</p></li>
+<li><p>RAID or SSD disks</p></li>
+<li><p>20 GB disk space</p></li>
+</ul>
+<p>Note that MongoDB performs best if all the data fits into RAM, and it has fast disk write speeds. In addition, larger farms may have to scale up on RAM and Cores as necessary, or even look at Sharding their database.</p>
+<div class="section" id="notes-for-windows">
+<span id="system-requirements-windows-non-server-ref-label"></span><h3>Notes for Windows<a class="headerlink" href="#notes-for-windows" title="Permalink to this headline">¶</a></h3>
+<p>If you choose a non-Server Windows operating system (8.1 or 10) to host the database, you should be aware that these operating systems have a TCP/IP connection limitation of 10 new connections per second. If your render farm consists of more than 10 machines, it is very likely that you’ll hit this limitation every now and then (and the odds continue to increase as the number of machines increase). This is a limitation of the operating systems, and isn’t something that we can workaround, so we recommend using a Server edition of Windows, or a different operating system like Linux.</p>
+</div>
+<div class="section" id="notes-for-linux">
+<h3>Notes for Linux<a class="headerlink" href="#notes-for-linux" title="Permalink to this headline">¶</a></h3>
+<p>If you choose a Linux system to host the database, <code class="docutils literal notranslate"><span class="pre">openssl</span></code> should be updated through your package manager to ensure compatibility with the MongoDB installation. You will also need to make sure the system resource limits are configured properly to avoid connection issues. More details can be found in the <a class="reference internal" href="install-db-repo.html#install-db-repo-ref-label"><span class="std std-ref">Database and Repository Installation Guide</span></a>.</p>
+<p>The Repository installer, which installs the database, also has a dependency on bzip2. Use your package manager to install bzip2 if it isn’t already installed on the system.</p>
+<p>Other Linux recommendations include:</p>
+<ul class="simple">
+<li><p>Do not run MongoDB on systems with Non-Uniform Access Memory (NUMA). It can cause a number of operational problems, including slow performance or high system process usage.</p></li>
+<li><p>Install on a system with a minimum Linux kernel version of 2.6.36.</p></li>
+<li><p>Install on a system with Ext4 or XFS file systems.</p></li>
+<li><p>Turn off atime or relatime for the storage volume containing the database files, as it can impact performance.</p></li>
+<li><p>Do not use hugepages virtual memory pages as MongoDB performs better with normal virtual memory pages.</p></li>
+</ul>
+</div>
+<div class="section" id="notes-for-macos">
+<h3>Notes for macOS<a class="headerlink" href="#notes-for-macos" title="Permalink to this headline">¶</a></h3>
+<p>If you choose a macOS system to host the database, you will need to make sure the system resource limits are configured properly to avoid connection issues. More details can be found in the <a class="reference internal" href="install-db-repo.html#install-db-repo-ref-label"><span class="std std-ref">Database and Repository Installation Guide</span></a>.</p>
+</div>
+</div>
+<div class="section" id="repository">
+<h2>Repository<a class="headerlink" href="#repository" title="Permalink to this headline">¶</a></h2>
+<p>The Repository is just a collection of files and folders, so it can be installed to any type of share on any type of operating system. Common Repository choices include:</p>
+<ul class="simple">
+<li><p>Windows Server</p></li>
+<li><p>Linux</p></li>
+<li><p>FreeBSD</p></li>
+</ul>
+<p>While the Repository can be installed on any operating system, the Repository installer is only supported on the following operating systems. <strong>To install on a different operating system, first create the network share on that system, and then run the Repository installer on one of the systems below and choose the network share as the installation location.</strong></p>
+<ul class="simple">
+<li><p>Windows (64-bit only)</p>
+<ul>
+<li><p>Windows 8.1 and later</p></li>
+<li><p>Windows Server 2012 and later</p></li>
+</ul>
+</li>
+<li><p>Linux (64-bit only)</p>
+<ul>
+<li><p>Ubuntu 20.04 and later</p></li>
+<li><p>Debian 10</p></li>
+<li><p>Fedora 36 and later</p></li>
+<li><p>CentOS 8 and later</p></li>
+<li><p>RHEL 8 and later</p></li>
+<li><p>Rocky Linux 8 and later</p></li>
+<li><p>AlmaLinux 8 and later</p></li>
+</ul>
+</li>
+<li><p>macOS (64-bit only)</p>
+<ul>
+<li><p>11 (Big Sur) and later</p></li>
+</ul>
+</li>
+</ul>
+<p>For hardware requirements, it mainly depends on if you are planning to submit scene files and other auxiliary files with your jobs. If you are, keep in mind that the Repository machine will need to serve out these files to the Client machines, so you will want to treat it like another asset server when it comes to picking hardware. That being said, if you already have an asset server, you could probably just install the Repository on it. If you are not submitting your scene files with your jobs (because they are already stored in a network location), then you should be fine with a less powerful machine.</p>
+<div class="section" id="id1">
+<h3>Notes for Windows<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>If you choose a non-Server Windows operating system (8.1 or 10), these operating systems usually will not allow more than 10 incoming connections without purchasing additional user access licenses from Microsoft. This means that if more than 10 machines (render nodes or workstations) connect to the Repository, connections will be dropped, which could result unexpected behavior. This is a limitation of the operating systems, and isn’t something that we can workaround, so we recommend using a Server edition of Windows, or a different operating system like Linux or FreeBSD.</p>
+</div>
+<div class="section" id="id2">
+<h3>Notes for Linux<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>The Repository installer on Linux has a dependency on bzip2. Use your package manager to install bzip2 if it isn’t already installed on the system.</p>
+</div>
+</div>
+<div class="section" id="client">
+<h2>Client<a class="headerlink" href="#client" title="Permalink to this headline">¶</a></h2>
+<p>The Client can be installed on Windows, Linux, or macOS. The requirements for today’s rendering applications go far beyond the requirements of the Client, so if a machine is powerful enough to be used for rendering, it is more than capable of running the Client applications.</p>
+<p>If you choose to run <a class="reference internal" href="pulse.html#pulse-ref-label"><span class="std std-ref">Pulse</span></a>, and you wish to run it on the same machine as the Database and/or Repository, you will have to install the Client on that machine as well.</p>
+<p>The following operating systems are supported for the Client:</p>
+<ul class="simple">
+<li><p>Windows (64-bit only)</p>
+<ul>
+<li><p>Windows 10</p></li>
+<li><p>Windows Server 2012 and later</p></li>
+</ul>
+</li>
+<li><p>Linux (64-bit only)</p>
+<ul>
+<li><p>Ubuntu 20.04 and later</p></li>
+<li><p>Debian 10</p></li>
+<li><p>Fedora 36 and later</p></li>
+<li><p>CentOS 8 and later</p></li>
+<li><p>RHEL 8 and later</p></li>
+<li><p>Rocky Linux 8 and later</p></li>
+<li><p>AlmaLinux 8 and later</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>There are known issues with the Deadline Worker application on macOS machines with Apple silicon, leading to periodic crashes and freezing of the application.</p>
+</div>
+<ul class="simple">
+<li><p>macOS (64-bit only)</p>
+<ul>
+<li><p>11 (Big Sur) and later</p></li>
+</ul>
+</li>
+</ul>
+<p>Note that it is recommended to run your operating system LANGUAGE as “ENGLISH”. This ensures that Deadline’s stdout and popup handling work correctly, since their pattern matching is based on English translations.</p>
+<div class="section" id="id3">
+<h3>Notes for Windows<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>If you are choosing a machine to run <a class="reference internal" href="pulse.html#pulse-ref-label"><span class="std std-ref">Pulse</span></a>, you should be aware that non-Server editions of Windows have a TCP/IP connection limitation of 10 new connections per second. If your render farm consists of more than 10 render nodes, it is very likely that you’ll hit this limitation every now and then (and the odds continue to increase as the number of machines increase). This is a limitation of the operating systems, and isn’t something that we can workaround, so we recommend using a Server edition of Windows, or a different operating system like Linux.</p>
+</div>
+<div class="section" id="system-requirements-linux-ref-label">
+<span id="id4"></span><h3>Notes for Linux<a class="headerlink" href="#system-requirements-linux-ref-label" title="Permalink to this headline">¶</a></h3>
+<p>The Client installer on Linux has a dependency on bzip2. Use your package manager to install bzip2 if it isn’t already installed on the system.</p>
+<p>The Deadline applications have dependencies on some libraries that are installed with the lsb (Linux Standard Base) package. To ensure you have all the dependencies you need, we recommend installing the full lsb package. Note, CentOS 7 by default, no longer has the LSB package installed, so this must be installed. In addition, the <code class="docutils literal notranslate"><span class="pre">libX11</span></code> and <code class="docutils literal notranslate"><span class="pre">libXext</span></code> must be installed on Linux for the Deadline applications to run on your user-based WORKSTATIONS, even if running them with the -nogui flag. They’re required for the <a class="reference internal" href="local-worker.html#local-worker-ref-label"><span class="std std-ref">Idle Detection</span></a> feature to work on your WORKSTATIONS. This means, that X11 is NOT required on your headless RENDERNODES. To check if <code class="docutils literal notranslate"><span class="pre">libX11</span></code> and <code class="docutils literal notranslate"><span class="pre">libXext</span></code> are installed, open a Terminal and run the following commands. If they are installed, then the path to the libraries will be printed out by these commands.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ldconfig</span> <span class="o">-</span><span class="n">p</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">libX11</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ldconfig</span> <span class="o">-</span><span class="n">p</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">libXext</span>
+</pre></div>
+</div>
+<p>Additionally, libQtCommercialCharts requires OpenGL on your workstations. Normally this is shipped with your graphics card drivers, but a software-only solution called Mesa exists if users wish to use Deadline without a graphics card.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ldconfig</span> <span class="o">-</span><span class="n">p</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">libMesaGL1</span> <span class="p">(</span><span class="n">libgl1</span><span class="o">-</span><span class="n">mesa</span><span class="o">-</span><span class="n">glx</span> <span class="n">on</span> <span class="n">Debian</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If any of these libraries are missing, then please contact your local system administrator to resolve this issue. Here is an example assuming you have root access, using YUM (RedHat/CentOS) to install them on your system:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="o">-</span><span class="n">s</span>
+
+<span class="go"># WORKSTATIONS</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yum</span> <span class="n">install</span> <span class="n">redhat</span><span class="o">-</span><span class="n">lsb</span> <span class="n">libX11</span> <span class="n">libXext</span>
+<span class="go"># old version</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yum</span> <span class="n">install</span> <span class="n">libMesaGL1</span>
+<span class="go"># new version</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yum</span> <span class="n">install</span> <span class="n">mesa</span><span class="o">-</span><span class="n">libGL</span> <span class="n">mesa</span><span class="o">-</span><span class="n">libGLU</span>
+
+<span class="go"># RENDERNODES</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yum</span> <span class="n">install</span> <span class="n">redhat</span><span class="o">-</span><span class="n">lsb</span>
+</pre></div>
+</div>
+<p>On Amazon Linux 2 (AL2):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="o">-</span><span class="n">s</span>
+
+<span class="go"># WORKSTATIONS / RENDERNODES</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yum</span> <span class="n">install</span> <span class="n">lsb</span>
+</pre></div>
+</div>
+<p>On Ubuntu:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sudo</span> <span class="o">-</span><span class="n">s</span>
+
+<span class="go"># WORKSTATIONS</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">lsb</span> <span class="n">libx11</span><span class="o">-</span><span class="mi">6</span> <span class="n">libxext</span><span class="o">-</span><span class="mi">6</span> <span class="n">libgl1</span><span class="o">-</span><span class="n">mesa</span><span class="o">-</span><span class="mi">6</span>
+
+<span class="go"># RENDERNODES</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">lsb</span>
+</pre></div>
+</div>
+<p>Additionally, some client functionality is also dependent on any of “xdg-open”, “gnome-open”, or “kfmclient”. Certain Linux desktop environments are missing one of these utilities (most commonly MATE). If you are experiencing issues with links not opening in the client applications check that you have one of these utilites installed and if not, install the approriate one for your system.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<dl class="simple">
+<dt>RHEL 9 and CentOS 9 users may need to install <code class="docutils literal notranslate"><span class="pre">libffi.so.6</span></code> for Deadline Client Applications to operate correctly. In such cases you might want to install the missing library:</dt><dd><ul class="simple">
+<li><p>Obtain a copy of libffi.so.6 rpm</p></li>
+<li><p>Extract rpm, for example <code class="docutils literal notranslate"><span class="pre">rpm2cpio</span> <span class="pre">libffi.so.6.x86_64.rpm</span> <span class="pre">|</span> <span class="pre">cpio</span> <span class="pre">-idmv</span></code>;</p></li>
+<li><p>Copy <code class="docutils literal notranslate"><span class="pre">libffi.so.6</span></code> to some location, for example to <code class="docutils literal notranslate"><span class="pre">/opt/libffi.so.6</span></code>;</p></li>
+<li><p>Created a symlink in <code class="docutils literal notranslate"><span class="pre">/usr/lib64</span></code>: <code class="docutils literal notranslate"><span class="pre">ln</span> <span class="pre">-s</span> <span class="pre">/usr/lib64/libffi.so.6</span> <span class="pre">&lt;libffi.so.6</span> <span class="pre">location&gt;</span></code>. If you have put the library into <code class="docutils literal notranslate"><span class="pre">/opt</span></code>
+then the command should look like <code class="docutils literal notranslate"><span class="pre">ln</span> <span class="pre">-s</span> <span class="pre">/usr/lib64/libffi.so.6</span> <span class="pre">/opt/libffi.so.6</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="section" id="aws-portal">
+<span id="system-requirements-aws-portal-ref-label"></span><h2>AWS Portal<a class="headerlink" href="#aws-portal" title="Permalink to this headline">¶</a></h2>
+<p>The AWS Portal feature requires the installation of a couple additional components:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The AWS Portal Link service.</p></li>
+<li><p>The AWS Portal Asset Transfer System.</p></li>
+</ul>
+</div></blockquote>
+<p>These components can be run on the following operating systems:</p>
+<ul class="simple">
+<li><p>Windows (64-bit only)</p>
+<ul>
+<li><p>Windows 8.1 and later</p></li>
+<li><p>Windows Server 2012 and later</p></li>
+</ul>
+</li>
+<li><p>Linux (64-bit only)</p>
+<ul>
+<li><p>Ubuntu 20.04 and later</p></li>
+<li><p>Debian 10 and later</p></li>
+<li><p>Fedora 36 and later</p></li>
+<li><p>CentOS 8 and later</p></li>
+<li><p>RHEL 8 and later</p></li>
+<li><p>Rocky Linux 8 and later</p></li>
+<li><p>AlmaLinux 8 and later</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you wish to use AWS Portal from a macOS machine, you
+need to have a Windows or Linux machine on your network to install and run these components.</p>
+</div>
+</div>
+<div class="section" id="floating-license-server-deprecated">
+<span id="system-requirements-license-server-ref-label"></span><h2>Floating License Server (DEPRECATED)<a class="headerlink" href="#floating-license-server-deprecated" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Starting with Deadline 10.1.23, Deadline and its components do not require a license. This section is left for operators of older versions of Deadline.</p>
+</div>
+<p>For floating licenses, Deadline requires Flexnet License Server version <strong>11.12</strong> or later, and the license server can be run on the following operating systems:</p>
+<ul class="simple">
+<li><p>Windows (64-bit only)</p>
+<ul>
+<li><p>Windows 10</p></li>
+<li><p>Windows Server 2012 and later</p></li>
+</ul>
+</li>
+<li><p>Linux (64-bit only)</p>
+<ul>
+<li><p>Ubuntu 20.04 and later</p></li>
+<li><p>Debian 10 and later</p></li>
+<li><p>Fedora 36 and later</p></li>
+<li><p>CentOS 7 and later</p></li>
+<li><p>RHEL 7 and later</p></li>
+</ul>
+</li>
+<li><p>macOS (64-bit only)</p>
+<ul>
+<li><p>11 (Big Sur) and later</p></li>
+</ul>
+</li>
+</ul>
+<p>See the <a class="reference external" href="https://docs.thinkboxsoftware.com/products/licensing/1.0/Licensing%20Guide/index.html">License Server Documentation</a> for more information on the License Server requirements.</p>
+<p>Note that if you choose a non-Server Windows operating system (Windows 10), you should be aware that these operating systems have a TCP/IP connection limitation of 10 new connections per second. If your render farm consists of more than 10 machines, it is very likely that you’ll hit this limitation every now and then (and the odds continue to increase as the number of machines increase). This is a limitation of the operating systems, and isn’t something that we can workaround, so we recommend using a Server edition of Windows, or a different operating system like Linux.</p>
+</div>
+<div class="section" id="usage-based-licensing">
+<h2>Usage-Based Licensing<a class="headerlink" href="#usage-based-licensing" title="Permalink to this headline">¶</a></h2>
+<p>Usage-Based Licensing is an on-demand licensing model for select 3rd party products that was introduced in Deadline 8, and is supported on Windows, Linux, and macOS. See the <a class="reference internal" href="licensing-usage-based.html#licensing-usage-based-ref-label"><span class="std std-ref">Usage-Based Licensing</span></a> documentation for more information.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Starting in the year 2020, only Deadline 10.1.2 and later will support UBL on macOS (as well as Deadline 10.0.29). If you are using Deadline 8, 9, or an older version of 10.0 or 10.1, you will need to upgrade to continue using UBL on macOS.</p>
+</div>
+<p>UBL uses a Cloud License Server, which is hosted in the Cloud. Because of this, the only additional requirement is an internet connection. See the <a class="reference internal" href="licensing-usage-based.html#licensing-usage-based-ref-label"><span class="std std-ref">Usage-Based Licensing documentation</span></a> for more information.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">System Requirements</a><ul>
+<li><a class="reference internal" href="#database">Database</a><ul>
+<li><a class="reference internal" href="#notes-for-windows">Notes for Windows</a></li>
+<li><a class="reference internal" href="#notes-for-linux">Notes for Linux</a></li>
+<li><a class="reference internal" href="#notes-for-macos">Notes for macOS</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#repository">Repository</a><ul>
+<li><a class="reference internal" href="#id1">Notes for Windows</a></li>
+<li><a class="reference internal" href="#id2">Notes for Linux</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#client">Client</a><ul>
+<li><a class="reference internal" href="#id3">Notes for Windows</a></li>
+<li><a class="reference internal" href="#system-requirements-linux-ref-label">Notes for Linux</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#aws-portal">AWS Portal</a></li>
+<li><a class="reference internal" href="#floating-license-server-deprecated">Floating License Server (DEPRECATED)</a></li>
+<li><a class="reference internal" href="#usage-based-licensing">Usage-Based Licensing</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="considerations.html"
+                        title="previous chapter">Render Farm Considerations</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="licensing.html"
+                        title="next chapter">Deadline Licensing</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="licensing.html" title="Deadline Licensing"
+             >next</a></li>
+        <li class="right" >
+          <a href="considerations.html" title="Render Farm Considerations"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installing-deadline.html" >Installing Deadline</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">System Requirements</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>(Unsupported) License Forwarder &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Administrative Features" href="index-admin-features.html" />
+    <link rel="prev" title="Web Service" href="web-service.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="index-admin-features.html" title="Administrative Features"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="web-service.html" title="Web Service"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" accesskey="U">Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">(Unsupported) License Forwarder</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="unsupported-license-forwarder">
+<span id="license-forwarder-ref-label"></span><h1>(Unsupported) License Forwarder<a class="headerlink" href="#unsupported-license-forwarder" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Topics covered in this page refer to legacy Thinkbox usage-based licensing (UBL), which is no longer available as of September 30, 2025. The UBL feature in Deadline 10 is now available through <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> UBL. For detailed setup instructions, please see the <a class="reference internal" href="licensing-usage-based.html#licensing-usage-based-ref-label"><span class="std std-ref">Deadline Cloud UBL Documentation</span></a>.</p>
+<p>For more details, please refer to <a class="reference external" href="https://marketplace.thinkboxsoftware.com/">the marketplace website</a>.</p>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The License Forwarder is an application that acts as a license server for third party applications when using <a class="reference internal" href="licensing-usage-based-legacy.html#licensing-usage-based-legacy-ref-label"><span class="std std-ref">Legacy Third Party Usage-Based Licensing</span></a>. In order to use 3rd Party render time, at least one instance of the License Forwarder must be running and connected to the Repository, and Workers must be able to connect to it.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The License Forwarder must not run on the same machine as a Deadline Worker or a license server as port binding conflicts will occur otherwise.</p>
+</div>
+<p>In addition, the License Forwarder can be used as a proxy for Deadline Usage-Based Licensing. See the <a class="reference internal" href="licensing-web-forwarding.html#licensing-web-forwarding-ref-label"><span class="std std-ref">Web Forwarding</span></a> documentation for more information.</p>
+</div>
+<div class="section" id="running-the-license-forwarder">
+<h2>Running the License Forwarder<a class="headerlink" href="#running-the-license-forwarder" title="Permalink to this headline">¶</a></h2>
+<p>To start the License Forwarder:</p>
+<ul>
+<li><p>On <strong>Windows</strong>, you can start the License Forwarder by double clicking on <code class="docutils literal notranslate"><span class="pre">deadlinelicenseforwarder.exe</span></code> in the Deadline installed folder, usually under</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Program</span> <span class="n">Files</span>\<span class="n">Thinkbox</span>\<span class="n">Deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span>\<span class="nb">bin</span>
+</pre></div>
+</div>
+</li>
+<li><p>On <strong>Linux</strong>, you can start the License Forwarder from a terminal window by running the <code class="docutils literal notranslate"><span class="pre">deadlinelicenseforwarder</span></code> script in the bin folder, usually under</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Thinkbox</span><span class="o">/</span><span class="n">Deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="o">/</span><span class="nb">bin</span>
+</pre></div>
+</div>
+</li>
+<li><p>On <strong>macOS</strong>, you can start the License Forwarder from a terminal by running the <code class="docutils literal notranslate"><span class="pre">DeadlineLicenseForwarder</span></code> application in</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">Applications</span><span class="o">/</span><span class="n">Thinkbox</span><span class="o">/</span><span class="n">Deadline</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="o">/</span><span class="n">DeadlineLicenseForwarder</span><span class="p">[</span><span class="n">VERSION</span><span class="p">]</span><span class="o">.</span><span class="n">app</span><span class="o">/</span><span class="n">Contents</span><span class="o">/</span><span class="n">MacOS</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>where [VERSION] is the MAJOR release number of Deadline, such as <strong>10</strong>.</p>
+</div>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>The License Forwarder requires a valid certificate for each third party application that will be using 3rd Party render time. When the License Forwarder is launched for the first time, it will prompt the user to specify a path where these 3rd Party certificates can be located. Alternatively, the 3rd Party certificate path can be set manually in the <a class="reference internal" href="client-config.html#client-config-forwarder-ssl-path-ref-label"><span class="std std-ref">Client Configuration</span></a>.</p>
+<p>You can also configure the License Forwarder through the command line using the <code class="docutils literal notranslate"><span class="pre">-sslpath</span></code> command line flag to set the 3rd Party certificate path. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinelicenseforwarder</span><span class="o">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">sslpath</span> <span class="n">C</span><span class="p">:</span>\<span class="mi">3</span><span class="n">PL_Certs</span>
+</pre></div>
+</div>
+<p>License Forwarder can also be configured to automatically start and recover from a crash/shutdown via the <a class="reference internal" href="client-config.html#client-config-license-forwarder-startup-ref-label"><span class="std std-ref">Client Configuration</span></a> ini file.</p>
+<div class="section" id="linux-open-file-limits">
+<h3>Linux Open File Limits<a class="headerlink" href="#linux-open-file-limits" title="Permalink to this headline">¶</a></h3>
+<p>If the License Forwarder is running on Linux, it is recommended that you increase the maximum number of open files for the License Forwarder process. Since socket connections are treated as open files on Linux it is very easy for the default maximum value (1024) to be reached in an active farm. We recommend setting it to at least 200000. You can set by running the following command before running the License Forwarder:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ulimit</span> <span class="o">-</span><span class="n">n</span> <span class="mi">200000</span>
+</pre></div>
+</div>
+<p>The License Forwarder will check the file limit on startup and print a warning to the beginning of the log if it is set to a value that is too low, but will run anyway.</p>
+</div>
+</div>
+<div class="section" id="registration-server-errors">
+<h2>Registration Server Errors<a class="headerlink" href="#registration-server-errors" title="Permalink to this headline">¶</a></h2>
+<p>When running the License forwarder you may see the following errors in your logs:</p>
+<blockquote>
+<div><p>Phone home failed, server did not respond.</p>
+<p>or</p>
+<p>Phone home registration failed.</p>
+</div></blockquote>
+<p>This is from a deprecated feature and will not affect the normal running of the Deadline Software. Upgrading to the latest version of Deadline will remove these messages.</p>
+</div>
+<div class="section" id="license-forwarder-scaling">
+<h2>License Forwarder Scaling<a class="headerlink" href="#license-forwarder-scaling" title="Permalink to this headline">¶</a></h2>
+<p>You can run as many License Forwarders as you want within a region; however, these License Forwarders must be running on separate machines. Each License Forwarder can handle about 500 Workers at once, so when deciding how many License Forwarders to run for a region you should take into consideration how many Workers are running in that region. When running multiple License Forwarders in a single region the load is balanced
+between the License Forwarders automatically. Workers handle License Forwarder selection automatically, so no configuration is required. To start load balancing your License Forwarder requests all that is required is that you start up additional License Forwarders within the desired region.</p>
+</div>
+<div class="section" id="region-behavior">
+<h2>Region Behavior<a class="headerlink" href="#region-behavior" title="Permalink to this headline">¶</a></h2>
+<p>If your Repository is configured to use multiple <a class="reference internal" href="repository-config.html#region-settings-label"><span class="std std-ref">Regions</span></a>, Workers running in a specific region will only connect to a License Forwarder that’s running in the same region, which means at least one License Forwarder must be running in each region.</p>
+</div>
+<div class="section" id="license-forwarders-panel">
+<h2>License Forwarders Panel<a class="headerlink" href="#license-forwarders-panel" title="Permalink to this headline">¶</a></h2>
+<p>The License Forwarders can be monitored through the Deadline Monitor with the “License Forwarders” panel. You can use this panel to check the state of the License Forwarders and to monitor their CPU and memory usage. Remote commands can be sent to License Forwarders through the right-click menu.</p>
+<a class="reference internal image-reference" href="../_images/license_forwarder_panel.png"><img alt="../_images/license_forwarder_panel.png" src="../_images/license_forwarder_panel.png" style="height: 200px;" /></a>
+<div class="section" id="license-forwarder-settings">
+<h3>License Forwarder Settings<a class="headerlink" href="#license-forwarder-settings" title="Permalink to this headline">¶</a></h3>
+<p>You can also configure License Forwarder specific settings by right-clicking on a License Forwarder in the License Forwarders panel and selecting ‘Modify License Forwarder Properties`.</p>
+<a class="reference internal image-reference" href="../_images/license_forwarder_settings.png"><img alt="../_images/license_forwarder_settings.png" src="../_images/license_forwarder_settings.png" style="height: 400px;" /></a>
+<p>These are the general License Forwarder settings:</p>
+<ul class="simple">
+<li><p><strong>Override Remote Command Port</strong>: If enabled, this port will be used by the License Forwarder for remote commands instead of a random port.</p></li>
+<li><p><strong>Host Name/IP Address Override</strong>: Overrides the Host name/IP address used by the Workers to connect to the License Forwarder, and for remote commands.</p></li>
+<li><p><strong>MAC Address Override</strong>: This is used to override the MAC Address associated with this License Forwarder. This is useful in the event that the License Forwarder defaults to a different MAC Address than the one needed for Wake On Lan.</p></li>
+<li><p><strong>Web Forwarding Port</strong>: The port the License Forwarder will use for <a class="reference internal" href="licensing-web-forwarding.html#licensing-web-forwarding-ref-label"><span class="std std-ref">Web Forwarding</span></a>.</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">(Unsupported) License Forwarder</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#running-the-license-forwarder">Running the License Forwarder</a></li>
+<li><a class="reference internal" href="#setup">Setup</a><ul>
+<li><a class="reference internal" href="#linux-open-file-limits">Linux Open File Limits</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#registration-server-errors">Registration Server Errors</a></li>
+<li><a class="reference internal" href="#license-forwarder-scaling">License Forwarder Scaling</a></li>
+<li><a class="reference internal" href="#region-behavior">Region Behavior</a></li>
+<li><a class="reference internal" href="#license-forwarders-panel">License Forwarders Panel</a><ul>
+<li><a class="reference internal" href="#license-forwarder-settings">License Forwarder Settings</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="web-service.html"
+                        title="previous chapter">Web Service</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="index-admin-features.html"
+                        title="next chapter">Administrative Features</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="index-admin-features.html" title="Administrative Features"
+             >next</a></li>
+        <li class="right" >
+          <a href="web-service.html" title="Web Service"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" >Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">(Unsupported) License Forwarder</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

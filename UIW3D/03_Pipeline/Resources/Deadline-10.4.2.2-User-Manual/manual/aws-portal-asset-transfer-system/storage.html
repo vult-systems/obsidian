@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The AWS Portal Asset Transfer System (Advanced) - Storage &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thinkbox.css" />
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Asset Server Options" href="../aws-asset-server.html" />
+    <link rel="prev" title="The AWS Portal Asset Transfer System (Advanced) - Output File Configuration" href="output-file-configuration.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../aws-asset-server.html" title="Asset Server Options"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="output-file-configuration.html" title="The AWS Portal Asset Transfer System (Advanced) - Output File Configuration"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="index.html" accesskey="U">The AWS Portal Asset Transfer System (Advanced)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">The AWS Portal Asset Transfer System (Advanced) - Storage</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="../aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<div class="section" id="the-aws-portal-asset-transfer-system-advanced-storage">
+<span id="aws-portal-asset-transfer-system-storage-ref-label"></span><h1>The AWS Portal Asset Transfer System (Advanced) - Storage<a class="headerlink" href="#the-aws-portal-asset-transfer-system-advanced-storage" title="Permalink to this headline">¶</a></h1>
+<p>An asset file could be stored in more than one location:</p>
+<ol class="arabic simple">
+<li><p>The S3 bucket. The uploads of on-prem files to the S3 bucket occur when the
+S3-Backed Cache Client is requesting them or AWS Portal Asset Server tries
+to pre-cache them. The files that have been uploaded to the S3 bucket are
+persistent unless you explicitly remove them.</p></li>
+<li><p>The EBS Volume of the S3-Backed Cache Client. The downloads of files onto
+the EBS volume occurs when the S3-Backed Cache Client tries to download a
+file from the S3 bucket. It could be that more than one S3-Backed Cache
+Client has a copy of the exact same file. (The main reason for this is allow
+multiple spot instances to render the same job in parallel.) The files that
+have been downloaded onto the EBS volume may or may not get removed after a
+render.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>An EBS Volume and the S3-Backed Cache Client reside on the Gateway
+instance. This is for backwards-compatibility with Windows AWS Portal AMIs
+prior to version 10.0.26.0. For such legacy AMIs, Windows instances mounted
+a Samba share hosted on the Gateway instance that handled the asset
+transfer to/from the S3 bucket.</p>
+</div>
+<div class="section" id="security-concerns">
+<h2>Security Concerns<a class="headerlink" href="#security-concerns" title="Permalink to this headline">¶</a></h2>
+<p>All the components use HTTPS to transfer the asset files between themselves and
+the S3 bucket. These components are only allowed to upload/download the files
+to/from the S3 bucket.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To be clear, the components themselves don’t have any
+permissions assigned to them. The EC2 instances where these components
+deployed have these permissions.</p>
+</div>
+<p>The metadata of the files are stored in the databases maintained by the Worker
+Controller and by the S3 Backed Cache Central Controller.</p>
+</div>
+<div class="section" id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<p>Access Logs for the S3 bucket are stored in a corresponding logging bucket.
+Logs will persist there for 60 days by default. To change that value, follow these
+instructions on <a class="reference external" href="https://docs.aws.amazon.com/AmazonS3/latest/user-guide/create-lifecycle.html">How to set a Lifecycle Policy</a>.</p>
+</div>
+<div class="section" id="versioning">
+<h2>Versioning<a class="headerlink" href="#versioning" title="Permalink to this headline">¶</a></h2>
+<p>By default, versioning is not enabled on the S3-Backed Cache. If you’d like to enable versioning, or subsequently suspend versioning, follow <a class="reference external" href="https://docs.aws.amazon.com/AmazonS3/latest/user-guide/enable-versioning.html">these instructions</a>.</p>
+<span class="target" id="aws-portal-versioning-ref-label"></span></div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The AWS Portal Asset Transfer System (Advanced) - Storage</a><ul>
+<li><a class="reference internal" href="#security-concerns">Security Concerns</a></li>
+<li><a class="reference internal" href="#logging">Logging</a></li>
+<li><a class="reference internal" href="#versioning">Versioning</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="output-file-configuration.html"
+                        title="previous chapter">The AWS Portal Asset Transfer System (Advanced) - Output File Configuration</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../aws-asset-server.html"
+                        title="next chapter">Asset Server Options</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../aws-asset-server.html" title="Asset Server Options"
+             >next</a></li>
+        <li class="right" >
+          <a href="output-file-configuration.html" title="The AWS Portal Asset Transfer System (Advanced) - Output File Configuration"
+             >previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="index.html" >The AWS Portal Asset Transfer System (Advanced)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">The AWS Portal Asset Transfer System (Advanced) - Storage</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

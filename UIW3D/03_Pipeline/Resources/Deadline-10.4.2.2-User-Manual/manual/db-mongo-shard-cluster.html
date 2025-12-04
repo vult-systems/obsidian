@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creating a Shard Cluster &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Deadline Client Applications" href="index-client-applications.html" />
+    <link rel="prev" title="Creating a Replica Set" href="db-mongo-replica-set.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="index-client-applications.html" title="Deadline Client Applications"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="db-mongo-replica-set.html" title="Creating a Replica Set"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" accesskey="U">Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Creating a Shard Cluster</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="creating-a-shard-cluster">
+<span id="db-shard-cluster-ref-label"></span><h1>Creating a Shard Cluster<a class="headerlink" href="#creating-a-shard-cluster" title="Permalink to this headline">¶</a></h1>
+<img alt="../_images/mongodb-shard-cluster-diagram.png" src="../_images/mongodb-shard-cluster-diagram.png" />
+<div class="section" id="required-components">
+<h2>Required Components<a class="headerlink" href="#required-components" title="Permalink to this headline">¶</a></h2>
+<p>To build a sharded cluster, you will need to setup the following components.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>One <a class="reference internal" href="#shard-config-replica-set">Shard Config Replica Set</a>, consisting of three members.</p></li>
+<li><p>Two or more <a class="reference internal" href="#shard-replica-sets">Shard Replica Sets</a>, each consisting of three members.</p></li>
+<li><p>One <a class="reference internal" href="#mongodb-shard-router">MongoDB Shard Router</a>, a single <code class="docutils literal notranslate"><span class="pre">mongos</span></code> instance.</p></li>
+</ol>
+</div></blockquote>
+<p>Once the components are setup, we can connect to the <a class="reference internal" href="#mongodb-shard-router">MongoDB Shard Router</a> and initialize the shard cluster.</p>
+<div class="section" id="shard-config-replica-set">
+<h3>Shard Config Replica Set<a class="headerlink" href="#shard-config-replica-set" title="Permalink to this headline">¶</a></h3>
+<p>The shard config replica set is a special type of replica set that stores the metadata for a sharded cluster. Only a single config replica set is needed for a sharded cluster. To setup the shard config replica set, follow the tutorial for <a class="reference internal" href="db-mongo-replica-set.html#db-replica-set-ref-label"><span class="std std-ref">Creating a Replica Set</span></a>. Here are some things to remember while following the tutorial. Some of this may make more sense while you’re going through the tutorial.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>You’re setting up three MongoDB instances from clean installations (not an existing Deadline database installation).</p></li>
+<li><p>You will need a separate MongoDB configuration for your shard config replica set than for your shard replica sets.</p></li>
+<li><p>You should have <code class="docutils literal notranslate"><span class="pre">clusterRole:</span> <span class="pre">configsvr</span></code> in your configuration.</p></li>
+<li><p>When initiating the replica set, be sure to include <code class="docutils literal notranslate"><span class="pre">configsvr:</span> <span class="pre">true</span></code> in the settings.</p></li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="shard-replica-sets">
+<h3>Shard Replica Sets<a class="headerlink" href="#shard-replica-sets" title="Permalink to this headline">¶</a></h3>
+<p>A shard replica set is one of of many in a sharded cluster. You can read more about MongoDB shards at <a class="reference external" href="https://docs.mongodb.com/v3.2/core/sharded-cluster-shards/">https://docs.mongodb.com/v3.2/core/sharded-cluster-shards/</a>.</p>
+<p>The recommended setup is one shard replica set created from an existing Deadline database, and all other shard replica sets created from clean MongoDB installations. You can follow the tutorial for <a class="reference internal" href="db-mongo-replica-set.html#db-replica-set-ref-label"><span class="std std-ref">Creating a Replica Set</span></a> to create each shard replica set. Here are some things to remember while following the tutorial. Some of this may make more sense while you’re going through the tutorial.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>You’re setting up two or more shard replica sets.</p></li>
+<li><p>If you’re using an existing database, one shard replica set is created from the existing Deadline database installation.</p></li>
+<li><p>All other shard replica sets are created from clean MongoDB installations.</p></li>
+<li><p>All shard replica sets can use the same configuration, provided by the Deadline database installation.</p></li>
+<li><p>You should have <code class="docutils literal notranslate"><span class="pre">clusterRole:</span> <span class="pre">shardsvr</span></code> in your configuration.</p></li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="mongodb-shard-router">
+<h3>MongoDB Shard Router<a class="headerlink" href="#mongodb-shard-router" title="Permalink to this headline">¶</a></h3>
+<p>The shard router <code class="docutils literal notranslate"><span class="pre">mongos</span></code> is a MongoDB application that handles routing operations to the appropriate shard.</p>
+<p>To start the MongoDB shard router, you need to connect <code class="docutils literal notranslate"><span class="pre">mongos</span></code> to your shard config replica set. This can be done with the following command:</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./mongos --configdb &lt;configReplSetName&gt;/&lt;hostname1&gt;:&lt;DB_PORT&gt;,&lt;hostname2&gt;:&lt;DB_PORT&gt;,&lt;hostname3&gt;:&lt;DB_PORT&gt; --port &lt;DB_PORT&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;configReplSetName&gt;</span></code> is the name of the replica set your shard config instances belong to. This should match the name provided when running <code class="docutils literal notranslate"><span class="pre">rs.initiate()</span></code> for the config replica set, as well as the separate configuration file for your config replica set instances.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;hostname1&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;hostname2&gt;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&lt;hostname3&gt;</span></code> should be names or IP addresses of the MongoDB instances in your config replica set. As when creating a replica set, these fields should not be <code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code> or <code class="docutils literal notranslate"><span class="pre">localhost</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Mongo DB port that is used in the tutorial is <code class="docutils literal notranslate"><span class="pre">27100</span></code> (for all replica sets) and will be referred to as &lt;DB_PORT&gt;.</p>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="add-shards-to-the-cluster">
+<h2>Add Shards to the Cluster<a class="headerlink" href="#add-shards-to-the-cluster" title="Permalink to this headline">¶</a></h2>
+<p>After all required components have been setup, you will need to connect to your <em>MongoDB Shard Router</em>. This can be done the same way as connecting to a MongoDB instance.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>On the machine running <code class="docutils literal notranslate"><span class="pre">mongos</span></code>, navigate to <code class="docutils literal notranslate"><span class="pre">&lt;databaseDirectory&gt;/mongo/application/bin/</span></code>.</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">./mongo</span> <span class="pre">--host</span> <span class="pre">localhost</span> <span class="pre">--port</span> <span class="pre">&lt;DB_PORT&gt;</span></code>.</p></li>
+</ol>
+</div></blockquote>
+<p>You can now begin adding the shard replica sets to the cluster. To add shards to a cluster, use the <code class="docutils literal notranslate"><span class="pre">sh.addShard()</span></code> command. This should look something like:</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sh.addShard( &quot;&lt;replicaSetName&gt;/&lt;hostname&gt;:&lt;DB_PORT&gt;&quot; )
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;replicaSetName&gt;</span></code> is the name of the replica set you are adding. This may be something like <code class="docutils literal notranslate"><span class="pre">dlshard0</span></code> or <code class="docutils literal notranslate"><span class="pre">dlshard1</span></code> (these are used in the <a class="reference internal" href="db-mongo-replica-set.html#db-replica-set-ref-label"><span class="std std-ref">Creating a Replica Set</span></a> tutorial).</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;hostname&gt;</span></code> is the name or IP address of any member of the specified replica set.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;DB_PORT&gt;</span></code> is the Mongo DB port, such as: <code class="docutils literal notranslate"><span class="pre">27100</span></code>.</p>
+</div>
+</div></blockquote>
+<p>Be sure to add all of your shard replica sets to the cluster. You will need to be connected to the <code class="docutils literal notranslate"><span class="pre">mongos</span></code> shell for the next step, so do not disconnect your shell (if you do, follow the above steps again).</p>
+</div>
+<div class="section" id="sharding-the-database-collections">
+<h2>Sharding the Database Collections<a class="headerlink" href="#sharding-the-database-collections" title="Permalink to this headline">¶</a></h2>
+<p>Now that you have your shard cluster setup, you need to do a bit of database setup to leverage your shards. This includes enabling sharding on the database with <code class="docutils literal notranslate"><span class="pre">sh.enableSharding()</span></code> and setting up sharding for specific collections with <code class="docutils literal notranslate"><span class="pre">sh.shardCollection()</span></code>. Make sure you are still connected to the <code class="docutils literal notranslate"><span class="pre">mongos</span></code> shell that was used to <a class="reference internal" href="#add-shards-to-the-cluster">Add Shards to the Cluster</a>.</p>
+<p>If you do not already have an existing Deadline database, you can use the repository installer to connect to an existing database. To connect to the sharded cluster, you will configure Deadline to connect to the machine running the <code class="docutils literal notranslate"><span class="pre">mongos</span></code> instance on port <code class="docutils literal notranslate"><span class="pre">27100</span></code>. Once this is done, you should be able to continue with the next few steps.</p>
+<p>To begin, you will need to enable sharding on the Deadline database. This can be done using the following command.</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sh.enableSharding( &quot;deadline&lt;VERSION&gt;db&quot; )
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;VERSION&gt;</span></code> is the Deadline major version such as: <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p>
+</div>
+</div></blockquote>
+<p>Next you will need to use the following command to specify sharding rules for specific collections. The strategy being used here is hashed sharding. More information about MongoDB sharding strategies can be found at <a class="reference external" href="https://docs.mongodb.com/v3.2/sharding/#hashed-sharding">https://docs.mongodb.com/v3.2/sharding/#hashed-sharding</a>.</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sh.shardCollection( &quot;deadline&lt;VERSION&gt;db.&lt;collection&gt;&quot;, { &lt;key&gt; : &quot;hashed&quot; } )
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;VERSION&gt;</span></code> is the Deadline major version such as: <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;collection&gt;</span></code> is the name of the Deadline database collection, such as <code class="docutils literal notranslate"><span class="pre">Jobs</span></code> or <code class="docutils literal notranslate"><span class="pre">JobTasks</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;key&gt;</span></code> is the field that should be used to establish the shard key. It is commonly <code class="docutils literal notranslate"><span class="pre">_id</span></code>, but in some cases it makes sense to use another field such as <code class="docutils literal notranslate"><span class="pre">JobID</span></code> (in the case of <code class="docutils literal notranslate"><span class="pre">JobTasks</span></code>).</p>
+</div>
+</div></blockquote>
+<p>If you already have data in the collection you are attempting to shard, you may need to use create a database index on the <code class="docutils literal notranslate"><span class="pre">&lt;key&gt;</span></code> field prior to using <code class="docutils literal notranslate"><span class="pre">sh.shardCollection()</span></code>. The following steps should accomplish this.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>In the MongoDB shell, run <code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">deadline&lt;VERSION&gt;db</span></code>, where <code class="docutils literal notranslate"><span class="pre">&lt;VERSION&gt;</span></code> is: <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">db.&lt;collection&gt;.createIndex(</span> <span class="pre">{</span> <span class="pre">&lt;key&gt;</span> <span class="pre">:</span> <span class="pre">&quot;hashed&quot;</span> <span class="pre">}</span> <span class="pre">)</span></code> to create a hashed index.</p></li>
+<li><p>Now use <code class="docutils literal notranslate"><span class="pre">sh.shardCollection(</span> <span class="pre">&quot;deadline&lt;VERSION&gt;db.&lt;collection&gt;&quot;,</span> <span class="pre">{</span> <span class="pre">&lt;key&gt;</span> <span class="pre">:</span> <span class="pre">&quot;hashed&quot;</span> <span class="pre">}</span> <span class="pre">)</span></code>, where <code class="docutils literal notranslate"><span class="pre">&lt;VERSION&gt;</span></code> is: <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p></li>
+</ol>
+</div></blockquote>
+<p>The <code class="docutils literal notranslate"><span class="pre">mongos</span></code> instance that you are connected to can be used like any MongoDB <code class="docutils literal notranslate"><span class="pre">mongod</span></code> instance. If you created a sharded cluster from an existing Deadline database, you may need to update your repository’s connection information to reference the sharded cluster by pointing to the <code class="docutils literal notranslate"><span class="pre">mongos</span></code> instance. To update Deadline database connection settings, use the <code class="docutils literal notranslate"><span class="pre">UpdateDatabaseSettings</span></code> command through <a class="reference external" href="https://docs.thinkboxsoftware.com/products/deadline/10.3/1_User%20Manual/manual/command.html">Deadline Command</a>.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Navigate to the <code class="docutils literal notranslate"><span class="pre">bin/</span></code> directory in your Deadline client installation directory.</p></li>
+<li><p>Run the following command to update your connection settings.</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>./deadlinecommand UpdateDatabaseSettings &lt;repositoryPath&gt; MongoDB &lt;mongosHostname&gt; deadline&lt;VERSION&gt;db &lt;DB_PORT&gt; -1 False False &quot;&quot; &quot;&quot; &quot;&quot; False
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;repositoryPath&gt;</span></code> is the path to the root directory of your repository.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;mongosHostname&gt;</span></code> is the name or IP address of the machine running the <code class="docutils literal notranslate"><span class="pre">mongos</span></code> instance.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;VERSION&gt;</span></code> is the Deadline major version such as: <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;DB_PORT&gt;</span></code> is the Mongo DB port, such as: <code class="docutils literal notranslate"><span class="pre">27100</span></code>.</p>
+</div>
+</div></blockquote>
+</div></blockquote>
+<p>You should now have Deadline connected to a MongoDB sharded cluster built from robust shard replica sets.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Creating a Shard Cluster</a><ul>
+<li><a class="reference internal" href="#required-components">Required Components</a><ul>
+<li><a class="reference internal" href="#shard-config-replica-set">Shard Config Replica Set</a></li>
+<li><a class="reference internal" href="#shard-replica-sets">Shard Replica Sets</a></li>
+<li><a class="reference internal" href="#mongodb-shard-router">MongoDB Shard Router</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#add-shards-to-the-cluster">Add Shards to the Cluster</a></li>
+<li><a class="reference internal" href="#sharding-the-database-collections">Sharding the Database Collections</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="db-mongo-replica-set.html"
+                        title="previous chapter">Creating a Replica Set</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="index-client-applications.html"
+                        title="next chapter">Deadline Client Applications</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="index-client-applications.html" title="Deadline Client Applications"
+             >next</a></li>
+        <li class="right" >
+          <a href="db-mongo-replica-set.html" title="Creating a Replica Set"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-installation-reference.html" >Installation Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Creating a Shard Cluster</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

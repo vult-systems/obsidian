@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RCS Load Balancing in the Cloud &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Security" href="security.html" />
+    <link rel="prev" title="NGINX Web Server" href="proxy-nginx.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="security.html" title="Security"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="proxy-nginx.html" title="NGINX Web Server"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" accesskey="U">Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">RCS Load Balancing in the Cloud</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="rcs-load-balancing-in-the-cloud">
+<span id="rcs-load-balancing-in-the-cloud-label"></span><h1>RCS Load Balancing in the Cloud<a class="headerlink" href="#rcs-load-balancing-in-the-cloud" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Application Load Balancer (<em>ALB</em>) is a highly available, automatically scalable and secure load balancer for HTTP/HTTPS request within the AWS ecosystem.  In this tutorial, you will learn how to leverage the benefits of using an ALB on AWS, to build a resilient, scalable and secure render farm.  You can find out more about ALB on <a class="reference external" href="https://aws.amazon.com/elasticloadbalancing/#:~:text=Elastic%20Load%20Balancing%20automatically%20distributes,or%20across%20multiple%20Availability%20Zones">Elastic Load Balancing</a>.</p>
+<p>To set up a render farm with an ALB, the Deadline Repository needs to be reachable from the Remote Connection Server (<em>RCS</em>) instances in the cloud.  Workers can exist both in the cloud and on-premise, to utilize existing on-premise machine and spot fleet for burst work load.  If you want to keep RCS on prem but want to leverage the cloud for burst work load, <a class="reference internal" href="aws-portal-setup.html#aws-portal-setup-label"><span class="std std-ref">AWS Portal</span></a> should be used instead.</p>
+</div>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="../_images/ALBSetupHttps.jpg"><img alt="../_images/ALBSetupHttps.jpg" src="../_images/ALBSetupHttps.jpg" style="width: 1000px;" /></a>
+<p>Illustrated in the diagram above, is a render farm setup, that improves performance and redundancy, by utilizing an ALB to load balance requests from Workers to RCS. The Deadline Repository resides on its own machine and should be mounted on RCS’s file system.  The communication between Workers and RCS will be encrypted for security.  The number of RCS in the private subnet should be at least 2 to achieve redundancy.</p>
+<p>Below are the steps to configure the architecture above with 2 RCSs and a single Worker.  It aims to provide a starting point for building render farm with ALB:</p>
+<ol class="arabic">
+<li><p>Start an EC2 instance to serve as the repository instance (The leftmost instance in the architecture diagram above). Download the Deadline Repository installer and install it on the repository instance. Turn off client authentication via ssl/tls in the database security step.</p></li>
+<li><p>Start two EC2 instances to serve as RCS instances. These two instances need to be launched into a private subnet.  If you are unfamiliar with the concept of private subnet or VPC, you can see an example setup <a class="reference external" href="https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenario2.html">here</a>.</p></li>
+<li><p>Configure the RCS instances to access (mount) the shared repository file system.  We commonly use NFS or Samba share for Linux and Samba share for Windows.</p></li>
+<li><p>Download Deadline Client installer and install it on both RCS instances.  Remember to select the RCS in the list of components, and turn off <cite>Require external Client to use TLS</cite>.  We will generate our own certs in later steps to secure the RCS.  Now both RCSs should be able to connect to the same repository and database.</p></li>
+<li><p><a class="reference internal" href="proxy-sslgen.html#ssl-cert-gen-ref-label"><span class="std std-ref">Generate new SSL Certificates.</span></a>.  You will have 5 files after this step: the CA cert, client key, client cert, server key, server cert. We will used these manually generated certs to secure the communication between Workers and RCSs.</p></li>
+<li><p>Transfer the CA cert and server cert to the RCS instances, and add/edit the following lines to the RCS’s deadline.ini.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">TlsAuth</span><span class="o">=</span><span class="kc">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">TlsListenPort</span><span class="o">=</span><span class="mi">4433</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">TlsServerCert</span><span class="o">=</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">pfx</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">TlsCaCert</span><span class="o">=</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">ca</span><span class="o">/</span><span class="n">crt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ClientSSLAuthentication</span><span class="o">=</span><span class="n">NotRequired</span>
+</pre></div>
+</div>
+</li>
+<li><p>Go to your EC2 Dashboard, in the left hand menu, under the “Load Balancing” section, select the “Load Balancer” option. Click the “create load balancer” button and select Application Load Balancer.</p></li>
+</ol>
+<a class="reference internal image-reference" href="../_images/SelectLoadBalancerTypeHttp.png"><img alt="../_images/SelectLoadBalancerTypeHttp.png" src="../_images/SelectLoadBalancerTypeHttp.png" style="width: 1000px;" /></a>
+<p>The following diagram is a sample configuration.  This load balancer will use HTTPS protocol and listen on port 443. The VPC you select under the availability zone should be the one that contains your Worker instances in the cloud.</p>
+<img alt="../_images/ConfigureLoadBalancerHttps.png" src="../_images/ConfigureLoadBalancerHttps.png" />
+<p>Upload your CA, server key and server cert like in the sample setup below:</p>
+<img alt="../_images/ConfigureSecuritySettingsHttps.png" src="../_images/ConfigureSecuritySettingsHttps.png" />
+<p>When configuring routing, select “instance” as target type, HTTPS as the protocol and use 4433 as the forwarding port number.</p>
+<img alt="../_images/ConfigureRoutingHttps.png" src="../_images/ConfigureRoutingHttps.png" />
+<p>Finally, we can register 2 RCS instances created at step 1 as the targets of the load balancer.</p>
+<img alt="../_images/RegisterTargetsHttps.png" src="../_images/RegisterTargetsHttps.png" />
+<ol class="arabic" start="8">
+<li><p>Start an EC2 instance to serve as the Worker. Download Deadline Client installer and install it on the Worker instance.</p></li>
+<li><p>Transfer the CA cert generated at step 5 to the Worker instance, and add/edit the following lines to the Worker’s deadline.ini.  You can find &lt;DNS name of the ALB&gt; variable under the description tab of the load balancer created at step 7:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ConnectionType</span><span class="o">=</span><span class="n">Remote</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ProxyUseSSL</span><span class="o">=</span><span class="kc">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ProxyRoot</span><span class="o">=&lt;</span><span class="n">DNS</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">ALB</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">443</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ProxySSLCertificate</span><span class="o">=</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ProxySSLCA</span><span class="o">=</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">ca</span><span class="o">/</span><span class="n">crt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ProxyRoot0</span><span class="o">=&lt;</span><span class="n">DNS</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">ALB</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">443</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ClientSSLAuthentication</span><span class="o">=</span><span class="n">NotRequired</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>If you follow the steps above, you will have a basic render farm with ALB over RCSs. Many customizations can be made to this setup. For example, RCSs can be placed in an Auto Scaling Group so that failed instances will be replaced automatically; Workers can be built from an AMI so that you don’t have to configure each one individually.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">RCS Load Balancing in the Cloud</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="proxy-nginx.html"
+                        title="previous chapter">NGINX Web Server</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="security.html"
+                        title="next chapter">Security</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="security.html" title="Security"
+             >next</a></li>
+        <li class="right" >
+          <a href="proxy-nginx.html" title="NGINX Web Server"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-advanced-admin.html" >Advanced Administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">RCS Load Balancing in the Cloud</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

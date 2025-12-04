@@ -1,0 +1,440 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Houdini &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Houdini Karma" href="app-houdini-karma.html" />
+    <link rel="prev" title="Hiero" href="app-hiero.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-houdini-karma.html" title="Houdini Karma"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-hiero.html" title="Hiero"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Houdini</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="houdini">
+<span id="app-houdini-ref-label"></span><h1>Houdini<a class="headerlink" href="#houdini" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs from within Houdini by installing the <a class="reference internal" href="#app-houdini-integrated-submission-script-label"><span class="std std-ref">integrated submission script, Deadline ROP node</span></a>, or you can submit them from the Monitor. The instructions for installing the <a class="reference internal" href="#app-houdini-integrated-submission-script-label"><span class="std std-ref">integrated submission script and Deadline ROP node</span></a> can be found further down this page.</p>
+<p>To submit from within Houdini, select ‘Render’ -&gt; ‘Submit To Deadline’, or create a Deadline ROP node within your scene.</p>
+<p><a class="reference internal" href="../_images/houdini_integrated.png"><img alt="integrated" src="../_images/houdini_integrated.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_houdini.png"><img alt="monitor" src="../_images/sub_houdini.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/rop_houdini.png"><img alt="rop" src="../_images/rop_houdini.png" style="height: 400px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.
+The following Houdini specific options are used when submitting with the integrated or Monitor submitter:</p>
+<ul>
+<li><p><strong>ROP To Render</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Choose</strong>: Allows you to choose your ROP from the dropbox to the right.</p></li>
+<li><p><strong>Selected</strong>: Allows you to render each ROP that you currently have selected in Houdini (in the order that you selected)</p></li>
+<li><p><strong>All</strong>: Allows you to render every ROP in the Houdini file.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Ignore Inputs</strong>: If enabled, only the selected ROP will be rendered. No dependencies will rendered.</p></li>
+<li><p><strong>Build to Force</strong>: Force 32 or 64 bit rendering.</p></li>
+<li><p><strong>Ignore Bypassed Nodes</strong>: If enabled, bypassed ROPs will be skipped over when submitting multiple ROPs.</p></li>
+<li><p><strong>Automatically Create Dependencies</strong>: If enabled, ROP dependencies will be reflected in the Deadline job dependencies when submitting multiple ROPs.</p></li>
+<li><p><strong>Submit Wedges as Separate Jobs</strong>: If enabled, each Wedge in a Wedge ROP will be submitted as a separate job with the current Wedge settings. This option is only enabled if the selected ROP is a Wedge ROP, or if all ROPs are being rendered and at least one of them is a Wedge ROP.</p></li>
+<li><p><strong>Jobs are Frame Dependent</strong>: If enabled, Workers will render tasks for frames that have completed in the dependency job. If disabled, Workers will not pick up any tasks until the entire dependency job is complete</p></li>
+</ul>
+</div>
+<div class="section" id="troubleshooting-render-issues">
+<h3>Troubleshooting Render Issues<a class="headerlink" href="#troubleshooting-render-issues" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="troubleshooting.html#troubleshooting-ref-label"><span class="std std-ref">troubleshooting guide</span></a> does not handle some differences specific to Houdini rendering, this guide will focus on the specifics related to how Deadline runs Houdini renders.</p>
+<p>To start we’ll need the error report, as that has the command we’ll need as well as the name of the render node we’ll be testing on. It’s important to test on the same render node that had the error. This way if the issue is related to the configuration of the individual render node we’ll be testing for it. You can find the name of the render node at the end of the task report on the line with “Worker Name:”.</p>
+<p>Search that log for a line that contains the phrase “Full Command”, here is one taken right out of a task report:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2023</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">03</span> <span class="mi">15</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span>  <span class="mi">0</span><span class="p">:</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Full</span> <span class="n">Command</span><span class="p">:</span> <span class="s2">&quot;C:\Program Files\Side Effects Software\Houdini 19.5.493</span><span class="se">\b</span><span class="s2">in\Hython.exe&quot;</span> <span class="s2">&quot;C:\ProgramData\Thinkbox\Deadline10\workers</span><span class="se">\r</span><span class="s2">ender_node1\plugins</span><span class="se">\60</span><span class="s2">ccf1c4fe540a0470ff804c\hrender_dl.py&quot;</span> <span class="o">-</span><span class="n">f</span> <span class="mi">1001</span> <span class="mi">1006</span> <span class="mi">1</span> <span class="o">-</span><span class="n">o</span> <span class="s2">&quot;Z:/assets/farm_test.$F4.exr&quot;</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">out</span><span class="o">/</span><span class="n">Redshift_ROP1</span> <span class="o">-</span><span class="n">tempdir</span> <span class="s2">&quot;C:\ProgramData\Thinkbox\Deadline10\workers</span><span class="se">\r</span><span class="s2">ender_node1\jobsData</span><span class="se">\60</span><span class="s2">ccf1c4fe540a0470ff804c</span><span class="se">\0</span><span class="s2">_tempzdETq0&quot;</span> <span class="o">-</span><span class="n">arnoldAbortOnLicenseFail</span> <span class="mi">1</span> <span class="s2">&quot;C:/ProgramData/Thinkbox/Deadline10/workers/render_node1/jobsData/60ccf1c4fe540a0470ff804c/my_test_scene.hip&quot;</span>
+</pre></div>
+</div>
+<p>Now strip the timestamp, and everything that isn’t the actual command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;C:\Program Files\Side Effects Software\Houdini 19.5.493</span><span class="se">\b</span><span class="s2">in\Hython.exe&quot;</span> <span class="s2">&quot;C:\ProgramData\Thinkbox\Deadline10\workers</span><span class="se">\r</span><span class="s2">ender_node1\plugins</span><span class="se">\60</span><span class="s2">ccf1c4fe540a0470ff804c\hrender_dl.py&quot;</span> <span class="o">-</span><span class="n">f</span> <span class="mi">1001</span> <span class="mi">1006</span> <span class="mi">1</span> <span class="o">-</span><span class="n">o</span> <span class="s2">&quot;Z:/assets/farm_test.$F4.exr&quot;</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">out</span><span class="o">/</span><span class="n">Redshift_ROP1</span> <span class="o">-</span><span class="n">tempdir</span> <span class="s2">&quot;C:\ProgramData\Thinkbox\Deadline10\workers</span><span class="se">\r</span><span class="s2">ender_node1\jobsData</span><span class="se">\60</span><span class="s2">ccf1c4fe540a0470ff804c</span><span class="se">\0</span><span class="s2">_tempzdETq0&quot;</span> <span class="o">-</span><span class="n">arnoldAbortOnLicenseFail</span> <span class="mi">1</span> <span class="s2">&quot;C:/ProgramData/Thinkbox/Deadline10/workers/render_node1/jobsData/60ccf1c4fe540a0470ff804c/my_test_scene.hip&quot;</span>
+</pre></div>
+</div>
+<p>The next issue is that this command references a couple files in temporary locations that are more than likely gone at this point or have been copied to the render node by the Worker.</p>
+<p>First we need the script that we pass to Houdini called hrender_dl.py. This is in DeadlineRepository10/plugins/Houdini. Copy it to the render node where it’ll be easy to reference. In this example we copy it to the Windows desktop of the user the Worker runs under, named ‘render’.</p>
+<p>Second we need the path to the .hip file. You likely don’t need to move the file as it should be readable from where it is for rendering anyways. The exception is if the job was submitted with ‘Submit Houdini Scene’, in which case the path will be to a temporary location and will need to be copied to the render node.</p>
+<p>Third we need to provide a temporary directory for rendering, the desktop will do for us here.</p>
+<p>With those, our new command looks like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;C:\Program Files\Side Effects Software\Houdini 19.5.493</span><span class="se">\b</span><span class="s2">in\Hython.exe&quot;</span> <span class="s2">&quot;C:\Users</span><span class="se">\r</span><span class="s2">ender\Desktop\hrender_dl.py&quot;</span> <span class="o">-</span><span class="n">f</span> <span class="mi">1001</span> <span class="mi">1006</span> <span class="mi">1</span> <span class="o">-</span><span class="n">o</span> <span class="s2">&quot;Z:/assets/farm_test.$F4.exr&quot;</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">out</span><span class="o">/</span><span class="n">Redshift_ROP1</span> <span class="o">-</span><span class="n">tempdir</span> <span class="s2">&quot;C:\Users</span><span class="se">\r</span><span class="s2">ender\Desktop</span><span class="se">\&quot;</span><span class="s2"> -arnoldAbortOnLicenseFail 1 &quot;</span><span class="n">Z</span><span class="p">:</span><span class="o">/</span><span class="n">projects</span><span class="o">/</span><span class="n">my_test_scene</span><span class="o">.</span><span class="n">hip</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>If no pathmapping is required the next step is to actually run the command from the Command Prompt, Terminal or Shell as applicable to your operating system.</p>
+<p>If the scene needs path-mapping to function then you’ll have to set the HOUDINI_PATHMAP environment variable. If your <a class="reference internal" href="repository-config.html#mapped-path-ref-label"><span class="std std-ref">path mapping</span></a> rule is set to convert Z:/assets/ into /mnt/assets, set <code class="docutils literal notranslate"><span class="pre">HOUDINI_PATHMAP={&quot;Z:/assets/&quot;:&quot;/mnt/assets/&quot;}</span></code> before running the above command.</p>
+<p>There are steps you can take now that you’ve run the render externally. In some cases Houdini render errors are multiple lines long and this test will show all lines of the error where Deadline would have cancelled the task before everything was printed.</p>
+<p>If the render still fails, then the issue would be either in the scene or in the render node itself. Try testing with a simpler scene, or on a different render node to identify which of the two is the issue.</p>
+</div>
+<div class="section" id="rop-node">
+<h3>ROP Node<a class="headerlink" href="#rop-node" title="Permalink to this headline">¶</a></h3>
+<p>The Deadline output driver submits render jobs to Deadline for distribution on the farm.  When you press the ‘Submit to Deadline’ button all upstream nodes will be submitted to Deadline while respecting all dependencies, locks and bypassed nodes.
+While submitting jobs if another Deadline ROP is encountered all further dependent nodes will use the new ROPs properties for future jobs.</p>
+<p><a class="reference internal" href="../_images/houdini_rop_example.png"><img alt="ropExample" src="../_images/houdini_rop_example.png" style="height: 400px;" /></a></p>
+<p>In this example mantra1 and mantra3 will use the settings from deadline1 while mantra2 will use the settings of deadline2.</p>
+<div class="section" id="setting-defaults">
+<h4>Setting Defaults<a class="headerlink" href="#setting-defaults" title="Permalink to this headline">¶</a></h4>
+<p>You can also easily set defaults for our node (or any node) in Houdini without needing to script at all, just follow these steps.</p>
+<ol class="arabic simple">
+<li><p>Have Houdini open with a Deadline ROP node created</p></li>
+<li><p>Set all the values you want as default (pools, groups, and limits are in the ‘Job Options’ tab of the Deadline ROP node)</p></li>
+<li><dl class="simple">
+<dt>Click the gear beside the Deadline ROP Name and select:</dt><dd><ul class="simple">
+<li><p>‘Save Preset…’ if you want the choice between different default values</p></li>
+<li><p>‘Save as Permanent Defaults’ if you want every created Deadline ROP node to have these defaults</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ol>
+<p><a class="reference internal" href="../_images/houdini_rop_defaults.png"><img alt="ropDefaults" src="../_images/houdini_rop_defaults.png" style="height: 400px;" /></a></p>
+</div>
+</div>
+<div class="section" id="tile-rendering-options">
+<span id="houdini-tile-rendering-ref-label"></span><h3>Tile Rendering Options<a class="headerlink" href="#tile-rendering-options" title="Permalink to this headline">¶</a></h3>
+<p>Enable Tile Rendering to split up a single frame into multiple tiles.</p>
+<ul class="simple">
+<li><p><strong>Enable Tile Rendering</strong>: If enabled, the frame will be split into multiple tiles that are rendered individually and can be assembled after.</p></li>
+<li><p><strong>Use Jigsaw Rendering</strong>: Enable to use <a class="reference internal" href="job-submitting.html#common-jigsaw-ref-label"><span class="std std-ref">Jigsaw</span></a>, otherwise a grid of tiles will be used.</p></li>
+<li><p><strong>Single Frame Tile Job Enabled</strong>: Enable to submit all tiles in a single job.</p></li>
+<li><p><strong>Single Job Frame</strong>: The frame that will be split up.</p></li>
+<li><p><strong>Submit Dependent Assembly Job</strong>: Submit a job dependent on the tile job that will assemble the tiles.</p></li>
+<li><p><strong>Cleanup Tiles after Assembly</strong>: If selected the tiles will be deleted after assembly.</p></li>
+<li><p><strong>Error on Missing Tiles</strong>: If enabled, then if any of the tiles are missing the assembly job will fail.</p></li>
+<li><p><strong>Assemble Over</strong>: Determine what the Draft Tile Assembler should assemble over be it a blank image, previous output or a specified file.</p></li>
+<li><p><strong>Error on Missing Background</strong>: If enabled, then if the background file is missing the job will fail.</p></li>
+</ul>
+<p>Note: Tile rendering is not currently supported for dependent V-Ray jobs.</p>
+</div>
+<div class="section" id="ifd-exporting-and-mantra-standalone">
+<h3>IFD Exporting and Mantra Standalone<a class="headerlink" href="#ifd-exporting-and-mantra-standalone" title="Permalink to this headline">¶</a></h3>
+<p>The Houdini submitter allows you to submit a job that will export the scene to IFD files, and then submit a dependent <a class="reference internal" href="app-mantra.html#app-mantra-ref-label"><span class="std std-ref">Mantra Standalone</span></a> job to render the exported IFD files.</p>
+<p><a class="reference internal" href="../_images/houdini_integrated_ifd.png"><img alt="integrated2" src="../_images/houdini_integrated_ifd.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_houdini_mantra.png"><img alt="monitor2" src="../_images/sub_houdini_mantra.png" style="height: 400px;" /></a></p>
+<p>When submitting from the Monitor, you just need to enable the Override Export IFD option. When submitting from within Houdini using the integrated submission script, you must first make sure that the ROPs you wish to export
+have the Disk File option enabled in their properties, and then enable the Submit Dependent Mantra Standalone Job option in the submitter. Note that if a ROP does not have the Disk File setting enabled, it will simply render the
+image, and no dependent Mantra Standalone job will be submitted.</p>
+<a class="reference internal image-reference" href="../_images/houdini_rop_disk_file.png"><img alt="../_images/houdini_rop_disk_file.png" src="../_images/houdini_rop_disk_file.png" style="height: 300px;" /></a>
+<p>The general Deadline options for the Mantra Standalone job are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. The Mantra Standalone specific options are:</p>
+<ul class="simple">
+<li><p><strong>Export Mantra Locally</strong>: If enabled, the Mantra IFD files will be exported by your machine before the Mantra standalone job is submitted.</p></li>
+<li><p><strong>Mantra Threads</strong>: The number of threads to use for the Mantra standalone job.</p></li>
+</ul>
+</div>
+<div class="section" id="arnold-exporting-and-arnold-standalone">
+<h3>Arnold Exporting and Arnold Standalone<a class="headerlink" href="#arnold-exporting-and-arnold-standalone" title="Permalink to this headline">¶</a></h3>
+<p>The Houdini submitter allows you to submit a job that will export the scene to Arnold .ass files, and then submit a dependent <a class="reference internal" href="app-arnold.html#app-arnold-ref-label"><span class="std std-ref">Arnold Standalone</span></a> job to render the exported .ass files.</p>
+<a class="reference internal image-reference" href="../_images/houdini_integrated_arnold.png"><img alt="../_images/houdini_integrated_arnold.png" src="../_images/houdini_integrated_arnold.png" style="height: 400px;" /></a>
+<p>The general Deadline options for the Arnold Standalone job are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. The Arnold Standalone specific options are:</p>
+<ul class="simple">
+<li><p><strong>Export Arnold Locally</strong>: If enabled, the Arnold .ass files will be exported by your machine before the Arnold standalone job is submitted.</p></li>
+<li><p><strong>Arnold Threads</strong>: The number of threads to use for the Arnold standalone job.</p></li>
+</ul>
+</div>
+<div class="section" id="renderman-exporting-and-renderman-standalone">
+<h3>RenderMan Exporting and RenderMan Standalone<a class="headerlink" href="#renderman-exporting-and-renderman-standalone" title="Permalink to this headline">¶</a></h3>
+<p>The Houdini submitter allows you to submit a job that will export the scene to .rib files, and then submit a dependent <a class="reference internal" href="app-renderman.html#app-renderman-ref-label"><span class="std std-ref">RenderMan Standalone</span></a> job to render the exported .rib files.</p>
+<p>Starting from RenderMan 21, the RenderMan RIS node must be used to render a scene.</p>
+<a class="reference internal image-reference" href="../_images/houdini_integrated_renderman.png"><img alt="../_images/houdini_integrated_renderman.png" src="../_images/houdini_integrated_renderman.png" style="height: 400px;" /></a>
+<p>When submitting from within Houdini using the integrated submission script, you must first make sure that the ROPs you wish to export have the Disk File option enabled in their properties, and then enable the Submit Dependent RenderMan Standalone Job option in the submitter. Note that if a ROP does not have the Disk File setting enabled, it will simply render the image, and no dependent RenderMan Standalone job will be submitted. Also note that if you wish to render from a range of frames, the export file’s name must contain the frame number so that a .rib file is exported for each frame (see below image for an example).</p>
+<a class="reference internal image-reference" href="../_images/houdini_rop_disk_file_renderman.png"><img alt="../_images/houdini_rop_disk_file_renderman.png" src="../_images/houdini_rop_disk_file_renderman.png" style="height: 350px;" /></a>
+<p>The general Deadline options for the RenderMan Standalone job are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. The RenderMan Standalone specific options are:</p>
+<ul class="simple">
+<li><p><strong>Export RenderMan Locally</strong>: If enabled, the RenderMan .rib files will be exported by your machine before the RenderMan standalone job is submitted.</p></li>
+<li><p><strong>RenderMan Threads</strong>: The number of threads to use for the RenderMan standalone job.</p></li>
+</ul>
+</div>
+<div class="section" id="v-ray-exporting-and-v-ray-standalone">
+<h3>V-Ray Exporting and V-Ray Standalone<a class="headerlink" href="#v-ray-exporting-and-v-ray-standalone" title="Permalink to this headline">¶</a></h3>
+<p>The Houdini submitter allows you to submit a job that will export the scene to .vrscene files, and then submit a dependent <a class="reference internal" href="app-vray.html#app-vray-ref-label"><span class="std std-ref">V-Ray Standalone</span></a> job to render the exported .vrscene files.  Currently only V-Ray Standalone is supported.</p>
+<a class="reference internal image-reference" href="../_images/houdini_integrated_vray.png"><img alt="../_images/houdini_integrated_vray.png" src="../_images/houdini_integrated_vray.png" style="height: 400px;" /></a>
+<p>The general Deadline options for the V-Ray Standalone job are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. The V-Ray Standalone specific options are:</p>
+<ul class="simple">
+<li><p><strong>Export V-Ray Locally</strong>: If enabled, the V-Ray .scene files will be exported by your machine before the V-Ray standalone job is submitted.</p></li>
+<li><p><strong>V-Ray Threads</strong>: The number of threads to use for the V-Ray standalone job.</p></li>
+</ul>
+<p>Note:  If exported .vrscene files will overwrite then a frame number will be appended to the .vrscene file.  This will not affect dependent V-Ray Standalone jobs.</p>
+</div>
+<div class="section" id="distributed-simulation-jobs">
+<h3>Distributed Simulation Jobs<a class="headerlink" href="#distributed-simulation-jobs" title="Permalink to this headline">¶</a></h3>
+<p>The Houdini submitter allows you to submit a job that will run a distributed simulation.</p>
+<p>In order to submit a simulation job you will have to first set up your fluid simulation.  Once you have your simulation set up, click the Distribute tool found on the Wire, Cloth, or Particle fluids tab, select the item you wish to distribute and then press enter. This will create 3 new nodes, the specific node that controls the simulation will be sent to Deadline as the new <code class="docutils literal notranslate"><span class="pre">distributedsim</span></code> node in the <code class="docutils literal notranslate"><span class="pre">/out</span></code> tree.  This node defines how many slices your simulation will have.</p>
+<p>Once you have the distributed sim node set up, submit it to Deadline using the regular Deadline in-app submitter.  Additional information for setting up distributed submissions and the properties defined in the nodes can be found in the <a class="reference external" href="https://www.sidefx.com/docs/houdini19.5/dyno/distribute">Houdini Documentation</a>.</p>
+</div>
+<div class="section" id="pipeline-tools">
+<h3>Pipeline Tools<a class="headerlink" href="#pipeline-tools" title="Permalink to this headline">¶</a></h3>
+<p>When using the integrated submitter to submit through Houdini you have the ability to use any of the event plugins that you have enabled through the Deadline Monitor. This is done by opening the Pipeline Tools window via the Pipeline Tools button. This window is explained further in the <a class="reference internal" href="event-pipeline-tools.html#event-pipeline-tools-ref-label"><span class="std std-ref">Pipeline Tools</span></a> documentation.</p>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Houdini plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Houdini plugin from the list on the left.</p>
+<p>Note, if the executable supports a MAJOR.MINOR.REVISION (9.0.123) numbering system in its path, then you will need to configure the explicit exe path to the particular revision that you have installed on your machines. Deadline does not track every possible revision available or indeed where it might be custom installed to, so a studio should verify their exe paths are correct for each application version they choose to use with Deadline. Multiple exe paths can still be declared and the first one that is found on a particular Worker on a particular platform will be used from the exe list.</p>
+<a class="reference internal image-reference" href="../_images/cp_houdini.png"><img alt="../_images/cp_houdini.png" src="../_images/cp_houdini.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Hython Executable</strong>: The path to the hython executable. It can be found in the Houdini bin folder. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+<p><strong>HQueue Simulation Job Options</strong></p>
+<ul class="simple">
+<li><p><strong>Tracker File</strong>: The path to the simtracker.py file that is used when distributing HQueue Sim jobs. Note that this file can be found in the Houdini install.</p></li>
+<li><p><strong>Houdini Sim Tracker Port</strong>: The port number that the Sim Tracker will listen on for communication.</p></li>
+<li><p><strong>Houdini Sim Web Service Port</strong>: The port number for the Sim Tracker’s Web Service.</p></li>
+<li><p><strong>Use IP Address for Sim Tracker</strong>: If enabled, the IP address of the machine running the Sim Tracker process will be used for communication instead of the host name.</p></li>
+</ul>
+<p><strong>Licensing Options</strong></p>
+<ul class="simple">
+<li><p><strong>Workers To Use Escape License</strong>: A list of Workers that should use a Houdini Escape license instead of a Batch license. Use a , to separate multiple Worker names, for example: worker001,worker002,worker003</p></li>
+</ul>
+<p><strong>Path Mapping (For Mixed Farms)</strong></p>
+<ul class="simple">
+<li><p><strong>Enable Path Mapping</strong>: If enabled, Deadline will use Houdini’s HOUDINI_PATHMAP environment variable to perform path mappings on the contents of the Houdini scene file. This feature can be turned off if there are no Path Mapping entries defined in the Repository Options.</p></li>
+</ul>
+<p><strong>Arnold Options</strong></p>
+<ul class="simple">
+<li><p><strong>Abort On Arnold License Fail</strong>: If enabled, the render will fail if Arnold cannot get a license. If disabled, Arnold will render with a watermark if it cannot get a license (Only applies when Arnold is the Renderer).</p></li>
+</ul>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-houdini-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to setup the integrated Houdini submission script for Deadline. This script has been tested with Houdini 9 and later.</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/houdini/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<p><strong>Current User</strong></p>
+<p>First, copy the following files and directories to: <code class="docutils literal notranslate"><span class="pre">%localappdata%\Thinkbox\Deadline[VERSION]\submitters\HoudiniSubmitter</span></code> on Windows or <code class="docutils literal notranslate"><span class="pre">~/Library/Application</span> <span class="pre">Support/Thinkbox/Deadline[VERSION]/submitters/HoudiniSubmitter</span></code> on macOS or <code class="docutils literal notranslate"><span class="pre">~/Thinkbox/Deadline[VERSION]/submitters/HoudiniSubmitter</span></code> on Linux (where [VERSION] is the major version of Deadline such as <strong>10</strong>):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;\submission\Houdini\Client\otls</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;\submission\Houdini\Client\soho</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;\submission\Houdini\Client\DeadlineHoudiniClient.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;\submission\Houdini\Client\MainMenuCommon.xml</span></code></p></li>
+</ul>
+</div></blockquote>
+<p>Second, update the MainMenuCommon.xml that was copied by replacing SUBMITTER_DIR with <code class="docutils literal notranslate"><span class="pre">%localappdata%\Thinkbox\Deadline[VERSION]\submitters\HoudiniSubmitter</span></code> on Windows, <code class="docutils literal notranslate"><span class="pre">~/Library/Application</span> <span class="pre">Support/Thinkbox/Deadline[VERSION]/submitters/HoudiniSubmitter</span></code> on macOS and <code class="docutils literal notranslate"><span class="pre">~/Thinkbox/Deadline[VERSION]/submitters/HoudiniSubmitter</span></code> on Linux.</p>
+<p>Third, copy <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;\submission\Houdini\Client\CallDeadlineCommand.py</span></code> to <code class="docutils literal notranslate"><span class="pre">%HOME%\Houdini{version}\python3.9libs</span></code> on Windows, <code class="docutils literal notranslate"><span class="pre">$HOME/Houdini[VERSION]/python3.9libs</span></code> on Linux, and <code class="docutils literal notranslate"><span class="pre">$HOME/Library/Preferences/houdini/[VERSION]/python3.9libs</span></code> on macOS.</p>
+<p>Finally, you need to update your houdini environment. The method for this depends on which version of houdini you are using.</p>
+<p>If you are installing the submitter for houdini 17.5 or above, you need to copy <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;\submission\Houdini\client\deadline.json</span></code> to <code class="docutils literal notranslate"><span class="pre">%HOME%\Houdini{version}\packages</span></code> on Windows, <code class="docutils literal notranslate"><span class="pre">$HOME/Houdini[VERSION]/packages</span></code> on Linux, and <code class="docutils literal notranslate"><span class="pre">$HOME/Library/Preferences/houdini/[VERSION]/packages</span></code> on macOS.</p>
+<p>If you are installing the submitter for houdini 17.0 or earlier, you need to add the following to the houdini.env file located in the <cite>Houdini [HOU VERSION]</cite> folder located in your user directory.  In this file you need to add the following lines:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HOUDINI_PATH</span> <span class="o">=</span> <span class="s2">&quot;$HOUDINI_PATH;[HOU SUBMITTER DIR];&amp;&quot;</span>
+<span class="n">HOUDINI_MENU_PATH</span> <span class="o">=</span> <span class="s2">&quot;$HOUDINI_MENU_PATH;[HOU SUBMITTER DIR];&amp;&quot;</span>
+</pre></div>
+</div>
+<p>(where [HOU SUBMITTER DIR] is the directory you copied the files to in the first step of installation.)</p>
+<p><strong>All Users</strong></p>
+<ul class="simple">
+<li><p>Copy the contents of <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/Houdini/Client</span></code> to a location accessible by all users.</p></li>
+<li><p>Update the MainMenuCommon.xml that was copied by replacing SUBMITTER_DIR with the full path of the directory you copied the contents of the submitter to.</p></li>
+<li><p>Set the Environment variable <code class="docutils literal notranslate"><span class="pre">HOUDINI_PACKAGE_DIR</span></code> to the directory configured above.</p></li>
+</ul>
+</div>
+<div class="section" id="custom-sanity-check-setup">
+<h3>Custom Sanity Check Setup<a class="headerlink" href="#custom-sanity-check-setup" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Custom Sanity Checks will <strong>NOT</strong> work with the Deadline ROP.</p>
+</div>
+<p>In Houdini, sanity checks are automatically run when you launch the submitter. They can be used to:</p>
+<ul class="simple">
+<li><p>Check for certain conditions in the Houdini scene</p></li>
+<li><p>Modify the Houdini scene before submitting</p></li>
+<li><p>Initialize the Deadline submitter fields (job naming conventions, priority, etc..)</p></li>
+<li><p>Lock submission fields so users can’t change them</p></li>
+</ul>
+<p>Sanity checks can be added by creating a <code class="docutils literal notranslate"><span class="pre">CustomSanityChecks.py</span></code> file alongside the main <code class="docutils literal notranslate"><span class="pre">SubmitHoudiniToDeadline.py</span></code> submission script in <code class="docutils literal notranslate"><span class="pre">&lt;DeadlineRepository&gt;\submission\Houdini\Main</span></code>. Simply create a function in this file called <code class="docutils literal notranslate"><span class="pre">RunSanityCheck</span></code>, and then add your sanity check code to it.</p>
+<p>In this example, we are going to create a sanity check that will disable the Job name text box so users cannot change it. This sanity check will also prevent the submitter from launching if using a version of Houdini earlier than version 15. In order to do this, we need to create the script mentioned above, and ensure it contains the function <code class="docutils literal notranslate"><span class="pre">RunSanityCheck</span></code> that accepts a reference to the submitter dialog (giving you full control to modify the window).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># CustomSanityChecks.py</span>
+<span class="c1">#</span>
+
+<span class="kn">import</span> <span class="nn">hou</span>
+
+<span class="k">def</span> <span class="nf">RunSanityCheck</span><span class="p">(</span><span class="n">dialog</span><span class="p">):</span>
+    <span class="c1"># Disable the Job Name box.</span>
+    <span class="n">dialog</span><span class="o">.</span><span class="n">enableValue</span><span class="p">(</span><span class="s2">&quot;jobname.val&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># Don&#39;t open the submitter if the version number of Houdini is less than 15.</span>
+    <span class="k">if</span> <span class="n">hou</span><span class="o">.</span><span class="n">applicationVersion</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">15</span><span class="p">:</span>
+        <span class="n">hou</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">displayMessage</span><span class="p">(</span><span class="s2">&quot;Jobs can only be submitted from Houdini 15 and later.&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Submit Houdini To Deadline&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>All your checks should be placed within this function. This function should return <code class="docutils literal notranslate"><span class="pre">True</span></code> for successfully passing any sanity checks.</p>
+<p>If you try to run the submitter from Houdini 14, you will now see the following message:</p>
+<a class="reference internal image-reference" href="../_images/sanity_checks_houdini_failed.png"><img alt="../_images/sanity_checks_houdini_failed.png" src="../_images/sanity_checks_houdini_failed.png" style="height: 120px;" /></a>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-houdini-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Houdini are supported by Deadline?</strong></p>
+<blockquote>
+<div><p>Houdini 9 and later is supported. To render with Houdini 7 or 8, use the <a class="reference internal" href="app-mantra.html#app-mantra-ref-label"><span class="std std-ref">Mantra Plugin</span></a>.</p>
+</div></blockquote>
+<p><strong>Which Houdini license(s) are required to render with Deadline?</strong></p>
+<blockquote>
+<div><p>Deadline uses Hython to render, which uses hbatch licenses. If those are not available, it will try to use a Master License instead.</p>
+</div></blockquote>
+<p><strong>Are HQueue Simulation nodes supported?</strong></p>
+<blockquote>
+<div><p>Yes. Simply select the HQueue simulation node in the integrated submitter when submitting the job to Deadline, and a job will be submitted with one task per slice.</p>
+</div></blockquote>
+<p><strong>Do all tasks for HQueue simulation jobs need to be picked up before the job can render?</strong></p>
+<blockquote>
+<div><p>Yes. This is how regular HQueue simulation jobs operate, and it’s the same when using Deadline. This is because all nodes that are rendering each slice need to be able to communicate their progress with each other.</p>
+</div></blockquote>
+<p><strong>Does Path Mapping work in Houdini?</strong></p>
+<blockquote>
+<div><p>Yes for input, not always for output.  Path Mapping in Houdini is done through it’s HOUDINI_PATHMAP environment variable which as of Houdini 14.0.339 has a known bug that it will not work on all output formats.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Houdini error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Houdini</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#troubleshooting-render-issues">Troubleshooting Render Issues</a></li>
+<li><a class="reference internal" href="#rop-node">ROP Node</a><ul>
+<li><a class="reference internal" href="#setting-defaults">Setting Defaults</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tile-rendering-options">Tile Rendering Options</a></li>
+<li><a class="reference internal" href="#ifd-exporting-and-mantra-standalone">IFD Exporting and Mantra Standalone</a></li>
+<li><a class="reference internal" href="#arnold-exporting-and-arnold-standalone">Arnold Exporting and Arnold Standalone</a></li>
+<li><a class="reference internal" href="#renderman-exporting-and-renderman-standalone">RenderMan Exporting and RenderMan Standalone</a></li>
+<li><a class="reference internal" href="#v-ray-exporting-and-v-ray-standalone">V-Ray Exporting and V-Ray Standalone</a></li>
+<li><a class="reference internal" href="#distributed-simulation-jobs">Distributed Simulation Jobs</a></li>
+<li><a class="reference internal" href="#pipeline-tools">Pipeline Tools</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+<li><a class="reference internal" href="#custom-sanity-check-setup">Custom Sanity Check Setup</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-hiero.html"
+                        title="previous chapter">Hiero</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-houdini-karma.html"
+                        title="next chapter">Houdini Karma</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-houdini-karma.html" title="Houdini Karma"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-hiero.html" title="Hiero"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Houdini</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

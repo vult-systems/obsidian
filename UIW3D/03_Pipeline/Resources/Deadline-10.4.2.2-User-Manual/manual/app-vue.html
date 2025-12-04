@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="xNormal" href="app-xnormal.html" />
+    <link rel="prev" title="VRED Cluster" href="app-vred-cluster.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-xnormal.html" title="xNormal"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-vred-cluster.html" title="VRED Cluster"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Vue</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="vue">
+<span id="app-vue-ref-label"></span><h1>Vue<a class="headerlink" href="#vue" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs from within Vue, or you can submit them from the Monitor.</p>
+<a class="reference internal image-reference" href="../_images/sub_vue.png"><img alt="../_images/sub_vue.png" src="../_images/sub_vue.png" style="height: 500px;" /></a>
+<div class="section" id="submitting-from-vue">
+<h3>Submitting from Vue<a class="headerlink" href="#submitting-from-vue" title="Permalink to this headline">¶</a></h3>
+<p>For the following steps, you will need to make some substitutions as-per the following table:</p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Placeholder</p></th>
+<th class="head"><p>Replacement</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">%DEADLINE_BIN%</span></code></p></td>
+<td><p>The path to the <code class="docutils literal notranslate"><span class="pre">bin</span></code> subdirectory in your Deadline client installation. Defaults to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Program</span> <span class="n">Files</span>\<span class="n">Thinkbox</span>\<span class="n">Deadline10</span>\<span class="nb">bin</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">%VUE_VERSION</span></code></p></td>
+<td><p>The version of Vue you are configuring. Possible values are: <code class="docutils literal notranslate"><span class="pre">7</span></code>, <code class="docutils literal notranslate"><span class="pre">8</span></code>, <code class="docutils literal notranslate"><span class="pre">9</span></code>, <code class="docutils literal notranslate"><span class="pre">10</span></code>, <code class="docutils literal notranslate"><span class="pre">11</span></code>, <code class="docutils literal notranslate"><span class="pre">2014</span></code>, <code class="docutils literal notranslate"><span class="pre">2015</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">2016</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="single-frame-submission">
+<h4>Single Frame Submission<a class="headerlink" href="#single-frame-submission" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic">
+<li><p>Open a Windows command prompt. Press <code class="docutils literal notranslate"><span class="pre">CTRL</span></code> + <code class="docutils literal notranslate"><span class="pre">R</span></code></p>
+<ol class="arabic">
+<li><p>Type <code class="docutils literal notranslate"><span class="pre">cmd</span></code></p></li>
+<li><p>Press <code class="docutils literal notranslate"><span class="pre">RETURN</span></code></p></li>
+<li><p>Type in:</p>
+<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span><span class="nv">%DEADLINE_BIN%</span>\deadlinecommand.exe  -GetRepositoryFilePath <span class="s2">&quot;scripts\submission\VueSubmission.py&quot;</span>
+</pre></div>
+</div>
+<p>Make note of the path that is output for future steps.</p>
+</li>
+</ol>
+</li>
+<li><p>In Vue, select <code class="docutils literal notranslate"><span class="pre">Render</span></code> → <code class="docutils literal notranslate"><span class="pre">Render</span> <span class="pre">Options</span></code></p></li>
+<li><p>Find the Renderer section, select RenderBull/RenderNode Network, then press the <code class="docutils literal notranslate"><span class="pre">Edit</span></code> button.</p></li>
+<li><p>In the <code class="docutils literal notranslate"><span class="pre">Options</span></code> dialog that pops up, enter the submission command using the template below</p>
+<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;</span><span class="nv">%DEADLINE_BIN%</span><span class="s2">\deadlinecommand.exe&quot;</span> -executescript <span class="s2">&quot;</span><span class="nv">%VUE_SUB_PATH%</span><span class="s2">&quot;</span> <span class="s2">&quot;[FILE_PATH]&quot;</span> <span class="s2">&quot;[SCENE_NAME]&quot;</span> <span class="s2">&quot;[NUM_FRAMES]&quot;</span> <span class="nv">%VUE_VERSION%</span>
+</pre></div>
+</div>
+<p>You will need to replace the <code class="docutils literal notranslate"><span class="pre">%DEADLINE_BIN%</span></code> and <code class="docutils literal notranslate"><span class="pre">%VUE_VERSION%</span></code> placeholders as described in the table above. Replace
+<code class="docutils literal notranslate"><span class="pre">%VUE_SUB_PATH%</span></code> with the path that is output in step 1. You can leave the <code class="docutils literal notranslate"><span class="pre">[FILE_PATH]</span></code>, <code class="docutils literal notranslate"><span class="pre">[SCENE_NAME]</span></code>, and <code class="docutils literal notranslate"><span class="pre">[NUM_FRAMES]</span></code>
+placeholders unchanged; they will be automatically substituted by Vue when submitting.</p>
+</li>
+<li><p>You can also enter the folder you want the temporary Vue scene file saved in during submission. By default, you should be able to leave this blank. Press <code class="docutils literal notranslate"><span class="pre">OK</span></code> when finished.</p></li>
+<li><p>Press <code class="docutils literal notranslate"><span class="pre">Render</span></code> to bring up the submission dialog.</p>
+<a class="reference internal image-reference" href="../_images/vue_renderoptions.png"><img alt="../_images/vue_renderoptions.png" src="../_images/vue_renderoptions.png" style="height: 400px;" /></a>
+</li>
+</ol>
+</div>
+<div class="section" id="animation-submission">
+<h4>Animation Submission<a class="headerlink" href="#animation-submission" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic">
+<li><p>Open a Windows command prompt. Press <code class="docutils literal notranslate"><span class="pre">CTRL</span></code> + <code class="docutils literal notranslate"><span class="pre">R</span></code></p>
+<ol class="arabic">
+<li><p>Type <code class="docutils literal notranslate"><span class="pre">cmd</span></code></p></li>
+<li><p>Press <code class="docutils literal notranslate"><span class="pre">RETURN</span></code></p></li>
+<li><p>Type in:</p>
+<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span><span class="nv">%DEADLINE_BIN%</span>\deadlinecommand.exe  -GetRepositoryFilePath <span class="s2">&quot;scripts\submission\VueSubmission.py&quot;</span>
+</pre></div>
+</div>
+<p>Make note of the path that is output for future steps.</p>
+</li>
+</ol>
+</li>
+<li><p>In Vue, select <code class="docutils literal notranslate"><span class="pre">Animation</span></code> → <code class="docutils literal notranslate"><span class="pre">Animation</span> <span class="pre">Render</span> <span class="pre">Options</span></code>,</p></li>
+<li><p>Find the Renderer section, select Network Rendering/RenderNode Network, then press the <code class="docutils literal notranslate"><span class="pre">Edit</span></code> button.</p></li>
+<li><p>In the <code class="docutils literal notranslate"><span class="pre">Options</span></code> dialog that pops up, enter the submission command using the template below</p>
+<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;</span><span class="nv">%DEADLINE_BIN%</span><span class="s2">\deadlinecommand.exe&quot;</span> -executescript <span class="s2">&quot;</span><span class="nv">%VUE_SUB_PATH%</span><span class="s2">&quot;</span> <span class="s2">&quot;[FILE_PATH]&quot;</span> <span class="s2">&quot;[SCENE_NAME]&quot;</span> <span class="s2">&quot;[NUM_FRAMES]&quot;</span> <span class="nv">%VUE_VERSION%</span>
+</pre></div>
+</div>
+<p>You will need to replace the <code class="docutils literal notranslate"><span class="pre">%DEADLINE_BIN%</span></code> and <code class="docutils literal notranslate"><span class="pre">%VUE_VERSION%</span></code> placeholders as described in the table above. Replace
+<code class="docutils literal notranslate"><span class="pre">%VUE_SUB_PATH%</span></code> with the path that is output in step 1. You can leave the <code class="docutils literal notranslate"><span class="pre">[FILE_PATH]</span></code>, <code class="docutils literal notranslate"><span class="pre">[SCENE_NAME]</span></code>, and <code class="docutils literal notranslate"><span class="pre">[NUM_FRAMES]</span></code>
+placeholders unchanged; they will be automatically substituted by Vue when submitting.</p>
+</li>
+<li><p>You can also enter the folder you want the temporary Vue scene file saved in during submission. By default, you should be able to leave this blank. Press <code class="docutils literal notranslate"><span class="pre">OK</span></code> when finished.</p></li>
+<li><p>Press <code class="docutils literal notranslate"><span class="pre">Render</span> <span class="pre">Animation</span></code> to bring up the submission dialog.</p>
+<a class="reference internal image-reference" href="../_images/vue_animoptions.png"><img alt="../_images/vue_animoptions.png" src="../_images/vue_animoptions.png" style="height: 400px;" /></a>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="submitting-from-the-monitor">
+<h3>Submitting from the Monitor<a class="headerlink" href="#submitting-from-the-monitor" title="Permalink to this headline">¶</a></h3>
+<p>To submit a Vue job from the Deadline Monitor, select <code class="docutils literal notranslate"><span class="pre">Submit</span> <span class="pre">-&gt;</span> <span class="pre">3D</span> <span class="pre">-&gt;</span> <span class="pre">Vue</span></code> from the menu bar.</p>
+</div>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.
+The Vue specific options are:</p>
+<ul class="simple">
+<li><p><strong>Vue File</strong>: The Vue scene file to be rendered.</p></li>
+<li><p><strong>Output Folder</strong>: If Override Output Path is enabled, the rendered images will be saved in this folder.</p></li>
+<li><p><strong>Override Output Path</strong>: Enable to override where the rendered images are saved.</p></li>
+<li><p><strong>Render animation sequence</strong>: If checked, will render the animation. Otherwise, Vue will render the single
+frame that the scene was set to when saved.</p></li>
+<li><p><strong>Version</strong>: The version of Vue to render with.</p></li>
+<li><p><strong>Build To Force</strong>: Force 32 bit or 64 bit rendering.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Vue plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Vue plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_vue.png"><img alt="../_images/cp_vue.png" src="../_images/cp_vue.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Vue Executable</strong>: The path to the Vue executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-vue-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Vue are supported?</strong></p>
+<blockquote>
+<div><p>Vue 6 and later are supported (Infinite and xStream editions).</p>
+</div></blockquote>
+<p><strong>I have Vue render node licenses, but when I render with Deadline, I get the error “No serial number found”.</strong></p>
+<blockquote>
+<div><p>If you have render node licenses for Vue, you need to use the *RenderNode.exe executable (ie: Vue 9 xStream RenderNode.exe) instead of the StandaloneRenderer.eon executable for rendering.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Vue error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here, please contact
+<a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> and let us know.</p>
+<p><strong>Unable to initialize application - Check render log for more information.</strong></p>
+<blockquote>
+<div><p>Check the render log for the job to see if this additional information in printed out:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">STDOUT</span><span class="p">:</span> <span class="n">Initializing</span><span class="o">...</span><span class="n">Error</span>
+<span class="n">STDOUT</span><span class="p">:</span> <span class="n">No</span> <span class="n">serial</span> <span class="n">number</span> <span class="n">found</span>
+<span class="n">STDOUT</span><span class="p">:</span> <span class="n">Unable</span> <span class="n">to</span> <span class="n">initialize</span> <span class="n">application</span><span class="o">.</span> <span class="n">Exiting</span><span class="o">.</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>If this is the case, it means that Vue can’t get a license. If you have render node licenses for Vue, you need to use the *RenderNode.exe executable (ie: Vue 9 xStream RenderNode.exe) instead of the StandaloneRenderer.eon
+executable for rendering.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Vue</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submitting-from-vue">Submitting from Vue</a><ul>
+<li><a class="reference internal" href="#single-frame-submission">Single Frame Submission</a></li>
+<li><a class="reference internal" href="#animation-submission">Animation Submission</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#submitting-from-the-monitor">Submitting from the Monitor</a></li>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-vred-cluster.html"
+                        title="previous chapter">VRED Cluster</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-xnormal.html"
+                        title="next chapter">xNormal</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-xnormal.html" title="xNormal"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-vred-cluster.html" title="VRED Cluster"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Vue</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

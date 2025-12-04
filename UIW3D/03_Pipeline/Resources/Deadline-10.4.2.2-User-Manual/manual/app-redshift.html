@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redshift Standalone &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="RenderMan (Pro Server)" href="app-renderman.html" />
+    <link rel="prev" title="REDLine" href="app-redline.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-renderman.html" title="RenderMan (Pro Server)"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-redline.html" title="REDLine"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Redshift Standalone</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="redshift-standalone">
+<span id="app-redshift-ref-label"></span><h1>Redshift Standalone<a class="headerlink" href="#redshift-standalone" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit Redshift Standalone jobs from the Monitor or via an in-app submitter such as <a class="reference internal" href="app-maya.html#app-maya-ref-label"><span class="std std-ref">MayaBatch</span></a> as an export job.</p>
+<p><a class="reference internal" href="../_images/sub_redshift.png"><img alt="job_options" src="../_images/sub_redshift.png" style="height: 500px;" /></a> <a class="reference internal" href="../_images/sub_redshift_options.png"><img alt="adv_options" src="../_images/sub_redshift_options.png" style="height: 500px;" /></a></p>
+<div class="section" id="setup-your-rs-files">
+<h3>Setup your rs Files<a class="headerlink" href="#setup-your-rs-files" title="Permalink to this headline">¶</a></h3>
+<p>Before you can submit a Redshift Standalone job, you must export your scene into .rs files such as via the <a class="reference internal" href="app-maya.html#app-maya-ref-label"><span class="std std-ref">MayaBatch</span></a> in-app submitter. Typically, one .rs file per frame is exported.</p>
+</div>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.</p>
+<p>The Redshift specific options are:</p>
+<ul>
+<li><p><strong>Redshift File</strong>: The Redshift file(s) to be rendered. If you are submitting a sequence of .rs files, select one of the numbered frames in the sequence, and the frame range will automatically be detected.</p></li>
+<li><p><strong>Frame List</strong>: The list of frames to render. If you are submitting a sequence of .rs files, the frames you choose to render should correspond to the numbers in the .rs files.</p></li>
+<li><p><strong>Calculate Frames From Redshift File</strong>: If enabled, the frame list will be calculated based on the selected input file.</p></li>
+<li><p><strong>Render Options File</strong>: Optional. Overrides render options using a text file. The text file should contain pairs of options on each line. ie:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">UnifiedMaxSamples</span> <span class="mi">1500</span>
+<span class="n">UnifiedFilterSize</span> <span class="mf">3.4</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Image Output Directory</strong>: Optional. Overrides the image output directory. If left blank, Redshift will save the image output to the folder defined in the .rs file.</p></li>
+<li><p><strong>PBT Output Directory</strong>: Optional. Overrides the point-based technique output directory. If left blank, Redshift will save the point-based technique output to the folder defined in the .rs file.</p></li>
+<li><p><strong>Cache Directory</strong>: Optional. Overrides the cache path folder. If left blank, Redshift will output to the default cache path folder.</p></li>
+<li><p><strong>Texture Cache Budget (MB)</strong>: Optional. Sets the texture cache size (in megabytes). If set to 0, will use the default texture cache budget.</p></li>
+<li><p><strong>GPUs Per Task</strong>: The number of GPUs to use per task. If set to 0, the default number of GPUs will be used.</p></li>
+<li><p><strong>Select GPU Devices</strong>: A comma separated list of the GPUs to use specified by the device id. ‘GPUs Per Task’ will be ignored. ie. ‘0’ or ‘1’ or ‘0,2’ or ‘0,3,4’ etc.</p></li>
+<li><p><strong>Version</strong>: The version of Redshift to render with.</p></li>
+<li><p><strong>Override Resolution</strong>: If enabled, the resolution defined within the Redshift scene will be overridden.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Redshift plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Redshift plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_redshift.png"><img alt="../_images/cp_redshift.png" src="../_images/cp_redshift.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Redshift 1 Executable</strong>: The path to the Redshift v1 executable file used for rendering. Enter alternative paths on separate lines.</p></li>
+</ul>
+</div>
+<div class="section" id="cross-platform-rendering-considerations">
+<h2>Cross-Platform Rendering Considerations<a class="headerlink" href="#cross-platform-rendering-considerations" title="Permalink to this headline">¶</a></h2>
+<p>In order to perform cross-platform rendering with Redshift, you must setup Mapped Paths so that Deadline can set the Redshift environment variable REDSHIFT_PATHOVERRIDE_FILE. You can access the Mapped Paths Setup in the Monitor while in
+power user mode by selecting Tools -&gt; Configure Repository. You’ll find the Mapped Paths Setup in the list on the left.</p>
+</div>
+<div class="section" id="faq">
+<span id="app-redshift-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Is Redshift Standalone supported?</strong></p>
+<blockquote>
+<div><p>Yes.</p>
+</div></blockquote>
+<p><strong>Does Redshift work with concurrent tasks?</strong></p>
+<blockquote>
+<div><p>Redshift does not support having multiple processes rendering on the same GPU at once. Due to this, Redshift may not work with concurrent tasks if GPUs per task is not also set.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Redshift error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here, please contact
+<a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Redshift Standalone</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#setup-your-rs-files">Setup your rs Files</a></li>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#cross-platform-rendering-considerations">Cross-Platform Rendering Considerations</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-redline.html"
+                        title="previous chapter">REDLine</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-renderman.html"
+                        title="next chapter">RenderMan (Pro Server)</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-renderman.html" title="RenderMan (Pro Server)"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-redline.html" title="REDLine"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Redshift Standalone</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

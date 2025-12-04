@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>REST Overview &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Jobs" href="rest-jobs.html" />
+    <link rel="prev" title="RESTful HTTP API" href="index-rest-api.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="rest-jobs.html" title="Jobs"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="index-rest-api.html" title="RESTful HTTP API"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-rest-api.html" accesskey="U">RESTful HTTP API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">REST Overview</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="rest-overview">
+<span id="rest-overview-ref-label"></span><h1>REST Overview<a class="headerlink" href="#rest-overview" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 11%" />
+<col style="width: 9%" />
+<col style="width: 8%" />
+<col style="width: 9%" />
+<col style="width: 10%" />
+<col style="width: 8%" />
+<col style="width: 9%" />
+<col style="width: 8%" />
+<col style="width: 11%" />
+<col style="width: 8%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td colspan="11"><p><a class="reference internal" href="#rest-overview-ref-label"><span class="std std-ref">REST Overview</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="rest-jobs.html#rest-jobs-ref-label"><span class="std std-ref">Jobs</span></a></p></td>
+<td><p><a class="reference internal" href="rest-job-reports.html#rest-job-reports-ref-label"><span class="std std-ref">Job Reports</span></a></p></td>
+<td><p><a class="reference internal" href="rest-groups.html#rest-groups-ref-label"><span class="std std-ref">Groups</span></a></p></td>
+<td><p><a class="reference internal" href="rest-pools.html#rest-pools-ref-label"><span class="std std-ref">Pools</span></a></p></td>
+<td><p><a class="reference internal" href="rest-limits.html#rest-limits-ref-label"><span class="std std-ref">Limits</span></a></p></td>
+<td><p><a class="reference internal" href="rest-repository.html#rest-repository-ref-label"><span class="std std-ref">Repository</span></a></p></td>
+<td><p><a class="reference internal" href="rest-pulse.html#rest-pulse-ref-label"><span class="std std-ref">Pulse</span></a></p></td>
+<td><p><a class="reference internal" href="rest-workers.html#rest-workers-ref-label"><span class="std std-ref">Workers</span></a></p></td>
+<td><p><a class="reference internal" href="rest-tasks.html#rest-tasks-ref-label"><span class="std std-ref">Tasks</span></a></p></td>
+<td><p><a class="reference internal" href="rest-task-reports.html#rest-task-reports-ref-label"><span class="std std-ref">Task Reports</span></a></p></td>
+<td><p><a class="reference internal" href="rest-users.html#rest-users-ref-label"><span class="std std-ref">Users</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
+<li><p><a class="reference internal" href="#request-types" id="id2">Request Types</a></p></li>
+<li><p><a class="reference internal" href="#request-formats-and-responses" id="id3">Request Formats and Responses</a></p></li>
+<li><p><a class="reference internal" href="#http-status-codes" id="id4">HTTP Status Codes</a></p></li>
+<li><p><a class="reference internal" href="#additional-information" id="id5">Additional Information</a></p></li>
+</ul>
+</div>
+<div class="section" id="overview">
+<h2><a class="toc-backref" href="#contents">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>RESTful HTTP API</strong> can be used to interact with an instance of the <a class="reference internal" href="web-service.html#web-service-ref-label"><span class="std std-ref">Web Service</span></a>.</p>
+<p>HTTP requests can be made to</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Request</strong> information from the database,</p></li>
+<li><p><strong>Store</strong> new data,</p></li>
+<li><p><strong>Alter</strong> existing data, or</p></li>
+<li><p><strong>Remove</strong> entries from the database.</p></li>
+</ul>
+</div></blockquote>
+<p>Requests to the API can be categorized by</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The <strong>type of data</strong> you are attempting to access, and by</p></li>
+<li><p>The <strong>type of HTTP request</strong> you are using to access the data. See <a class="reference internal" href="#types-of-http-ref-label"><span class="std std-ref">Request Formats and Responses</span></a> below for details.</p></li>
+</ul>
+</div></blockquote>
+<p>In order to use the HTTP API, you must have the <a class="reference internal" href="web-service.html#web-service-ref-label"><span class="std std-ref">Web Service</span></a> running on a machine whose address and port number you know.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">As all communication to Deadline travels through the machine running the <a class="reference internal" href="web-service.html#web-service-ref-label"><span class="std std-ref">Web Service</span></a> and not the local host, there are consequences that should be considered carefully.</div>
+<div class="line">Any file paths provided need to be valid on the <a class="reference internal" href="web-service.html#web-service-ref-label"><span class="std std-ref">Web Service</span></a> machine, including any differences between operating systems, if for example your local host is running Windows but the <a class="reference internal" href="web-service.html#web-service-ref-label"><span class="std std-ref">Web Service</span></a> machine is running Linux.</div>
+<div class="line">In the case of submitting a Job, the Job’s UserName will be the user account currently running the <a class="reference internal" href="web-service.html#web-service-ref-label"><span class="std std-ref">Web Service</span></a>, NOT the submitting local user, unless a UserName is provided in the Job info.</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Requests that <strong>alter</strong> data are primarily <code class="docutils literal notranslate"><span class="pre">POST</span></code> or <code class="docutils literal notranslate"><span class="pre">PUT</span></code> messages, and they typically return text stating whether they succeeded or if there was an error.</p></li>
+<li><p>Requests made to <strong>retrieve</strong> data are done using <code class="docutils literal notranslate"><span class="pre">GET</span></code> messages, and return <strong>JavaScript Object Notation (JSON)</strong> formatted objects if successful, and <strong>text</strong> explaining the error if not.</p></li>
+<li><p>Some <code class="docutils literal notranslate"><span class="pre">POST</span></code> and <code class="docutils literal notranslate"><span class="pre">PUT</span></code> messages will return <strong>JSON</strong> objects as well, but usually only if there is information about the action that the user may need (an example of this would be a request to create a new object, the object’s primary key may be returned on creation).</p></li>
+<li><p>Requests made to <strong>remove</strong> data are typically done using <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> messages and return <strong>text</strong> stating whether they succeeded or if there was an error, just like <code class="docutils literal notranslate"><span class="pre">POST</span></code> and <code class="docutils literal notranslate"><span class="pre">PUT</span></code> messages.</p></li>
+<li><p>In the event of an error message being returned, the <a class="reference internal" href="#http-status-codes-ref-label"><span class="std std-ref">HTTP Status Code</span></a> will also be set to describe the error.</p></li>
+</ul>
+</div>
+<div class="section" id="request-types">
+<h2><a class="toc-backref" href="#contents">Request Types</a><a class="headerlink" href="#request-types" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="rest-jobs.html#rest-jobs-ref-label"><span class="std std-ref">Jobs</span></a></p></li>
+<li><p><a class="reference internal" href="rest-job-reports.html#rest-job-reports-ref-label"><span class="std std-ref">Job Reports</span></a></p></li>
+<li><p><a class="reference internal" href="rest-groups.html#rest-groups-ref-label"><span class="std std-ref">Groups</span></a></p></li>
+<li><p><a class="reference internal" href="rest-pools.html#rest-pools-ref-label"><span class="std std-ref">Pools</span></a></p></li>
+<li><p><a class="reference internal" href="rest-limits.html#rest-limits-ref-label"><span class="std std-ref">Limits</span></a></p></li>
+<li><p><a class="reference internal" href="rest-repository.html#rest-repository-ref-label"><span class="std std-ref">Repository</span></a></p></li>
+<li><p><a class="reference internal" href="rest-pulse.html#rest-pulse-ref-label"><span class="std std-ref">Pulse</span></a></p></li>
+<li><p><a class="reference internal" href="rest-workers.html#rest-workers-ref-label"><span class="std std-ref">Workers</span></a></p></li>
+<li><p><a class="reference internal" href="rest-tasks.html#rest-tasks-ref-label"><span class="std std-ref">Tasks</span></a></p></li>
+<li><p><a class="reference internal" href="rest-task-reports.html#rest-task-reports-ref-label"><span class="std std-ref">Task Reports</span></a></p></li>
+<li><p><a class="reference internal" href="rest-users.html#rest-users-ref-label"><span class="std std-ref">Users</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="request-formats-and-responses">
+<span id="types-of-http-ref-label"></span><h2><a class="toc-backref" href="#contents">Request Formats and Responses</a><a class="headerlink" href="#request-formats-and-responses" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><strong>GET</strong></p>
+<ul>
+<li><p>Request for some data.</p></li>
+<li><p>These messages are constructed entirely within the URL.</p></li>
+<li><p>Successful requests will usually return a JSON object and failed requests will return a brief error message along with the <a class="reference internal" href="#http-status-codes-ref-label"><span class="std std-ref">HTTP Status Code</span></a>.</p></li>
+<li><p>There are some <code class="docutils literal notranslate"><span class="pre">GET</span></code> requests that will return plain text for a successful request.</p></li>
+</ul>
+</li>
+<li><p><strong>PUT</strong></p>
+<ul>
+<li><p>Typically a request to modify some data.</p></li>
+<li><p>These messages use the URL to specify what type of data that you wish to alter, and use the message body for storing the message to the database.</p></li>
+<li><p>The message body must be a JSON object, although how this object must be built depends on the data being modified.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PUT</span></code> messages for data that does not exist will often fail, but in some cases will act as a <code class="docutils literal notranslate"><span class="pre">POST</span></code>.</p></li>
+<li><p>Successful requests will usually return text stating success. Failed requests will return a brief error message along with the <a class="reference internal" href="#http-status-codes-ref-label"><span class="std std-ref">HTTP Status Code</span></a>.</p></li>
+<li><p>There are some <code class="docutils literal notranslate"><span class="pre">PUT</span></code> messages that return JSON objects, and this usually occurs when data has been created instead of altered.</p></li>
+</ul>
+</li>
+<li><p><strong>POST</strong></p>
+<ul>
+<li><p>Request to create some data.</p></li>
+<li><p>These messages use the URL to specify what type of data that you wish to create, and use the message body for storing the message to the database.</p></li>
+<li><p>The message body must be a JSON object, although how this object must be built depends on the data being modified.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">POST</span></code> messages for data that already exists will fail.</p></li>
+<li><p>Successful requests will usually return text stating success.</p></li>
+<li><p>Failed requests will return a brief error message along with the <a class="reference internal" href="#http-status-codes-ref-label"><span class="std std-ref">HTTP Status Code</span></a>.</p></li>
+<li><p>There are some <code class="docutils literal notranslate"><span class="pre">POST</span></code> messages that return JSON objects.</p></li>
+</ul>
+</li>
+<li><p><strong>DELETE</strong></p>
+<ul>
+<li><p>Request to delete some data.</p></li>
+<li><p>These messages are constructed entirely within the URL.</p></li>
+<li><p>Successful requests will usually return text stating success.</p></li>
+<li><p>Failed requests will return a brief error message along with the <a class="reference internal" href="#http-status-codes-ref-label"><span class="std std-ref">HTTP Status Code</span></a>.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="http-status-codes">
+<span id="http-status-codes-ref-label"></span><h2><a class="toc-backref" href="#contents">HTTP Status Codes</a><a class="headerlink" href="#http-status-codes" title="Permalink to this headline">¶</a></h2>
+<p>The following are the HTTP Status Code that can be returned, and what they signify in Deadline.</p>
+<ul>
+<li><p><strong>200 - OK</strong></p>
+<blockquote>
+<div><p>Request completed without error. Note that this does not always mean the request modified everything as intended. Example: trying to send a “complete” message to a completed job will do nothing and return this status code.
+Another example: trying to release a job from pending when the job is not pending will return this status code and do nothing.</p>
+</div></blockquote>
+</li>
+<li><p><strong>400 - Bad Request</strong></p>
+<blockquote>
+<div><p>Request could not be completed due to incorrect request message structure in either the URL or the body of the request message.</p>
+</div></blockquote>
+</li>
+<li><p><strong>404 - Not Found</strong></p>
+<blockquote>
+<div><p>Requested data could not be found, or requested command could not be found.</p>
+</div></blockquote>
+</li>
+<li><p><strong>405 - Method Not Allowed</strong></p>
+<blockquote>
+<div><p>Requested operation could not be completed using the request format given.</p>
+</div></blockquote>
+</li>
+<li><p><strong>500 - Internal Server Error</strong></p>
+<blockquote>
+<div><p>Request message could not be interpreted properly, or the action being attempted causing an exception in Deadline.</p>
+</div></blockquote>
+</li>
+<li><p><strong>501 - Not Implemented</strong></p>
+<blockquote>
+<div><p>Request type is not supported. For example, a JobReport <code class="docutils literal notranslate"><span class="pre">PUT</span></code> request would return this because only <code class="docutils literal notranslate"><span class="pre">GET</span></code> is supported.</p>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="additional-information">
+<h2><a class="toc-backref" href="#contents">Additional Information</a><a class="headerlink" href="#additional-information" title="Permalink to this headline">¶</a></h2>
+<p>If a request is made for a JSON object, and an empty JSON object is returned, then the information provided for the request did not match any entry in the repository.</p>
+<p>Adding additional key-value pairs to a JSON object for a request that does not specify their use can have surprising consequences. Keys that are not used by other commands will be ignored, but be sure to
+read the documentation for each possible query for each request type before building a JSON object for your query, as some commands are identical other than the presence of a single key and have vastly different effects.</p>
+<p>If a documented query requires a JSON object that you do not know how to properly construct, it is often possible to do a <code class="docutils literal notranslate"><span class="pre">GET</span></code> query for the same object type and receive the JSON format that the query expects.</p>
+<p>A query that returns “Success” does not imply that the actions your query requested occurred. Some actions are impossible, but do not warrant an error message.
+(Example, sending a Suspend message to a Suspended job, or Deleting a Worker that does not exist or was already Deleted.)</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">REST Overview</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#request-types">Request Types</a></li>
+<li><a class="reference internal" href="#request-formats-and-responses">Request Formats and Responses</a></li>
+<li><a class="reference internal" href="#http-status-codes">HTTP Status Codes</a></li>
+<li><a class="reference internal" href="#additional-information">Additional Information</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index-rest-api.html"
+                        title="previous chapter">RESTful HTTP API</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="rest-jobs.html"
+                        title="next chapter">Jobs</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="rest-jobs.html" title="Jobs"
+             >next</a></li>
+        <li class="right" >
+          <a href="index-rest-api.html" title="RESTful HTTP API"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-rest-api.html" >RESTful HTTP API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">REST Overview</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

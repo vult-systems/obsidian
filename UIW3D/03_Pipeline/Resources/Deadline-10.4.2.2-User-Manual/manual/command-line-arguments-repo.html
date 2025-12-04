@@ -1,0 +1,1252 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Database and Repository - Command Arguments &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Clients and Logs - Command Arguments" href="command-line-arguments-clients.html" />
+    <link rel="prev" title="Command" href="command.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command-line-arguments-clients.html" title="Clients and Logs - Command Arguments"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="command.html" title="Command"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" accesskey="U">Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Database and Repository - Command Arguments</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="database-and-repository-command-arguments">
+<span id="command-arguments-repo"></span><h1>Database and Repository - Command Arguments<a class="headerlink" href="#database-and-repository-command-arguments" title="Permalink to this headline">¶</a></h1>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td colspan="2"><p><a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">Command Overview</span></a></p></td>
+<td><p><a class="reference internal" href="#command-arguments-repo"><span class="std std-ref">Database and Repository</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-clients.html#command-arguments-clients"><span class="std std-ref">Clients and Logs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-workers.html#command-arguments-workers"><span class="std std-ref">Workers</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="command-line-arguments-jobs.html#command-arguments-jobs"><span class="std std-ref">Jobs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-tasks.html#command-arguments-tasks"><span class="std std-ref">Tasks</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-pools-groups.html#command-arguments-pools"><span class="std std-ref">Pools, Groups, and Limits</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-users.html#command-arguments-users"><span class="std std-ref">Users and User Groups</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-pathmapping.html#command-arguments-pathmapping"><span class="std std-ref">Path and Drive Mapping</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="command-line-arguments-cloud.html#command-arguments-cloud"><span class="std std-ref">AWS Portal and Cloud</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-scripting.html#command-arguments-scripting"><span class="std std-ref">Scripting</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-system.html#command-arguments-system"><span class="std std-ref">System Functions and Dialogs</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-housekeeping.html#command-arguments-housekeeping"><span class="std std-ref">Scans, History, and Reports</span></a></p></td>
+<td><p><a class="reference internal" href="command-line-arguments-version.html#command-arguments-version"><span class="std std-ref">Version and Help</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#database" id="id1">Database</a></p>
+<ul>
+<li><p><a class="reference internal" href="#configuremongodbdatabase" id="id2">ConfigureMongoDBDatabase</a></p></li>
+<li><p><a class="reference internal" href="#createmongodbuser" id="id3">CreateMongoDBUser</a></p></li>
+<li><p><a class="reference internal" href="#getdatabasesettings" id="id4">GetDatabaseSettings</a></p></li>
+<li><p><a class="reference internal" href="#updateenvironmentsettings" id="id5">UpdateEnvironmentSettings</a></p></li>
+<li><p><a class="reference internal" href="#updatemongodbsettings" id="id6">UpdateMongoDBSettings</a></p></li>
+<li><p><a class="reference internal" href="#migratemonitorlayouts" id="id7">MigrateMonitorLayouts</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#repository-options-and-configuration" id="id8">Repository Options and Configuration</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getrepositoryroot" id="id9">GetRepositoryRoot</a></p></li>
+<li><p><a class="reference internal" href="#getrepositoryroots" id="id10">GetRepositoryRoots</a></p></li>
+<li><p><a class="reference internal" href="#getrepositorypath" id="id11">GetRepositoryPath</a></p></li>
+<li><p><a class="reference internal" href="#getrepositoryfilepath" id="id12">GetRepositoryFilePath</a></p></li>
+<li><p><a class="reference internal" href="#getrepositoryoptions" id="id13">GetRepositoryOptions</a></p></li>
+<li><p><a class="reference internal" href="#getrepositoryoptionswithvalues" id="id14">GetRepositoryOptionsWithValues</a></p></li>
+<li><p><a class="reference internal" href="#getrepositoryoption" id="id15">GetRepositoryOption</a></p></li>
+<li><p><a class="reference internal" href="#setrepositoryoption" id="id16">SetRepositoryOption</a></p></li>
+<li><p><a class="reference internal" href="#getmaximumpriority" id="id17">GetMaximumPriority</a></p></li>
+<li><p><a class="reference internal" href="#getrepositoryversion" id="id18">GetRepositoryVersion</a></p></li>
+<li><p><a class="reference internal" href="#setminimumdeadlineversion" id="id19">SetMinimumDeadlineVersion</a></p></li>
+<li><p><a class="reference internal" href="#updatescriptmenus" id="id20">UpdateScriptMenus</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="database">
+<h2><a class="toc-backref" href="#contents">Database</a><a class="headerlink" href="#database" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="configuremongodbdatabase">
+<span id="configuremongodbdatabase-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">ConfigureMongoDBDatabase</a><a class="headerlink" href="#configuremongodbdatabase" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Configures (or re-configures) a Deadline database. This will connect to MongoDB using the provided information, and prints out server connection info that was used in a successful connection (might be slightly different from the input).</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -ConfigureMongoDBDatabase</strong> &lt;Host&gt; &lt;Port&gt; &lt;DB Name&gt; &lt;SSL&gt; &lt;Client Certificate&gt; &lt;Certificate Password&gt; &lt;Authenticate&gt; &lt;Username&gt; &lt;Password&gt; &lt;Replica Set&gt; &lt;Split DB&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Host&gt;</p></td>
+<td><p>The host name or IP address of the database machine.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Port&gt;</p></td>
+<td><p>The database port</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;DB Name&gt;</p></td>
+<td><p>The name of the Deadline database.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;SSL&gt;</p></td>
+<td><p>True if SSL/TLS should be used when connecting to the Database server, False otherwise.</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Client Certificate&gt;</p></td>
+<td><p>The path to a client x.509 certificate to present when connecting using SSL/TLS. Ignored if SSL is False.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Certificate Password&gt;</p></td>
+<td><p>The password to the client certificate provided. Ignored if SSL is False, or if no certificate was provided. If left empty and a password is required, you will be prompted to enter it.</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Authenticate&gt;</p></td>
+<td><p>True if Deadline needs to authenticate in order to interact with the Database, False otherwise.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Username&gt;</p></td>
+<td><p>The username with which to authenticate. If empty, and both Authenticate and SSL are True, the client certificate will be used instead. Ignored if Authenticate is False.</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Password&gt;</p></td>
+<td><p>The password for the specified user. Ignored if Authenticate is False, or if no user name was provided. Passwords have four modes: 1) Empty - The password will be prompted from standard input 2) A value with the prefix <code class="docutils literal notranslate"><span class="pre">pass:</span></code> - The portion after <code class="docutils literal notranslate"><span class="pre">pass:</span></code> is the password. Note that this option is risky, since it will have your password exposed in the command line history 3) A value with the prefix <code class="docutils literal notranslate"><span class="pre">env:</span></code> - The portion after <code class="docutils literal notranslate"><span class="pre">env:</span></code> indicates the environment variable to pull the password from (e.g. <code class="docutils literal notranslate"><span class="pre">env:MY_VARIABLE</span></code>) 4) A value with the prefix <code class="docutils literal notranslate"><span class="pre">file:</span></code> - The portion after <code class="docutils literal notranslate"><span class="pre">file:</span></code> indicates the file path to pull the password from (e.g. <code class="docutils literal notranslate"><span class="pre">file:FILE_PATH</span></code>). The first line of file will be used as password.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Replica Set&gt;</p></td>
+<td><p>The name of the Replica set which the Database belongs to, if applicable.</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Split DB&gt;</p></td>
+<td><p>Whether or not to split Deadline data across multiple databases. These databases will be prefixed by &lt;DB Name&gt; (Default: False).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="createmongodbuser">
+<span id="createmongodbuser-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">CreateMongoDBUser</a><a class="headerlink" href="#createmongodbuser" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Attempts to create a Deadline User in the given database. The user will be  created with ‘readWriteAnyDatabase’ and ‘clusterMonitor’ roles.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -CreateMongoDBUser</strong> &lt;Connection String&gt; &lt;Authentication Type&gt; &lt;Username (or Certificate)&gt; &lt;Password&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Connection String&gt;</p></td>
+<td><p>The connection string that specifies how to connect to the database (e.g. mongodb://&lt;host&gt;:&lt;port&gt;).</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Authentication Type&gt;</p></td>
+<td><p>The Type of authentication mechanism to use. Only X509 is currently supported.</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Username (or Certificate)&gt;</p></td>
+<td><p>The client certificate (X509) in PKCS12 format.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Password&gt;</p></td>
+<td><p>The password required to decrypt the client certificate (X509), if applicable. If left empty and a password is required, you will be prompted for it.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="getdatabasesettings">
+<span id="getdatabasesettings-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetDatabaseSettings</a><a class="headerlink" href="#getdatabasesettings" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Prints the given repository’s connection.ini file contents to stdout.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetDatabaseSettings</strong> &lt;Repository&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Repository&gt;</p></td>
+<td><p>The path to the repository root</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetDatabaseSettings C:\DeadlineRepository10
+     Database Type: MongoDB
+       Hostname(s): DESKTOP-4E76V9C;10.0.0.42
+     Database Name: deadline10db
+              Port: 27100
+          Port Alt: 0
+       SSL Enabled: True
+      Authenticate: True
+         User Name:
+       Replica Set:
+          Split DB: False
+           Version: 10
+</pre></div>
+</div>
+</div>
+<div class="section" id="updateenvironmentsettings">
+<span id="updateenvironmentsettings-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">UpdateEnvironmentSettings</a><a class="headerlink" href="#updateenvironmentsettings" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Updates the Environment in the database.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -UpdateEnvironmentSettings</strong> &lt;EnvironmentFile&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;EnvironmentFile&gt;</p></td>
+<td><p>The path to the environment file</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="updatemongodbsettings">
+<span id="updatemongodbsettings-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">UpdateMongoDBSettings</a><a class="headerlink" href="#updatemongodbsettings" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Updates the given repository’s connection.ini file with the given database settings.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<div class="line-block">
+<div class="line">This function does <strong>not</strong> perform any validation on the provided settings!</div>
+<div class="line">Any incorrect settings could prevent some or all Deadline Clients pointing to this Repository from connecting to the Database!</div>
+</div>
+</div>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -UpdateMongoDBSettings</strong> &lt;Repository&gt; &lt;DbType&gt; &lt;Host&gt; &lt;Name&gt; &lt;Port&gt; &lt;AltPort&gt; &lt;SSL&gt; &lt;Authenticate&gt; &lt;Username&gt; &lt;Password&gt; &lt;Replica Set&gt; &lt;Split DB&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Repository&gt;</p></td>
+<td><p>The path to the repository root</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;DbType&gt;</p></td>
+<td><p>The database type (currently only MongoDB)</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Host&gt;</p></td>
+<td><p>The host name or IP address of the database machine</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Name&gt;</p></td>
+<td><p>The database name</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Port&gt;</p></td>
+<td><p>The database port</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;AltPort&gt;</p></td>
+<td><p>The alternate database port (not currently used)</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;SSL&gt;</p></td>
+<td><p>If SSL should be used to connect (not currently used)</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Authenticate&gt;</p></td>
+<td><p>If authentication is required</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Username&gt;</p></td>
+<td><p>The username</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Password&gt;</p></td>
+<td><p>The password. Passwords have four modes: 1) Empty - The password will be prompted from standard input 2) A value with the prefix <code class="docutils literal notranslate"><span class="pre">pass:</span></code> - The portion after <code class="docutils literal notranslate"><span class="pre">pass:</span></code> is the password. Note that this option is risky, since it will have your password exposed in the command line history 3) A value with the prefix <code class="docutils literal notranslate"><span class="pre">env:</span></code> - The portion after <code class="docutils literal notranslate"><span class="pre">env:</span></code> indicates the environment variable to pull the password from (e.g. <code class="docutils literal notranslate"><span class="pre">env:MY_VARIABLE</span></code>) 4) A value with the prefix <code class="docutils literal notranslate"><span class="pre">file:</span></code> - The portion after <code class="docutils literal notranslate"><span class="pre">file:</span></code> indicates the file path to pull the password from (e.g. <code class="docutils literal notranslate"><span class="pre">file:FILE_PATH</span></code>). The first line of file will be used as password.</p></td>
+</tr>
+<tr class="row-even"><td><p>&lt;Replica Set&gt;</p></td>
+<td><p>The Replica set name</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Split DB&gt;</p></td>
+<td><p>If Database should be split (by default, it is disabled)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="migratemonitorlayouts">
+<span id="migratemonitorlayouts-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">MigrateMonitorLayouts</a><a class="headerlink" href="#migratemonitorlayouts" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Converts Deadline Monitor UI layouts in the database from a legacy format to a new format for Deadline 10.4+, optionally deleting the old layouts.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -MigrateMonitorLayouts</strong> [&lt;DryRun&gt;] [&lt;DeleteLayouts&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;DryRun&gt;</p></td>
+<td><p>If specified, only prints if legacy layouts exist in the database.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;DeleteLayouts&gt;</p></td>
+<td><p>If specified, will delete legacy layouts from the database after they have been migrated.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="repository-options-and-configuration">
+<h2><a class="toc-backref" href="#contents">Repository Options and Configuration</a><a class="headerlink" href="#repository-options-and-configuration" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getrepositoryroot">
+<span id="getrepositoryroot-dlc-ref-label"></span><span id="root-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetRepositoryRoot</a><a class="headerlink" href="#getrepositoryroot" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Returns the repository network root.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetRepositoryRoot</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Aliases:</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">GetRepositoryRoot</span></code>, <code class="docutils literal notranslate"><span class="pre">Root</span></code></p>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetRepositoryRoot
+    C:\DeadlineRepository10
+</pre></div>
+</div>
+</div>
+<div class="section" id="getrepositoryroots">
+<span id="getrepositoryroots-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetRepositoryRoots</a><a class="headerlink" href="#getrepositoryroots" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Returns all repository roots stored in the Deadline config file.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetRepositoryRoots</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Aliases:</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">GetRepositoryRoots</span></code>, <code class="docutils literal notranslate"><span class="pre">Networks</span></code></p>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetRepositoryRoots
+    C:\DeadlineRepository10
+    C:\DeadlineRepository10.0.2.0
+    C:\DeadlineRepository_StavromulaBeta
+</pre></div>
+</div>
+</div>
+<div class="section" id="getrepositorypath">
+<span id="getrepositorypath-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetRepositoryPath</a><a class="headerlink" href="#getrepositorypath" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Returns the appropriate full path to the given subdirectory of the Repository.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetRepositoryPath</strong> [&lt;Subdir&gt;] [&lt;Custom:True|False&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Subdir&gt;</p></td>
+<td><p>The repository’s sub-directory to retrieve.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Custom&gt;</p></td>
+<td><p>Whether or not to check the Custom folder first.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Examples:</strong></p>
+<p>If connected directly to the Repository, the result is the path on the Repository share:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetRepositoryPath submission\3dsmax\Main\
+    C:\DeadlineRepository10\submission\3dsmax\Main
+</pre></div>
+</div>
+<p>If no first argument is provided, or it is an empty string, the root path is returned:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetRepositoryPath
+    C:\DeadlineRepository10
+
+C:\&gt;deadlinecommand -GetRepositoryPath &quot;&quot;
+    C:\DeadlineRepository10
+</pre></div>
+</div>
+<p>If connected via a Remote Connection Server, the paths are cached locally, so the local cache path is returned instead:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetRepositoryPath submission\3dsmax\Main\
+    C:\Users\SomeUser\AppData\Local\Thinkbox\Deadline10\cache\QC6Q1XV3ZclisdmBNCBAEbj6oc\submission\3dsmax\Main\
+</pre></div>
+</div>
+<p>If the second argument is provided as False, the Factory path is returned. If True or not specified, the Custom path is returned:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetRepositoryPath &quot;submission&quot; False
+    C:\DeadlineRepository10\submission
+
+C:\&gt;deadlinecommand -GetRepositoryPath &quot;submission&quot; True
+    C:\DeadlineRepository10\custom\submission
+
+C:\&gt;deadlinecommand -GetRepositoryPath &quot;submission&quot;
+    C:\DeadlineRepository10\custom\submission
+</pre></div>
+</div>
+</div>
+<div class="section" id="getrepositoryfilepath">
+<span id="getrepositoryfilepath-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetRepositoryFilePath</a><a class="headerlink" href="#getrepositoryfilepath" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Returns the appropriate full path to the given file in the Repository.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetRepositoryFilePath</strong> [&lt;Subdir&gt;] [&lt;Custom:True|False&gt;]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;FilePath&gt;</p></td>
+<td><p>The repository’s file path to retrieve.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Custom&gt;</p></td>
+<td><p>Whether or not to check the Custom folder first.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Examples:</strong></p>
+<p>If connected directly to the Repository, the result is the path on the Repository share:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetRepositoryFilePath &quot;submission\3dsmax\Main\SubmitMaxToDeadline.ms&quot;
+    C:\DeadlineRepository10\submission\3dsmax\Main\SubmitMaxToDeadline.ms
+</pre></div>
+</div>
+<p>If connected via a Remote Connection Server, the paths are cached locally, so the local cache path is returned instead:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetRepositoryFilePath &quot;submission\3dsmax\Main\SubmitMaxToDeadline.ms&quot;
+    C:\Users\SomeUser\AppData\Local\Thinkbox\Deadline10\cache\QC6Q1XV3ZclisdmBNCBAEbj6oc\submission\3dsmax\Main\SubmitMaxToDeadline.ms
+</pre></div>
+</div>
+<p>An argument is required:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetRepositoryFilePath
+    Error: File path cannot be blank. (System.Data.NoNullAllowedException)
+</pre></div>
+</div>
+</div>
+<div class="section" id="getrepositoryoptions">
+<span id="getrepositoryoptions-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetRepositoryOptions</a><a class="headerlink" href="#getrepositoryoptions" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays the list of all exposed Repository Options.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetRepositoryOptions</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetRepositoryOptions
+</pre></div>
+</div>
+<p>See below for the output of <a class="reference internal" href="#getrepositoryoptionswithvalues-dlc-ref-label"><span class="std std-ref">GetRepositoryOptionsWithValues</span></a> which also includes the current values.</p>
+</div>
+<div class="section" id="getrepositoryoptionswithvalues">
+<span id="getrepositoryoptionswithvalues-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetRepositoryOptionsWithValues</a><a class="headerlink" href="#getrepositoryoptionswithvalues" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays the list of all exposed Repository Options and their values.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetRepositoryOptionsWithValues</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetRepositoryOptionsWithValues
+    PythonSearchPathString:
+    JobExtraInfo0Name:Extra Info 0
+    JobExtraInfo1Name:Extra Info 1
+    JobExtraInfo2Name:Extra Info 2
+    JobExtraInfo3Name:Extra Info 3
+    JobExtraInfo4Name:Extra Info 4
+    JobExtraInfo5Name:Extra Info 5
+    JobExtraInfo6Name:Extra Info 6
+    JobExtraInfo7Name:Extra Info 7
+    JobExtraInfo8Name:Extra Info 8
+    JobExtraInfo9Name:Extra Info 9
+    TaskExtraInfo0Name:Extra Info 0
+    TaskExtraInfo1Name:Extra Info 1
+    TaskExtraInfo2Name:Extra Info 2
+    TaskExtraInfo3Name:Extra Info 3
+    TaskExtraInfo4Name:Extra Info 4
+    TaskExtraInfo5Name:Extra Info 5
+    TaskExtraInfo6Name:Extra Info 6
+    TaskExtraInfo7Name:Extra Info 7
+    TaskExtraInfo8Name:Extra Info 8
+    TaskExtraInfo9Name:Extra Info 9
+    SlaveExtraInfo0Name:Extra Info 0
+    SlaveExtraInfo1Name:Extra Info 1
+    SlaveExtraInfo2Name:Extra Info 2
+    SlaveExtraInfo3Name:Extra Info 3
+    SlaveExtraInfo4Name:Extra Info 4
+    SlaveExtraInfo5Name:Extra Info 5
+    SlaveExtraInfo6Name:Extra Info 6
+    SlaveExtraInfo7Name:Extra Info 7
+    SlaveExtraInfo8Name:Extra Info 8
+    SlaveExtraInfo9Name:Extra Info 9
+    UseAlternateAuxiliaryFileLocation:False
+    AlternateAuxiliaryWindowsPath:
+    AlternateAuxiliaryLinuxPath:
+    AlternateAuxiliaryMacPath:
+    AutoJobCleanupDays:30
+    AutoJobCleanupEnabled:False
+    AutoArchivedJobCleanupDays:120
+    AutoJobCleanupHoursModified:0
+    PurgeDeletedJobHours:2
+    SmartJobTimeoutForce:False
+    SmartJobTimeoutTaskPercentage:25
+    SmartJobTimeoutTaskPercentageEnabled:False
+    SmartJobTimeoutMinimumTasks:30
+    SmartJobTimeoutMinimumTasksEnabled:False
+    SmartJobTimeoutMultiplier:3
+    EnableStatisticsGathering:True
+    SlaveStatisticsGatheringInterval:30
+    RepoStatisticsGatheringInterval:10
+    DaysToKeepJobStatistics:1000
+    DeleteJobStatistics:False
+    DaysToKeepSlaveStatistics:120
+    DeleteSlaveStatistics:True
+    DaysToKeepRepoStatistics:120
+    DeleteRepositoryStatistics:True
+    MaxRepoHistoryEntries:4096
+    MaxPowerManagementHistoryEntries:4096
+    MaxSlaveHistoryEntries:1024
+    MaxJobHistoryEntries:1024
+    MaxPulseHistoryEntries:1024
+    MaxBalancerHistoryEntries:1024
+    EnableSlaveVerboseLogging:False
+    SlaveLogHistoryLength:30
+    TempFolderHistoryLength:1
+    MonitorLogHistoryLength:30
+    PulseLogHistoryLength:30
+    BalancerLogHistoryLength:30
+    LauncherLogHistoryLength:30
+    ProxyLogHistoryLength:30
+    WebServiceLogHistoryLength:30
+    LicenseForwarderLogHistoryLength:30
+    EnableLicenseForwarderVerboseLogging:False
+    EnablePulseVerboseLogging:False
+    EnableBalancerVerboseLogging:False
+    EnableMetricsTracking:False
+    MetricsTimeToLiveHours:6
+    EnableRemoteAdministration:False
+    EnableRemoteCommandWhitelist:True
+    RemoteCommandWhitelistString:
+    EnableAutomaticUpdates:True
+    UseFullyQualifiedDomainNames:False
+    MonitorJobUpdateInterval:1
+    MonitorSlaveUpdateInterval:1
+    MonitorPulseUpdateInterval:1
+    MonitorBalancerUpdateInterval:1
+    MonitorLimitUpdateInterval:1
+    MonitorSettingsUpdateInterval:10
+    MonitorProxyServerUpdateInterval:1
+    MonitorLicenseForwarderUpdateInterval:1
+    MonitorCloudUpdateInterval:10
+    MonitorManualRefreshEnabled:False
+    MonitorManualRefreshInterval:10
+    MonitorEventUpgradeInterval:300
+    MonitorDisableDynamicSorting:False
+    MonitorRemoteControlSettings:False
+    GatherResourceUsageDuringRendering:True
+    SlaveStdOutLimit:5000
+    SlaveStdOutLimitEnabled:True
+    BetweenTaskDelay:1
+    BetweenPollingDelay:1
+    BetweenPollingMinimum:1
+    PollingMultiplier:0.15
+    SlavePowerManagementScanInterval:600
+    SlaveInfoUpdateInterval:5
+    DequeueBadJobPercentage:5
+    AutoSlaveRemovalDays:60
+    AutoSlaveRemovalDaysEnabled:False
+    StalledSlaveDelay:5
+    StalledProxyServerDelay:10
+    StalledPulseDelay:10
+    StalledBalancerDelay:10
+    OverrideSlaveListeningPort:False
+    SlaveListeningPort:5054
+    SlaveAllowPortForwarder:False
+    OverridePulseListeningPort:False
+    PulseListeningPort:5056
+    OverrideBalancerListeningPort:False
+    BalancerListeningPort:5058
+    OverrideLicenseForwarderListeningPort:False
+    LicenseForwarderListeningPort:5060
+    StalledLicenseForwarderDelay:10
+    SlaveUseIPAddress:False
+    PulseUseIPAddress:False
+    LicenseForwarderUseIPAddress:False
+    BalancerUseIPAddress:False
+    SetBalancerPrimaryInHouseCleaning:False
+    SetPulsePrimaryInHouseCleaning:False
+    EmailNotificationSmtpServer:
+    EmailNotificationPort:25
+    EmailNotificationAuthenticate:False
+    EmailNotificationAuthenticationUserName:
+    EmailNotificationSender:
+    EmailNotificationSSLEnabled:False
+    GenerateEmailsForNewUsers:True
+    EmailAddressPostfix:
+    SecondaryEmailNotificationSmtpServer:
+    SecondaryEmailNotificationPort:25
+    SecondaryEmailNotificationAuthenticate:False
+    SecondaryEmailNotificationAuthenticationUserName:
+    SecondaryEmailNotificationSender:
+    SecondaryEmailNotificationSSLEnabled:False
+    EmailJobFailedReports:
+    EmailJobWarningReports:
+    EmailSlaveTimeoutReports:
+    EmailJobCompletionReports:
+    EmailJobTransferCompletionReports:
+    EmailJobTransferFailedReports:
+    EmailSystemAdministrator:
+    EmailDatabaseConnections:
+    AvailableConnectionThreshold:30
+    EmailIdleShutdownNotifications:
+    EmailMachineStartupNotifications:
+    EmailThermalShutdownNotifications:
+    EmailMachineRestartNotifications:
+    EmailStalledSlaveNotifications:
+    EmailFailedTasksNotifications:
+    EmailSlaveLicenseErrorNotifications:
+    AutoDeleteCorruptedJobs:False
+    SlaveErrorNotificationLimit:50
+    SlaveErrorNotificationEnabled:False
+    JobErrorWarningLimit:50
+    JobErrorWarningEnabled:False
+    JobErrorLimit:100
+    JobErrorEnabled:True
+    TaskErrorLimit:10
+    TaskErrorEnabled:False
+    BadJobErrorLimit:5
+    BadJobErrorEnabled:False
+    PulseDataLoadingThreads:10
+    PulsePowerManagementScanInterval:300
+    PulseRepositoryCleanupInterval:60
+    PulseRepositoryRepairInterval:60
+    PulsePendingJobScanInterval:10
+    PulseMaximumIncomingConnections:3000
+    PulseMaxConnectionAttempts:1
+    PulseMessageTimeoutMilliseconds:500
+    SlaveThrottleLimit:10
+    SlaveThrottleLimitEnabled:False
+    SlaveThrottleWaitInterval:20
+    SlaveThrottleTimeoutMultiplier:3
+    WebServicePort:8081
+    WebServiceTimeout:120
+    WebServiceConnectionLimit:10
+    WebServiceAllowNonScriptCommands:False
+    WebServiceRequireAuthentication:False
+    WebServiceAllowEmptyPasswords:False
+    EnableWebServiceVerboseLogging:False
+    JobMaximumPriority:100
+    JobTaskLimit:5000
+    JobErrorReportLimit:5000
+    EnhancedSchedulerBalancing:False
+    WeightedPriorityFloatValue:100
+    WeightedSubmitTimeFloatValue:3
+    WeightedErrorFloatValue:-10
+    WeightedRenderingTasksFloatValue:-100
+    RenderingTaskBuffer:1
+    MapDrivesInServiceModeOnly:False
+    CurrentBalancerLogicPlugin:DefaultAlgorithm
+    CurrentBalancerInterval:60
+    BalancerGroupSwitching:True
+    BalancerErrorLimit:2
+    DeadlineUserIsSystemUser:False
+    RunJobsAsUser:False
+    RunRemoteCommandsAsUser:False
+    RunRemoteCommandsAsUserPreserveEnvironment:False
+    PreserveEnvironment:False
+    SimulateLogin:False
+    SetHomeVariable:False
+    EnableProxyServerVerboseLogging:False
+    WakeOnLanPorts:System.Int32[]
+    PendingJobScanTimeoutSeconds:1800
+    PendingJobScanInSeparateProcess:False
+    SeparatePendingJobScanOutput:False
+    RepositoryRepairTimeoutSeconds:1800
+    RunRepositoryRepairInSeparateProcess:False
+    SeparateRepositoryRepairOutput:False
+    HouseCleaningTimeoutSeconds:1800
+    RunHouseCleaningInSeparateProcess:False
+    SeparateHouseCleaningOutput:False
+    HouseCleaningEnableJobArchiveMaximum:False
+    HouseCleaningJobArchiveMaximum:200
+    HouseCleaningEnableAuxiliaryMaximum:False
+    HouseCleaningAuxiliaryMaximum:200
+    HouseCleaningEnableJobReportMaximum:False
+    HouseCleaningJobReportMaximum:2000
+    HouseCleaningEnableDeletedJobMaximum:False
+    HouseCleaningDeletedJobMaximum:200
+    HouseCleaningEnableJobEventQueueEntryMaximum:False
+    HouseCleaningJobEventQueueEntryMaximum:200
+    AsynchronousEvents:False
+    UseEventTimeout:False
+    EventTimeoutSeconds:30
+    NewApplicationPluginsEnabled:True
+    EnableSlavePendingJobScan:True
+    EnableSlaveHouseCleaning:True
+    EnableSlaveRepositoryRepair:True
+    UsageBasedURL:
+    UsageBasedActivationCode:
+    UseCloudLicenseServer:True
+    DynamicLicensingMode:False
+    StandardLicensingThreshold:50
+    UBLUseForwarderForUBL:False
+    SlaveDisableSandboxSettings:False
+    SandboxRunsInJobEnvironment:False
+    DisableEventSandboxing:False
+    LicenseForwarderInfoUpdateInterval:5
+</pre></div>
+</div>
+</div>
+<div class="section" id="getrepositoryoption">
+<span id="getrepositoryoption-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetRepositoryOption</a><a class="headerlink" href="#getrepositoryoption" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Gets the value of the provided Repository Option if it exists and is exposed.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetRepositoryOption</strong>  &lt;Repository Option&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Repository Option&gt;</p></td>
+<td><p>The name of the Repository Option we want to get</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Get the Job Task Limit value:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetRepositoryOption JobTaskLimit
+    JobTaskLimit:5000
+</pre></div>
+</div>
+</div>
+<div class="section" id="setrepositoryoption">
+<span id="setrepositoryoption-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetRepositoryOption</a><a class="headerlink" href="#setrepositoryoption" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Sets the value of the provided Repository Option if it exists and is exposed.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetRepositoryOption</strong>  &lt;Repository Option&gt; &lt;Value&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Repository Option&gt;</p></td>
+<td><p>The name of the Repository Option we want to set</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Value&gt;</p></td>
+<td><p>The value to set for the Repository Option</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<p>Increase the Job Task Limit to 6000 (default is 5000):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SetRepositoryOption JobTaskLimit 6000
+    JobTaskLimit set to 6000
+</pre></div>
+</div>
+<p>The first argument must be a valid Repository Option - see <a class="reference internal" href="#getrepositoryoptionswithvalues-dlc-ref-label"><span class="std std-ref">GetRepositoryOptionsWithValues</span></a> above for a command to get the list of valid options and values.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -SetRepositoryOption TheAnswer 42
+    Error: TheAnswer is not an exposed repository option.
+</pre></div>
+</div>
+</div>
+<div class="section" id="getmaximumpriority">
+<span id="getmaximumpriority-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetMaximumPriority</a><a class="headerlink" href="#getmaximumpriority" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Displays the maximum priority value for Jobs.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetMaximumPriority</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetMaximumPriority
+    100
+</pre></div>
+</div>
+<p>Alternatively, you can use <a class="reference internal" href="#getrepositoryoption-dlc-ref-label"><span class="std std-ref">general Repository options</span></a> access, but it is more difficult to parse:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetRepositoryOption JobMaximumPriority
+    JobMaximumPriority:100
+</pre></div>
+</div>
+</div>
+<div class="section" id="getrepositoryversion">
+<span id="getrepositoryversion-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">GetRepositoryVersion</a><a class="headerlink" href="#getrepositoryversion" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Gets the Deadline Repository and Integration Version</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -GetRepositoryVersion</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>.</p></td>
+<td><p>No arguments</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>C:\&gt;deadlinecommand -GetRepositoryVersion
+    Repository Version: 10.1.2.2 (d9f8db73b)
+    Integration Version: 10.1.2.2 (d9f8db73b)
+</pre></div>
+</div>
+</div>
+<div class="section" id="setminimumdeadlineversion">
+<span id="setminimumdeadlineversion-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">SetMinimumDeadlineVersion</a><a class="headerlink" href="#setminimumdeadlineversion" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Sets the minimum Deadline version for the database.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -SetMinimumDeadlineVersion</strong> &lt;Installer Minimum&gt; &lt;Client Minimum&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Installer Minimum&gt;</p></td>
+<td><p>The minimum version for the installer</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;Client Minimum&gt;</p></td>
+<td><p>The minimum version for the client</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="updatescriptmenus">
+<span id="updatescriptmenus-dlc-ref-label"></span><h3><a class="toc-backref" href="#contents">UpdateScriptMenus</a><a class="headerlink" href="#updatescriptmenus" title="Permalink to this headline">¶</a></h3>
+<p><strong>Description:</strong></p>
+<p>Updates the script menu configuration based on the given file.</p>
+<p><strong>Syntax:</strong></p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>deadlinecommand -UpdateScriptMenus</strong> &lt;Script Menu File&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arguments:</strong></p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>&lt;Script Menu File&gt;</p></td>
+<td><p>The file containing the script menu configuration</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Database and Repository - Command Arguments</a><ul>
+<li><a class="reference internal" href="#database">Database</a><ul>
+<li><a class="reference internal" href="#configuremongodbdatabase">ConfigureMongoDBDatabase</a></li>
+<li><a class="reference internal" href="#createmongodbuser">CreateMongoDBUser</a></li>
+<li><a class="reference internal" href="#getdatabasesettings">GetDatabaseSettings</a></li>
+<li><a class="reference internal" href="#updateenvironmentsettings">UpdateEnvironmentSettings</a></li>
+<li><a class="reference internal" href="#updatemongodbsettings">UpdateMongoDBSettings</a></li>
+<li><a class="reference internal" href="#migratemonitorlayouts">MigrateMonitorLayouts</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#repository-options-and-configuration">Repository Options and Configuration</a><ul>
+<li><a class="reference internal" href="#getrepositoryroot">GetRepositoryRoot</a></li>
+<li><a class="reference internal" href="#getrepositoryroots">GetRepositoryRoots</a></li>
+<li><a class="reference internal" href="#getrepositorypath">GetRepositoryPath</a></li>
+<li><a class="reference internal" href="#getrepositoryfilepath">GetRepositoryFilePath</a></li>
+<li><a class="reference internal" href="#getrepositoryoptions">GetRepositoryOptions</a></li>
+<li><a class="reference internal" href="#getrepositoryoptionswithvalues">GetRepositoryOptionsWithValues</a></li>
+<li><a class="reference internal" href="#getrepositoryoption">GetRepositoryOption</a></li>
+<li><a class="reference internal" href="#setrepositoryoption">SetRepositoryOption</a></li>
+<li><a class="reference internal" href="#getmaximumpriority">GetMaximumPriority</a></li>
+<li><a class="reference internal" href="#getrepositoryversion">GetRepositoryVersion</a></li>
+<li><a class="reference internal" href="#setminimumdeadlineversion">SetMinimumDeadlineVersion</a></li>
+<li><a class="reference internal" href="#updatescriptmenus">UpdateScriptMenus</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="command.html"
+                        title="previous chapter">Command</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="command-line-arguments-clients.html"
+                        title="next chapter">Clients and Logs - Command Arguments</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="command-line-arguments-clients.html" title="Clients and Logs - Command Arguments"
+             >next</a></li>
+        <li class="right" >
+          <a href="command.html" title="Command"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-client-applications.html" >Deadline Client Applications</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Database and Repository - Command Arguments</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

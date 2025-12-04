@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connecting to a Linux AWS Portal Worker From a Linux/macOS Machine &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thinkbox.css" />
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Connecting to a Linux AWS Portal Worker From a Windows Machine" href="aws-connect-to-linux-workers-from-windows.html" />
+    <link rel="prev" title="Connecting to a Linux AWS Portal Worker" href="aws-connect-to-linux-workers.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-connect-to-linux-workers-from-windows.html" title="Connecting to a Linux AWS Portal Worker From a Windows Machine"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="aws-connect-to-linux-workers.html" title="Connecting to a Linux AWS Portal Worker"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" accesskey="U">AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Connecting to a Linux AWS Portal Worker From a Linux/macOS Machine</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="../aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<span class="target" id="aws-connect-to-linux-workers-from-linux-or-osx-ref-label"></span><div class="section" id="connecting-to-a-linux-aws-portal-worker-from-a-linux-macos-machine">
+<h1>Connecting to a Linux AWS Portal Worker From a Linux/macOS Machine<a class="headerlink" href="#connecting-to-a-linux-aws-portal-worker-from-a-linux-macos-machine" title="Permalink to this headline">¶</a></h1>
+<p>If you are connecting to the Gateway instance from a Linux or macOS machine use the following steps.</p>
+<p><strong>Prerequisites</strong></p>
+<p>Before you connect to your Gateway instance, you will need to:</p>
+<ul class="simple">
+<li><p><strong>Install an SSH client</strong> <br /> Your Linux or Mac computer most likely includes an SSH client by default. You can check for an SSH client by typing ssh at the command line. If your computer doesn’t recognize the command, the OpenSSH project provides a free implementation of the full suite of SSH tools. For more information, see <a class="reference external" href="https://www.openssh.com/">https://www.openssh.com/</a>.</p></li>
+</ul>
+<p><strong>Setup SSH Agent Forwarding</strong></p>
+<ol class="arabic">
+<li><p>Run the following command to start the ssh-agent</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>eval \`ssh-agent\`
+</pre></div>
+</div>
+</li>
+<li><p>Next you must configure ssh to allow agent forwarding.</p>
+<blockquote>
+<div><ol class="loweralpha">
+<li><p>Open /etc/ssh/ssh_config as the root user <br /> <br /></p></li>
+<li><p>Add the following line to the end of the file.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ForwardAgent</span> <span class="n">yes</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+<p><strong>To connect to the Gateway instance using SSH</strong></p>
+<ol class="arabic">
+<li><p>In a command-line shell, change directories to the location of the <a class="reference internal" href="aws-connect-to-infrastructure.html#dashkey"><span class="std std-ref">DashKey</span></a> file that you found earlier.</p></li>
+<li><p>Use the ssh command to connect to the instance. You specify the <a class="reference internal" href="aws-connect-to-infrastructure.html#dashkey"><span class="std std-ref">DashKey</span></a> file and <a class="reference internal" href="aws-connect-to-infrastructure.html#public-dns-name-or-ipv4-address"><span class="std std-ref">ec2-user&#64;public_dns_name_or_ipv4_address</span></a>. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="o">-</span><span class="n">i</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">DashKey</span> <span class="n">ec2</span><span class="o">-</span><span class="n">user</span><span class="nd">@ec2</span><span class="o">-</span><span class="mi">54</span><span class="o">-</span><span class="mi">189</span><span class="o">-</span><span class="mi">199</span><span class="o">-</span><span class="mf">216.</span><span class="n">us</span><span class="o">-</span><span class="n">west</span><span class="o">-</span><span class="mf">2.</span><span class="n">compute</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><p>	You will see the following response.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>The authenticity of host &#39;ec2-54-189-199-216.us-west-2.compute.amazonaws.com (10.128.2.4)&#39;
+can&#39;t be established.
+RSA key fingerprint is 1f:51:ae:28:bf:89:e9:d8:1f:25:5d:37:2d:7d:b8:ca:9f:f5:f1:6f.
+Are you sure you want to continue connecting (yes/no)?
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic" start="3">
+<li><p>Enter yes. <br /> <br /> You will see the following response.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Warning</span><span class="p">:</span> <span class="n">Permanently</span> <span class="n">added</span> <span class="s1">&#39;ec2-54-189-199-216.us-west-2.compute.amazonaws.com&#39;</span> <span class="p">(</span><span class="n">RSA</span><span class="p">)</span>
+<span class="n">to</span> <span class="n">the</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">known</span> <span class="n">hosts</span><span class="o">.</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><p>	You are now connected to your Gateway instance.</p>
+</div></blockquote>
+<p><strong>Connecting to the Worker</strong></p>
+<p>Once you have logged into the Gateway instance you can now log into your AWS Portal Worker instances.</p>
+<ol class="arabic">
+<li><p>Use the ssh command to connect to the instance. You specify <a class="reference internal" href="aws-connect-to-linux-workers.html#linux-private-ip"><span class="std std-ref">ec2-user&#64;private_ipv4_address</span></a>. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="n">ec2</span><span class="o">-</span><span class="n">user</span><span class="nd">@10</span><span class="o">.</span><span class="mf">128.31</span><span class="o">.</span><span class="mi">167</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><p>	You will see the following response.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>The authenticity of host &#39;10.128.31.167 (10.128.31.167)&#39; can&#39;t be established.
+ECDSA key fingerprint is SHA256:AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsT0123.
+ECDSA key fingerprint is MD5:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00.
+Are you sure you want to continue connecting (yes/no)?
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic" start="2">
+<li><p>Enter yes. <br /> <br /> You will see the following response.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Warning</span><span class="p">:</span> <span class="n">Permanently</span> <span class="n">added</span> <span class="s1">&#39;10.128.31.167&#39;</span> <span class="p">(</span><span class="n">RSA</span><span class="p">)</span>
+<span class="n">to</span> <span class="n">the</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">known</span> <span class="n">hosts</span><span class="o">.</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><p>	You are now connected to your AWS Portal Worker instance.</p>
+</div></blockquote>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aws-connect-to-linux-workers.html"
+                        title="previous chapter">Connecting to a Linux AWS Portal Worker</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="aws-connect-to-linux-workers-from-windows.html"
+                        title="next chapter">Connecting to a Linux AWS Portal Worker From a Windows Machine</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="aws-connect-to-linux-workers-from-windows.html" title="Connecting to a Linux AWS Portal Worker From a Windows Machine"
+             >next</a></li>
+        <li class="right" >
+          <a href="aws-connect-to-linux-workers.html" title="Connecting to a Linux AWS Portal Worker"
+             >previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Connecting to a Linux AWS Portal Worker From a Linux/macOS Machine</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Scripts &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Web Service Scripts" href="web-service-scripts.html" />
+    <link rel="prev" title="Monitor Scripts" href="monitor-scripts.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="web-service-scripts.html" title="Web Service Scripts"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="monitor-scripts.html" title="Monitor Scripts"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-scripting.html" accesskey="U">Scripting</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Job Scripts</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="job-scripts">
+<span id="job-scripts-ref-label"></span><h1>Job Scripts<a class="headerlink" href="#job-scripts" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Job scripts and Dependency scripts can use Python to implement additional automation. Job scripts can be used to perform additional tasks during rendering, and Dependency scripts can control when jobs start rendering.</p>
+<p>Note that because the Python scripts will be executed in a non-interactive way, it is important that your scripts do not contain any blocking operations like infinite loops, or interfaces that require user input.
+See the <a class="reference internal" href="scripting-overview.html#scripting-overview-ref-label"><span class="std std-ref">Scripting Overview</span></a> documentation for more information, and links to the Deadline Scripting reference.</p>
+</div>
+<div class="section" id="id1">
+<h2>Job Scripts<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Job scripts can be assigned to Jobs in order to automate certain tasks before a Job starts rendering (Pre-Job Script), after a Job finished rendering (Post-Job Script), or before and after each individual Job Task has been
+completed (Pre and Post-Task Scripts).</p>
+<p>After you create your scripts, you can assign them to a Job by right-clicking on the desired Job in the Monitor, and selecting ‘Modify Job Properties’. The script options can be found under the ‘Scripts’ section of the
+<a class="reference internal" href="job-controlling.html#job-controlling-scripts-ref-label"><span class="std std-ref">Job Properties</span></a> window. In addition to this, Job scripts can be specified by custom submitters by including them in the <a class="reference internal" href="manual-submission.html#job-info-ref-label"><span class="std std-ref">Job Info File</span></a> on submission. Note that
+a full path to the script is required, so it is recommended that the script file be stored in a location that is accessible to all Workers.</p>
+<div class="section" id="creating-job-scripts">
+<h3>Creating Job Scripts<a class="headerlink" href="#creating-job-scripts" title="Permalink to this headline">¶</a></h3>
+<p>The only requirement for a Job script is that you define a __main__ function. This is the function that will be called by Deadline when it comes time to execute the script, and an instance of the
+DeadlinePlugin object will be passed as a parameter.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__main__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="c1">#Replace &quot;pass&quot;</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>A common use for Post-Task scripts is to do some processing with the output image files. Here is a sample script that demonstrates how to get the output file names for the current task, and print them out to the render log:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">System.IO</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">Deadline.Scripting</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="k">def</span> <span class="nf">__main__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">deadlinePlugin</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">job</span> <span class="o">=</span> <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">GetJob</span><span class="p">()</span>
+    <span class="n">outputDirectories</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">OutputDirectories</span>
+    <span class="n">outputFilenames</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">OutputFileNames</span>
+    <span class="n">paddingRegex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;[^</span><span class="se">\\</span><span class="s2">?#]*([</span><span class="se">\\</span><span class="s2">?#]+).*&quot;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">outputDirectories</span><span class="p">)):</span>
+        <span class="n">outputDirectory</span> <span class="o">=</span> <span class="n">outputDirectories</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">outputFilename</span> <span class="o">=</span> <span class="n">outputFilenames</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="n">startFrame</span> <span class="o">=</span> <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">GetStartFrame</span><span class="p">()</span>
+        <span class="n">endFrame</span> <span class="o">=</span> <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">GetEndFrame</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">frameNum</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">startFrame</span><span class="p">,</span> <span class="n">endFrame</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">outputPath</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">Combine</span><span class="p">(</span><span class="n">outputDirectory</span><span class="p">,</span><span class="n">outputFilename</span><span class="p">)</span>
+            <span class="n">outputPath</span> <span class="o">=</span> <span class="n">outputPath</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;//&quot;</span><span class="p">,</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+
+            <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">paddingRegex</span><span class="p">,</span><span class="n">outputPath</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
+                <span class="n">padding</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">frame</span> <span class="o">=</span> <span class="n">StringUtils</span><span class="o">.</span><span class="n">ToZeroPaddedString</span><span class="p">(</span><span class="n">frameNum</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">padding</span><span class="p">),</span><span class="kc">False</span><span class="p">)</span>
+                <span class="n">outputPath</span> <span class="o">=</span> <span class="n">outputPath</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">padding</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
+
+            <span class="n">deadlinePlugin</span><span class="o">.</span><span class="n">LogInfo</span><span class="p">(</span><span class="s2">&quot;Output file: &quot;</span> <span class="o">+</span> <span class="n">outputPath</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="dependency-scripts">
+<span id="job-dependency-scripts-ref-label"></span><h2>Dependency Scripts<a class="headerlink" href="#dependency-scripts" title="Permalink to this headline">¶</a></h2>
+<p>Dependency scripts can be used to control when a job starts rendering. For example, the script could connect to an internal pipeline database to see if the job has been approved to start rendering.</p>
+<p>After you create your dependency scripts, you can assign them to a Job by right-clicking on the desired Job in the Monitor, and selecting ‘Modify Job Properties’.
+The Script Dependencies options can be found under the ‘Scripts’ section of the <a class="reference internal" href="job-controlling.html#job-controlling-scripts-ref-label"><span class="std std-ref">Job Properties</span></a> window. In addition to this, Job scripts can be specified by custom submitters by including
+them in the <a class="reference internal" href="manual-submission.html#job-info-ref-label"><span class="std std-ref">Job Info File</span></a> on submission. Note that a full path to the script is required, so it is recommended that the script file be stored in a location that is accessible to all Workers.</p>
+<div class="section" id="creating-dependency-scripts">
+<h3>Creating Dependency Scripts<a class="headerlink" href="#creating-dependency-scripts" title="Permalink to this headline">¶</a></h3>
+<p>The only requirement for a Dependency script is that you define a __main__ function. This is the function that will be called by Deadline when it comes time to execute the script to determine if a job should be released or not.</p>
+<p>For jobs without Frame Dependencies enabled, only the job ID will be passed as a parameter. The __main__ function should then return True if the job should be released or False if it shouldn’t be.</p>
+<p>For jobs with Frame Dependencies enabled, the job ID will be passed as the first parameter, and a list of pending task IDs will be passed as the second parameter. The __main__ function
+should then return the list of task IDs that should be released, or an empty list of none should be released.</p>
+<p>Here is a very simple example that will work regardless of whether Frame Dependencies are enabled or not:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__main__</span><span class="p">(</span><span class="n">jobId</span><span class="p">,</span> <span class="n">taskIds</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">taskIds</span><span class="p">:</span>
+        <span class="c1"># Frame Dependencies are disabled</span>
+        <span class="n">releaseJob</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1">#figure out if job should be released</span>
+
+        <span class="k">return</span> <span class="n">releaseJob</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Frame Dependencies are enabled</span>
+        <span class="n">tasksToRelease</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1">#figure out which tasks should be released, and append their IDs to the array</span>
+        <span class="k">return</span> <span class="n">tasksToRelease</span>
+</pre></div>
+</div>
+<p>By giving the taskIds parameter a default of None, it allows the script to function regardless of whether Frame Dependencies are enabled or not. You can check if “taskIds” is None, and if it is, you know that
+Frame Dependencies are disabled.</p>
+</div>
+</div>
+<div class="section" id="migrating-scripts-from-deadline-5">
+<span id="job-scripts-migration-ref-label"></span><h2>Migrating Scripts from Deadline 5<a class="headerlink" href="#migrating-scripts-from-deadline-5" title="Permalink to this headline">¶</a></h2>
+<p>Some changes were made to the Scripting API in Deadline 6, which means that Deadline 6 and later are NOT backward compatible with scripts written for Deadline 5. However, migrating your scripts over is relatively straightforward, and
+this guide will walk you through the API changes so that you can update your scripts as necessary.</p>
+<p>The only significant change is that the globally defined functions are no longer available. See the <a class="reference internal" href="scripting-overview.html#scripting-overview-migration-ref-label"><span class="std std-ref">Code Completion for the Deadline Scripting API</span></a> section in the Scripting Overview documentation for more information, including replacement functions.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Job Scripts</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#id1">Job Scripts</a><ul>
+<li><a class="reference internal" href="#creating-job-scripts">Creating Job Scripts</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dependency-scripts">Dependency Scripts</a><ul>
+<li><a class="reference internal" href="#creating-dependency-scripts">Creating Dependency Scripts</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#migrating-scripts-from-deadline-5">Migrating Scripts from Deadline 5</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="monitor-scripts.html"
+                        title="previous chapter">Monitor Scripts</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="web-service-scripts.html"
+                        title="next chapter">Web Service Scripts</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="web-service-scripts.html" title="Web Service Scripts"
+             >next</a></li>
+        <li class="right" >
+          <a href="monitor-scripts.html" title="Monitor Scripts"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-scripting.html" >Scripting</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Job Scripts</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

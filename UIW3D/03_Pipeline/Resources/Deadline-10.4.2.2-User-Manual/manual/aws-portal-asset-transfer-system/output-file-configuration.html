@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The AWS Portal Asset Transfer System (Advanced) - Output File Configuration &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thinkbox.css" />
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="The AWS Portal Asset Transfer System (Advanced) - Storage" href="storage.html" />
+    <link rel="prev" title="The AWS Portal Asset Transfer System (Advanced) - Overview" href="overview.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="storage.html" title="The AWS Portal Asset Transfer System (Advanced) - Storage"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="overview.html" title="The AWS Portal Asset Transfer System (Advanced) - Overview"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="index.html" accesskey="U">The AWS Portal Asset Transfer System (Advanced)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">The AWS Portal Asset Transfer System (Advanced) - Output File Configuration</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="line-block">
+<div class="line">If you’re familiar with Deadline 10 and looking to start using AWS Portal, we recommend starting <a class="reference internal" href="../aws-portal-intro.html#aws-portal-intro-ref-label"><span class="std std-ref">here</span></a>.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While AWS Portal can enable cloud rendering in Deadline 10, <a class="reference external" href="https://aws.amazon.com/deadline-cloud/">AWS Deadline Cloud</a> is a newer offering that has been built specifically for the cloud.
+It is a fully managed service that does not require installation or maintenance of infrastructure (e.g., repository, database, or license server).
+Worker fleet auto-scaling, asset synching, and licensing are all managed natively within AWS by Deadline Cloud.
+See <a class="reference external" href="https://docs.aws.amazon.com/deadline-cloud/latest/userguide/what-is-deadline-cloud.html">here</a> for more information on Deadline Cloud and its capabilities.</p>
+</div>
+<div class="section" id="the-aws-portal-asset-transfer-system-advanced-output-file-configuration">
+<span id="aws-portal-asset-transfer-system-output-file-configuration-ref-label"></span><h1>The AWS Portal Asset Transfer System (Advanced) - Output File Configuration<a class="headerlink" href="#the-aws-portal-asset-transfer-system-advanced-output-file-configuration" title="Permalink to this headline">¶</a></h1>
+<p>The output file extensions are used to help AWS Portal Asset System to
+identify the output files that need to be uploaded. <strong>It’s necessary because
+it avoids transferring temporary files that are generated by the rendering
+software to your S3 bucket. It improves overall performance significantly.</strong></p>
+<p>There are two kinds of output file extensions that can be configured.</p>
+<ol class="arabic simple">
+<li><p>Global File Extension. The global file extensions will apply for every job.</p></li>
+<li><p>Job-specific File Extension. The job-specific file extensions will only apply to the job that you have configured.</p></li>
+</ol>
+<div class="section" id="global-file-extension">
+<h2>Global File Extension<a class="headerlink" href="#global-file-extension" title="Permalink to this headline">¶</a></h2>
+<p>The global output file extensions automatically apply to every job.
+You can view and modify the global file extension allow list in the Asset Server Settings dialog.
+To open the dialog:</p>
+<ol class="arabic simple">
+<li><p>Open the Deadline Monitor</p></li>
+<li><p>Enter Power User Mode (Tools menu → Power User Mode)</p></li>
+<li><p>Go to <code class="docutils literal notranslate"><span class="pre">Tools</span></code></p></li>
+<li><p>Select <code class="docutils literal notranslate"><span class="pre">Configure</span> <span class="pre">Asset</span> <span class="pre">Server</span></code></p></li>
+</ol>
+<p>You can see the global file extensions next to “Output File Extensions” in the dialog.</p>
+<ul class="simple">
+<li><p>To add an extension, type a new extension (without the period) in the text box below the <code class="docutils literal notranslate"><span class="pre">Add</span></code> button, and press the <code class="docutils literal notranslate"><span class="pre">Add</span></code> button.</p></li>
+<li><p>To remove an extension, click on an extension in the list, and press the <code class="docutils literal notranslate"><span class="pre">Remove</span></code> button.</p></li>
+</ul>
+<img alt="../../_images/aws_portal_asset_transfer_system_whitelist_global.png" src="../../_images/aws_portal_asset_transfer_system_whitelist_global.png" />
+</div>
+<div class="section" id="job-specific-file-extensions">
+<h2>Job Specific File Extensions<a class="headerlink" href="#job-specific-file-extensions" title="Permalink to this headline">¶</a></h2>
+<p>You can also configure an allow list for output file extensions on a per-job basis.</p>
+<ol class="arabic simple">
+<li><p>After submitting a job, right-click on the job in the Deadline Monitor, and click <code class="docutils literal notranslate"><span class="pre">Modify</span> <span class="pre">Job</span> <span class="pre">Properties</span></code></p></li>
+<li><p>Click <code class="docutils literal notranslate"><span class="pre">AWS</span> <span class="pre">Portal</span> <span class="pre">Settings</span></code></p></li>
+</ol>
+<p>In this dialog, you can modify the file extensions of the job.</p>
+<ul class="simple">
+<li><p>To add an extension, type in a new extension (without the period) and press the <code class="docutils literal notranslate"><span class="pre">Add</span></code> button to add it.</p></li>
+<li><p>To remove an extension, click on the extension in the list and press the <code class="docutils literal notranslate"><span class="pre">Remove</span></code> button.</p></li>
+</ul>
+<img alt="../../_images/aws_portal_asset_transfer_system_whitelist_job.png" src="../../_images/aws_portal_asset_transfer_system_whitelist_job.png" />
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The AWS Portal Asset Transfer System (Advanced) - Output File Configuration</a><ul>
+<li><a class="reference internal" href="#global-file-extension">Global File Extension</a></li>
+<li><a class="reference internal" href="#job-specific-file-extensions">Job Specific File Extensions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="overview.html"
+                        title="previous chapter">The AWS Portal Asset Transfer System (Advanced) - Overview</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="storage.html"
+                        title="next chapter">The AWS Portal Asset Transfer System (Advanced) - Storage</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="storage.html" title="The AWS Portal Asset Transfer System (Advanced) - Storage"
+             >next</a></li>
+        <li class="right" >
+          <a href="overview.html" title="The AWS Portal Asset Transfer System (Advanced) - Overview"
+             >previous</a> |</li>
+	<li><img src="../../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index-aws-portal-reference.html" >AWS Portal</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="index.html" >The AWS Portal Asset Transfer System (Advanced)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">The AWS Portal Asset Transfer System (Advanced) - Output File Configuration</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

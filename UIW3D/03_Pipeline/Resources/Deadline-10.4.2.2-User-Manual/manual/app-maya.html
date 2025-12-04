@@ -1,0 +1,995 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maya &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Media Encoder" href="app-mediaencoder.html" />
+    <link rel="prev" title="Maxwell" href="app-maxwell.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-mediaencoder.html" title="Media Encoder"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-maxwell.html" title="Maxwell"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Maya</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="maya">
+<span id="app-maya-ref-label"></span><h1>Maya<a class="headerlink" href="#maya" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs from within Maya by installing the <a class="reference internal" href="#app-maya-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a>, or you can submit them from the Monitor. The instructions for installing the <a class="reference internal" href="#app-maya-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<p><a class="reference internal" href="../_images/integrated_maya.png"><img alt="integrated" src="../_images/integrated_maya.png" style="height: 450px;" /></a> <a class="reference internal" href="../_images/sub_maya.png"><img alt="monitor" src="../_images/sub_maya.png" style="height: 450px;" /></a></p>
+<p>To submit from within Maya, select the Thinkbox shelf and press the green button there. If the green icon is missing, you can delete the shelf and restart Maya to get it back.</p>
+<a class="reference internal image-reference" href="../_images/maya_submission_button.png"><img alt="../_images/maya_submission_button.png" src="../_images/maya_submission_button.png" style="height: 200px;" /></a>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the <a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation.
+The Maya specific options are:</p>
+<a class="reference internal image-reference" href="../_images/maya_additional_frame_options.png"><img alt="../_images/maya_additional_frame_options.png" src="../_images/maya_additional_frame_options.png" style="height: 200px;" /></a>
+<p><strong>Additional Frame Options</strong></p>
+<ul class="simple">
+<li><p><strong>Render Preview Job First</strong>: When enabled, two jobs will be submitted - a PREVIEW job with a fraction of the frames, and a REST job with all other frames. The PREVIEW job can be submitted with slightly higher priority and will provide a glimpse into the final result. If its output looks incorrect, you can suspend the REST job before wasting render time rendering a wrong submission.</p></li>
+<li><p><strong>Priority Offset</strong>: Specify a higher priority for the PREVIEW job.</p></li>
+<li><p><strong>Number of Preview Frames</strong>: Specify the number of frames to preview.</p></li>
+<li><p><strong>Submit Dependent Job With Remaining Frames</strong>: If enabled, the REST job will be dependent on the PREVIEW job.</p></li>
+<li><p><strong>Task Order</strong>: The order in which to render the frames for the job.</p></li>
+<li><p><strong>Out Of Order Step</strong>: Defines the Nth frame step to use for some of the Task Order options.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/maya_render_options.png"><img alt="../_images/maya_render_options.png" src="../_images/maya_render_options.png" style="height: 200px;" /></a>
+<p><strong>Render Options</strong></p>
+<ul class="simple">
+<li><p><strong>Camera</strong>: Select the camera to render with. Leaving this blank will force Deadline to render using the default camera settings (including multiple camera outputs).</p></li>
+<li><p><strong>Disable Auto Camera Tag</strong>: If you do not have <code class="code docutils literal notranslate"><span class="pre">&lt;Camera&gt;</span></code> inside the File Name Prefix in Render Settings, this will prevent Maya from automatically adding one (only available when a camera is selected).</p></li>
+<li><p><strong>Project Path</strong>: The Maya project folder (this should be a shared folder on the network).</p></li>
+<li><p><strong>Output Path</strong>: The folder where your output will be dumped (this should be a shared folder on the network).</p></li>
+<li><p><strong>Maya Build</strong>: Force 32 bit or 64 bit rendering.</p></li>
+<li><p><strong>Submit Maya Scene File</strong>: If checked, the scene file will be submitted to the repository (as well as the XGen files).</p></li>
+<li><p><strong>Use MayaBatch Plugin</strong>: This uses our MayaBatch plugin that keeps the scene loaded in memory between frames, thus reducing the overhead of rendering the job.</p></li>
+<li><p><strong>Ignore Error Code 211</strong>: This allows a Maya task to finish successfully even if the Maya command line renderer returns the non-zero error code 211 (not available when using the MayaBatch plugin). Sometimes Maya will return this error code even after successfully saving the rendered images.</p></li>
+<li><p><strong>Strict Error Checking</strong>: Enable this option to have Deadline fail Maya jobs when Maya prints out an “error” or “warning” message that is known to impact the render. If disabled, Deadline will ignore all “error” or “warning” messages.</p></li>
+<li><p><strong>Use Local Asset Caching</strong>: Enabling local asset caching can reduce network overhead. When enabled, Deadline stores a local copy of all assets used during Maya renders on the Worker. The renderer then uses the assets from the local machine, rather than having to access them from their network location. The assets are stored in the Worker’s cache and can be used by subsequent frames or scenes submitted with the same assets without having to reach out to the network.</p></li>
+<li><p><strong>Startup Script</strong>: Maya will source the specified script file on startup (only available when using the MayaBatch plugin).</p></li>
+<li><p><strong>Command Line Args</strong>: Specify additional command line arguments to pass to the Maya command line renderer (not available when using the MayaBatch plugin).</p></li>
+<li><p><strong>Deadline Job Type</strong>: Select the type of Maya job you want to submit. The available options are covered in the next few sections.</p></li>
+</ul>
+</div>
+<div class="section" id="pipeline-tools">
+<h3>Pipeline Tools<a class="headerlink" href="#pipeline-tools" title="Permalink to this headline">¶</a></h3>
+<p>When using the integrated submitter to submit through Maya you have the ability to use any of the event plugins that you have enabled through the Deadline Monitor. This is done by opening the Pipeline Tools window via the Pipeline Tools button. This window is explained further in the <a class="reference internal" href="event-pipeline-tools.html#event-pipeline-tools-ref-label"><span class="std std-ref">Pipeline Tools</span></a> documentation.</p>
+</div>
+<div class="section" id="maya-render-job">
+<h3>Maya Render Job<a class="headerlink" href="#maya-render-job" title="Permalink to this headline">¶</a></h3>
+<p>If rendering a normal Maya job, select the Maya Render Job type.</p>
+<a class="reference internal image-reference" href="../_images/maya_options.png"><img alt="../_images/maya_options.png" src="../_images/maya_options.png" style="height: 150px;" /></a>
+<p><strong>General Options</strong></p>
+<p>The following options are available:</p>
+<ul>
+<li><p><strong>Threads</strong>: The maximum number of CPUs per machine to render with.</p></li>
+<li><p><strong>Frame Number Offset</strong>: Uses Maya’s frame renumbering option to offset the frames that are rendered.</p></li>
+<li><p><strong>Submit Render Layers As Separate Jobs</strong>: Enable to submit each layer in your scene as a separate job.</p></li>
+<li><p><strong>Override Layer Job Settings</strong>: If submitting each layer as a separate job, enable this option override the job name, frame list, and task size for each layer. When enabled, the override dialog will appear after you press Submit.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/maya_layers.png"><img alt="../_images/maya_layers.png" src="../_images/maya_layers.png" style="height: 300px;" /></a>
+</div></blockquote>
+</li>
+<li><p><strong>Submit Cameras As Separate Jobs</strong>: Enable to submit each camera as a separate job.</p></li>
+<li><p><strong>Ignore Default Cameras</strong>: Enable to have Deadline skip over cameras like persp, top, etc, when submitting each camera as a separate job (even if those cameras are set to renderable).</p></li>
+<li><p><strong>Enable Local Rendering</strong>: If enabled, Deadline will render the frames locally before copying them over to the final network location. This has been known to improve the speed of Maya rendering in some cases.</p></li>
+<li><p><strong>Render Half Frames</strong>: If checked, frames will be split into two using a step of 0.5. Note that frame 0 will save out images 0 and 1, frame 1 will save out images 2 and 3, frame 2 will save out images 4 and 5, etc.</p></li>
+</ul>
+</div>
+<div class="section" id="region-rendering-options">
+<span id="maya-region-rendering-ref-label"></span><h3>Region Rendering Options<a class="headerlink" href="#region-rendering-options" title="Permalink to this headline">¶</a></h3>
+<p>If submitting a Maya Render Job or an Arnold Export Job, you can choose to submit a region rendering job. You can also submit a dependent assembly job to assemble the image when the main region job completes. Otherwise, the output formats that are supported are BMP, DDS, EXR, JPG, JPE, JPEG, PNG, RGB, RGBA, SGI, TGA, TIF, and TIFF.</p>
+<a class="reference internal image-reference" href="../_images/maya_region_options.png"><img alt="../_images/maya_region_options.png" src="../_images/maya_region_options.png" style="height: 300px;" /></a>
+<p>The following renderers are supported for Region Rendering:</p>
+<ul class="simple">
+<li><p><strong>MayaSoftware</strong></p></li>
+<li><p><strong>Mental Ray</strong></p></li>
+<li><p><strong>Arnold</strong> (and export jobs)</p></li>
+<li><p><strong>RenderMan</strong></p></li>
+<li><p><strong>FinalRender</strong></p></li>
+<li><p><strong>Turtle</strong></p></li>
+<li><p><strong>V-Ray</strong></p></li>
+<li><p><strong>Redshift</strong></p></li>
+<li><p><strong>Iray</strong></p></li>
+</ul>
+<p>Note, if you have multiple layers in your scene file, Region Rendering will ONLY work if you submit each layer as a separate job.</p>
+<p>The following options are available:</p>
+<ul class="simple">
+<li><p><strong>Region Render Type</strong>: If set to Jigsaw Rendering then the submission will use <a class="reference internal" href="job-submitting.html#common-jigsaw-ref-label"><span class="std std-ref">Jigsaw</span></a>, otherwise it will use a grid of tiles.</p></li>
+<li><p><strong>Enable Region Rendering</strong>: If enabled, the frame will be split into multiple tiles that are rendered individually and can be assembled after.</p></li>
+<li><p><strong>Submit All Tiles as a single Job</strong>:  If enabled, a single frame will be submitted with all tiles in a single job, otherwise each tile will be submitted as a separate job with each frame being a separate frame.</p></li>
+<li><p><strong>Open Jigsaw Panel</strong>: Click this button to open the standalone PyQt <a class="reference internal" href="job-submitting.html#common-jigsaw-ref-label"><span class="std std-ref">Jigsaw</span></a> panel to interact with the <a class="reference internal" href="job-submitting.html#common-jigsaw-ref-label"><span class="std std-ref">Jigsaw</span></a> GUI system to create your tiles and regions. Note, this Jigsaw panel MUST be open during submission.</p></li>
+<li><p><strong>Submit Dependent Assembly Job</strong>: Submit a job dependent on the region job that will assemble the tiles, if doing jigsaw animation a separate job will be created for each different named output file</p></li>
+<li><p><strong>Cleanup Tiles after Assembly</strong>: If enabled, the tiles will be deleted after assembly.</p></li>
+<li><p><strong>Error on Missing Tiles</strong>: If enabled, then if any of the tiles are missing the assembly job will fail.</p></li>
+<li><p><strong>Assemble over</strong>: Determine what the Draft Tile Assembler should assemble over be it a blank image, previous output or a specified file.</p></li>
+<li><p><strong>Background Image File</strong>: If “specified file” option above is selected, then browse for a background image file to assemble the tile renders with.</p></li>
+<li><p><strong>Error on Missing Background</strong>: If enabled, then if the background file is missing the Draft Tile Assembler job will fail.</p></li>
+</ul>
+</div>
+<div class="section" id="gpu-affinity">
+<span id="maya-gpu-affinity-ref-label"></span><h3>GPU Affinity<a class="headerlink" href="#gpu-affinity" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="../_images/maya_gpu_affinity_options.png"><img alt="../_images/maya_gpu_affinity_options.png" src="../_images/maya_gpu_affinity_options.png" style="width: 600px;" /></a>
+<p>If you are GPU rendering, there are additional GPU affinity override options:</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Ensure you only use one of these settings at any one time! You can’t combine the Worker centric <a class="reference internal" href="worker-config.html#gpu-affinity-ref-label"><span class="std std-ref">GPU Affinity</span></a> with the <strong>GPUs Per Task</strong> or <strong>Select GPU Devices</strong> setting below.</p>
+</div>
+<ul>
+<li><p><strong>GPUs Per Task</strong>: If set to 0 (the default), then the GPU renderer will be responsible for automatically choosing the GPUs used during rendering.</p>
+<blockquote>
+<div><p>If this is set to 1 or greater, then each task for the job will be assigned specific GPUs. This can be used in combination with concurrent tasks to get a distribution over the GPUs. For example:</p>
+<ul class="simple">
+<li><p>if this is set to 1, then tasks rendered by the Workers thread 0 would use GPU 0, thread 1 would use GPU 1, etc.</p></li>
+<li><p>if this is set to 2, then tasks rendered by the Workers thread 0 would use GPUs {0,1}, thread 1 would use GPUs {2,3}, etc.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Select GPU Devices</strong>: A comma separated list of specific GPU device ID(s) can be entered instead of using the above ‘GPUs Per Task’ option (which must be set to “0”). Valid examples include: “0” or “1” or “0,1” or “2,4” without the quotation marks. Note: “Concurrent Tasks” must be set to “1” only.</p></li>
+</ul>
+</div>
+<div class="section" id="renderer-options">
+<span id="renderer-specific-options-ref-label"></span><h3>Renderer Options<a class="headerlink" href="#renderer-options" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="mental-ray">
+<span id="maya-renderer-options-mentalray-ref-label"></span><h4>Mental Ray<a class="headerlink" href="#mental-ray" title="Permalink to this headline">¶</a></h4>
+<a class="reference internal image-reference" href="../_images/maya_renderer_specific_options_mental_ray.png"><img alt="../_images/maya_renderer_specific_options_mental_ray.png" src="../_images/maya_renderer_specific_options_mental_ray.png" style="width: 600px;" /></a>
+<p>If rendering with Mental Ray, there is an additional Mental Ray Options section under the Maya Options:</p>
+<ul class="simple">
+<li><p><strong>Mental Ray Verbosity</strong>: Set the verbosity level for Mental Ray renders.</p></li>
+<li><p><strong>Auto Memory Limit</strong>: If enabled, Mental Ray will automatically detect the optimal memory limit when rendering.</p></li>
+<li><p><strong>Memory Limit</strong>: Soft limit (in MB) for the memory used by Mental Ray (specify 0 for unlimited memory).</p></li>
+</ul>
+</div>
+<div class="section" id="v-ray">
+<span id="maya-renderer-options-vray-ref-label"></span><h4>V-Ray<a class="headerlink" href="#v-ray" title="Permalink to this headline">¶</a></h4>
+<a class="reference internal image-reference" href="../_images/maya_renderer_specific_options_vray.png"><img alt="../_images/maya_renderer_specific_options_vray.png" src="../_images/maya_renderer_specific_options_vray.png" style="width: 600px;" /></a>
+<p>If rendering with V-Ray, there is an additional V-Ray Options section under the Maya Options:</p>
+<ul class="simple">
+<li><p><strong>Auto Memory Limit Detection</strong>: If enabled, Deadline will automatically detect the dynamic memory limit for V-Ray prior to rendering.</p></li>
+<li><p><strong>Memory Buffer</strong>: Deadline subtracts this value from the system’s unused memory to determine the dynamic memory limit for V-Ray.</p></li>
+</ul>
+</div>
+<div class="section" id="arnold">
+<span id="maya-renderer-options-arnold-ref-label"></span><h4>Arnold<a class="headerlink" href="#arnold" title="Permalink to this headline">¶</a></h4>
+<a class="reference internal image-reference" href="../_images/maya_renderer_specific_options_arnold.png"><img alt="../_images/maya_renderer_specific_options_arnold.png" src="../_images/maya_renderer_specific_options_arnold.png" style="width: 600px;" /></a>
+<p>If rendering with Arnold, there is an additional Arnold Options section under the Maya Options:</p>
+<ul class="simple">
+<li><p><strong>Arnold Verbosity</strong>: Set the verbosity level for Arnold renders.</p></li>
+</ul>
+<p>Note that the verbosity levels have changed with newer versions of the Maya to Arnold plugin. The Maya submitter automatically detects the version of Maya To Arnold installed and lists the verbosity levels accordingly.</p>
+<p>Maya To Arnold <strong>Version 2 and lower</strong>:</p>
+<ul class="simple">
+<li><p><strong>0</strong> (<strong>Error</strong>): only print errors</p></li>
+<li><p><strong>1</strong> (<strong>Warning &amp; Info</strong>): print errors, warnings, and render statistics. Select this verbosity setting to allow the Deadline Monitor to show render progress. This is selected by default.</p></li>
+<li><p><strong>2</strong> (<strong>Debug</strong>): print all render info. Note that this may slow down your render time.</p></li>
+</ul>
+<p>Maya To Arnold <strong>Version 3 and higher</strong>:</p>
+<ul class="simple">
+<li><p><strong>0</strong> (<strong>Error</strong>): only print errors</p></li>
+<li><p><strong>1</strong> (<strong>Warnings</strong>): print errors and warnings</p></li>
+<li><p><strong>2</strong> (<strong>Info</strong>): print errors, warnings, and render statistics that do not slow down rendering. Select this verbosity setting to allow the Deadline Monitor to show render progress. This is selected by default.</p></li>
+<li><p><strong>3</strong> (<strong>Debug</strong>): print all render info. Note that this may slow down your render time.</p></li>
+</ul>
+</div>
+<div class="section" id="redshift">
+<span id="maya-renderer-options-redshift-ref-label"></span><h4>Redshift<a class="headerlink" href="#redshift" title="Permalink to this headline">¶</a></h4>
+<a class="reference internal image-reference" href="../_images/maya_renderer_specific_options_redshift.png"><img alt="../_images/maya_renderer_specific_options_redshift.png" src="../_images/maya_renderer_specific_options_redshift.png" style="width: 600px;" /></a>
+<p>If rendering with RedShift, there will be an additional RedShift Options under the Maya Options:</p>
+<ul class="simple">
+<li><p><strong>Redshift Verbosity</strong>: Control the level of verbosity generated by Redshift renderer.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="mr-export-job">
+<span id="maya-mental-ray-export-job-ref-label"></span><h3>MR Export Job<a class="headerlink" href="#mr-export-job" title="Permalink to this headline">¶</a></h3>
+<p>If rendering a Mental Ray Export job, select the Mental Ray Export Job type.</p>
+<a class="reference internal image-reference" href="../_images/maya_export_options.png"><img alt="../_images/maya_export_options.png" src="../_images/maya_export_options.png" style="height: 400px;" /></a>
+<p>The following options are available:</p>
+<ul>
+<li><p><strong>Output File</strong>: The full filename of the Mental Ray files that will be exported. Padding is handled automatically by the exporter.</p></li>
+<li><p><strong>Export Settings</strong>: This opens up the Mental Ray export settings dialog where you can configure the remaining of the settings. Note that this dialog must be open when you submit the job.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/maya_mr_export_options.png"><img alt="../_images/maya_mr_export_options.png" src="../_images/maya_mr_export_options.png" style="height: 400px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+<p>You have the option to submit a dependent Mental Ray Standalone job that will render the exported mi files after the export job finishes. The Mental Ray specific job options are:</p>
+<ul class="simple">
+<li><p><strong>Threads</strong>: The number of threads to use for rendering.</p></li>
+<li><p><strong>Frame Offset</strong>: The first frame in the input MI file being rendered, which is used to offset the frame range being passed to the mental ray renderer.</p></li>
+<li><p><strong>Mental Ray Build</strong>: You can force 32 or 64 bit rendering.</p></li>
+<li><p><strong>Enable Local Rendering</strong>: If enabled, the frames will be rendered locally, and then copied to their final network location.</p></li>
+<li><p><strong>Command Line Args</strong>: Specify additional command line arguments you would like to pass to the mental ray renderer.</p></li>
+</ul>
+</div>
+<div class="section" id="v-ray-export-job">
+<span id="maya-vray-export-job-ref-label"></span><h3>V-Ray Export Job<a class="headerlink" href="#v-ray-export-job" title="Permalink to this headline">¶</a></h3>
+<p>If rendering a V-Ray Export job, select the V-Ray Export Job type.</p>
+<a class="reference internal image-reference" href="../_images/maya_vray_export.png"><img alt="../_images/maya_vray_export.png" src="../_images/maya_vray_export.png" style="height: 400px;" /></a>
+<p>The following options are available:</p>
+<ul class="simple">
+<li><p><strong>Output File</strong>: The full file name of the V-Ray files that will be exported (padding is handled automatically by the exporter).</p></li>
+</ul>
+<p>You have the option to submit a dependent V-Ray Standalone job that will render the exported vrscene files after the export job finishes. The V-Ray specific job options are:</p>
+<ul class="simple">
+<li><p><strong>Threads</strong>: The number of threads to use for rendering.</p></li>
+<li><p><strong>Vrimg2Exr Conversion Job</strong>: If you are submitting a dependent V-Ray Standalone job, and the output format is vrimg, you have the option to submit a dependent job that will convert the vrimg files to exr files, using V-Ray’s vrimg2exr application.</p></li>
+</ul>
+</div>
+<div class="section" id="rman-export-job">
+<span id="maya-renderman-export-job-ref-label"></span><h3>RMan Export Job<a class="headerlink" href="#rman-export-job" title="Permalink to this headline">¶</a></h3>
+<p>If rendering a RenderMan Export job, select the RenderMan Export Job type.</p>
+<a class="reference internal image-reference" href="../_images/maya_renderman_export.png"><img alt="../_images/maya_renderman_export.png" src="../_images/maya_renderman_export.png" style="height: 400px;" /></a>
+<p>The following options are available:</p>
+<ul class="simple">
+<li><p><strong>Threads</strong>: The number of threads to use for exporting. Specify 0 to automatically use the optimal number of threads.</p></li>
+<li><p><strong>Render with RIS</strong>: If checked, the exported RIB files will have RIS set as the renderer instead of REYES.</p></li>
+</ul>
+<p>You have the option to submit a dependent RenderMan Render job that will render the exported rib files after the export job finishes. The RenderMan specific job options are:</p>
+<ul class="simple">
+<li><p><strong>Enable RenderMan Frame Dependencies</strong>: If checked, the RenderMan Job will have Frame Dependencies. If your scene has static content, do not use!</p></li>
+<li><p><strong>Threads</strong>: The number of threads to use for rendering.</p></li>
+<li><p><strong>Command Line Args</strong>: Specify additional command line arguments you would like to pass to the RenderMan renderer.</p></li>
+</ul>
+</div>
+<div class="section" id="arnold-export-job">
+<span id="maya-arnold-export-job-ref-label"></span><h3>Arnold Export Job<a class="headerlink" href="#arnold-export-job" title="Permalink to this headline">¶</a></h3>
+<p>If rendering an Arnold Export job, select the Arnold Export Job type.</p>
+<a class="reference internal image-reference" href="../_images/maya_arnold_export.png"><img alt="../_images/maya_arnold_export.png" src="../_images/maya_arnold_export.png" style="height: 400px;" /></a>
+<p>The following options are available for Arnold Export Jobs:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>Render Layers</strong> (new in 10.1.1): Which render layers to submit. This drop-down is only enabled when there are render layers set up in the scene. Select from the following options:</dt><dd><ul>
+<li><p><strong>Active Layer At Submission Time</strong>: Only the active layer at the time of submission will be exported to an Arnold stand-alone scene file (<code class="docutils literal notranslate"><span class="pre">.ass</span></code> file).</p></li>
+<li><p><strong>All Render Layers (Separate Jobs)</strong>: A job will be submitted to export each render layer in the scene to an Arnold stand-alone scene file (<code class="docutils literal notranslate"><span class="pre">.ass</span></code> file).</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>You have the option to submit a dependent Arnold Standalone job that will render the exported .ass files after the export job finishes. The Arnold Standalone specific job options are:</p>
+<ul class="simple">
+<li><p><strong>Local Export to Arnold</strong>: If this option is set to true, the Arnold .ass files will be exported locally.</p></li>
+<li><p><strong>Threads</strong>: The number of threads to use for rendering.</p></li>
+<li><p><strong>Command Line Args</strong>: Specify additional command line arguments you would like to pass to the Arnold renderer.</p></li>
+</ul>
+</div>
+<div class="section" id="maxwell-export-job">
+<span id="maya-maxwell-export-job-ref-label"></span><h3>Maxwell Export Job<a class="headerlink" href="#maxwell-export-job" title="Permalink to this headline">¶</a></h3>
+<p>If rendering a Maxwell Export job, select the Maxwell Export Job type.</p>
+<a class="reference internal image-reference" href="../_images/maya_maxwell_export.png"><img alt="../_images/maya_maxwell_export.png" src="../_images/maya_maxwell_export.png" style="height: 400px;" /></a>
+<p>The following options are available:</p>
+<ul class="simple">
+<li><p><strong>Maxwell Script Name</strong>: The path that the exported Maxwell MXS files will be saved to.</p></li>
+</ul>
+<p>You have the option to submit a dependent Maxwell Standalone job that will render the exported .MXS files after the export job finishes. The Maxwell Standalone specific job options are:</p>
+<ul class="simple">
+<li><p><strong>Local Export to Maxwell</strong>: If this option is set to true, the Maxwell MXS files will be exported locally.</p></li>
+<li><p><strong>Threads</strong>: The number of threads to use for rendering.</p></li>
+<li><p><strong>Command Line Args</strong>: Specify additional command line arguments you would like to pass to the Maxwell renderer.</p></li>
+</ul>
+<p><strong>Co-op Rendering</strong></p>
+<ul class="simple">
+<li><p><strong>Cooperative Rendering</strong>: Enable this to use Maxwell’s co-op rendering feature to render the same image across multiple computers. You can then use Maxwell to combine the resulting output after the rendering has completed.</p></li>
+<li><p><strong>Split Co-op Renders Into Separate Jobs</strong>: By default, a co-op render is submitted as a single job, where each task represents a different seed. If this option is enabled, a separate job will represent each seed.</p></li>
+<li><p><strong>Number of Co-op Renders</strong>: The number of co-op render jobs to submit to Deadline.</p></li>
+<li><p><strong>Auto-Merge Files</strong>: Enable this option to auto-merge the co-op renders into the final image.</p></li>
+<li><p><strong>Fail On Missing Intermediate Files</strong>: If enabled, the auto-merge will fail if any co-op renders are missing.</p></li>
+<li><p><strong>Delete Intermediate Files</strong>: If enabled, the co-op renders will be deleted after the final image is merged together.</p></li>
+</ul>
+</div>
+<div class="section" id="redshift-export-job">
+<span id="maya-redshift-export-job-ref-label"></span><h3>Redshift Export Job<a class="headerlink" href="#redshift-export-job" title="Permalink to this headline">¶</a></h3>
+<p>If rendering a Redshift Export job, select the Redshift Export Job type.</p>
+<a class="reference internal image-reference" href="../_images/maya_redshift_export.png"><img alt="../_images/maya_redshift_export.png" src="../_images/maya_redshift_export.png" style="height: 400px;" /></a>
+<p>The normal <a class="reference internal" href="#maya-renderer-options-redshift-ref-label"><span class="std std-ref">Redshift</span></a> renderer options are available.</p>
+<p>You have the option to submit a dependent Redshift Standalone job that will render the exported .rs files after the export job finishes. The Redshift Standalone specific job options are:</p>
+<ul class="simple">
+<li><p><strong>Submit Dependent Redshift Standalone Render Job</strong>: If enabled, the Redshift Standalone dependent job will be submitted.</p></li>
+<li><p><strong>Local Export to Redshift</strong>: If this option is set to true, the redshift rs file will be exported locally.</p></li>
+<li><p><strong>Enable Redshift Frame Dependencies</strong>: If Checked, the Redshift Job will have Frame Dependencies. If your scene contains static content, do not use!</p></li>
+<li><p><strong>Submit Render Layers As Separate Jobs</strong>: Check this to submit each renderable Render Layer as a separate Deadline job. Note that the frame range will be pulled from the render globals for each layer.</p></li>
+<li><p><strong>Threads</strong>: The number of threads to use for rendering.</p></li>
+<li><p><strong>Command Line Args</strong>: Specify additional command line arguments you would like to pass to the Redshift renderer.</p></li>
+</ul>
+</div>
+<div class="section" id="bifrost-sim-job">
+<span id="maya-bifrost-simulation-job-ref-label"></span><h3>Bifrost Sim Job<a class="headerlink" href="#bifrost-sim-job" title="Permalink to this headline">¶</a></h3>
+<p>To run a Bifrost Simulation job, select the Bifrost Simulation Job type. This will run a simulation for all Bifrost containers in the Maya scene.</p>
+<a class="reference internal image-reference" href="../_images/maya_bifrost_simulation.png"><img alt="../_images/maya_bifrost_simulation.png" src="../_images/maya_bifrost_simulation.png" style="height: 150px;" /></a>
+<p>The following options are available:</p>
+<ul class="simple">
+<li><p><strong>Bifrost Cache Directory</strong>: The path that all Bifrost containers will be simulated to.</p></li>
+<li><p><strong>Compression Format</strong>: The style of compression to be used for the Bifrost container simulation.</p></li>
+</ul>
+</div>
+<div class="section" id="alembic-export-job">
+<span id="maya-alembic-export-job-ref-label"></span><h3>Alembic Export Job<a class="headerlink" href="#alembic-export-job" title="Permalink to this headline">¶</a></h3>
+<p>To run an Alembic Export job, select the Alembic Export Job type.</p>
+<a class="reference internal image-reference" href="../_images/maya_alembic_export.png"><img alt="../_images/maya_alembic_export.png" src="../_images/maya_alembic_export.png" style="height: 300px;" /></a>
+<p>The following options are available:</p>
+<ul class="simple">
+<li><p><strong>Alembic Output File</strong>: The directory path and filename of the Alembic file that will be created.</p></li>
+<li><p><strong>Export</strong>: Select “All” to export all Polygon or NURBS objects in your scene, select “Selection” to only export selected/highlighted Polygon or NURBS objects in your scene.</p></li>
+</ul>
+<p>You also have the option to set the advanced options of the Alembic export job. These options are described in the Autodesk Maya documentation and should be left untouched by novice users.</p>
+<p><a class="reference external" href="https://knowledge.autodesk.com/support/maya/learn-explore/caas/CloudHelp/cloudhelp/2016/ENU/Maya/files/GUID-854D22F6-7547-465C-8A13-E21A8A6D9714-htm.html">Advanced Alembic Options</a></p>
+</div>
+<div class="section" id="maya-script-job">
+<span id="maya-script-job-ref-label"></span><h3>Maya Script Job<a class="headerlink" href="#maya-script-job" title="Permalink to this headline">¶</a></h3>
+<p>To run a Maya Script Job, select the Maya Script Job type.</p>
+<a class="reference internal image-reference" href="../_images/maya_script_job.png"><img alt="../_images/maya_script_job.png" src="../_images/maya_script_job.png" style="height: 125px;" /></a>
+<p>This job will execute a submitted Python or Melscript file.</p>
+<p>The following options are available:</p>
+<ul class="simple">
+<li><p><strong>Script File Name</strong>: The directory and name of the Melscript or Python file that will be run.</p></li>
+</ul>
+<p>When running script jobs Deadline exposes 3 melscript functions so that Deadline job information can be accessed within the script.  The functions that are defined are:</p>
+<ul class="simple">
+<li><p><strong>DeadlinePluginInfo</strong>:  This function takes the name of a plugin info property of the Deadline job and returns the value as a string.</p></li>
+<li><p><strong>DeadlineExtraInfo</strong>: This function takes the name of an extra info key value pair defined in the Deadline job and returns the value as a string.</p></li>
+<li><p><strong>DeadlineValue</strong>: This function takes in the name of a property of the task and returns the appropriate value.  The exposed properties are DataFileName, PluginDirectory, JobsDataDirectory, StartFrame, EndFrame, ThreadNumber, and TestValue.</p></li>
+</ul>
+</div>
+<div class="section" id="fluid-caching-job">
+<span id="maya-fluid-caching-job-ref-label"></span><h3>Fluid Caching Job<a class="headerlink" href="#fluid-caching-job" title="Permalink to this headline">¶</a></h3>
+<p>To run a Fluid Caching Job, select the Fluid Caching Job type.</p>
+<a class="reference internal image-reference" href="../_images/maya_fluid_cache.png"><img alt="../_images/maya_fluid_cache.png" src="../_images/maya_fluid_cache.png" style="height: 200px;" /></a>
+<p>This job will cache selected fluids in a Maya scene. At least one fluid must be selected in order to run a Fluid Caching Job.</p>
+<p>The following options are available:</p>
+<ul class="simple">
+<li><p><strong>Cache Output Directory</strong>: The path which the Fluid Cache(s) will be saved to.</p></li>
+<li><p><strong>Cache Prefix Name</strong>: The prefix to be used for any Fluid Cache files to be written.</p></li>
+<li><p><strong>Cache Format</strong>: Mcc (Maya pre-2014) or Mcx (Maya 2014 or newer)</p></li>
+<li><p><strong>File Distribution</strong>: Choose to have one file (one cache) for each frame, or only one cache for the entire frame range.</p></li>
+<li><p><strong>One Cache Per Fluid</strong>: Choose to have separate caches for each fluid, or only one cache that will contain all selected fluids.</p></li>
+</ul>
+</div>
+<div class="section" id="geo-caching-job">
+<span id="maya-geometry-caching-job-ref-label"></span><h3>Geo Caching Job<a class="headerlink" href="#geo-caching-job" title="Permalink to this headline">¶</a></h3>
+<p>To run a Geometry Caching Job, select the Geometry Caching Job type.</p>
+<a class="reference internal image-reference" href="../_images/maya_geometry_cache.png"><img alt="../_images/maya_geometry_cache.png" src="../_images/maya_geometry_cache.png" style="height: 300px;" /></a>
+<p>This job will cache selected geometry in a Maya scene. At least one geometry object must be selected in order to run a Geometry Caching Job.</p>
+<p>The following options are available:</p>
+<ul class="simple">
+<li><p><strong>Cache Output Directory</strong>: The path which the Geometry Cache(s) will be saved to.</p></li>
+<li><p><strong>Cache Prefix Name</strong>: The prefix to be used for any Geometry Cache files to be written.</p></li>
+<li><p><strong>Cache Format</strong>: Mcc (Maya pre-2014) or Mcx (Maya 2014 or newer)</p></li>
+<li><p><strong>File Distribution</strong>: Choose to have one file (one cache) for each frame, or only one cache for the entire frame range.</p></li>
+<li><p><strong>Store Points As</strong>: Choose the format in which geometry points will be stored (Double or Float).</p></li>
+<li><p><strong>Store Points In</strong>: Choose the context in which geometry points will be stored (Local or World).</p></li>
+<li><p><strong>One Cache Per Geometry</strong>: Choose to have separate caches for each geometry, or only one cache that will contain all selected geometry.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="cross-platform-rendering-considerations">
+<h2>Cross-Platform Rendering Considerations<a class="headerlink" href="#cross-platform-rendering-considerations" title="Permalink to this headline">¶</a></h2>
+<p>In order to perform cross-platform rendering with Maya, you must setup Mapped Paths so that Deadline can swap out the Project and Output paths where appropriate. You can access the Mapped Paths Setup in the Monitor while in
+power user mode by selecting Tools -&gt; Configure Repository. You’ll find the Mapped Paths Setup in the list on the left.</p>
+<p>As long as all paths used in your Maya scene are relative to the Project and Output paths, and those paths are network accessible, you should have no problems performing cross-platform renders.</p>
+<p>However, if you are using absolute paths in your Maya scene file, it is possible for Deadline to swap them as well, but you must save your scene file as a Maya Ascii (.ma) file. Because .ma files are ascii files, Deadline can
+read them and swap out paths as necessary. If they’re saved as Maya Binary (.mb) files, they can’t be read, and can’t have their paths swapped.</p>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the MayaBatch and MayaCmd plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Maya plugin from the list on the left.</p>
+<div class="section" id="mayabatch">
+<span id="app-maya-cp-ref-label"></span><h3>MayaBatch<a class="headerlink" href="#mayabatch" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="../_images/cp_maya_batch.png"><img alt="../_images/cp_maya_batch.png" src="../_images/cp_maya_batch.png" style="height: 350px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Maya Executable</strong>: The path to the Maya executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+<p><strong>Maxwell For Maya (version 2 and later)</strong></p>
+<ul class="simple">
+<li><p><strong>Workers To Use Interactive License</strong>: A list of Workers that should use an interactive Maxwell license instead of a render license. Use a , to separate multiple Worker names, for example: worker001,worker002,worker003</p></li>
+</ul>
+<p><strong>Path Mapping For Scene Files (For Mixed Farms)</strong></p>
+<ul class="simple">
+<li><p><strong>Enable Path Mapping</strong>: If enabled, path mapping will be performed on the contents of the Maya scene file.</p></li>
+<li><p><strong>Path Mapping Mode</strong>: The first option uses Maya’s ‘dirmap’ command to map paths when the scene is loaded, which works on .ma and.mb files. The second option creates a local copy of the .ma file, and uses text replacement on the file to map paths.</p></li>
+</ul>
+<p><strong>Logging</strong></p>
+<ul class="simple">
+<li><p><strong>Suppress Warning Messages</strong>: If enabled, warning messages printed out by Maya will not be included in the render log.</p></li>
+<li><p><strong>Silence Scene Load Errors</strong>: If enabled, errors that occur when loading a scene file are silenced by Maya and will not be included in the render log.</p></li>
+<li><p><strong>Log Script Contents To Render Log</strong>: If enabled, the full script that Deadline is passing to Maya will be written to the render log. This is useful for debugging purposes.</p></li>
+</ul>
+<p><strong>CPU Affinity</strong></p>
+<ul class="simple">
+<li><p><strong>Limit Threads To CPU Affinity</strong>: If enabled, the number of render threads will be limited to the CPU affinity of the rendering Worker.</p></li>
+</ul>
+<p><strong>Local Asset Caching</strong></p>
+<ul class="simple">
+<li><p><strong>Remote Asset Path</strong>: When scanning a Maya scene file, it is necessary to identify which assets are located on a remote storage device. The way Deadline determines that is by checking its path prefix. If the path starts with a prefix listed under this “Remote Asset Path” option, it is assumed to be on a remote storage device, and will be cached locally upon render.</p></li>
+<li><p><strong>Worker LAC Directory</strong>:  These options determine where on the local Worker drive the assets will be cached. Since directory structures are set up differently across different platforms, and caching is cross-platform, it is necessary to have three different options based on the operating system that the Worker is running on.</p></li>
+<li><p><strong>Days until Cache Delete</strong>: It is necessary to do some housekeeping on the Workers in order to clean up the local cache and prevent the local storage to fill up unnecessarily. This option allows user to specify when an asset in the cache will be deleted. If a cached asset is not accessed within the specified number of days, that file will be removed from the cache.</p></li>
+</ul>
+</div>
+<div class="section" id="mayacmd">
+<h3>MayaCmd<a class="headerlink" href="#mayacmd" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="../_images/cp_maya_cmd.png"><img alt="../_images/cp_maya_cmd.png" src="../_images/cp_maya_cmd.png" style="height: 350px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Maya Executable</strong>: The path to the Maya executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+<p><strong>Maxwell For Maya (version 2 and later)</strong></p>
+<ul class="simple">
+<li><p><strong>Workers To Use Interactive License</strong>: A list of Workers that should use an interactive Maxwell license instead of a render license. Use a , to separate multiple Worker names, for example: worker001,worker002,worker003</p></li>
+</ul>
+<p><strong>Path Mapping For ma Scene Files (For Mixed Farms)</strong></p>
+<ul class="simple">
+<li><p><strong>Enable Path Mapping For ma Files</strong>: If enabled, a temporary ma file will be created locally on the Worker for rendering and Deadline will do path mapping directly in the ma file.</p></li>
+</ul>
+<p><strong>Logging</strong></p>
+<ul class="simple">
+<li><p><strong>Suppress Warning Messages</strong>: If enabled, warning messages printed out by Maya will not be included in the render log.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-maya-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to install the integrated Maya submission script. This script allows for submitting Maya render jobs to Deadline directly from within the Maya editing GUI. The script and the following
+installation procedure has been tested with Maya 2010 and later.</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As of Deadline 10.0.10.3 the manual installation documentation and submitter installers have been updated to install both the <code class="docutils literal notranslate"><span class="pre">userSetup.mel</span></code> and <code class="docutils literal notranslate"><span class="pre">DeadlineMayaClient.mel</span></code> files into the user directory. This change has occurred to allow the submitter installer to work without requiring admin access and to ensure that all versions of Maya will use the same client script file. This should not affect any current installs and is not a required update.</p>
+</div>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/Maya/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<p>The Maya integrated submitter can be installed for either a specific user or for all users.</p>
+<p><strong>Current User</strong></p>
+<ul>
+<li><p>Copy the file <code class="docutils literal notranslate"><span class="pre">[Repository]/submission/Maya/Client/DeadlineMayaClient.mel</span></code> to <code class="docutils literal notranslate"><span class="pre">[MAYA_APP_DIR]/scripts</span></code>.</p></li>
+<li><p>If you do not have a <code class="docutils literal notranslate"><span class="pre">userSetup.mel</span></code> in <code class="docutils literal notranslate"><span class="pre">[MAYA_APP_DIR]/scripts</span></code>, copy the file <code class="docutils literal notranslate"><span class="pre">[Repository]/submission/Maya/Client/userSetup.mel</span></code> to <code class="docutils literal notranslate"><span class="pre">[MAYA_APP_DIR]/scripts</span></code>.</p></li>
+<li><p>If you have a <code class="docutils literal notranslate"><span class="pre">userSetup.mel</span></code> file, add the following line to the end of this file:</p>
+<p>if( startsWith( <cite>whatIs DeadlineMayaClient</cite>, “Mel procedure found in” ) ){ DeadlineMayaClient(); }else{ warning( “DeadlineMayaClient either has errors or has not been installed.” ); }</p>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>MAYA_APP_DIR defaults to <code class="docutils literal notranslate"><span class="pre">[My</span> <span class="pre">Documents]/maya</span></code> on Windows, <code class="docutils literal notranslate"><span class="pre">/Users/[USERNAME]/Library/Preferences/Autodesk/maya</span></code> on macOS, and <code class="docutils literal notranslate"><span class="pre">/home/[USERNAME]/maya</span></code> on linux.</p>
+</div>
+<p><strong>All Users</strong></p>
+<ul class="simple">
+<li><p>Copy the contents of <code class="docutils literal notranslate"><span class="pre">[Repository]/submission/Maya/Client/AllUsers</span></code> to a location accessible by all users.</p></li>
+<li><p>Set the Environment variable <code class="docutils literal notranslate"><span class="pre">MAYA_MODULE_PATH</span></code> to the directory configured above.</p></li>
+</ul>
+</div>
+<div class="section" id="network-installation">
+<h3>Network Installation<a class="headerlink" href="#network-installation" title="Permalink to this headline">¶</a></h3>
+<p>Instead of installing the integrated submitter on each machine individually you are also able to do a network install.</p>
+<p>You can do this by setting up a <code class="docutils literal notranslate"><span class="pre">userSetup.mel</span></code> and <code class="docutils literal notranslate"><span class="pre">DeadlineMayaClient.mel</span></code> in a folder on your network.
+Once this is set up, set the environment variable <code class="docutils literal notranslate"><span class="pre">MAYA_SCRIPT_PATH</span></code> on each of the machines to include the folder that contains <code class="docutils literal notranslate"><span class="pre">DeadlineMayaClient.mel</span></code>.</p>
+</div>
+<div class="section" id="verify-installation">
+<h3>Verify Installation<a class="headerlink" href="#verify-installation" title="Permalink to this headline">¶</a></h3>
+<p>The next time Maya is started, a Deadline shelf should appear with a green button that can be clicked on to launch the submitter.</p>
+<a class="reference internal image-reference" href="../_images/maya_submission_button.png"><img alt="../_images/maya_submission_button.png" src="../_images/maya_submission_button.png" style="height: 200px;" /></a>
+<p>If you don’t see the Deadline shelf, it’s likely that Maya is loading another <code class="docutils literal notranslate"><span class="pre">userSetup.mel</span></code> file from somewhere. Maya can only load one <code class="docutils literal notranslate"><span class="pre">userSetup.mel</span></code> file, so you either have to configure Maya to point to the file mentioned above, or you have to modify the file that Maya is currently using as explained above. To figure out which <code class="docutils literal notranslate"><span class="pre">userSetup.mel</span></code> file Maya is using, open up Maya and then open up the Script Editor. Run this command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">whatIs</span> <span class="n">userSetup</span><span class="o">.</span><span class="n">mel</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="custom-sanity-check">
+<h3>Custom Sanity Check<a class="headerlink" href="#custom-sanity-check" title="Permalink to this headline">¶</a></h3>
+<p>You can create a <code class="docutils literal notranslate"><span class="pre">CustomSanityChecks.mel</span></code> file alongside the main <code class="docutils literal notranslate"><span class="pre">SubmitMayaToDeadline.mel</span></code> in the <code class="docutils literal notranslate"><span class="pre">[Repository]\submission\Maya\Main</span></code> folder, and it can be used to set defaults in the submission script before it is displayed.
+For example, here is a script that can set the default Limit Groups based on the renderer:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AddStringAttribute</span><span class="p">(</span> <span class="s2">&quot;deadlineLimitGroups&quot;</span> <span class="p">);</span>
+<span class="k">if</span><span class="p">(</span> <span class="n">GetCurrentRenderer</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;mentalRay&quot;</span> <span class="p">)</span>
+    <span class="n">setAttr</span> <span class="n">defaultRenderGlobals</span><span class="o">.</span><span class="n">deadlineLimitGroups</span> <span class="o">-</span><span class="nb">type</span> <span class="s2">&quot;string&quot;</span> <span class="s2">&quot;mray_for_maya&quot;</span><span class="p">;</span>
+<span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="n">GetCurrentRenderer</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;vray&quot;</span> <span class="p">)</span>
+    <span class="n">setAttr</span> <span class="n">defaultRenderGlobals</span><span class="o">.</span><span class="n">deadlineLimitGroups</span> <span class="o">-</span><span class="nb">type</span> <span class="s2">&quot;string&quot;</span> <span class="s2">&quot;vray_for_maya&quot;</span><span class="p">;</span>
+<span class="k">else</span>
+    <span class="n">setAttr</span> <span class="n">defaultRenderGlobals</span><span class="o">.</span><span class="n">deadlineLimitGroups</span> <span class="o">-</span><span class="nb">type</span> <span class="s2">&quot;string&quot;</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The available Deadline globals are defined in the SavePersistentDeadlineOptions function in the <code class="docutils literal notranslate"><span class="pre">SubmitMayaToDeadline.mel</span></code> script. These can be used to set the initial values in the submission dialog.</p>
+<p>You can also create a <code class="docutils literal notranslate"><span class="pre">CustomPostSanityChecks.mel</span></code> file alongside the main <code class="docutils literal notranslate"><span class="pre">SubmitMayaToDeadline.mel</span></code> in the <code class="docutils literal notranslate"><span class="pre">[Repository]\submission\Maya\Main</span></code> folder. It can be used to run some additional checks after the user clicks the Submit
+button in the submitter. It must define a global proc called CustomPostSanityCheck() that takes no arguments, and must return 0 or 1. If 1 is returned, the submission process will continue, otherwise it will be aborted. Here
+is an example script:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">global</span> <span class="n">proc</span> <span class="nb">int</span> <span class="n">CustomPostSanityCheck</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="o">//</span> <span class="n">Don</span><span class="s1">&#39;t allow mayaSoftware jobs to be submitted</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">GetCurrentRenderer</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;mayaSoftware&quot;</span> <span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-maya-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Do I need to install Maya on each machine that will render and all 3rd party plugins that are required?</strong></p>
+<blockquote>
+<div><p>Yes. Traditionally, Maya and all required scripts &amp; 3rd party plugins should always be installed and licensed (where applicable) on each machine where it is intended to network render on. However, VFX studios tend to operate a Linux OS platform and take advantage of installing software onto a centralized file server that importantly has the performance to support this configuration and then all local machines can be configured to point at this central location. Additionally, 3rd party plugins/scripts can then be added to this central server path location in combination with floating licenses. This level of custom deployment and configuration is beyond the scope of Thinkbox support and you would be best advised to engage an approved Autodesk reseller or Autodesk directly on best practices here. Here are some URL links, which may be of assistance. If you are able to install and successfully run Maya &amp; all your plugins/scripts from a network location in your studio, then Deadline will be able to support network rendering from this location as well. Simply update the MayaBatch &amp; MayaCmd plugins with the new executable path location using Deadline Monitor, click on “Tools” –&gt; “Power User Mode” –&gt; “Configure Plugins…” –&gt; “MayaBatch” or “MayaCmd”.</p>
+<p><a class="reference external" href="https://www.vonnau.com/articles/maya-network-install/">How to install Maya on a network share</a></p>
+</div></blockquote>
+<p><strong>Can Maya’s environment variables be controlled?</strong></p>
+<blockquote>
+<div><p>Yes. Typically a <code class="docutils literal notranslate"><span class="pre">Maya.env</span></code> file is used as explained in the <a class="reference external" href="https://help.autodesk.com/view/MAYAUL/2023/ENU/?guid=GUID-8EFB1AC1-ED7D-4099-9EEE-624097872C04">Autodesk Maya</a> docs. Standard operating system commands can also be used to set an environment variable via Deadline’s <a class="reference internal" href="environment.html#environment-ref-label"><span class="std std-ref">Render Environment</span></a> controls. Here are some links to assist you in locating the actual Maya environment variables:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://paulnendick.github.io/articles/maya-rosetta-stone.html">Maya Environment Variables</a></p></li>
+<li><p><a class="reference external" href="https://help.autodesk.com/view/MAYAUL/2023/ENU/?guid=GUID-925EB3B5-1839-45ED-AA2E-3184E3A45AC7">Autodesk Maya’s Environment Variables</a></p></li>
+</ul>
+</div></blockquote>
+<p><strong>Which versions of Maya are supported?</strong></p>
+<blockquote>
+<div><p>Maya versions 2010 and later are all supported.</p>
+</div></blockquote>
+<p><strong>Which Maya renderers are supported?</strong></p>
+<blockquote>
+<div><p>All Maya renderers should work fine with Deadline. The renderers that are known to work with Deadline are 3Delight, Arnold, Caustic Visualizer, Final Render, Gelato, Iray, Krakatoa, Maxwell, MayaSoftware, MayaHardware, MayaVector, Mental
+Ray, Octane, RedShift, RenderMan, RenderMan RIS, Turtle, and V-Ray. If you see a Maya renderer that’s not on this list, contact <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> and let us know!</p>
+</div></blockquote>
+<p><strong>Does the Maya plugin support Tile Rendering?</strong></p>
+<blockquote>
+<div><p>Yes. See the <a class="reference internal" href="#maya-region-rendering-ref-label"><span class="std std-ref">Region Rendering Options</span></a> section above for more details.</p>
+</div></blockquote>
+<p><strong>Does the Maya plugin support multiple arbitrary sized, multi-resolution Tile Rendering for both stills or animations and automatic re-assembly, including the use of multi-channel image formats and arbitary Render Passes? (incl. V-Ray/Arnold/MR support?)</strong></p>
+<blockquote>
+<div><p>Yes. We call it ‘Jigsaw’ and it’s unique to the Deadline system! See the “Region Rendering Options” section above for more details.</p>
+</div></blockquote>
+<p><strong>Which Maya application should I select as the render executable in the MayaCmd plugin configuration?</strong></p>
+<blockquote>
+<div><p>Select the Render.exe application. This is Maya’s command line renderer.</p>
+</div></blockquote>
+<p><strong>Which Maya application should I select as the render executable in the MayaBatch plugin configuration?</strong></p>
+<blockquote>
+<div><p>Select the MayaBatch.exe application. This is Maya’s batch renderer.</p>
+</div></blockquote>
+<p><strong>What is the MayaBatch plugin, and how is it different than the MayaCmd plugin?</strong></p>
+<blockquote>
+<div><p>This plugin keeps the Maya scene loaded in memory between frames, thus reducing the overhead of rendering the job. This is the recommended plugin to use, but if you run into any problems, you can always try using the MayaCmd plugin.</p>
+</div></blockquote>
+<p><strong>Why is each task of my job is rendering the same frame(s)?</strong></p>
+<blockquote>
+<div><p>This happens if you have the Renumber Frames option enabled in your Maya render settings. Each task is a separate batch, and if Renumber Frames is enabled, each batch will start at that frame number.</p>
+</div></blockquote>
+<p><strong>I have a multi-core machine, but when rendering the machine isn’t using 100% of the cpu. What can I do?</strong></p>
+<blockquote>
+<div><p>When submitting the job to Maya, set the Threads option to 0. This will instruct Maya to use the optimal number of threads when rendering based on the machine’s core-count.</p>
+</div></blockquote>
+<p><strong>Does Deadline support Maya render layers?</strong></p>
+<blockquote>
+<div><p>Yes. You can either submit one job that renders all the layers, or you can submit a single job per layer.</p>
+</div></blockquote>
+<p><strong>Can I render scenes that use Maya Fur?</strong></p>
+<blockquote>
+<div><p>A recommended setup for Maya is to have your project folder on a shared location that all of your machines can see (whether it be a Windows folder share or a mapped path), then create your Maya scene in this project folder.
+This way, when you submit the job, you can specify the shared project path in the submission dialog, and all of your Worker machines will be able to see it (and therefore see the Maya Fur folders within the project folder).</p>
+</div></blockquote>
+<p><strong>Can I make use of the particle cache during network renders?</strong></p>
+<blockquote>
+<div><p>Yes you can. All that is necessary to do this is to make your scene’s project directory network-accessible by your Workers. Please consult the Autodesk Maya documentation on how to create and save a <a class="reference external" href="https://knowledge.autodesk.com/support/maya/learn-explore/caas/CloudHelp/cloudhelp/2015/ENU/Maya/files/GUID-84735697-416C-47F2-81C9-81D34DE99532-htm.html">particle disk cache</a>.</p>
+</div></blockquote>
+<p><strong>Can I submit custom Maya jobs to Deadline?</strong></p>
+<blockquote>
+<div><p>Yes you can. We support a number of custom job types which are all available via the integrated Maya submitter:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#maya-geometry-caching-job-ref-label"><span class="std std-ref">Geometry Caching Job</span></a></p></li>
+<li><p><a class="reference internal" href="#maya-fluid-caching-job-ref-label"><span class="std std-ref">Fluid Caching Job</span></a></p></li>
+<li><p><a class="reference internal" href="#maya-script-job-ref-label"><span class="std std-ref">Maya Script (MEL/Python) Job</span></a></p></li>
+<li><p><a class="reference internal" href="#maya-alembic-export-job-ref-label"><span class="std std-ref">Alembic Export Job</span></a></p></li>
+<li><p><a class="reference internal" href="#maya-bifrost-simulation-job-ref-label"><span class="std std-ref">Bifrost Simulation Job</span></a></p></li>
+</ul>
+</div></blockquote>
+<p><strong>When clicking on one of the folder browser buttons in the Maya submission dialog, I sometimes get an error.</strong></p>
+<blockquote>
+<div><p>There is an article on this problem. It’s a .NET problem that seems to randomly occur when the user specifies a path of more than 130 characters, but it looks like Microsoft provides a hotfix for it.</p>
+</div></blockquote>
+<p><strong>When submitting the job from Maya, if I check the Submit Each Render Layer As A Separate Job box, no jobs are submitted when you click submit.</strong></p>
+<blockquote>
+<div><p>The render layers you want to submit need to be set to renderable (the letter ‘R’ need to be there next to the render layer) for the submitter to submit the layer. Note that render layer should not be confused with
+display layer. Deadline only deals with render layers. It is not using the Maya option to render only the content of a specific display layer.</p>
+</div></blockquote>
+<p><strong>I’m trying to render certain frame range from Maya, but Deadline is rendering the entire frame range set in the Maya render globals.</strong></p>
+<blockquote>
+<div><p>If you have the Submit Each Render Layer As A Separate Job box checked, Deadline grabs the frame information from each individual layer’s render globals when submitting the job. If unchecked, Deadline will use the info
+from the Frame List in the submission dialog.</p>
+</div></blockquote>
+<p><strong>Rendering Maya scenes with Deadline is taking forever in comparison to a local render of the same file.</strong></p>
+<blockquote>
+<div><p>One thing you can try is ensuring that the Local Rendering option is enabled when submitting the job to Deadline. This forces Maya to render the frame locally, then copy it to the final destination after. This has been known to improve rendering speeds.</p>
+</div></blockquote>
+<p><strong>How do I configure Mental Ray Satellite to render Mental Ray for Maya jobs with Deadline?</strong></p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Choose a satellite master machine, then modify the maya.rayhosts of the that machine so that it uses the Workers you want.</p></li>
+<li><p>Only put the master machine in Deadline.</p></li>
+<li><p>Submit a job, and make sure that the job will be picked-up by the master machine you have setup. Use pools to do so.</p></li>
+<li><p>In the job property page of the Maya job, in the Maya tab, you could add the following line in the additional arguments field: -rnm 1</p></li>
+</ol>
+</div></blockquote>
+<p>This -rnm 1 means “render no master true”, which will force the master not to participate in the rendering but only submit and receive the render tasks. You will get better results this way.</p>
+<p>You could also use -rnm 0 which means “render no master false” and force 1 cpu on the master (if your master is a dual cpu) so you have 1 cpu free on the master to dispatch the task. In short you should always have 1 cpu free on
+the master machine for dispatching or else your render time will suffer.</p>
+<p><strong>Can I submit MEL or Python Maya script files to Deadline?</strong></p>
+<blockquote>
+<div><p>Yes, you can submit your own custom scripts from the Advanced tab in the Maya submission script in the Monitor Submit menu or via the <a class="reference internal" href="#maya-script-job-ref-label"><span class="std std-ref">Maya Script Job</span></a> job type in the integrated Maya submitter.</p>
+</div></blockquote>
+<p><strong>Can I perform Fume FX simulations with Deadline?</strong></p>
+<blockquote>
+<div><p>Yes and it’s supported by both our MayaBatch &amp; MayaCmd plugins. To do so, follow these steps:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Requires min. FumeFX for Maya v3.5.4</p></li>
+<li><p>Ensure you have “MayaSoftware” selected as renderer in Maya.</p></li>
+<li><p>Before you launch the Maya submission script, make sure that the Fume FX NetRender (Backburner) toggle button is “ON” in the FumeFX options in Maya.</p></li>
+<li><p>Fume FX output paths must be UNC or via mapped drive letter (Windows)</p></li>
+<li><p>Deadline Worker must have either Fume FX “full” or Fume FX “simulation” license available and authorized. If you wish to use “Sim Only Mode” license, then you can switch via the “Fume FX Prefs Dialog” in Maya prior to
+Deadline Submission. Note, that you must restart Maya for this license mode change to be committed. Do this before submitting to Deadline if you need to use a Sim. only license on a Deadline Worker.</p></li>
+<li><p>Submit any arbitrary Maya single frame to begin the Fume FX Simulation (Fume FX uses its own frame range). However, note that Maya will render whatever single frame the Fume FX job was submitted on at the end of the
+simulation.</p></li>
+<li><p>Please see the Fume FX for Maya help manual for more details on the above requirements.</p></li>
+</ol>
+</div></blockquote>
+</div></blockquote>
+<p><strong>How can I region render large V-Ray scenes?</strong></p>
+<blockquote>
+<div><p>By changing the memory frame buffer on the V-Ray Common tab of the render settings to None you will be able to render larger tiles since V-Ray does not crop the tiles.</p>
+</div></blockquote>
+<p><strong>How many GPUs can I use with RedShift Renderer?</strong></p>
+<blockquote>
+<div><p>Using Deadline’s <a class="reference internal" href="worker-config.html#gpu-affinity-ref-label"><span class="std std-ref">GPU Affinity</span></a> you can assign up to a maximum of <strong>8</strong> GPUs to be used by RedShift per machine. Note, this current RedShift limitation also means that only the <strong>first 8 GPUs</strong> (by ordinal) are usable. Unfortunately, using multiple Deadline Workers with GPU affinity configured (Worker 1: 0-7, Worker 2: 7-15) does not workaround this limitation, which is RedShift / machine limited at this time. The following RedShift error will occur if you attempt to use more GPU devices than is currently supported:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">17</span> <span class="mi">16</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span><span class="mi">34</span><span class="p">:</span>  <span class="mi">0</span><span class="p">:</span> <span class="n">STDOUT</span><span class="p">:</span> <span class="n">ASSERT</span> <span class="n">FAILED</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">17</span> <span class="mi">16</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span><span class="mi">34</span><span class="p">:</span>  <span class="mi">0</span><span class="p">:</span> <span class="n">STDOUT</span><span class="p">:</span> <span class="n">File</span> <span class="n">GPUComputing_CUDA</span><span class="o">.</span><span class="n">cpp</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">17</span> <span class="mi">16</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span><span class="mi">34</span><span class="p">:</span>  <span class="mi">0</span><span class="p">:</span> <span class="n">STDOUT</span><span class="p">:</span> <span class="n">Line</span> <span class="mi">442</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">17</span> <span class="mi">16</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span><span class="mi">34</span><span class="p">:</span>  <span class="mi">0</span><span class="p">:</span> <span class="n">STDOUT</span><span class="p">:</span> <span class="n">Device</span> <span class="n">ordinal</span> <span class="n">out</span> <span class="n">of</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>I am overriding the GPU affinity of my Workers but Redshift appears to be using the wrong GPUs.</strong></p>
+<blockquote>
+<div><p>When rendering using Redshift, the index of the gpu in the render logs may not be accurate.  Redshift prints out the indexes based on which GPUs it is using and not based off of the index of the GPU on the machine.</p>
+</div></blockquote>
+<p><strong>When rendering my Workers are ignoring the CPU Affinity.</strong></p>
+<blockquote>
+<div><p>Some renderers modify the CPU affinity when a render starts.  In these cases you can enable the Plugin Configuration option “Limit Threads To CPU Affinity” which will limit the number of threads the renderer can use.</p>
+</div></blockquote>
+<p><strong>Why doesn’t Maya 2018.5 have it’s own render executable?</strong></p>
+<blockquote>
+<div><p>Unlike previous years Maya 2018.5 is not a separate install and is treated as Maya 2018 in all respects.</p>
+</div></blockquote>
+<p><strong>Why is Renderman 22 considered a separate renderer in the monitor submitter?</strong></p>
+<blockquote>
+<div><p>For Renderman 22 Pixar rewrote their Maya support so it requires a separate render workflow compared to previous versions.  Thus we need a way to tell which workflow we should be using.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Maya error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here, please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><strong>Error in StartJob: Error in RenderExecutable: 64 bit Maya ####_0 render executable was not found in the semicolon separated list “C:/Program Files/Autodesk/Maya####/bin/MayaBatch.exe;/usr/autodesk/maya####/bin/maya”. The path to the render executable can be configured from the Plugin Configuration in the Deadline Monitor.</strong></p>
+<blockquote>
+<div><p>(Where #### is the year of Maya release such as “2015”). Using Deadline Monitor, click on “Tools” –&gt; “Power User Mode” –&gt; “Configure Plugins…” –&gt; “MayaBatch” or “MayaCmd”. The above error message is indicating that Deadline has been unable to locate the correct local install path of Maya on the machine which generated the error message. Deadline already ships with all the known, default install path locations for Maya across the 3 supported operating systems. So you shouldn’t have to edit these paths unless you have installed Maya to a custom location. Please note the subtle diffences between the different executables being used between MayaBatch &amp; MayaCmd and also the slightly different file path locations depending on OS. If in doubt, please contact <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> for further assistance.</p>
+</div></blockquote>
+<p><strong>Error in RenderTasks: Monitored managed process “MayaBatch” has exited or been terminated.</strong></p>
+<blockquote>
+<div><p>This is the most common Maya error in Deadline. The “MayaBatch” plugin, which keeps the Maya scene file open between tasks (frames) will sometimes not display the full stack trace (error message) regarding the root cause of your issue. To obtain a full error message, you should re-submit the Maya file via either Monitor –&gt; “Submit Maya Job To Deadline” –&gt; “Advanced Options” –&gt; uncheck the “Use MayaBatch Plugin” checkbox OR alternatively in the in-app, Maya submission UI –&gt; “Render Options” –&gt; uncheck the “Use MayaBatch Plugin” checkbox. Allow this job to run and fail in Deadline and a more comprehensive error message should now be available. It is this comprehensive error message that should be sent to <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> if further assistance is required.</p>
+</div></blockquote>
+<p><strong>Exception during render: Error: (Mayatomr) : could not get a license</strong></p>
+<blockquote>
+<div><p>Mental Ray is reporting that it can’t find a license. Mental Ray requires an additional license for network rendering, whereas renders such as mayaSoftware and mayaHardware simply uses your Maya license.</p>
+<p>Certain versions of Maya come with satellite licenses for Mental Ray, but this requires some additional setting up to enable network rendering. It’s probably best to contact the Maya support team about this.</p>
+</div></blockquote>
+<p><strong>Error: setAttr: The attribute ‘x’ is locked or connected and cannot be modified.</strong></p>
+<blockquote>
+<div><p>Some of Maya’s attributes are updated during the process of rendering on Deadline. If you get this error for a particular setting (in the example above, referred to as ‘x’), that you right-click on the actual ‘text’ label of it’s UI in Maya and select “Unlock Attribute”, to ensure this particular setting can be updated in Maya by Deadline. An example error might look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">STDOUT</span><span class="p">:</span> <span class="n">mel</span><span class="p">:</span> <span class="n">Error</span><span class="p">:</span> <span class="n">file</span><span class="p">:</span> <span class="n">C</span><span class="p">:</span><span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">mike</span><span class="o">/</span><span class="n">AppData</span><span class="o">/</span><span class="n">Local</span><span class="o">/</span><span class="n">Temp</span><span class="o">/</span><span class="n">tmp6386</span><span class="o">.</span><span class="n">tmp</span> <span class="n">line</span> <span class="mi">12</span><span class="p">:</span>
+<span class="n">setAttr</span><span class="p">:</span> <span class="n">The</span> <span class="n">attribute</span> <span class="s1">&#39;vraySettings.fileNamePrefix&#39;</span> <span class="ow">is</span> <span class="n">locked</span> <span class="ow">or</span> <span class="n">connected</span> <span class="ow">and</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">modified</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>In the above example, in the ‘Render Settings’ in Maya, the V-Ray ‘File name prefix:’ setting has been locked and should be unlocked (by right-clicking on the UI text label) to resolve the issue and the file re-submitted to Deadline.</p>
+</div></blockquote>
+<p><strong>Exception during render: Renderer returned non-zero error code, 211</strong></p>
+<blockquote>
+<div><p>When Maya prints this error message it usually means that Maya can’t access a particular path because it either doesn’t exist or it doesn’t have the necessary read/write permissions to access it. This error tends to occur
+when Maya is either loading the scene or other referenced data or when saving the final output images.</p>
+<p>When you get this error, you should check the Worker log that is included with the error report. If it is a path problem, Maya shows which path it wasn’t able to access. Check to make sure that the Worker machine rendering
+the job can see the path, and that it has the necessary permissions to read/write to it. If it’s not a path problem, the Worker log should still provide some useful information that can help explain the problem.</p>
+<p>There is also the case where Maya exits with this error code after successfully rendering the images. If this is the case, there are two things to try:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>When you submit the job, enable the option to ignore error code 211.</p></li>
+<li><p>When you submit the job, enable the MayaBatch option. Deadline doesn’t check error codes in this case.</p></li>
+</ol>
+</div></blockquote>
+</div></blockquote>
+<p><strong>Cannot open renderer description file “vrayRenderer.xml” on macOS</strong></p>
+<blockquote>
+<div><p>We are not sure if this is specific to a studio’s installation of V-Ray for Maya on macOS (f.e. a studio’s custom environment variables might be confusing the V-Ray installer) or if this is just a bug in the V-Ray installer specficially on macOS. The issue has been reported to <a class="reference external" href="mailto:support&#37;&#52;&#48;chaosgroup&#46;com">support<span>&#64;</span>chaosgroup<span>&#46;</span>com</a>. Currently, Maya 20xx on macOS (where xx indicates any year of Maya that V-Ray ships support for) has 3 x “rendererDesc” directories in the following locations:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/Applications/Autodesk/maya20xx/Maya.app/Contents/bin/rendererDesc/</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/Applications/Autodesk/maya20xx/Maya.app/Contents/MacOS/rendererDesc/</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/Applications/Autodesk/maya20xx/bin/rendererDesc</span></code></p></li>
+</ol>
+</div></blockquote>
+<p>The V-Ray installer adds the “vrayRenderer.xml” file to locations (2) &amp; (3). However, Maya requires this file to reside primarily in location(s) (1) and/or (2).</p>
+<p>There are a couple of ways to resolve this issue whilst hopefully a fix is provided by Chaos Group in the future.</p>
+<blockquote>
+<div><ul>
+<li><p>Ensure your Workers have the environment variable “MAYA_RENDER_DESC_PATH” defined and pointing to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">Applications</span><span class="o">/</span><span class="n">Autodesk</span><span class="o">/</span><span class="n">maya20xx</span><span class="o">/</span><span class="n">Maya</span><span class="o">.</span><span class="n">app</span><span class="o">/</span><span class="n">Contents</span><span class="o">/</span><span class="n">MacOS</span><span class="o">/</span><span class="n">rendererDesc</span>
+</pre></div>
+</div>
+</li>
+<li><p>Alternatively, ensure the user shell of the Deadline Worker has this setting exported such as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">MAYA_RENDER_DESC_PATH</span><span class="o">=</span><span class="s2">&quot;/Applications/Autodesk/maya20xx/Maya.app/Contents/MacOS/rendererDesc&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Finally, another solution is to ensure on each of your rendernodes you copy the “vrayRenderer.xml” from location (2) to location (1).</p></li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<p><strong>Exception during render: Error: Too many open files</strong></p>
+<blockquote>
+<div><p>This is where Maya is unable to open all the file handles it needs to operate correctly. The fix depends on your operating system being used on your Deadline Worker.</p>
+<p>On Linux/macOS, you will need to increase the ‘ulimit -n’ (open files) limit on the system. Typically, by default, this number might be low such as 256. You should consider increasing this number towards something like 64000 (for Linux) or 10000 (for macOS). Check your distribution and operating system documentation for more information on this topic. Ensure this is a system-wide change for all users of Deadline Worker and the new setting remains in place after a system reboot.</p>
+<p>On Windows, ensure you ‘disable offline files’ on the OS. Windows Group Policy can be used here to globally disable this feature in your studio. Here is more infomation on <a class="reference external" href="http://hs.windows.microsoft.com/hhweb/content/m-en-us/p-6.2/id-93a550df-34cd-4497-85d0-8732602f5959/">Microsoft Offline Files</a>.</p>
+</div></blockquote>
+<p><strong>Exception during render: Error: Cannot find procedure “getStrokeUVFromPoly”</strong></p>
+<blockquote>
+<div><p>This error can occur when rendering with paint effects. When you write prerender/postrender scripts be sure to use Maya commands and not function wrappers that the gui posts since a huge number of functions don’t get
+loaded when rendering in batch mode.</p>
+<p>For a quick fix, add the following before the call to the prerenderscripts main functions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="s2">&quot;getStrokes&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Turtle: The system cannot find the path specified.</strong></p>
+<blockquote>
+<div><p>When Turtle is installed, it sets some environment variables. However, Deadline will not recognize these variables until the Launcher (the application in the Windows tray) is restarted. Restarting the Launcher will fix this problem.</p>
+</div></blockquote>
+<p><strong>Exception during render: Renderer returned non-zero error code, -1073741819</strong></p>
+<blockquote>
+<div><p>The error code -1073741819 is equivalent to 0xC0000005, which represents a Memory Access Violation error. So Maya is either running out of memory, or memory is becoming corrupt. Take a look at the full render log to see if
+Maya prints out any information prior to the crash that might explain the problem. Autodesk have written a number of knowledgebase articles which may help here:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://knowledge.autodesk.com/support/maya/troubleshooting/caas/sfdcarticles/sfdcarticles/Maya-Renders-crash-on-Headless-render-nodes-more-than-50-percent-of-the-time.html">Maya Renders crash on Headless render nodes more than 50 percent of the time</a></p></li>
+<li><p><a class="reference external" href="https://knowledge.autodesk.com/support/maya/troubleshooting/caas/sfdcarticles/sfdcarticles/Maya-exited-with-status-1073741819.html">Maya exited with status -1073741819</a></p></li>
+<li><p><a class="reference external" href="https://knowledge.autodesk.com/support/maya/troubleshooting/caas/discussion/t5/Installation-Licensing/-Maya-exited-with-status-1073741819-Maya-2016-5-rendering-from-CMD/td-p/6377138.html">Maya exited with status -1073741819 - Maya 2016.5 rendering from CMD</a></p></li>
+<li><p>Ensure you are running the latest <a class="reference external" href="https://knowledge.autodesk.com/support/maya/troubleshooting/caas/CloudHelp/cloudhelp/ENU/123112/files/maya-certified-hardware-html.html">supported</a> graphics card drivers for your version of <a class="reference external" href="https://knowledge.autodesk.com/support/maya/troubleshooting/caas/sfdcarticles/sfdcarticles/System-requirements-for-Autodesk-Maya.html">Maya</a>.</p></li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<p><strong>Error: The transforms path found in the configuration file does not exist: C:/Users/%USERNAME%/Documents/maya/2017/prefs/synColorConfig.xml</strong></p>
+<blockquote>
+<div><p>Maya 2017 can fail to start or crash instantly if the following entry is not present in your <a class="reference external" href="https://knowledge.autodesk.com/support/maya/learn-explore/caas/CloudHelp/cloudhelp/2016/ENU/Maya/files/GUID-5F28462D-0966-492C-96DC-6330308993F6-htm.html">SynColor</a> Configuration File. Make sure the SynColor xml file: <code class="docutils literal notranslate"><span class="pre">synColorConfig.xml</span></code> inside the Users folder (meaning the user that the renderfarm is rendering as) has the line <code class="docutils literal notranslate"><span class="pre">&lt;TransformsHome</span> <span class="pre">dir=&quot;C:/Program</span> <span class="pre">Files/Autodesk/Maya2017/synColor&quot;</span> <span class="pre">/&gt;</span></code> in it.</p>
+<p>To expand: the SynColor file should look like this on Windows OS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;SynColorConfig version=&quot;2.0&quot;&gt;
+   &lt;AutoConfigure graphicsMonitor=&quot;false&quot; /&gt;
+   &lt;TransformsHome dir=&quot;C:/Program Files/Autodesk/Maya2017/synColor&quot; /&gt;
+   &lt;SharedHome dir=&quot;C:/Users/%USERNAME%/Documents/maya/synColor/Shared/&quot; /&gt;
+   &lt;ReferenceTable&gt;
+      &lt;Ref alias=&quot;OutputToSceneBridge&quot; path=&quot;misc/identity.ctf&quot; basePath=&quot;Autodesk&quot; /&gt;
+      &lt;Ref alias=&quot;SceneToOutputBridge&quot; path=&quot;RRT+ODT/ACES_to_CIE-XYZ_v0.1.1.ctf&quot; basePath=&quot;Autodesk&quot; /&gt;
+      &lt;Ref alias=&quot;broadcastMonitor&quot; path=&quot;display/broadcast/CIE-XYZ_to_HD-video.ctf&quot; basePath=&quot;Autodesk&quot; /&gt;
+      &lt;Ref alias=&quot;defaultLook&quot; path=&quot;misc/identity.ctf&quot; basePath=&quot;Autodesk&quot; /&gt;
+      &lt;Ref alias=&quot;graphicsMonitor&quot; path=&quot;interchange/sRGB/CIE-XYZ_to_sRGB.ctf&quot; basePath=&quot;Autodesk&quot; /&gt;
+   &lt;/ReferenceTable&gt;
+&lt;/SynColorConfig&gt;
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Error: The SynColor package is not installed: C:/ProgramData/Autodesk/Synergy/SynColor/2017</strong></p>
+<blockquote>
+<div><p>Same error as the above entry. Please follow the same solution to resolve depending on your OS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Windows</span><span class="p">:</span> <span class="n">C</span><span class="p">:</span>\<span class="n">ProgramData</span>\<span class="n">Autodesk</span>\<span class="n">Synergy</span>\<span class="n">SynColor</span>\<span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span>\<span class="n">synColorConfig</span><span class="o">.</span><span class="n">xml</span>
+<span class="n">Linux</span><span class="p">:</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Autodesk</span><span class="o">/</span><span class="n">Synergy</span><span class="o">/</span><span class="n">SynColor</span><span class="o">/&lt;</span><span class="n">version</span><span class="o">&gt;/</span><span class="n">synColorConfig</span><span class="o">.</span><span class="n">xml</span>
+<span class="n">macOS</span><span class="p">:</span> <span class="o">/</span><span class="n">Applications</span><span class="o">/</span><span class="n">Autodesk</span><span class="o">/</span><span class="n">Synergy</span><span class="o">/</span><span class="n">SynColor</span><span class="o">/&lt;</span><span class="n">version</span><span class="o">&gt;/</span><span class="n">synColorConfig</span><span class="o">.</span><span class="n">xml</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Maya 2017 Update 3 fails to render</strong></p>
+<blockquote>
+<div><p>Unfortunately, Autodesk introduced a regression into Maya 2017 Update 3 where batch rendering crashes if the “-im” flag or other non-numeric render-time overrides are invoked on the command line to override the image file prefix at render time (Autodesk JIRA BUG: MAYA-81011). Autodesk have published this article <a class="reference external" href="https://knowledge.autodesk.com/support/maya/troubleshooting/caas/sfdcarticles/sfdcarticles/Script-to-fix-Batch-Render-crash-issue-with-im-flag-in-Maya-2017-Update-3.html">Script to fix Batch Render crash issue with “-im” flag in Maya 2017 Update 3</a> with an updated <code class="docutils literal notranslate"><span class="pre">mayaBatchRenderProcedure.mel</span></code> file to fix the issue. Note: Maya 2017 Update 4 has now been released which has resolved this issue.</p>
+</div></blockquote>
+<p><strong>mental ray: out of memory</strong></p>
+<blockquote>
+<div><p>Try tweaking your Memory and Performance settings in the mental ray tab in the Maya Render Settings window. Try increasing the Physical memory setting (if you have the extra RAM). A common suggestion is to set it to 80% of
+your available RAM. You could also try tweaking the Acceleration method settings.</p>
+<p>Another thing you can try is trimming down your scene so that is uses less memory.</p>
+</div></blockquote>
+<p><strong>V-Ray error: [VFBCore::SetRegion] Error writing render region to raw image file.</strong></p>
+<blockquote>
+<div><p>Ensure V-Ray’s VFB “region render” &amp; “track mouse” buttons are disabled prior to submission to Deadline. It is also recommended to disable “Hide V-Ray VFB in batch mode” &amp; “Disable region rendering in batch mode” in the V-Ray Common settings under <a class="reference external" href="https://docs.chaos.com/display/VMAYA/Common+tab">Render View</a> in Maya prior to submission if you are already using Jigsaw for region/tile rendering.</p>
+</div></blockquote>
+<p><strong>Error: This file contains legacy render layers and Maya is currently in Render Setup mode. This combination is unsupported. You can switch to Legacy Render Layers mode from the Preferred Render Setup system drop-down list in the Rendering section of the Preferences window.</strong></p>
+<blockquote>
+<div><p>In Maya 2016.5, Autodesk introduced a new render layer system which is incompatible with their old one. The system is loaded on startup via the preferences on a per machine basis. Typically, you might see some of your machines are succeeding to render (set to load the Legacy Render Layer system), whereas other Workers might be failing as their preference hasn’t been changed (Maya 2016.5 and onwards defaults to the new “Render Setup”).</p>
+<p>In Deadline version 8.0.3, we added support to handle this by switching your Workers dynamically to the proper version of render layers for the file they’re rendering (we gather this info during job submission). The easiest solution would be to upgrade to the latest version of Deadline, since we handle this for you.</p>
+</div></blockquote>
+<p><strong>Error: “Unsupported Display” QuickTime pop-up dialog / “quicktimeShim.exe” application hangs</strong></p>
+<blockquote>
+<div><p>This error may show itself as a QuickTime pop-up dialog on Windows OS 8/10 based machines only when the workstation is “locked” by the user OR can sometimes just be crashing, with Windows Event Viewer logs pointing to the failed execution of “quicktimeShim.exe” application in the Maya bin directory. This error has been seen in Maya 2016, 2016.5 and 2017. This issue seems more prevalent on AMD graphics based machines. The following has been known to resolve this issue:</p>
+<ul>
+<li><p>Update <a class="reference external" href="https://forums.autodesk.com/t5/maya-forum/i-just-installed-it-when-i-start-the-software-the-output-window/td-p/6697596">graphics drivers</a> to latest available version.</p></li>
+<li><p>Navigate to the <em>bin</em> directory of each version of Maya installed on your machine(s):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\Autodesk\Maya2016\bin\quicktimeShim.exe</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\Autodesk\Maya2016.5\bin\quicktimeShim.exe</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\Autodesk\Maya2017\bin\quicktimeShim.exe</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Right-click the <code class="docutils literal notranslate"><span class="pre">quicktimeShim.exe</span></code> file.</p></li>
+<li><p>Choose Properties.</p></li>
+<li><p>On the Compatibility tab, select the “Run This Program As An Administrator” option.</p></li>
+<li><p>Click OK.</p></li>
+<li><p>If you see a User Account Control prompt, accept it.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>ERROR | [driver_exr] defaultArnoldDriver&#64;driver_exr.RGBA: can’t create file “.exr”: OpenEXR exception: Permission denied.</strong></p>
+<blockquote>
+<div><p>This error means that Arnold could not find the path to the output location.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Maya</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#pipeline-tools">Pipeline Tools</a></li>
+<li><a class="reference internal" href="#maya-render-job">Maya Render Job</a></li>
+<li><a class="reference internal" href="#region-rendering-options">Region Rendering Options</a></li>
+<li><a class="reference internal" href="#gpu-affinity">GPU Affinity</a></li>
+<li><a class="reference internal" href="#renderer-options">Renderer Options</a><ul>
+<li><a class="reference internal" href="#mental-ray">Mental Ray</a></li>
+<li><a class="reference internal" href="#v-ray">V-Ray</a></li>
+<li><a class="reference internal" href="#arnold">Arnold</a></li>
+<li><a class="reference internal" href="#redshift">Redshift</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mr-export-job">MR Export Job</a></li>
+<li><a class="reference internal" href="#v-ray-export-job">V-Ray Export Job</a></li>
+<li><a class="reference internal" href="#rman-export-job">RMan Export Job</a></li>
+<li><a class="reference internal" href="#arnold-export-job">Arnold Export Job</a></li>
+<li><a class="reference internal" href="#maxwell-export-job">Maxwell Export Job</a></li>
+<li><a class="reference internal" href="#redshift-export-job">Redshift Export Job</a></li>
+<li><a class="reference internal" href="#bifrost-sim-job">Bifrost Sim Job</a></li>
+<li><a class="reference internal" href="#alembic-export-job">Alembic Export Job</a></li>
+<li><a class="reference internal" href="#maya-script-job">Maya Script Job</a></li>
+<li><a class="reference internal" href="#fluid-caching-job">Fluid Caching Job</a></li>
+<li><a class="reference internal" href="#geo-caching-job">Geo Caching Job</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cross-platform-rendering-considerations">Cross-Platform Rendering Considerations</a></li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a><ul>
+<li><a class="reference internal" href="#mayabatch">MayaBatch</a></li>
+<li><a class="reference internal" href="#mayacmd">MayaCmd</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+<li><a class="reference internal" href="#network-installation">Network Installation</a></li>
+<li><a class="reference internal" href="#verify-installation">Verify Installation</a></li>
+<li><a class="reference internal" href="#custom-sanity-check">Custom Sanity Check</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-maxwell.html"
+                        title="previous chapter">Maxwell</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-mediaencoder.html"
+                        title="next chapter">Media Encoder</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-mediaencoder.html" title="Media Encoder"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-maxwell.html" title="Maxwell"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Maya</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,816 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3ds Command &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="After Effects" href="app-after-effects.html" />
+    <link rel="prev" title="3ds Max - Integrated Submitter - Scripting" href="app-3ds-max-smtd-scripting.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-after-effects.html" title="After Effects"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-3ds-max-smtd-scripting.html" title="3ds Max - Integrated Submitter - Scripting"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Command</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ds-command">
+<span id="app-3ds-command-ref-label"></span><h1>3ds Command<a class="headerlink" href="#ds-command" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As of Deadline 10, Autodesk’s Backburner is no longer required to be installed with 3ds Max to allow Deadline to control network rendering of 3ds Max.</p>
+</div>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit jobs from within 3ds Max by installing the <a class="reference internal" href="#app-3ds-command-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a>, or you can submit them from the Monitor. The instructions for installing the <a class="reference internal" href="#app-3ds-command-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<p>Once installed, you can submit from within 3ds Max, by selecting <code class="docutils literal notranslate"><span class="pre">Deadline</span></code> → <code class="docutils literal notranslate"><span class="pre">Submit</span> <span class="pre">Max</span> <span class="pre">To</span> <span class="pre">Deadline</span> <span class="pre">(3dsCmd)</span></code> from the 3ds Max menu bar.</p>
+<p><a class="reference internal" href="../_images/integrated_3dscmd_01.png"><img alt="integrated01" src="../_images/integrated_3dscmd_01.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/integrated_3dscmd_02.png"><img alt="integrated02" src="../_images/integrated_3dscmd_02.png" style="height: 400px;" /></a></p>
+<p><a class="reference internal" href="../_images/sub_3dscmd_01.png"><img alt="monitor01" src="../_images/sub_3dscmd_01.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_3dscmd_02.png"><img alt="monitor02" src="../_images/sub_3dscmd_02.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_3dscmd_03.png"><img alt="monitor03" src="../_images/sub_3dscmd_03.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_3dscmd_04.png"><img alt="monitor04" src="../_images/sub_3dscmd_04.png" style="height: 400px;" /></a></p>
+<div class="section" id="submission-options">
+<span id="dscmd-submission-options-ref-label"></span><h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation, and the Draft/Integration options are explained in the
+<a class="reference internal" href="job-submitting.html#draft-shotgun-ref-label"><span class="std std-ref">Draft and Integration</span></a> documentation. The 3ds Command specific options are:</p>
+<dl>
+<dt><strong>Force Build</strong></dt><dd><p>You can force 32 bit or 64 bit rendering.</p>
+</dd>
+<dt><strong>Apply VideoPost To Scene</strong></dt><dd><p>Whether or not to use VideoPost during rendering.</p>
+</dd>
+<dt><strong>Continue On Error</strong></dt><dd><p>Enable to have the 3ds command line renderer ignore errors during rendering.</p>
+</dd>
+<dt><strong>Enable Local Rendering</strong></dt><dd><p>If enabled, the frames will be rendered locally, and then copied to their final network location.</p>
+</dd>
+<dt><strong>Gamma Correction</strong></dt><dd><p>Enable to apply gamma correction during rendering.</p>
+</dd>
+<dt><strong>Split Rendering</strong></dt><dd><p>Enable split rendering. Specify the number of strips to split the frame into, as well as the overlap you want to use.</p>
+</dd>
+<dt><strong>V-Ray/Mental Ray DBR</strong></dt><dd><p>Enable this option to offload a V-Ray or Mental Ray DBR render to Deadline. See the <a class="reference internal" href="#dscmd-vray-ref-label"><span class="std std-ref">V-Ray/Mental Ray DBR</span></a> section for more information.</p>
+</dd>
+<dt><strong>Run Sanity Check On Submission</strong></dt><dd><p>Check for scene problems during submission. See the <a class="reference internal" href="#dscmd-sanity-check-ref-label"><span class="std std-ref">Sanity Check</span></a> section for more information.</p>
+</dd>
+<dt><strong>Camera</strong></dt><dd><p>The camera to render with (if blank then the camera will be determined by the scene).</p>
+</dd>
+<dt><strong>Path Config</strong></dt><dd><p>Allows you to specify an alternate path file in the MXP format that the Workers can use to find bitmaps that are not found on the primary map paths.</p>
+</dd>
+<dt><strong>Render Preset File</strong></dt><dd><p>Uses a render preset settings file where &lt;filename&gt; is the name of the preset file.</p>
+</dd>
+<dt><strong>Pre Render Script File</strong></dt><dd><p>Uses a pre-render script where &lt;filename&gt; is the name of the maxscript (<code class="docutils literal notranslate"><span class="pre">*.ms</span></code>) file.</p>
+</dd>
+<dt><strong>Post Render Script File</strong></dt><dd><p>Uses a post-render script where &lt;filename&gt; is the name of the maxscript (<code class="docutils literal notranslate"><span class="pre">*.ms</span></code>) file.</p>
+</dd>
+<dt><strong>Scene State</strong></dt><dd><p>Loads the specified scene state in the 3ds Max scene file before rendering the image.</p>
+</dd>
+<dt><strong>Batch Render (ALL Views)</strong></dt><dd><p>Renders all enabled tasks in the Batch Render dialog.</p>
+</dd>
+<dt><strong>Batch Render Name</strong></dt><dd><p>Renders batch renders in the 3ds Max scene file named batch-render-name.</p>
+</dd>
+<dt><strong>Remove Padding (Still-Frame)</strong></dt><dd><p>Indicates that this is a still-frame render; no frame suffix will be added.</p>
+</dd>
+<dt><strong>Image Sequence File Creation</strong></dt><dd><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Only available when more than one frame is specified in the frame list</p>
+</div>
+<p>Dictate to 3ds Max whether to create image sequence files and if so, what type.
+Possible options include:</p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">none</span></code></p></td>
+<td><p>Do not create any image sequence file</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">.imsq</span></code></p></td>
+<td><p>Create a <code class="docutils literal notranslate"><span class="pre">.imsq</span></code> image sequence file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">.ifl</span></code></p></td>
+<td><p>Create a <code class="docutils literal notranslate"><span class="pre">.ifl</span></code> image sequence file</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><strong>Use Design Edition</strong></dt><dd><p>Determines which version of the Max executable should be used.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="gpu-affinity">
+<span id="dscmd-gpu-affinity-ref-label"></span><h3>GPU Affinity<a class="headerlink" href="#gpu-affinity" title="Permalink to this headline">¶</a></h3>
+<p>If you are GPU rendering, there are additional GPU affinity override options:</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Ensure you only use one of these settings at any one time! You can’t combine the Worker centric <a class="reference internal" href="worker-config.html#gpu-affinity-ref-label"><span class="std std-ref">GPU Affinity</span></a> with the <strong>GPUs Per Task</strong> or <strong>Select GPU Devices</strong> setting below.</p>
+</div>
+<ul>
+<li><p><strong>GPUs Per Task</strong>: If set to 0 (the default), then the GPU renderer will be responsible for automatically choosing the GPUs used during rendering.</p>
+<blockquote>
+<div><p>If this is set to 1 or greater, then each task for the job will be assigned specific GPUs. This can be used in combination with concurrent tasks to get a distribution over the GPUs. For example:</p>
+<ul class="simple">
+<li><p>if this is set to 1, then tasks rendered by the Workers thread 0 would use GPU 0, thread 1 would use GPU 1, etc.</p></li>
+<li><p>if this is set to 2, then tasks rendered by the Workers thread 0 would use GPUs {0,1}, thread 1 would use GPUs {2,3}, etc.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Select GPU Devices</strong>: A comma separated list of specific GPU device ID(s) can be entered instead of using the above ‘GPUs Per Task’ option (which must be set to “0”). Valid examples include: “0” or “1” or “0,1” or “2,4” without the quotation marks. Note: “Concurrent Tasks” must be set to “1” only.</p></li>
+</ul>
+</div>
+<div class="section" id="render-options">
+<span id="dscmd-render-options-ref-label"></span><h3>Render Options<a class="headerlink" href="#render-options" title="Permalink to this headline">¶</a></h3>
+<p>These additional options are exposed in the Monitor submission UI only or in the case of the integrated 3dsCmd submitter, the equivalent current scene settings are respected at submission time:</p>
+<dl class="simple">
+<dt><strong>Override Resolution (Leave unchecked to respect scene’s resolution settings)</strong></dt><dd><p>Enable to override render resolution.</p>
+</dd>
+<dt><strong>Show Rendered Frame Window</strong> / <strong>Show Virtual Frame Buffer</strong></dt><dd><p>Controls whether to display the rendered frame window (a.k.a. virtual frame buffer) during rendering.</p>
+</dd>
+<dt><strong>Skip Rendered Frames</strong></dt><dd><p>Whether to skip frames where a corresponding output image file already exists.</p>
+</dd>
+<dt><strong>Perform Color Check</strong></dt><dd><p>Toggle video Color Check.</p>
+</dd>
+<dt><strong>Force Two-Sided</strong></dt><dd><p>Toggle force 2 sided.</p>
+</dd>
+<dt><strong>Render Hidden Objects</strong></dt><dd><p>Toggle render hidden.</p>
+</dd>
+<dt><strong>Use Atmospherics Effects</strong></dt><dd><p>Toggle atmospherics.</p>
+</dd>
+<dt><strong>Use Super Black</strong></dt><dd><p>Toggle super black.</p>
+</dd>
+<dt><strong>Render To Fields</strong></dt><dd><p>Toggle render to fields.</p>
+</dd>
+<dt><strong>Field Order</strong></dt><dd><p>Toggles Field Order.</p>
+</dd>
+<dt><strong>Output Render Elements</strong></dt><dd><p>Output render elements. Must be explicitly enabled for 3ds Max 2013 or earlier to create render elements.</p>
+</dd>
+<dt><strong>Perform Displacement Mapping</strong></dt><dd><p>Toggle displacement mapping.</p>
+</dd>
+<dt><strong>Perform Render Effects</strong></dt><dd><p>Toggle render effects.</p>
+</dd>
+<dt><strong>Convert Area Lights To Point Sources</strong></dt><dd><p>Toggle area lights/shadows.</p>
+</dd>
+<dt><strong>Use Advanced Lighting</strong></dt><dd><p>Toggles use advanced lighting.</p>
+</dd>
+<dt><strong>Compute Advanced Lighting</strong></dt><dd><p>Toggles compute advanced lighting.</p>
+</dd>
+<dt><strong>Toggles Output Dithering (paletted)</strong></dt><dd><p>Toggles Output Dithering (paletted).</p>
+</dd>
+<dt><strong>Toggles Output Dithering (true-color)</strong></dt><dd><p>Toggles Output Dithering (true-color).</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="bitmap-options">
+<span id="dscmd-bitmap-options-ref-label"></span><h3>Bitmap Options<a class="headerlink" href="#bitmap-options" title="Permalink to this headline">¶</a></h3>
+<p>These additional Bitmap Parameters are exposed in the Monitor submission UI only or in the case of the integrated 3dsCmd submitter, the equivalent current scene settings are respected at submission time:</p>
+<ul class="simple">
+<li><p><strong>Override BMP_TYPE</strong>: Sets the type of BMP file being rendered. “2”=paletted, “8”=true 24-bit.</p></li>
+</ul>
+<p>JPEG Options:</p>
+<ul class="simple">
+<li><p><strong>Override JPEG_QUALITY</strong>: Sets the JPG quality value. Ranges from 1 to 100.</p></li>
+<li><p><strong>Override JPEG_SMOOTHING</strong>: Sets the JPG smoothing value. Ranges from 1 to 100.</p></li>
+</ul>
+<p>TARGA Options:</p>
+<ul class="simple">
+<li><p><strong>Override TARGA_COLORDEPTH</strong>: Sets the color depth for TGA files.</p></li>
+<li><p><strong>Override TARGA_COMPRESSED</strong>: Toggles TGA Compression. “1”=On, “0”=Off.</p></li>
+<li><p><strong>Override TARGA_ALPHASPLIT</strong>: Toggles TGA Alpha Split. “1”=On, “0”=Off.</p></li>
+<li><p><strong>Override TARGA_PREMULTALPHA</strong>: Toggles TGA Pre-Multiplied Alpha. “1”=On, “0”=Off.</p></li>
+</ul>
+<p>TIF Options:</p>
+<ul class="simple">
+<li><p><strong>Override TIF_TYPE</strong>: Sets the TIF type. “0”=mono, “1”=color, “2”=logl, “3”=logluv, “4”=16-bit color.</p></li>
+<li><p><strong>Override TIF_ALPHA</strong>: Toggles TIF file alpha. “1”=On, “0”=Off.</p></li>
+<li><p><strong>Override TIF_COMPRESSION</strong>: Toggles TIF Compression. “1”=On, “0”=Off.</p></li>
+<li><p><strong>Override TIF_DPI</strong>: Sets the dots-per-inch value for TIF files.</p></li>
+</ul>
+<p>For each of the following <code class="docutils literal notranslate"><span class="pre">RLA_xxxx</span></code> switches, there is a corresponding <code class="docutils literal notranslate"><span class="pre">RPF_xxxx</span></code> option.</p>
+<ul class="simple">
+<li><p><strong>Override RLA_COLORDEPTH</strong>: Sets the RLA color bitdepth.</p></li>
+<li><p><strong>Override RLA_ALPHA</strong>: Toggles RLA Alpha. “1”=On, “0”=Off.</p></li>
+<li><p><strong>Override RLA_PREMULTALPHA</strong>: Toggles RLA Premultiplied Alpha. “1”=On, “0”=Off.</p></li>
+<li><p><strong>Override RLA_DESCRIPTION</strong>: Lets you specify an RLA description (in quotes).</p></li>
+<li><p><strong>Override RLA_AUTHOR</strong>: Lets you specify an RLA author name (in quotes).</p></li>
+<li><p><strong>Override RLA_ZDEPTHCHANNEL</strong>: Toggles RLA Z-Depth Channel. “1”=On, “0”=Off.</p></li>
+<li><p><strong>Override RLA_MTLIDCHANNEL</strong>: Toggles RLA Material ID Channel. “1”=On, “0”=Off.</p></li>
+<li><p><strong>Override RLA_OBJECTIDCHANNEL</strong>: Toggles RLA Object Channel. “1”=On, “0”=Off.</p></li>
+<li><p><strong>Override RLA_UVCHANNEL</strong>: Toggles RLA UV Coordinates Channel. “1”=On, “0”=Off.</p></li>
+<li><p><strong>Override RLA_NORMALCHANNEL</strong>: Toggles RLA Surface Normals Channel. “1”=On, “0”=Off.</p></li>
+<li><p><strong>Override RLA_NONCLAMPEDCOLORCHANNEL</strong>: Toggles RLA Non-Clamped Color Channel. “1”=On, “0”=Off.</p></li>
+<li><p><strong>Override RLA_COVERAGECHANNEL</strong>: Toggles RLA Coverage Channel. “1”=On, “0”=Off.</p></li>
+</ul>
+<p>The following <code class="docutils literal notranslate"><span class="pre">RPF_xxxx</span></code> switches do not have corresponding <code class="docutils literal notranslate"><span class="pre">RLA_xxxx</span></code> options.</p>
+<ul class="simple">
+<li><p><strong>Override RPF_NODERENDERIDCHANNEL</strong>: Turns on RPF Node Render ID Channel.</p></li>
+<li><p><strong>Override RPF_COLORCHANNEL</strong>: Turns on RPF Color Channel.</p></li>
+<li><p><strong>Override RPF_TRANSPCHANNEL</strong>: Turns on RPF Transparency Channel.</p></li>
+<li><p><strong>Override RPF_VELOCCHANNEL</strong>: Turns on RPF Velocity Channel.</p></li>
+<li><p><strong>Override RPF_WEIGHTCHANNEL</strong>: Turns on RPF Sub-Pixel Weight Channel.</p></li>
+<li><p><strong>Override RPF_MASKCHANNEL</strong>: Turns on RPF Sub-Pixel Mask Channel.</p></li>
+</ul>
+<p>EXR Options:</p>
+<ul class="simple">
+<li><p><strong>Override EXR_USEEXPONENT</strong>: EXR use exponent on/off.</p></li>
+<li><p><strong>Override EXR_EXPONENT</strong>: EXR exponent value (decimal).</p></li>
+<li><p><strong>Override EXR_PREMULTALPHA</strong>: EXR premultiplied alpha on/off.</p></li>
+<li><p><strong>Override EXR_ALPHA</strong>: EXR save alpha component on/off.</p></li>
+<li><p><strong>Override EXR_RED</strong>: EXR save red component on/off.</p></li>
+<li><p><strong>Override EXR_GREEN</strong>: EXR save green component on/off.</p></li>
+<li><p><strong>Override EXR_BLUE</strong>: EXR save blue component on/off.</p></li>
+<li><p><strong>Override EXR_BITDEPTH</strong>: EXR bit depth: 0=8-bit integers; 1=half float; 2=float.</p></li>
+<li><p><strong>Override EXR_USEFRAMENUMDIGITS</strong>: EXR use number of frame digits on/off.</p></li>
+<li><p><strong>Override EXR_FRAMENUMDIGITS</strong>: EXR number of frame digits (integer).</p></li>
+<li><p><strong>Override EXR_COMPRESSIONTYPE</strong>: EXR compression type: 0=no compression; 1=RLE; 2=ZIP (1 scanline); 3=ZIP (16 scanlines); 4=PIZ.</p></li>
+<li><p><strong>Override EXR_USEREALPIX</strong>: EXR use RealPix RGB data on/off.</p></li>
+</ul>
+</div>
+<div class="section" id="pipeline-tools">
+<h3>Pipeline Tools<a class="headerlink" href="#pipeline-tools" title="Permalink to this headline">¶</a></h3>
+<p>When using the integrated submitter to submit through 3dsCmd you have the ability to use any of the event plugins that you have enabled through the Deadline Monitor. This is done by opening the Pipeline Tools window via the Pipeline Tools button. This window is explained further in the <a class="reference internal" href="event-pipeline-tools.html#event-pipeline-tools-ref-label"><span class="std std-ref">Pipeline Tools</span></a> documentation.</p>
+</div>
+<div class="section" id="sanity-check">
+<span id="dscmd-sanity-check-ref-label"></span><h3>Sanity Check<a class="headerlink" href="#sanity-check" title="Permalink to this headline">¶</a></h3>
+<p>The 3ds Command Sanity Check script defines a set of functions to be called to ensure that the scene submission does not contain typical errors like wrong render view and frame range settings, incorrect output path, etc.</p>
+<p>The Sanity Check is enabled by the Run Sanity Check Automatically Before Submission checkbox in the User Options group of controls in the Submit To Deadline (3dsmaxCmd) dialog. You can also run the Sanity Check manually
+by clicking the Run Now! button.</p>
+<a class="reference internal image-reference" href="../_images/sanity_checker.png"><img alt="../_images/sanity_checker.png" src="../_images/sanity_checker.png" style="height: 300px;" /></a>
+<p>The dialog contains the following elements:</p>
+<ul class="simple">
+<li><p>The upper area (Error Report) lists the problems found in the current scene.</p></li>
+<li><p>The lower area (Feedback Messages) lists the actions the Sanity Check performs and gives feedback to the user. The latest message is always on top.</p></li>
+<li><p>Between the two areas, there is a summary text line listing the total number of errors and a color indicator of the current Sanity Check state. When red, the Sanity Check will not allow a job submission to be performed.</p></li>
+</ul>
+<p><strong>The Error Report</strong></p>
+<p>The left column of the Error Report displays a checkbox and the type of the error. The checkbox determines whether the error will be taken into account by the final result of the check. Currently, there are 3 types of errors:</p>
+<ul class="simple">
+<li><p><strong>FATAL</strong>: The error cannot be fixed automatically and requires manual changes to the scene itself. A job submission with such error would be pointless. The state of the checkbox is ignored and assumed always checked.</p></li>
+<li><p><strong>Can Be Fixed</strong>: The error can be fixed automatically or manually. If the checkbox is active, the error contributes to the final result. If unchecked, the error is ignored and handled as a warning.</p></li>
+<li><p><strong>Warning</strong>: The problem might not require fixing, but could be of importance to the user. It is not taken into account by the final result (the state of the checkbox is ignored and assumed always unchecked).</p></li>
+</ul>
+<p><strong>Repairing Errors</strong></p>
+<p>Right-clicking an Error Message in the Error Report window will cause an associated repair function to be executed and/or a Report Message to be output in the Feedback Messages window. This difference was caused by the
+switch to DotNet controls which handle double-clicks as checked events, changing the checkbox state in front of the error instead.</p>
+<p><strong>Updating the Error Report</strong></p>
+<p>You can rerun/update the Sanity Check in one of the following ways:</p>
+<ul class="simple">
+<li><p>Clicking the dialog anywhere outside of the two message areas will rerun the Sanity Check and update all messages.</p></li>
+<li><p>Double-clicking any Message in the Feedback Messages window will rerun the Sanity Check and update all messages.</p></li>
+<li><p>Repairing an error by double-clicking will also automatically rerun the Sanity Check</p></li>
+<li><p>Pressing the Run Now! button in the Submit To Deadline dialog will update the Sanity Check.</p></li>
+</ul>
+<p>The following Sanity Checks are FATAL. These are errors that must be fixed manually before the job can be submitted.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Message</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Fix</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>The scene does not contain
+ANY objects!</p></td>
+<td><p>The scene is empty and should
+not be sent to Deadline.</p></td>
+<td><p>Load a valid scene or create/
+merge objects, then try again.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Maxwell is the renderer and
+the current view is NOT a
+Camera.</p></td>
+<td><p>Maxwell renderer must render
+through an actual camera and
+will fail through a viewport.</p></td>
+<td><p>Double-click the error message
+to open a Select By Name
+dialog to pick a camera for
+the current viewport.</p></td>
+</tr>
+<tr class="row-even"><td><p>The scene contains objects or
+groups with the same name as a
+camera!</p></td>
+<td><p>The scene contains objects or
+groups with a duplicate name
+to a camera which could result
+in an incorrect object being
+used as the camera.</p></td>
+<td><p>Ensure you remove any
+duplicate named objects from
+your scene.</p></td>
+</tr>
+<tr class="row-odd"><td><p>‘Select GPU Devices’ syntax is
+invalid! Trailing ‘commas’ if
+present, should be removed.</p></td>
+<td><p>Trailing ‘commas’ should be
+removed. Valid Examples: 0 or
+2 or 0,1,2 or 0,3,4 etc.</p></td>
+<td><p>Ensure GPU syntax is valid as
+entered in the ‘Select GPU
+Devices’ text field.</p></td>
+</tr>
+<tr class="row-even"><td><p>If using ‘Select GPU Devices’,
+then ‘Concurrent Tasks’ must
+be set to 1!</p></td>
+<td><p>Due to Task to GPU device ID
+mapping, ensure Concurrent
+Tasks is set to 1 if using
+‘Select GPU Devices’ option.</p></td>
+<td><p>Double-click the error message
+to set Concurrent Tasks to 1.</p></td>
+</tr>
+<tr class="row-odd"><td><p>At least one camera name has
+whitespace, newline, or tab at
+start/end of camera name.</p></td>
+<td><p>One or more cameras in the
+scene have ‘bad’ characters at
+the start or end of the camera
+name which will cause the
+camera to be ‘undefined’ at
+render time.</p></td>
+<td><p>Double-click the error message
+to trim any bad characters
+from each identified camera.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The following Sanity Checks can be automatically fixed before the job is submitted.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Message</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Fix</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>The current Scene Name is
+Untitled.</p></td>
+<td><p>The scene has never been saved
+to a MAX file.</p>
+<p>While it is possible to submit
+an untitled scene to Deadline,
+it is not a good practice.</p>
+</td>
+<td><p>Double-click the error message
+to open a Save As dialog and
+save to disk.</p></td>
+</tr>
+<tr class="row-odd"><td><p>The current view is NOT a
+camera.</p></td>
+<td><p>The active viewport is not a
+camera viewport.</p></td>
+<td><p>Double-click the error message
+to open a Select By Name
+dialog to pick a camera for
+the current viewport.</p></td>
+</tr>
+<tr class="row-even"><td><p>The Render Time Output is set
+to SINGLE FRAME!</p></td>
+<td><p>While it is ok to send a
+single frame to Deadline,
+users are sending animations
+99% of the cases.</p></td>
+<td><p>Double-click the error message
+to set the Render Time Output
+to “Active Time Segment:. The
+Render Dialog will open so you
+can check the options and set
+to Range or Frames instead.</p></td>
+</tr>
+<tr class="row-odd"><td><p>The Render Output Path appears
+to point at a LOCAL DRIVE!</p></td>
+<td><p>While it is technically
+possible to save locally on
+each Worker, this is a bad
+idea
+- all Workers should write
+their output to a central
+location on the network.
+Currently, disks C:, D: and E:
+are considered local and will
+be tested against the output
+path.</p></td>
+<td><p>Double-click the error message
+to open the Render Dialog and
+select a valid path, then</p>
+<p>double-click again to retest.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>The Render Output File Name
+ends with a DIGIT - trailing
+numbers might fail.</p></td>
+<td><p>The Name to be saved to ends
+with one, two or three digits.
+Rendering to this file name
+will append 4 more digits and
+make loading sequential files
+in other applications hard or
+impossible. This check is
+performed only when the type
+is not AVI or MOV and will
+ignore 4 trailing digits which
+will be replaced by 3dsmax
+correctly when rendering to
+sequential files.</p></td>
+<td><p>Double-click the error message
+to add an underscore _ to the
+end of the file name, for
+example z:\temp\test123.tga
+will be changed to
+z:\temp\test123_.tga</p></td>
+</tr>
+<tr class="row-odd"><td><p>The Render Output will not be
+saved to a file.</p></td>
+<td><p>No renders will be saved as
+Render Scene Dialog checkbox
+is currently disabled.</p></td>
+<td><p>Double-click the error message
+to open the Render Dialog and
+to enable the Save File
+checkbox.</p></td>
+</tr>
+<tr class="row-even"><td><p>The Distributed Rendering
+option is enabled for this
+renderer.</p></td>
+<td><p>Check if Distributed Rendering
+is enabled for MR or V-Ray
+renderer.</p></td>
+<td><p>Double-click the error message
+to disable Distributed
+rendering.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The following Sanity Checks are simply warnings.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Message</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Fix</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>The Render Output Path is NOT
+DEFINED!</p></td>
+<td><p>No frames will be saved to
+disk. This is allowed if you
+want to output render elements
+only.</p></td>
+<td><p>Double-click the error message
+to open the Render Dialog and
+select a valid path, then
+double-click again to retest.</p></td>
+</tr>
+<tr class="row-odd"><td><p>The Render Output is set to a
+MOVIE format.</p></td>
+<td><p>The file extension is set to
+an AVI or MOV format.</p>
+<p>In the current version of
+Deadline, this would result in
+a sequence of single frame MOV
+files rendered by separate
+Workers. In the future, the
+behaviour might be changed to
+render a single MOV or AVI
+file on a single Worker as one
+Task.</p>
+</td>
+<td><p>Double-click the error message
+to open the Render Dialog and
+select a single frame output
+format, then double-click
+again to retest.</p></td>
+</tr>
+</tbody>
+</table>
+<p>This list will be extended to include future checks and can be edited by 3rd parties by adding new definitions and functions to the original script. Documentation on extending the script will be published later.
+Please email suggestions for enhancements and additional test cases to <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a>.</p>
+</div>
+</div>
+<div class="section" id="off-load-dbr">
+<span id="dscmd-vray-ref-label"></span><h2>Off-load DBR<a class="headerlink" href="#off-load-dbr" title="Permalink to this headline">¶</a></h2>
+<p>You can offload a V-Ray, Corona or Mental Ray DBR job to Deadline by enabling the Distributed Rendering option in your V-Ray, Corona or Mental Ray settings, and by enabling the V-Ray/Mental Ray/Corona DBR checkbox in the submission dialog.
+With this option enabled, a job will be submitted with its task count equal to the number of Workers you specify, and it will render the current frame in the scene file.</p>
+<p>The Worker that picks up task 0 will be the “master”, and will wait until all other tasks are picked up by other Workers (unless <strong>Dynamic Start</strong> has been enabled in plugin config). Once the other tasks have been picked up, the “master” will update its local V-Ray, Corona or Mental Ray config
+file with the names of the machines that are rendering the other tasks. It will then start the distributed render by connecting to the other machines.</p>
+<p>If you wish for your DBR jobs to start rendering immediately after task 0 is picked up by the master Worker, then <a class="reference internal" href="app-3ds-max.html#dsmax-off-load-vray-dbr-rendering-ref-label"><span class="std std-ref">Dynamic Start</span></a> for V-Ray or <a class="reference internal" href="app-3ds-max.html#dsmax-off-load-vray-rt-dbr-rendering-ref-label"><span class="std std-ref">Auto-start local Worker</span></a> for V-Ray RT needs to be enabled in the <em>Plugin Configuration</em> of the <a class="reference internal" href="app-3ds-max.html#dsmax-plugin-configuration-ref-label"><span class="std std-ref">3dsmax</span></a> or <a class="reference internal" href="#dscmd-plugin-configuration-ref-label"><span class="std std-ref">3dsCmd</span></a> plugin depending on which render plugin you are submitting your off-load DBR jobs to.</p>
+<p>It is recommended to setup V-Ray DBR, Corona DR or Mental Ray DBR for 3ds Max and verify it is working correctly prior to submitting a DBR off-load job to Deadline. RTT (Render To Texture) is not supported with distributed bucket rendering.
+If running multiple Deadline Workers on one machine, having these 2 or more Workers both pick up a different DBR job concurrently as either master or Worker is not supported.</p>
+<p>Many of the common V-Ray/Mental Ray/Corona DR settings have been exposed in the Plugin Configuration in <a class="reference internal" href="#dscmd-off-load-plugin-options-ref-label"><span class="std std-ref">3dsCmd</span></a> or <a class="reference internal" href="app-3ds-max.html#dsmax-off-load-plugin-options-ref-label"><span class="std std-ref">3dsMax</span></a>.</p>
+<p><strong>Notes for V-Ray DBR</strong>:</p>
+<blockquote>
+<div><img alt="../_images/dynamic_dbr.png" src="../_images/dynamic_dbr.png" />
+</div></blockquote>
+<ul class="simple">
+<li><p>Deadline 9.0 introduced support to dynamically add or remove Deadline Workers (V-Ray Spawner nodes) to the currently processing DBR render once started on the “master” Worker (min V-Ray v3.2 SP2 required). Ensure <strong>Dynamic Start</strong> is enabled in Plugin Configuration in <a class="reference internal" href="#dscmd-off-load-plugin-options-ref-label"><span class="std std-ref">3dsCmd</span></a> or <a class="reference internal" href="app-3ds-max.html#dsmax-off-load-plugin-options-ref-label"><span class="std std-ref">3dsMax</span></a>. To add/remove machines, right-click on your DBR off-load job in Deadline Monitor -&gt; Scripts -&gt; DynamicDBR(.py).</p></li>
+<li><p>Deadline’s 3dsCmd plugin does NOT consume a 3ds Max workstation license compared to using Deadline’s 3dsMax plugin. If using SMTD, then you MUST have the Force Workstation Mode option enabled in the submission dialog (under the Render tab). This means that the “master” will use up a 3ds Max workstation license. If you don’t want to use a 3ds Max license, you can submit to the <a class="reference internal" href="#app-3ds-command-ref-label"><span class="std std-ref">3ds Command</span></a> plugin instead by either enabling the <strong>Use 3dsCmd Plugin</strong> checkbox or by submitting using the <a class="reference internal" href="#app-3ds-command-ref-label"><span class="std std-ref">3dsCmd in-app submitter</span></a>.</p></li>
+<li><p>Ensure V-Ray is the currently assigned renderer in the 3ds Max scene file prior to submission.</p></li>
+<li><p>You must have the Distributed Rendering option enabled in your V-Ray settings under the Settings tab.</p></li>
+<li><p>The Workers will launch the V-Ray Spawner executable found in the 3ds Max root directory. Do NOT install the V-Ray Spawner as a service on the master or Worker machines.</p></li>
+<li><p>The vray_dr.cfg / vrayrt_dr.cfg file in the 3ds Max’s plugcfg directory must be writeable so that the “master” machine can update it. This is typically located in the user profile directory, in which case it will be writeable already.</p></li>
+<li><p>Chaos Group recommend that each machine to be used for DBR has previously rendered at least one other 3ds Max job prior to trying DBR on the same machine.</p></li>
+<li><p>Ensure all Workers can correctly access any mapped drives or resolve all UNC paths to obtain any assets required by the 3ds Max scene file to render successfully. Use the Deadline <a class="reference internal" href="repository-config.html#mapped-drives-ref-label"><span class="std std-ref">Mapped Drives</span></a> feature to ensure the necessary drive mappings are in place.</p></li>
+<li><p>Default lights are not supported by Chaos Group in DBR mode and will not render.</p></li>
+<li><p>Ensure you have sufficient V-Ray DR licenses if processing multiple V-Ray DBR jobs through Deadline concurrently. Use the Deadline <a class="reference internal" href="limits.html#limits-ref-label"><span class="std std-ref">Limits</span></a> feature to limit the number of licenses being used at any time.</p></li>
+<li><p>Ensure the necessary V-Ray executables &amp; TCP/UDP ports have been allowed to pass-through the Windows Firewall. Please consult the V-Ray user manual or <a class="reference internal" href="app-vray-dbr.html#app-vray-dbr-port-config-ref-label"><span class="std std-ref">V-Ray Spawner Port Configuration</span></a> documentation for more information.</p></li>
+</ul>
+<p><strong>Notes for Mental Ray DBR</strong>:</p>
+<ul class="simple">
+<li><p>Ensure Mental Ray is the currently assigned renderer in the 3ds Max scene file prior to submission.</p></li>
+<li><p>You must have the Distributed Render option enabled in your Mental Ray settings under the Processing tab.</p></li>
+<li><p>The Mental Ray Satellite service must be running on your Worker machines. It is installed by default during the 3ds Max 2014 or earlier installation. Note that ADSK changed this default from 3dsMax 2015 onwards and the Mental Ray Satellite Service is installed as part of the install process but is NOT automatically started, so you will need to start it manually the very first time. See this <a class="reference external" href="https://area.autodesk.com/blogs/maxstation/n239-distributed-bucket-rendering-in-3ds-max-2015">AREA blog post about Distributed Bucket Rendering in 3ds Max 2015</a>.</p></li>
+<li><p>Ensure the “Use Placeholder Objects” checkbox is enabled in the “Translator Options” rollout of the “Processing” tab. When placeholder objects are enabled, geometry is sent to the renderer only on demand.</p></li>
+<li><p>Ensure “Bucket Order” is set to “Hilbert” in the “Options” section of the “Sampling Quality” rollout of the “Renderer” tab. With Hilbert order, the sequence of buckets to render uses the fewest number of data transfers.</p></li>
+<li><p>Contour shading is not supported with distributed bucket rendering.</p></li>
+<li><p>Autodesk Mental Ray licensing in 3ds Max is restricted. Autodesk says “Satellite processors allow any owner of a 3ds Max license to freely use up to four Worker machines (with up to four processors each and an unlimited number of cores) to render an image using distributed bucket rendering, not counting the one, two, or four processors on the master system that runs 3ds Max.” Mental Ray Standalone licensing can be used to go beyond this license limit. Use the Deadline <a class="reference internal" href="limits.html#limits-ref-label"><span class="std std-ref">Limits</span></a> feature to limit the number of licenses being used at any time if required.</p></li>
+<li><p>Ensure the necessary Mental Ray executables &amp; TCP/UDP ports have been allowed to pass-through the Windows Firewall. Please consult the Autodesk 3ds Max user manual for specific information.</p></li>
+</ul>
+<p><strong>Max Rayhosts File</strong>:</p>
+<ul>
+<li><p>The max.rayhosts file must be writeable so that the “master” machine can update it. It’s location is different for different versions of 3ds Max:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>2010 and earlier</strong>: It will be in the “mentalray” folder in the 3ds Max root directory.</p></li>
+<li><p><strong>2011 and 2012</strong>: It will be in the “mentalimages” folder in the 3ds Max root directory.</p></li>
+<li><p><strong>2013 and later</strong>: It will be in the “NVIDIA” folder in the 3ds Max root directory.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="plugin-configuration">
+<span id="dscmd-plugin-configuration-ref-label"></span><h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the 3ds Command plugin settings from the Monitor. While in power user mode, select <code class="docutils literal notranslate"><span class="pre">Tools</span></code> → <code class="docutils literal notranslate"><span class="pre">Configure</span> <span class="pre">Plugins</span></code> and select the 3ds Command plugin from the list on the left.</p>
+<img alt="../_images/cp_3ds_cmd.png" class="align-center" src="../_images/cp_3ds_cmd.png" />
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>3ds Max Cmd Executable</strong>: The path to the 3dsmaxcmd.exe executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+<p><strong>Render Options</strong></p>
+<ul class="simple">
+<li><p><strong>3ds Cmd Verbosity Level</strong>: The amount of logging detail that will be output in the Worker task. The value can be a number between 0 and 5, where a higher value indicates a higher level of detail.</p></li>
+<li><p><strong>Enable Secure Mode (3ds Max Cmd IO only)</strong>: Enables or disables the secure mode for cloud rendering.</p></li>
+</ul>
+<p id="dscmd-off-load-plugin-options-ref-label"><strong>V-Ray DBR and Mental Ray Satellite Rendering</strong></p>
+<ul class="simple">
+<li><p><strong>Use IP Addresses</strong>: If offloading a V-Ray DBR or Mental Ray Satellite render to Deadline, Deadline will update the appropriate config file with the host names of the machines that are running the V-Ray Spawner or Satellite service. If this is enabled, the IP addresses of the machines will be used instead.</p></li>
+</ul>
+<p><strong>Mental Ray Satellite Off-Load Rendering</strong></p>
+<ul class="simple">
+<li><p><strong>MR Port Number 3ds Max 2010</strong>: The port number that the master machine will use to communicate to the Mental Ray Satellite Service over TCP/IP for 3dsMax 2010. Leave BLANK to use default port.</p></li>
+<li><p><strong>MR Port Number 3ds Max 2011</strong>: The port number that the master machine will use to communicate to the Mental Ray Satellite Service over TCP/IP for 3dsMax 2011. Leave BLANK to use default port.</p></li>
+<li><p><strong>MR Port Number 3ds Max 2012</strong>: The port number that the master machine will use to communicate to the Mental Ray Satellite Service over TCP/IP for 3dsMax 2012. Leave BLANK to use default port.</p></li>
+<li><p><strong>MR Port Number 3ds Max 2013</strong>: The port number that the master machine will use to communicate to the Mental Ray Satellite Service over TCP/IP for 3dsMax 2013. Leave BLANK to use default port.</p></li>
+<li><p><strong>MR Port Number 3ds Max 2014</strong>: The port number that the master machine will use to communicate to the Mental Ray Satellite Service over TCP/IP for 3dsMax 2014. Leave BLANK to use default port.</p></li>
+<li><p><strong>MR Port Number 3ds Max 2015</strong>: The port number that the master machine will use to communicate to the Mental Ray Satellite Service over TCP/IP for 3dsMax 2015. Leave BLANK to use default port.</p></li>
+<li><p><strong>MR Port Number 3ds Max 2016</strong>: The port number that the master machine will use to communicate to the Mental Ray Satellite Service over TCP/IP for 3dsMax 2016. Leave BLANK to use default port.</p></li>
+<li><p><strong>MR Port Number 3ds Max 2017</strong>: The port number that the master machine will use to communicate to the Mental Ray Satellite Service over TCP/IP for 3dsMax 2017. Leave BLANK to use default port.</p></li>
+</ul>
+<p><strong>V-Ray DBR Process Handling</strong></p>
+<ul class="simple">
+<li><p><strong>Handle Existing Spawner Process</strong>: Either FAIL on existing V-Ray Spawner process or KILL the existing V-Ray Spawner process if already running. Default: “Fail On Existing Process”.</p></li>
+</ul>
+<p id="dscmd-off-load-vray-dbr-rendering-ref-label"><strong>V-Ray DBR Off-Load Rendering</strong></p>
+<ul class="simple">
+<li><p><strong>Dynamic Start</strong>: If enabled, a V-Ray DBR off-load job will start rendering immediately after TaskId=0 (master machine) has started rendering. With V-Ray v3.2 (min SP2) onwards, Workers dequeuing tasks of this job will start participating in the ongoing render when V-Ray re-scans it’s *.cfg file on the master machine. Default: True.</p></li>
+<li><p><strong>V-Ray Port range</strong>: The port number (20204) or range (20204-20212) that the master machine will use to communicate to the V-Ray Spawner over TCP/IP. Default: 20204.</p></li>
+<li><p><strong>Use local host</strong>: When enabled, the master TaskId=0 machine (the Worker from which initiates the DR off-load render) will also take part in the rendering calculations. If disabled, this Deadline Worker only organizes the DR process, sending rendering tasks to the Deadline Workers. Default: True.</p></li>
+</ul>
+<p>It is recommended to disable “Use local host” checkbox to reduce network traffic on the “master” machine, when using a large number of Workers (5+). If disabled, the “master” machine only organises the DBR process, sending rendering tasks to the Deadline Workers. This is particularly important if you intend to use the V-Ray v3+ “Transfer missing assets” feature. Note that Windows 7 OS has a limitation of a maximum of 20 other machines concurrently ‘connecting’ to the “master” machine.</p>
+<p>V-Ray v3.00.0x has a bug in DBR when the “Use local host” is unchecked, it still demands a render node license. This is resolved in a newer version of V-Ray. Please contact Chaos Group for more information.</p>
+<ul class="simple">
+<li><p><strong>Transfer missing assets</strong>: This option allows Deadline Workers to automatically download missing rendering assets from the master machine. This includes textures, V-Ray proxy files, IES profiles, GI solution caches (irradiance map, light cache), X-Ref scenes etc. Default: False.</p></li>
+<li><p><strong>Use cached assets</strong>: This option tells the Deadline Workers to keep the downloaded rendering assets between different DR sessions. Default: False.</p></li>
+<li><p><strong>Cache limit type</strong>: Allows you to specify under what conditions the assets cache is cleaned up. The possible values are: None, Age (hours), Size (GB). Default: None.</p></li>
+<li><p><strong>Cache limit value</strong>: The specific value of the limit for the asset cache. This is either hours or GB, depending on the value of Cache limit type. Min:0.0, Max:1000000.0. Default: 100.0.</p></li>
+</ul>
+<p id="dscmd-off-load-vray-rt-dbr-rendering-ref-label"><strong>V-Ray RT DBR Off-Load Rendering</strong></p>
+<ul class="simple">
+<li><p><strong>Dynamic RT Start</strong>: If enabled, a V-Ray RT DBR off-load job will start rendering immediately after TaskId=0 (master machine) has started rendering. With V-Ray v3.2 (min SP2) onwards, Workers dequeuing tasks of this job will start participating in the ongoing render when V-Ray RT re-scans it’s *.cfg file on the master machine. Default: True.</p></li>
+<li><p><strong>V-Ray RT Port range</strong>: The port number (20206) or range (20206-20212) that the master machine will use to communicate to the V-Ray RT Spawner over TCP/IP. Default: 20206.</p></li>
+<li><p><strong>Auto-start local Worker</strong>: When enabled, the master TaskId=0 machine (the Worker from which initiates the V-Ray RT DR off-load render) will also take part in the rendering calculations. If disabled, this Deadline Worker only organizes the V-Ray RT DR process, sending rendering tasks to the Deadline Workers. Default: True.</p></li>
+</ul>
+<p>It is recommended to disable <strong>Auto-start local Worker</strong> checkbox to reduce network traffic on the “master” machine, when using a large number of Workers (5+). If disabled, the “master” machine only organises the DBR process, sending rendering tasks to the Deadline Workers. This is particularly important if you intend to use the V-Ray v3+ “Transfer missing assets” feature. Note that Windows 7 OS has a limitation of a maximum of 20 other machines concurrently ‘connecting’ to the “master” machine.</p>
+</div>
+<div class="section" id="firewall-considerations">
+<span id="dscmd-firewall-ref-label"></span><h2>Firewall Considerations<a class="headerlink" href="#firewall-considerations" title="Permalink to this headline">¶</a></h2>
+<p>Here is an non-exhaustive list of specific 3dsMax related application executables which should be granted access to pass through the Windows Firewall for all applicable policy scopes (Windows - domain, private, public) and both inbound &amp; outbound rules (where &lt;maxroot&gt; is the 3dsMax install directory):</p>
+<ul class="simple">
+<li><p>&lt;maxroot&gt;/3dsmax.exe</p></li>
+<li><p>&lt;maxroot&gt;/3dsmaxcmd.exe</p></li>
+<li><p>&lt;maxroot&gt;/maxadapter.adp.exe</p></li>
+<li><p>&lt;maxroot&gt;/vrayspawnerYYYY.exe where YYYY is the yearDate such as “2015” (Only applicable if V-Ray installed)</p></li>
+<li><p>&lt;maxroot&gt;/python/python.exe</p></li>
+<li><p>&lt;maxroot&gt;/python/pythonw.exe</p></li>
+</ul>
+<p>Autodesk Communication Center (InfoCenter) Path (dependent on 3dsMax version being used):</p>
+<ul class="simple">
+<li><p>3dsMax 2009-2010: <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\Common</span> <span class="pre">Files\Autodesk</span> <span class="pre">Shared\WSCommCntr1.exe</span></code></p></li>
+<li><p>3dsMax 2011: <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\Common</span> <span class="pre">Files\Autodesk</span> <span class="pre">Shared\WSCommCntr\lib\WSCommCntr2.exe</span></code></p></li>
+<li><p>3dsMax 2012: <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\Common</span> <span class="pre">Files\Autodesk</span> <span class="pre">Shared\WSCommCntr3\lib\WSCommCntr3.exe</span></code></p></li>
+<li><p>3dsMax 2013-current: <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\Common</span> <span class="pre">Files\Autodesk</span> <span class="pre">Shared\WSCommCntr4\lib\WSCommCntr4.exe</span></code></p></li>
+</ul>
+<p>It is recommended to always start 3dsMax for the very first time with Administrative rights to ensure the application is fully initialized correctly. This can also be achieved by right-clicking the 3dsmax.exe application and selecting “Run as administrator”.</p>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-3ds-command-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedure describes how to install the integrated Autodesk 3ds Command submission script. The integrated submission script allows for submitting 3ds Command Line render jobs to Deadline directly from within
+the Max editing GUI. The integrated render job submission script and the following installation procedure has been tested with Max versions 2014 and later (including Design editions).</p>
+<p>You can either run the Submitter installer or manually install the submission script</p>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/3dsCmd/Installers</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="mi">3</span><span class="n">dsCmd</span>\<span class="n">Client</span>\<span class="n">Deadline3dsCmdClient</span><span class="o">.</span><span class="n">mcr</span> <span class="n">to</span> <span class="p">[</span><span class="mi">3</span><span class="n">ds</span> <span class="n">Install</span> <span class="n">Directory</span><span class="p">]</span>\<span class="n">MacroScripts</span>
+</pre></div>
+</div>
+</li>
+<li><p>If you don’t have a MacroScripts folder in your 3ds Max install directory, check to see if you have a <code class="docutils literal notranslate"><span class="pre">UI\Macroscripts</span></code> folder instead, and copy the <code class="docutils literal notranslate"><span class="pre">Deadline3dsCmdClient.mcr</span></code> file there if you do.</p></li>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="mi">3</span><span class="n">dsmax</span>\<span class="n">Client</span>\<span class="n">SMTDSetup</span><span class="o">.</span><span class="n">ms</span> <span class="n">to</span> <span class="p">[</span><span class="mi">3</span><span class="n">ds</span> <span class="n">Max</span> <span class="n">Install</span> <span class="n">Directory</span><span class="p">]</span>\<span class="n">scripts</span>\<span class="n">Startup</span>\<span class="n">SMTDSetup</span><span class="o">.</span><span class="n">ms</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="verify-installation">
+<h3>Verify Installation<a class="headerlink" href="#verify-installation" title="Permalink to this headline">¶</a></h3>
+<p>Launch 3ds Max, and find the new Deadline menu.</p>
+<blockquote>
+<div><img alt="../_images/3dsmax_submission_button_3dscmd.png" src="../_images/3dsmax_submission_button_3dscmd.png" />
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-3ds-command-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Max are supported?</strong></p>
+<blockquote>
+<div><p>The 3dsCommand plugin has been tested with 3ds Max 2014 and later (including Design editions).</p>
+</div></blockquote>
+<p><strong>When should I use the 3dsCommand plugin to render Max jobs instead of the original?</strong></p>
+<blockquote>
+<div><p>This plugin should only be used when a particular feature doesn’t work with our normal 3dsmax plugin. For example, there was a time when using the 3dsCommand plugin was the only way to render scenes that made use of Vray’s Frame Buffer features.</p>
+<p>Note that the 3dsCommand plugin has less features in the submission dialog, and the error handling isn’t as robust. In addition, using 3dsCommand causes Max to take extra time to start up because 3dsmaxcmd.exe needs to be launched for each task, so renders might take a little extra time to complete.</p>
+</div></blockquote>
+<p><strong>Is PSoft’s Pencil+ render effects plugin supported?</strong></p>
+<blockquote>
+<div><p>Yes. Ensure the render output and render element output directory paths all exist on the file server before rendering commences. Please note at least Pencil+ v3.10 is required if you are using the alternative 3dsmax(Lightning) plugin in Deadline. Unfortunately, due to the way Pencil+ plugin and 3ds Max work together, it is not possible for this combination to support “crop” renders in 3ds Max via the “Pencil+ Line” render effect. This means that Tile/Jigsaw rendering is NOT supported in Deadline. Pencil+ Line refers to the camera’s screen geometry information for rendering. However, when using “crop”, 3ds Max outputs the geometry information with an offset. Since Pencil+ Line renders are based on the information before the offset, there is a mismatch with the data output by 3ds Max. You can see a similar problem when using Backburner’s “Split Scan Lines”. Standard 3ds Max render effects such as “Lens Effects” do not have this problem because they refer to the actual rendered pixels to apply its effects. The PSoft developers have confirmed that since this problem is related to the way 3ds Max works, there is nothing they can do on their side to fix it. Please note that “Local Rendering” is NOT supported with this plugin. Ensure any saved files are pointing back to your central file server.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<span id="app-3ds-command-errors-ref-label"></span><h2>Error Messages And Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known 3ds Command error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p>Currently, no error messages have been reported for this plugin.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3ds Command</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#gpu-affinity">GPU Affinity</a></li>
+<li><a class="reference internal" href="#render-options">Render Options</a></li>
+<li><a class="reference internal" href="#bitmap-options">Bitmap Options</a></li>
+<li><a class="reference internal" href="#pipeline-tools">Pipeline Tools</a></li>
+<li><a class="reference internal" href="#sanity-check">Sanity Check</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#off-load-dbr">Off-load DBR</a></li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#firewall-considerations">Firewall Considerations</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+<li><a class="reference internal" href="#verify-installation">Verify Installation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages And Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-3ds-max-smtd-scripting.html"
+                        title="previous chapter">3ds Max - Integrated Submitter - Scripting</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-after-effects.html"
+                        title="next chapter">After Effects</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-after-effects.html" title="After Effects"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-3ds-max-smtd-scripting.html" title="3ds Max - Integrated Submitter - Scripting"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">3ds Command</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

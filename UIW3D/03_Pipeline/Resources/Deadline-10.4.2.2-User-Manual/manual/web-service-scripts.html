@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Service Scripts &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Standalone Python API" href="standalone-python.html" />
+    <link rel="prev" title="Job Scripts" href="job-scripts.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="standalone-python.html" title="Standalone Python API"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="job-scripts.html" title="Job Scripts"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-scripting.html" accesskey="U">Scripting</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Web Service Scripts</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="web-service-scripts">
+<span id="web-service-scripts-ref-label"></span><h1>Web Service Scripts<a class="headerlink" href="#web-service-scripts" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Web service scripts allow you to retrieve data from Deadline and display it in any way you see fit. See the <a class="reference internal" href="web-service.html#web-service-ref-label"><span class="std std-ref">Web Service</span></a> for more information on Deadline’s web service feature and how you can
+use it to call scripts and commands.</p>
+</div>
+<div class="section" id="creating-web-service-scripts">
+<h2>Creating Web Service Scripts<a class="headerlink" href="#creating-web-service-scripts" title="Permalink to this headline">¶</a></h2>
+<p>Custom web service scripts can be created in the ‘custom\scripts\WebService’ folder in your repository. See the <a class="reference internal" href="scripting-overview.html#scripting-overview-ref-label"><span class="std std-ref">Scripting Overview</span></a> documentation for more information on the ‘custom’ folder in the
+Repository and how it’s used.</p>
+<p>Just place any new scripts directly into this folder, and they will be available to the Web Service. Script files names should not contain any spaces, and should end in a ‘.py’ extension (ie, they must be Python scripts).</p>
+<div class="section" id="the-main-function">
+<h3>The __main__ Function<a class="headerlink" href="#the-main-function" title="Permalink to this headline">¶</a></h3>
+<p>All web service scripts must define a __main__ function that accepts *args (a tuple containing 2 items). This is the function that will be called when the web service executes the script. Note that if you decide not to accept
+args, and an argument string is passed to your script in the URL, it will result in an exception being thrown. The function should also return a string value, which is used to display the results. The string can be
+HTML, XML, plain text, etc.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__main__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="c1">#...</span>
+    <span class="c1">#append data to results</span>
+    <span class="c1">#...</span>
+
+    <span class="k">return</span> <span class="n">results</span>
+</pre></div>
+</div>
+<p>It is also possible for the web service script to set the HTTP status code. This can be done by including the status code after the results in the return statement. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__main__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">statusCode</span> <span class="o">=</span> <span class="s2">&quot;200&quot;</span>
+
+    <span class="c1">#...</span>
+    <span class="c1">#append data to results, and set statusCode as necessary</span>
+    <span class="c1">#...</span>
+
+    <span class="k">return</span> <span class="n">results</span><span class="p">,</span> <span class="n">statusCode</span>
+</pre></div>
+</div>
+<p>Finally, it is possible for the web service script to set additional headers to be included in the HTTP response. This can be done by including an arbitrary number of “key=value” strings after the status code in the return statement. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__main__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">statusCode</span> <span class="o">=</span> <span class="s2">&quot;200&quot;</span>
+
+    <span class="c1">#...</span>
+    <span class="c1">#append data to results, and set statusCode as necessary</span>
+    <span class="c1">#...</span>
+
+    <span class="k">return</span> <span class="n">results</span><span class="p">,</span> <span class="n">statusCode</span><span class="p">,</span> <span class="s2">&quot;header1=value1&quot;</span><span class="p">,</span> <span class="s2">&quot;header2=value2&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="supporting-arguments">
+<h3>Supporting Arguments<a class="headerlink" href="#supporting-arguments" title="Permalink to this headline">¶</a></h3>
+<p>Arguments can be passed to web service scripts as a tuple with 2 items, and can be accepted in two different ways. The first way is to simply accept args, which will be an array of length 2. The other way is to
+accept the tuple as two separate variables, for instance (dlArgs, qsArgs) for Deadline arguments and query string arguments. In the first case, args[0] is equivalent to dlArgs (Deadline arguments), and args[1] is
+equivalent to qsArgs (Query String Arguments).</p>
+<p><strong>Deadline Arguments</strong></p>
+<p>The web service will automatically pass your script a dictionary as the first item in the args tuple. The Dictionary will contain at least one key (“Authenticated”), but may contain more if the user
+authenticated with the web service. Currently, if the user has not authenticated, the Dictionary will only contain the “Authenticated” key, with a value of ‘False’. However, if the user has authenticated,
+it will also contain the “UserName” key, with a value of the user executing the script.</p>
+<p><strong>Query String Arguments</strong></p>
+<p>Arguments are passed to your script by a query string defined in the URL, and can be in one of the following forms:</p>
+<p>Key/Value Pairs: This is the preferred method of passing arguments. Arguments in this form will look something like this at the end of the URL:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>?key0=value0&amp;key1=value1
+</pre></div>
+</div>
+<p>List of Values: Arguments in this form will instead look something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>?value0&amp;value1
+</pre></div>
+</div>
+<p>The query string will be passed to the Python script as a NameValueCollection and it will be the second item of the tuple passed to your script’s __main__ function.</p>
+</div>
+<div class="section" id="relevant-api-functions">
+<h3>Relevant API Functions<a class="headerlink" href="#relevant-api-functions" title="Permalink to this headline">¶</a></h3>
+<p>For functions that will be relevant to most Web Service scripts, see the ‘Deadline.PulseUtils’ section of the Deadline Scripting Reference documentation. The full Deadline Scripting Reference can be found on the <a class="reference external" href="https://docs.thinkboxsoftware.com">Thinkbox Software Documentation Website</a>. Offline PDF and HTML versions can be downloaded from here as well.</p>
+</div>
+</div>
+<div class="section" id="calling-web-service-scripts">
+<h2>Calling Web Service Scripts<a class="headerlink" href="#calling-web-service-scripts" title="Permalink to this headline">¶</a></h2>
+<p>Once the script has been created, you can call it using the web service. See the <a class="reference internal" href="web-service.html#web-service-ref-label"><span class="std std-ref">Web Service</span></a> Documentation for more information on how to set this up.
+For example, if you have a Web Service script called ‘GetFarmStatistics.py’, you would call it using the following URL (where [myhost] is the hostname pointing to your web service machine):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="p">[</span><span class="n">myhost</span><span class="p">]:</span><span class="mi">8080</span><span class="o">/</span><span class="n">GetFarmStatistics</span>
+</pre></div>
+</div>
+<p>Some scripts can take arguments, as detailed in the previous section. To include arguments, you need to place a ‘?’ between the base URL and the first argument, with ‘&amp;’ separating addition arguments.
+Here is an example of how you would pass ‘arg1’, ‘arg2’, and ‘arg3’ as a list of arguments to the GetFarmStatistics.py script:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>http://[myhost]:8080/GetFarmStatistics?arg1&amp;arg2&amp;arg3
+</pre></div>
+</div>
+<p>Here is an example of how you would pass values for arguments named ‘arg1’, ‘arg2’, and ‘arg3’ in the form of key-value pairs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>http://[myhost]:8080/GetFarmStatistics?arg1=value1&amp;arg2=value2&amp;arg3=value3
+</pre></div>
+</div>
+<p>The way the results of the script will be displayed is entirely dependent on the format in which the Script returns them.</p>
+</div>
+<div class="section" id="migrating-scripts-from-deadline-5">
+<span id="web-service-scripts-migration-ref-label"></span><h2>Migrating Scripts from Deadline 5<a class="headerlink" href="#migrating-scripts-from-deadline-5" title="Permalink to this headline">¶</a></h2>
+<p>Some changes were made to the Scripting API in Deadline 6, which means that Deadline 6 and later are NOT backward compatible with scripts written for Deadline 5. However, migrating your scripts over is relatively straightforward, and
+this guide will walk you through the API changes so that you can update your scripts as necessary.</p>
+<p>The only significant change is that the globally defined functions are no longer available. See the <a class="reference internal" href="scripting-overview.html#scripting-overview-migration-ref-label"><span class="std std-ref">Code Completion for the Deadline Scripting API</span></a> section in the Scripting Overview documentation for more information, including replacement functions.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Web Service Scripts</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#creating-web-service-scripts">Creating Web Service Scripts</a><ul>
+<li><a class="reference internal" href="#the-main-function">The __main__ Function</a></li>
+<li><a class="reference internal" href="#supporting-arguments">Supporting Arguments</a></li>
+<li><a class="reference internal" href="#relevant-api-functions">Relevant API Functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#calling-web-service-scripts">Calling Web Service Scripts</a></li>
+<li><a class="reference internal" href="#migrating-scripts-from-deadline-5">Migrating Scripts from Deadline 5</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="job-scripts.html"
+                        title="previous chapter">Job Scripts</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="standalone-python.html"
+                        title="next chapter">Standalone Python API</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="standalone-python.html" title="Standalone Python API"
+             >next</a></li>
+        <li class="right" >
+          <a href="job-scripts.html" title="Job Scripts"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-scripting.html" >Scripting</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Web Service Scripts</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

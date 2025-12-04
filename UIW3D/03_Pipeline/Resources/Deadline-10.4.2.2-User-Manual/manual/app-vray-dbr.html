@@ -1,0 +1,557 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>V-Ray Distributed Rendering &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="V-Ray Ply2Vrmesh" href="app-vray-ply2vrmesh.html" />
+    <link rel="prev" title="V-Ray Benchmark" href="app-vray-benchmark.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-vray-ply2vrmesh.html" title="V-Ray Ply2Vrmesh"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-vray-benchmark.html" title="V-Ray Benchmark"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">V-Ray Distributed Rendering</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="v-ray-distributed-rendering">
+<span id="app-vray-dbr-ref-label"></span><h1>V-Ray Distributed Rendering<a class="headerlink" href="#v-ray-distributed-rendering" title="Permalink to this headline">¶</a></h1>
+<p>For information on newer V-Ray Swarm, navigate to our <a class="reference internal" href="app-vray-swarm.html#app-vray-swarm-ref-label"><span class="std std-ref">V-Ray Swarm documentation</span></a>.</p>
+<div class="section" id="interactive-distributed-rendering">
+<h2>Interactive Distributed Rendering<a class="headerlink" href="#interactive-distributed-rendering" title="Permalink to this headline">¶</a></h2>
+<p>You can submit interactive V-Ray DBR jobs from <a class="reference internal" href="#app-vray-dbr-3dsmax-submit-ref-label"><span class="std std-ref">3ds Max</span></a>, <a class="reference internal" href="#app-vray-dbr-maya-submit-ref-label"><span class="std std-ref">Maya</span></a>,  <a class="reference internal" href="#app-vray-dbr-rhino-submit-ref-label"><span class="std std-ref">Rhino</span></a>, or <a class="reference internal" href="#app-vray-dbr-softimage-submit-ref-label"><span class="std std-ref">Softimage</span></a>. The instructions for installing the <a class="reference internal" href="#app-vraydbr-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page.</p>
+<p>The interactive submitter will submit a V-Ray Spawner job (V-Ray Standalone for Maya, Softimage, 3dsMaxRT, Rhino, Sketchup) to reserve render nodes, and the submitter will automatically update the V-Ray server list.</p>
+<p>Do <strong>NOT</strong> execute or install the Chaos Group V-RaySpawner (V-RaySpawner/V-RaySpawner RT/V-Ray Standalone) executable as a background service (NT service/daemon). Deadline is more flexible here and will spawn the V-RaySpawner/Standalone executable as a child process of the Deadline Worker. This makes our system more flexible and resilient to crashes as when we terminate the V-Ray DBR job in the Deadline queue, the Deadline Worker application will ‘cleanly’ tidy up V-RaySpawner/Standalone and more importantly, any DCC application (3dsMax/Maya) or Standalone instances which it in turn has spawned as a child process. This can be helpful if V-Ray DBR becomes unstable and a user wishes to reset the system remotely. You can simply re-queue or delete/complete the current DBR job or re-submit.</p>
+<p><a class="reference internal" href="../_images/vray_dbr_max.png"><img alt="one" src="../_images/vray_dbr_max.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/vray_dbr_maya.png"><img alt="two" src="../_images/vray_dbr_maya.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/vray_dbr_softimage.png"><img alt="three" src="../_images/vray_dbr_softimage.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/vray_dbr_rhino.png"><img alt="four" src="../_images/vray_dbr_rhino.png" style="height: 400px;" /></a></p>
+<div class="section" id="port-configuration">
+<span id="app-vray-dbr-port-config-ref-label"></span><h3>Port Configuration<a class="headerlink" href="#port-configuration" title="Permalink to this headline">¶</a></h3>
+<p>Here is a consolidated list of port requirements for the various versions of V-Ray. Ensure any applicable firewalls are opened to allow pass-through communication. Typically if in doubt, opening TCP/UDP ports in the range: 20200-20300 will cover all V-Ray implementations for DBR. During initial testing, it is recommended to open all ports in this range, verify and then consider tightening up security.</p>
+<table class="docutils align-left">
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 13%" />
+<col style="width: 14%" />
+<col style="width: 69%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Protocol</p></th>
+<th class="head"><p>Default Port Number</p></th>
+<th class="head"><p>Application</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>TCP/IP</p></td>
+<td><p>20204</p></td>
+<td><p>3dsMax V-Ray Production</p></td>
+<td><p>V-Ray 2.x, V-Ray 3.x - Production and Nightly beta builds (v2 &amp; v3: 20204)</p></td>
+</tr>
+<tr class="row-odd"><td><p>TCP/IP</p></td>
+<td><p>FIXED</p></td>
+<td><p>3dsMax / V-Ray Spawner</p></td>
+<td><p>Used by render servers to broadcast a message that they are ready to join an ongoing DR session (v2 &amp; v3: 20205)</p></td>
+</tr>
+<tr class="row-even"><td><p>TCP/IP</p></td>
+<td><p>20206</p></td>
+<td><p>3dsMax V-Ray RT/GPU</p></td>
+<td><p>V-Ray 2.x, V-Ray 3.x RT/GPU - Production and Nightly beta builds (v2 &amp; v3: 20206)</p></td>
+</tr>
+<tr class="row-odd"><td><p>TCP/IP</p></td>
+<td><p>20207</p></td>
+<td><p>Maya</p></td>
+<td><p>V-Ray 2.x and 3.x RT/GPU - Production and Nightly beta builds</p></td>
+</tr>
+<tr class="row-even"><td><p>TCP/IP</p></td>
+<td><p>20207</p></td>
+<td><p>Softimage</p></td>
+<td><p>V-Ray 2.x and 3.x - Production</p></td>
+</tr>
+<tr class="row-odd"><td><p>TCP/IP</p></td>
+<td><p>20207</p></td>
+<td><p>modo</p></td>
+<td><p>V-Ray Standalone</p></td>
+</tr>
+<tr class="row-even"><td><p>TCP/IP</p></td>
+<td><p>20207</p></td>
+<td><p>Rhino</p></td>
+<td><p>V-Ray Standalone</p></td>
+</tr>
+<tr class="row-odd"><td><p>TCP/IP</p></td>
+<td><p>20207</p></td>
+<td><p>SketchUp</p></td>
+<td><p>V-Ray Standalone</p></td>
+</tr>
+<tr class="row-even"><td><p>TCP/IP</p></td>
+<td><p>20207</p></td>
+<td><p>C4D</p></td>
+<td><p>V-Ray Standalone</p></td>
+</tr>
+<tr class="row-odd"><td><p>TCP/IP</p></td>
+<td><p>20207</p></td>
+<td><p>Standalone</p></td>
+<td><p>V-Ray Standalone</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. The V-Ray DBR specific options are:</p>
+<ul class="simple">
+<li><p><strong>Maximum Servers</strong>: The maximum number of V-Ray Servers to reserve for distributed rendering.</p></li>
+<li><p><strong>Port Number (Softimage/Maya/3dsMax/3dsMaxRT only)</strong>: The port number that V-Ray will use for distributed rendering. In the case of Softimage, this is necessary because Softimage uses V-Ray Standalone for distributed rendering and the default port number for V-Ray in Softimage is different from the default port number in V-Ray Standalone. The port number needs to be identical on all machines including the workstation machine for a particular DCC application to communicate correctly. It is recommended to disable any client firewall whilst initial testing/configuration is carried out. Typically, opening TCP/UDP ports in the range: 20200-20300 will cover all V-Ray implementations for DBR.</p></li>
+<li><p><strong>Use Server IP Address instead of Host Name</strong>: If checked, the Active Servers list will show the server IP addresses instead of host names.</p></li>
+<li><p><strong>Automatically Update Server List (3dsMax only)</strong>: This option when un-checked stops the automatic refresh of the active servers list based on the current Deadline queue.</p></li>
+<li><p><strong>Complete Job After Render (3dsMax only)</strong>: When checked, as soon as the DR session has completed (max quick render finished), then the Deadline job will be marked as complete in the queue.</p></li>
+<li><p><strong>Active Servers (3dsMax only)</strong>: Individual Deadline Workers can be enabled/disabled here (V-Ray Spawner as a job will still continue to run on the disabled Workers until the job is deleted/completed/suspended).</p></li>
+<li><p><strong>Check ALL/INVERT/Check NONE (3dsMax only)</strong>: Easily enable all/invert/none all currently listed Deadline Workers in the Active Servers List.</p></li>
+</ul>
+</div>
+<div class="section" id="rendering">
+<h3>Rendering<a class="headerlink" href="#rendering" title="Permalink to this headline">¶</a></h3>
+<p>After you’ve configured your submission options, press the Reserve Servers button to submit the V-Ray Spawner job. The job’s ID and Status will be tracked in the submitter, and as nodes pick up the job, they will show up in the
+Active Servers list. Once you are happy with the server list, press Start Render (3ds Max and Maya) or Render Current Pass/Render All Passes (Softimage) to start distributed rendering.</p>
+<p>Note that the V-Ray Spawner/V-Ray Standalone process can sometimes take a little while to initialize. This means that a server in the Active Server list could have started the V-Ray Spawner, but it’s not fully initialized yet. If this
+is the case, it’s probably best to wait a minute or so after the last server has shown up before pressing Start Render.</p>
+<p>Update Servers (3dsMax only) button will manually update the Active Servers List. Note, if you modify the Maximum Servers value, the job’s frame range will be updated when this button is pressed or if “Automatically Update Server List” is enabled.</p>
+<p>After the render is finished, you can press Release Servers or close the submitter UI (Setup V-Ray DBR With Deadline) to mark the V-Ray Spawner/V-Ray Standalone job as complete so that the render nodes can move on to another job.</p>
+</div>
+</div>
+<div class="section" id="v-ray-spawner-v-ray-standalone-submission">
+<h2>V-Ray Spawner/V-Ray Standalone Submission<a class="headerlink" href="#v-ray-spawner-v-ray-standalone-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can also submit V-Ray Spawner/V-Ray Standalone jobs from the Monitor, which can be used to reserve render nodes for distributed rendering. Note, if you submit the job via the Monitor submission script, that you will need to manually configure/update your local workstation settings to point to the correct, corresponding Deadline Workers over an identical port number.</p>
+<a class="reference internal image-reference" href="../_images/sub_vray_spawner.png"><img alt="../_images/sub_vray_spawner.png" src="../_images/sub_vray_spawner.png" style="height: 500px;" /></a>
+<div class="section" id="id1">
+<h3>Submission Options<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. The V-Ray DBR specific options are:</p>
+<ul class="simple">
+<li><p><strong>Maximum Servers</strong>: The maximum number of V-Ray Servers to reserve for distributed rendering.</p></li>
+<li><p><strong>Application</strong>: The application you will be initiating the distributed render from.</p></li>
+<li><p><strong>Version</strong>: The version of the application, if applicable.</p></li>
+<li><p><strong>Port Number (3dsMaxRT/Cinema4D/Maya/Modo/Softimage/Standalone only)</strong>: The port number that V-Ray will use for distributed rendering. In the case of Softimage, this is necessary because Softimage uses V-Ray Standalone for distributed rendering and the default port number for V-Ray in Softimage is different from the default port number in V-Ray Standalone. The port number needs to be identical on all machines including the workstation machine for a particular DCC application to communicate correctly. It is recommended to disable any client firewall whilst initial testing/configuration is carried out. Typically, opening TCP/UDP ports in the range: 20200-20300 will cover all V-Ray implementations for DBR.</p></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h3>Rendering<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>After you’ve configured your submission options, press the Submit button to submit the V-Ray Spawner/V-Ray Standalone job. Note that this doesn’t start any rendering, it just allows the V-Ray Spawner/V-Ray Standalone application to
+start up on nodes in the farm. Once you’re happy with the nodes that have picked up the job, you can initiate the distributed render manually from within the application (ie: Rhino or Sketchup). This will likely require manually
+configuring your V-Ray Server list.</p>
+<p>After the distributed render has finished, remember to mark the job as complete or delete it so that the nodes can move on to other jobs.</p>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<span id="app-vray-dbr-plugin-config-ref-label"></span><h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the V-Ray Spawner/V-Ray Standalone plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the V-RaySpawner plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_vray_spawner.png"><img alt="../_images/cp_vray_spawner.png" src="../_images/cp_vray_spawner.png" style="height: 400px;" /></a>
+<p><strong>V-Ray Executables</strong></p>
+<p>Here you can specify the executable used for rendering for the different versions of V-Ray.</p>
+<p><strong>DR Process Handling</strong></p>
+<ul class="simple">
+<li><p><strong>Handle Existing DR/DBR Process</strong>: Only one instance of the same DR process running over the same port is possible. This option allows for Deadline to fail the task if this is the case or attempt to kill the currently running process, to allow the Deadline managed DR process to run successfully. Note, if the process is set to kill and does indeed kill a currently present process, but seems to auto-restart even after killing; then this indicates the process is already running as a service and the service will need to be stopped by your IT staff. Do NOT install as a service as Deadline can NOT support this configuration.</p></li>
+</ul>
+<p><strong>DR Job Handling</strong></p>
+<ul class="simple">
+<li><p><strong>DR On Job Complete</strong>: If desired, you can automatically archive or delete the DR job when it completes.</p></li>
+</ul>
+<p><strong>DR Session Handling</strong></p>
+<p>If enabled, these settings control what happens when a Worker that is running V-Ray Spawner has entered an IDLE state where it is not currently partaking in a V-Ray DBR render. We define a <strong>session</strong> as the time between a V-Ray DBR render completing and the next DBR based render starting. There are additional settings to control the behaviour once at least one DBR render has taken place on a Worker.</p>
+<ul class="simple">
+<li><p><strong>DR Session Auto Timeout Enable</strong>: If enabled, when a DR session has successfully completed on a Worker, the task on the Worker will be marked as complete after the DR session auto timeout period in seconds has been reached (Default: False).</p></li>
+<li><p><strong>DR Session Auto Timeout (Minutes)</strong>: This is the timeout period (Default: 15 Minutes) when a DR session will timeout and be marked as complete by a Worker. This timeout is only active prior to the first render on the Worker.</p></li>
+<li><p><strong>DR Session Auto Timeout: Wait for first render</strong>: If enabled, it will force at least one render to complete before Auto Timeout becomes active (Default: True).</p></li>
+<li><p><strong>DR Session Auto Timeout: After First Minute</strong>: This is the timeout period (Default: 15 Minutes) when a DR session will timeout and be marked as complete by a Worker. This timeout becomes active once the first render on the Worker is complete.</p></li>
+</ul>
+<p><strong>Logging Options</strong></p>
+<ul>
+<li><dl>
+<dt><strong>Logging Verbosity Level</strong>: Defines the amount of information that will be printed to the standard output. Note that this is only available when using vray.exe. The levels:</dt><dd><div class="line-block">
+<div class="line">3 - errors, warnings and informational messages</div>
+<div class="line">4 - all output</div>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-vraydbr-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>There are integrated V-Ray DBR submission scripts for 3ds Max, Maya, and Softimage. The installation process for these scripts can be found below.</p>
+<p>You can also submit V-Ray Spawner jobs for Rhino and Sketchup from the Monitor. In this case, the render nodes will simply be reserved for DBR, and the distributed rendering process itself will have to be initiated manually from within Rhino or Sketchup.</p>
+<div class="section" id="ds-max">
+<span id="app-vray-dbr-3dsmax-submit-ref-label"></span><h3>3ds Max<a class="headerlink" href="#ds-max" title="Permalink to this headline">¶</a></h3>
+<p>The following procedures describe how to install the integrated V-Ray DBR submission script for 3ds Max. The integrated submission script and the following installation procedure has been tested with Max versions 2012 and later
+(including Design editions).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Due to a maxscript bug in the initial release of 3ds Max 2012, the integrated submission scripts will not work. However, this bug has been addressed in 3ds Max 2012 Hotfix 1.</p>
+</div>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="submitter-install">
+<h4>Submitter Install<a class="headerlink" href="#submitter-install" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/3dsmaxVRayDBR/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="manual-install">
+<h4>Manual Install<a class="headerlink" href="#manual-install" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span><span class="o">/</span><span class="n">submission</span><span class="o">/</span><span class="mi">3</span><span class="n">dsmaxVRayDBR</span><span class="o">/</span><span class="n">Client</span><span class="o">/</span><span class="n">Deadline3dsmaxVRayDBRClient</span><span class="o">.</span><span class="n">mcr</span> <span class="n">to</span> <span class="p">[</span><span class="mi">3</span><span class="n">ds</span> <span class="n">Install</span> <span class="n">Directory</span><span class="p">]</span><span class="o">/</span><span class="n">MacroScripts</span>
+</pre></div>
+</div>
+</li>
+<li><p>If you don’t have a MacroScripts folder in your 3ds Max install directory, check to see if you have a <code class="docutils literal notranslate"><span class="pre">UI\Macroscripts</span></code> folder instead, and copy the Deadline3dsmaxVRayDBRClient.mcr file there if you do.</p></li>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span><span class="o">/</span><span class="n">submission</span><span class="o">/</span><span class="mi">3</span><span class="n">dsmax</span><span class="o">/</span><span class="n">Client</span><span class="o">/</span><span class="n">SMTDSetup</span><span class="o">.</span><span class="n">ms</span> <span class="n">to</span> <span class="p">[</span><span class="mi">3</span><span class="n">ds</span> <span class="n">Max</span> <span class="n">Install</span> <span class="n">Directory</span><span class="p">]</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">Startup</span><span class="o">/</span><span class="n">SMTDSetup</span><span class="o">.</span><span class="n">ms</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="verify-install">
+<h4>Verify Install<a class="headerlink" href="#verify-install" title="Permalink to this headline">¶</a></h4>
+<p>Launch 3ds Max, and find the new Deadline menu.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/3dsmax_submission_button_vray_dbr.png"><img alt="../_images/3dsmax_submission_button_vray_dbr.png" src="../_images/3dsmax_submission_button_vray_dbr.png" style="height: 400px;" /></a>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="maya">
+<span id="app-vray-dbr-maya-submit-ref-label"></span><h3>Maya<a class="headerlink" href="#maya" title="Permalink to this headline">¶</a></h3>
+<p>As of Deadline 10.0.10 the manual submission documentation and submitter installers have been updated to install both the userSetup.mel file and DeadlineMayaVRayDBRClient.mel are being installed into the user directory.  This change has occurred so the submitter installer will work without requiring admin access and to ensure that all versions of Maya will use the same client script file. This should not affect any installs and is not a required update.</p>
+<p>The following procedure describes how to install the integrated V-Ray DBR submission script for Maya. The integrated submission script and the following installation procedure has been tested with Maya versions 2012 and later.</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="id3">
+<h4>Submitter Install<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/MayaVRayDBR/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h4>Manual Install<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p>On <strong>Windows</strong>, copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="n">MayaVRayDBR</span>\<span class="n">Client</span>\<span class="n">DeadlineMayaVRayDBRClient</span><span class="o">.</span><span class="n">mel</span> <span class="n">to</span> <span class="p">[</span><span class="n">My</span> <span class="n">Documents</span><span class="p">]</span>\<span class="n">maya</span>\<span class="n">scripts</span>
+</pre></div>
+</div>
+</li>
+<li><p>If you do not have a userSetup.mel in <code class="docutils literal notranslate"><span class="pre">[My</span> <span class="pre">Documents]\maya\scripts</span></code>, copy the file <code class="docutils literal notranslate"><span class="pre">[Repository]\submission\MayaVRayDBR\Client\userSetup.mel</span></code> to <code class="docutils literal notranslate"><span class="pre">[My</span> <span class="pre">Documents]\maya\scripts</span></code>. If you have a userSetup.mel file, add the following line to the end of this file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>if( startsWith( `whatIs DeadlineMayaVRayDBRClient`, &quot;Mel procedure found in&quot; ) ){ DeadlineMayaVRayDBRClient(); }else{ warning( &quot;DeadlineMayaVRayDBRClient either has errors or has not been installed.&quot; ); }
+</pre></div>
+</div>
+</li>
+<li><p>On <strong>macOS</strong>, copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span><span class="o">/</span><span class="n">submission</span><span class="o">/</span><span class="n">MayaVRayDBR</span><span class="o">/</span><span class="n">Client</span><span class="o">/</span><span class="n">DeadlineMayaVRayDBRClient</span><span class="o">.</span><span class="n">mel</span> <span class="n">to</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="p">[</span><span class="n">USERNAME</span><span class="p">]</span><span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">Preferences</span><span class="o">/</span><span class="n">Autodesk</span><span class="o">/</span><span class="n">maya</span><span class="o">/</span><span class="n">scripts</span>
+</pre></div>
+</div>
+</li>
+<li><p>If you do not have a userSetup.mel in <code class="docutils literal notranslate"><span class="pre">/Users/[USERNAME]/Library/Preferences/Autodesk/maya/scripts</span></code>, copy the file <code class="docutils literal notranslate"><span class="pre">[Repository]/submission/MayaVRayDBR/Client/userSetup.mel</span></code> to <code class="docutils literal notranslate"><span class="pre">/Users/[USERNAME]/Library/Preferences/Autodesk/maya/scripts</span></code>. If you have a userSetup.mel file, add the following line to the end of this file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>if( startsWith( `whatIs DeadlineMayaVRayDBRClient`, &quot;Mel procedure found in&quot; ) ){ DeadlineMayaVRayDBRClient(); }else{ warning( &quot;DeadlineMayaVRayDBRClient either has errors or has not been installed.&quot; ); }
+</pre></div>
+</div>
+</li>
+<li><p>On <strong>Linux</strong>, copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span><span class="o">/</span><span class="n">submission</span><span class="o">/</span><span class="n">MayaVRayDBR</span><span class="o">/</span><span class="n">Client</span><span class="o">/</span><span class="n">DeadlineMayaVRayDBRClient</span><span class="o">.</span><span class="n">mel</span> <span class="n">to</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="p">[</span><span class="n">USERNAME</span><span class="p">]</span><span class="o">/</span><span class="n">maya</span><span class="o">/</span><span class="n">scripts</span>
+</pre></div>
+</div>
+</li>
+<li><p>If you do not have a userSetup.mel in <code class="docutils literal notranslate"><span class="pre">/home/[USERNAME]/maya/scripts</span></code>, copy the file <code class="docutils literal notranslate"><span class="pre">[Repository]/submission/MayaVRayDBR/Client/userSetup.mel</span></code> to <code class="docutils literal notranslate"><span class="pre">/home/[USERNAME]/maya/scripts</span></code>. If you have a userSetup.mel file, add the following line to the end of this file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>if( startsWith( `whatIs DeadlineMayaVRayDBRClient`, &quot;Mel procedure found in&quot; ) ){ DeadlineMayaVRayDBRClient(); }else{ warning( &quot;DeadlineMayaVRayDBRClient either has errors or has not been installed.&quot; ); }
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="id5">
+<h4>Verify Install<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<p>The next time Maya is started, a Deadline shelf should appear with an orange button that can be clicked on to launch the submitter.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/maya_submission_button_vray_dbr.png"><img alt="../_images/maya_submission_button_vray_dbr.png" src="../_images/maya_submission_button_vray_dbr.png" style="height: 200px;" /></a>
+</div></blockquote>
+<ul>
+<li><p>If you don’t see the Deadline shelf, it’s likely that Maya is loading another userSetup.mel file from somewhere. Maya can only load one userSetup.mel file, so you either have to configure Maya to point to the file mentioned above, or you have to modify the file that Maya is currently using as explained above. To figure out which userSetup.mel file Maya is using, open up Maya and then open up the Script Editor. Run this command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">whatIs</span> <span class="n">userSetup</span><span class="o">.</span><span class="n">mel</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="rhino">
+<span id="app-vray-dbr-rhino-submit-ref-label"></span><h3>Rhino<a class="headerlink" href="#rhino" title="Permalink to this headline">¶</a></h3>
+<p>The following procedure describes how to install the integrated V-Ray DBR submission script for Rhino. The integrated submission script and the following installation procedure has been tested with Rhino 5.</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="id6">
+<h4>Submitter Install<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/RhinoVRayDBR/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h4>Manual Install<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<p>The following installation procedure is intended and has been tested for Rhino 5.0.</p>
+<ul>
+<li><p>In Rhino, select ‘Tools’ -&gt; ‘Toolbar Layout’.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/rhino5_tb_layout.png"><img alt="../_images/rhino5_tb_layout.png" src="../_images/rhino5_tb_layout.png" style="height: 300px;" /></a>
+</div></blockquote>
+</li>
+<li><p>Select the Toolbar Collection file that you want to add the Deadline V-Ray DBR submission button to, and then select ‘File’ -&gt; ‘Import Toolbars…’. Browse to <code class="docutils literal notranslate"><span class="pre">[Repository]\submission\RhinoVRayDBR\Client\</span></code> and select the ‘deadlineVRayDBR.rui’ file.</p></li>
+<li><p>Check the box next to ‘Deadline V-Ray DBR’ and press ‘OK’.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/rhino5_dbr_tb_import.png"><img alt="../_images/rhino5_dbr_tb_import.png" src="../_images/rhino5_dbr_tb_import.png" style="height: 200px;" /></a>
+</div></blockquote>
+</li>
+<li><p>There should now be a toolbar with a <strong>Deadline V-Ray DBR</strong> button on your screen, which you can dock anywhere you want.</p></li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h4>Verify Install<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<p>The next time Maya is started, a Deadline V-Ray DBR toolbar should appear with an orange button that can be clicked on to launch the submitter.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/rhino_submission_button_vray_dbr.png"><img alt="../_images/rhino_submission_button_vray_dbr.png" src="../_images/rhino_submission_button_vray_dbr.png" style="height: 100px;" /></a>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="softimage">
+<span id="app-vray-dbr-softimage-submit-ref-label"></span><h3>Softimage<a class="headerlink" href="#softimage" title="Permalink to this headline">¶</a></h3>
+<p>The following procedure describes how to install the integrated V-Ray DBR submission script for Softimage. The integrated submission script and the following installation procedure has been tested with Softimage versions 2012 and
+later.</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="id9">
+<h4>Submitter Install<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/SoftimageVRayDBR/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="id10">
+<h4>Manual Install<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span><span class="o">/</span><span class="n">submission</span><span class="o">/</span><span class="n">SoftimageVRayDBR</span><span class="o">/</span><span class="n">Client</span><span class="o">/</span><span class="n">DeadlineSoftimageVRayDBRClient</span><span class="o">.</span><span class="n">py</span> <span class="n">to</span> <span class="n">the</span> <span class="n">folder</span> <span class="p">[</span><span class="n">Softimage</span> <span class="n">Install</span> <span class="n">Directory</span><span class="p">]</span><span class="o">/</span><span class="n">Application</span><span class="o">/</span><span class="n">Plugins</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="id11">
+<h4>Verify Install<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<p>Launch Softimage. The submission script is automatically installed when Softimage starts up. To make sure the script was installed correctly, select the Render toolbar on the left and click the Render button. A <strong>Setup V-Ray DBR With Deadline</strong> menu item should be available.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/xsi_vray_submitbutton.png"><img alt="../_images/xsi_vray_submitbutton.png" src="../_images/xsi_vray_submitbutton.png" style="height: 300px;" /></a>
+</div></blockquote>
+</div>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-vray-dbr-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Is V-Ray Distributed Rendering (DBR) supported?</strong></p>
+<blockquote>
+<div><p>Yes. A special ‘reserve’ job is submitted that will run the V-Ray Spawner/V-Ray Standalone process on the render nodes. Once the V-Ray Spawner/V-Ray Standalone process is running, these nodes will be able to participate in distributed rendering.</p>
+</div></blockquote>
+<p><strong>Which versions of V-Ray DBR are supported?</strong></p>
+<blockquote>
+<div><p>V-Ray DBR interactive rendering is supported for 3ds Max, Maya, and Softimage 2012-2015. You can also submit V-Ray Spawner jobs for Rhino and Sketchup from the Monitor. In the latter case, the render nodes will simply be reserved for DBR, and the distributed rendering process itself will have to be initiated manually from within Rhino or Sketchup. Finally, V-Ray Standalone is supported for Cinema 4D and V-Ray Standalone itself.</p>
+</div></blockquote>
+<p><strong>V-Ray Worker or V-Ray Spawner application fails to start manually?</strong></p>
+<blockquote>
+<div><p>During initial configuration of V-Ray DBR &amp; any future debugging, it is recommended to disable any firewall &amp; anti-virus software at both the DBR master host machine as well as all render Worker machines which are intended to participate in the DBR render. We suggest you manually get V-Ray DBR up and running in your studio pipeline to verify all is well before then introducing Deadline as a framework to handle the Spawner/Slave process.</p>
+</div></blockquote>
+<p><strong>Is Backburner required for 3dsMax based V-Ray DBR rendering via Deadline?</strong></p>
+<blockquote>
+<div><p>Yes. Normal 3dsMax rendering via Deadline requires the Backburner dll’s to be present on a system and this is the same prerequisite for V-Ray DBR rendering to work correctly. Ensure you have the latest/corresponding version of Backburner to ensure it supports the version of 3dsMax you are using. You can submit a normal 3dsmax render job to verify that Backburner &amp; 3dsMax rendering via Deadline are all operating correctly before attempting to configure V-Ray DBR rendering. Use the Deadline job report to verify the correctly matched version of Backburner, 3dsMax are in order.</p>
+</div></blockquote>
+<p><strong>3dsmax.exe starts (via vrayspawnerYYYY.exe) in the taskbar (minimized) but then instantly disappears?</strong></p>
+<blockquote>
+<div><p>V-Ray DBR rendering requires Deadline to have rendered at least one normal 3dsMax render job on the Worker machine prior to attempting DBR rendering via vrayspawnerYYYY.exe. Essentially, to test/debug if this is an issue, try to manually start the vrayspawnerYYYY.exe program from the Start menu (Start menu &gt; Programs &gt; Chaos Group &gt; V-Ray for 3dsmax &gt; Distributed rendering &gt; Launch V-Ray DR spawner). It will automatically try to find the 3dsmax.exe file and start it in server mode. You should end up with 3dsmax minimized in the task bar with the title “vraydummyYYYY.max”. If 3ds Max stays there alive without closing then V-Ray DBR is working correctly. If you see the 3ds Max window flashing on the taskbar and then instantly disappearing, right-click on the V-Ray DR spawner icon in the taskbar tray, select “Exit” to close the DR spawner application, and try submitting a regular Deadline 3dsMax render job with this machine running Deadline Worker. After that, try to start the V-Ray DR spawner again.</p>
+</div></blockquote>
+<p><strong>Do I need to run the vrayspawner (or RT/vrayslave/vray Standalone) application or install vrayspawner (or RT/vrayslave/vray Standalone) executable as a service/daemon on each machine?</strong></p>
+<blockquote>
+<div><p>No. Do <strong>NOT</strong> execute or install the Chaos Group V-RaySpawner (V-RaySpawner/V-RaySpawner RT/V-Ray Standalone) executable as a background service (NT service/daemon). Deadline is more flexible here and will spawn the
+V-RaySpawner/Standalone executable as a child process of the Deadline Worker. This makes our system more flexible and resilient to crashes as when we terminate the V-Ray DBR job in the Deadline queue, the Deadline Worker
+application will ‘cleanly’ tidy up V-RaySpawner/Standalone and more importantly, any DCC application (3dsMax/Maya) or Standalone instances which it in turn has spawned as a child process. This can be helpful if V-Ray DBR
+becomes unstable and a user wishes to reset the system remotely. You can simply re-queue or delete/complete the current DBR job or re-submit.</p>
+</div></blockquote>
+<p><strong>Can I force V-Ray Spawner/Slave to run over a certain control port?</strong></p>
+<blockquote>
+<div><p>Yes. Set the system environment variable <strong>VRAY_DR_CONTROLPORT</strong> to the required port number or where possible, in the case of some supported applications we expose the Port Number option in our Monitor/in-app submitters. Please consult the <a class="reference external" href="https://docs.chaos.com/display/VMAX/Set+Up+Distributed+Rendering">V-Ray User Manual</a> for more information on TCP/IP Port Numbers.</p>
+</div></blockquote>
+<p><strong>Can I force V-Ray DBR to run over a specific port for 3dsMax?</strong></p>
+<blockquote>
+<div><p>Yes. V-Ray production renderer specifically via 3dsMax uses a TCP port (default:20204), which can be changed via the “Port Number” spinner. V-Ray RT as the renderer uses a different TCP port (default:20206). See here for more information on <a class="reference internal" href="#app-vray-dbr-port-config-ref-label"><span class="std std-ref">Port Configuration</span></a>. Please consult the <a class="reference external" href="https://docs.chaos.com/display/VMAX/Set+Up+Distributed+Rendering">V-Ray User Manual</a> for more information on TCP/IP Port Numbers. Note, the Port Number can only be controlled via the 3dsMax in-app submitter and NOT when “reserving” a V-Ray DBR job for 3dsMax via the Deadline Monitor submission script.</p>
+</div></blockquote>
+<p><strong>V-Ray DBR rendering seems a little unstable sometimes or my machine slows down dramatically!</strong></p>
+<blockquote>
+<div><p>Depending on the number of Worker machines being used (Win7 OS &lt; 20), scene file sizes being moved around together with asset files, and your network/file storage configuration, it may help to disable your local machine from participating in the DR render process. Depending on your 3D application used and the V-Ray version, there might be a “Use local host” or “Don’t use local machine” checkbox option, which can help to reduce the load on your local machine.</p>
+</div></blockquote>
+<p><strong>Can I fully off-load 3dsMax V-Ray or Mental Ray Satellite rendering from my machine?</strong></p>
+<blockquote>
+<div><p>Yes, although please note, this is a different workflow and is supported directly in the 3dsmax plugin. See the <a class="reference internal" href="app-3ds-max-smtd.html#dsmax-vray-ref-label"><span class="std std-ref">V-Ray/Mental Ray DBR</span></a> section for more information.</p>
+</div></blockquote>
+<p><strong>Can I mark ALL V-Ray ‘reserve’ jobs as completed after a render?</strong></p>
+<blockquote>
+<div><p>Yes. A number of options are available in the <a class="reference internal" href="#app-vray-dbr-plugin-config-ref-label"><span class="std std-ref">Plugin Configuration</span></a> to automatically mark ALL DBR jobs as completed after the job has finished rendering. In the example below, we wish for ALL DBR jobs to be marked as completed after 1 minute (default is 15 minutes) has elapsed since the DBR render has finished and only after at least one DBR session has taken place.</p>
+<a class="reference internal image-reference" href="../_images/vray_dbr_session_timeout_config.png"><img alt="../_images/vray_dbr_session_timeout_config.png" src="../_images/vray_dbr_session_timeout_config.png" style="height: 400px;" /></a>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known V-Ray DBR error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here, please
+contact <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> and let us know.</p>
+<p><strong>error: Failed to start network server: Failed to open listening port (98)</strong></p>
+<blockquote>
+<div><p>VRay.exe/vrayslave has been configured as a service/daemon on the machine generating this error message, possibly during the V-Ray/Maya install process and this is conflicting with Deadline trying to also spawn the same process on the same TCP port (default: 20207). On Linux, ensure you check the contents of the file: “/usr/autodesk/maya20##-x64/vray/bin/vrayslave” for a line entry as follows: “/usr/autodesk/maya2014-x64/vray/bin/vray.bin $* -server -portNumber=20207” where ## is the Maya version. This line entry should not be present. Note, we are unable to attach to an already running process as part of the V-Ray Spawner Plugin, hence the V-Ray executable must NOT already be running. Do <strong>NOT</strong> execute or install V-Ray as a service. Deadline is more flexible here and will spawn the executable as a child process of the Deadline Worker.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">V-Ray Distributed Rendering</a><ul>
+<li><a class="reference internal" href="#interactive-distributed-rendering">Interactive Distributed Rendering</a><ul>
+<li><a class="reference internal" href="#port-configuration">Port Configuration</a></li>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#rendering">Rendering</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#v-ray-spawner-v-ray-standalone-submission">V-Ray Spawner/V-Ray Standalone Submission</a><ul>
+<li><a class="reference internal" href="#id1">Submission Options</a></li>
+<li><a class="reference internal" href="#id2">Rendering</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#ds-max">3ds Max</a><ul>
+<li><a class="reference internal" href="#submitter-install">Submitter Install</a></li>
+<li><a class="reference internal" href="#manual-install">Manual Install</a></li>
+<li><a class="reference internal" href="#verify-install">Verify Install</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#maya">Maya</a><ul>
+<li><a class="reference internal" href="#id3">Submitter Install</a></li>
+<li><a class="reference internal" href="#id4">Manual Install</a></li>
+<li><a class="reference internal" href="#id5">Verify Install</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rhino">Rhino</a><ul>
+<li><a class="reference internal" href="#id6">Submitter Install</a></li>
+<li><a class="reference internal" href="#id7">Manual Install</a></li>
+<li><a class="reference internal" href="#id8">Verify Install</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#softimage">Softimage</a><ul>
+<li><a class="reference internal" href="#id9">Submitter Install</a></li>
+<li><a class="reference internal" href="#id10">Manual Install</a></li>
+<li><a class="reference internal" href="#id11">Verify Install</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-vray-benchmark.html"
+                        title="previous chapter">V-Ray Benchmark</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-vray-ply2vrmesh.html"
+                        title="next chapter">V-Ray Ply2Vrmesh</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-vray-ply2vrmesh.html" title="V-Ray Ply2Vrmesh"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-vray-benchmark.html" title="V-Ray Benchmark"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">V-Ray Distributed Rendering</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

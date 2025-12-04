@@ -1,0 +1,462 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>REDLine &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Redshift Standalone" href="app-redshift.html" />
+    <link rel="prev" title="Realflow" href="app-realflow.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-redshift.html" title="Redshift Standalone"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-realflow.html" title="Realflow"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">REDLine</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="redline">
+<span id="app-redline-ref-label"></span><h1>REDLine<a class="headerlink" href="#redline" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit REDLine jobs from the Monitor. REDLine is the command line tool that ships with REDCINE-X, and previously with REDAlert.</p>
+<a class="reference internal image-reference" href="../_images/sub_redline.png"><img alt="../_images/sub_redline.png" src="../_images/sub_redline.png" style="height: 500px;" /></a>
+</div>
+<div class="section" id="submission-options">
+<h2>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h2>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation. Deadline basically supports all the options that are available in the REDCINE-X application. It also supports the ability to specify RSX files to use when rendering, so you can set your options in REDCINE-X and then use them to render the job through Deadline. Please refer to your REDCINE-X documentation for more information about these additional render options.</p>
+<div class="section" id="file-frame-misc">
+<h3>File, Frame, Misc<a class="headerlink" href="#file-frame-misc" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="../_images/sub_redline_file_frame_misc.png"><img alt="../_images/sub_redline_file_frame_misc.png" src="../_images/sub_redline_file_frame_misc.png" style="height: 500px;" /></a>
+<p><strong>REDLine File and Frame Options</strong></p>
+<ul>
+<li><p><strong>Select by Directory</strong>: Choose a root directory to scan for all *.R3D files.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Process Sub-Directories</strong>: Optionally choose to scan sub-directories as well for *.R3D files.</p></li>
+<li><p><strong>R3D Directory</strong>: Choose a root directory to scan for all *.R3D files.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Select by File</strong>: Choose by individual *.R3D file selection.</p>
+<blockquote>
+<div><ul>
+<li><p><strong>Single</strong>: Choose a single view file.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Input R3D Files</strong>: Specify the R3D file(s) you want to render.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Stereo (L/R)</strong>: Choose matching stereo view files.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>LEFT Eye R3D File</strong>: Specify the LEFT EYE R3D file you want to render.</p></li>
+<li><p><strong>RIGHT Eye R3D File</strong>: Specify the RIGHT EYE R3D file you want to render.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Audio File (Optional)</strong>: Optionally, specify an input audio file.</p></li>
+<li><p><strong>Output Folder</strong>: The folder where the output files will be saved.</p></li>
+<li><p><strong>Output Filename</strong>: The prefix portion of the output filename. It is not necessary to specify the extension.</p></li>
+<li><p><strong>Output Format</strong>: The output format. This will determine the filename extension.</p></li>
+<li><p><strong>Render Resolution</strong>: The resolution to render at.</p></li>
+<li><p><strong>Output Padding</strong>: The output padding size.</p></li>
+<li><p><strong>Color Science Version</strong>: The color science version.</p></li>
+<li><p><strong>Make Output Subfolder</strong>: Makes subdirectory for each output.</p></li>
+</ul>
+<p><strong>Frame Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Frame List</strong>:The list of frames to render if rendering an animation.</p></li>
+<li><p><strong>Renumber Start Frame</strong>: The new start frame number (optional).</p></li>
+<li><p><strong>Frames Per Task</strong>: This is the number of frames that will be rendered at a time for each job task.</p></li>
+<li><p><strong>Submit R3D File(s) With Job</strong>: If this option is enabled, the input file(s) will be submitted with the job, and then copied locally to the Worker machine during rendering.</p></li>
+</ul>
+<p><strong>Export Preset Options</strong></p>
+<ul>
+<li><p><strong>Export Preset Name</strong>: Optionally, load settings from an export preset: [default = none].</p></li>
+<li><p><strong>Export Preset File</strong>: Optionally, the file to load export presets from:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/Users/$USER/Library/Application Support/Red/RedCineX/Presets/UserExportPresets.xml.
+</pre></div>
+</div>
+</li>
+</ul>
+<p><strong>Misc Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Adv Lut Render</strong>: Override the Adv Lut Render.</p></li>
+<li><p><strong>No Render</strong>: Forces redline to abort before any rendering occurs.</p></li>
+<li><p><strong>No Audio</strong>: Disable all audio output.</p></li>
+</ul>
+</div>
+<div class="section" id="stereo-metadata-crop-scale-qt">
+<h3>Stereo, Metadata, Crop, Scale, QT<a class="headerlink" href="#stereo-metadata-crop-scale-qt" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="../_images/sub_redline_stereo_meta_crop_scale_qt.png"><img alt="../_images/sub_redline_stereo_meta_crop_scale_qt.png" src="../_images/sub_redline_stereo_meta_crop_scale_qt.png" style="height: 500px;" /></a>
+<p><strong>Stereo 3D Mode</strong></p>
+<ul class="simple">
+<li><p><strong>3D Mode</strong>: 3D Export Mode (PixelInterleave,Side By Side,Right Top, Left Bottom,Left Top, Right Bottom,Row Interleave).</p></li>
+<li><p><strong>3D Offset</strong>: Offset in frames of the left eye from the right (or right eye from the left if negative) [default = 0].</p></li>
+</ul>
+<p><strong>Metadata Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Load RSX File</strong>: Use look metadata in REDLine RSX file.</p></li>
+<li><p><strong>Use RSX Defaults For</strong>: What to use RSX defaults for (Color &amp; In/Out,Color Only).</p></li>
+<li><p><strong>Load RMD File</strong>: Use look metadata in REDLine RMD file.</p></li>
+<li><p><strong>Use RMD Defaults For</strong>: What to use RMD defaults for (Color &amp; In/Out,Color Only).</p></li>
+<li><p><strong>Use Metadata In R3D File</strong>: Use look metadata in R3D as defaults (overridden for each value explicitly set).</p></li>
+<li><p><strong>Ignore Frame Guides</strong>: Use in conjunction with Use Metadata checkbox. Ignores frame guides.</p></li>
+<li><p><strong>Print Meta</strong>: Override Print Meta (header,normal,csv,header+csv,3D rig,per-frame lens+acc+gyro).</p></li>
+<li><p><strong>ALE File</strong>: Save an ALE file with the given filename.</p></li>
+<li><p><strong>Reel ID</strong>: Override Reel ID file naming convention (full name,FCP 8 Character).</p></li>
+<li><p><strong>Clip Frame Rate</strong>: Override Clip Frame Rate (23.976fps,24fps,25fps,29.97fps,30fps,47.952fps,48fps,50fps,59.94fps,60fps,71.928fps,72fps).</p></li>
+</ul>
+<p><strong>Crop and Scale Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Crop</strong>: If cropping should be enabled</p></li>
+<li><p><strong>Width</strong>: Crop demosaiced source before resize using Width.</p></li>
+<li><p><strong>Height</strong>: Crop demosaiced source before resize using Height.</p></li>
+<li><p><strong>Origin X</strong>: Crop demosaiced source before resize using origin X.</p></li>
+<li><p><strong>Origin Y</strong>: Crop demosaiced source before resize using origin Y.</p></li>
+<li><p><strong>Scale</strong>: If scaling should be enabled.</p></li>
+<li><p><strong>Width</strong>: Resize to X dimension.</p></li>
+<li><p><strong>Height</strong>: Resize to Y dimension.</p></li>
+<li><p><strong>Fit/Stretch</strong>: Fit source to destination (Fit Width,Fit Height,Stretch,Fit Width 2x,Fit Width .9x,Fit Height .9x,Fit Width 1.46x,Fit Width 1.09x,Fit Width 0.5x,Fit Height 0.5x,Fit Width 1.3x,Fit Height 1.3x,Fit Width 1.25x).</p></li>
+<li><p><strong>Resample Filter</strong>: Filter using the selected option (Bilinear (fastest),Bell (smoother),Lanczos (sharper),Quadratic (smoother),Cubic-bspline (smoother),CatmulRom (sharper),Mitchell (smoother),Gauss (smoother),WideGauss (smoothest),Sinc (sharpest),Keys (sharper),Rocket (sharper)).</p></li>
+<li><p><strong>Override Flip H</strong>: Override Force Flip Horizontal.</p></li>
+<li><p><strong>Force Flip Horizontal</strong>: 0 = Disables any horizontal flip setting in metadata, 1 = Forces the image to be flipped horizontally.</p></li>
+<li><p><strong>Override Flip V</strong>: Override Force Flip Vertical.</p></li>
+<li><p><strong>Force Flip Vertical</strong>: 0 = Disables any vertical flip setting in metadata, 1 = Forces the image to be flipped vertically.</p></li>
+<li><p><strong>Override Rotate</strong>: Rotates the image only 0.0, -90.0 and 90.0 degrees are currently accepted (0.0,-90.0,90.0).</p></li>
+<li><p><strong>Override Neg Pixels</strong>: Override Prevent Negative Pixels.</p></li>
+<li><p><strong>Prevent Negative Pixels</strong>: Prevents the scaler from generating negative pixel values. 0=off 1=on [default = 1].</p></li>
+</ul>
+</div>
+<div class="section" id="qt-transcode-burn-in">
+<h3>QT Transcode, Burn-In<a class="headerlink" href="#qt-transcode-burn-in" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="../_images/sub_redline_qt_transcode_burnin.png"><img alt="../_images/sub_redline_qt_transcode_burnin.png" src="../_images/sub_redline_qt_transcode_burnin.png" style="height: 500px;" /></a>
+<p><strong>QuickTime Transcode Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Codec</strong>: QT codec to output.</p></li>
+<li><p><strong>Clobber Existing QT File</strong>: Do clobber an existing QT file. If disabled, ‘_Sxxx’ will be added for each new file.</p></li>
+</ul>
+<p><strong>Burn-In Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Burn In</strong>: Turn on burn in.</p></li>
+<li><p><strong>Frames</strong>: Do burn in for the specified frames (All,First,First &amp; Last,Last,Count).</p></li>
+<li><p><strong>Frames Count</strong>: Number of frames to burn in [default = 1].</p></li>
+<li><p><strong>Font</strong>: The burn in font (Letter Gothic,Monaco,Courier,Lucida Type,Andale Mono,OCRA,Orator Std).</p></li>
+<li><p><strong>Text Height</strong>: Height of text in percent of output height.</p></li>
+<li><p><strong>Text Origin Y %</strong>: Burn in Y location in percent of output height.</p></li>
+<li><p><strong>Lower Left</strong>: The burn in for the lower left (Reel/Filename,Frames,Frames In Edit,Frames In Source,Edge Code,EXT/TOD Time Code).</p></li>
+<li><p><strong>Lower Right</strong>: The burn in for the lower right (Reel/Filename,Frames,Frames In Edit,Frames In Source,Edge Code,EXT/TOD Time Code).</p></li>
+<li><p><strong>Upper Left</strong>: The burn in for the upper left (Reel/Filename,Frames,Frames In Edit,Frames In Source,Edge Code,EXT/TOD Time Code).</p></li>
+<li><p><strong>Upper Right</strong>: The burn in for the upper right (Reel/Filename,Frames,Frames In Edit,Frames In Source,Edge Code,EXT/TOD Time Code).</p></li>
+<li><p><strong>Text RGBA</strong>: Text channels (red, green, blue, and alpha respectively).</p></li>
+<li><p><strong>Background RGBA</strong>: Background channels (red, green, blue, and alpha respectively).</p></li>
+</ul>
+<p><strong>Watermark Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Watermarking</strong>: Turn on watermarking.</p></li>
+<li><p><strong>Font</strong>: The watermark font to use (Letter Gothic,Andale Mono,OCRA,DejaVu Sans Mono).</p></li>
+<li><p><strong>Text</strong>: Enter the text to be displayed in the watermark.</p></li>
+<li><p><strong>Size %</strong>: Height of text in percent of output height [default = 5].</p></li>
+<li><p><strong>Base %</strong>: Watermark Y location in percent of height [default = 20].</p></li>
+<li><p><strong>Text R</strong>: Text red channel (0-1.0) [default = 1.0].</p></li>
+<li><p><strong>Text G</strong>: Text green channel (0-1.0) [default = 1.0].</p></li>
+<li><p><strong>Text B</strong>: Text blue channel (0-1.0) [default = 1.0].</p></li>
+<li><p><strong>Text Alpha</strong>: Text alpha channel (0-1.0) [default = 0.8].</p></li>
+</ul>
+</div>
+<div class="section" id="color-gamma-curve">
+<h3>Color, Gamma, Curve<a class="headerlink" href="#color-gamma-curve" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="../_images/sub_redline_color_gamma_curve.png"><img alt="../_images/sub_redline_color_gamma_curve.png" src="../_images/sub_redline_color_gamma_curve.png" style="height: 500px;" /></a>
+<p><strong>Color/Gamma Space Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Color Space</strong>: Override the color space option.</p></li>
+<li><p><strong>LUT/Gamma Curve</strong>: Override the gamma curve.</p></li>
+<li><p><strong>Chroma Denoise</strong>: Override the noise reduction.</p></li>
+<li><p><strong>Debayer Detail</strong>: Override the detail.</p></li>
+<li><p><strong>OLPF Compensation</strong>: Override the post sharpen.</p></li>
+<li><p><strong>SMPTE Color Range</strong>: Override the SMPTE color range.</p></li>
+</ul>
+<p><strong>Color Settings</strong></p>
+<ul class="simple">
+<li><p><strong>ISO</strong>: Override ISO.</p></li>
+<li><p><strong>Flut</strong>: Override Flut.</p></li>
+<li><p><strong>Shadow</strong>: Override Shadow.</p></li>
+<li><p><strong>Kelvin</strong>: Override kelvin.</p></li>
+<li><p><strong>Tint</strong>: Override tint.</p></li>
+<li><p><strong>Exposure</strong>: Override exposure.</p></li>
+<li><p><strong>Saturation</strong>: Override saturation.</p></li>
+<li><p><strong>Contrast</strong>: Override contrast.</p></li>
+<li><p><strong>Brightness</strong>: Override brightness.</p></li>
+<li><p><strong>Red</strong>: Override reg gain.</p></li>
+<li><p><strong>Green</strong>: Override green gain.</p></li>
+<li><p><strong>Blue</strong>: Override blue gain.</p></li>
+<li><p><strong>DRX</strong>: Override dynamic range extender.</p></li>
+<li><p><strong>DEB</strong>: Override dragon enhanced blacks.</p></li>
+</ul>
+<p><strong>Lift Gamma Gain Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Red Lift</strong>: Override Red Lift.</p></li>
+<li><p><strong>Green Lift</strong>: Override Green Lift.</p></li>
+<li><p><strong>Blue Lift</strong>: Override Blue Lift.</p></li>
+<li><p><strong>Red Gamma</strong>: Override Red Gamma.</p></li>
+<li><p><strong>Green Gamma</strong>: Override Green Gamma.</p></li>
+<li><p><strong>Blue Gamma</strong>: Override Blue Gamma.</p></li>
+<li><p><strong>Red Gain</strong>: Override Red Gain.</p></li>
+<li><p><strong>Green Gain</strong>: Override Green Gain.</p></li>
+<li><p><strong>Blue Gain</strong>: Override Blue Gain.</p></li>
+</ul>
+<p><strong>Print Density Settings</strong></p>
+<ul class="simple">
+<li><p><strong>PD Black</strong>: Override Print Density Black.</p></li>
+<li><p><strong>PD White</strong>: Override Print Density White.</p></li>
+<li><p><strong>PD Gamma</strong>: Override Print Density Gamma.</p></li>
+</ul>
+<p><strong>Curve Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Black</strong>: Override Black Curve.</p></li>
+<li><p><strong>White</strong>: Override White Curve.</p></li>
+<li><p><strong>Luma Curve</strong>: Override Luma Curve. Enter 10 integer values separated by colon character (0:0:25:25:50:50:75:75:100:100).</p></li>
+<li><p><strong>Red Curve</strong>: Override Red Curve. Enter 10 integer values separated by colon character (0:0:25:25:50:50:75:75:100:100).</p></li>
+<li><p><strong>Green Curve</strong>: Override Green Curve. Enter 10 integer values separated by colon character (0:0:25:25:50:50:75:75:100:100).</p></li>
+<li><p><strong>Blue Curve</strong>: Override Blue Curve. Enter 10 integer values separated by colon character (0:0:25:25:50:50:75:75:100:100).</p></li>
+</ul>
+</div>
+<div class="section" id="file-format">
+<h3>File Format<a class="headerlink" href="#file-format" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="../_images/sub_redline_file_format.png"><img alt="../_images/sub_redline_file_format.png" src="../_images/sub_redline_file_format.png" style="height: 500px;" /></a>
+<p><strong>HDR Settings</strong></p>
+<ul class="simple">
+<li><p><strong>HDR Mode</strong>: Override the HDR mode.</p></li>
+<li><p><strong>HDR Bias</strong>: HDR Bias (for Simple Blend and Magic Motion modes only) [default=0.0, range = -1.0 to 1.0].</p></li>
+</ul>
+<p><strong>DPX Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Byte Order</strong>: Override DPX Byte Order (LSB,MSB).</p></li>
+<li><p><strong>Bit Depth</strong>: Override DPX Bit Depth (10,16).</p></li>
+<li><p><strong>Max Writers</strong>: Override DPX Max Simultaneous Writers.</p></li>
+</ul>
+<p><strong>EXR Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Compression</strong>: Override EXR compression (NONE,RLE,ZIPS,ZIP,PIZ,PXR24,B44,B44A,DWAA,DWAB).</p></li>
+<li><p><strong>DWAA Compression</strong>: OpenEXR DWA Compression Level [default = 45, range 25 - 100].</p></li>
+<li><p><strong>Multi View</strong>: Override OpenEXR MultiView: Dual Channel=1, Single Channel=0 [default=0].</p></li>
+<li><p><strong>Max Writers</strong>: Override OpenEXR Max Simultaneous Writers [default = 10, range = 1 - 64].</p></li>
+<li><p><strong>ACES</strong>: Override OpenEXR ACES: On=1, Off=0 [default=0].</p></li>
+<li><p><strong>Soft Clamp</strong>: Override OpenEXR Soft Clamp: On=1, Off=0 [default=0].</p></li>
+</ul>
+<p><strong>R3D Trim Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Include RMD Sidecar</strong>: Include RMD sidecar.</p></li>
+<li><p><strong>Include QT Wrappers</strong>: Include Qt Wrappers.</p></li>
+<li><p><strong>Include FCP XML</strong>: Override Include FCP XML (No FCP XML,Full,Half,Quarter,Eighth).</p></li>
+<li><p><strong>Include Audio</strong>: Include Audio in R3D Trim.</p></li>
+<li><p><strong>Clip Framerate</strong>: Change Clip Framerate.</p></li>
+<li><p><strong>Clip’s OLPF</strong>: Change the clip’s OLPF. Use –olpfLookup to get available OLPF IDs for a clip.</p></li>
+</ul>
+<p><strong>Avid DNX Settings</strong></p>
+<ul class="simple">
+<li><p><strong>DNX Codec</strong>: Avid DNX Codec to output [default = DNxHR HQ].</p></li>
+<li><p><strong>Media Framerate</strong>: Avid Media Framerate [default = 23.98].</p></li>
+</ul>
+<p><strong>REDray Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Content Title</strong>: Content Title.</p></li>
+<li><p><strong>Poster Frame</strong>: Poster Frame.</p></li>
+</ul>
+</div>
+<div class="section" id="rocket-gpu-add">
+<h3>Rocket, GPU, ADD<a class="headerlink" href="#rocket-gpu-add" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="../_images/sub_redline_rocket_gpu_add.png"><img alt="../_images/sub_redline_rocket_gpu_add.png" src="../_images/sub_redline_rocket_gpu_add.png" style="height: 500px;" /></a>
+<p><strong>Rocket Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Disable Rocket</strong>: Turn rocket support off even if it’s available.</p></li>
+<li><p><strong>Single Rocket</strong>: Limit REDline to a maximum of one Rocket.</p></li>
+<li><p><strong>Force Rocket</strong>: Forces the use of Red Rocket. If NO rockets are available the export will abort.</p></li>
+<li><p><strong>Specify Rocket Devices</strong>: Choose which Rocket(s) to use (for example: 0,2). Comma separated string.</p></li>
+</ul>
+<p id="redline-gpu-affinity-ref-label"><strong>Processing Settings</strong></p>
+<ul class="simple">
+<li><p><strong>GPU Platform</strong>: Override if GPU should be enabled (No GPU,OpenCL,CUDA).</p></li>
+<li><p><strong>Specific GPUs (Optional)</strong>: Optionally, specify which GPU devices to use by device index. Comma separated string such as 0 or 0,1 or 0,1,2.</p></li>
+<li><p><strong>Decode Threads</strong>: Number of simultaneous decompression threads (Default 7).</p></li>
+<li><p><strong>Num Graphs</strong>: Number of simultaneous graphs to process.</p></li>
+<li><p><strong>Num of GPU proc streams</strong>: Number of GPU processing streams.</p></li>
+</ul>
+<p><strong>Advanced Dragon Debayer (A.D.D.) Settings</strong></p>
+<ul class="simple">
+<li><p><strong>Enable A.D.D.</strong>: Enable A.D.D.</p></li>
+<li><p><strong>Unsharp Mask Amount</strong>: A.D.D. Unsharp Mask Amount. (Default: 200).</p></li>
+<li><p><strong>Unsharp Mask Radius</strong>: A.D.D. Unsharp Mask Radius. (Default: 0.6).</p></li>
+<li><p><strong>Unsharp Mask Threshold</strong>: A.D.D. Unsharp Mask Threshold. (Default: 1.0).</p></li>
+<li><p><strong>Disable Unsharp Mask for A.D.D.</strong>: Disable Unsharp Mask for A.D.D. Processing.</p></li>
+</ul>
+<p><strong>3D LUT Settings</strong></p>
+<ul class="simple">
+<li><p><strong>LUT File</strong>: Load a 3D LUT from file.</p></li>
+<li><p><strong>Edge length of LUT File</strong>: Edge length of the 3D LUT.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the REDLine plugin settings from the Deadline Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the REDAlert plugin from the list on the left.</p>
+<p>Note, if the executable supports a MAJOR.MINOR.REVISION (9.0.123) numbering system in its path, then you will need to configure the explicit exe path to the particular revision that you have installed on your machines. Deadline does not track every possible revision available or indeed where it might be custom installed to, so a studio should verify their exe paths are correct for each application version they choose to use with Deadline. Multiple exe paths can still be declared and the first one that is found on a particular Worker on a particular platform will be used from the exe list.</p>
+<a class="reference internal image-reference" href="../_images/cp_redline.png"><img alt="../_images/cp_redline.png" src="../_images/cp_redline.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>REDLine Executable</strong>: The path to the REDline executable file used for rendering. Enter alternative paths on separate lines.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-redline-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Is REDCINE-X/REDAlert supported by Deadline?</strong></p>
+<blockquote>
+<div><p>Yes. Both applications ship with a command line application called REDLine, which Deadline uses to render. We only support the newer (~circa 2012 and onwards) 64bit version of REDLine.</p>
+</div></blockquote>
+<p><strong>Which Operating System(s) can I render REDLine jobs with?</strong></p>
+<blockquote>
+<div><p>Currently, REDLine is available on Windows and macOS, so you can render REDLine jobs on these operating systems. Path mapping is supported between the platforms, so you can submit on Windows and process on macOS or vice-versa.</p>
+</div></blockquote>
+<p><strong>Do you support REDLine’s RED rocket if installed?</strong></p>
+<blockquote>
+<div><p>Yes. Please see the additional options available in the <em>Rocket, GPU, ADD</em> tab of the Monitor submitter. You can also define which specific rockets are used per REDLine job.</p>
+</div></blockquote>
+<p><strong>Do you support GPU acceleration in REDLine?</strong></p>
+<blockquote>
+<div><p>Yes. We automatically support both OpenCL and CUDA based GPU affinity via the options available in the <em>Rocket, GPU, ADD</em> tab of the Monitor submitter. Additionally, Worker GPU affinity override is respected. By default, only CPU is used in REDLine jobs.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known REDLine error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here, please contact
+<a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Deadline Support</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">REDLine</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a></li>
+<li><a class="reference internal" href="#submission-options">Submission Options</a><ul>
+<li><a class="reference internal" href="#file-frame-misc">File, Frame, Misc</a></li>
+<li><a class="reference internal" href="#stereo-metadata-crop-scale-qt">Stereo, Metadata, Crop, Scale, QT</a></li>
+<li><a class="reference internal" href="#qt-transcode-burn-in">QT Transcode, Burn-In</a></li>
+<li><a class="reference internal" href="#color-gamma-curve">Color, Gamma, Curve</a></li>
+<li><a class="reference internal" href="#file-format">File Format</a></li>
+<li><a class="reference internal" href="#rocket-gpu-add">Rocket, GPU, ADD</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-realflow.html"
+                        title="previous chapter">Realflow</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-redshift.html"
+                        title="next chapter">Redshift Standalone</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-redshift.html" title="Redshift Standalone"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-realflow.html" title="Realflow"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">REDLine</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

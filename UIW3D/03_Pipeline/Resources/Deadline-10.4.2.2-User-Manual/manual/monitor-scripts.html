@@ -1,0 +1,457 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monitor Scripts &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Job Scripts" href="job-scripts.html" />
+    <link rel="prev" title="Event Plugins" href="event-plugins.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="job-scripts.html" title="Job Scripts"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="event-plugins.html" title="Event Plugins"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-scripting.html" accesskey="U">Scripting</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Monitor Scripts</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="monitor-scripts">
+<span id="monitor-scripts-ref-label"></span><h1>Monitor Scripts<a class="headerlink" href="#monitor-scripts" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>There are several different types of Monitor scripts available. While the large majority of the ones shipping with Deadline are Submission Scripts used to submit new Jobs to the farm, the Monitor has the capability
+of running utility scripts in the context of specific Jobs, Tasks, Workers, Limits, or even Reports.</p>
+<p>Below, we go into more detail for each of the different types of Scripts, and how to create your own.</p>
+</div>
+<div class="section" id="scripting-reference">
+<h2>Scripting Reference<a class="headerlink" href="#scripting-reference" title="Permalink to this headline">¶</a></h2>
+<p>As with all other Deadline scripts, Monitor scripts use <a class="reference external" href="https://www.python.org/">Python</a>, which is additionally supported using <a class="reference external" href="https://pythonnet.sourceforge.net/">Python for .NET</a>. This means that in addition to typical cPython modules, Python for .NET
+allows your scripts to make use of <a class="reference external" href="https://msdn.microsoft.com/en-us/library/gg145045%28VS.100%29.aspx">.NET Libraries</a>, and Deadline’s own internal functions. For UI construction, <strong>PyQt5</strong> is used. Deadline’s <a class="reference external" href="https://docs.thinkboxsoftware.com/products/deadline/10.3/2_Scripting%20Reference/class_script_control_1_1_script_control.html">ScriptControl</a> UI class inherits from <a class="reference external" href="https://doc.qt.io/qt-5/qwidget.html">QWidget</a>. Both <a class="reference external" href="https://docs.thinkboxsoftware.com/products/deadline/10.3/2_Scripting%20Reference/class_script_dialog_1_1_script_dialog.html">ScriptDialog</a> and <a class="reference external" href="https://docs.thinkboxsoftware.com/products/deadline/10.3/2_Scripting%20Reference/class_deadline_script_dialog_1_1_deadline_script_dialog.html">DeadlineScriptDialog</a> extend this <a class="reference external" href="https://docs.thinkboxsoftware.com/products/deadline/10.3/2_Scripting%20Reference/class_script_control_1_1_script_control.html">ScriptControl</a> class, allowing you to use <strong>PyQt5</strong> interchangeably within Deadline’s Python when creating UI based scripts.</p>
+<p>The full Deadline Scripting Reference can be downloaded in CHM or PDF format from the Deadline <a class="reference external" href="https://downloads.thinkboxsoftware.com">Downloads</a> page.</p>
+<p>Particular functions of note relevant to Monitor Scripting can be found in the aforementioned Scripting Reference, under the following sections:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Deadline.Scripting.MonitorUtils</p></li>
+<li><p>Deadline.Scripting.JobUtils</p></li>
+<li><p>Deadline.Scripting.SlaveUtils</p></li>
+</ul>
+</div></blockquote>
+<p>It can also be very helpful when developing your own Monitor Script to take a look at how our built-in Monitor Scripts of that type are structured.</p>
+</div>
+<div class="section" id="general-script-template">
+<span id="general-script-template-ref-label"></span><h2>General Script Template<a class="headerlink" href="#general-script-template" title="Permalink to this headline">¶</a></h2>
+<p>We follow a fairly specific template when making any new built-in Monitor scripts. The template is loosely as follows:</p>
+<blockquote>
+<div><ul>
+<li><p><strong>Define your __main__ function</strong>: This is the function that Deadline will call when invoking your script. This is mandatory, and your script will generate an error if it isn’t done.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__main__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="c1">#Replace &quot;pass&quot;</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Build the submission UI</strong>: Typically done in the __main__ function by creating a ScriptDialog object, and adding controls to it. Each control’s name must be unique, so that each control can be
+identified properly. You can also set the dialog’s size (if not using a grid layout), the row and column (if using a grid layout), title, and a few other settings. For more details, see the
+ScriptDialog and ScriptControl sections of the Reference Manual. For an example on how to use the grid layout see the <a class="reference internal" href="#monitor-scripts-grid-layout-example-ref-label"><span class="std std-ref">Grid Layout Example Script</span></a> documentation.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Define and Load Sticky Settings</strong>: Sticky settings are settings that persist after the dialog has been closed. They are defined by creating a string array that contains the names of the controls for
+which you want the settings to persist. After defining them, you can load them by calling the ‘LoadSettings’ function of your ScriptDialog.</p></li>
+<li><p><strong>Show the Dialog</strong>: The last thing you should do in your __main__ function is to show your ScriptDialog, by using its ‘ShowDialog’ function.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Define Your Functions</strong>: Specify any functions that may be used by your script. These could just be helper functions, or event handlers that do stuff when UI values are modified.</p></li>
+</ul>
+</div></blockquote>
+<p>Note that you don’t necessarily need to follow this template, but the closer you stick to it, the more examples you’ll have to draw on.</p>
+</div>
+<div class="section" id="id1">
+<h2>Monitor Scripts<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>There are many different types of scripts you can write for the Monitor, which are listed below. It is recommended that these scripts be created in the ‘custom’ folder in the Repository to avoid issues when
+upgrading your Repository in the future. See the <a class="reference internal" href="scripting-overview.html#scripting-overview-ref-label"><span class="std std-ref">Scripting Overview</span></a> documentation for more information on the ‘custom’ folder in the Repository and how it’s used.</p>
+<p>When a Monitor script is executed the log will show where the script is being loaded from.</p>
+<div class="section" id="submission-scripts">
+<span id="submission-scripts-ref-label"></span><h3>Submission Scripts<a class="headerlink" href="#submission-scripts" title="Permalink to this headline">¶</a></h3>
+<p>Submission Scripts are used to create custom Submission dialogs, and ultimately submit new Jobs to Deadline. They are located in the ‘Submit’ menu of the Monitor’s main menu bar, as well as the ‘Submit’ menu in the the Launcher.
+Creating your own custom Submission dialog is quite simple, and the process is described below.</p>
+<p>To create new submission scripts, simply navigate to the ‘custom\scripts\Submission’ folder in your Repository. Then, create a new Python file named ‘MySubmissionScript.py’, where ‘MySubmissionScript’ is the name of your
+new script.</p>
+<p>Once created, you can follow the template outlined above in the <a class="reference internal" href="#general-script-template-ref-label"><span class="std std-ref">General Script Template</span></a> section to build up your script.</p>
+</div>
+<div class="section" id="general-scripts">
+<span id="general-scripts-ref-label"></span><h3>General Scripts<a class="headerlink" href="#general-scripts" title="Permalink to this headline">¶</a></h3>
+<p>General scripts are used to perform any sort of custom action by selecting them from the Monitor’s (or Launcher’s) ‘Scripts’ menu. Under the hood, there technically isn’t anything different between General and
+Submission scripts. The only real difference is that they show up under different menus, which is just to help keep scripts semantically separated.</p>
+<p>To create new General scripts, simply navigate to the ‘custom\scripts\General’ folder in your Repository. Then, create a new Python file named ‘MyGeneralScript.py’, where ‘MyGeneralScript’ is the name of your new script.</p>
+<p>Once created, you can follow the template outlined above in the <a class="reference internal" href="#general-script-template-ref-label"><span class="std std-ref">General Script Template</span></a> section to build up your script.</p>
+</div>
+<div class="section" id="job-scripts">
+<h3>Job Scripts<a class="headerlink" href="#job-scripts" title="Permalink to this headline">¶</a></h3>
+<p>Job Scripts are typically used to modify or to perform actions on a selected Job in the Monitor. They can be accessed by right-clicking an existing Job in the Job Panel, under the ‘Scripts’ sub-menu.</p>
+<p>To create new Job scripts, simply navigate to the ‘custom\scripts\Jobs’ folder in your Repository. Then, create a new Python file named ‘MyJobScript.py’, where ‘MyJobScript’ is the name of your new script.</p>
+<p>Once created, you can follow the template outlined above in the <a class="reference internal" href="#general-script-template-ref-label"><span class="std std-ref">General Script Template</span></a> section to build up your script.</p>
+</div>
+<div class="section" id="task-scripts">
+<span id="task-scripts-ref-label"></span><h3>Task Scripts<a class="headerlink" href="#task-scripts" title="Permalink to this headline">¶</a></h3>
+<p>Task Scripts are typically used to modify or to perform actions on a selected Task in the Monitor. They can be accessed by right-clicking an existing Task in the Task Panel, under the ‘Scripts’ sub-menu.</p>
+<p>To create new Task scripts, simply navigate to the ‘custom\scripts\Tasks’ folder in your Repository. Then, create a new Python file named ‘MyTaskScript.py’, where ‘MyTaskScript’ is the name of your new script.</p>
+<p>Once created, you can follow the template outlined above in the <a class="reference internal" href="#general-script-template-ref-label"><span class="std std-ref">General Script Template</span></a> section to build up your script.</p>
+</div>
+<div class="section" id="worker-scripts">
+<span id="worker-scripts-ref-label"></span><h3>Worker Scripts<a class="headerlink" href="#worker-scripts" title="Permalink to this headline">¶</a></h3>
+<p>Worker Scripts are typically used to modify or to perform actions on a selected Worker in the Monitor. They can be accessed by right-clicking an existing Worker in the Worker Panel, under the ‘Scripts’ sub-menu.</p>
+<p>To create new Worker scripts, simply navigate to the ‘custom\scripts\Slaves’ folder in your Repository. Then, create a new Python file named ‘MyWorkerScript.py’, where ‘MyWorkerScript’ is the name of your new script.</p>
+<p>Once created, you can follow the template outlined above in the <a class="reference internal" href="#general-script-template-ref-label"><span class="std std-ref">General Script Template</span></a> section to build up your script.</p>
+</div>
+<div class="section" id="pulse-scripts">
+<span id="pulse-scripts-ref-label"></span><h3>Pulse Scripts<a class="headerlink" href="#pulse-scripts" title="Permalink to this headline">¶</a></h3>
+<p>Pulse Scripts are typically used to modify or to perform actions on a selected Pulse in the Monitor. They can be accessed by right-clicking an existing Pulse in the Pulse Panel, under the ‘Scripts’ sub-menu.</p>
+<p>To create new Pulse scripts, simply navigate to the ‘custom\scripts\Pulse’ folder in your Repository. Then, create a new Python file named ‘MyPulseScript.py’, where ‘MyPulseScript’ is the name of your new script.</p>
+<p>Once created, you can follow the template outlined above in the <a class="reference internal" href="#general-script-template-ref-label"><span class="std std-ref">General Script Template</span></a> section to build up your script.</p>
+</div>
+<div class="section" id="limit-scripts">
+<span id="limit-scripts-ref-label"></span><h3>Limit Scripts<a class="headerlink" href="#limit-scripts" title="Permalink to this headline">¶</a></h3>
+<p>Limit Scripts are typically used to modify or to perform actions on selected Limits in the Monitor. They can be accessed by right-clicking an existing Limit in the Pulse Panel, under the ‘Scripts’ sub-menu.</p>
+<p>To create new Limit scripts, simply navigate to the ‘custom\scripts\Limits’ folder in your Repository. Then, create a new Python file named ‘MyLimitScript.py’, where ‘MyLimitScript’ is the name of your new script.</p>
+<p>Once created, you can follow the template outlined above in the <a class="reference internal" href="#general-script-template-ref-label"><span class="std std-ref">General Script Template</span></a> section to build up your script.</p>
+</div>
+<div class="section" id="job-report-scripts">
+<span id="job-report-scripts-ref-label"></span><h3>Job Report Scripts<a class="headerlink" href="#job-report-scripts" title="Permalink to this headline">¶</a></h3>
+<p>Job Report Scripts are typically used to modify or to perform actions on selected Job Reports in the Monitor. They can be accessed by right-clicking an existing Job Report in the Job Report Panel, under the ‘Scripts’ sub-menu.</p>
+<p>To create new Job Report scripts, simply navigate to the ‘custom\scripts\JobReports’ folder in your Repository. Then, create a new Python file named ‘MyJobReportScript.py’, where ‘MyJobReportScript’ is the name of your new script.</p>
+<p>Once created, you can follow the template outlined above in the <a class="reference internal" href="#general-script-template-ref-label"><span class="std std-ref">General Script Template</span></a> section to build up your script.</p>
+</div>
+<div class="section" id="worker-report-scripts">
+<span id="worker-report-scripts-ref-label"></span><h3>Worker Report Scripts<a class="headerlink" href="#worker-report-scripts" title="Permalink to this headline">¶</a></h3>
+<p>Worker Report Scripts are typically used to modify or to perform actions on selected Worker Reports in the Monitor. They can be accessed by right-clicking an existing Worker Report in the Worker Report Panel,
+under the ‘Scripts’ sub-menu.</p>
+<p>To create new Worker Report scripts, simply navigate to the ‘custom\scripts\SlaveReports’ folder in your Repository. Then, create a new Python file named ‘MyWorkerReportScript.py’, where ‘MyWorkerReportScript’
+is the name of your new script.</p>
+<p>Once created, you can follow the template outlined above in the <a class="reference internal" href="#general-script-template-ref-label"><span class="std std-ref">General Script Template</span></a> section to build up your script.</p>
+</div>
+</div>
+<div class="section" id="customizing-script-display">
+<h2>Customizing Script Display<a class="headerlink" href="#customizing-script-display" title="Permalink to this headline">¶</a></h2>
+<p>As with any built-in script, once you’ve created your new Monitor Script you can change its Display Name, Keyboard Shortcut, Icon, and its position within the menu in the <a class="reference internal" href="repository-config.html#repository-config-ref-label"><span class="std std-ref">Repository Configuration</span></a>.</p>
+<p>You can also control who can see (and use) your Submission Script through by tweaking its access level in <a class="reference internal" href="user-management.html#user-management-ref-label"><span class="std std-ref">User Management</span></a>.
+It is probably a good idea to disable access to it for most users until you have your new script in working order.</p>
+</div>
+<div class="section" id="grid-layout-example-script">
+<span id="monitor-scripts-grid-layout-example-ref-label"></span><h2>Grid Layout Example Script<a class="headerlink" href="#grid-layout-example-script" title="Permalink to this headline">¶</a></h2>
+<p>Grid layouts allow your script dialog to dynamically resize its contents to fit the the size of the dialog. Below are some examples of how to use the new grid layout to build a script dialog.</p>
+<p>First you must create a ScriptDialog object and start a grid. Once all controls have been added you must end the grid</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dg</span> <span class="o">=</span> <span class="n">DeadlineScriptDialog</span><span class="p">()</span>
+
+<span class="n">dg</span><span class="o">.</span><span class="n">AddGrid</span><span class="p">()</span>
+<span class="c1">#...</span>
+<span class="c1">#Added controls go here</span>
+<span class="c1">#...</span>
+<span class="n">dg</span><span class="o">.</span><span class="n">EndGrid</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Once you start a grid you can add controls to it by row and column. There is no need to specify how many rows or columns you want the grid to have, just specify the row and column where you want the control to be
+and the grid will grow to accommodate. Here is an example of adding a label and a text field to the dialog in the same row.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dg</span><span class="o">.</span><span class="n">AddGrid</span><span class="p">()</span>
+<span class="n">dg</span><span class="o">.</span><span class="n">AddControlToGrid</span><span class="p">(</span><span class="s2">&quot;Label1&quot;</span><span class="p">,</span> <span class="s2">&quot;LabelControl&quot;</span><span class="p">,</span> <span class="s2">&quot;I&#39;m a label.&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;A tooltip&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">dg</span><span class="o">.</span><span class="n">AddControlToGrid</span><span class="p">(</span> <span class="s2">&quot;TextBox1&quot;</span><span class="p">,</span> <span class="s2">&quot;TextControl&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="p">)</span>
+
+<span class="n">dg</span><span class="o">.</span><span class="n">EndGrid</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Here is an example of what this dialog would look like:</p>
+<img alt="../_images/grid_example_one.png" src="../_images/grid_example_one.png" />
+<p>It is not possible to specify the size of the controls you want to add to the grid, however it is also not necessary to do so. The contents of the grid(s) will automatically adjust themselves to share the size of the dialog. If
+you want certain elements to not grow within a row you can set the “expand” property to be disabled. If you want a control to take more space you can set the control span multiple rows or columns using “rowSpan” and “colSpan”,
+respectively. By default controls have “expand” set and have their “colSpan” and “rowSpan” properties set to 1.</p>
+<p>This is an example of a dialog with two rows and four columns. The first row contains a label in the first column and is set to not grow any bigger than it needs to and a text control that spans the next 3 columns and is allowed to grow. The second row
+contains three labels that are not allowed to grow in the first three columns and a text control in the fourth column that can grow as needed.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dg</span><span class="o">.</span><span class="n">AddGrid</span><span class="p">()</span>
+<span class="n">dg</span><span class="o">.</span><span class="n">AddControlToGrid</span><span class="p">(</span>
+    <span class="s2">&quot;L1&quot;</span><span class="p">,</span> <span class="s2">&quot;LabelControl&quot;</span><span class="p">,</span> <span class="s2">&quot;I&#39;m a label.&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;A tooltip&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">dg</span><span class="o">.</span><span class="n">AddControlToGrid</span><span class="p">(</span>
+    <span class="s2">&quot;TextBox1&quot;</span><span class="p">,</span> <span class="s2">&quot;TextControl&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">colSpan</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">dg</span><span class="o">.</span><span class="n">AddControlToGrid</span><span class="p">(</span>
+    <span class="s2">&quot;L2&quot;</span><span class="p">,</span> <span class="s2">&quot;LabelControl&quot;</span><span class="p">,</span> <span class="s2">&quot;I&#39;m another label.&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;A tooltip&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">dg</span><span class="o">.</span><span class="n">AddControlToGrid</span><span class="p">(</span>
+    <span class="s2">&quot;L3&quot;</span><span class="p">,</span> <span class="s2">&quot;LabelControl&quot;</span><span class="p">,</span> <span class="s2">&quot;I&#39;m another label.&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;A tooltip&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">dg</span><span class="o">.</span><span class="n">AddControlToGrid</span><span class="p">(</span>
+    <span class="s2">&quot;L4&quot;</span><span class="p">,</span> <span class="s2">&quot;LabelControl&quot;</span><span class="p">,</span> <span class="s2">&quot;I&#39;m another label.&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;A tooltip&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">dg</span><span class="o">.</span><span class="n">AddControlToGrid</span><span class="p">(</span>
+    <span class="s2">&quot;TextBox2&quot;</span><span class="p">,</span> <span class="s2">&quot;TextControl&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="n">dg</span><span class="o">.</span><span class="n">EndGrid</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Here is an example of what this dialog would look like:</p>
+<img alt="../_images/grid_example_two.png" src="../_images/grid_example_two.png" />
+<p>When you expand the dialog horizontally, only the text controls will grow in the above example. Nothing will grow, other than the dialog itself, when expanding vertically. Note that if you set all controls in a row to not expand
+that this will cause the cells in the grid that the controls are in to expand without allowing any of the controls to expand with it. This will result in the dialog losing its layout when it is expanded.</p>
+<p>Here is an example of what this dialog would look like expanded horizontally:</p>
+<img alt="../_images/grid_example_three.png" src="../_images/grid_example_three.png" />
+<p>Here is an example of what this dialog would look like expanded vertically:</p>
+<img alt="../_images/grid_example_four.png" src="../_images/grid_example_four.png" />
+<p>Here is an example of what the dialog would look like expanded horizontally if all controls had “expand=False” set.</p>
+<img alt="../_images/grid_example_five.png" src="../_images/grid_example_five.png" />
+<p>If you want to space controls out in the grid you can use labels filled with white space, or you can use horizontal spacers. Here is an example of adding two buttons to a dialog and keeping them to the far right of the dialog.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dg</span><span class="o">.</span><span class="n">AddGrid</span><span class="p">()</span>
+<span class="n">dg</span><span class="o">.</span><span class="n">AddHorizontalSpacerToGrid</span><span class="p">(</span> <span class="s2">&quot;DummyLabel&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">)</span>
+
+<span class="n">ok</span> <span class="o">=</span> <span class="n">dg</span><span class="o">.</span><span class="n">AddControlToGrid</span><span class="p">(</span>
+    <span class="s2">&quot;Ok&quot;</span><span class="p">,</span> <span class="s2">&quot;ButtonControl&quot;</span><span class="p">,</span> <span class="s2">&quot;OK&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">False</span> <span class="p">)</span>
+<span class="n">ok</span><span class="o">.</span><span class="n">ValueModified</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">OkButtonPressed</span><span class="p">)</span>
+
+<span class="n">cancel</span> <span class="o">=</span> <span class="n">dg</span><span class="o">.</span><span class="n">AddControlToGrid</span><span class="p">(</span>
+    <span class="s2">&quot;Cancel&quot;</span><span class="p">,</span> <span class="s2">&quot;ButtonControl&quot;</span><span class="p">,</span> <span class="s2">&quot;Cancel&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">False</span> <span class="p">)</span>
+<span class="n">cancel</span><span class="o">.</span><span class="n">ValueModified</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">CancelButtonPressed</span><span class="p">)</span>
+<span class="n">dg</span><span class="o">.</span><span class="n">EndGrid</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Here is an example of what this dialog will look like when expanded horizontally:</p>
+<img alt="../_images/grid_example_six.png" src="../_images/grid_example_six.png" />
+<p>All together, here is an example of a basic script dialog using grid layouts.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">DeadlineUI.Controls.Scripting.DeadlineScriptDialog</span> <span class="k">import</span> <span class="n">DeadlineScriptDialog</span>
+
+<span class="n">dg</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">__main__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Main Function Called By Deadline&quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">dg</span>
+
+    <span class="n">dg</span> <span class="o">=</span> <span class="n">DeadlineScriptDialog</span><span class="p">()</span>
+
+    <span class="n">dg</span><span class="o">.</span><span class="n">SetTitle</span><span class="p">(</span><span class="s2">&quot;Example Deadline Script&quot;</span><span class="p">)</span>
+
+    <span class="n">dg</span><span class="o">.</span><span class="n">AddGrid</span><span class="p">()</span>
+    <span class="n">dg</span><span class="o">.</span><span class="n">AddControlToGrid</span><span class="p">(</span>
+        <span class="s2">&quot;L1&quot;</span><span class="p">,</span> <span class="s2">&quot;LabelControl&quot;</span><span class="p">,</span> <span class="s2">&quot;I&#39;m a label.&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;A tooltip&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">dg</span><span class="o">.</span><span class="n">AddControlToGrid</span><span class="p">(</span>
+        <span class="s2">&quot;TextBox1&quot;</span><span class="p">,</span> <span class="s2">&quot;TextControl&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">colSpan</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="n">dg</span><span class="o">.</span><span class="n">AddControlToGrid</span><span class="p">(</span>
+        <span class="s2">&quot;L2&quot;</span><span class="p">,</span> <span class="s2">&quot;LabelControl&quot;</span><span class="p">,</span> <span class="s2">&quot;I&#39;m another label.&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;A tooltip&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">dg</span><span class="o">.</span><span class="n">AddControlToGrid</span><span class="p">(</span>
+        <span class="s2">&quot;L3&quot;</span><span class="p">,</span> <span class="s2">&quot;LabelControl&quot;</span><span class="p">,</span> <span class="s2">&quot;I&#39;m another label.&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;A tooltip&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">dg</span><span class="o">.</span><span class="n">AddControlToGrid</span><span class="p">(</span>
+        <span class="s2">&quot;L4&quot;</span><span class="p">,</span> <span class="s2">&quot;LabelControl&quot;</span><span class="p">,</span> <span class="s2">&quot;I&#39;m another label.&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;A tooltip&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">dg</span><span class="o">.</span><span class="n">AddControlToGrid</span><span class="p">(</span>
+        <span class="s2">&quot;TextBox2&quot;</span><span class="p">,</span> <span class="s2">&quot;TextControl&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="n">dg</span><span class="o">.</span><span class="n">EndGrid</span><span class="p">()</span>
+
+    <span class="c1">#Adds an OK and Cancel button to the dialog</span>
+    <span class="n">dg</span><span class="o">.</span><span class="n">AddGrid</span><span class="p">()</span>
+    <span class="n">dg</span><span class="o">.</span><span class="n">AddHorizontalSpacerToGrid</span><span class="p">(</span><span class="s2">&quot;DummyLabel&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">ok</span> <span class="o">=</span> <span class="n">dg</span><span class="o">.</span><span class="n">AddControlToGrid</span><span class="p">(</span>
+        <span class="s2">&quot;Ok&quot;</span><span class="p">,</span> <span class="s2">&quot;ButtonControl&quot;</span><span class="p">,</span> <span class="s2">&quot;OK&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ok</span><span class="o">.</span><span class="n">ValueModified</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">OkButtonPressed</span><span class="p">)</span>
+
+    <span class="n">cancel</span> <span class="o">=</span> <span class="n">dg</span><span class="o">.</span><span class="n">AddControlToGrid</span><span class="p">(</span>
+        <span class="s2">&quot;Cancel&quot;</span><span class="p">,</span> <span class="s2">&quot;ButtonControl&quot;</span><span class="p">,</span> <span class="s2">&quot;Cancel&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">cancel</span><span class="o">.</span><span class="n">ValueModified</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">CancelButtonPressed</span><span class="p">)</span>
+    <span class="n">dg</span><span class="o">.</span><span class="n">EndGrid</span><span class="p">()</span>
+
+    <span class="n">dg</span><span class="o">.</span><span class="n">ShowDialog</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">CloseDialog</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">dg</span>
+    <span class="n">dg</span><span class="o">.</span><span class="n">CloseDialog</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">CancelButtonPressed</span><span class="p">():</span>
+    <span class="n">CloseDialog</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">OkButtonPressed</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">dg</span>
+    <span class="n">dg</span><span class="o">.</span><span class="n">ShowMessageBox</span><span class="p">(</span><span class="s2">&quot;You pressed the OK button.&quot;</span><span class="p">,</span> <span class="s2">&quot;Button Pressed&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here is what this dialog looks like:</p>
+<img alt="../_images/grid_example_seven.png" src="../_images/grid_example_seven.png" />
+</div>
+<div class="section" id="migrating-scripts-from-deadline-5">
+<span id="monitor-scripts-migration-ref-label"></span><h2>Migrating Scripts from Deadline 5<a class="headerlink" href="#migrating-scripts-from-deadline-5" title="Permalink to this headline">¶</a></h2>
+<p>Some changes were made to the Scripting API in Deadline 6, which means that Deadline 6 and later are NOT backward compatible with scripts written for Deadline 5. However, migrating your scripts over is relatively straightforward, and
+this guide will walk you through the API changes so that you can update your scripts as necessary.</p>
+<div class="section" id="global-functions">
+<h3>Global Functions<a class="headerlink" href="#global-functions" title="Permalink to this headline">¶</a></h3>
+<p>The globally defined functions are no longer available. See the <a class="reference internal" href="scripting-overview.html#scripting-overview-migration-ref-label"><span class="std std-ref">Code Completion for the Deadline Scripting API</span></a> section in the Scripting Overview documentation for more information, including replacement functions.</p>
+</div>
+<div class="section" id="user-interface">
+<h3>User Interface<a class="headerlink" href="#user-interface" title="Permalink to this headline">¶</a></h3>
+<p>If you are creating a user interface using the ScriptDialog object, you can no longer get an instance of it from DeadlineScriptEngine using the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scriptDialog</span> <span class="o">=</span> <span class="n">DeadlineScriptEngine</span><span class="o">.</span><span class="n">GetScriptDialog</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Instead, you need to import the DeadlineScriptDialog class, and use its constructor to create an instance:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">DeadlineUI.Controls.Scripting.DeadlineScriptDialog</span> <span class="k">import</span> <span class="n">DeadlineScriptDialog</span>
+<span class="o">...</span>
+<span class="n">scriptDialog</span> <span class="o">=</span> <span class="n">DeadlineScriptDialog</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Another change is how the ValueModifed event handlers are hooked up for the ScriptDialog controls. For example, this is how the event was hooked up in Deadline 5:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">compBox</span> <span class="o">=</span> <span class="n">scriptDialog</span><span class="o">.</span><span class="n">AddControl</span><span class="p">(</span>
+    <span class="s2">&quot;CompBox&quot;</span><span class="p">,</span> <span class="s2">&quot;TextControl&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">dialogWidth</span><span class="o">-</span><span class="n">labelWidth</span><span class="o">-</span><span class="mi">24</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">compBox</span><span class="o">.</span><span class="n">ValueModified</span> <span class="o">+=</span> <span class="n">CompChanged</span>
+</pre></div>
+</div>
+<p>Now, because the ScriptDialog object is a Qt object, you need to use the connect function to hook up events:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">compBox</span> <span class="o">=</span> <span class="n">scriptDialog</span><span class="o">.</span><span class="n">AddControl</span><span class="p">(</span>
+    <span class="s2">&quot;CompBox&quot;</span><span class="p">,</span> <span class="s2">&quot;TesxtControl&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">dialogWidth</span><span class="o">-</span><span class="n">labelWidth</span><span class="o">-</span><span class="mi">24</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">compBox</span><span class="o">.</span><span class="n">ValueModified</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span> <span class="n">CompChanged</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>The File Browser based controls have also changed their file filter syntax. In Deadline 5, the file filter syntax looked like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scriptDialog</span><span class="o">.</span><span class="n">AddRow</span><span class="p">()</span>
+<span class="n">scriptDialog</span><span class="o">.</span><span class="n">AddControl</span><span class="p">(</span>
+    <span class="s2">&quot;FileLabel&quot;</span><span class="p">,</span> <span class="s2">&quot;LabelControl&quot;</span><span class="p">,</span> <span class="s2">&quot;Select File&quot;</span><span class="p">,</span> <span class="n">labelWidth</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">scriptDialog</span><span class="o">.</span><span class="n">AddSelectionControl</span><span class="p">(</span><span class="s2">&quot;FileBox&quot;</span><span class="p">,</span> <span class="s2">&quot;FileBrowserControl&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;All Files (*.*)|*.*|CAD Files: JT (*.jt)|*.jt&quot;</span><span class="p">,</span> <span class="n">dialogWidth</span><span class="o">-</span><span class="n">labelWidth</span><span class="o">-</span><span class="mi">24</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">scriptDialog</span><span class="o">.</span><span class="n">EndRow</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Now, because the ScriptDialog object is a Qt object, you need to use the following syntax to filter files in any of the browser controls. Note the replacement of the “|” character for “;;” and there is no longer the requirement to provide a file extension filter per file
+format entry as the filter is taken from the text label (*.txt) or (*.*) as per the example below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scriptDialog</span><span class="o">.</span><span class="n">AddRow</span><span class="p">()</span>
+<span class="n">scriptDialog</span><span class="o">.</span><span class="n">AddControl</span><span class="p">(</span>
+    <span class="s2">&quot;FileLabel&quot;</span><span class="p">,</span> <span class="s2">&quot;LabelControl&quot;</span><span class="p">,</span> <span class="s2">&quot;Select File&quot;</span><span class="p">,</span> <span class="n">labelWidth</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">scriptDialog</span><span class="o">.</span><span class="n">AddSelectionControl</span><span class="p">(</span> <span class="s2">&quot;FileBox&quot;</span><span class="p">,</span> <span class="s2">&quot;FileBrowserControl&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Text Files (*.txt);;All Files (*.*)&quot;</span><span class="p">,</span> <span class="n">dialogWidth</span><span class="o">-</span><span class="n">labelWidth</span><span class="o">-</span><span class="mi">24</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">scriptDialog</span><span class="o">.</span><span class="n">EndRow</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Monitor Scripts</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#scripting-reference">Scripting Reference</a></li>
+<li><a class="reference internal" href="#general-script-template">General Script Template</a></li>
+<li><a class="reference internal" href="#id1">Monitor Scripts</a><ul>
+<li><a class="reference internal" href="#submission-scripts">Submission Scripts</a></li>
+<li><a class="reference internal" href="#general-scripts">General Scripts</a></li>
+<li><a class="reference internal" href="#job-scripts">Job Scripts</a></li>
+<li><a class="reference internal" href="#task-scripts">Task Scripts</a></li>
+<li><a class="reference internal" href="#worker-scripts">Worker Scripts</a></li>
+<li><a class="reference internal" href="#pulse-scripts">Pulse Scripts</a></li>
+<li><a class="reference internal" href="#limit-scripts">Limit Scripts</a></li>
+<li><a class="reference internal" href="#job-report-scripts">Job Report Scripts</a></li>
+<li><a class="reference internal" href="#worker-report-scripts">Worker Report Scripts</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#customizing-script-display">Customizing Script Display</a></li>
+<li><a class="reference internal" href="#grid-layout-example-script">Grid Layout Example Script</a></li>
+<li><a class="reference internal" href="#migrating-scripts-from-deadline-5">Migrating Scripts from Deadline 5</a><ul>
+<li><a class="reference internal" href="#global-functions">Global Functions</a></li>
+<li><a class="reference internal" href="#user-interface">User Interface</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="event-plugins.html"
+                        title="previous chapter">Event Plugins</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="job-scripts.html"
+                        title="next chapter">Job Scripts</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="job-scripts.html" title="Job Scripts"
+             >next</a></li>
+        <li class="right" >
+          <a href="event-plugins.html" title="Event Plugins"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-scripting.html" >Scripting</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Monitor Scripts</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

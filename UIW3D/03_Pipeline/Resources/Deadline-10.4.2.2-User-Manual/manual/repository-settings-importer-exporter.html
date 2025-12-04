@@ -1,0 +1,833 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Repository Settings Importer and Exporter &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Advanced Administration" href="index-advanced-admin.html" />
+    <link rel="prev" title="Script Menus" href="script-menus.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="index-advanced-admin.html" title="Advanced Administration"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="script-menus.html" title="Script Menus"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" accesskey="U">Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Repository Settings Importer and Exporter</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="repository-settings-importer-and-exporter">
+<span id="repository-settings-importer-exporter-ref-label"></span><h1>Repository Settings Importer and Exporter<a class="headerlink" href="#repository-settings-importer-and-exporter" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The Repository Settings Importer and Exporter feature uses a standalone file format to save or load repository settings via <a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">Deadline Command</span></a>. This is particularly useful if your workflow requires frequent tear-down/redeploy of your Deadline render farm infrastructure as it can save you the hassle of having to manually reconfigure your farm.</p>
+</div>
+<div class="section" id="how-is-this-different-to-the-existing-import-repository-settings-feature">
+<h2>How Is This Different to the Existing <a class="reference internal" href="importing.html#importing-ref-label"><span class="std std-ref">Import Repository Settings</span></a> Feature?<a class="headerlink" href="#how-is-this-different-to-the-existing-import-repository-settings-feature" title="Permalink to this headline">¶</a></h2>
+<p><strong>Pros</strong></p>
+<ul class="simple">
+<li><p>Available via <a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">Deadline Command</span></a></p></li>
+<li><p>Does not require a connection to a repository to import settings from</p></li>
+<li><p>Can export your repository settings into a standalone file format</p></li>
+</ul>
+<p><strong>Cons</strong></p>
+<ul class="simple">
+<li><p>Not available via <a class="reference internal" href="monitor.html#monitor-ref-label"><span class="std std-ref">Deadline Monitor</span></a></p></li>
+<li><p>Currently only supports a subset of the settings in <a class="reference internal" href="importing.html#importing-ref-label"><span class="std std-ref">Import Repository Settings</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="supported-settings">
+<h2>Supported Settings<a class="headerlink" href="#supported-settings" title="Permalink to this headline">¶</a></h2>
+<p>The following settings are supported for exporting and importing through <a class="reference internal" href="command.html#command-ref-label"><span class="std std-ref">Deadline Command</span></a>.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="pools-and-groups.html#pools-and-groups-ref-label"><span class="std std-ref">Pools and Groups</span></a></p></li>
+<li><p><a class="reference internal" href="cross-platform.html#cross-platform-ref-label"><span class="std std-ref">Regions</span></a></p></li>
+<li><p><a class="reference internal" href="limits.html#limits-ref-label"><span class="std std-ref">Limits</span></a></p></li>
+<li><p><a class="reference internal" href="cross-platform.html#cross-platform-ref-label"><span class="std std-ref">Mapped Paths</span></a></p></li>
+<li><p><a class="reference internal" href="user-management.html#user-management-ref-label"><span class="std std-ref">Users</span></a></p></li>
+<li><p><a class="reference internal" href="user-management.html#user-management-ref-label"><span class="std std-ref">User/User Groups</span></a>.</p></li>
+</ul>
+</div>
+<div class="section" id="exporting-repository-settings">
+<h2>Exporting Repository Settings<a class="headerlink" href="#exporting-repository-settings" title="Permalink to this headline">¶</a></h2>
+<p>To export repository settings use the <code class="docutils literal notranslate"><span class="pre">ExportRepositorySettings</span></code> command. To get information on the settings and flags that can be used, use the <code class="docutils literal notranslate"><span class="pre">Help</span></code> command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span> <span class="n">Help</span> <span class="n">ExportRepositorySettings</span>
+</pre></div>
+</div>
+<p>The simplest way to use the <code class="docutils literal notranslate"><span class="pre">ExportRepositorySettings</span></code> command is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span> <span class="n">ExportRepositorySettings</span>
+</pre></div>
+</div>
+<p>This will print the export to the console. Since exports can get quite lengthy, there is also the ability to export to a file path. This can be done by specifying the <code class="docutils literal notranslate"><span class="pre">ExportFilePath</span></code> as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span> <span class="n">ExportRepositorySettings</span> <span class="o">-</span><span class="n">ExportFilePath</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Desired</span>\<span class="n">Export</span>\<span class="n">Path</span>\<span class="n">Export</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>Specific settings may also be specified if it is desired to not include all settings in the export. This can be done by specifying the <code class="docutils literal notranslate"><span class="pre">Settings</span></code> as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span> <span class="n">ExportRepositorySettings</span> <span class="o">-</span><span class="n">Settings</span> <span class="n">setting1</span> <span class="n">setting2</span> <span class="n">setting3</span> <span class="o">&lt;</span><span class="n">etc</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>For example, to export only pools and groups to a file the following command would be used:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span> <span class="n">ExportRepositorySettings</span> <span class="o">-</span><span class="n">Settings</span> <span class="n">Groups</span> <span class="n">Pools</span> <span class="o">-</span><span class="n">ExportFilePath</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Desired</span>\<span class="n">Export</span>\<span class="n">Path</span>\<span class="n">Export</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>By default all settings will be exported if the <code class="docutils literal notranslate"><span class="pre">Settings</span></code> setting is not specified.</p>
+</div>
+<div class="section" id="importing-repository-settings">
+<h2>Importing Repository Settings<a class="headerlink" href="#importing-repository-settings" title="Permalink to this headline">¶</a></h2>
+<p>To import the repository settings use the <code class="docutils literal notranslate"><span class="pre">ImportRepositorySettings</span></code> command. To get information on the settings and flags that can be used, use the <code class="docutils literal notranslate"><span class="pre">Help</span></code> command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span> <span class="n">Help</span> <span class="n">ImportRepositorySettings</span>
+</pre></div>
+</div>
+<p>The simplest way to use the <code class="docutils literal notranslate"><span class="pre">ImportRepositorySettings</span></code> command is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span> <span class="n">ImportRepositorySettings</span> <span class="o">-</span><span class="n">ImportFilePath</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Desired</span>\<span class="n">Export</span>\<span class="n">Path</span>\<span class="n">Export</span><span class="o">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">ImportOperation</span> <span class="n">Append</span>
+</pre></div>
+</div>
+<p>One thing to note here is the <code class="docutils literal notranslate"><span class="pre">ImportOperation</span></code>. The import operation tells the importer how to import the settings. There are two main import operations: <code class="docutils literal notranslate"><span class="pre">Append</span></code> and <code class="docutils literal notranslate"><span class="pre">Replace</span></code>. The <code class="docutils literal notranslate"><span class="pre">Append</span></code> operation retains existing settings, and adds on to them where possible. The <code class="docutils literal notranslate"><span class="pre">Replace</span></code> operation will remove previous settings and replace them.</p>
+<p>There is also the ability to do a dry run of an import to determine if there will be any errors or warnings. Doing a dry run will not modify the settings at all but can indicate if the import would be successful. To do a dry run of an import append the words <code class="docutils literal notranslate"><span class="pre">DryRun</span></code> to the import operation. For instance, <code class="docutils literal notranslate"><span class="pre">AppendDryRun</span></code> indicates a dry run using the append operation. This would be used as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span> <span class="n">ImportRepositorySettings</span> <span class="o">-</span><span class="n">ImportFilePath</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Desired</span>\<span class="n">Export</span>\<span class="n">Path</span>\<span class="n">Export</span><span class="o">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">ImportOperation</span> <span class="n">AppendDryRun</span>
+</pre></div>
+</div>
+<p>Only the settings the Import File included will be modified in the repository, while settings that are not included will remain the same as they were before the import.</p>
+</div>
+<div class="section" id="file-format-specification">
+<span id="repository-settings-file-format-spec"></span><h2>File Format Specification<a class="headerlink" href="#file-format-specification" title="Permalink to this headline">¶</a></h2>
+<p>The importer/exporter uses JSON encoding. The various top-level JSON keys are documented below.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="#repository-settings-file-format-groups-spec"><span class="std std-ref">Groups</span></a></p></li>
+<li><p><a class="reference internal" href="#repository-settings-file-format-pools-spec"><span class="std std-ref">Pools</span></a></p></li>
+<li><p><a class="reference internal" href="#repository-settings-file-format-limits-spec"><span class="std std-ref">Limits</span></a></p></li>
+<li><p><a class="reference internal" href="#repository-settings-file-format-pathmapping-spec"><span class="std std-ref">Path Mapping</span></a></p></li>
+<li><p><a class="reference internal" href="#repository-settings-file-format-users-spec"><span class="std std-ref">Users</span></a></p></li>
+<li><p><a class="reference internal" href="#repository-settings-file-format-permissions-groups-spec"><span class="std std-ref">User Groups</span></a></p></li>
+<li><p><a class="reference internal" href="#repository-settings-file-format-worker-settings-spec"><span class="std std-ref">Worker settings</span></a></p></li>
+</ul>
+</div></blockquote>
+<div class="section" id="groups">
+<span id="repository-settings-file-format-groups-spec"></span><h3>Groups<a class="headerlink" href="#groups" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="pools-and-groups.html#pools-and-groups-ref-label"><span class="std std-ref">Deadline Groups</span></a> are represented by a JSON object that is a child of the root document having the <code class="docutils literal notranslate"><span class="pre">&quot;Groups&quot;</span></code> key. The schema is defined as:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="c1">// ...</span>
+  <span class="s2">&quot;Groups&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;Version&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">version</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;Settings&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;GroupList&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s2">&quot;Name&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">group_name</span><span class="o">&gt;</span>
+        <span class="p">}</span>
+        <span class="c1">// ...</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The possible fields include:</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;version&gt;</span></code></p></td>
+<td><p>The version of the group schema. Currently there is only version (<code class="docutils literal notranslate"><span class="pre">1</span></code>).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;group_name&gt;</span></code></p></td>
+<td><p>The name of a group. Each group name must be unique and contain only alphanumeric characters, hyphens(-) and underscores(_).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="pools">
+<span id="repository-settings-file-format-pools-spec"></span><h3>Pools<a class="headerlink" href="#pools" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="pools-and-groups.html#pools-and-groups-ref-label"><span class="std std-ref">Deadline Pools</span></a> are represented by a JSON object that is a child of the root document having the <code class="docutils literal notranslate"><span class="pre">&quot;Pools&quot;</span></code> key. The schema is defined as:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="c1">// ...</span>
+  <span class="s2">&quot;Pools&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;Version&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">version</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;Settings&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;PoolList&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s2">&quot;Name&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">pool_name</span><span class="o">&gt;</span>
+        <span class="p">}</span>
+        <span class="c1">// ...</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The possible fields include:</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;version&gt;</span></code></p></td>
+<td><p>The version of the pool schema. Currently there is only version (<code class="docutils literal notranslate"><span class="pre">1</span></code>).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;pool_name&gt;</span></code></p></td>
+<td><p>The name of a pool. Each pool name must be unique and contain alphanumeric characters, hyphens(-) and underscores(_).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="limits">
+<span id="repository-settings-file-format-limits-spec"></span><h3>Limits<a class="headerlink" href="#limits" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="limits.html#limits-ref-label"><span class="std std-ref">Limits and Machine Limits</span></a> are represented by a JSON object that is a child of the root document having the <code class="docutils literal notranslate"><span class="pre">&quot;Limits&quot;</span></code> key. The schema is defined as:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="c1">// ...</span>
+  <span class="s2">&quot;Limits&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;Version&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;Settings&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;LimitList&quot;</span><span class="o">:</span> <span class="p">[</span>
+          <span class="p">{</span>
+            <span class="s2">&quot;Name&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">limit_name</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="s2">&quot;Limit&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">limits</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="s2">&quot;LimitType&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;limit_type&gt;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ReleasePercentage&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">release_limit</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="s2">&quot;UsageLevel&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;usage_level&gt;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;UBLSettings&quot;</span><span class="o">:</span> <span class="p">{</span>
+              <span class="s2">&quot;Limit&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">ubl_limit</span><span class="o">&gt;</span><span class="p">,</span>
+              <span class="s2">&quot;Application&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;ubl_application&gt;&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;Enabled&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+              <span class="s2">&quot;DenyListedWorkers&quot;</span><span class="o">:</span> <span class="p">[</span> <span class="o">&lt;</span><span class="nx">deny_workers</span><span class="o">&gt;</span> <span class="p">],</span>
+              <span class="s2">&quot;ExcludedWorkers&quot;</span><span class="o">:</span> <span class="p">[</span> <span class="o">&lt;</span><span class="nx">excl_workers</span><span class="o">&gt;</span> <span class="p">],</span>
+              <span class="s2">&quot;AllowListedWorkers&quot;</span><span class="o">:</span> <span class="p">[</span> <span class="o">&lt;</span><span class="nx">allow_workers</span><span class="o">&gt;</span> <span class="p">],</span>
+            <span class="p">}</span>
+          <span class="p">}</span>
+          <span class="c1">// ...</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+    <span class="c1">// ...</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">UBLSettings</span></code> is an optional section and can be used only for the limits with type <cite>License</cite>.</p>
+<p>The possible fields include:</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;version&gt;</span></code></p></td>
+<td><p>The version of the limits schema. Currently there is only version (<code class="docutils literal notranslate"><span class="pre">1</span></code>).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;limit_name&gt;</span></code></p></td>
+<td><p>The name of a limit. Each limit name must be unique and contain only lower-case
+alphanumeric characters, spaces, underscores (_), and hyphens (-).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;limits&gt;</span></code></p></td>
+<td><p>The maximum number of Resources/Licenses that can simultaneously be used for this limit.
+For an unlimited license type, use (<code class="docutils literal notranslate"><span class="pre">-1</span></code>).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;limit_type&gt;</span></code></p></td>
+<td><dl class="simple">
+<dt>There are two types of limits that can be configured:</dt><dd><ul class="simple">
+<li><p>License Limits - use value (<code class="docutils literal notranslate"><span class="pre">License</span></code>)</p></li>
+<li><p>Resource Limits - use value (<code class="docutils literal notranslate"><span class="pre">Resource</span></code>)</p></li>
+</ul>
+</dd>
+</dl>
+<p>More details about license types you can be found <a class="reference internal" href="limits.html#global-limits-ref-label"><span class="std std-ref">here</span></a>.</p>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;release_limit&gt;</span></code></p></td>
+<td><p>Limit will be released when task reaches this progress.
+Used only for Resource limits.
+To disable this option use (<code class="docutils literal notranslate"><span class="pre">0.0</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;usage_level&gt;</span></code></p></td>
+<td><p>The level at which a Limit Count will be checked out.
+Value must be one of the following three values: <code class="docutils literal notranslate"><span class="pre">Worker</span></code>, <code class="docutils literal notranslate"><span class="pre">Machine</span></code> or <code class="docutils literal notranslate"><span class="pre">Task</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;ubl_limit&gt;</span></code></p></td>
+<td><p>UBL count that can be checked out at a time. For no limit use (<code class="docutils literal notranslate"><span class="pre">-1</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;ubl_application&gt;</span></code></p></td>
+<td><p>This is the application that 3rd Party UBL is being used for.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;deny_workers&gt;</span></code></p></td>
+<td><p>The list of workers names that will not render jobs that require this limit.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;allow_workers&gt;</span></code></p></td>
+<td><p>The list of workers names that will render jobs that require this limit, providing that the limit has not been reached.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;excl_workers&gt;</span></code></p></td>
+<td><p>The list of workers names that will render jobs that require this limit, regardless of whether or not the limit has been reached.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="path-mapping">
+<span id="repository-settings-file-format-pathmapping-spec"></span><h3>Path Mapping<a class="headerlink" href="#path-mapping" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="cross-platform.html#cross-platform-ref-label"><span class="std std-ref">Path Mapping (Cross-Platform Rendering)</span></a> are represented by a JSON object that is a child of the root document having the <code class="docutils literal notranslate"><span class="pre">&quot;PathMapping&quot;</span></code> key. The schema is defined as:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="c1">// ...</span>
+  <span class="s2">&quot;PathMapping&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;Version&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">version</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;Settings&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;GlobalRules&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s2">&quot;Path&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;replace_path&gt;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;WindowsPath&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;windows_path&gt;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;LinuxPath&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;linux_path&gt;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;MacPath&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;mac_path&gt;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;CaseSensitive&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">case_sensitive</span><span class="o">&gt;</span><span class="p">,</span>
+          <span class="s2">&quot;RegularExpression&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">regular_exp</span><span class="o">&gt;</span><span class="p">,</span>
+          <span class="s2">&quot;Region&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;region_name&gt;&quot;</span>
+        <span class="p">}</span>
+        <span class="c1">// ...</span>
+      <span class="p">],</span>
+      <span class="s2">&quot;SubmissionTimeRules&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="c1">// ...</span>
+      <span class="p">],</span>
+      <span class="s2">&quot;RecursivelyApplyRules&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">recursive_rule</span><span class="o">&gt;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Two types of rules can be configured for path mapping.</dt><dd><ul class="simple">
+<li><p><strong>Global rules</strong> will be applied to <em>any</em> known paths prior to rendering any job. Configured under the <code class="docutils literal notranslate"><span class="pre">GlobalRules</span></code> key.</p></li>
+<li><p><strong>Submission-Time rules</strong> are defined globally, but are tied to individual jobs as <em>Job-Specific Rules</em> at the time of submission.  Configured under the <code class="docutils literal notranslate"><span class="pre">SubmissionTimeRules</span></code> key.</p></li>
+</ul>
+</dd>
+</dl>
+<p>All rule types are configured similarly, and only differ in the ways mentioned above.</p>
+<p>The possible fields include:</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;version&gt;</span></code></p></td>
+<td><p>The version of the path mapping schema. Currently there is only version (<code class="docutils literal notranslate"><span class="pre">1</span></code>).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;replace_path&gt;</span></code></p></td>
+<td><p>The original path that will be replaced.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;windows_path&gt;</span></code></p></td>
+<td><p>The path that will replace the original path on Windows.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;linux_path&gt;</span></code></p></td>
+<td><p>The path that will replace the original path on Linux.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;mac_path&gt;</span></code></p></td>
+<td><p>The path that will replace the original path on Mac.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;case_sensitive&gt;</span></code></p></td>
+<td><p>Boolean parameter that is responsible for case sensitivity when replacing a path.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;regular_exp&gt;</span></code></p></td>
+<td><p>Boolean parameter responsible for treating the text in the Replace Path entry as a regular expression.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;region_name&gt;</span></code></p></td>
+<td><p>The region that this pathmapping will be apply to. For all region use (<code class="docutils literal notranslate"><span class="pre">All</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;recursive_rule&gt;</span></code></p></td>
+<td><p>Boolean parameter that is responsible for the sequential application of several rules when mapping paths.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="users">
+<span id="repository-settings-file-format-users-spec"></span><h3>Users<a class="headerlink" href="#users" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="user-management.html#user-management-ref-label"><span class="std std-ref">User Management</span></a> are represented by a JSON object that is a child of the root document having the <code class="docutils literal notranslate"><span class="pre">&quot;Users&quot;</span></code> key. The schema is defined as:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="c1">// ...</span>
+  <span class="s2">&quot;Users&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;Version&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">version</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;Settings&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;UserList&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s2">&quot;UserName&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;user_name&gt;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;MachineName&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;machine_name&gt;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;EmailAddress&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;email_address&gt;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;SendEmailNotifications&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">email_notification</span><span class="o">&gt;</span><span class="p">,</span>
+          <span class="s2">&quot;SendPopupNotifications&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">popup_notification</span><span class="o">&gt;</span><span class="p">,</span>
+          <span class="s2">&quot;NotificationTypes&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;JobCompleted&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">job_complete</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="s2">&quot;JobFailed&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">job_failed</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="s2">&quot;JobWarning&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">job_warning</span><span class="o">&gt;</span><span class="p">,</span>
+            <span class="s2">&quot;JobTimeout&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">job_timeout</span><span class="o">&gt;</span>
+          <span class="p">},</span>
+          <span class="s2">&quot;RenderAsUserName&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;render_as_user&gt;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;RenderAsUserDomain&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;render_as_user_domain&gt;&quot;</span>
+        <span class="p">}</span>
+        <span class="c1">// ...</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The possible fields include:</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;version&gt;</span></code></p></td>
+<td><p>The version of the user schema. Currently there is only version (<code class="docutils literal notranslate"><span class="pre">1</span></code>).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;user_name&gt;</span></code></p></td>
+<td><p>The name of a user. Each user name must be unique and can contain any Unicode character except for any of the following: <code class="docutils literal notranslate"><span class="pre">*=+?|:;&quot;&lt;&gt;/\[]%</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;machine_name&gt;</span></code></p></td>
+<td><p>The user’s machine name (for Popup notifications).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;email_address&gt;</span></code></p></td>
+<td><p>The Email address of the user (for Email notifications).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;email_notification&gt;</span></code></p></td>
+<td><p>Boolean parameter responsible for if the user will receive Email notifications for the jobs when they complete, fail, or time out.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;popup_notification&gt;</span></code></p></td>
+<td><p>Boolean parameter responsible for if the user will receive Popup notifications for the jobs when they complete, fail, or time out.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;job_complete&gt;</span></code></p></td>
+<td><p>Boolean parameter responsible for if the user will receive notifications for the jobs when they complete.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;job_failed&gt;</span></code></p></td>
+<td><p>Boolean parameter responsible for if the user will receive notifications for the jobs when they fail.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;job_warning&gt;</span></code></p></td>
+<td><p>Boolean parameter responsible for if the user will receive notifications for the jobs when they generate a certain number of errors.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;job_timeout&gt;</span></code></p></td>
+<td><p>Boolean parameter responsible for if the user will receive notifications for the jobs when they timeout.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;render_as_user&gt;</span></code></p></td>
+<td><p>If Render Job As User is enabled, this is the user that the job will render as.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;render_as_user_domain&gt;</span></code></p></td>
+<td><p>If Render Job As User is enabled, this is the domain that will be used to start the rendering process as this user. This is only used on Windows.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="user-groups">
+<span id="repository-settings-file-format-permissions-groups-spec"></span><h3>User Groups<a class="headerlink" href="#user-groups" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="user-management.html#user-management-ref-label"><span class="std std-ref">User Groups</span></a> are represented by a JSON object that is a child of the root document having the <code class="docutils literal notranslate"><span class="pre">&quot;PermissionGroups&quot;</span></code> key. The schema is defined as:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="c1">// ...</span>
+  <span class="s2">&quot;PermissionGroups&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;Version&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">version</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;Settings&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;PermissionGroupList&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="s2">&quot;Name&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;user_group&gt;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;Enabled&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+          <span class="s2">&quot;Expires&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">group_expires</span><span class="o">&gt;</span><span class="p">,</span>
+          <span class="s2">&quot;ExpiryDate&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;expire_date&gt;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;FeatureAccessLevels&quot;</span><span class="o">:</span> <span class="p">{},</span>
+          <span class="s2">&quot;GroupMembers&quot;</span><span class="o">:</span> <span class="p">[</span><span class="o">&lt;</span><span class="nx">list_of_users</span><span class="o">&gt;</span><span class="p">],</span>
+          <span class="s2">&quot;IsTimeRestricted&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">time_restricted</span><span class="o">&gt;</span><span class="p">,</span>
+          <span class="s2">&quot;RestrictedDays&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;Sunday&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="s2">&quot;Monday&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="s2">&quot;Tuesday&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="s2">&quot;Wednesday&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="s2">&quot;Thursday&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="s2">&quot;Friday&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="s2">&quot;Saturday&quot;</span><span class="o">:</span> <span class="kc">true</span>
+          <span class="p">},</span>
+          <span class="s2">&quot;RestrictedStartTime&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;restriction_start&gt;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;RestrictedEndTime&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;restriction_end&gt;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;CanSubmitJobs&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">submit_jobs</span><span class="o">&gt;</span><span class="p">,</span>
+          <span class="s2">&quot;CanModifyAllJobs&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">modify_jobs</span><span class="o">&gt;</span><span class="p">,</span>
+          <span class="s2">&quot;CanSeeAllJobs&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">see_all_jobs</span><span class="o">&gt;</span><span class="p">,</span>
+          <span class="s2">&quot;CanHandleProtectedJobs&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">handle_unedit_jobs</span><span class="o">&gt;</span>
+        <span class="p">}</span>
+        <span class="c1">// ...</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="nx">You</span> <span class="nx">can</span> <span class="nx">specify</span> <span class="nx">different</span> <span class="nx">features</span> <span class="nx">access</span> <span class="nx">levels</span> <span class="nx">under</span> <span class="nx">the</span> <span class="nx">key</span> <span class="sb">``</span><span class="nx">FeatureAccessLevels</span><span class="sb">``</span><span class="p">.</span>
+<span class="nx">More</span> <span class="nx">detailed</span> <span class="nx">information</span> <span class="nx">about</span> <span class="nx">features</span> <span class="nx">you</span> <span class="nx">can</span> <span class="nx">find</span>  <span class="o">:</span><span class="nx">ref</span><span class="o">:</span><span class="sb">`here &lt;controlling_feature_access_ref_label&gt;`</span><span class="p">.</span>
+</pre></div>
+</div>
+<p>The possible fields include:</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;version&gt;</span></code></p></td>
+<td><p>The version of the user group schema. Currently there is only version (<code class="docutils literal notranslate"><span class="pre">1</span></code>).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;user_group&gt;</span></code></p></td>
+<td><p>The name of a user group. Each group name must be unique.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;group_expires&gt;</span></code></p></td>
+<td><p>Boolean parameter responsible for enabling control of expiry date for this user group.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;expire_date&gt;</span></code></p></td>
+<td><p>Date and time in ISO 8601 format.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;list_of_users&gt;</span></code></p></td>
+<td><p>List of group members.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;time_restricted&gt;</span></code></p></td>
+<td><p>Boolean parameter responsible for the user group to only be active during the specified time span, from &lt;restriction_start&gt; to &lt;restriction_end&gt;.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;restriction_start&gt;</span></code></p></td>
+<td><p>The start time when group will be active if Active Time-Window is enabled. Should be provided in format <code class="docutils literal notranslate"><span class="pre">HH:MM:SS</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;restriction_end&gt;</span></code></p></td>
+<td><p>The end time when group will be active if Active Time-Window is enabled. Should be provided in format <code class="docutils literal notranslate"><span class="pre">HH:MM:SS</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;submit_jobs&gt;</span></code></p></td>
+<td><p>Boolean parameter that determines if users in this user group can see the option to submit jobs in the Monitor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;modify_jobs&gt;</span></code></p></td>
+<td><p>Boolean parameter that determines if users in this user group can see the option to modify jobs in the Monitor.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;see_all_jobs&gt;</span></code></p></td>
+<td><p>Boolean parameter that determines if users in this user group can see other users jobs in the Monitor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;handle_unedit_jobs&gt;</span></code></p></td>
+<td><p>Boolean parameter that determines if users in this user group can see the options to delete or archive uneditable jobs in the Monitor.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="worker-settings">
+<span id="repository-settings-file-format-worker-settings-spec"></span><h3>Worker Settings<a class="headerlink" href="#worker-settings" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="repository-config.html#repository-config-worker-settings-ref-label"><span class="std std-ref">Worker Settings</span></a> are represented by a JSON object that is a child of the root document having the <code class="docutils literal notranslate"><span class="pre">&quot;WorkerSettings&quot;</span></code> key. The schema is defined as:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="c1">// ...</span>
+  <span class="s2">&quot;WorkerSettings&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;Version&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">version</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;Settings&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;StdOutLimitEnable&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">std_out_limit_enable</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;StdOutLimit&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">std_out_limit</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;AutoRemovalDaysEnabled&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">auto_removal_days_enabled</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;AutoRemovalDays&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">auto_removal_days</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;OverrideListeningPort&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">override_listening_port</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;ListeningPort&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">listening_port</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;GatherResourceUsageDuringRendering&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">gather_resource_usage</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;UseFullyQualifiedDomainNames&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">use_domain_name</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;UseIPAddress&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">use_ip_address</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;ExcludeInNonePool&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">exclude_in_none_pool</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;ExcludeInNoneGroup&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">exclude_in_none_group</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;SandboxRunsInJobEnvironment&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">sandbox_runs_in_job_env</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;StalledDelay&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">stalled_delay</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;PowerManagementScanInterval&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">power_management_scan_interval</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;ExtraInfo0Name&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">extra_info_name_0</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;ExtraInfo1Name&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">extra_info_name_1</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;ExtraInfo2Name&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">extra_info_name_2</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;ExtraInfo3Name&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">extra_info_name_3</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;ExtraInfo4Name&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">extra_info_name_4</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;ExtraInfo5Name&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">extra_info_name_5</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;ExtraInfo6Name&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">extra_info_name_6</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;ExtraInfo7Name&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">extra_info_name_7</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;ExtraInfo8Name&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">extra_info_name_8</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;ExtraInfo9Name&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">extra_info_name_9</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;ThrottleLimitEnabled&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">throttle_limit_enabled</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;ThrottleLimit&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">throttle_limit</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;ThrottleWaitInterval&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">throttle_wait_interval</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;ThrottleTimeoutMultiplier&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">throttle_timeout_multiplier</span><span class="o">&gt;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The possible fields include:</p>
+<table class="colwidths-given docutils align-left" style="width: 100%">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;version&gt;</span></code></p></td>
+<td><p>The version of the worker settings schema. Currently there is only version (<code class="docutils literal notranslate"><span class="pre">1</span></code>).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;std_out_limit_enable&gt;</span></code></p></td>
+<td><p>Boolean parameter responsible for enabling limit the number of characters per line for standard output handling.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;std_out_limit&gt;</span></code></p></td>
+<td><p>Limit the number of characters per line for standard output handling. This value cannot be less than 1 or greater than 10,000.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;auto_removal_days_enabled&gt;</span></code></p></td>
+<td><p>Boolean parameter responsible for enabling deletion offline and stalled AWS Portal Workers.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;auto_removal_days&gt;</span></code></p></td>
+<td><p>The number of days before offline and stalled AWS Portal Workers will be deleted. This value cannot be less than 1 or greater than 10,000.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;override_listening_port&gt;</span></code></p></td>
+<td><p>Boolean parameter responsible for overriding Global Remote Command Port.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;listening_port&gt;</span></code></p></td>
+<td><p>Worker Global Remote Command Port Override to. This value cannot be less than 1 or greater than 65,536.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;gather_resource_usage&gt;</span></code></p></td>
+<td><p>Boolean parameter responsible for gathering System Resources (CPU and RAM) when rendering Tasks on Linux/Mac.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;use_domain_name&gt;</span></code></p></td>
+<td><p>Boolean parameter responsible for using fully qualified domain name (FQDN) for Machine Name instead of host name.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;use_ip_address&gt;</span></code></p></td>
+<td><p>Boolean parameter responsible for using Worker’s IP address for Remote Control.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;exclude_in_none_pool&gt;</span></code></p></td>
+<td><p>Boolean parameter responsible for excluding Jobs in the ‘none’ Pool.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;exclude_in_none_group&gt;</span></code></p></td>
+<td><p>Boolean parameter responsible for excluding Jobs in the ‘none’ Group.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;sandbox_runs_in_job_env&gt;</span></code></p></td>
+<td><p>Boolean parameter responsible for running Plugin Sandbox in Job’s Environment.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;stalled_delay&gt;</span></code></p></td>
+<td><p>Number of minutes before an unresponsive Worker is marked as Stalled. This value cannot be less than 5 or greater than 10,000.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;power_management_scan_interval&gt;</span></code></p></td>
+<td><p>Number of seconds between Thermal Shutdown checks if Pulse is offline. This value cannot be less than 5 or greater than 999,999.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;extra_info_name_0&gt;</span></code></p></td>
+<td><p>The human readable name for the ExtraInfo0 Worker property.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;extra_info_name_1&gt;</span></code></p></td>
+<td><p>The human readable name for the ExtraInfo1 Worker property.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;extra_info_name_2&gt;</span></code></p></td>
+<td><p>The human readable name for the ExtraInfo2 Worker property.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;extra_info_name_3&gt;</span></code></p></td>
+<td><p>The human readable name for the ExtraInfo3 Worker property.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;extra_info_name_4&gt;</span></code></p></td>
+<td><p>The human readable name for the ExtraInfo4 Worker property.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;extra_info_name_5&gt;</span></code></p></td>
+<td><p>The human readable name for the ExtraInfo5 Worker property.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;extra_info_name_6&gt;</span></code></p></td>
+<td><p>The human readable name for the ExtraInfo6 Worker property.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;extra_info_name_7&gt;</span></code></p></td>
+<td><p>The human readable name for the ExtraInfo7 Worker property.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;extra_info_name_8&gt;</span></code></p></td>
+<td><p>The human readable name for the ExtraInfo8 Worker property.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;extra_info_name_9&gt;</span></code></p></td>
+<td><p>The human readable name for the ExtraInfo9 Worker property.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;throttle_limit_enabled&gt;</span></code></p></td>
+<td><p>Boolean parameter responsible for the Worker throttle limit is enabling.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;throttle_limit&gt;</span></code></p></td>
+<td><p>The maximum number of Workers that throttling will allow to be starting their jobs simultaneously. Set to 0 to disable throttling. This value cannot be less than 0 or greater than 100,000.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;throttle_wait_interval&gt;</span></code></p></td>
+<td><p>The amount of time (in seconds) a Worker will wait between sending checks and updates to the throttle queue. This value cannot be less than 1 or greater than 100,000.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;throttle_timeout_multiplier&gt;</span></code></p></td>
+<td><p>Throttling will use this multiplier on the <code class="docutils literal notranslate"><span class="pre">&lt;throttle_wait_interval&gt;</span></code> property value to determine the total Worker Throttle Update Timeout. The specified value cannot be less than 3 or greater than 100,000.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="faq">
+<h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p><strong>Can Passwords/Keys and other Secret/Classified parameters be imported or exported through this?</strong></p>
+<blockquote>
+<div><p>No. Passwords, keys and other secret/classified parameters are not exposed through this interface.</p>
+</div></blockquote>
+<p><strong>How is a backup and restore performed through this?</strong></p>
+<blockquote>
+<div><p>To backup your repository you can simply export the setting to a file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span> <span class="n">ExportRepositorySettings</span> <span class="o">-</span><span class="n">ExportFilePath</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Desired</span>\<span class="n">Export</span>\<span class="n">Path</span>\<span class="n">Backup</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>To restore from the backup, a <code class="docutils literal notranslate"><span class="pre">Replace</span></code> import operation is suggested:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deadlinecommand</span> <span class="n">ImportRepositorySettings</span> <span class="o">-</span><span class="n">ImportFilePath</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Desired</span>\<span class="n">Export</span>\<span class="n">Path</span>\<span class="n">Backup</span><span class="o">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">ImportOperation</span> <span class="n">Replace</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>How is an import file created?</strong></p>
+<blockquote>
+<div><p>There are two main workflows that are suggested to create an import file. The first and easiest workflow is to configure an existing repository with the desired setting configuration, and then export the settings to create the file. The second workflow is to export your repository and manually edit values to create the import file.</p>
+</div></blockquote>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Repository Settings Importer and Exporter</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#how-is-this-different-to-the-existing-import-repository-settings-feature">How Is This Different to the Existing <span class="xref std std-ref">Import Repository Settings</span> Feature?</a></li>
+<li><a class="reference internal" href="#supported-settings">Supported Settings</a></li>
+<li><a class="reference internal" href="#exporting-repository-settings">Exporting Repository Settings</a></li>
+<li><a class="reference internal" href="#importing-repository-settings">Importing Repository Settings</a></li>
+<li><a class="reference internal" href="#file-format-specification">File Format Specification</a><ul>
+<li><a class="reference internal" href="#groups">Groups</a></li>
+<li><a class="reference internal" href="#pools">Pools</a></li>
+<li><a class="reference internal" href="#limits">Limits</a></li>
+<li><a class="reference internal" href="#path-mapping">Path Mapping</a></li>
+<li><a class="reference internal" href="#users">Users</a></li>
+<li><a class="reference internal" href="#user-groups">User Groups</a></li>
+<li><a class="reference internal" href="#worker-settings">Worker Settings</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="script-menus.html"
+                        title="previous chapter">Script Menus</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="index-advanced-admin.html"
+                        title="next chapter">Advanced Administration</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="index-advanced-admin.html" title="Advanced Administration"
+             >next</a></li>
+        <li class="right" >
+          <a href="script-menus.html" title="Script Menus"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index-admin-features.html" >Administrative Features</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Repository Settings Importer and Exporter</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

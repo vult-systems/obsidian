@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>V-Ray Ply2Vrmesh &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="V-Ray Swarm" href="app-vray-swarm.html" />
+    <link rel="prev" title="V-Ray Distributed Rendering" href="app-vray-dbr.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-vray-swarm.html" title="V-Ray Swarm"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-vray-dbr.html" title="V-Ray Distributed Rendering"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">V-Ray Ply2Vrmesh</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="v-ray-ply2vrmesh">
+<span id="app-vray-ply2vrmesh-ref-label"></span><h1>V-Ray Ply2Vrmesh<a class="headerlink" href="#v-ray-ply2vrmesh" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="job-submission">
+<h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline">¶</a></h2>
+<p>You can submit Ply2Vrmesh jobs from the Submit menu in the Monitor.</p>
+<p><a class="reference internal" href="../_images/sub_ply2vrmesh.png"><img alt="one" src="../_images/sub_ply2vrmesh.png" style="height: 500px;" /></a> <a class="reference internal" href="../_images/sub_ply2vrmesh_options.png"><img alt="two" src="../_images/sub_ply2vrmesh_options.png" style="height: 500px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation.</p>
+<p>The Ply2Vrmesh specific options are:</p>
+<ul class="simple">
+<li><p><strong>Input Files</strong>: The file to be converted. If a sequence of files exist in the same folder, Deadline will automatically collect the range of the files and will set the Frame Range accordingly.</p></li>
+<li><p><strong>Output File (Optional)</strong>: Optionally override the output file name. If left blank, the output name will be the same as the input name (with the vrmesh extension).</p></li>
+<li><p><strong>Frame List</strong>: The frames to render.</p></li>
+<li><p><strong>Version</strong>: The version of V-Ray’s Ply2Vrmesh to use.</p></li>
+<li><p><strong>Append</strong>: appends the information as a new frame to the .vrmesh file</p></li>
+<li><p><strong>Merge Output Files</strong>: Merge output files into a single file.</p></li>
+</ul>
+<p><strong>Conversion Options</strong></p>
+<ul class="simple">
+<li><p><strong>Smooth Angle</strong>: A floating point number that specifies the angle (in degrees) used to distinguish if the normals should be  smoothed or not. If present it automatically enables the -smoothNormals flag.</p></li>
+<li><p><strong>Smooth Normals</strong>: Generates smooth vertex normals. Only valid for .obj and .geo files; always enabled for .bin files.</p></li>
+<li><p><strong>Map Channel</strong>: Stores the UVW coordinates to the specified mapping channel (default is 1). Only valid for .obj and .geo files. When exporting a mesh that will be used in Maya, currently this must be set to 0 or the textures on the mesh will not render properly.</p></li>
+<li><p><strong>Disable Color Set Packing</strong>: Only valid for .geo and .bgeo files; disables the packing of float1 and float2 attributes in vertex color sets.</p></li>
+<li><p><strong>FPS</strong>: A floating-point number that specifies the frames per second at which a .geo or .bin file is exported, so that vertex velocities can be scaled accordingly. The default is 24.0.</p></li>
+<li><p><strong>Material IDs</strong>: Only valid for .geo files; assigns material IDs based on the primitive groups in the file.</p></li>
+<li><p><strong>Preview Faces</strong>: Specifies the maximum number of faces in the .vrmesh preview information. Default is 9973 faces.</p></li>
+<li><p><strong>Flip Normals</strong>: Reverses the face/vertex normals. Only valid for .obj, .geo and .bin files.</p></li>
+<li><p><strong>Faces Per Voxel</strong>: Specifies the maximum number of faces per voxel in the resulting .vrmesh file. Default is 10000 faces.</p></li>
+<li><p><strong>Flip Vertex Normals</strong>: Reverses the vertex normals. Only valid for .obj, .geo and .bin files.</p></li>
+<li><p><strong>Preview Hairs</strong>: Specifies the maximum number of hairs in the .vrmesh preview information. Default is 500 hairs.</p></li>
+<li><p><strong>Flip Face Normals</strong>: Reverses the face normals. Only valid for .obj, .geo and .bin files.</p></li>
+<li><p><strong>Segments Per Voxel</strong>: Specifies maximum segments per voxel in the resulting .vrmesh file. Default is 64000 hairs.</p></li>
+<li><p><strong>Flip YZ</strong>: Swap y/z axes. Needed for some programs i.e. Poser, ZBrush. Valid for .ply, .obj, .geo and .bin files.</p></li>
+<li><p><strong>Hair Width Multiplier</strong>: Specifies the multiplier to scale hair widths in the resulting .vrmesh file. Default is 1.0.</p></li>
+<li><p><strong>Flip Y Positive Z</strong>: Same as -flipYZ but does not reverse the sign of the z coordinate.</p></li>
+<li><p><strong>Preview Particles</strong>: Specifies the maximum number of particles in the .vrmesh preview information. Default is 20000 particles.</p></li>
+<li><p><strong>Flip X Positive Z</strong>: Same as -flipYPosZ but swaps x/z axes.</p></li>
+<li><p><strong>Particles Per Voxel</strong>: Specifies maximum particles per voxel in the resulting .vrmesh file. Default is 64000 particles.</p></li>
+<li><p><strong>Merge Voxels</strong>: Merge objects before voxelization to reduce overlapping voxels.</p></li>
+<li><p><strong>Particle Width Multiplier</strong>: Specifies the multiplier to scale particles in the resulting .vrmesh file. Default is 1.0.</p></li>
+<li><p><strong>Velocity Attr Name</strong>: Specifies the name of the point attribute which should be used to generate the velocity channel. By default the ‘v’ attribute is used.</p></li>
+</ul>
+<p><strong>VRSCENE Options</strong></p>
+<p>These settings are only enabled when the <strong>Input Files</strong> points to a <code class="docutils literal notranslate"><span class="pre">.vrscene</span></code> file.</p>
+<ul class="simple">
+<li><p><strong>Node Name</strong>: The name of the node within the <code class="docutils literal notranslate"><span class="pre">.vrscene</span></code> file that will be converted to a <code class="docutils literal notranslate"><span class="pre">.vrmesh</span></code> file.</p></li>
+<li><p><strong>Apply Transform</strong>: If enabled, the world-space transformation of the specified node in the <code class="docutils literal notranslate"><span class="pre">.vrscene</span></code> will be applied to the output <code class="docutils literal notranslate"><span class="pre">.vrmesh</span></code> file.</p></li>
+<li><p><strong>Velocity Channel</strong>: Generates velocity channel (used for motion blur).</p></li>
+<li><p><strong>Animation</strong>: Specifies whether to export an animation range from the <code class="docutils literal notranslate"><span class="pre">.vrscene</span></code> file</p></li>
+<li><p><strong>Start Frame</strong>: Specifies the start frame of the animation export.</p></li>
+<li><p><strong>End Frame</strong>: Specifies the end frame of the animation export.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Ply2Vrmesh plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the Ply2Vrmesh plugin from the list on the left.</p>
+<a class="reference internal image-reference" href="../_images/cp_ply2vrmesh.png"><img alt="../_images/cp_ply2vrmesh.png" src="../_images/cp_ply2vrmesh.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Ply2Vrmesh Executable</strong>: The path to the ply2vrmesh.exe executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes.</p></li>
+</ul>
+</div>
+<div class="section" id="faq">
+<span id="app-vray-ply2vrmesh-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Ply2Vrmesh are supported?</strong></p>
+<blockquote>
+<div><p>Ply2Vrmesh for V-Ray 2 and 3 are currently supported.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Ply2Vrmesh error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><em>Currently, no error messages have been reported for this plugin.</em></p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">V-Ray Ply2Vrmesh</a><ul>
+<li><a class="reference internal" href="#job-submission">Job Submission</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-vray-dbr.html"
+                        title="previous chapter">V-Ray Distributed Rendering</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-vray-swarm.html"
+                        title="next chapter">V-Ray Swarm</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-vray-swarm.html" title="V-Ray Swarm"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-vray-dbr.html" title="V-Ray Distributed Rendering"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">V-Ray Ply2Vrmesh</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>

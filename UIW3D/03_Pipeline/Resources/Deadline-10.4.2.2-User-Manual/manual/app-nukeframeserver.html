@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nuke Frame Server &#8212; Deadline 10.4.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thinkbox.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Octane Standalone" href="app-octane.html" />
+    <link rel="prev" title="Nuke" href="app-nuke.html" />
+ 
+<script src='/static/shortbreadv1.js'></script>
+<script>
+    shortbread = AWSCShortbread({domain: ".thinkboxsoftware.com"});
+    shortbread.checkForCookieConsent();
+</script>
+
+  </head><body>
+    
+    <div class="header">
+    <b>Notice:</b> On November 7, 2025, AWS Thinkbox Deadline 10 will enter maintenance mode. We recommend exploring <a href="https://aws.amazon.com/deadline-cloud/" target="_blank", rel="noopener">AWS Deadline Cloud</a> for render management.<br />
+    For questions, contact <a href="mailto:support@awsthinkbox.zendesk.com">support@awsthinkbox.zendesk.com</a> or refer to the <a href="https://docs.thinkboxsoftware.com/products/deadline/latest/1_User%20Manual/manual/maintenance-mode-faq.html", target="_blank", rel="noopener">Maintenance Mode FAQ</a>.
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-octane.html" title="Octane Standalone"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="app-nuke.html" title="Nuke"
+             accesskey="P">previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" accesskey="U">Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Nuke Frame Server</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="nuke-frame-server">
+<span id="app-nuke-frame-server-ref-label"></span><h1>Nuke Frame Server<a class="headerlink" href="#nuke-frame-server" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="reserving-workers-for-frame-server-render">
+<h2>Reserving Workers For Frame Server Render<a class="headerlink" href="#reserving-workers-for-frame-server-render" title="Permalink to this headline">¶</a></h2>
+<p>You can reserve Deadline Workers for a rendering over the Nuke Studio frame server from Nuke Studio by installing the <a class="reference internal" href="#app-nukeframeserver-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a>, or you can reserve them from the Monitor.
+The instructions for installing the <a class="reference internal" href="#app-nukeframeserver-integrated-submission-script-label"><span class="std std-ref">integrated submission script</span></a> can be found further down this page. The Deadline Workers will create the specified number of Nuke Frame Server Workers
+processes on the machines in which they run.</p>
+<p>Note: The machine submitting the Nuke Frame Server job cannot create Nuke Frame Server Workers.</p>
+<p>To submit a Reserve Frame Server Workers Job from within Nuke Studio, select Submit to Deadline from the Thinkbox menu.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As of Nuke 11.0, the Nuke/NukeX versions as well as Nuke Studio can now be used with Frame Server.</p>
+</div>
+<p><a class="reference internal" href="../_images/frameserverintegrated.png"><img alt="int" src="../_images/frameserverintegrated.png" style="height: 400px;" /></a> <a class="reference internal" href="../_images/sub_frameserver.png"><img alt="mon1" src="../_images/sub_frameserver.png" style="height: 400px;" /></a></p>
+<div class="section" id="submission-options">
+<h3>Submission Options<a class="headerlink" href="#submission-options" title="Permalink to this headline">¶</a></h3>
+<p>The general Deadline options are explained in the <a class="reference internal" href="job-submitting.html#common-job-ref-label"><span class="std std-ref">Job Submission</span></a> documentation.
+The Nuke specific options are:</p>
+<ul class="simple">
+<li><p><strong>Host</strong>: The IP address or Host Name of the Master Machine that the frame server Workers will connect to. This machine is the machine that will start the actual Nuke render.</p></li>
+<li><p><strong>Port Number</strong>: The port number to use to connect to the Master Machine. Default is 5560. Worker must <strong>NOT</strong> run on the same machine as the Master Machine.</p></li>
+<li><p><strong>Worker Count</strong>: The number of workers that should be spawned on each Deadline Worker that is reserved. Each worker runs an instance of Nuke and renders independently of other workers.</p></li>
+<li><p><strong>Worker Threads</strong>: The number of threads each worker should use.</p></li>
+<li><p><strong>Worker Memory</strong>: The amount of memory to reserve for each worker.</p></li>
+</ul>
+</div>
+<div class="section" id="reserving-from-inside-nuke-studio">
+<h3>Reserving From Inside Nuke Studio<a class="headerlink" href="#reserving-from-inside-nuke-studio" title="Permalink to this headline">¶</a></h3>
+<p>It is required that you have Nuke Studio 9.0v3 or newer (skip Nuke 9.0v4 as it contains a Frame Server bug) or Nuke 11.0 onwards, installed in order to properly use the Frame Server with Deadline. After you’ve configured your submission options, press the Reserve Machines button to submit the
+Nuke Frame Server Job. The Job’s ID and Status will be tracked in the submitter, and as nodes pick up the Job, they will show up in the Reserved Machines list. Once you are happy with the server list you can start rendering
+or exporting over the frame server.</p>
+<p>Note that the Nuke Frame Server process can sometimes take a little while to initialize. This means that a machine in the Reserved Machines list could have started the Nuke Frame Server process, but it’s not fully initialized yet. If this
+is the case, it’s probably best to wait a minute or so after the last server has shown up before starting the render.</p>
+<p>After the render is finished, you can press Release Machines or close the submitter UI (Setup Frame Server Workers With Deadline) to mark the Frame Server Job as complete so that the render nodes can move on to another Job.</p>
+<p>Note: Only one Deadline Worker per machine may pick up a Nuke Frame Server Job, as allowing multiple Workers on the same machine to try to bind to the same port would not work. Deadline will also fail a render if a Deadline Worker running on the Master Machine
+tries to pick up the Reserve Job, as it is already running an instance of the Frame Server and the same port binding conflict can occur.</p>
+</div>
+<div class="section" id="reserving-from-the-monitor">
+<h3>Reserving From The Monitor<a class="headerlink" href="#reserving-from-the-monitor" title="Permalink to this headline">¶</a></h3>
+<p>After you’ve configured your submission options, press the Submit button to submit the Nuke Frame Server Job. Note that this doesn’t start any rendering, it just allows the Nuke Frame Server to
+start up on nodes in the farm. Once you’re happy with the nodes that have picked up the Job, you can initiate the distributed render manually from within Nuke Studio.</p>
+<p>After the distributed render has finished, remember to mark the Job as complete or delete it so that the nodes can move on to other Jobs.</p>
+</div>
+</div>
+<div class="section" id="cross-platform-rendering-considerations">
+<h2>Cross-Platform Rendering Considerations<a class="headerlink" href="#cross-platform-rendering-considerations" title="Permalink to this headline">¶</a></h2>
+<p>In order to perform cross-platform rendering with Nuke/Nuke Studio, you must setup Mapped Paths so that Deadline can swap out Read Node and Write Node file paths where appropriate. You can access the Mapped Paths Setup in the Monitor while in
+power user mode by selecting Tools -&gt; Configure Repository. You’ll find the Mapped Paths Setup in the list on the left.</p>
+</div>
+<div class="section" id="plugin-configuration">
+<h2>Plugin Configuration<a class="headerlink" href="#plugin-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You can configure the Nuke Frame Server plugin settings from the Monitor. While in power user mode, select Tools -&gt; Configure Plugins and select the NukeFrameServer plugin from the list on the left.</p>
+<p>Note, if the executable supports a MAJOR.MINOR.REVISION (9.0.123) numbering system in its path, then you will need to configure the explicit exe path to the particular revision that you have installed on your machines. Deadline does not track every possible revision available or indeed where it might be custom installed to, so a studio should verify their exe paths are correct for each application version they choose to use with Deadline. Multiple exe paths can still be declared and the first one that is found on a particular Worker on a particular platform will be used from the exe list.</p>
+<a class="reference internal image-reference" href="../_images/cp_nuke_fs.png"><img alt="../_images/cp_nuke_fs.png" src="../_images/cp_nuke_fs.png" style="height: 400px;" /></a>
+<p><strong>Render Executables</strong></p>
+<ul class="simple">
+<li><p><strong>Nuke Executable</strong>: The path to the Nuke executable file used for rendering. Enter alternative paths on separate lines. Different executable paths can be configured for each version installed on your render nodes. Note that the versions supported are the <strong>MAJOR.MINOR</strong> (9.0 or 9.1) versions of Nuke. If you wish to run a particular <strong>REVISION</strong> of Nuke then you will need to change the actual exe path under 9.0v1 to actually point at say, the 9.0v8 version. We don’t directly support <strong>MAJOR.MINOR.REVISION</strong>’s of Nuke, but rather just the first two levels <strong>MAJOR.MINOR</strong> and leave the specific REVISION to a studio to control. Multiple exe paths can still be declared and the first one that is found on a Worker will be used from the exe list.</p></li>
+</ul>
+<p><strong>Licensing Options</strong></p>
+<ul class="simple">
+<li><p><strong>Workers To Use Interactive License</strong>: A list of Workers that should use an interactive Nuke license instead of a render license. Use a , to separate multiple Worker names, for example: worker001,worker002,worker003</p></li>
+</ul>
+<p><strong>OFX Cache</strong></p>
+<ul class="simple">
+<li><p><strong>Prepare OFX Cache Before Rendering</strong>: If enabled, Deadline will try to create the temporary ofxplugincache folder before rendering, which helps ensure that comps that use OFX plugins render properly.</p></li>
+</ul>
+</div>
+<div class="section" id="integrated-submission-script-setup">
+<span id="app-nukeframeserver-integrated-submission-script-label"></span><h2>Integrated Submission Script Setup<a class="headerlink" href="#integrated-submission-script-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following procedures describe how to install the integrated Nuke Frame Server submission script. This script allows for submitting Nuke Reserve Frame Server Workers Jobs to Deadline directly from within the Nuke/Nuke Studio
+editing GUI.</p>
+<p>You can either run the Submitter installer or manually install the submission script.</p>
+<div class="section" id="submitter-installer">
+<h3>Submitter Installer<a class="headerlink" href="#submitter-installer" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Run the <a class="reference internal" href="install-submitters.html#install-submitters-ref-label"><span class="std std-ref">Submitter Installer</span></a> located at <code class="docutils literal notranslate"><span class="pre">&lt;Repository&gt;/submission/Nuke/Installers</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="manual-installation">
+<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Copy the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Repository</span><span class="p">]</span>\<span class="n">submission</span>\<span class="n">Nuke</span>\<span class="n">Client</span>\<span class="n">DeadlineNukeFrameServerClient</span><span class="o">.</span><span class="n">py</span> <span class="n">to</span> <span class="n">your</span> <span class="o">.</span><span class="n">nuke</span> <span class="n">user</span> <span class="n">folder</span> <span class="p">(</span><span class="o">~/.</span><span class="n">nuke</span> <span class="ow">or</span> <span class="o">%</span><span class="n">USERPROFILE</span><span class="o">%</span>\<span class="o">.</span><span class="n">nuke</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>If menu.py does not exist in your .nuke user folder, copy <code class="docutils literal notranslate"><span class="pre">[Repository]\submission\Nuke\Client\menu.py</span></code> to your .nuke user folder</p></li>
+<li><p>If menu.py does exist, then open it in a text editor and add the following lines of code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#For Nuke Frame Server and Nuke Submission</span>
+<span class="kn">import</span> <span class="nn">DeadlineNukeClient</span>
+<span class="n">menubar</span> <span class="o">=</span> <span class="n">nuke</span><span class="o">.</span><span class="n">menu</span><span class="p">(</span><span class="s2">&quot;Nuke&quot;</span><span class="p">)</span>
+<span class="n">tbmenu</span> <span class="o">=</span> <span class="n">menubar</span><span class="o">.</span><span class="n">addMenu</span><span class="p">(</span><span class="s2">&quot;&amp;Thinkbox&quot;</span><span class="p">)</span>
+<span class="n">tbmenu</span><span class="o">.</span><span class="n">addCommand</span><span class="p">(</span><span class="s2">&quot;Submit Nuke To Deadline&quot;</span><span class="p">,</span> <span class="n">DeadlineNukeClient</span><span class="o">.</span><span class="n">main</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+<span class="c1">#This is done to only add the Frame Server in Nuke/Nuke Studio.</span>
+<span class="c1">#Try-except is for older versions of Nuke.</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">nuke</span><span class="o">.</span><span class="n">env</span><span class="p">[</span> <span class="s1">&#39;studio&#39;</span> <span class="p">]</span> <span class="ow">or</span> <span class="n">nuke</span><span class="o">.</span><span class="n">env</span><span class="p">[</span> <span class="s1">&#39;NukeVersionMajor&#39;</span> <span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">11</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">DeadlineNukeFrameServerClient</span>
+        <span class="n">tbmenu</span><span class="o">.</span><span class="n">addCommand</span><span class="p">(</span><span class="s2">&quot;Reserve Frame Server Slaves&quot;</span><span class="p">,</span>
+            <span class="n">DeadlineNukeFrameServerClient</span><span class="o">.</span><span class="n">main</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="verify-installation">
+<h3>Verify Installation<a class="headerlink" href="#verify-installation" title="Permalink to this headline">¶</a></h3>
+<p>The next time you launch Nuke/Nuke Studio, there should be a Thinkbox menu with the option to <strong>Reserve Frame Server Workers</strong>.</p>
+</div>
+<div class="section" id="custom-sanity-check">
+<h3>Custom Sanity Check<a class="headerlink" href="#custom-sanity-check" title="Permalink to this headline">¶</a></h3>
+<p>A CustomSanityChecks.py file can be created alongside the main ReserveFrameServerSlaves.py submission script (in <code class="docutils literal notranslate"><span class="pre">[Repository]\submission\Nuke\Main</span></code>), and will be evaluated if it exists. This script will let you set any of the initial properties in the submission script prior to displaying the submission window. You can also use it to run your own checks and display errors or warnings to the user. Here is a very simple example of what this script could look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nuke</span>
+<span class="kn">import</span> <span class="nn">DeadlineFRGlobals</span>
+
+<span class="k">def</span> <span class="nf">RunSanityCheck</span><span class="p">():</span>
+    <span class="n">DeadlineFRGlobals</span><span class="o">.</span><span class="n">initDepartment</span> <span class="o">=</span> <span class="s2">&quot;The Best Department!&quot;</span>
+    <span class="n">DeadlineFRGlobals</span><span class="o">.</span><span class="n">initPriority</span> <span class="o">=</span> <span class="mi">33</span>
+    <span class="n">DeadlineFRGlobals</span><span class="o">.</span><span class="n">initPort</span> <span class="o">=</span> <span class="mi">5570</span>
+
+    <span class="n">nuke</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="s2">&quot;This is a custom sanity check!&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>The DeadlineFRGlobals module can be found in the same folder as the ReserveFrameServerSlaves.py script mentioned above. It just contains the list of global variables that you can set, which are then used by the submission script to set the initial values in the submission dialog. Simply open <code class="docutils literal notranslate"><span class="pre">DeadlineFRGlobals.py</span></code> in a text editor to view the global variables.</p>
+<p>Finally, if the RunSanityCheck method returns False, the submission will be cancelled.</p>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="app-nuke-frame-server-faq-ref-label"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<p><strong>Which versions of Nuke are supported?</strong></p>
+<blockquote>
+<div><p>Nuke Studio 9.0v3 to 15.0 and Nuke/NukeX 11.0 to 16.0 are supported.</p>
+</div></blockquote>
+<p><strong>What Nuke license does Frame Server use?</strong></p>
+<blockquote>
+<div><p>Nuke Studio’s Frame Server uses by default a standard Nuke rendernode “-r” license. Note for every license of Nuke Studio you own, a number of Nuke render licenses are included from The Foundry. These licenses are intended to be used for ‘local’ Nuke Studio background rendering using Frame Server running locally. Deadline’s Frame Server Jobs are for when additional processing power is required by your local running instance of Nuke Studio and it’s Master Frame Server functionality. Note, in Deadline’s Nuke Frame Server plugin configuration section, you can also provide a list of Workers that should use an interactive Nuke license instead of a render license, albeit this is a somewhat expensive thing to do with your Nuke GUI licenses!</p>
+</div></blockquote>
+<p><strong>Can I run Frame Server via Deadline Worker on the Master Machine?</strong></p>
+<blockquote>
+<div><p>No. You won’t be able to run Frame Server via Deadline Worker on the same machine that is also acting as the Master Machine (the machine currently running your session of Nuke Studio). Deadline will fail a render if a Worker running on the Master Machine tries to pick up the Job, as it is already running an instance of the Frame Server and a port binding conflict will occur. You will need to use a different machine even for simple testing purposes.</p>
+</div></blockquote>
+<p><strong>If running multiple Deadline Workers, can I run a normal Nuke network rendering Job simultaneously with Nuke Frame Server Jobs?</strong></p>
+<blockquote>
+<div><p>Yes. You will want to consider using Deadline limits here to ensure you don’t blow your Nuke license budget. See our <a class="reference internal" href="limits.html#limits-ref-label"><span class="std std-ref">Limits</span></a> documentation for how to implement limits for each of your software license needs. Ensure you use “Machine” as the “Usage Level” in your Limits configuration, to ensure only 1 x Nuke license is used by the one physical/virtual machine. Don’t forget to consider licensing implications for any 3rd party Nuke plugins such as Optical Flares you may be using.</p>
+</div></blockquote>
+<p><strong>How can I check if my Nuke Frame Server Workers are connected?</strong></p>
+<blockquote>
+<div><p>There is a python script on <a class="reference external" href="https://learn.foundry.com/nuke/content/comp_environment/rendering/frame_server_renders.html">Nuke’s website</a> which can be used in the Script Editor windows in Nuke Studio to see the connected Nuke Frame Server Workers.</p>
+</div></blockquote>
+</div>
+<div class="section" id="error-messages-and-meanings">
+<h2>Error Messages and Meanings<a class="headerlink" href="#error-messages-and-meanings" title="Permalink to this headline">¶</a></h2>
+<p>This is a collection of known Nuke Frame Server error messages and their meanings, as well as possible solutions. We want to keep this list as up to date as possible, so if you run into an error message that isn’t listed here,
+please visit the <a class="reference external" href="https://awsthinkbox.zendesk.com/hc/">Thinkbox Help Centre</a> and let us know.</p>
+<p><strong>workerapplication.py: error: no such option: –loglevelstream</strong></p>
+<blockquote>
+<div><p>Earlier versions of Nuke Studio 9.0 contained a few Frame Server bugs, which were solved in later point releases of Nuke. It is recommended to use the latest version of Nuke where possible or at least Nuke 9.0v5 if running across different platforms:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Nuke 9.0v5</dt><dd><ul>
+<li><p>Foundry BUG ID 46790 - Using the Frame Server across platforms did not work as expected.</p></li>
+<li><p>Foundry BUG ID 45420 - The path remap argument (–remap) did not work when mapping between Windows and macOS or Linux file systems.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Nuke 9.0v8:</dt><dd><ul>
+<li><p>Foundry BUG ID 50296 - Frame Server: Error handling and reporting when worker processes don’t start has been improved.</p></li>
+<li><p>Foundry BUG ID 42082 - The Frame Server process occasionally interfered with Nuke Studio’s responsiveness.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Product_Button_Deadline.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Nuke Frame Server</a><ul>
+<li><a class="reference internal" href="#reserving-workers-for-frame-server-render">Reserving Workers For Frame Server Render</a><ul>
+<li><a class="reference internal" href="#submission-options">Submission Options</a></li>
+<li><a class="reference internal" href="#reserving-from-inside-nuke-studio">Reserving From Inside Nuke Studio</a></li>
+<li><a class="reference internal" href="#reserving-from-the-monitor">Reserving From The Monitor</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cross-platform-rendering-considerations">Cross-Platform Rendering Considerations</a></li>
+<li><a class="reference internal" href="#plugin-configuration">Plugin Configuration</a></li>
+<li><a class="reference internal" href="#integrated-submission-script-setup">Integrated Submission Script Setup</a><ul>
+<li><a class="reference internal" href="#submitter-installer">Submitter Installer</a></li>
+<li><a class="reference internal" href="#manual-installation">Manual Installation</a></li>
+<li><a class="reference internal" href="#verify-installation">Verify Installation</a></li>
+<li><a class="reference internal" href="#custom-sanity-check">Custom Sanity Check</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq">FAQ</a></li>
+<li><a class="reference internal" href="#error-messages-and-meanings">Error Messages and Meanings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app-nuke.html"
+                        title="previous chapter">Nuke</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app-octane.html"
+                        title="next chapter">Octane Standalone</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="app-octane.html" title="Octane Standalone"
+             >next</a></li>
+        <li class="right" >
+          <a href="app-nuke.html" title="Nuke"
+             >previous</a> |</li>
+	<li><img src="../_static/logo.png" alt="Logo" style="vertical-align: middle"/></li>
+	<li><a href="https://www.awsthinkbox.com/">AWS Thinkbox</a> &#187;</li>
+	<li><a href="https://docs.thinkboxsoftware.com/">Documentation</a> &#187;</li>
+	<li><a href="../index.html">Deadline 10.4.2.2</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="../index-linear.html" >Index</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="app-index.html" >Application Plugins Index</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Nuke Frame Server</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+	<a href="https://www.awsthinkbox.com/privacy">Privacy</a> | <a href="https://www.awsthinkbox.com/terms">Site terms</a> | <a href="#" onclick="shortbread.customizeCookies();">Cookie preferences</a>
+</div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, AWS Thinkbox.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+
+  </body>
+</html>
