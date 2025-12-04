@@ -1,0 +1,121 @@
+// OpenCue Maya Shelf
+// Copy to: %USERPROFILE%\Documents\maya\<version>\prefs\shelves\shelf_OpenCue.mel
+// Or import via Maya's shelf editor
+
+global proc shelf_OpenCue () {
+    global string $gBuffStr;
+    global string $gBuffStr0;
+    global string $gBuffStr1;
+
+    // Submit Render button
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Submit to OpenCue - Click to submit current scene to render farm"
+        -enableBackground 0
+        -backgroundColor 0 0 0
+        -highlightColor 0.321569 0.521569 0.65098
+        -align "center"
+        -label "Submit"
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont"
+        -imageOverlayLabel "CUE"
+        -overlayLabelColor 0.8 0.8 0.8
+        -overlayLabelBackColor 0 0 0 0.5
+        -image "render.png"
+        -image1 "render.png"
+        -style "iconOnly"
+        -marginWidth 1
+        -marginHeight 1
+        -command "import opencue_submit\nopencue_submit.show()"
+        -sourceType "python"
+        -commandRepeatable 1
+        -flat 1
+    ;
+
+    // Launch CueGUI button
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Launch CueGUI - Monitor and manage render jobs"
+        -enableBackground 0
+        -backgroundColor 0 0 0
+        -highlightColor 0.321569 0.521569 0.65098
+        -align "center"
+        -label "CueGUI"
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont"
+        -imageOverlayLabel "GUI"
+        -overlayLabelColor 0.8 0.8 0.8
+        -overlayLabelBackColor 0 0 0 0.5
+        -image "QR_refresh.png"
+        -image1 "QR_refresh.png"
+        -style "iconOnly"
+        -marginWidth 1
+        -marginHeight 1
+        -command "import subprocess\nsubprocess.Popen(['cuegui'])"
+        -sourceType "python"
+        -commandRepeatable 1
+        -flat 1
+    ;
+
+    // Check Connection button
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Check OpenCue Connection - Test connectivity to render farm"
+        -enableBackground 0
+        -backgroundColor 0 0 0
+        -highlightColor 0.321569 0.521569 0.65098
+        -align "center"
+        -label "Check"
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont"
+        -imageOverlayLabel "CHK"
+        -overlayLabelColor 0.8 0.8 0.8
+        -overlayLabelBackColor 0 0 0 0.5
+        -image "out_time.png"
+        -image1 "out_time.png"
+        -style "iconOnly"
+        -marginWidth 1
+        -marginHeight 1
+        -command "import opencue\ntry:\n    hosts = opencue.api.getHosts()\n    print('OpenCue: Connected to {} render hosts'.format(len(hosts)))\n    for h in hosts[:5]:\n        print('  - {} ({} cores)'.format(h.name(), h.cores()))\n    if len(hosts) > 5:\n        print('  ... and {} more'.format(len(hosts)-5))\nexcept Exception as e:\n    print('OpenCue: Connection failed - {}'.format(e))"
+        -sourceType "python"
+        -commandRepeatable 1
+        -flat 1
+    ;
+
+}
